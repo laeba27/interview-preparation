@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Frontend Developer — Concept Notes</title>
+<link rel="stylesheet" href="../assets/notes.css">
+<script>
+  try { document.documentElement.setAttribute("data-theme",
+    localStorage.getItem("notes-theme") || "light"); } catch (e) {}
+</script>
+</head>
+<body>
+<div class="scrim"></div>
+<div class="layout">
+
+<button class="icon-btn" id="reopen" title="Show sidebar ([)" aria-label="Show sidebar">☰</button>
+<aside>
+  <div class="sidebar-head">
+    <a class="back-link" href="../index.html">← All topics</a>
+    <button class="icon-btn" id="collapseBtn" title="Hide sidebar ([)" aria-label="Hide sidebar">‹</button>
+  </div>
+  <input id="search" type="text" placeholder="Filter topics…" autocomplete="off">
+
+  <h2>Foundations</h2>
+  <nav>
+    <a href="#s1">1 · What Frontend Really Is</a>
+    <a href="#s2">2 · How the Browser Works</a>
+    <a href="#s3">3 · HTML &amp; Semantics</a>
+    <a href="#s4">4 · Forms &amp; Inputs</a>
+  </nav>
+
+  <h2>CSS</h2>
+  <nav>
+    <a href="#s5">5 · Cascade &amp; Specificity</a>
+    <a href="#s6">6 · Box Model &amp; Sizing</a>
+    <a href="#s7">7 · Layout: Flow &amp; Position</a>
+    <a href="#s8">8 · Flexbox</a>
+    <a href="#s9">9 · Grid</a>
+    <a href="#s10">10 · Responsive Design</a>
+    <a href="#s11">11 · Transitions &amp; Animation</a>
+    <a href="#s12">12 · Modern CSS &amp; Architecture</a>
+  </nav>
+
+  <h2>JavaScript</h2>
+  <nav>
+    <a href="#s13">13 · Types &amp; Coercion</a>
+    <a href="#s14">14 · Scope, Hoisting, Closures</a>
+    <a href="#s15">15 · this, call, bind</a>
+    <a href="#s16">16 · Objects &amp; Prototypes</a>
+    <a href="#s17">17 · Arrays &amp; Iteration</a>
+    <a href="#s18">18 · The Event Loop</a>
+    <a href="#s19">19 · Promises &amp; async/await</a>
+    <a href="#s20">20 · Modules &amp; Tooling</a>
+  </nav>
+
+  <h2>The Browser</h2>
+  <nav>
+    <a href="#s21">21 · DOM Manipulation</a>
+    <a href="#s22">22 · Events in Depth</a>
+    <a href="#s23">23 · Storage &amp; Cookies</a>
+    <a href="#s24">24 · Fetch, HTTP, CORS</a>
+    <a href="#s25">25 · Browser APIs</a>
+  </nav>
+
+  <h2>React</h2>
+  <nav>
+    <a href="#s26">26 · Mental Model &amp; JSX</a>
+    <a href="#s27">27 · State &amp; Rendering</a>
+    <a href="#s28">28 · Effects &amp; Lifecycle</a>
+    <a href="#s29">29 · Hooks in Depth</a>
+    <a href="#s30">30 · Performance &amp; Patterns</a>
+    <a href="#s31">31 · Data, Routing, Forms</a>
+  </nav>
+
+  <h2>Craft</h2>
+  <nav>
+    <a href="#s32">32 · Performance</a>
+    <a href="#s33">33 · Accessibility</a>
+    <a href="#s34">34 · Security</a>
+    <a href="#s35">35 · Testing</a>
+  </nav>
+
+  <h2>Revision</h2>
+  <nav>
+    <a href="#rev">Interview Q&amp;A</a>
+    <a href="#road">Learning Path</a>
+  </nav>
+</aside>
+
+<main>
+<header class="top">
+  <h1>Frontend Developer — Concept Notes</h1>
+  <div class="top-actions">
+    <button class="ghost" id="menuBtn">☰ Topics</button>
+    <button class="ghost" id="theme">Dark mode</button>
+  </div>
+</header>
+<p class="sub">Concept-first, in depth. Examples use plain JS and React, but the ideas apply to any frontend stack. Print this page for a PDF.</p>
+
+<!-- ================= FOUNDATIONS ================= -->
+<div class="part">Part 1 — Foundations</div>
+
+<section id="s1">
+<h3>1. What Frontend Really Is</h3>
+<p>The frontend is everything that runs on the <b>user's device</b> — code you ship but don't control. It is downloaded over a network you can't predict, executed on hardware you can't choose, and read by people using a screen reader, a 5-year-old Android, or a keyboard only.</p>
+<h4>Core responsibilities</h4>
+<ul>
+<li><b>Structure</b> — meaningful HTML that describes what content <i>is</i>, not how it looks.</li>
+<li><b>Presentation</b> — CSS that stays predictable as the project grows.</li>
+<li><b>Behaviour</b> — JavaScript that reacts to input without blocking the page.</li>
+<li><b>State management</b> — keeping the UI and the data in sync; this is where most bugs live.</li>
+<li><b>Performance</b> — bytes shipped, time to interactive, smooth scrolling.</li>
+<li><b>Accessibility</b> — usable by keyboard, screen reader, and low vision users.</li>
+<li><b>Resilience</b> — the network fails, APIs return 500, users double-click. Handle it.</li>
+</ul>
+<div class="note"><b>Golden rule:</b> the client is untrusted and unreliable. Frontend validation is for user experience; the backend still has to validate everything. Never put a secret in frontend code — anyone can read your bundle.</div>
+<h4>Key mental model — the render lifecycle</h4>
+<div class="flow">User types a URL
+  → DNS + TCP/TLS → HTML arrives as a stream
+  → Parser builds the DOM
+      ↳ &lt;link rel=stylesheet&gt;  → CSSOM  (render blocking)
+      ↳ &lt;script&gt;               → pauses parsing unless defer/async
+  → DOM + CSSOM = Render Tree
+  → Layout   (where is every box? "reflow")
+  → Paint    (fill in pixels)
+  → Composite(stack the layers on the GPU)
+  → JS runs → state changes → back to Layout/Paint/Composite</div>
+<p>Almost every frontend performance question reduces to: <i>how do I do less work in this pipeline, or move it off the critical path?</i></p>
+</section>
+
+<section id="s2">
+<h3>2. How the Browser Works</h3>
+<h4>The pieces</h4>
+<ul>
+<li><b>Rendering engine</b> — Blink (Chrome, Edge), WebKit (Safari), Gecko (Firefox). Parses HTML/CSS, lays out and paints.</li>
+<li><b>JS engine</b> — V8, JavaScriptCore, SpiderMonkey. Parses and JIT-compiles JS.</li>
+<li><b>Browser process vs renderer process</b> — each tab typically gets its own sandboxed renderer, so one crashed tab doesn't kill the browser.</li>
+<li><b>The main thread</b> does parsing, layout, paint, <i>and</i> your JavaScript. That's why a long loop freezes scrolling.</li>
+</ul>
+<h4>Critical rendering path</h4>
+<p>The browser cannot paint until it has both DOM and CSSOM. So <b>CSS is render-blocking</b> by default, and a synchronous <code>&lt;script&gt;</code> in the head blocks parsing entirely.</p>
+<div class="table-wrap"><table>
+<tr><th>Script tag</th><th>Downloads</th><th>Executes</th><th>Use for</th></tr>
+<tr><td><code>&lt;script&gt;</code></td><td>Immediately, blocking parse</td><td>Immediately</td><td>Almost never in head</td></tr>
+<tr><td><code>async</code></td><td>Parallel</td><td>As soon as ready, out of order</td><td>Independent scripts (analytics)</td></tr>
+<tr><td><code>defer</code></td><td>Parallel</td><td>After parsing, in order</td><td>Your app code — the default choice</td></tr>
+<tr><td><code>type="module"</code></td><td>Parallel</td><td>Deferred by default</td><td>ES module entry points</td></tr>
+</table></div>
+<h4>Reflow vs repaint vs composite</h4>
+<ul>
+<li><b>Reflow (layout)</b> — geometry changed: <code>width</code>, <code>top</code>, <code>font-size</code>, adding a node. Expensive, can cascade to the whole document.</li>
+<li><b>Repaint</b> — pixels changed but geometry didn't: <code>color</code>, <code>background</code>, <code>box-shadow</code>. Cheaper.</li>
+<li><b>Composite only</b> — <code>transform</code> and <code>opacity</code> can be handled by the GPU without touching layout or paint. <mark>This is why you animate transform, not top/left.</mark></li>
+</ul>
+<h4>Layout thrashing</h4>
+<p>Reading a layout property (<code>offsetHeight</code>, <code>getBoundingClientRect</code>) forces the browser to flush pending style changes so the value is correct. Interleaving reads and writes in a loop forces a reflow every iteration.</p>
+<pre><code>// Bad — read/write/read/write forces N reflows
+items.forEach(el =&gt; { el.style.height = el.offsetHeight + 10 + "px"; });
+
+// Good — batch all reads, then all writes
+const heights = items.map(el =&gt; el.offsetHeight);
+items.forEach((el, i) =&gt; { el.style.height = heights[i] + 10 + "px"; });</code></pre>
+</section>
+
+<section id="s3">
+<h3>3. HTML &amp; Semantics</h3>
+<p>Semantic HTML means choosing the element that describes the <b>meaning</b> of the content. It is free accessibility, free SEO, and free default behaviour.</p>
+<h4>Structural elements</h4>
+<div class="table-wrap"><table>
+<tr><th>Element</th><th>Meaning</th></tr>
+<tr><td><code>&lt;header&gt;</code> / <code>&lt;footer&gt;</code></td><td>Intro / closing content for its nearest section or the page</td></tr>
+<tr><td><code>&lt;nav&gt;</code></td><td>A block of major navigation links</td></tr>
+<tr><td><code>&lt;main&gt;</code></td><td>The primary content. One per page — screen readers can jump to it</td></tr>
+<tr><td><code>&lt;article&gt;</code></td><td>Self-contained and independently distributable (a post, a card)</td></tr>
+<tr><td><code>&lt;section&gt;</code></td><td>A thematic grouping — should have a heading</td></tr>
+<tr><td><code>&lt;aside&gt;</code></td><td>Tangential content (sidebar, callout)</td></tr>
+<tr><td><code>&lt;figure&gt;/&lt;figcaption&gt;</code></td><td>Media with a caption tied to it</td></tr>
+<tr><td><code>&lt;time datetime&gt;</code></td><td>A machine-readable date</td></tr>
+</table></div>
+<div class="note"><b>Interview favourite:</b> why <code>&lt;button&gt;</code> over <code>&lt;div onclick&gt;</code>? A button is focusable, fires on Enter <i>and</i> Space, is announced as "button" by screen readers, can be disabled, and participates in forms. Recreating all of that on a div takes <code>tabindex</code>, two key handlers, and <code>role="button"</code> — and you'll still miss something.</div>
+<h4>The document head</h4>
+<pre><code>&lt;meta charset="UTF-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;Page title — Site&lt;/title&gt;
+&lt;meta name="description" content="Shown in search results"&gt;
+&lt;meta property="og:title" content="Shown when shared on social"&gt;
+&lt;link rel="canonical" href="https://site.com/page"&gt;
+&lt;link rel="preconnect" href="https://api.site.com"&gt;</code></pre>
+<p>Without the viewport meta tag, mobile browsers render at ~980px wide and zoom out — your media queries will look like they don't work.</p>
+<h4>Images</h4>
+<ul>
+<li><code>alt=""</code> (empty) for decorative images — this <i>hides</i> them from screen readers, which is correct. Omitting <code>alt</code> entirely makes the reader announce the filename.</li>
+<li><code>width</code> and <code>height</code> attributes let the browser reserve space and prevent layout shift (CLS).</li>
+<li><code>loading="lazy"</code> for below-the-fold images; never for the hero image.</li>
+<li><code>srcset</code> / <code>&lt;picture&gt;</code> serve different sizes or formats (AVIF/WebP with a JPEG fallback).</li>
+</ul>
+<pre><code>&lt;img src="hero-800.jpg" alt="Team at work"
+     srcset="hero-400.jpg 400w, hero-800.jpg 800w, hero-1600.jpg 1600w"
+     sizes="(max-width: 700px) 100vw, 800px"
+     width="800" height="450"&gt;</code></pre>
+</section>
+
+<section id="s4">
+<h3>4. Forms &amp; Inputs</h3>
+<h4>The label is not optional</h4>
+<pre><code>&lt;label for="email"&gt;Email&lt;/label&gt;
+&lt;input id="email" name="email" type="email" required autocomplete="email"&gt;</code></pre>
+<p>A correctly associated label is announced by screen readers <i>and</i> expands the click target. A placeholder is <b>not</b> a label — it disappears as soon as the user types.</p>
+<h4>Input types earn you behaviour for free</h4>
+<ul>
+<li><code>type="email"</code>, <code>tel</code>, <code>number</code>, <code>url</code> — change the mobile keyboard.</li>
+<li><code>type="search"</code>, <code>date</code>, <code>color</code>, <code>range</code>, <code>file</code> — native widgets.</li>
+<li><code>required</code>, <code>min</code>, <code>max</code>, <code>pattern</code>, <code>minlength</code> — native validation and the <code>:invalid</code> pseudo-class.</li>
+<li><code>autocomplete</code> — a real UX win; browsers fill addresses and cards correctly when you use the standard tokens.</li>
+</ul>
+<h4>Controlled vs uncontrolled</h4>
+<p>An <b>uncontrolled</b> input keeps its value in the DOM; you read it on submit. A <b>controlled</b> input keeps its value in JS state and re-renders on every keystroke. Controlled gives you instant validation and derived UI; uncontrolled is cheaper and simpler for big forms.</p>
+<pre><code>// React — controlled
+const [email, setEmail] = useState("");
+&lt;input value={email} onChange={e =&gt; setEmail(e.target.value)} /&gt;
+
+// React — uncontrolled
+const ref = useRef();
+&lt;input ref={ref} defaultValue="" /&gt;   // read ref.current.value on submit</code></pre>
+<h4>Submitting properly</h4>
+<pre><code>form.addEventListener("submit", async (e) =&gt; {
+  e.preventDefault();                       // stop the full page reload
+  const data = Object.fromEntries(new FormData(form));
+  btn.disabled = true;                      // stop double submits
+  try { await api.save(data); }
+  finally { btn.disabled = false; }
+});</code></pre>
+<div class="note">Keep the form a real <code>&lt;form&gt;</code> with a <code>type="submit"</code> button even in a SPA — you get Enter-to-submit, native validation, and password manager support for free.</div>
+</section>
+
+<!-- ================= CSS ================= -->
+<div class="part">Part 2 — CSS</div>
+
+<section id="s5">
+<h3>5. The Cascade &amp; Specificity</h3>
+<p>When two rules target the same element, the browser resolves the conflict in this order:</p>
+<ol>
+<li><b>Origin &amp; importance</b> — author <code>!important</code> beats author normal, which beats user-agent defaults.</li>
+<li><b>Specificity</b> — a score per selector.</li>
+<li><b>Source order</b> — the last matching rule wins.</li>
+</ol>
+<h4>Specificity scoring (a, b, c)</h4>
+<div class="table-wrap"><table>
+<tr><th>Selector</th><th>Score</th><th>Note</th></tr>
+<tr><td><code>#id</code></td><td>1,0,0</td><td>Very hard to override — avoid in component CSS</td></tr>
+<tr><td><code>.class</code>, <code>[attr]</code>, <code>:hover</code></td><td>0,1,0</td><td>The sweet spot</td></tr>
+<tr><td><code>div</code>, <code>::before</code></td><td>0,0,1</td><td>Element and pseudo-element</td></tr>
+<tr><td><code>*</code>, <code>:where()</code></td><td>0,0,0</td><td><code>:where()</code> always scores zero</td></tr>
+<tr><td>inline <code>style=""</code></td><td>above all selectors</td><td>Only <code>!important</code> beats it</td></tr>
+</table></div>
+<p>Compare left to right: <code>0,1,0</code> beats <code>0,0,9</code>. Ten element selectors never beat one class.</p>
+<pre><code>.card .title      { color: blue; }   /* 0,2,0 — wins */
+#page .title      { color: red;  }   /* 1,1,0 — actually this wins */
+:where(#page) .title { color: green; } /* 0,1,0 — :where() zeroes the id */</code></pre>
+<h4>Inheritance</h4>
+<p>Text-ish properties inherit (<code>color</code>, <code>font-*</code>, <code>line-height</code>, <code>visibility</code>). Box properties do not (<code>margin</code>, <code>padding</code>, <code>border</code>, <code>background</code>). You can force either with <code>inherit</code>, <code>initial</code>, <code>unset</code>, or <code>revert</code>.</p>
+<div class="note"><b>Why <code>!important</code> is a smell:</b> it wins the cascade but takes the tool away from the next person — the only way to beat it is another <code>!important</code>. Fix the specificity instead. Legitimate uses: utility classes and overriding third-party CSS you can't edit.</div>
+</section>
+
+<section id="s6">
+<h3>6. The Box Model &amp; Sizing</h3>
+<p>Every element is a box: <b>content → padding → border → margin</b>.</p>
+<div class="flow">┌──────────── margin ─────────────┐
+│ ┌────────── border ───────────┐ │
+│ │ ┌──────── padding ────────┐ │ │
+│ │ │        content          │ │ │
+│ │ └─────────────────────────┘ │ │
+│ └─────────────────────────────┘ │
+└─────────────────────────────────┘</div>
+<h4>box-sizing</h4>
+<ul>
+<li><code>content-box</code> (default) — <code>width</code> sets the content only; padding and border are added on top. A 200px box with 20px padding renders 240px wide.</li>
+<li><code>border-box</code> — <code>width</code> includes padding and border. 200px means 200px.</li>
+</ul>
+<pre><code>*, *::before, *::after { box-sizing: border-box; }  /* set this once, always */</code></pre>
+<h4>Margin collapsing</h4>
+<p>Adjacent <b>vertical</b> margins between block elements merge into the largest of the two — 30px below + 20px above = 30px gap, not 50px. Horizontal margins never collapse. Collapsing is prevented by padding, a border, <code>overflow</code> other than visible, or a flex/grid container.</p>
+<h4>Units</h4>
+<div class="table-wrap"><table>
+<tr><th>Unit</th><th>Relative to</th><th>Good for</th></tr>
+<tr><td><code>px</code></td><td>Nothing</td><td>Borders, fine detail</td></tr>
+<tr><td><code>rem</code></td><td>Root font-size</td><td>Spacing and type — respects user zoom settings</td></tr>
+<tr><td><code>em</code></td><td>Own font-size</td><td>Padding that scales with its own text; compounds when nested</td></tr>
+<tr><td><code>%</code></td><td>Parent's same dimension</td><td>Fluid widths</td></tr>
+<tr><td><code>vw</code> / <code>vh</code> / <code>dvh</code></td><td>Viewport</td><td>Full-screen sections; <code>dvh</code> handles mobile browser chrome</td></tr>
+<tr><td><code>ch</code></td><td>Width of "0"</td><td>Readable line length — <code>max-width: 65ch</code></td></tr>
+<tr><td><code>fr</code></td><td>Free space in a grid</td><td>Grid tracks only</td></tr>
+</table></div>
+<div class="note">Use <code>rem</code> for font sizes. If a user sets a larger default font for readability, <code>px</code> ignores them and <code>rem</code> respects them.</div>
+</section>
+
+<section id="s7">
+<h3>7. Layout: Normal Flow &amp; Positioning</h3>
+<h4>display</h4>
+<ul>
+<li><code>block</code> — full width, stacks vertically, respects width/height.</li>
+<li><code>inline</code> — flows with text; <b>width, height and vertical margin are ignored</b>.</li>
+<li><code>inline-block</code> — flows inline but accepts box dimensions.</li>
+<li><code>flex</code> / <code>grid</code> — establish a new layout context for children.</li>
+<li><code>none</code> — removed from the tree entirely (vs <code>visibility: hidden</code>, which keeps the space, and <code>opacity: 0</code>, which keeps the space and stays clickable).</li>
+</ul>
+<h4>position</h4>
+<div class="table-wrap"><table>
+<tr><th>Value</th><th>Positioned relative to</th><th>In flow?</th></tr>
+<tr><td><code>static</code></td><td>Nothing (default)</td><td>Yes</td></tr>
+<tr><td><code>relative</code></td><td>Its own normal position</td><td>Yes — original space kept</td></tr>
+<tr><td><code>absolute</code></td><td>Nearest positioned ancestor</td><td>No</td></tr>
+<tr><td><code>fixed</code></td><td>The viewport</td><td>No</td></tr>
+<tr><td><code>sticky</code></td><td>Scroll position, within its parent</td><td>Yes</td></tr>
+</table></div>
+<p><code>position: sticky</code> needs a threshold (<code>top: 0</code>) and only sticks <i>inside its parent's box</i> — if it isn't working, the parent usually has <code>overflow: hidden</code> or no height.</p>
+<h4>Stacking contexts &amp; z-index</h4>
+<p><code>z-index</code> only compares elements <b>within the same stacking context</b>. A new context is created by: a positioned element with a <code>z-index</code>, <code>opacity</code> &lt; 1, <code>transform</code>, <code>filter</code>, <code>will-change</code>, or a flex/grid child with a z-index.</p>
+<div class="note"><b>Classic bug:</b> "my modal has <code>z-index: 9999</code> and still hides behind the header." The modal's ancestor has <code>transform</code> or <code>opacity</code>, creating a context — so 9999 only competes inside that box. Fix: move the modal to a portal at the body root.</div>
+<h4>Floats and overflow</h4>
+<p>Floats are legacy layout but still appear for wrapping text around an image. Modern replacement for clearfix: <code>display: flow-root</code> on the parent, which contains floats without hacks.</p>
+</section>
+
+<section id="s8">
+<h3>8. Flexbox</h3>
+<p>Flexbox is <b>one-dimensional</b>: you lay out along a main axis, and the cross axis is handled for you. Reach for it for toolbars, cards in a row, centring, and anything where content size should drive the layout.</p>
+<h4>Container properties</h4>
+<pre><code>.container {
+  display: flex;
+  flex-direction: row | row-reverse | column | column-reverse;
+  flex-wrap: nowrap | wrap;
+  justify-content: flex-start | center | space-between | space-around | space-evenly;
+  align-items: stretch | flex-start | center | baseline;   /* cross axis */
+  align-content: /* spacing of multiple lines — only with wrap */;
+  gap: 16px;                                               /* use this, not margins */
+}</code></pre>
+<p><b>Remember:</b> <code>justify-content</code> works on the main axis, <code>align-items</code> on the cross axis. Change <code>flex-direction</code> to <code>column</code> and the two swap meaning.</p>
+<h4>Item properties</h4>
+<pre><code>.item {
+  flex-grow: 0;      /* share of leftover space to absorb */
+  flex-shrink: 1;    /* how eagerly to shrink when space is tight */
+  flex-basis: auto;  /* starting size before grow/shrink */
+  flex: 1;           /* shorthand for 1 1 0%  — equal columns */
+  flex: auto;        /* 1 1 auto — sized by content, then grows */
+  align-self: center;/* override align-items for one item */
+  order: 2;          /* visual order only — does NOT change tab order */
+}</code></pre>
+<div class="note"><b><code>flex: 1</code> vs <code>flex: auto</code>:</b> <code>flex: 1</code> sets basis to 0, so items end up equal width regardless of content. <code>flex: auto</code> starts from content width, so a longer item stays wider. Interviewers ask this a lot.</div>
+<h4>Two things that bite</h4>
+<ul>
+<li>A flex item's <code>min-width</code> defaults to <code>auto</code>, so it refuses to shrink below its content — long text or a wide <code>&lt;pre&gt;</code> overflows the container. Fix with <code>min-width: 0</code>.</li>
+<li>Perfect centring is just <code>display:flex; justify-content:center; align-items:center;</code>.</li>
+</ul>
+</section>
+
+<section id="s9">
+<h3>9. Grid</h3>
+<p>Grid is <b>two-dimensional</b> — you define rows and columns and place items into them. Use it for page structure and any real grid of content.</p>
+<pre><code>.grid {
+  display: grid;
+  grid-template-columns: 200px 1fr 1fr;         /* fixed sidebar + fluid */
+  grid-template-rows: auto 1fr auto;
+  gap: 20px;
+}
+
+/* Responsive with no media queries at all */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+}</code></pre>
+<p><code>auto-fill</code> keeps empty tracks; <code>auto-fit</code> collapses them so the items stretch to fill the row. <code>minmax(250px, 1fr)</code> means "at least 250px, otherwise share the space".</p>
+<h4>Placing items</h4>
+<pre><code>.hero  { grid-column: 1 / 3; }        /* from line 1 to line 3 */
+.hero  { grid-column: span 2; }       /* same thing, relative */
+.full  { grid-column: 1 / -1; }       /* full width, whatever the count */
+
+/* Named areas — very readable for page layout */
+.page {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  grid-template-areas:
+    "sidebar header"
+    "sidebar main"
+    "sidebar footer";
+}
+.sidebar { grid-area: sidebar; }</code></pre>
+<h4>Grid vs Flexbox</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>Flexbox</th><th>Grid</th></tr>
+<tr><td>Dimensions</td><td>One axis at a time</td><td>Rows and columns together</td></tr>
+<tr><td>Driven by</td><td>Content</td><td>The layout you declare</td></tr>
+<tr><td>Best for</td><td>Navbars, button rows, centring</td><td>Page shells, card grids, dashboards</td></tr>
+</table></div>
+<p>They compose: a grid for the page, flexbox inside each cell.</p>
+</section>
+
+<section id="s10">
+<h3>10. Responsive Design</h3>
+<h4>Mobile first</h4>
+<p>Write the small-screen styles as the base, then add complexity with <code>min-width</code> queries. It keeps the CSS additive instead of a pile of overrides.</p>
+<pre><code>.grid { display: grid; gap: 16px; }                 /* 1 column by default */
+@media (min-width: 640px)  { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .grid { grid-template-columns: repeat(3, 1fr); } }</code></pre>
+<h4>Fluid type and space</h4>
+<pre><code>h1 { font-size: clamp(1.75rem, 1.2rem + 2.5vw, 3rem); }
+/*               min      preferred(scales)    max  */
+.section { padding-inline: max(1rem, 5vw); }</code></pre>
+<p><code>clamp()</code>, <code>min()</code> and <code>max()</code> replace whole stacks of media queries.</p>
+<h4>Container queries</h4>
+<p>Media queries ask about the viewport; container queries ask about the <b>parent</b> — so a component can adapt wherever it's dropped.</p>
+<pre><code>.card-wrap { container-type: inline-size; }
+@container (min-width: 400px) {
+  .card { display: grid; grid-template-columns: 120px 1fr; }
+}</code></pre>
+<h4>Other responsive concerns</h4>
+<ul>
+<li>Touch targets of at least 44×44px.</li>
+<li><code>@media (prefers-color-scheme: dark)</code> and <code>(prefers-reduced-motion: reduce)</code> — respect both.</li>
+<li><code>100vh</code> on mobile includes the browser chrome and causes jumping; prefer <code>100dvh</code>.</li>
+<li>Test with the keyboard open and at 200% zoom, not just by dragging the window.</li>
+</ul>
+</section>
+
+<section id="s11">
+<h3>11. Transitions &amp; Animation</h3>
+<pre><code>.btn {
+  transition: background-color .2s ease, transform .2s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.panel { animation: slide-in .3s ease-out both; }</code></pre>
+<h4>Animate only cheap properties</h4>
+<p>Stick to <b><code>transform</code></b> and <b><code>opacity</code></b> — they are composited on the GPU and skip layout and paint entirely. Animating <code>width</code>, <code>top</code>, <code>margin</code> or <code>box-shadow</code> forces layout or paint every frame and drops you below 60fps.</p>
+<div class="table-wrap"><table>
+<tr><th>Instead of</th><th>Animate</th></tr>
+<tr><td><code>left</code> / <code>top</code></td><td><code>transform: translate()</code></td></tr>
+<tr><td><code>width</code> / <code>height</code></td><td><code>transform: scale()</code></td></tr>
+<tr><td><code>display: none</code></td><td><code>opacity</code> + <code>visibility</code>, or <code>@starting-style</code></td></tr>
+</table></div>
+<h4>Respect motion preferences</h4>
+<pre><code>@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}</code></pre>
+<p>This isn't a nicety — motion triggers nausea and migraines for some users.</p>
+<h4>CSS vs JS animation</h4>
+<p>CSS for state changes and simple sequences (it can run off the main thread). JS (Web Animations API, GSAP, Framer Motion) when you need to interrupt, chain, or drive animation from scroll or gesture position.</p>
+</section>
+
+<section id="s12">
+<h3>12. Modern CSS &amp; Architecture</h3>
+<h4>Custom properties</h4>
+<pre><code>:root { --brand: #2f6f4e; --space: 8px; }
+html[data-theme="dark"] { --brand: #7fc8a0; }
+.btn { background: var(--brand); padding: calc(var(--space) * 2); }</code></pre>
+<p>Unlike Sass variables, these are live at runtime — they cascade, inherit, and can be read and set from JavaScript (<code>el.style.setProperty("--brand", "#333")</code>). This is how theme switching works with no rebuild.</p>
+<h4>Useful modern selectors</h4>
+<ul>
+<li><code>:is(h1, h2, h3) code</code> — grouping; takes the highest specificity inside.</li>
+<li><code>:where(...)</code> — same grouping but zero specificity; perfect for resets.</li>
+<li><code>:has(&gt; img)</code> — the long-awaited parent selector. <code>.card:has(img)</code> styles cards that contain an image.</li>
+<li><code>:focus-visible</code> — focus ring only for keyboard users, not mouse clicks. Never do <code>outline: none</code> without this.</li>
+<li><code>&amp;</code> native nesting, <code>@layer</code> for cascade layers, <code>aspect-ratio</code>, <code>inset: 0</code>.</li>
+</ul>
+<h4>Naming and structure</h4>
+<div class="table-wrap"><table>
+<tr><th>Approach</th><th>Idea</th><th>Trade-off</th></tr>
+<tr><td>BEM</td><td><code>.card__title--large</code></td><td>Flat specificity, verbose names</td></tr>
+<tr><td>Utility-first (Tailwind)</td><td>Compose from small classes</td><td>Very fast; markup gets noisy</td></tr>
+<tr><td>CSS Modules</td><td>Hashed local class names</td><td>Real scoping, needs a build step</td></tr>
+<tr><td>CSS-in-JS</td><td>Styles colocated in components</td><td>Dynamic; runtime cost unless compiled</td></tr>
+</table></div>
+<div class="note">Whatever you pick, the goal is the same: <b>deleting a component should delete its CSS</b>. Global stylesheets fail this, which is why they grow forever.</div>
+</section>
+
+<!-- ================= JAVASCRIPT ================= -->
+<div class="part">Part 3 — JavaScript</div>
+
+<section id="s13">
+<h3>13. Types &amp; Coercion</h3>
+<h4>The seven primitives</h4>
+<p><code>string</code>, <code>number</code>, <code>boolean</code>, <code>null</code>, <code>undefined</code>, <code>symbol</code>, <code>bigint</code>. Everything else — objects, arrays, functions, dates — is an <b>object</b>.</p>
+<ul>
+<li>Primitives are copied <b>by value</b>; objects are copied <b>by reference</b>.</li>
+<li><code>typeof null === "object"</code> — a 1995 bug kept for compatibility.</li>
+<li><code>typeof []</code> is <code>"object"</code>; use <code>Array.isArray()</code>.</li>
+<li><code>undefined</code> = "not assigned yet"; <code>null</code> = "deliberately empty".</li>
+</ul>
+<h4>Falsy values — memorise these</h4>
+<p><code>false</code>, <code>0</code>, <code>-0</code>, <code>0n</code>, <code>""</code>, <code>null</code>, <code>undefined</code>, <code>NaN</code>. Everything else is truthy — including <code>[]</code>, <code>{}</code>, <code>"0"</code> and <code>"false"</code>.</p>
+<h4>== vs ===</h4>
+<pre><code>0 == "";          // true   — both coerced to 0
+0 == "0";         // true
+"" == "0";        // false  — not transitive!
+null == undefined // true   — the one loose comparison worth using
+null === undefined// false
+NaN === NaN       // false  — use Number.isNaN()
+[] == false       // true   — [] → "" → 0
+</code></pre>
+<p>Rule: always <code>===</code>. The single exception is <code>x == null</code> to test for null-or-undefined in one go.</p>
+<h4>Copying</h4>
+<pre><code>const a = { x: 1, nested: { y: 2 } };
+const shallow = { ...a };                  // nested is still shared
+const deep    = structuredClone(a);        // real deep copy, built in
+
+let n = 5;  let m = n;  m = 10;            // n is still 5   (by value)
+let o = {v:5}; let p = o; p.v = 10;        // o.v is now 10  (by reference)</code></pre>
+<h4>Nullish operators</h4>
+<pre><code>const port = config.port ?? 3000;   // only falls back on null/undefined
+const port = config.port || 3000;   // ALSO falls back on 0 — a bug
+user?.profile?.name;                // optional chaining, no TypeError
+obj.method?.();                     // call only if it exists</code></pre>
+</section>
+
+<section id="s14">
+<h3>14. Scope, Hoisting &amp; Closures</h3>
+<h4>Declarations</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th><code>var</code></th><th><code>let</code></th><th><code>const</code></th></tr>
+<tr><td>Scope</td><td>Function</td><td>Block</td><td>Block</td></tr>
+<tr><td>Hoisted</td><td>Yes, as <code>undefined</code></td><td>Yes, but in the TDZ</td><td>Same as let</td></tr>
+<tr><td>Redeclare</td><td>Allowed</td><td>No</td><td>No</td></tr>
+<tr><td>Reassign</td><td>Yes</td><td>Yes</td><td>No (binding, not the value)</td></tr>
+</table></div>
+<p>The <b>Temporal Dead Zone</b> is the gap between entering a scope and the <code>let</code>/<code>const</code> line — accessing the variable there throws a <code>ReferenceError</code>, which is far better than <code>var</code>'s silent <code>undefined</code>.</p>
+<p><code>const obj = {}</code> then <code>obj.a = 1</code> is legal: <code>const</code> freezes the binding, not the contents. Use <code>Object.freeze()</code> for the contents.</p>
+<h4>The classic loop question</h4>
+<pre><code>for (var i = 0; i &lt; 3; i++) setTimeout(() =&gt; console.log(i));  // 3 3 3
+for (let i = 0; i &lt; 3; i++) setTimeout(() =&gt; console.log(i));  // 0 1 2</code></pre>
+<p><code>var</code> creates <b>one</b> binding shared by all three callbacks, which by the time they run holds 3. <code>let</code> creates a <b>fresh binding per iteration</b>, so each closure captures its own.</p>
+<h4>Closures</h4>
+<p>A closure is a function that keeps access to the variables of the scope where it was <b>defined</b>, even after that scope has returned. It's not magic — the function holds a reference to its lexical environment, so the garbage collector keeps it alive.</p>
+<pre><code>function counter() {
+  let count = 0;                       // private — not reachable from outside
+  return {
+    inc:  () =&gt; ++count,
+    get:  () =&gt; count,
+  };
+}
+const c = counter();
+c.inc(); c.inc();  c.get();            // 2</code></pre>
+<h4>Where closures show up in real work</h4>
+<pre><code>// Debounce — run only after the user stops typing
+function debounce(fn, delay = 300) {
+  let timer;                                  // captured by the returned fn
+  return (...args) =&gt; {
+    clearTimeout(timer);
+    timer = setTimeout(() =&gt; fn(...args), delay);
+  };
+}
+
+// Throttle — run at most once per interval
+function throttle(fn, limit = 300) {
+  let waiting = false;
+  return (...args) =&gt; {
+    if (waiting) return;
+    fn(...args);
+    waiting = true;
+    setTimeout(() =&gt; { waiting = false; }, limit);
+  };
+}</code></pre>
+<div class="note"><b>Debounce vs throttle:</b> debounce for search-as-you-type and resize (you only care about the final value); throttle for scroll handlers and infinite scroll (you want steady updates). Both are closure questions in disguise.</div>
+</section>
+
+<section id="s15">
+<h3>15. <code>this</code>, call, apply, bind</h3>
+<p><code>this</code> is decided by <b>how a function is called</b>, not where it is written. Check these rules in order:</p>
+<ol>
+<li><b><code>new Fn()</code></b> → <code>this</code> is the newly created object.</li>
+<li><b>Explicit</b> — <code>fn.call(obj)</code>, <code>fn.apply(obj)</code>, <code>fn.bind(obj)</code> → <code>this</code> is <code>obj</code>.</li>
+<li><b>Method call</b> — <code>obj.fn()</code> → <code>this</code> is <code>obj</code> (whatever is left of the dot).</li>
+<li><b>Plain call</b> — <code>fn()</code> → <code>undefined</code> in strict mode / modules, <code>window</code> otherwise.</li>
+</ol>
+<p><b>Arrow functions ignore all of this.</b> They have no <code>this</code> of their own and take it from the enclosing lexical scope, permanently. <code>bind</code> cannot change it.</p>
+<pre><code>const user = {
+  name: "Ada",
+  greetRegular() { console.log(this.name); },
+  greetArrow: () =&gt; console.log(this.name),
+};
+user.greetRegular();          // "Ada"
+user.greetArrow();            // undefined — `this` is the module/window
+
+const fn = user.greetRegular;
+fn();                         // undefined — lost the object on the way
+fn.call(user);                // "Ada"
+const bound = fn.bind(user);
+bound();                      // "Ada" — permanently attached</code></pre>
+<h4>The callback trap</h4>
+<pre><code>class Timer {
+  constructor() { this.secs = 0; }
+  startBroken() { setInterval(function () { this.secs++; }, 1000); } // this = window
+  startOk()     { setInterval(() =&gt; { this.secs++; }, 1000); }       // arrow inherits
+}</code></pre>
+<p>Same reason React class components needed <code>this.handleClick = this.handleClick.bind(this)</code> in the constructor — or a class field arrow function instead.</p>
+<h4>call vs apply vs bind</h4>
+<pre><code>fn.call(ctx, a, b);     // invoke now, args listed
+fn.apply(ctx, [a, b]);  // invoke now, args as an array
+const g = fn.bind(ctx); // don't invoke — return a new bound function</code></pre>
+</section>
+
+<section id="s16">
+<h3>16. Objects &amp; Prototypes</h3>
+<h4>The prototype chain</h4>
+<p>Every object has a hidden link (<code>[[Prototype]]</code>, exposed as <code>__proto__</code>) to another object. When you read a property, JS walks up that chain until it finds it or hits <code>null</code>. That is the whole inheritance model — there are no classes underneath, just objects linking to objects.</p>
+<pre><code>const animal = { speak() { return `${this.name} makes a sound`; } };
+const dog = Object.create(animal);
+dog.name = "Rex";
+dog.speak();                       // found on animal, `this` is dog
+Object.getPrototypeOf(dog) === animal;  // true</code></pre>
+<h4>Classes are syntax over prototypes</h4>
+<pre><code>class Animal {
+  #secret = "private";             // true private field
+  static count = 0;
+  constructor(name) { this.name = name; Animal.count++; }
+  speak() { return `${this.name} makes a sound`; }   // lives on Animal.prototype
+}
+class Dog extends Animal {
+  constructor(name, breed) {
+    super(name);                   // must call before using `this`
+    this.breed = breed;
+  }
+  speak() { return `${super.speak()} — a bark`; }
+}</code></pre>
+<p>Methods live on the prototype and are shared by every instance; fields defined in the constructor are copied per instance.</p>
+<h4>Useful object work</h4>
+<pre><code>Object.keys(o); Object.values(o); Object.entries(o);
+Object.fromEntries(pairs);            // rebuild an object from entries
+Object.assign(target, a, b);          // shallow merge
+Object.freeze(o);                     // shallow immutability
+o.hasOwnProperty("k");                // own property, not inherited
+Object.hasOwn(o, "k");                // the modern, safer form
+
+const { a, b: renamed, c = 5, ...rest } = obj;      // destructuring
+const [first, , third = 0] = arr;</code></pre>
+<h4>Map/Set vs object/array</h4>
+<ul>
+<li><b>Map</b> — any key type (including objects), preserves insertion order, has <code>.size</code>, faster for frequent add/delete.</li>
+<li><b>Set</b> — unique values. <code>[...new Set(arr)]</code> deduplicates in one line.</li>
+<li><b>WeakMap/WeakSet</b> — keys held weakly, so entries are collected when the key is garbage. Good for caching data against DOM nodes without leaking.</li>
+</ul>
+</section>
+
+<section id="s17">
+<h3>17. Arrays &amp; Iteration</h3>
+<div class="table-wrap"><table>
+<tr><th>Method</th><th>Returns</th><th>Mutates?</th></tr>
+<tr><td><code>map</code></td><td>New array, same length</td><td>No</td></tr>
+<tr><td><code>filter</code></td><td>New array, subset</td><td>No</td></tr>
+<tr><td><code>reduce</code></td><td>Any single value</td><td>No</td></tr>
+<tr><td><code>find</code> / <code>findIndex</code></td><td>First match / its index</td><td>No</td></tr>
+<tr><td><code>some</code> / <code>every</code></td><td>Boolean</td><td>No</td></tr>
+<tr><td><code>slice</code></td><td>A copy of a range</td><td>No</td></tr>
+<tr><td><code>splice</code></td><td>Removed items</td><td><b>Yes</b></td></tr>
+<tr><td><code>sort</code> / <code>reverse</code></td><td>The same array</td><td><b>Yes</b></td></tr>
+<tr><td><code>flat</code> / <code>flatMap</code></td><td>New flattened array</td><td>No</td></tr>
+<tr><td><code>at(-1)</code></td><td>Last element</td><td>No</td></tr>
+<tr><td><code>toSorted</code> / <code>toReversed</code></td><td>New array</td><td>No — modern, safe</td></tr>
+</table></div>
+<pre><code>// reduce is just a loop with an accumulator
+const total = items.reduce((sum, i) =&gt; sum + i.price, 0);
+
+// group into an object
+const byRole = users.reduce((acc, u) =&gt; {
+  (acc[u.role] ||= []).push(u);
+  return acc;
+}, {});
+
+// sort needs a comparator for numbers — default sort is lexicographic!
+[10, 9, 1].sort();              // [1, 10, 9]  ← surprise
+[10, 9, 1].sort((a, b) =&gt; a - b); // [1, 9, 10]
+
+// sort mutates — copy first in React state
+const sorted = [...items].sort((a, b) =&gt; a.n - b.n);</code></pre>
+<h4>Loop choices</h4>
+<ul>
+<li><code>for...of</code> — values of any iterable; supports <code>break</code> and works with <code>await</code>.</li>
+<li><code>for...in</code> — <b>keys</b>, including inherited ones. Avoid on arrays.</li>
+<li><code>forEach</code> — cannot <code>break</code>, and ignores async callbacks (a very common bug).</li>
+</ul>
+<pre><code>// Bad — forEach doesn't await; "done" prints first
+items.forEach(async i =&gt; { await save(i); });
+console.log("done");
+
+// Sequential
+for (const i of items) await save(i);
+// Parallel
+await Promise.all(items.map(i =&gt; save(i)));</code></pre>
+</section>
+
+<section id="s18">
+<h3>18. The Event Loop</h3>
+<p>JavaScript is <b>single-threaded</b>: one call stack, one thing at a time. Concurrency comes from the runtime handing slow work (timers, network, DOM events) to the browser and queuing the callback for later.</p>
+<div class="flow">   ┌─────────────┐
+   │  Call Stack │ ← runs one frame at a time
+   └──────┬──────┘
+          │ when the stack is EMPTY
+          ▼
+   ┌──────────────────────┐
+   │  Microtask queue     │ ← promises, queueMicrotask, MutationObserver
+   │  (drained COMPLETELY)│    a microtask can queue more — all of them run
+   └──────┬───────────────┘
+          ▼
+   ┌──────────────────────┐
+   │  Render (if needed)  │ ← requestAnimationFrame, style, layout, paint
+   └──────┬───────────────┘
+          ▼
+   ┌──────────────────────┐
+   │  Macrotask (ONE)     │ ← setTimeout, setInterval, I/O, events
+   └──────────────────────┘
+          └─── repeat ───┘</div>
+<h4>The interview question</h4>
+<pre><code>console.log("1");
+setTimeout(() =&gt; console.log("2"), 0);
+Promise.resolve().then(() =&gt; console.log("3"));
+queueMicrotask(() =&gt; console.log("4"));
+console.log("5");
+
+// Output: 1, 5, 3, 4, 2</code></pre>
+<p>Sync code first (<code>1</code>, <code>5</code>). Then the stack empties and <b>all</b> microtasks drain (<code>3</code>, <code>4</code>). Only then one macrotask runs (<code>2</code>). This is why <code>setTimeout(fn, 0)</code> is never actually 0 — it's "after the current work and all pending microtasks".</p>
+<h4>Why it matters practically</h4>
+<ul>
+<li>A long synchronous loop blocks <b>everything</b>: no clicks, no scroll, no paint. Break work into chunks or move it to a Web Worker.</li>
+<li>An infinite microtask chain starves rendering completely — microtasks drain fully before the browser is allowed to paint.</li>
+<li><code>requestAnimationFrame</code> runs just before paint, which is the right place for visual updates.</li>
+<li><code>setTimeout</code> is clamped to ~4ms after several nested calls, and throttled hard in background tabs.</li>
+</ul>
+</section>
+
+<section id="s19">
+<h3>19. Promises &amp; async/await</h3>
+<p>A promise is an object representing a value that isn't ready yet. It is in one of three states — <b>pending</b>, <b>fulfilled</b>, or <b>rejected</b> — and once settled it never changes again.</p>
+<pre><code>const p = new Promise((resolve, reject) =&gt; {
+  setTimeout(() =&gt; resolve("done"), 1000);   // or reject(new Error("nope"))
+});
+
+p.then(v =&gt; v.toUpperCase())      // each .then returns a NEW promise
+ .then(v =&gt; console.log(v))
+ .catch(err =&gt; console.error(err))// catches any rejection above it
+ .finally(() =&gt; stopSpinner());   // runs either way</code></pre>
+<h4>async/await is the same thing, readable</h4>
+<pre><code>async function load(id) {            // always returns a promise
+  try {
+    const res  = await fetch(`/api/users/${id}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);  // fetch does NOT throw on 404/500
+    return await res.json();
+  } catch (err) {
+    console.error("Load failed:", err);
+    throw err;                       // rethrow, or the caller thinks it worked
+  }
+}</code></pre>
+<h4>Combinators</h4>
+<div class="table-wrap"><table>
+<tr><th>Method</th><th>Resolves when</th><th>Rejects when</th></tr>
+<tr><td><code>Promise.all</code></td><td>All fulfil — array of values</td><td><b>Any</b> rejects (fail fast)</td></tr>
+<tr><td><code>Promise.allSettled</code></td><td>All settle — <code>{status, value/reason}[]</code></td><td>Never</td></tr>
+<tr><td><code>Promise.race</code></td><td>First to <i>settle</i>, either way</td><td>If the first settled one rejected</td></tr>
+<tr><td><code>Promise.any</code></td><td>First to <b>fulfil</b></td><td>Only if all reject</td></tr>
+</table></div>
+<pre><code>// Sequential — 3 seconds
+const a = await getA(); const b = await getB(); const c = await getC();
+
+// Parallel — 1 second. Use this whenever the calls are independent.
+const [a, b, c] = await Promise.all([getA(), getB(), getC()]);
+
+// Don't let one failure kill the page
+const results = await Promise.allSettled([getA(), getB()]);
+const ok = results.filter(r =&gt; r.status === "fulfilled").map(r =&gt; r.value);</code></pre>
+<div class="note"><b>Two traps.</b> (1) <code>fetch</code> only rejects on a network failure — a 500 response is a fulfilled promise, so you must check <code>res.ok</code> yourself. (2) An unhandled rejection is a silent bug in the browser; always <code>.catch</code> or wrap in <code>try/catch</code>.</div>
+</section>
+
+<section id="s20">
+<h3>20. Modules &amp; Tooling</h3>
+<pre><code>// named exports — many per file, imported by exact name
+export const PI = 3.14;
+export function area(r) { return PI * r * r; }
+import { PI, area as circleArea } from "./math.js";
+
+// default export — one per file, any name on import
+export default function Button() {}
+import Btn from "./Button.jsx";
+
+// dynamic import — returns a promise, creates a separate chunk
+const { Chart } = await import("./Chart.js");</code></pre>
+<p>ES modules are <b>static</b> (the imports are known before running), which is what makes tree shaking possible. They are also deferred and run in strict mode automatically.</p>
+<h4>ESM vs CommonJS</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>ESM</th><th>CommonJS</th></tr>
+<tr><td>Syntax</td><td><code>import</code> / <code>export</code></td><td><code>require</code> / <code>module.exports</code></td></tr>
+<tr><td>Loading</td><td>Static, async</td><td>Dynamic, synchronous</td></tr>
+<tr><td>Tree shaking</td><td>Yes</td><td>No</td></tr>
+<tr><td>Where</td><td>Browsers + modern Node</td><td>Legacy Node</td></tr>
+</table></div>
+<h4>What a bundler does</h4>
+<ul>
+<li><b>Bundle</b> — follow the import graph into a few files, avoiding hundreds of requests.</li>
+<li><b>Transpile</b> — Babel/SWC/esbuild convert modern JS and JSX to what browsers support.</li>
+<li><b>Tree shake</b> — drop exports nobody imports.</li>
+<li><b>Code split</b> — <code>import()</code> and route boundaries become separate chunks loaded on demand.</li>
+<li><b>Hash filenames</b> — <code>app.8fa3b.js</code> so you can cache forever and bust on change.</li>
+</ul>
+<p>Vite serves native ESM in dev (instant startup, real HMR) and bundles with Rollup for production. Webpack is the older, more configurable equivalent.</p>
+</section>
+
+<!-- ================= BROWSER ================= -->
+<div class="part">Part 4 — The Browser</div>
+
+<section id="s21">
+<h3>21. DOM Manipulation</h3>
+<pre><code>document.querySelector(".card");        // first match, any CSS selector
+document.querySelectorAll(".card");     // static NodeList — snapshot
+document.getElementsByClassName("card");// LIVE HTMLCollection — updates itself
+
+el.textContent = "safe";                // escapes everything — use this
+el.innerHTML   = userInput;             // XSS risk — never with untrusted data
+el.insertAdjacentHTML("beforeend", html);
+
+el.classList.add("on"); el.classList.toggle("on", isOn);
+el.dataset.userId = 42;                 // &lt;div data-user-id="42"&gt;
+el.setAttribute("aria-expanded", "true");
+el.closest(".card");                    // walk UP to the nearest match</code></pre>
+<div class="note"><b>Attribute vs property:</b> <code>input.getAttribute("value")</code> returns the <i>initial</i> HTML value; <code>input.value</code> returns what the user has actually typed. They diverge the moment someone types.</div>
+<h4>Creating nodes efficiently</h4>
+<pre><code>// Each append to the live DOM can trigger layout — batch with a fragment
+const frag = document.createDocumentFragment();
+for (const item of items) {
+  const li = document.createElement("li");
+  li.textContent = item.name;
+  frag.append(li);
+}
+list.append(frag);                     // one DOM operation</code></pre>
+<h4>Measuring</h4>
+<ul>
+<li><code>getBoundingClientRect()</code> — size and position relative to the viewport.</li>
+<li><code>offsetWidth</code> includes padding and border; <code>clientWidth</code> excludes the border; <code>scrollWidth</code> is the full content width.</li>
+<li>Every one of these forces a synchronous layout — read them in a batch, never inside a write loop.</li>
+</ul>
+</section>
+
+<section id="s22">
+<h3>22. Events in Depth</h3>
+<h4>The three phases</h4>
+<div class="flow">          ① CAPTURE  (window → target)
+window → document → body → div.card → button   ← ② TARGET
+          ③ BUBBLE   (target → window)</div>
+<p>Listeners run in the bubble phase by default; pass <code>{ capture: true }</code> for the way down. Most events bubble — <code>focus</code>, <code>blur</code>, <code>load</code> and <code>scroll</code> (on an element) do not. <code>focusin</code>/<code>focusout</code> are the bubbling versions of focus/blur.</p>
+<h4>Delegation</h4>
+<pre><code>// One listener for a list of any size — works for items added later
+list.addEventListener("click", (e) =&gt; {
+  const btn = e.target.closest("[data-id]");
+  if (!btn || !list.contains(btn)) return;
+  remove(btn.dataset.id);
+});</code></pre>
+<p>This is the single most useful event pattern: fewer listeners, less memory, and it survives dynamic content.</p>
+<h4>stopPropagation vs preventDefault</h4>
+<ul>
+<li><code>e.preventDefault()</code> — cancel the browser's default action (form submit, link navigation, checkbox toggle). The event still propagates.</li>
+<li><code>e.stopPropagation()</code> — stop travelling to ancestors. The default action still happens.</li>
+<li><code>e.stopImmediatePropagation()</code> — also stop other listeners on this same element.</li>
+</ul>
+<p><code>e.target</code> is what was actually clicked; <code>e.currentTarget</code> is the element the listener is attached to. Inside a delegated handler they differ, and that's the point.</p>
+<h4>Listener options</h4>
+<pre><code>el.addEventListener("scroll", onScroll, { passive: true });  // never calls preventDefault
+el.addEventListener("click", once, { once: true });          // auto-removes itself
+
+const ac = new AbortController();
+el.addEventListener("move", fn, { signal: ac.signal });
+ac.abort();                              // removes it — great for cleanup</code></pre>
+<p><code>{ passive: true }</code> on scroll and touch listeners tells the browser it doesn't need to wait for your handler before scrolling — a real, measurable scroll performance win.</p>
+</section>
+
+<section id="s23">
+<h3>23. Storage &amp; Cookies</h3>
+<div class="table-wrap"><table>
+<tr><th></th><th>localStorage</th><th>sessionStorage</th><th>Cookies</th><th>IndexedDB</th></tr>
+<tr><td>Size</td><td>~5–10MB</td><td>~5–10MB</td><td>~4KB</td><td>Hundreds of MB</td></tr>
+<tr><td>Expires</td><td>Never</td><td>On tab close</td><td>You set it</td><td>Never</td></tr>
+<tr><td>Sent to server</td><td>No</td><td>No</td><td><b>Every request</b></td><td>No</td></tr>
+<tr><td>API</td><td>Sync, strings only</td><td>Sync, strings only</td><td>Sync, string</td><td>Async, structured</td></tr>
+<tr><td>Use for</td><td>Theme, drafts</td><td>One-tab flow state</td><td>Sessions, auth</td><td>Offline data, files</td></tr>
+</table></div>
+<pre><code>localStorage.setItem("theme", "dark");
+JSON.parse(localStorage.getItem("user") ?? "null");   // always guard — may be null
+// Wrap in try/catch: private mode and blocked site data can throw.</code></pre>
+<h4>Cookie flags that matter</h4>
+<pre><code>Set-Cookie: sid=abc123; HttpOnly; Secure; SameSite=Lax; Max-Age=604800; Path=/</code></pre>
+<ul>
+<li><b>HttpOnly</b> — JS cannot read it. This is what protects a session token from XSS.</li>
+<li><b>Secure</b> — HTTPS only.</li>
+<li><b>SameSite</b> — <code>Strict</code> (never cross-site), <code>Lax</code> (sent on top-level navigation; the modern default), <code>None</code> (requires Secure). This is the main CSRF defence.</li>
+</ul>
+<div class="note"><b>Where do I put the JWT?</b> <code>localStorage</code> is readable by any injected script, so an XSS bug hands over the token. An <code>HttpOnly</code> cookie can't be read by JS but needs CSRF protection (<code>SameSite</code> + a CSRF token). The cookie is generally the safer default.</div>
+</section>
+
+<section id="s24">
+<h3>24. Fetch, HTTP &amp; CORS</h3>
+<pre><code>const res = await fetch("/api/users", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(user),
+  credentials: "include",       // send cookies cross-origin
+  signal: controller.signal,    // for cancellation
+});
+if (!res.ok) throw new Error(`HTTP ${res.status}`);
+const data = await res.json();</code></pre>
+<h4>Status codes worth knowing</h4>
+<div class="table-wrap"><table>
+<tr><th>Code</th><th>Meaning</th></tr>
+<tr><td>200 / 201 / 204</td><td>OK / Created / No content</td></tr>
+<tr><td>301 / 302 / 304</td><td>Moved permanently / temporarily / Not modified (cached)</td></tr>
+<tr><td>400 / 401 / 403</td><td>Bad request / Not authenticated / Authenticated but not allowed</td></tr>
+<tr><td>404 / 409 / 422 / 429</td><td>Not found / Conflict / Unprocessable / Rate limited</td></tr>
+<tr><td>500 / 502 / 503</td><td>Server error / Bad gateway / Unavailable</td></tr>
+</table></div>
+<p><b>401 vs 403:</b> 401 means "I don't know who you are" (log in); 403 means "I know who you are and you still can't".</p>
+<h4>Cancelling</h4>
+<pre><code>const controller = new AbortController();
+fetch(url, { signal: controller.signal })
+  .catch(e =&gt; { if (e.name !== "AbortError") throw e; });
+controller.abort();     // cancel a stale search request or on unmount</code></pre>
+<h4>CORS</h4>
+<p>The browser's <b>same-origin policy</b> blocks JS from reading a response from a different origin (scheme + host + port). CORS is the server opting in with response headers. Two important points: <mark>CORS is enforced by the browser, not the server</mark> — curl and Postman are unaffected — and the request usually still reached the server.</p>
+<pre><code>Access-Control-Allow-Origin: https://app.site.com
+Access-Control-Allow-Credentials: true      // cannot be used with Origin: *
+Access-Control-Allow-Methods: GET, POST, PUT, DELETE
+Access-Control-Allow-Headers: Content-Type, Authorization</code></pre>
+<p>A <b>preflight</b> <code>OPTIONS</code> request is sent first when the request isn't "simple" — i.e. it uses a method other than GET/HEAD/POST, a custom header like <code>Authorization</code>, or a JSON content type. The browser asks permission before sending the real request.</p>
+<div class="note"><b>Fix a CORS error on the server</b>, not in the client — there is nothing a frontend can do about it except use a dev proxy. If you see "has been blocked by CORS policy", the response is missing the right header.</div>
+<h4>Caching headers</h4>
+<ul>
+<li><code>Cache-Control: max-age=31536000, immutable</code> — for hashed assets.</li>
+<li><code>Cache-Control: no-cache</code> — cache, but revalidate every time (via <code>ETag</code>).</li>
+<li><code>ETag</code> / <code>If-None-Match</code> → a 304 with no body when nothing changed.</li>
+</ul>
+</section>
+
+<section id="s25">
+<h3>25. Browser APIs Worth Knowing</h3>
+<h4>IntersectionObserver</h4>
+<p>Tells you when an element enters or leaves the viewport — without a scroll handler. Use it for lazy loading, infinite scroll, scrollspy, and reveal-on-scroll animation.</p>
+<pre><code>const io = new IntersectionObserver((entries) =&gt; {
+  entries.forEach(e =&gt; { if (e.isIntersecting) e.target.classList.add("visible"); });
+}, { rootMargin: "0px 0px -20% 0px", threshold: 0.1 });
+document.querySelectorAll(".reveal").forEach(el =&gt; io.observe(el));</code></pre>
+<h4>Others</h4>
+<ul>
+<li><b>ResizeObserver</b> — react to an element's size changing, not just the window's.</li>
+<li><b>MutationObserver</b> — watch for DOM changes (third-party widgets, rich text editors).</li>
+<li><b>Web Workers</b> — run heavy JS on another thread so the UI stays responsive. No DOM access; you communicate by <code>postMessage</code>.</li>
+<li><b>Service Worker</b> — a proxy between the page and the network: offline support, caching, push. The backbone of a PWA.</li>
+<li><b>History API</b> — <code>pushState</code> / <code>popstate</code>; this is how client-side routers work without reloading.</li>
+<li><b>WebSocket</b> — a persistent two-way connection for chat and live updates. <code>EventSource</code> (SSE) is simpler when you only need server→client.</li>
+<li><b>Clipboard, Geolocation, Notification, matchMedia, Page Visibility</b> — permission-gated but simple.</li>
+</ul>
+<pre><code>// Pause polling when the tab is hidden — free battery and quota
+document.addEventListener("visibilitychange", () =&gt; {
+  document.hidden ? stopPolling() : startPolling();
+});
+
+// Read a media query from JS, and react to changes
+const mq = matchMedia("(prefers-color-scheme: dark)");
+mq.addEventListener("change", e =&gt; setTheme(e.matches ? "dark" : "light"));</code></pre>
+</section>
+
+<!-- ================= REACT ================= -->
+<div class="part">Part 5 — React</div>
+
+<section id="s26">
+<h3>26. Mental Model &amp; JSX</h3>
+<p>React's core idea: <b>UI is a function of state</b>. You never describe the steps to update the DOM — you describe what the UI should look like for the current state, and React works out the difference.</p>
+<div class="flow">state change → your component function runs
+            → returns a new element tree (plain objects)
+            → React DIFFS it against the previous tree
+            → applies the minimum DOM operations</div>
+<h4>JSX is just function calls</h4>
+<pre><code>&lt;div className="card"&gt;Hi&lt;/div&gt;
+// compiles to
+React.createElement("div", { className: "card" }, "Hi")
+// which produces a plain object:
+{ type: "div", props: { className: "card", children: "Hi" } }</code></pre>
+<p>That's why components must return a single root (or a <code>&lt;&gt;fragment&lt;/&gt;</code>), why attributes are camelCase (<code>className</code>, <code>onClick</code>, <code>htmlFor</code>), and why <code>{}</code> holds any JS expression — but not statements like <code>if</code>.</p>
+<h4>The virtual DOM and reconciliation</h4>
+<p>The "virtual DOM" is just that tree of objects. Comparing two objects is cheap; touching the real DOM is expensive. React compares old and new trees with two assumptions: elements of a <b>different type</b> produce a completely new subtree, and children are matched by <b>key</b>.</p>
+<h4>Keys</h4>
+<pre><code>{items.map((item, i) =&gt; &lt;Row key={item.id} ... /&gt;)}   // stable identity ✓
+{items.map((item, i) =&gt; &lt;Row key={i} ... /&gt;)}         // index — bug source ✗</code></pre>
+<p>With an index key, deleting the first item makes React think every row changed its content rather than that one row was removed — so component state (an input's text, a checkbox) sticks to the wrong row. Index keys are only safe for a static list that is never reordered, filtered or added to.</p>
+<div class="note">Changing a component's <code>key</code> is also a deliberate tool: it unmounts and remounts the component, resetting all of its state. Handy for resetting a form when the selected record changes.</div>
+</section>
+
+<section id="s27">
+<h3>27. State &amp; Rendering</h3>
+<h4>Props vs state</h4>
+<p><b>Props</b> come from the parent and are read-only. <b>State</b> is owned by the component and changing it triggers a re-render. When two components need the same data, <b>lift state up</b> to their closest common parent.</p>
+<h4>State updates are asynchronous and batched</h4>
+<pre><code>const [count, setCount] = useState(0);
+
+setCount(count + 1);
+setCount(count + 1);          // both read the SAME stale count → +1 total
+
+setCount(c =&gt; c + 1);
+setCount(c =&gt; c + 1);         // functional updates queue → +2 ✓</code></pre>
+<p>Use the functional form whenever the next value depends on the previous one.</p>
+<h4>Immutability is not optional</h4>
+<pre><code>// ✗ React compares by reference — same object, no re-render
+user.name = "New"; setUser(user);
+items.push(newItem); setItems(items);
+
+// ✓ new reference every time
+setUser({ ...user, name: "New" });
+setItems([...items, newItem]);
+setItems(items.filter(i =&gt; i.id !== id));
+setItems(items.map(i =&gt; i.id === id ? { ...i, done: true } : i));
+
+// nested — spread at every level you change
+setState(s =&gt; ({ ...s, address: { ...s.address, city: "Pune" } }));</code></pre>
+<h4>When does a component re-render?</h4>
+<ol>
+<li>Its own state changed.</li>
+<li>Its parent re-rendered (by default — children re-render regardless of props).</li>
+<li>A context it consumes changed.</li>
+</ol>
+<p>Re-rendering is not the same as touching the DOM. React re-runs the function and diffs; if the output is identical, no DOM work happens. Don't optimise renders you haven't measured.</p>
+<h4>Derived state</h4>
+<pre><code>// ✗ duplicated state that can drift out of sync
+const [items, setItems] = useState([]);
+const [count, setCount] = useState(0);
+
+// ✓ just compute it during render
+const count = items.length;
+const visible = items.filter(i =&gt; !i.done);</code></pre>
+</section>
+
+<section id="s28">
+<h3>28. Effects &amp; Lifecycle</h3>
+<p><code>useEffect</code> is for <b>synchronising with something outside React</b> — a network request, a subscription, a timer, the document title. It is not a general "run some code" hook.</p>
+<pre><code>useEffect(() =&gt; {
+  const id = setInterval(tick, 1000);
+  return () =&gt; clearInterval(id);       // cleanup: unmount + before every re-run
+}, []);                                  // deps</code></pre>
+<div class="table-wrap"><table>
+<tr><th>Deps</th><th>Runs</th></tr>
+<tr><td>omitted</td><td>After every render</td></tr>
+<tr><td><code>[]</code></td><td>Once after mount (twice in dev StrictMode — deliberate)</td></tr>
+<tr><td><code>[a, b]</code></td><td>On mount and whenever <code>a</code> or <code>b</code> changes (<code>Object.is</code> comparison)</td></tr>
+</table></div>
+<h4>Fetching with cleanup</h4>
+<pre><code>useEffect(() =&gt; {
+  const ac = new AbortController();
+  (async () =&gt; {
+    try {
+      const res = await fetch(`/api/users/${id}`, { signal: ac.signal });
+      setUser(await res.json());
+    } catch (e) { if (e.name !== "AbortError") setError(e); }
+  })();
+  return () =&gt; ac.abort();      // stops a stale response overwriting a newer one
+}, [id]);</code></pre>
+<p>Without the cleanup, switching quickly between ids can let a slow first response land after the fast second one — a race condition that shows the wrong user.</p>
+<h4>Common mistakes</h4>
+<ul>
+<li><b>Missing deps</b> — the effect closes over stale values. Let the lint rule guide you rather than trimming the array.</li>
+<li><b>An object or function in deps</b> — recreated each render, so the effect runs every time. Wrap it in <code>useMemo</code>/<code>useCallback</code> or move it inside the effect.</li>
+<li><b>Setting state in an effect that the effect depends on</b> — an infinite loop.</li>
+<li><b>Using an effect to transform props into state</b> — calculate it during render instead.</li>
+</ul>
+<div class="note"><b>StrictMode double-invokes effects in development</b> to surface missing cleanup. If your code breaks with it on, it has a real bug — don't disable StrictMode, fix the cleanup.</div>
+<h4>useLayoutEffect</h4>
+<p>Same API but runs <b>synchronously after DOM mutation, before paint</b>. Use it only when you must measure the DOM and adjust before the user sees anything (a tooltip position). It blocks paint, so it's the exception.</p>
+</section>
+
+<section id="s29">
+<h3>29. Hooks in Depth</h3>
+<h4>The rules of hooks</h4>
+<p>Call hooks only at the <b>top level</b> of a component or another hook — never in a condition, loop or nested function. React tracks hooks by <b>call order</b>, so a conditional hook shifts every subsequent hook's state onto the wrong slot.</p>
+<h4>The core set</h4>
+<pre><code>const [v, setV]   = useState(initial);      // or useState(() =&gt; expensive())
+const [s, dispatch] = useReducer(reducer, init);  // complex/related transitions
+const ref         = useRef(null);           // DOM node, or a mutable box that
+                                            // survives renders WITHOUT re-rendering
+const memo        = useMemo(() =&gt; heavy(a), [a]);   // cache a value
+const cb          = useCallback(() =&gt; fn(a), [a]);  // cache a function identity
+const theme       = useContext(ThemeContext);
+const id          = useId();                // stable SSR-safe id for label/input</code></pre>
+<h4>useRef has two jobs</h4>
+<pre><code>const inputRef = useRef(null);              // 1. reach a DOM node
+&lt;input ref={inputRef} /&gt;;  inputRef.current.focus();
+
+const renders = useRef(0);                  // 2. mutable value, no re-render
+renders.current++;                          // changing .current never re-renders</code></pre>
+<h4>useReducer when state moves together</h4>
+<pre><code>function reducer(state, action) {
+  switch (action.type) {
+    case "loading": return { ...state, loading: true, error: null };
+    case "success": return { loading: false, error: null, data: action.data };
+    case "error":   return { loading: false, error: action.error, data: null };
+    default: return state;
+  }
+}
+const [state, dispatch] = useReducer(reducer, { loading: false, data: null, error: null });</code></pre>
+<p>Three <code>useState</code>s that always change together is the signal to switch — it makes impossible states (loading <i>and</i> error) unrepresentable.</p>
+<h4>Custom hooks</h4>
+<p>A custom hook is just a function starting with <code>use</code> that calls other hooks. It shares <b>logic</b>, not state — two components calling <code>useFetch</code> get independent state.</p>
+<pre><code>function useDebounced(value, delay = 300) {
+  const [debounced, setDebounced] = useState(value);
+  useEffect(() =&gt; {
+    const t = setTimeout(() =&gt; setDebounced(value), delay);
+    return () =&gt; clearTimeout(t);
+  }, [value, delay]);
+  return debounced;
+}
+
+// in a component
+const query = useDebounced(input);          // only fires a search when typing pauses
+useEffect(() =&gt; { if (query) search(query); }, [query]);</code></pre>
+</section>
+
+<section id="s30">
+<h3>30. Performance &amp; Patterns</h3>
+<h4>The memo trio</h4>
+<pre><code>const Row = React.memo(function Row({ item, onSelect }) { ... });
+// skips re-render when props are shallow-equal
+
+const handleSelect = useCallback((id) =&gt; setSelected(id), []);
+const sorted = useMemo(() =&gt; [...items].sort(byName), [items]);</code></pre>
+<p><code>React.memo</code> alone is useless if you pass a fresh object or inline arrow as a prop — the shallow comparison fails every render. That's exactly why <code>useCallback</code> and <code>useMemo</code> exist: to keep prop <b>identity</b> stable.</p>
+<div class="note"><b>Don't memoise everything.</b> Memoisation costs memory and comparison time, and React 19's compiler does much of it automatically. Reach for it when a profiler shows a real problem: big lists, expensive computation, or a heavy child re-rendering constantly.</div>
+<h4>Composition beats memoisation</h4>
+<pre><code>// Every state change re-renders &lt;Expensive /&gt;
+function App() {
+  const [n, setN] = useState(0);
+  return &lt;&gt;&lt;button onClick={() =&gt; setN(n+1)}&gt;{n}&lt;/button&gt;&lt;Expensive /&gt;&lt;/&gt;;
+}
+
+// Move state down, or pass the child in as children — it no longer re-renders
+function App({ children }) {
+  const [n, setN] = useState(0);
+  return &lt;&gt;&lt;button onClick={() =&gt; setN(n+1)}&gt;{n}&lt;/button&gt;{children}&lt;/&gt;;
+}</code></pre>
+<h4>Code splitting</h4>
+<pre><code>const Dashboard = lazy(() =&gt; import("./Dashboard"));
+&lt;Suspense fallback={&lt;Spinner /&gt;}&gt;&lt;Dashboard /&gt;&lt;/Suspense&gt;</code></pre>
+<p>Split at route boundaries first, then at heavy components (charts, editors, maps).</p>
+<h4>Patterns worth naming</h4>
+<ul>
+<li><b>Container / presentational</b> — separate data fetching from rendering.</li>
+<li><b>Compound components</b> — <code>&lt;Tabs&gt;&lt;Tab/&gt;&lt;/Tabs&gt;</code> sharing state via context.</li>
+<li><b>Render props / children as function</b> — pass behaviour, let the caller render.</li>
+<li><b>Error boundaries</b> — a class component with <code>componentDidCatch</code>; still the only way to catch render errors.</li>
+<li><b>Portals</b> — <code>createPortal(modal, document.body)</code> escapes overflow and stacking contexts.</li>
+<li><b>Virtualisation</b> — render only visible rows for lists in the thousands.</li>
+</ul>
+</section>
+
+<section id="s31">
+<h3>31. Data, Routing &amp; Forms</h3>
+<h4>Context is for low-frequency global state</h4>
+<pre><code>const ThemeContext = createContext("light");
+&lt;ThemeContext.Provider value={theme}&gt;&lt;App /&gt;&lt;/ThemeContext.Provider&gt;
+const theme = useContext(ThemeContext);</code></pre>
+<p>Context solves <b>prop drilling</b>, not performance: every consumer re-renders when the value changes, and an inline object literal as <code>value</code> creates a new reference every render. Good for theme, locale, and the current user. Bad for fast-changing state.</p>
+<h4>Choosing a state tool</h4>
+<div class="table-wrap"><table>
+<tr><th>Kind of state</th><th>Use</th></tr>
+<tr><td>Local UI (open, input)</td><td><code>useState</code></td></tr>
+<tr><td>Complex related transitions</td><td><code>useReducer</code></td></tr>
+<tr><td>Rarely-changing global</td><td>Context</td></tr>
+<tr><td>Frequently-changing global</td><td>Zustand / Redux Toolkit</td></tr>
+<tr><td><b>Server data</b></td><td>TanStack Query / SWR / RTK Query</td></tr>
+<tr><td>Shareable filters, tabs, page</td><td>The URL</td></tr>
+</table></div>
+<div class="note"><b>Server state is not client state.</b> It's cached, it goes stale, it needs refetching, deduping and retries. Hand-rolling that in <code>useEffect</code> is where most React apps accumulate bugs — a query library gives you caching, background refresh, and loading/error states for free.</div>
+<h4>Routing</h4>
+<pre><code>&lt;Routes&gt;
+  &lt;Route path="/" element={&lt;Layout /&gt;}&gt;
+    &lt;Route index element={&lt;Home /&gt;} /&gt;
+    &lt;Route path="users/:id" element={&lt;User /&gt;} /&gt;
+    &lt;Route path="*" element={&lt;NotFound /&gt;} /&gt;
+  &lt;/Route&gt;
+&lt;/Routes&gt;
+
+const { id } = useParams();
+const [params, setParams] = useSearchParams();
+const navigate = useNavigate();</code></pre>
+<p>Client-side routing uses the History API — no page reload, so state survives navigation. The server must be configured to return <code>index.html</code> for every path, or a refresh on <code>/users/5</code> gives a 404.</p>
+<h4>CSR vs SSR vs SSG</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>Rendered</th><th>Good for</th><th>Cost</th></tr>
+<tr><td>CSR</td><td>In the browser</td><td>Dashboards behind a login</td><td>Blank first paint, weak SEO</td></tr>
+<tr><td>SSR</td><td>On the server per request</td><td>Personalised, SEO-sensitive pages</td><td>Server load, TTFB</td></tr>
+<tr><td>SSG</td><td>At build time</td><td>Docs, blogs, marketing</td><td>Rebuild to update</td></tr>
+<tr><td>ISR</td><td>Built, then revalidated</td><td>Large mostly-static catalogues</td><td>Some staleness</td></tr>
+</table></div>
+<p><b>Hydration</b> is React attaching event listeners to server-rendered HTML. A "hydration mismatch" means the server and client rendered different markup — usually from <code>Date.now()</code>, <code>Math.random()</code>, or reading <code>window</code> during render.</p>
+</section>
+
+<!-- ================= CRAFT ================= -->
+<div class="part">Part 6 — Craft</div>
+
+<section id="s32">
+<h3>32. Performance</h3>
+<h4>Core Web Vitals</h4>
+<div class="table-wrap"><table>
+<tr><th>Metric</th><th>Measures</th><th>Good</th><th>Main fixes</th></tr>
+<tr><td><b>LCP</b> Largest Contentful Paint</td><td>When the main content appears</td><td>&lt; 2.5s</td><td>Optimise the hero image, preload it, cut render-blocking CSS/JS, faster TTFB</td></tr>
+<tr><td><b>INP</b> Interaction to Next Paint</td><td>Responsiveness to input</td><td>&lt; 200ms</td><td>Break up long tasks, less JS, debounce, use a worker</td></tr>
+<tr><td><b>CLS</b> Cumulative Layout Shift</td><td>Unexpected movement</td><td>&lt; 0.1</td><td>width/height on images, reserve ad/embed space, <code>font-display: swap</code> + size-adjust</td></tr>
+</table></div>
+<h4>Loading strategy</h4>
+<ul>
+<li><b>Ship less JavaScript</b> — the single biggest lever. Audit the bundle, drop heavy dependencies (moment → date-fns, lodash → native), code-split routes.</li>
+<li><code>defer</code> your scripts; <code>preload</code> the hero image and critical font; <code>preconnect</code> to the API origin.</li>
+<li><b>Images</b> — modern formats (AVIF/WebP), correct dimensions, <code>srcset</code>, lazy-load below the fold.</li>
+<li><b>Fonts</b> — subset, self-host, <code>font-display: swap</code>, and preload the one used above the fold.</li>
+<li><b>Caching</b> — hashed filenames with a long <code>max-age</code>; compress with Brotli.</li>
+</ul>
+<h4>Runtime performance</h4>
+<pre><code>// Break a long task so the browser can paint and respond between chunks
+async function processAll(items) {
+  for (let i = 0; i &lt; items.length; i++) {
+    process(items[i]);
+    if (i % 100 === 0) await new Promise(r =&gt; setTimeout(r, 0));
+  }
+}</code></pre>
+<ul>
+<li>Virtualise long lists; debounce/throttle high-frequency handlers; use <code>{ passive: true }</code> on scroll.</li>
+<li>Animate only <code>transform</code> and <code>opacity</code>.</li>
+<li>Batch DOM reads and writes; prefer <code>IntersectionObserver</code> over scroll math.</li>
+</ul>
+<div class="note"><b>Measure before optimising.</b> Lighthouse for a lab score, the Performance panel for long tasks, the Network panel for waterfalls, and real-user (field) data for what users actually get. An optimisation you can't measure is a guess.</div>
+</section>
+
+<section id="s33">
+<h3>33. Accessibility</h3>
+<p>The four POUR principles: <b>Perceivable, Operable, Understandable, Robust</b>. In practice it comes down to a handful of habits.</p>
+<h4>The habits</h4>
+<ul>
+<li><b>Semantic HTML first.</b> A native <code>&lt;button&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;input&gt;</code> or <code>&lt;dialog&gt;</code> gives you keyboard support, focus and screen-reader roles for free.</li>
+<li><b>Keyboard</b> — everything reachable with Tab, activatable with Enter/Space, dismissible with Escape. Never remove the focus ring without replacing it (<code>:focus-visible</code>).</li>
+<li><b>Contrast</b> — 4.5:1 for normal text, 3:1 for large text and UI borders.</li>
+<li><b>Labels</b> — every input has a real <code>&lt;label&gt;</code>; every icon-only button has <code>aria-label</code>.</li>
+<li><b>Headings</b> — one <code>h1</code>, no skipped levels; screen reader users navigate by heading.</li>
+<li><b>Don't rely on colour alone</b> to convey meaning — add an icon or text.</li>
+</ul>
+<h4>ARIA — the rules</h4>
+<p><i>No ARIA is better than bad ARIA.</i> ARIA changes only how assistive tech announces something; it adds no behaviour. Use it when no native element fits.</p>
+<pre><code>&lt;button aria-expanded="false" aria-controls="menu"&gt;Menu&lt;/button&gt;
+&lt;div id="menu" hidden&gt;…&lt;/div&gt;
+
+&lt;div role="alert"&gt;Saved&lt;/div&gt;                    &lt;!-- interrupts immediately --&gt;
+&lt;div aria-live="polite"&gt;3 results&lt;/div&gt;          &lt;!-- announced when idle --&gt;
+&lt;button aria-label="Close"&gt;×&lt;/button&gt;
+&lt;span aria-hidden="true"&gt;🔥&lt;/span&gt;                &lt;!-- decorative --&gt;</code></pre>
+<h4>Modals — the checklist interviewers love</h4>
+<ol>
+<li>Move focus into the dialog when it opens.</li>
+<li>Trap focus inside while it's open.</li>
+<li>Close on Escape and on backdrop click.</li>
+<li>Return focus to the trigger element on close.</li>
+<li><code>role="dialog"</code> <code>aria-modal="true"</code> and a labelled title — or just use <code>&lt;dialog&gt;</code>, which does most of this natively.</li>
+</ol>
+<p>Test by unplugging your mouse, then with a real screen reader (VoiceOver on Mac: ⌘F5). Automated tools like axe catch roughly a third of issues — the rest is manual.</p>
+</section>
+
+<section id="s34">
+<h3>34. Frontend Security</h3>
+<h4>XSS — Cross-Site Scripting</h4>
+<p>Attacker-controlled data ends up executed as code in your page. The consequence is total: read <code>localStorage</code>, make requests as the user, rewrite the page.</p>
+<pre><code>// ✗ any of these with untrusted input
+el.innerHTML = comment;
+&lt;div dangerouslySetInnerHTML={{ __html: comment }} /&gt;
+eval(input);  new Function(input);  &lt;a href={userUrl}&gt;   // javascript: URLs
+
+// ✓
+el.textContent = comment;                    // escapes automatically
+el.innerHTML = DOMPurify.sanitize(comment);  // when you must render HTML</code></pre>
+<p>React escapes interpolated values by default, which prevents most XSS — <code>dangerouslySetInnerHTML</code> is named that way for a reason. Add a <b>Content-Security-Policy</b> header as defence in depth.</p>
+<h4>CSRF</h4>
+<p>A malicious site makes the user's browser send an authenticated request to yours, using cookies that are attached automatically. Defences: <code>SameSite=Lax/Strict</code> cookies, a CSRF token, and never using GET for state changes.</p>
+<h4>Other essentials</h4>
+<ul>
+<li><b>No secrets in frontend code.</b> Every env var in the bundle is public — <code>VITE_</code>/<code>NEXT_PUBLIC_</code> prefixes exist to make that explicit.</li>
+<li><b>Never trust the client.</b> Hiding an admin button is UX; the server must still check permissions.</li>
+<li><code>rel="noopener noreferrer"</code> on <code>target="_blank"</code> links so the opened page can't touch <code>window.opener</code>.</li>
+<li><b>Dependencies</b> — <code>npm audit</code>, lockfiles, and scepticism about adding packages.</li>
+<li><b>HTTPS everywhere</b>, plus <code>Strict-Transport-Security</code>, <code>X-Content-Type-Options: nosniff</code> and a sensible <code>frame-ancestors</code> to prevent clickjacking.</li>
+</ul>
+</section>
+
+<section id="s35">
+<h3>35. Testing</h3>
+<div class="table-wrap"><table>
+<tr><th>Level</th><th>Tests</th><th>Tools</th></tr>
+<tr><td>Unit</td><td>One function or hook in isolation</td><td>Vitest, Jest</td></tr>
+<tr><td>Component</td><td>Rendering and interaction</td><td>React Testing Library</td></tr>
+<tr><td>Integration</td><td>Several units together, mocked network</td><td>RTL + MSW</td></tr>
+<tr><td>E2E</td><td>A real browser, a real flow</td><td>Playwright, Cypress</td></tr>
+</table></div>
+<pre><code>test("submits the entered email", async () =&gt; {
+  const onSubmit = vi.fn();
+  render(&lt;SignupForm onSubmit={onSubmit} /&gt;);
+
+  await userEvent.type(screen.getByLabelText(/email/i), "a@b.com");
+  await userEvent.click(screen.getByRole("button", { name: /sign up/i }));
+
+  expect(onSubmit).toHaveBeenCalledWith({ email: "a@b.com" });
+});</code></pre>
+<div class="note"><b>The Testing Library principle:</b> query the way a user finds things — by role, label and visible text — not by class name or test id. A test that breaks when you rename a CSS class is testing the wrong thing; a test that survives a refactor but catches a real regression is worth keeping.</div>
+<ul>
+<li>Prefer <code>getByRole</code> → <code>getByLabelText</code> → <code>getByText</code>; <code>getByTestId</code> is the last resort.</li>
+<li>Mock the network (MSW), not your own modules.</li>
+<li>Test behaviour and output, not internal state or implementation details.</li>
+<li>A small number of E2E tests covering the critical paths (signup, checkout) beats a large number of brittle ones.</li>
+</ul>
+</section>
+
+<!-- ================= REVISION ================= -->
+<div class="part">Revision</div>
+
+<section id="rev">
+<h3>Interview Q&amp;A — quick answers</h3>
+
+<h4>HTML &amp; CSS</h4>
+<ul>
+<li><b>Why semantic HTML?</b> Accessibility, SEO and free default behaviour — the element describes the meaning, not the appearance.</li>
+<li><b>Explain the box model.</b> content → padding → border → margin; <code>border-box</code> makes <code>width</code> include padding and border.</li>
+<li><b>Specificity order?</b> inline &gt; id &gt; class/attribute/pseudo-class &gt; element; ties break on source order; <code>!important</code> overrides the lot.</li>
+<li><b>Flexbox vs Grid?</b> Flex is one-dimensional and content-driven; Grid is two-dimensional and layout-driven.</li>
+<li><b><code>flex: 1</code> vs <code>flex: auto</code>?</b> <code>1</code> means basis 0 → equal widths; <code>auto</code> means basis auto → content-sized, then grows.</li>
+<li><b>Centre a div?</b> <code>display:grid; place-items:center;</code> on the parent.</li>
+<li><b>display:none vs visibility:hidden vs opacity:0?</b> Removed from layout / keeps space, not interactive / keeps space, still clickable.</li>
+<li><b>position sticky?</b> Relative until a scroll threshold, then fixed — but only within its parent's box.</li>
+<li><b>rem vs em?</b> rem is relative to the root; em to the element's own font-size and compounds when nested.</li>
+</ul>
+
+<h4>JavaScript</h4>
+<ul>
+<li><b>== vs ===?</b> Loose equality coerces types; strict doesn't. Always use <code>===</code>.</li>
+<li><b>What is a closure?</b> A function that retains access to its defining scope after that scope has returned. Powers private state, debounce, throttle, module pattern.</li>
+<li><b>var vs let vs const?</b> Function-scoped and hoisted as undefined vs block-scoped with a TDZ; <code>const</code> can't be reassigned but its contents can change.</li>
+<li><b>How does <code>this</code> work?</b> Determined by the call site: new → the instance, explicit bind/call/apply → that object, method call → the object before the dot, plain call → undefined/window. Arrow functions inherit lexically.</li>
+<li><b>Explain the event loop.</b> Stack → drain <b>all</b> microtasks → render → <b>one</b> macrotask → repeat. Promises are microtasks; <code>setTimeout</code> is a macrotask.</li>
+<li><b>Output of <code>console.log(1); setTimeout(...0); Promise.then(...); console.log(2)</code>?</b> 1, 2, promise, timeout.</li>
+<li><b>Prototypal inheritance?</b> Objects link to other objects; property lookup walks the chain. Classes are syntax over it.</li>
+<li><b>Promise.all vs allSettled?</b> <code>all</code> rejects on the first failure; <code>allSettled</code> always resolves with each outcome.</li>
+<li><b>Debounce vs throttle?</b> Debounce runs after the activity stops; throttle runs at most once per interval.</li>
+<li><b>Event delegation?</b> One listener on a parent using <code>e.target.closest()</code> — fewer listeners, works for dynamic children.</li>
+<li><b>Shallow vs deep copy?</b> Spread copies one level; <code>structuredClone</code> goes all the way down.</li>
+</ul>
+
+<h4>React</h4>
+<ul>
+<li><b>Virtual DOM?</b> A lightweight object tree; React diffs old against new and applies the minimum DOM changes.</li>
+<li><b>Why keys?</b> Stable identity during reconciliation. Index keys break on reorder or deletion and can attach state to the wrong row.</li>
+<li><b>State vs props?</b> State is owned and mutable via setter; props come from the parent and are read-only.</li>
+<li><b>Why is my state not updating immediately?</b> Updates are batched and asynchronous — use the functional form <code>setX(x =&gt; …)</code>.</li>
+<li><b>useEffect dependency array?</b> Omitted → every render; <code>[]</code> → once on mount; <code>[a]</code> → when <code>a</code> changes. Always return cleanup for subscriptions and timers.</li>
+<li><b>useMemo vs useCallback?</b> Cache a computed value vs cache a function's identity. <code>useCallback(fn, d)</code> ≡ <code>useMemo(() =&gt; fn, d)</code>.</li>
+<li><b>When does a component re-render?</b> Own state changed, parent re-rendered, or a consumed context changed.</li>
+<li><b>Context vs Redux?</b> Context passes values down without drilling (all consumers re-render); Redux/Zustand is for frequently-changing global state with selectors and devtools.</li>
+<li><b>Controlled vs uncontrolled input?</b> Value in React state vs value in the DOM read via a ref.</li>
+<li><b>Custom hook?</b> A <code>use…</code> function composing other hooks; shares logic, not state.</li>
+<li><b>Why does my effect run twice?</b> StrictMode in development, deliberately — to expose missing cleanup.</li>
+</ul>
+
+<h4>Browser &amp; general</h4>
+<ul>
+<li><b>localStorage vs sessionStorage vs cookies?</b> Persistent / per-tab / sent with every request and configurable via flags.</li>
+<li><b>What is CORS?</b> A browser-enforced rule; the server opts in with <code>Access-Control-Allow-*</code> headers. A preflight OPTIONS precedes non-simple requests.</li>
+<li><b>defer vs async?</b> Both download in parallel; <code>defer</code> executes after parsing in order, <code>async</code> executes as soon as it lands, out of order.</li>
+<li><b>Reflow vs repaint?</b> Geometry recalculated vs pixels redrawn. Composite-only (<code>transform</code>/<code>opacity</code>) is cheapest.</li>
+<li><b>How do you prevent XSS?</b> <code>textContent</code> over <code>innerHTML</code>, sanitise any HTML you must render, add a CSP, keep tokens in HttpOnly cookies.</li>
+<li><b>Improve page load?</b> Ship less JS, code-split, optimise images and fonts, cache with hashed filenames, defer non-critical work — then measure.</li>
+<li><b>Core Web Vitals?</b> LCP &lt; 2.5s, INP &lt; 200ms, CLS &lt; 0.1.</li>
+</ul>
+</section>
+
+<section id="road">
+<h3>Learning Path</h3>
+<ol>
+<li><b>HTML &amp; CSS properly</b> — semantics, the box model, the cascade. Build three static pages from a design without a framework.</li>
+<li><b>Layout</b> — Flexbox and Grid until you stop guessing. Rebuild a real site's layout from scratch.</li>
+<li><b>Responsive</b> — mobile-first, <code>clamp()</code>, container queries, and testing at 200% zoom.</li>
+<li><b>JavaScript fundamentals</b> — types, scope, closures, <code>this</code>, prototypes, array methods. Don't skip to a framework here; everything later depends on it.</li>
+<li><b>Async JS</b> — the event loop, promises, async/await, error handling, cancellation.</li>
+<li><b>The DOM</b> — build a to-do app and an image carousel with no library at all, once.</li>
+<li><b>Fetch &amp; APIs</b> — loading, error and empty states; CORS; a real REST integration.</li>
+<li><b>Tooling</b> — npm, Vite, ESLint, Prettier, Git. Learn what a bundler actually does.</li>
+<li><b>React</b> — components, state, effects, hooks, lists and forms. Then routing and a data-fetching library.</li>
+<li><b>Project 1</b> — a complete CRUD app with auth, routing, forms with validation, and proper loading/error states.</li>
+<li><b>Quality</b> — accessibility audit, Lighthouse pass, and tests for the critical paths.</li>
+<li><b>Project 2</b> — something with real complexity: optimistic updates, infinite scroll, a virtualised table, or realtime via WebSocket.</li>
+<li><b>Level up</b> — TypeScript everywhere, then SSR with Next.js, then one deep area (animation, data viz, or design systems).</li>
+</ol>
+<div class="note"><b>The single best habit:</b> for every component you build, ask "what does this look like while loading, when the request fails, when the list is empty, when the text is three times longer, and when I only have a keyboard?" Answering those five turns tutorial code into frontend engineering.</div>
+</section>
+
+</main>
+</div>
+
+<script src="../assets/notes.js"></script>
+</body>
+</html>

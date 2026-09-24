@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Backend Developer — Concept Notes</title>
+<link rel="stylesheet" href="../assets/notes.css">
+<script>
+  try { document.documentElement.setAttribute("data-theme",
+    localStorage.getItem("notes-theme") || "light"); } catch (e) {}
+</script>
+</head>
+<body>
+<div class="scrim"></div>
+<button class="icon-btn" id="reopen" title="Show sidebar ([)" aria-label="Show sidebar">☰</button>
+<div class="layout">
+
+<aside>
+  <div class="sidebar-head">
+    <a class="back-link" href="../index.html">← All topics</a>
+    <button class="icon-btn" id="collapseBtn" title="Hide sidebar ([)" aria-label="Hide sidebar">‹</button>
+  </div>
+  <input id="search" type="text" placeholder="Filter topics…" autocomplete="off">
+  <h2>Foundations</h2>
+  <nav>
+    <a href="#s1">1 · What Backend Really Is</a>
+    <a href="#s2">2 · How the Internet Works</a>
+    <a href="#s3">3 · HTTP in Depth</a>
+    <a href="#s4">4 · Cookies, Cache, CORS</a>
+  </nav>
+  <h2>Node.js</h2>
+  <nav>
+    <a href="#s5">5 · Runtime Architecture</a>
+    <a href="#s6">6 · Event Loop in Depth</a>
+    <a href="#s7">7 · Async Patterns</a>
+    <a href="#s8">8 · Streams & Buffers</a>
+    <a href="#s9">9 · Modules, Memory, Processes</a>
+  </nav>
+  <h2>Building APIs</h2>
+  <nav>
+    <a href="#s10">10 · Express Deep Dive</a>
+    <a href="#s11">11 · Project Architecture</a>
+    <a href="#s12">12 · Errors & Validation</a>
+    <a href="#s13">13 · REST API Design</a>
+    <a href="#s14">14 · Files, Email, Real-time</a>
+  </nav>
+  <h2>Data</h2>
+  <nav>
+    <a href="#s15">15 · Database Fundamentals</a>
+    <a href="#s16">16 · SQL in Depth</a>
+    <a href="#s17">17 · Indexes & Query Tuning</a>
+    <a href="#s18">18 · Transactions & Isolation</a>
+    <a href="#s19">19 · MongoDB / NoSQL</a>
+    <a href="#s20">20 · ORMs & Migrations</a>
+    <a href="#s21">21 · Caching & Redis</a>
+  </nav>
+  <h2>Security</h2>
+  <nav>
+    <a href="#s22">22 · Auth Concepts</a>
+    <a href="#s23">23 · Sessions, JWT, OAuth</a>
+    <a href="#s24">24 · Attacks & Defences</a>
+  </nav>
+  <h2>Scale & Ops</h2>
+  <nav>
+    <a href="#s25">25 · Architecture Patterns</a>
+    <a href="#s26">26 · Scaling & Performance</a>
+    <a href="#s27">27 · Queues & Background Jobs</a>
+    <a href="#s28">28 · Testing</a>
+    <a href="#s29">29 · Deployment & DevOps</a>
+    <a href="#s30">30 · Observability</a>
+  </nav>
+  <h2>Revision</h2>
+  <nav>
+    <a href="#rev">Interview Q&A</a>
+    <a href="#road">Learning Path</a>
+  </nav>
+</aside>
+
+<main>
+<header class="top">
+  <h1>Backend Developer — Concept Notes</h1>
+  <div class="top-actions">
+    <button class="ghost" id="menuBtn">☰ Topics</button>
+    <button class="ghost" id="theme">Dark mode</button>
+  </div>
+</header>
+<p class="sub">Concept-first, in depth. Examples are Node.js/Express, but the concepts apply to any backend stack. Print this page for a PDF.</p>
+
+<!-- ================= FOUNDATIONS ================= -->
+<div class="part">Part 1 — Foundations</div>
+
+<section id="s1">
+<h3>1. What Backend Really Is</h3>
+<p>The backend is everything that runs on a machine you control rather than the user's device. The browser is <b>untrusted</b> — anyone can edit the HTML, disable JS, or call your API directly with curl. So the backend is the place where the real decisions happen.</p>
+<h4>Core responsibilities</h4>
+<ul>
+<li><b>Persistence</b> — storing data so it survives restarts (databases, object storage).</li>
+<li><b>Business logic</b> — the rules: can this user cancel this order? what is the discount?</li>
+<li><b>Authentication & authorization</b> — who is calling, and are they allowed?</li>
+<li><b>Validation & integrity</b> — the last line of defence against bad or malicious data.</li>
+<li><b>Integration</b> — payment gateways, email/SMS, third-party APIs, AI services.</li>
+<li><b>Performance & scale</b> — caching, indexing, background jobs, load handling.</li>
+<li><b>Observability</b> — logs, metrics, alerts so you know what broke and why.</li>
+</ul>
+<div class="note"><b>Golden rule:</b> frontend validation is for user experience; backend validation is for correctness and security. Never rely on the client for anything that matters.</div>
+<h4>Key mental model — the request lifecycle</h4>
+<figure class="diagram">
+<svg viewBox="0 0 640 400" role="img" aria-label="Request lifecycle from client through DNS, TLS, load balancer, middleware chain, controller, service and repository to the database, with the response bubbling back.">
+  <rect class="d-box-accent" x="20" y="16" width="120" height="40" rx="7"/>
+  <text class="d-accent-text" x="80" y="41" text-anchor="middle">Client</text>
+
+  <rect class="d-box" x="20" y="76" width="120" height="40" rx="7"/>
+  <text class="d-label" x="80" y="95" text-anchor="middle">DNS + TLS</text>
+  <text class="d-sub"   x="80" y="110" text-anchor="middle">resolve, handshake</text>
+
+  <rect class="d-box" x="20" y="136" width="120" height="40" rx="7"/>
+  <text class="d-label" x="80" y="155" text-anchor="middle">Nginx</text>
+  <text class="d-sub"   x="80" y="170" text-anchor="middle">proxy / balancer</text>
+
+  <rect class="d-box-accent" x="190" y="76" width="430" height="256" rx="9"/>
+  <text class="d-accent-text" x="206" y="98">YOUR NODE PROCESS</text>
+
+  <rect class="d-box" x="210" y="112" width="390" height="46" rx="6"/>
+  <text class="d-label" x="224" y="131">Middleware chain</text>
+  <text class="d-sub"   x="224" y="149">logging → CORS → body parse → rate limit → auth</text>
+
+  <rect class="d-box" x="210" y="170" width="390" height="42" rx="6"/>
+  <text class="d-label" x="224" y="189">Controller</text>
+  <text class="d-sub"   x="224" y="205">HTTP only — read input, send status + JSON</text>
+
+  <rect class="d-box" x="210" y="224" width="390" height="42" rx="6"/>
+  <text class="d-label" x="224" y="243">Service</text>
+  <text class="d-sub"   x="224" y="259">business rules — knows nothing about HTTP</text>
+
+  <rect class="d-box" x="210" y="278" width="390" height="42" rx="6"/>
+  <text class="d-label" x="224" y="297">Repository / ORM</text>
+  <text class="d-sub"   x="224" y="313">the only layer that speaks SQL</text>
+
+  <rect class="d-box" x="330" y="346" width="130" height="38" rx="7"/>
+  <text class="d-label" x="395" y="370" text-anchor="middle">Database</text>
+  <rect class="d-box" x="478" y="346" width="122" height="38" rx="7"/>
+  <text class="d-label" x="539" y="370" text-anchor="middle">Cache</text>
+
+  <path class="d-line-accent" d="M80 56 V70"/><path class="d-arrow-accent" d="M80 76 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M80 116 V130"/><path class="d-arrow" d="M80 136 l-4.5 -9 h9 z"/>
+  <path class="d-line-accent" d="M140 156 H184"/><path class="d-arrow-accent" d="M190 156 l-9 -4.5 v9 z"/>
+
+  <path class="d-line" d="M405 158 V164"/><path class="d-arrow" d="M405 170 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M405 212 V218"/><path class="d-arrow" d="M405 224 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M405 266 V272"/><path class="d-arrow" d="M405 278 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M395 320 V340"/><path class="d-arrow" d="M395 346 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M539 320 V340"/><path class="d-arrow" d="M539 346 l-4.5 -9 h9 z"/>
+
+  <path class="d-dash" d="M166 300 V60 H86"/>
+  <path class="d-arrow" d="M80 60 l9 -4.5 v9 z"/>
+  <text class="d-sub" x="24" y="202">response</text>
+  <text class="d-sub" x="24" y="218">bubbles</text>
+  <text class="d-sub" x="24" y="234">back up</text>
+</svg>
+<figcaption>Nearly every backend framework in every language is a variation of this pipeline. Note the one-way dependency: controller → service → repository, never backwards.</figcaption>
+</figure>
+<p>Almost every backend framework in every language is a variation of this pipeline. Learn the pipeline and switching stacks becomes easy.</p>
+</section>
+
+<section id="s2">
+<h3>2. How the Internet Works (the part backend devs need)</h3>
+<h4>DNS</h4>
+<p>Domain names map to IP addresses. The resolver checks browser cache → OS cache → ISP resolver → root → TLD → authoritative nameserver. Records you'll meet: <b>A</b> (IPv4), <b>AAAA</b> (IPv6), <b>CNAME</b> (alias), <b>MX</b> (mail), <b>TXT</b> (verification/SPF). <b>TTL</b> controls how long records are cached — this is why DNS changes "take time to propagate".</p>
+<h4>TCP vs UDP</h4>
+<ul>
+<li><b>TCP</b> — connection-oriented, ordered, reliable (3-way handshake SYN → SYN-ACK → ACK). HTTP, databases, SSH.</li>
+<li><b>UDP</b> — fire-and-forget, no ordering guarantees, low latency. DNS, video calls, gaming, QUIC/HTTP3.</li>
+</ul>
+<h4>TLS / HTTPS</h4>
+<figure class="diagram">
+<svg viewBox="0 0 620 300" role="img" aria-label="TCP three-way handshake followed by the TLS handshake, then encrypted application data, shown as messages between client and server over time.">
+  <text class="d-accent-text" x="70" y="20" text-anchor="middle">CLIENT</text>
+  <text class="d-accent-text" x="540" y="20" text-anchor="middle">SERVER</text>
+  <path class="d-dash" d="M70 30 V282"/>
+  <path class="d-dash" d="M540 30 V282"/>
+
+  <text class="d-sub" x="305" y="48" text-anchor="middle">— TCP: 3-way handshake —</text>
+  <path class="d-line" d="M76 66 H528"/><path class="d-arrow" d="M534 66 l-9 -4.5 v9 z"/>
+  <text class="d-mono" x="305" y="62" text-anchor="middle">SYN</text>
+  <path class="d-line" d="M534 92 H82"/><path class="d-arrow" d="M76 92 l9 -4.5 v9 z"/>
+  <text class="d-mono" x="305" y="88" text-anchor="middle">SYN-ACK</text>
+  <path class="d-line" d="M76 118 H528"/><path class="d-arrow" d="M534 118 l-9 -4.5 v9 z"/>
+  <text class="d-mono" x="305" y="114" text-anchor="middle">ACK</text>
+
+  <text class="d-accent-text" x="305" y="150" text-anchor="middle">— TLS handshake —</text>
+  <path class="d-line-accent" d="M76 170 H528"/><path class="d-arrow-accent" d="M534 170 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="305" y="166" text-anchor="middle">ClientHello — ciphers I support</text>
+  <path class="d-line-accent" d="M534 198 H82"/><path class="d-arrow-accent" d="M76 198 l9 -4.5 v9 z"/>
+  <text class="d-sub" x="305" y="194" text-anchor="middle">ServerHello + certificate (signed by a CA)</text>
+  <path class="d-line-accent" d="M76 226 H528"/><path class="d-arrow-accent" d="M534 226 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="305" y="222" text-anchor="middle">verify cert → agree a shared symmetric key</text>
+
+  <rect class="d-fill-accent" x="86" y="244" width="446" height="34" rx="6"/>
+  <rect class="d-box-accent"  x="86" y="244" width="446" height="34" rx="6"/>
+  <text class="d-accent-text" x="305" y="266" text-anchor="middle">encrypted application data (your HTTP request)</text>
+</svg>
+<figcaption>Every HTTPS request pays this setup cost once per connection — which is why connection reuse (keep-alive) and HTTP/2 multiplexing matter so much.</figcaption>
+</figure>
+
+<p>TLS encrypts the TCP connection. The handshake verifies the server's certificate (signed by a CA), agrees on a cipher, and derives a shared symmetric key. HTTPS gives you <b>confidentiality</b> (nobody can read it), <b>integrity</b> (nobody can modify it) and <b>authenticity</b> (you're talking to the real server). Certificates are usually free via Let's Encrypt and auto-renewed.</p>
+<h4>Ports, proxies and load balancers</h4>
+<ul>
+<li>A <b>port</b> identifies a process on a machine: 80 (HTTP), 443 (HTTPS), 5432 (Postgres), 27017 (MongoDB), 6379 (Redis), 3000 (typical Node dev).</li>
+<li>A <b>reverse proxy</b> (Nginx, Caddy) sits in front of your app: TLS termination, gzip, static files, rate limiting, routing to multiple apps.</li>
+<li>A <b>load balancer</b> spreads traffic over multiple instances (round-robin, least-connections). It also health-checks instances and removes dead ones.</li>
+<li>A <b>CDN</b> caches static assets at edge locations near users.</li>
+</ul>
+</section>
+
+<section id="s3">
+<h3>3. HTTP in Depth</h3>
+<h4>Why "stateless" is the root of so much design</h4>
+<p>HTTP has no memory. Two requests from the same person arriving one second apart are, as far as the protocol is concerned, completely unrelated — there is no connection identity the server can rely on. Every mechanism you'll meet later exists to work around this single fact:</p>
+<ul>
+<li><b>Cookies</b> — the server asks the browser to send a token back on every request.</li>
+<li><b>Sessions / JWT</b> — that token is how "who is this?" gets answered each time.</li>
+<li><b>Idempotency keys</b> — because the server can't tell a retry from a genuine second request.</li>
+<li><b>Horizontal scaling works at all</b> — precisely because no request depends on the last one, any instance can serve any request.</li>
+</ul>
+<div class="note">Statelessness looks like a limitation and is actually the feature. A protocol that remembered connections could not be load balanced across a hundred machines.</div>
+<p>HTTP is a <b>stateless</b>, text-based request/response protocol. Stateless means the server doesn't remember anything between requests — which is exactly why we need cookies, sessions and tokens.</p>
+<h4>Anatomy</h4>
+<div class="flow">POST /api/v1/orders HTTP/1.1        ← method, path, version
+Host: api.shop.com                   ← headers
+Authorization: Bearer eyJhbGc...
+Content-Type: application/json
+Idempotency-Key: 7f3c-9a1
+
+{ "productId": 42, "qty": 2 }        ← body
+
+HTTP/1.1 201 Created                 ← status line
+Content-Type: application/json
+Location: /api/v1/orders/1001
+
+{ "id": 1001, "status": "pending" }</div>
+<h4>Methods and their properties</h4>
+<p><b>Safe</b> means the request doesn't change server state (GET, HEAD, OPTIONS) — a crawler can call it freely. <b>Idempotent</b> means calling it N times leaves the same state as calling it once. This is not about the response body; it's about the <i>effect</i>.</p>
+<p>PUT is idempotent because "set the name to Ada" applied twice still leaves the name as Ada. POST is not, because "create an order" applied twice creates two orders. DELETE is idempotent in effect — the row is gone either way — even though the second call may return 404.</p>
+<div class="note"><b>Why this matters in production:</b> networks retry. A mobile client sends a payment, the connection drops before the response arrives, and the client retries — you've now charged twice. The fix is an <b>idempotency key</b>: the client sends a unique ID with the request, and the server stores it with the result. A repeat of the same key returns the stored response instead of charging again.</div>
+<div class="table-wrap"><table>
+<tr><th>Method</th><th>Purpose</th><th>Safe</th><th>Idempotent</th><th>Body</th></tr>
+<tr><td>GET</td><td>Read a resource</td><td>Yes</td><td>Yes</td><td>No</td></tr>
+<tr><td>POST</td><td>Create / trigger an action</td><td>No</td><td>No</td><td>Yes</td></tr>
+<tr><td>PUT</td><td>Replace the whole resource</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+<tr><td>PATCH</td><td>Partial update</td><td>No</td><td>No</td><td>Yes</td></tr>
+<tr><td>DELETE</td><td>Remove</td><td>No</td><td>Yes</td><td>Rare</td></tr>
+<tr><td>HEAD / OPTIONS</td><td>Headers only / capabilities (CORS preflight)</td><td>Yes</td><td>Yes</td><td>No</td></tr>
+</table></div>
+<p><b>Safe</b> = doesn't change server state. <b>Idempotent</b> = doing it 5 times has the same effect as once. This matters because clients and proxies <b>retry</b> failed requests — a non-idempotent POST retried can create duplicate orders. Fix with an <b>idempotency key</b>: the client sends a unique key, the server stores the result for that key and returns the same response on retry.</p>
+<h4>Status codes — how to choose</h4>
+<div class="table-wrap"><table>
+<tr><th>Code</th><th>Use it when</th></tr>
+<tr><td>200 OK</td><td>Successful GET/PATCH with a body</td></tr>
+<tr><td>201 Created</td><td>POST created a resource (add a <code>Location</code> header)</td></tr>
+<tr><td>202 Accepted</td><td>Work queued, will finish later (background job)</td></tr>
+<tr><td>204 No Content</td><td>Success with nothing to return (DELETE)</td></tr>
+<tr><td>301 / 308</td><td>Permanent redirect (URL moved forever)</td></tr>
+<tr><td>302 / 307</td><td>Temporary redirect</td></tr>
+<tr><td>304 Not Modified</td><td>Client's cached copy is still valid (ETag matched)</td></tr>
+<tr><td>400 Bad Request</td><td>Malformed request the server can't parse</td></tr>
+<tr><td>401 Unauthorized</td><td>Missing/invalid credentials → <mark>you are not logged in</mark></td></tr>
+<tr><td>403 Forbidden</td><td>Valid identity, no permission → <mark>logged in but not allowed</mark></td></tr>
+<tr><td>404 Not Found</td><td>Resource doesn't exist (also used to hide existence)</td></tr>
+<tr><td>405 / 406</td><td>Method not allowed / can't produce requested format</td></tr>
+<tr><td>409 Conflict</td><td>State conflict: duplicate email, version mismatch</td></tr>
+<tr><td>422 Unprocessable</td><td>Syntax fine, validation failed</td></tr>
+<tr><td>429 Too Many Requests</td><td>Rate limited (send <code>Retry-After</code>)</td></tr>
+<tr><td>500 / 502 / 503 / 504</td><td>Server bug / bad upstream / down / upstream timeout</td></tr>
+</table></div>
+<div class="note"><b>Rule of thumb:</b> 4xx = the client must change something. 5xx = the client did nothing wrong, your server failed. Never return 200 with <code>{"error": ...}</code> inside — clients and monitoring rely on status codes.</div>
+<h4>HTTP versions</h4>
+<ul>
+<li><b>HTTP/1.1</b> — one request at a time per connection (head-of-line blocking); keep-alive reuses connections.</li>
+<li><b>HTTP/2</b> — multiplexes many streams over one TCP connection, header compression, binary framing.</li>
+<li><b>HTTP/3</b> — runs over QUIC (UDP): faster handshakes, no TCP head-of-line blocking, better on flaky mobile networks.</li>
+</ul>
+</section>
+
+<section id="s4">
+<h3>4. Cookies, Caching and CORS</h3>
+<h4>Cookies</h4>
+<p>A cookie is a small key/value the server sets via <code>Set-Cookie</code> and the browser <b>automatically</b> returns on every matching request. That automatic behaviour is both the convenience and the danger (CSRF).</p>
+<div class="table-wrap"><table>
+<tr><th>Attribute</th><th>Meaning</th></tr>
+<tr><td><code>HttpOnly</code></td><td>JS can't read it → protects against XSS token theft</td></tr>
+<tr><td><code>Secure</code></td><td>Sent only over HTTPS</td></tr>
+<tr><td><code>SameSite=Lax/Strict/None</code></td><td>Controls sending on cross-site requests → CSRF defence</td></tr>
+<tr><td><code>Max-Age</code> / <code>Expires</code></td><td>Lifetime; without it, it's a session cookie</td></tr>
+<tr><td><code>Domain</code> / <code>Path</code></td><td>Scope of the cookie</td></tr>
+</table></div>
+<h4>HTTP caching</h4>
+<ul>
+<li><b><code>Cache-Control</code></b> is the main control: <code>no-store</code> (never cache — use for private data), <code>no-cache</code> (cache but revalidate), <code>max-age=3600</code>, <code>public</code>/<code>private</code>, <code>stale-while-revalidate</code>.</li>
+<li><b>Validators:</b> <code>ETag</code> (content hash) and <code>Last-Modified</code>. The client sends <code>If-None-Match</code>; if unchanged the server replies <b>304</b> with no body — saves bandwidth.</li>
+<li><b>Cache invalidation</b> is famously hard. The usual trick for static assets is <b>content hashing in filenames</b> (<code>app.9f2c.js</code>) so you can cache forever and change the name on deploy.</li>
+</ul>
+<h4>CORS (Cross-Origin Resource Sharing)</h4>
+<p>Browsers enforce the <b>Same-Origin Policy</b>: JS on <code>a.com</code> can't read responses from <code>b.com</code> unless <code>b.com</code> allows it. An origin = scheme + host + port. CORS is the server saying "this origin may read my responses" via <code>Access-Control-Allow-Origin</code>.</p>
+<ul>
+<li><b>Simple requests</b> (GET/POST with basic headers) go straight out; the browser just blocks reading the response if headers are missing.</li>
+<li><b>Preflight:</b> for other methods/headers the browser first sends an <code>OPTIONS</code> request and only proceeds if allowed.</li>
+<li>To send cookies cross-origin you need <code>credentials: "include"</code> on the client and <code>Access-Control-Allow-Credentials: true</code> plus an <b>explicit origin</b> (wildcard <code>*</code> is not allowed with credentials).</li>
+</ul>
+<div class="note">CORS is a <b>browser</b> restriction, not a server security feature. curl, Postman and other servers ignore it entirely — so CORS never replaces authentication.</div>
+</section>
+
+<!-- ================= NODE ================= -->
+<div class="part">Part 2 — Node.js Internals</div>
+
+<section id="s5">
+<h3>5. Runtime Architecture</h3>
+<figure class="diagram">
+<svg viewBox="0 0 620 330" role="img" aria-label="Node.js architecture: your JavaScript runs on a single main thread via V8, while libuv handles I/O using the OS kernel and a small thread pool for blocking work.">
+  <rect class="d-box-accent" x="150" y="14" width="320" height="48" rx="7"/>
+  <text class="d-accent-text" x="310" y="36" text-anchor="middle">YOUR JAVASCRIPT</text>
+  <text class="d-sub" x="310" y="54" text-anchor="middle">one thread — only one line runs at a time</text>
+
+  <rect class="d-box" x="150" y="78" width="150" height="46" rx="7"/>
+  <text class="d-label" x="225" y="99" text-anchor="middle">V8</text>
+  <text class="d-sub"   x="225" y="115" text-anchor="middle">executes JS</text>
+
+  <rect class="d-box" x="320" y="78" width="150" height="46" rx="7"/>
+  <text class="d-label" x="395" y="99" text-anchor="middle">Node bindings</text>
+  <text class="d-sub"   x="395" y="115" text-anchor="middle">fs, net, crypto…</text>
+
+  <rect class="d-box-accent" x="60" y="146" width="500" height="106" rx="9"/>
+  <text class="d-accent-text" x="78" y="168">libuv — the async engine</text>
+
+  <rect class="d-box" x="80" y="180" width="220" height="58" rx="6"/>
+  <text class="d-label" x="94" y="200">Event loop</text>
+  <text class="d-sub"   x="94" y="217">polls the OS for finished I/O</text>
+  <text class="d-sub"   x="94" y="232">queues callbacks for the main thread</text>
+
+  <rect class="d-box" x="320" y="180" width="220" height="58" rx="6"/>
+  <text class="d-label" x="334" y="200">Thread pool (4 by default)</text>
+  <text class="d-sub"   x="334" y="217">fs, DNS, crypto, zlib —</text>
+  <text class="d-sub"   x="334" y="232">work the OS can't do async</text>
+
+  <rect class="d-box" x="150" y="270" width="320" height="42" rx="7"/>
+  <text class="d-label" x="310" y="290" text-anchor="middle">OS kernel</text>
+  <text class="d-sub"   x="310" y="306" text-anchor="middle">epoll / kqueue / IOCP — network sockets are async here</text>
+
+  <path class="d-line" d="M225 62 V72"/><path class="d-arrow" d="M225 78 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M395 62 V72"/><path class="d-arrow" d="M395 78 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M395 124 V140"/><path class="d-arrow" d="M395 146 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M190 238 V264"/><path class="d-arrow" d="M190 270 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M430 238 V264"/><path class="d-arrow" d="M430 270 l-4.5 -9 h9 z"/>
+  <path class="d-line-accent" d="M80 200 H70 V40 H144"/>
+  <path class="d-arrow-accent" d="M150 40 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="16" y="120">callback</text>
+  <text class="d-sub" x="16" y="136">ready</text>
+</svg>
+<figcaption>"Node is single-threaded" means <b>your JavaScript</b> is. Underneath, libuv and the OS do plenty in parallel — which is why Node handles thousands of concurrent connections on one thread.</figcaption>
+</figure>
+<h4>Why this design scales</h4>
+<p>A traditional thread-per-request server allocates ~1MB of stack per connection and pays a context switch each time it swaps. 10,000 idle connections means 10,000 mostly-sleeping threads. Node keeps <b>one</b> thread and a queue of callbacks, so idle connections cost almost nothing — they're just entries the kernel is watching.</p>
+<div class="note"><b>The trade-off:</b> this model is superb for I/O-bound work (APIs, proxies, real-time) and poor for CPU-bound work. One heavy computation blocks every other request, because there is no other thread to pick them up.</div>
+
+<p>Node.js is a JavaScript <b>runtime</b>: the V8 engine (compiles and runs JS) plus <b>libuv</b> (event loop, thread pool, async I/O) plus Node's own C++/JS standard library (fs, http, crypto…).</p>
+<h4>Blocking vs non-blocking — the core idea</h4>
+<p>A traditional server (classic PHP/Java model) uses <b>one thread per request</b>. 10,000 concurrent requests means 10,000 threads, each with its own memory stack and context-switching cost. Most of those threads are just <b>waiting</b> on the database or disk, doing nothing.</p>
+<p>Node instead uses <b>one thread running an event loop</b>. When a request needs I/O, Node hands the work to the OS (or a thread pool) and immediately moves on to the next request. When the I/O finishes, a callback is queued and executed. Waiting costs almost nothing.</p>
+<div class="table-wrap"><table>
+<tr><th>Node is great for</th><th>Node is bad for</th></tr>
+<tr><td>APIs, CRUD apps, gateways</td><td>Video encoding, image processing at scale</td></tr>
+<tr><td>Real-time (chat, notifications)</td><td>Heavy math / ML training</td></tr>
+<tr><td>Streaming and proxying data</td><td>Long synchronous loops over big arrays</td></tr>
+<tr><td>Many concurrent slow connections</td><td>Anything that monopolises the CPU</td></tr>
+</table></div>
+<div class="note"><mark>Node is single-threaded for <b>your JavaScript</b>, not for I/O.</mark> Disk, DNS and crypto work happens on libuv's thread pool (default 4 threads, <code>UV_THREADPOOL_SIZE</code>); network I/O uses the OS event notification system (epoll/kqueue/IOCP).</div>
+</section>
+
+<section id="s6">
+<h3>6. The Event Loop in Depth</h3>
+<p>The event loop runs in phases, forever. Each phase has a queue of callbacks; the loop drains a phase, then moves to the next.</p>
+<figure class="diagram">
+<svg viewBox="0 0 640 400" role="img" aria-label="Node event loop phases arranged in a cycle: timers, pending callbacks, idle prepare, poll, check, close callbacks, with nextTick and promise microtasks drained between every phase.">
+  <rect class="d-box" x="176" y="16" width="290" height="40" rx="6"/>
+  <text class="d-label" x="192" y="34">timers</text>
+  <text class="d-sub"   x="192" y="49">setTimeout · setInterval callbacks whose time is up</text>
+
+  <rect class="d-box" x="176" y="66" width="290" height="36" rx="6"/>
+  <text class="d-label" x="192" y="84">pending callbacks</text>
+  <text class="d-sub"   x="192" y="97">some deferred system / TCP errors</text>
+
+  <rect class="d-box" x="176" y="112" width="290" height="32" rx="6"/>
+  <text class="d-sub"   x="192" y="132">idle, prepare — internal to libuv</text>
+
+  <rect class="d-fill-accent" x="176" y="154" width="290" height="58" rx="6"/>
+  <rect class="d-box-accent"  x="176" y="154" width="290" height="58" rx="6"/>
+  <text class="d-accent-text" x="192" y="174">poll  ← the loop WAITS here</text>
+  <text class="d-sub"   x="192" y="191">runs I/O callbacks (sockets, files)</text>
+  <text class="d-sub"   x="192" y="206">blocks for new events if nothing else is due</text>
+
+  <rect class="d-box" x="176" y="222" width="290" height="36" rx="6"/>
+  <text class="d-label" x="192" y="240">check</text>
+  <text class="d-sub"   x="192" y="253">setImmediate callbacks</text>
+
+  <rect class="d-box" x="176" y="268" width="290" height="36" rx="6"/>
+  <text class="d-label" x="192" y="286">close callbacks</text>
+  <text class="d-sub"   x="192" y="299">socket.on("close") etc.</text>
+
+  <path class="d-line" d="M321 56 V60"/><path class="d-arrow" d="M321 66 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M321 102 V106"/><path class="d-arrow" d="M321 112 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M321 144 V148"/><path class="d-arrow" d="M321 154 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M321 212 V216"/><path class="d-arrow" d="M321 222 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M321 258 V262"/><path class="d-arrow" d="M321 268 l-4.5 -9 h9 z"/>
+
+  <path class="d-line-accent" d="M176 286 H150 V36 H170"/>
+  <path class="d-arrow-accent" d="M176 36 l-9 -4.5 v9 z"/>
+  <text class="d-accent-text" x="110" y="160">one</text>
+  <text class="d-accent-text" x="104" y="176">"tick"</text>
+
+  <rect class="d-box-accent" x="486" y="126" width="146" height="112" rx="7"/>
+  <text class="d-accent-text" x="500" y="148">BETWEEN every</text>
+  <text class="d-accent-text" x="500" y="164">phase AND every</text>
+  <text class="d-accent-text" x="500" y="180">callback:</text>
+  <text class="d-mono" x="500" y="202">nextTick queue</text>
+  <text class="d-sub"  x="500" y="218">then promises</text>
+  <text class="d-sub"  x="500" y="232">— both drained fully</text>
+
+  <path class="d-dash" d="M470 182 H482"/><path class="d-arrow" d="M486 182 l-8 -4 v8 z"/>
+
+  <text class="d-sub" x="320" y="336" text-anchor="middle">An infinite nextTick chain starves the loop — it never reaches the next phase.</text>
+  <text class="d-sub" x="320" y="358" text-anchor="middle">A long synchronous function blocks every phase, so every pending request waits.</text>
+</svg>
+<figcaption>The loop drains one phase at a time; microtasks jump the queue between each. This ordering is exactly what the classic "what prints first?" question tests.</figcaption>
+</figure>
+<h4>Microtasks vs macrotasks</h4>
+<ul>
+<li><b>Microtasks</b> = <code>process.nextTick()</code> then promise callbacks. They run <b>after the current operation</b>, before the loop continues — and the queue is drained <b>completely</b>.</li>
+<li><b>Macrotasks</b> = timers, I/O callbacks, <code>setImmediate</code> — one phase at a time.</li>
+<li>An infinite <code>nextTick</code> chain can <b>starve</b> the event loop, because the loop never gets to move on.</li>
+</ul>
+<pre><code>console.log("1 sync");
+setTimeout(() =&gt; console.log("5 timeout"), 0);
+setImmediate(() =&gt; console.log("6 immediate"));
+Promise.resolve().then(() =&gt; console.log("4 promise"));
+process.nextTick(() =&gt; console.log("3 nextTick"));
+console.log("2 sync");
+
+// 1 sync → 2 sync → 3 nextTick → 4 promise → 5 timeout → 6 immediate
+// (timeout vs immediate order at top level is not guaranteed;
+//  inside an I/O callback, setImmediate always fires first)</code></pre>
+<h4>Blocking the loop — what it looks like</h4>
+<pre><code>// BAD: freezes every other request for seconds
+app.get("/report", (req, res) =&gt; {
+  let total = 0;
+  for (let i = 0; i &lt; 1e10; i++) total += i;   // CPU-bound, synchronous
+  res.json({ total });
+});
+
+// Also blocking: fs.readFileSync, JSON.parse on a 100MB string,
+// bcrypt with a huge cost factor in sync mode, big RegExp backtracking (ReDoS)</code></pre>
+<p><b>Fixes:</b> use async APIs, move CPU work to a <b>worker thread</b>, push it to a <b>queue</b> processed by a separate worker service, paginate/stream large data, or delegate to a specialised service.</p>
+</section>
+
+<section id="s7">
+<h3>7. Async Patterns</h3>
+<h4>Evolution</h4>
+<ul>
+<li><b>Callbacks</b> — error-first convention <code>(err, data)</code>. Nesting leads to "callback hell" and error handling is easy to get wrong.</li>
+<li><b>Promises</b> — an object representing a future value with states <b>pending → fulfilled / rejected</b>. Chainable, composable.</li>
+<li><b>async/await</b> — syntactic sugar over promises; reads like sync code, uses <code>try/catch</code>. An <code>async</code> function always returns a promise.</li>
+</ul>
+<h4>Combinators — know the differences</h4>
+<div class="table-wrap"><table>
+<tr><th>Combinator</th><th>Resolves when</th><th>Use for</th></tr>
+<tr><td><code>Promise.all</code></td><td>All succeed; rejects on first failure</td><td>Parallel fetches that all must work</td></tr>
+<tr><td><code>Promise.allSettled</code></td><td>All finish, success or failure</td><td>Batch jobs where partial failure is OK</td></tr>
+<tr><td><code>Promise.race</code></td><td>First to settle (even a rejection)</td><td>Timeouts</td></tr>
+<tr><td><code>Promise.any</code></td><td>First success</td><td>Multiple mirrors/fallback sources</td></tr>
+</table></div>
+<pre><code>// Sequential (slow) — 300ms
+const user = await getUser(id);
+const orders = await getOrders(id);
+
+// Parallel (fast) — 150ms
+const [user, orders] = await Promise.all([getUser(id), getOrders(id)]);
+
+// Timeout pattern
+const withTimeout = (p, ms) =&gt; Promise.race([
+  p,
+  new Promise((_, rej) =&gt; setTimeout(() =&gt; rej(new Error("timeout")), ms)),
+]);</code></pre>
+<h4>Common async mistakes</h4>
+<ul>
+<li><code>forEach</code> with <code>async</code> doesn't wait — use <code>for...of</code> (sequential) or <code>Promise.all(map(...))</code> (parallel).</li>
+<li>Forgetting <code>await</code> → you return a pending promise and errors become <b>unhandled rejections</b>.</li>
+<li>Not handling rejections → in modern Node an unhandled rejection <b>crashes the process</b>.</li>
+<li>Firing thousands of parallel promises at once → exhausts DB connections. Use a concurrency limiter (e.g. <code>p-limit</code>) or batch.</li>
+</ul>
+</section>
+
+<section id="s8">
+<h3>8. Streams & Buffers</h3>
+<p>A <b>Buffer</b> is a fixed-length chunk of raw binary memory outside V8's heap — how Node represents bytes (file contents, network packets, images).</p>
+<p>A <b>Stream</b> processes data <b>chunk by chunk</b> instead of loading it all into memory. Reading a 2 GB file with <code>readFile</code> needs 2 GB of RAM; streaming it needs only the size of one chunk. Streams are the reason Node handles large uploads/downloads well.</p>
+<div class="table-wrap"><table>
+<tr><th>Type</th><th>Description</th><th>Example</th></tr>
+<tr><td>Readable</td><td>Source of data</td><td><code>fs.createReadStream</code>, HTTP request</td></tr>
+<tr><td>Writable</td><td>Destination</td><td><code>fs.createWriteStream</code>, HTTP response</td></tr>
+<tr><td>Duplex</td><td>Both</td><td>TCP socket</td></tr>
+<tr><td>Transform</td><td>Duplex that modifies data</td><td>gzip, encryption, CSV parser</td></tr>
+</table></div>
+<pre><code>import { pipeline } from "node:stream/promises";
+
+// Stream a file to the client, gzipped, with proper error handling
+await pipeline(
+  fs.createReadStream("big.csv"),
+  zlib.createGzip(),
+  res
+);</code></pre>
+<p><b>Backpressure</b> is the key concept: if the destination is slower than the source, the writable stream signals "slow down" and the readable pauses. <code>pipe()</code>/<code>pipeline()</code> handle this automatically; manual <code>data</code> event handling usually doesn't — which causes memory blowups.</p>
+</section>
+
+<section id="s9">
+<h3>9. Modules, Memory and Processes</h3>
+<h4>Module systems</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>CommonJS</th><th>ES Modules</th></tr>
+<tr><td>Syntax</td><td><code>require</code> / <code>module.exports</code></td><td><code>import</code> / <code>export</code></td></tr>
+<tr><td>Loading</td><td>Synchronous, runtime</td><td>Asynchronous, statically analysed</td></tr>
+<tr><td>Enabled by</td><td>Default</td><td><code>"type":"module"</code> or <code>.mjs</code></td></tr>
+<tr><td>Benefit</td><td>Simple, huge ecosystem</td><td>Tree-shaking, top-level await, standard</td></tr>
+</table></div>
+<p>Modules are <b>cached after first load</b> — that's why a database connection file can export a single shared connection (a natural singleton).</p>
+<h4>Memory and garbage collection</h4>
+<ul>
+<li>V8 splits the heap into <b>new space</b> (short-lived objects, scavenged often) and <b>old space</b> (survivors, collected with mark-sweep-compact).</li>
+<li><b>Memory leaks</b> in Node usually come from: global arrays/maps that only grow, forgotten event listeners, uncleaned timers, closures holding big objects, unbounded in-memory caches.</li>
+<li>Symptoms: RSS climbing steadily, slow GC pauses, eventual <code>heap out of memory</code> crash. Investigate with heap snapshots (<code>--inspect</code> + Chrome DevTools) or <code>clinic.js</code>.</li>
+</ul>
+<h4>Using all CPU cores</h4>
+<ul>
+<li><b>Cluster module / PM2</b> — fork one process per core, all sharing a port. Processes don't share memory, so <mark>state must live outside the process</mark> (Redis, DB).</li>
+<li><b>Worker threads</b> — real threads inside one process for CPU-bound tasks, communicating by messages/shared memory.</li>
+<li><b>child_process</b> — run external programs (<code>spawn</code> streams output, <code>exec</code> buffers it; never pass unsanitised user input to a shell).</li>
+</ul>
+<h4>npm essentials</h4>
+<ul>
+<li><b>Semver</b> <code>MAJOR.MINOR.PATCH</code>: major = breaking, minor = features, patch = fixes. <code>^1.2.3</code> allows minor+patch, <code>~1.2.3</code> only patch, exact pins everything.</li>
+<li><code>package-lock.json</code> pins the whole tree — <b>commit it</b>; use <code>npm ci</code> in CI for reproducible installs.</li>
+<li><code>dependencies</code> ship to production; <code>devDependencies</code> don't. Audit with <code>npm audit</code>.</li>
+</ul>
+</section>
+
+<!-- ================= APIs ================= -->
+<div class="part">Part 3 — Building APIs</div>
+
+<section id="s10">
+<h3>10. Express Deep Dive</h3>
+<figure class="diagram">
+<svg viewBox="0 0 620 300" role="img" aria-label="Express middleware chain: a request passes through logger, CORS, body parser, rate limiter and auth, each calling next, reaching the route handler, with any error jumping straight to the error handler.">
+  <rect class="d-box-accent" x="16" y="96" width="82" height="42" rx="7"/>
+  <text class="d-accent-text" x="57" y="122" text-anchor="middle">Request</text>
+
+  <rect class="d-box" x="118" y="96" width="76" height="42" rx="6"/>
+  <text class="d-sub" x="156" y="113" text-anchor="middle">logger</text>
+  <text class="d-sub" x="156" y="129" text-anchor="middle">next()</text>
+
+  <rect class="d-box" x="206" y="96" width="76" height="42" rx="6"/>
+  <text class="d-sub" x="244" y="113" text-anchor="middle">cors</text>
+  <text class="d-sub" x="244" y="129" text-anchor="middle">next()</text>
+
+  <rect class="d-box" x="294" y="96" width="82" height="42" rx="6"/>
+  <text class="d-sub" x="335" y="113" text-anchor="middle">json body</text>
+  <text class="d-sub" x="335" y="129" text-anchor="middle">next()</text>
+
+  <rect class="d-box" x="388" y="96" width="76" height="42" rx="6"/>
+  <text class="d-sub" x="426" y="113" text-anchor="middle">auth</text>
+  <text class="d-sub" x="426" y="129" text-anchor="middle">next()</text>
+
+  <rect class="d-fill-accent" x="476" y="96" width="128" height="42" rx="6"/>
+  <rect class="d-box-accent"  x="476" y="96" width="128" height="42" rx="6"/>
+  <text class="d-accent-text" x="540" y="113" text-anchor="middle">route handler</text>
+  <text class="d-sub" x="540" y="129" text-anchor="middle">res.json(…)</text>
+
+  <path class="d-line-accent" d="M98 117 H112"/><path class="d-arrow-accent" d="M118 117 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M194 117 H200"/><path class="d-arrow" d="M206 117 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M282 117 H288"/><path class="d-arrow" d="M288 117 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M376 117 H382"/><path class="d-arrow" d="M388 117 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M464 117 H470"/><path class="d-arrow" d="M476 117 l-9 -4.5 v9 z"/>
+
+  <rect class="d-box" x="206" y="212" width="258" height="46" rx="7"/>
+  <text class="d-label" x="335" y="232" text-anchor="middle">Error handler (err, req, res, next)</text>
+  <text class="d-sub"   x="335" y="249" text-anchor="middle">four arguments — that is how Express knows</text>
+
+  <path class="d-dash" d="M244 140 V206"/><path class="d-arrow" d="M244 212 l-4.5 -9 h9 z"/>
+  <path class="d-dash" d="M426 140 V206"/><path class="d-arrow" d="M426 212 l-4.5 -9 h9 z"/>
+  <path class="d-dash" d="M540 140 V190 H470"/><path class="d-arrow" d="M464 190 l9 -4.5 v9 z"/>
+  <text class="d-sub" x="335" y="180" text-anchor="middle">next(err) — skips every remaining middleware</text>
+
+  <text class="d-sub" x="310" y="286" text-anchor="middle">Order is everything: auth must run before the handler; the error handler must be registered last.</text>
+</svg>
+<figcaption>A middleware is just <code>(req, res, next)</code>. Calling <code>next()</code> passes control along; calling <code>next(err)</code> jumps straight to the error handler; calling neither leaves the request hanging forever.</figcaption>
+</figure>
+
+<p>Express is a thin layer over Node's <code>http</code> module giving you routing and middleware. Understanding <b>middleware</b> is understanding Express.</p>
+<h4>The middleware chain</h4>
+<p>Express keeps an ordered array of functions. Each request walks the array. A middleware either <b>sends a response</b> (chain ends) or calls <code>next()</code> (continue). Calling <code>next(err)</code> jumps straight to the error handler. Nothing happens if you forget both — the request hangs.</p>
+<pre><code>import express from "express";
+const app = express();
+
+app.use(helmet());                       // security headers
+app.use(cors({ origin: ALLOWED, credentials: true }));
+app.use(express.json({ limit: "10kb" })); // parse + limit payload size
+app.use(morgan("dev"));                  // logging
+app.use("/api", rateLimit({ windowMs: 60_000, max: 100 }));
+
+app.use("/api/v1/users", userRoutes);    // routers
+
+app.use((req, res) =&gt; res.status(404).json({ message: "Not found" }));
+app.use(errorHandler);                   // must be LAST, 4 args</code></pre>
+<h4>Middleware categories</h4>
+<ul>
+<li><b>Application-level</b> — <code>app.use(fn)</code>, runs for everything (or a path prefix).</li>
+<li><b>Router-level</b> — scoped to one router, e.g. auth on <code>/admin</code>.</li>
+<li><b>Route-level</b> — <code>router.post("/", validate(schema), auth, controller)</code>.</li>
+<li><b>Built-in</b> — <code>express.json</code>, <code>express.urlencoded</code>, <code>express.static</code>.</li>
+<li><b>Error-handling</b> — four parameters <code>(err, req, res, next)</code>.</li>
+</ul>
+<h4>Request and response</h4>
+<div class="table-wrap"><table>
+<tr><th>Property</th><th>Source</th><th>Example</th></tr>
+<tr><td><code>req.params</code></td><td>URL segments</td><td><code>/users/:id</code> → <code>{id:"7"}</code></td></tr>
+<tr><td><code>req.query</code></td><td>Query string</td><td><code>?page=2&amp;sort=name</code></td></tr>
+<tr><td><code>req.body</code></td><td>Request body</td><td>needs a body-parser middleware</td></tr>
+<tr><td><code>req.headers</code></td><td>Headers</td><td><code>authorization</code></td></tr>
+<tr><td><code>req.user</code></td><td>Set by your auth middleware</td><td>attached after verifying a token</td></tr>
+</table></div>
+<div class="note"><b>Note on ordering:</b> <code>express.json()</code> must come <b>before</b> routes that read <code>req.body</code>; the 404 handler must come <b>after</b> all routes; the error handler must be <b>last</b>. Most "why is req.body undefined" bugs are ordering bugs.</div>
+<h4>Alternatives worth knowing</h4>
+<ul>
+<li><b>Fastify</b> — faster, schema-based validation and serialization built in.</li>
+<li><b>NestJS</b> — opinionated, TypeScript, decorators, dependency injection; good for large teams.</li>
+<li><b>Hono / Elysia</b> — tiny, fast, run on edge runtimes.</li>
+</ul>
+</section>
+
+<section id="s11">
+<h3>11. Project Architecture</h3>
+<h4>Why separate layers at all?</h4>
+<p>Beginners reasonably ask why a 10-line database call needs three files. The answer is what each layer <i>doesn't</i> know:</p>
+<ul>
+<li>The <b>controller</b> knows HTTP — status codes, headers, <code>req.body</code> — and nothing about business rules.</li>
+<li>The <b>service</b> knows the rules — "a user can't cancel a shipped order" — and nothing about HTTP. It never sees <code>req</code> or <code>res</code>.</li>
+<li>The <b>repository</b> knows the database and nothing else.</li>
+</ul>
+<p>The payoff is concrete. When a background job or a CLI script needs to cancel an order, it calls the same service — there's no <code>req</code> object to fake. When you swap Postgres for MongoDB, only the repository changes. When you test the business rules, you don't spin up an HTTP server.</p>
+<div class="note"><b>Don't over-apply it.</b> For a three-endpoint side project, this ceremony costs more than it saves. Add layers when the file gets hard to read, not on day one. Knowing <i>when</i> a pattern isn't worth it is a stronger interview answer than reciting it.</div>
+<p>The goal is <b>separation of concerns</b>: each layer knows only about the layer below it. The test is simple — could you swap Express for Fastify, or Mongo for Postgres, by touching only one layer?</p>
+<div class="flow">src/
+├─ config/         env parsing, db connection, constants
+├─ routes/         URL → controller mapping only
+├─ controllers/    read req, call service, send res   (HTTP layer)
+├─ services/       business logic, no req/res anywhere (pure logic)
+├─ repositories/   database queries only              (data layer)
+├─ models/         schemas / entities
+├─ middleware/     auth, validate, rateLimit, error
+├─ jobs/           queues, cron
+├─ utils/          logger, AppError, helpers
+├─ app.js          express app (no listen)
+└─ server.js       starts server, handles shutdown</div>
+<pre><code>// controller — thin, HTTP only
+export const createUser = asyncHandler(async (req, res) =&gt; {
+  const dto = createUserSchema.parse(req.body);
+  const user = await userService.create(dto);
+  res.status(201).json({ data: user });
+});
+
+// service — business rules, reusable from a CLI or a queue worker
+export const create = async (dto) =&gt; {
+  if (await userRepo.findByEmail(dto.email))
+    throw new AppError("Email already registered", 409);
+  const password = await bcrypt.hash(dto.password, 12);
+  const user = await userRepo.insert({ ...dto, password });
+  await mailer.sendWelcome(user.email);
+  return sanitize(user);
+};</code></pre>
+<p><b>Why it matters:</b> controllers full of business logic can't be reused by a cron job or a WebSocket handler, are hard to unit test (you need fake req/res), and turn into 500-line files.</p>
+<div class="note"><b>Twelve-factor habits:</b> config from environment variables, treat the app as a stateless process, logs to stdout, strict dev/prod parity, run admin tasks as one-off processes.</div>
+</section>
+
+<section id="s12">
+<h3>12. Error Handling & Validation</h3>
+<h4>A single error pipeline</h4>
+<ul>
+<li>Define an <code>AppError</code> with <code>statusCode</code> and an <code>isOperational</code> flag.</li>
+<li><b>Operational errors</b> (invalid input, not found, payment declined) are expected → return a clean 4xx.</li>
+<li><b>Programmer errors</b> (undefined is not a function) are bugs → log fully, return a generic 500, and consider restarting the process.</li>
+<li>Throw from anywhere; one central middleware formats the response. Never build error JSON in twenty places.</li>
+</ul>
+<pre><code>export class AppError extends Error {
+  constructor(message, statusCode = 500) {
+    super(message);
+    this.statusCode = statusCode;
+    this.isOperational = true;
+    Error.captureStackTrace(this, this.constructor);
+  }
+}
+
+export const asyncHandler = (fn) =&gt; (req, res, next) =&gt;
+  Promise.resolve(fn(req, res, next)).catch(next);   // no try/catch everywhere
+
+export const errorHandler = (err, req, res, next) =&gt; {
+  logger.error({ err, path: req.path, id: req.id });
+  const status = err.isOperational ? err.statusCode : 500;
+  res.status(status).json({
+    message: err.isOperational ? err.message : "Something went wrong",
+    ...(process.env.NODE_ENV !== "production" &amp;&amp; { stack: err.stack }),
+  });
+};</code></pre>
+<h4>Process-level safety nets</h4>
+<pre><code>process.on("unhandledRejection", (err) =&gt; { logger.fatal(err); shutdown(1); });
+process.on("uncaughtException",  (err) =&gt; { logger.fatal(err); process.exit(1); });
+process.on("SIGTERM", shutdown);   // graceful: stop accepting, finish in-flight, close DB</code></pre>
+<h4>Validation</h4>
+<p>Validate at the <b>boundary</b> — body, params, query, headers, webhooks, env vars. Prefer a schema library (<b>Zod</b>, Joi) so validation is declarative, reusable and (with Zod/TS) gives you types for free.</p>
+<pre><code>const createUserSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+  age: z.number().int().min(13).optional(),
+}).strict();                       // reject unknown keys → prevents mass assignment
+
+export const validate = (schema) =&gt; (req, res, next) =&gt; {
+  const result = schema.safeParse(req.body);
+  if (!result.success)
+    return res.status(422).json({ errors: result.error.flatten().fieldErrors });
+  req.body = result.data;          // use the parsed, coerced, trimmed data
+  next();
+};</code></pre>
+<div class="note"><b>Mass assignment</b> is a classic bug: <code>User.create(req.body)</code> lets an attacker send <code>{"role":"admin"}</code>. Always whitelist fields (<code>.strict()</code>, explicit picking) instead of trusting the whole body.</div>
+</section>
+
+<section id="s13">
+<h3>13. REST API Design</h3>
+<h4>Principles</h4>
+<ul>
+<li><b>Resources, not actions.</b> <code>POST /orders</code>, not <code>POST /createOrder</code>. Use plural nouns and nest only one level deep: <code>/users/7/orders</code>.</li>
+<li><b>Stateless</b> — every request carries its own authentication.</li>
+<li><b>Consistent envelopes</b> — one shape for success, one for errors, everywhere.</li>
+<li><b>Versioning</b> — <code>/api/v1/</code> in the URL (simplest) or via headers. Never break an existing version; deprecate with warnings.</li>
+</ul>
+<pre><code>GET    /api/v1/products?category=books&amp;sort=-price&amp;page=2&amp;limit=20
+POST   /api/v1/products
+GET    /api/v1/products/42
+PATCH  /api/v1/products/42
+DELETE /api/v1/products/42
+GET    /api/v1/products/42/reviews</code></pre>
+<h4>Pagination</h4>
+<div class="table-wrap"><table>
+<tr><th>Style</th><th>How</th><th>Trade-off</th></tr>
+<tr><td><b>Offset</b></td><td><code>?page=3&amp;limit=20</code> → <code>OFFSET 40</code></td><td>Simple; slow on deep pages, items shift if data changes</td></tr>
+<tr><td><b>Cursor / keyset</b></td><td><code>?after=eyJpZCI6MTAwfQ</code> → <code>WHERE id &gt; 100</code></td><td>Fast and stable at any depth; no random page jumps</td></tr>
+</table></div>
+<pre><code>{
+  "data": [ ... ],
+  "meta": { "page": 2, "limit": 20, "total": 348, "totalPages": 18 }
+}
+{
+  "message": "Validation failed",
+  "code": "VALIDATION_ERROR",
+  "errors": { "email": ["Invalid email"] },
+  "requestId": "a1b2c3"
+}</code></pre>
+<h4>Other design decisions</h4>
+<ul>
+<li><b>Filtering/sorting/search</b> — keep them in the query string with a whitelist of allowed fields (never interpolate them into SQL).</li>
+<li><b>Partial responses</b> — <code>?fields=id,name</code> to reduce payload.</li>
+<li><b>Rate limiting</b> — return <code>429</code> plus <code>X-RateLimit-*</code> and <code>Retry-After</code>.</li>
+<li><b>Soft delete</b> — set <code>deletedAt</code> instead of removing rows when you need audit/undo.</li>
+<li><b>Documentation</b> — OpenAPI/Swagger spec; generate it from your schemas so it never goes stale.</li>
+</ul>
+<h4>REST vs GraphQL vs gRPC vs tRPC</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>REST</th><th>GraphQL</th><th>gRPC</th><th>tRPC</th></tr>
+<tr><td>Shape</td><td>Fixed per endpoint</td><td>Client picks fields</td><td>Protobuf contract</td><td>TS functions</td></tr>
+<tr><td>Best for</td><td>Public APIs, caching</td><td>Many clients, nested data</td><td>Internal microservices</td><td>TS monorepos</td></tr>
+<tr><td>Pain</td><td>Over/under-fetching</td><td>Caching, N+1, complexity</td><td>Not browser-native</td><td>TS only</td></tr>
+</table></div>
+</section>
+
+<section id="s14">
+<h3>14. Files, Email and Real-time</h3>
+<h4>File uploads</h4>
+<ul>
+<li>Parse <code>multipart/form-data</code> with <b>multer</b> (or busboy for streaming).</li>
+<li><mark>Store files in object storage (S3, R2, Cloudinary), not in your database or app server</mark> — app servers are disposable.</li>
+<li><b>Presigned URLs</b> are the scalable pattern: the client uploads <b>directly</b> to S3 with a short-lived signed URL, so file bytes never touch your server.</li>
+<li>Always validate: size limit, MIME type <b>and</b> magic bytes (extensions lie), random filenames, and never serve user uploads from your own domain without care.</li>
+</ul>
+<h4>Email & notifications</h4>
+<p>Use a provider (Resend, SendGrid, SES) — never your own SMTP for production deliverability. Send emails from a <b>background job</b>, not inside the request, so a slow provider doesn't slow your API. Deliverability depends on SPF, DKIM and DMARC DNS records.</p>
+<h4>Real-time</h4>
+<div class="table-wrap"><table>
+<tr><th>Technique</th><th>Direction</th><th>Use for</th></tr>
+<tr><td>Short polling</td><td>Client asks repeatedly</td><td>Simplest; wasteful</td></tr>
+<tr><td>Long polling</td><td>Server holds the request</td><td>Fallback when WS is blocked</td></tr>
+<tr><td><b>SSE</b></td><td>Server → client stream over HTTP</td><td>Notifications, live logs, AI token streaming</td></tr>
+<tr><td><b>WebSocket</b></td><td>Full duplex, persistent</td><td>Chat, multiplayer, collaborative editing</td></tr>
+<tr><td>Webhooks</td><td>Server → your server</td><td>Payment events (verify the signature!)</td></tr>
+</table></div>
+<p>With multiple server instances, WebSocket connections live on <b>different processes</b> — a message from user A on server 1 won't reach user B on server 2. Solve with a <b>Redis pub/sub adapter</b> (e.g. socket.io-redis) so servers broadcast to each other.</p>
+</section>
+
+<!-- ================= DATA ================= -->
+<div class="part">Part 4 — Databases & Data</div>
+
+<section id="s15">
+<h3>15. Database Fundamentals</h3>
+<h4>Connection pooling — why you never open a connection per request</h4>
+<p>Opening a database connection is expensive: a TCP handshake, authentication, and server-side memory allocated per connection. Doing that per request adds tens of milliseconds and will exhaust the database's connection limit (Postgres defaults to ~100) under load.</p>
+<p>A <b>pool</b> opens a fixed set of connections at startup and lends them out. A request borrows one, runs its query, and returns it. If all are busy, the request waits briefly rather than opening a new one.</p>
+<pre><code>const pool = new Pool({ max: 20, idleTimeoutMillis: 30000 });
+// 20 connections serving hundreds of concurrent requests, because each
+// query only holds one for a few milliseconds</code></pre>
+<div class="note"><b>Sizing trap:</b> more is not better. 10 app instances × a pool of 100 = 1000 connections, and the database falls over. Total pool size across <i>all</i> instances must stay under the database's limit. A common starting point is <code>(cores × 2) + effective spindles</code> — usually somewhere between 10 and 30.</div>
+<div class="table-wrap"><table>
+<tr><th></th><th>Relational (Postgres, MySQL)</th><th>Document (MongoDB)</th></tr>
+<tr><td>Model</td><td>Tables, rows, fixed schema</td><td>Collections, flexible JSON documents</td></tr>
+<tr><td>Relations</td><td>Foreign keys + JOINs</td><td>Embedding or manual references</td></tr>
+<tr><td>Guarantees</td><td>Strong ACID, constraints enforced by the DB</td><td>ACID per document (multi-doc needs transactions)</td></tr>
+<tr><td>Schema changes</td><td>Migrations</td><td>Just write different fields (risk: silent drift)</td></tr>
+<tr><td>Fits</td><td>Money, orders, anything highly related</td><td>Catalogs, logs, varied/nested shapes</td></tr>
+</table></div>
+<div class="note"><b>Honest advice:</b> for most applications, <b>PostgreSQL is the safe default</b>. It handles relational data, JSONB documents, full-text search, geospatial data and queues. Choose MongoDB when your data is genuinely document-shaped and schema varies a lot.</div>
+<h4>Other database types</h4>
+<ul>
+<li><b>Key–value</b> (Redis, DynamoDB) — cache, sessions, counters, extremely fast lookups.</li>
+<li><b>Search</b> (Elasticsearch, Meilisearch, Postgres FTS) — ranked full-text search, typo tolerance.</li>
+<li><b>Time-series</b> (TimescaleDB, InfluxDB) — metrics and IoT data.</li>
+<li><b>Graph</b> (Neo4j) — relationship-heavy data: social graphs, recommendations, fraud rings.</li>
+<li><b>Columnar / OLAP</b> (ClickHouse, BigQuery) — analytics over billions of rows.</li>
+</ul>
+<h4>OLTP vs OLAP</h4>
+<p><b>OLTP</b> = many small reads/writes (your app). <b>OLAP</b> = few huge analytical scans (dashboards, reports). Running heavy analytics on your production OLTP database is a classic cause of outages — use a read replica or a separate warehouse.</p>
+<h4>CAP theorem</h4>
+<p>In a distributed system, when a network <b>Partition</b> happens you must choose between <b>Consistency</b> (reject requests rather than serve stale data) and <b>Availability</b> (serve possibly stale data). Single-node databases aren't in this trade-off; distributed ones are. Related idea: <b>eventual consistency</b> — replicas converge after a short delay, which is why a read right after a write may miss it.</p>
+</section>
+
+<section id="s16">
+<h3>16. SQL in Depth</h3>
+<pre><code>-- Filter, sort, page
+SELECT id, name, price FROM products
+WHERE category = 'books' AND price BETWEEN 100 AND 900
+ORDER BY price DESC
+LIMIT 20 OFFSET 40;
+
+-- Join + aggregate: revenue per customer, only big spenders
+SELECT u.id, u.name, COUNT(o.id) AS orders, SUM(o.total) AS revenue
+FROM users u
+JOIN orders o ON o.user_id = u.id
+WHERE o.created_at &gt;= NOW() - INTERVAL '30 days'
+GROUP BY u.id, u.name
+HAVING SUM(o.total) &gt; 10000
+ORDER BY revenue DESC;</code></pre>
+<h4>Execution order (why you can't use an alias in WHERE)</h4>
+<div class="flow">FROM → JOIN → WHERE → GROUP BY → HAVING → SELECT → DISTINCT → ORDER BY → LIMIT</div>
+<p><code>WHERE</code> filters <b>rows before grouping</b>; <code>HAVING</code> filters <b>groups after aggregation</b>. <code>SELECT</code> runs late, so aliases defined there aren't visible to <code>WHERE</code>.</p>
+<h4>Joins</h4>
+<div class="table-wrap"><table>
+<tr><th>Join</th><th>Returns</th></tr>
+<tr><td>INNER</td><td>Only rows matching in both tables</td></tr>
+<tr><td>LEFT</td><td>All left rows; NULLs where no match (e.g. users with zero orders)</td></tr>
+<tr><td>RIGHT / FULL</td><td>Mirror of LEFT / both sides</td></tr>
+<tr><td>CROSS</td><td>Cartesian product (every combination)</td></tr>
+<tr><td>SELF</td><td>Table joined to itself (employee → manager)</td></tr>
+</table></div>
+<h4>Keys and constraints — let the database protect you</h4>
+<ul>
+<li><b>PRIMARY KEY</b> — unique row identity. <b>FOREIGN KEY</b> — referential integrity, with <code>ON DELETE CASCADE / SET NULL / RESTRICT</code>.</li>
+<li><b>UNIQUE</b>, <b>NOT NULL</b>, <b>CHECK</b> (<code>price &gt;= 0</code>), <b>DEFAULT</b>.</li>
+<li>Constraints in the DB are enforced even when a buggy script or a second service writes data — application-level checks are not.</li>
+</ul>
+<h4>Normalization vs denormalization</h4>
+<ul>
+<li><b>1NF</b> atomic values, no repeating groups · <b>2NF</b> no partial dependency on part of a composite key · <b>3NF</b> no non-key column depending on another non-key column.</li>
+<li>Normalize to avoid duplication and update anomalies; <b>denormalize deliberately</b> (cached counts, duplicated names) when reads dominate — and then keep the copies in sync.</li>
+</ul>
+<h4>Useful advanced tools</h4>
+<ul>
+<li><b>Window functions:</b> <code>ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY created_at DESC)</code> — rank within groups without collapsing rows.</li>
+<li><b>CTEs:</b> <code>WITH recent AS (...) SELECT ...</code> — readable multi-step queries, recursion for trees.</li>
+<li><b>Upsert:</b> <code>INSERT ... ON CONFLICT (email) DO UPDATE SET ...</code>.</li>
+<li><b>Views</b> for reusable queries; <b>materialized views</b> for cached expensive aggregations.</li>
+</ul>
+</section>
+
+<section id="s17">
+<h3>17. Indexes & Query Performance</h3>
+<figure class="diagram">
+<svg viewBox="0 0 680 320" role="img" aria-label="A B-tree index: a root node of key ranges points to branch nodes, which point to leaf nodes holding sorted keys and row pointers, so a lookup takes three hops instead of scanning every row.">
+  <rect class="d-box-accent" x="248" y="14" width="144" height="38" rx="6"/>
+  <text class="d-mono" x="320" y="38" text-anchor="middle">&lt;50 | 50–99 | 100+</text>
+  <text class="d-sub" x="404" y="38">root</text>
+
+  <rect class="d-box" x="40" y="94" width="150" height="38" rx="6"/>
+  <text class="d-mono" x="115" y="118" text-anchor="middle">1–24 | 25–49</text>
+  <rect class="d-fill-accent" x="246" y="94" width="150" height="38" rx="6"/>
+  <rect class="d-box-accent"  x="246" y="94" width="150" height="38" rx="6"/>
+  <text class="d-mono" x="321" y="118" text-anchor="middle">50–74 | 75–99</text>
+  <rect class="d-box" x="452" y="94" width="150" height="38" rx="6"/>
+  <text class="d-mono" x="527" y="118" text-anchor="middle">100–149 | 150+</text>
+  <text class="d-sub" x="610" y="80">branch</text>
+
+  <rect class="d-box" x="40" y="176" width="112" height="46" rx="6"/>
+  <text class="d-sub" x="96" y="195" text-anchor="middle">1 … 24</text>
+  <text class="d-sub" x="96" y="212" text-anchor="middle">→ row ptrs</text>
+
+  <rect class="d-box" x="166" y="176" width="112" height="46" rx="6"/>
+  <text class="d-sub" x="222" y="195" text-anchor="middle">25 … 49</text>
+  <text class="d-sub" x="222" y="212" text-anchor="middle">→ row ptrs</text>
+
+  <rect class="d-fill-accent" x="292" y="176" width="112" height="46" rx="6"/>
+  <rect class="d-box-accent"  x="292" y="176" width="112" height="46" rx="6"/>
+  <text class="d-accent-text" x="348" y="195" text-anchor="middle">50 … 74</text>
+  <text class="d-sub" x="348" y="212" text-anchor="middle">id 62 found ✓</text>
+
+  <rect class="d-box" x="418" y="176" width="112" height="46" rx="6"/>
+  <text class="d-sub" x="474" y="195" text-anchor="middle">75 … 99</text>
+  <text class="d-sub" x="474" y="212" text-anchor="middle">→ row ptrs</text>
+
+  <rect class="d-box" x="544" y="176" width="58" height="46" rx="6"/>
+  <text class="d-sub" x="573" y="202" text-anchor="middle">100 …</text>
+  <text class="d-sub" x="610" y="162">leaf</text>
+
+  <path class="d-line" d="M280 52 L150 88"/><path class="d-arrow" d="M144 90 l7 -7 l2 9 z"/>
+  <path class="d-line-accent" d="M320 52 V88"/><path class="d-arrow-accent" d="M320 94 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M360 52 L490 88"/><path class="d-arrow" d="M496 90 l-9 -2 l2 9 z"/>
+  <path class="d-line-accent" d="M310 132 L348 170"/><path class="d-arrow-accent" d="M348 176 l-6 -8 l9 -1 z"/>
+
+  <path class="d-dash" d="M96 222 V250 H560 V222"/>
+  <text class="d-sub" x="320" y="268" text-anchor="middle">leaves are linked in sorted order — this is what makes range scans and ORDER BY fast</text>
+
+  <text class="d-accent-text" x="120" y="36" text-anchor="middle">WHERE id = 62</text>
+  <text class="d-sub" x="120" y="56" text-anchor="middle">3 hops, not 10M rows</text>
+
+  <text class="d-sub" x="320" y="300" text-anchor="middle">A B-tree stays balanced, so lookup cost is O(log n) — 10× the rows costs only one more hop.</text>
+</svg>
+<figcaption>An index is a sorted structure kept beside the table. Without it the database scans every row; with it, it descends a few levels.</figcaption>
+</figure>
+<h4>Why an index is not free</h4>
+<p>Every index must be updated on every <code>INSERT</code>, <code>UPDATE</code> and <code>DELETE</code>, and it consumes disk and memory. That is the trade: <b>faster reads, slower writes</b>. Index the columns you filter, join and sort on — not every column.</p>
+
+<p>An index is a sorted data structure (usually a <b>B-tree</b>) mapping column values to row locations. Without one, the DB does a <b>sequential scan</b> — reading every row. With one, it does a tree lookup: milliseconds instead of seconds on large tables.</p>
+<h4>Costs and rules</h4>
+<ul>
+<li>Every index <b>slows writes</b> (each INSERT/UPDATE must update the index) and uses disk. Don't index everything.</li>
+<li>Index the columns you <b>filter</b>, <b>join</b> and <b>sort</b> by — especially foreign keys.</li>
+<li><b>Composite indexes</b> follow the <b>leftmost prefix rule</b>: an index on <code>(user_id, created_at)</code> helps queries filtering on <code>user_id</code>, or <code>user_id + created_at</code> — but not <code>created_at</code> alone.</li>
+<li><b>Low selectivity</b> columns (a boolean, a status with 3 values) benefit little from a plain B-tree index.</li>
+<li>An index is <b>not used</b> if you wrap the column in a function (<code>WHERE LOWER(email) = ...</code>) — create a functional index instead.</li>
+<li><b>Covering index</b> — when the index contains every column the query needs, the DB never touches the table.</li>
+</ul>
+<pre><code>EXPLAIN ANALYZE
+SELECT * FROM orders WHERE user_id = 42 ORDER BY created_at DESC LIMIT 10;
+-- Look for: Seq Scan (bad on big tables) vs Index Scan,
+-- rows estimated vs actual, and the slowest node's time.
+
+CREATE INDEX idx_orders_user_created ON orders (user_id, created_at DESC);</code></pre>
+<h4>The N+1 query problem</h4>
+<pre><code>// BAD — 1 + N queries
+const posts = await Post.find();
+for (const p of posts) p.author = await User.findById(p.authorId);
+
+// GOOD — 2 queries (or 1 with a JOIN)
+const posts = await Post.find().populate("author");
+const posts = await prisma.post.findMany({ include: { author: true } });</code></pre>
+<h4>Other performance levers</h4>
+<ul>
+<li><b>Connection pooling</b> — opening a DB connection is expensive; reuse a pool. In serverless, use a pooler (PgBouncer, Prisma Accelerate) or you'll exhaust connections.</li>
+<li><b>Select only needed columns</b>; avoid <code>SELECT *</code> on wide tables.</li>
+<li><b>Batch</b> inserts/updates instead of looping one query at a time.</li>
+<li><b>Read replicas</b> for heavy read traffic; <b>partitioning</b> for very large tables.</li>
+<li><b>Slow query log</b> — always measure before optimising.</li>
+</ul>
+</section>
+
+<section id="s18">
+<h3>18. Transactions & Concurrency</h3>
+<figure class="diagram">
+<svg viewBox="0 0 620 300" role="img" aria-label="Two concurrent transactions both reading stock equals one and both selling it, resulting in a lost update, with the fix shown as an atomic conditional update.">
+  <text class="d-accent-text" x="150" y="20" text-anchor="middle">Transaction A</text>
+  <text class="d-accent-text" x="470" y="20" text-anchor="middle">Transaction B</text>
+  <path class="d-dash" d="M150 30 V210"/>
+  <path class="d-dash" d="M470 30 V210"/>
+  <text class="d-sub" x="310" y="20" text-anchor="middle">stock = 1</text>
+  <path class="d-dash" d="M310 30 V210"/>
+
+  <rect class="d-box" x="56" y="44" width="188" height="28" rx="5"/>
+  <text class="d-mono" x="150" y="63" text-anchor="middle">SELECT stock → 1</text>
+  <path class="d-line" d="M244 58 H304"/><path class="d-arrow" d="M310 58 l-9 -4.5 v9 z"/>
+
+  <rect class="d-box" x="376" y="86" width="188" height="28" rx="5"/>
+  <text class="d-mono" x="470" y="105" text-anchor="middle">SELECT stock → 1</text>
+  <path class="d-line" d="M376 100 H316"/><path class="d-arrow" d="M310 100 l9 -4.5 v9 z"/>
+
+  <rect class="d-box" x="56" y="128" width="188" height="28" rx="5"/>
+  <text class="d-mono" x="150" y="147" text-anchor="middle">UPDATE stock = 0</text>
+  <rect class="d-box" x="376" y="170" width="188" height="28" rx="5"/>
+  <text class="d-mono" x="470" y="189" text-anchor="middle">UPDATE stock = 0</text>
+
+  <text class="d-sub" x="310" y="234" text-anchor="middle">Both checked "stock &gt; 0" and both passed — one item, sold twice.</text>
+  <text class="d-accent-text" x="310" y="258" text-anchor="middle">LOST UPDATE</text>
+
+  <rect class="d-fill-accent" x="60" y="270" width="500" height="26" rx="5"/>
+  <rect class="d-box-accent"  x="60" y="270" width="500" height="26" rx="5"/>
+  <text class="d-mono" x="310" y="288" text-anchor="middle">Fix: UPDATE … SET stock = stock - 1 WHERE id = ? AND stock &gt; 0</text>
+</svg>
+<figcaption>The read and the write are separate steps, so another transaction can slip between them. The fix moves the check <i>into</i> the write, where the database enforces it atomically.</figcaption>
+</figure>
+
+<p>A transaction groups statements so they succeed or fail <b>together</b>. The classic example is a money transfer: debit and credit must both happen or neither.</p>
+<pre><code>BEGIN;
+  UPDATE accounts SET balance = balance - 500 WHERE id = 1;
+  UPDATE accounts SET balance = balance + 500 WHERE id = 2;
+COMMIT;   -- or ROLLBACK on any error</code></pre>
+<h4>ACID</h4>
+<ul>
+<li><b>Atomicity</b> — all or nothing.</li>
+<li><b>Consistency</b> — constraints hold before and after.</li>
+<li><b>Isolation</b> — concurrent transactions don't corrupt each other.</li>
+<li><b>Durability</b> — once committed, it survives a crash (write-ahead log).</li>
+</ul>
+<h4>Isolation levels and the anomalies they prevent</h4>
+<div class="table-wrap"><table>
+<tr><th>Level</th><th>Dirty read</th><th>Non-repeatable read</th><th>Phantom read</th></tr>
+<tr><td>Read Uncommitted</td><td>Possible</td><td>Possible</td><td>Possible</td></tr>
+<tr><td>Read Committed <i>(Postgres default)</i></td><td>No</td><td>Possible</td><td>Possible</td></tr>
+<tr><td>Repeatable Read <i>(MySQL default)</i></td><td>No</td><td>No</td><td>Possible*</td></tr>
+<tr><td>Serializable</td><td>No</td><td>No</td><td>No</td></tr>
+</table></div>
+<p><i>Dirty read</i> = seeing uncommitted data. <i>Non-repeatable read</i> = same row returns different values within one transaction. <i>Phantom read</i> = a repeated range query returns new rows. Higher isolation = more correctness, less concurrency.</p>
+<h4>Race conditions and locking</h4>
+<ul>
+<li><b>Lost update:</b> two requests read stock = 1 and both sell it. Fix with <code>SELECT ... FOR UPDATE</code> (pessimistic lock) or an atomic statement like <code>UPDATE ... SET stock = stock - 1 WHERE stock &gt; 0</code>.</li>
+<li><b>Optimistic locking:</b> keep a <code>version</code> column; update <code>WHERE version = X</code> and fail with 409 if zero rows changed. Great for low-contention data and user-facing edit conflicts.</li>
+<li><b>Deadlock:</b> two transactions lock resources in opposite order. Prevent by always locking in a consistent order and keeping transactions short.</li>
+<li>Keep transactions <b>short</b> — never call an external API inside one.</li>
+</ul>
+</section>
+
+<section id="s19">
+<h3>19. MongoDB / NoSQL Modelling</h3>
+<pre><code>const orderSchema = new mongoose.Schema({
+  user:   { type: mongoose.Schema.Types.ObjectId, ref: "User", index: true },
+  items:  [{ product: { type: ObjectId, ref: "Product" }, qty: Number, price: Number }],
+  status: { type: String, enum: ["pending","paid","shipped"], default: "pending" },
+  total:  { type: Number, required: true, min: 0 },
+}, { timestamps: true });
+
+orderSchema.index({ user: 1, createdAt: -1 });   // compound index</code></pre>
+<h4>Embed vs reference — the central modelling decision</h4>
+<div class="table-wrap"><table>
+<tr><th>Embed when</th><th>Reference when</th></tr>
+<tr><td>Data is read together with the parent</td><td>Data is queried independently</td></tr>
+<tr><td>The child list is bounded and small</td><td>The list grows without limit (comments, logs)</td></tr>
+<tr><td>It belongs only to this parent (address, order lines)</td><td>It's shared across documents (users, products)</td></tr>
+<tr><td>Snapshot semantics are wanted (price at purchase time)</td><td>Updates must apply everywhere at once</td></tr>
+</table></div>
+<p>MongoDB has a <b>16 MB document limit</b>, so unbounded arrays are an anti-pattern. Model around your <b>read patterns</b>, not around abstract entity diagrams.</p>
+<h4>Querying</h4>
+<ul>
+<li>Operators: <code>$eq $gt $gte $lt $in $nin $and $or $exists $regex</code>; updates: <code>$set $unset $inc $push $pull $addToSet</code>.</li>
+<li><code>populate()</code> is a client-side join — it issues extra queries. <code>$lookup</code> joins inside the aggregation pipeline.</li>
+<li><b>Aggregation pipeline</b>: <code>$match → $group → $sort → $project → $lookup → $facet</code>. Put <code>$match</code> and <code>$sort</code> first so indexes can be used.</li>
+<li>Mongoose gives you schemas, validation, middleware (<code>pre("save")</code> for hashing passwords), and virtuals.</li>
+<li>Multi-document <b>transactions</b> exist but need a replica set and are slower — prefer designs where one document is the unit of consistency.</li>
+</ul>
+</section>
+
+<section id="s20">
+<h3>20. ORMs, Query Builders & Migrations</h3>
+<h4>The N+1 query problem</h4>
+<p>This is the most common performance bug in ORM code, and a near-guaranteed interview question. It happens when you load a list, then access a relation inside a loop — the ORM quietly issues one more query per row.</p>
+<pre><code>// 1 query for the posts…
+const posts = await Post.find();
+for (const post of posts) {
+  // …then ONE MORE query per post. 100 posts = 101 queries.
+  post.author = await User.findById(post.userId);
+}</code></pre>
+<pre><code>// Fix 1 — let the database join (SQL)
+SELECT p.*, u.name FROM posts p JOIN users u ON u.id = p.user_id;
+
+// Fix 2 — eager load (Prisma / Sequelize / Mongoose)
+await prisma.post.findMany({ include: { author: true } });
+await Post.find().populate("author");
+
+// Fix 3 — batch the lookup yourself: 2 queries total, whatever the row count
+const posts = await Post.find();
+const users = await User.find({ _id: { $in: posts.map(p =&gt; p.userId) } });
+const byId = new Map(users.map(u =&gt; [String(u._id), u]));
+posts.forEach(p =&gt; { p.author = byId.get(String(p.userId)); });</code></pre>
+<p>It's insidious because it works perfectly in development with 10 rows and collapses in production with 10,000. <b>Log your queries in development</b> — if one page request produces 200 queries, you've found it.</p>
+<div class="table-wrap"><table>
+<tr><th>Layer</th><th>Example</th><th>Trade-off</th></tr>
+<tr><td>Raw driver</td><td><code>pg</code>, <code>mongodb</code></td><td>Full control, most boilerplate</td></tr>
+<tr><td>Query builder</td><td>Knex, Drizzle</td><td>SQL-like, composable, thin</td></tr>
+<tr><td>ORM</td><td>Prisma, TypeORM, Sequelize, Mongoose</td><td>Productive, type-safe; can hide expensive queries</td></tr>
+</table></div>
+<pre><code>const users = await prisma.user.findMany({
+  where: { active: true, orders: { some: { total: { gt: 1000 } } } },
+  include: { orders: { take: 5, orderBy: { createdAt: "desc" } } },
+  skip: 20, take: 10,
+});</code></pre>
+<h4>Migrations</h4>
+<p>Migrations are <b>version control for your schema</b>: ordered, committed files that every environment applies in the same order. Never change production schema by hand.</p>
+<ul>
+<li>Each migration should be reversible where possible and <b>tested on a copy of production data</b>.</li>
+<li><b>Zero-downtime pattern</b> for renaming a column: add the new column → write to both → backfill → switch reads → stop writing the old → drop it. Several deploys, no outage.</li>
+<li>Adding an index on a huge table can lock it — use <code>CREATE INDEX CONCURRENTLY</code> in Postgres.</li>
+<li><b>Seeding</b> scripts create predictable dev/test data.</li>
+</ul>
+<div class="note"><b>ORM caution:</b> ORMs make bad queries easy to write invisibly (N+1, fetching entire tables). Log generated SQL in development and be ready to drop to raw SQL for complex reports.</div>
+</section>
+
+<section id="s21">
+<h3>21. Caching & Redis</h3>
+<figure class="diagram">
+<svg viewBox="0 0 620 230" role="img" aria-label="Cache-aside pattern: the app checks Redis first; on a hit it returns immediately, on a miss it queries the database, writes the result into the cache with a TTL, then returns it.">
+  <rect class="d-box-accent" x="20" y="40" width="120" height="44" rx="7"/>
+  <text class="d-accent-text" x="80" y="68" text-anchor="middle">App</text>
+
+  <rect class="d-box" x="236" y="40" width="140" height="44" rx="7"/>
+  <text class="d-label" x="306" y="60" text-anchor="middle">Redis</text>
+  <text class="d-sub"   x="306" y="76" text-anchor="middle">in memory, ~1ms</text>
+
+  <rect class="d-box" x="468" y="40" width="132" height="44" rx="7"/>
+  <text class="d-label" x="534" y="60" text-anchor="middle">Database</text>
+  <text class="d-sub"   x="534" y="76" text-anchor="middle">on disk, ~50ms</text>
+
+  <path class="d-line-accent" d="M146 56 H230"/><path class="d-arrow-accent" d="M236 56 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="188" y="50" text-anchor="middle">① GET key</text>
+
+  <path class="d-line-accent" d="M230 76 H146"/><path class="d-arrow-accent" d="M140 76 l9 -4.5 v9 z"/>
+  <text class="d-accent-text" x="188" y="98" text-anchor="middle">HIT → done</text>
+
+  <path class="d-line" d="M382 56 H462"/><path class="d-arrow" d="M468 56 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="422" y="50" text-anchor="middle">② MISS</text>
+
+  <path class="d-line" d="M462 76 H382"/><path class="d-arrow" d="M376 76 l9 -4.5 v9 z"/>
+  <text class="d-sub" x="422" y="98" text-anchor="middle">③ rows</text>
+
+  <path class="d-dash" d="M534 84 V132 H312"/>
+  <path class="d-arrow" d="M306 132 l9 -4.5 v9 z"/>
+  <text class="d-sub" x="310" y="152" text-anchor="middle">④ SET key value EX 300 — write it back with a TTL</text>
+
+  <text class="d-sub" x="80" y="104" text-anchor="middle">read path</text>
+
+  <text class="d-accent-text" x="310" y="182" text-anchor="middle">Hit rate is everything</text>
+  <text class="d-sub" x="310" y="208" text-anchor="middle">90% hits ≈ 0.9(1ms) + 0.1(51ms) ≈ 6ms average — a 50ms query made 8× faster.</text>
+</svg>
+<figcaption>Cache-aside: the application owns the logic. Check cache → miss → read database → populate cache → return. A TTL bounds how stale the data can get.</figcaption>
+</figure>
+<h4>The two hard parts</h4>
+<ul>
+<li><b>Invalidation.</b> When the underlying row changes, the cached copy is wrong. Either delete the key on write (<code>DEL user:7</code>) or accept staleness until the TTL expires. Deleting is more correct; TTL is simpler and usually enough.</li>
+<li><b>Stampede.</b> A popular key expires and 500 requests miss simultaneously, all hammering the database at once. Fixes: a short lock so one request refills while others wait, or staggered/jittered TTLs so keys don't expire together.</li>
+</ul>
+<div class="note"><b>Only cache what's worth caching:</b> data read far more often than it changes, and expensive to produce. Caching a fast, constantly-changing query adds complexity and a new class of bug for no gain.</div>
+
+<p>Caching trades <b>freshness for speed</b>. Add it only where you've measured a real cost, and always decide up front how the cache gets invalidated.</p>
+<h4>Layers of caching</h4>
+<div class="flow">Browser cache → CDN → Reverse proxy → Application cache (Redis) → Database cache → Disk
+  fastest, stalest ───────────────────────────────────────────► slowest, freshest</div>
+<h4>Patterns</h4>
+<ul>
+<li><b>Cache-aside (lazy):</b> read cache → miss → read DB → write cache with a TTL. The default choice.</li>
+<li><b>Write-through:</b> write DB and cache together — fresher, slightly slower writes.</li>
+<li><b>Write-behind:</b> write cache now, DB later — fast but risky.</li>
+<li><b>TTL + invalidation on write:</b> delete the key whenever the underlying data changes.</li>
+</ul>
+<pre><code>async function getProduct(id) {
+  const key = `product:${id}`;
+  const hit = await redis.get(key);
+  if (hit) return JSON.parse(hit);
+
+  const product = await db.product.findUnique({ where: { id } });
+  await redis.set(key, JSON.stringify(product), "EX", 300);   // 5 min TTL
+  return product;
+}
+// on update: await redis.del(`product:${id}`)</code></pre>
+<h4>What Redis is used for besides caching</h4>
+<ul>
+<li><b>Sessions</b> — shared across many server instances.</li>
+<li><b>Rate limiting</b> — atomic <code>INCR</code> with an expiry per user/IP.</li>
+<li><b>Queues</b> — BullMQ builds on Redis lists/streams.</li>
+<li><b>Pub/Sub</b> — broadcasting between server instances (WebSockets).</li>
+<li><b>Distributed locks</b>, counters, leaderboards (sorted sets).</li>
+</ul>
+<h4>Cache hazards</h4>
+<ul>
+<li><b>Stampede / thundering herd:</b> a hot key expires and thousands of requests hit the DB at once. Fix with a lock, staggered TTLs, or serving stale while revalidating.</li>
+<li><b>Stale data</b> after updates — invalidate on write, don't just wait for TTL.</li>
+<li><b>Never cache private data under a shared key</b> — include the user ID in the key.</li>
+<li>Redis is memory-bound: set <code>maxmemory</code> and an eviction policy (<code>allkeys-lru</code>).</li>
+</ul>
+</section>
+
+<!-- ================= SECURITY ================= -->
+<div class="part">Part 5 — Authentication & Security</div>
+
+<section id="s22">
+<h3>22. Authentication Concepts</h3>
+<ul>
+<li><b>Identification</b> — who you claim to be. <b>Authentication</b> — proving it. <b>Authorization</b> — what you may do.</li>
+<li><b>Authorization models:</b> <b>RBAC</b> (roles: admin/editor/user), <b>ABAC</b> (attributes/conditions), <b>ownership checks</b> (this document belongs to this user).</li>
+</ul>
+<div class="note"><mark>The most common real-world API bug is a missing ownership check.</mark> <code>GET /invoices/1042</code> with a valid token of the wrong user must return 403/404 — verifying the token is not enough (this is "Broken Object Level Authorization").</div>
+<h4>Password storage</h4>
+<ul>
+<li>Never store plaintext, and never use fast hashes (MD5, SHA-256) for passwords.</li>
+<li>Use <b>bcrypt</b> (cost 12ish) or <b>argon2id</b>: deliberately slow and memory-hard, which makes brute forcing expensive.</li>
+<li>A <b>salt</b> (unique random value per password, handled automatically by bcrypt) defeats rainbow tables and hides identical passwords.</li>
+<li>Compare with the library's <code>compare()</code>, which is timing-safe. Return the same generic "invalid credentials" message for both wrong email and wrong password (no user enumeration).</li>
+<li>Extras: rate-limit and lock out after failed attempts, check against breached-password lists, offer <b>MFA/TOTP</b>, expire reset tokens quickly and single-use them.</li>
+</ul>
+<pre><code>const hash = await bcrypt.hash(password, 12);
+const ok = await bcrypt.compare(input, user.passwordHash);</code></pre>
+</section>
+
+<section id="s23">
+<h3>23. Sessions, JWT and OAuth</h3>
+<figure class="diagram">
+<svg viewBox="0 0 640 340" role="img" aria-label="Side by side comparison: session authentication stores state in a shared store the server must look up, while JWT carries signed claims the server verifies without a lookup.">
+  <text class="d-accent-text" x="158" y="20" text-anchor="middle">SESSION (stateful)</text>
+  <rect class="d-box" x="16" y="30" width="284" height="286" rx="8"/>
+
+  <rect class="d-box" x="36" y="46" width="110" height="34" rx="5"/>
+  <text class="d-sub" x="91" y="68" text-anchor="middle">Browser</text>
+  <rect class="d-box" x="170" y="46" width="110" height="34" rx="5"/>
+  <text class="d-sub" x="225" y="68" text-anchor="middle">Server</text>
+
+  <path class="d-line" d="M146 63 H164"/><path class="d-arrow" d="M170 63 l-9 -4.5 v9 z"/>
+  <text class="d-mono" x="158" y="100" text-anchor="middle">cookie: sid=abc</text>
+  <text class="d-sub"  x="158" y="118" text-anchor="middle">an opaque ID — means nothing alone</text>
+
+  <path class="d-line" d="M225 132 V152"/><path class="d-arrow" d="M225 158 l-4.5 -9 h9 z"/>
+  <rect class="d-fill-accent" x="120" y="162" width="160" height="52" rx="6"/>
+  <rect class="d-box-accent"  x="120" y="162" width="160" height="52" rx="6"/>
+  <text class="d-accent-text" x="200" y="182" text-anchor="middle">Redis / DB lookup</text>
+  <text class="d-sub" x="200" y="200" text-anchor="middle">abc → { userId: 7 }</text>
+
+  <text class="d-sub" x="158" y="238" text-anchor="middle">✓ revoke instantly — delete the row</text>
+  <text class="d-sub" x="158" y="258" text-anchor="middle">✓ small cookie</text>
+  <text class="d-sub" x="158" y="278" text-anchor="middle">✗ a lookup on every request</text>
+  <text class="d-sub" x="158" y="298" text-anchor="middle">✗ shared store to run &amp; scale</text>
+
+  <text class="d-accent-text" x="482" y="20" text-anchor="middle">JWT (stateless)</text>
+  <rect class="d-box" x="340" y="30" width="284" height="286" rx="8"/>
+
+  <rect class="d-box" x="360" y="46" width="110" height="34" rx="5"/>
+  <text class="d-sub" x="415" y="68" text-anchor="middle">Browser</text>
+  <rect class="d-box" x="494" y="46" width="110" height="34" rx="5"/>
+  <text class="d-sub" x="549" y="68" text-anchor="middle">Server</text>
+
+  <path class="d-line" d="M470 63 H488"/><path class="d-arrow" d="M494 63 l-9 -4.5 v9 z"/>
+  <text class="d-mono" x="482" y="100" text-anchor="middle">Bearer eyJhb…</text>
+  <text class="d-sub"  x="482" y="118" text-anchor="middle">header . payload . signature</text>
+
+  <path class="d-line" d="M549 132 V152"/><path class="d-arrow" d="M549 158 l-4.5 -9 h9 z"/>
+  <rect class="d-fill-accent" x="444" y="162" width="160" height="52" rx="6"/>
+  <rect class="d-box-accent"  x="444" y="162" width="160" height="52" rx="6"/>
+  <text class="d-accent-text" x="524" y="182" text-anchor="middle">verify signature</text>
+  <text class="d-sub" x="524" y="200" text-anchor="middle">no database at all</text>
+
+  <text class="d-sub" x="482" y="238" text-anchor="middle">✓ no lookup — scales horizontally</text>
+  <text class="d-sub" x="482" y="258" text-anchor="middle">✓ works across services</text>
+  <text class="d-sub" x="482" y="278" text-anchor="middle">✗ can't revoke before expiry</text>
+  <text class="d-sub" x="482" y="298" text-anchor="middle">✗ bigger; payload is readable</text>
+</svg>
+<figcaption>The whole trade-off in one line: a session asks the database <i>who is this?</i> on every request; a JWT carries the answer and only checks the signature.</figcaption>
+</figure>
+<h4>Reading the trade-off properly</h4>
+<p>Interviewers push on <b>revocation</b>. A JWT is valid until it expires — you cannot un-issue it. The standard answer is a <b>short-lived access token</b> (5–15 min) plus a long-lived <b>refresh token</b> stored server-side, which <i>can</i> be revoked. You accept a small window where a stolen access token still works, in exchange for not hitting the database on every request.</p>
+<div class="note"><b>Base64 is not encryption.</b> Anyone can decode a JWT payload and read it — paste one into jwt.io and see. The signature proves it hasn't been <i>tampered with</i>; it does not hide anything. Never put a password, card number or secret in a JWT.</div>
+
+<div class="table-wrap"><table>
+<tr><th></th><th>Server sessions</th><th>JWT</th></tr>
+<tr><td>Where state lives</td><td>Server (Redis/DB); cookie holds only an ID</td><td>In the token itself; server stores nothing</td></tr>
+<tr><td>Revocation</td><td>Instant — delete the session</td><td>Hard — valid until expiry unless you keep a denylist</td></tr>
+<tr><td>Scaling</td><td>Needs shared session storage</td><td>Naturally stateless</td></tr>
+<tr><td>Size</td><td>Tiny cookie</td><td>Bigger token on every request</td></tr>
+<tr><td>Best for</td><td>Classic web apps, admin panels</td><td>APIs, mobile clients, service-to-service</td></tr>
+</table></div>
+<h4>How a JWT works</h4>
+<p><code>header.payload.signature</code>, base64url-encoded. The signature proves the token wasn't modified and was issued by you. <mark>The payload is encoded, not encrypted — anyone can read it.</mark> Never put secrets in it; keep it small (user id, role, expiry).</p>
+<pre><code>const access  = jwt.sign({ sub: user.id, role: user.role },
+                  process.env.JWT_SECRET, { expiresIn: "15m" });
+const refresh = jwt.sign({ sub: user.id, jti: randomUUID() },
+                  process.env.REFRESH_SECRET, { expiresIn: "7d" });
+
+// verify in middleware
+const payload = jwt.verify(token, process.env.JWT_SECRET);
+req.user = { id: payload.sub, role: payload.role };</code></pre>
+<h4>The access + refresh token pattern</h4>
+<ul>
+<li><b>Access token</b> — short-lived (5–15 min), sent with each request. If stolen, it expires quickly.</li>
+<li><b>Refresh token</b> — long-lived, stored in an <code>HttpOnly; Secure; SameSite</code> cookie, kept in the DB so it can be revoked.</li>
+<li><b>Rotation:</b> each refresh issues a new refresh token and invalidates the old one; reuse of an old token means theft → revoke the whole family.</li>
+<li>Logout = delete the refresh token server-side (and clear the cookie).</li>
+</ul>
+<div class="note"><b>Where to store tokens in a browser:</b> <code>localStorage</code> is readable by any XSS script. Prefer <b>HttpOnly cookies</b> with <code>SameSite</code> + CSRF protection. There is no perfect option — pick one and defend its weakness.</div>
+<h4>OAuth 2.0 / OpenID Connect</h4>
+<ul>
+<li><b>OAuth 2.0</b> = delegated <b>authorization</b> ("let this app read my Drive"). <b>OIDC</b> adds an <b>ID token</b> for <b>authentication</b> ("Login with Google").</li>
+<li><b>Authorization Code flow with PKCE</b> is the modern standard: redirect to the provider → user consents → you receive a short-lived <b>code</b> → your server exchanges it (with the client secret) for tokens. The secret never touches the browser.</li>
+<li><b>Never</b> use the implicit flow anymore. Always validate the <code>state</code> parameter (CSRF) and verify the ID token signature and issuer.</li>
+<li>In practice use a library — Auth.js/NextAuth, Passport, Clerk, Better Auth, Keycloak. Rolling your own is where breaches come from.</li>
+</ul>
+</section>
+
+<section id="s24">
+<h3>24. Attacks & Defences</h3>
+<h4>Why parameterised queries actually work</h4>
+<p>It's worth understanding the mechanism rather than memorising "use an ORM". String concatenation fails because the data becomes <i>part of the query text</i>, so the parser cannot tell code from input:</p>
+<pre><code>// The input "'; DROP TABLE users; --" turns into:
+`SELECT * FROM users WHERE email = ''; DROP TABLE users; --'`
+//                                    ↑ now a second statement</code></pre>
+<p>A parameterised query sends the SQL and the values over <b>separate channels</b>. The database parses and plans the statement first, with <code>$1</code> as a placeholder, and only then binds the value. The value can never be reinterpreted as SQL, whatever it contains.</p>
+<pre><code>db.query("SELECT * FROM users WHERE email = $1", [email]);   // always safe</code></pre>
+<p>The same principle explains the other injection defences: keep data and code in separate channels. That's why <code>textContent</code> beats <code>innerHTML</code>, and why you pass arguments as an array to <code>execFile</code> rather than building a shell string.</p>
+<div class="table-wrap"><table>
+<tr><th>Attack</th><th>How it works</th><th>Defence</th></tr>
+<tr><td><b>SQL / NoSQL injection</b></td><td>User input becomes part of the query</td><td>Parameterized queries / ORM; never string-concatenate; cast types; reject <code>$</code> keys in Mongo queries</td></tr>
+<tr><td><b>XSS</b></td><td>Attacker's JS runs in another user's browser</td><td>Escape output, sanitize HTML (DOMPurify), Content-Security-Policy, HttpOnly cookies</td></tr>
+<tr><td><b>CSRF</b></td><td>Another site makes the browser send your cookies</td><td><code>SameSite=Lax/Strict</code>, CSRF tokens, check Origin; not an issue for token-in-header APIs</td></tr>
+<tr><td><b>Broken access control</b></td><td>Changing an ID to read someone else's data</td><td>Check ownership/role on <b>every</b> request, server-side</td></tr>
+<tr><td><b>SSRF</b></td><td>Your server fetches an attacker-supplied URL (e.g. cloud metadata)</td><td>Whitelist domains, block private IP ranges, no redirects</td></tr>
+<tr><td><b>Path traversal</b></td><td><code>../../etc/passwd</code> in a filename</td><td>Normalize and verify the resolved path stays inside the base dir</td></tr>
+<tr><td><b>Brute force / credential stuffing</b></td><td>Automated login attempts</td><td>Rate limit, exponential backoff, CAPTCHA, MFA, breached-password checks</td></tr>
+<tr><td><b>DoS</b></td><td>Huge payloads, regex backtracking, zip bombs</td><td>Body size limits, timeouts, safe regexes, rate limiting, WAF/CDN</td></tr>
+<tr><td><b>Mass assignment</b></td><td><code>{"role":"admin"}</code> in the body</td><td>Whitelist fields with a strict schema</td></tr>
+<tr><td><b>Supply chain</b></td><td>A malicious/compromised npm package</td><td><code>npm audit</code>, lockfiles, fewer dependencies, Dependabot</td></tr>
+<tr><td><b>Secrets leakage</b></td><td>Keys in git, tokens in logs</td><td>Env vars / secret manager, <code>.gitignore</code>, redact logs, rotate keys</td></tr>
+</table></div>
+<h4>Practical hardening checklist</h4>
+<ul>
+<li><code>helmet()</code> for security headers (CSP, HSTS, X-Content-Type-Options, frame options).</li>
+<li>HTTPS everywhere; redirect HTTP; enable HSTS.</li>
+<li>Strict CORS whitelist; never <code>origin: "*"</code> with credentials.</li>
+<li>Global rate limiting + stricter limits on auth endpoints.</li>
+<li>Validate everything at the boundary; limit body size.</li>
+<li>Least-privilege database user; separate credentials per environment.</li>
+<li>Never log passwords, tokens, card numbers or full request bodies.</li>
+<li>Generic error messages outward; detailed logs inward.</li>
+<li>Keep dependencies and the Node runtime patched.</li>
+<li><b>Encrypt in transit and at rest;</b> hash what you never need to read back (passwords), encrypt what you do (PII).</li>
+</ul>
+</section>
+
+<!-- ================= SCALE ================= -->
+<div class="part">Part 6 — Architecture, Scale & Operations</div>
+
+<section id="s25">
+<h3>25. Architecture Patterns</h3>
+<div class="table-wrap"><table>
+<tr><th></th><th>Monolith</th><th>Microservices</th></tr>
+<tr><td>Deploy</td><td>One unit</td><td>Many independent services</td></tr>
+<tr><td>Pros</td><td>Simple, fast to build, easy transactions and refactors</td><td>Independent scaling/deploys, team autonomy, tech freedom</td></tr>
+<tr><td>Cons</td><td>Scales as one block; large codebase over time</td><td>Network failures, distributed transactions, tracing, ops burden</td></tr>
+</table></div>
+<div class="note"><b>Practical advice:</b> start with a <b>modular monolith</b> — one deployable, clean module boundaries. Extract a service only when a specific part has a genuinely different scaling, language or ownership need. Microservices are an organisational solution, not a performance trick.</div>
+<h4>Ideas worth knowing</h4>
+<ul>
+<li><b>Layered architecture</b> — controller → service → repository (covered in §11).</li>
+<li><b>Hexagonal / ports & adapters</b> — the domain core knows nothing about HTTP or the DB; adapters plug in around it.</li>
+<li><b>Event-driven</b> — services publish events ("OrderPlaced") and others react. Loose coupling, eventual consistency.</li>
+<li><b>CQRS</b> — separate the write model from optimized read models.</li>
+<li><b>Saga</b> — a long business transaction across services implemented as steps with compensating actions (no distributed rollback).</li>
+<li><b>API gateway</b> — single entry point doing auth, routing, rate limiting for many services.</li>
+<li><b>Circuit breaker</b> — stop calling a failing dependency for a while instead of piling up timeouts.</li>
+<li><b>Idempotency + retries with exponential backoff and jitter</b> — the baseline of reliable distributed systems.</li>
+</ul>
+</section>
+
+<section id="s26">
+<h3>26. Scaling & Performance</h3>
+<figure class="diagram">
+<svg viewBox="0 0 640 330" role="img" aria-label="Horizontal scaling: a load balancer spreads traffic across three stateless app instances that share one database, a cache and a queue, with read replicas behind the primary database.">
+  <rect class="d-box" x="252" y="12" width="136" height="34" rx="6"/>
+  <text class="d-label" x="320" y="34" text-anchor="middle">Clients</text>
+
+  <rect class="d-box-accent" x="232" y="66" width="176" height="42" rx="7"/>
+  <text class="d-accent-text" x="320" y="86" text-anchor="middle">Load balancer</text>
+  <text class="d-sub" x="320" y="102" text-anchor="middle">round-robin + health checks</text>
+
+  <rect class="d-box" x="40" y="140" width="150" height="46" rx="7"/>
+  <text class="d-label" x="115" y="160" text-anchor="middle">App instance 1</text>
+  <text class="d-sub"   x="115" y="176" text-anchor="middle">stateless</text>
+  <rect class="d-box" x="245" y="140" width="150" height="46" rx="7"/>
+  <text class="d-label" x="320" y="160" text-anchor="middle">App instance 2</text>
+  <text class="d-sub"   x="320" y="176" text-anchor="middle">stateless</text>
+  <rect class="d-box" x="450" y="140" width="150" height="46" rx="7"/>
+  <text class="d-label" x="525" y="160" text-anchor="middle">App instance 3</text>
+  <text class="d-sub"   x="525" y="176" text-anchor="middle">stateless</text>
+
+  <rect class="d-fill-accent" x="40" y="224" width="150" height="44" rx="7"/>
+  <rect class="d-box-accent"  x="40" y="224" width="150" height="44" rx="7"/>
+  <text class="d-accent-text" x="115" y="244" text-anchor="middle">Redis</text>
+  <text class="d-sub" x="115" y="260" text-anchor="middle">cache + sessions</text>
+
+  <rect class="d-box" x="245" y="224" width="150" height="44" rx="7"/>
+  <text class="d-label" x="320" y="244" text-anchor="middle">Primary DB</text>
+  <text class="d-sub"   x="320" y="260" text-anchor="middle">all writes</text>
+
+  <rect class="d-box" x="450" y="224" width="150" height="44" rx="7"/>
+  <text class="d-label" x="525" y="244" text-anchor="middle">Queue</text>
+  <text class="d-sub"   x="525" y="260" text-anchor="middle">slow jobs → workers</text>
+
+  <rect class="d-box" x="245" y="284" width="150" height="36" rx="7"/>
+  <text class="d-sub" x="320" y="306" text-anchor="middle">Read replicas ×2</text>
+
+  <path class="d-line" d="M320 46 V60"/><path class="d-arrow" d="M320 66 l-4.5 -9 h9 z"/>
+  <path class="d-line-accent" d="M270 108 L140 134"/><path class="d-arrow-accent" d="M134 136 l8 -5 l1 9 z"/>
+  <path class="d-line-accent" d="M320 108 V134"/><path class="d-arrow-accent" d="M320 140 l-4.5 -9 h9 z"/>
+  <path class="d-line-accent" d="M370 108 L500 134"/><path class="d-arrow-accent" d="M506 136 l-9 -4 l1 9 z"/>
+
+  <path class="d-line" d="M115 186 V218"/><path class="d-arrow" d="M115 224 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M320 186 V218"/><path class="d-arrow" d="M320 224 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M525 186 V218"/><path class="d-arrow" d="M525 224 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M320 268 V278"/><path class="d-arrow" d="M320 284 l-4.5 -9 h9 z"/>
+  <text class="d-sub" x="336" y="280">replication</text>
+</svg>
+<figcaption>Every instance is identical and interchangeable. That is only possible because state lives in the shared boxes at the bottom — not in the app's memory.</figcaption>
+</figure>
+<h4>Why "stateless" is the whole trick</h4>
+<p>If instance 2 stores your session in a local variable, your next request lands on instance 3 and you're logged out. The same applies to uploaded files on local disk, in-memory caches, and <code>setInterval</code> timers — each instance would run its own copy of the job. <mark>Move every piece of state out of the process</mark> and you can add or kill instances freely, which is what makes autoscaling and zero-downtime deploys possible.</p>
+<div class="note"><b>Vertical vs horizontal:</b> vertical scaling (a bigger machine) is simpler and needs no code changes, but has a ceiling and a single point of failure. Horizontal scaling has no ceiling and gives you redundancy, but forces you to solve state, sessions and consistency. Start vertical; design so you <i>can</i> go horizontal.</div>
+
+<h4>Vertical vs horizontal</h4>
+<ul>
+<li><b>Vertical</b> — a bigger machine. Simple, instant, but has a ceiling and a single point of failure.</li>
+<li><b>Horizontal</b> — more machines behind a load balancer. Nearly unlimited, but demands <b>stateless</b> servers.</li>
+</ul>
+<p><b>Stateless</b> means any instance can serve any request: sessions in Redis, uploads in S3, no in-memory caches that matter, no local file writes. If you use sticky sessions to work around state, you've limited your scaling.</p>
+<h4>Scaling the database (usually the real bottleneck)</h4>
+<ul>
+<li><b>Indexes and query tuning first</b> — cheapest win by far.</li>
+<li><b>Connection pooling</b> — the DB has a hard connection limit.</li>
+<li><b>Read replicas</b> — send reads to replicas, writes to the primary (mind replication lag).</li>
+<li><b>Partitioning</b> — split a huge table by range (dates) or list.</li>
+<li><b>Sharding</b> — split data across databases by a shard key. Powerful but painful: cross-shard queries and rebalancing. Last resort.</li>
+</ul>
+<h4>Performance checklist for an API</h4>
+<ul>
+<li>Measure first: p50/p95/p99 latency, not averages. The p99 is what angry users feel.</li>
+<li>Cache what's hot and expensive; compress responses (gzip/brotli).</li>
+<li>Paginate everything that can grow; never return unbounded lists.</li>
+<li>Fetch in parallel; eliminate N+1 queries.</li>
+<li>Move slow work (emails, PDFs, images, webhooks) to a background queue and return <code>202</code>.</li>
+<li>Use a CDN for static assets and public cacheable responses.</li>
+<li>Set timeouts on every outbound call — a hung dependency shouldn't hang you.</li>
+</ul>
+</section>
+
+<section id="s27">
+<h3>27. Queues & Background Jobs</h3>
+<h4>Why a queue instead of just doing the work</h4>
+<p>A user signs up. You need to write the row, send a welcome email, generate an avatar thumbnail, and sync to the CRM. Done inline, the response takes 4 seconds, and if the email provider is down the whole signup fails — even though the account was created fine.</p>
+<p>With a queue, the request writes the row, pushes four jobs, and returns in 50ms. Workers process the jobs separately. If the email provider is down, that job retries later without affecting anything else.</p>
+<div class="flow">Without a queue:  request ──[db]──[email]──[thumbnail]──[crm]──&gt; response   4s, fails as a unit
+With a queue:     request ──[db]──[push jobs]──&gt; response                   50ms
+                                     ↓
+                            worker: email → thumbnail → crm   (retries independently)</div>
+<h4>What you must handle</h4>
+<ul>
+<li><b>Retries with backoff</b> — transient failures are normal; retry 3–5 times with growing delays.</li>
+<li><b>Idempotent workers</b> — a job may run twice (the worker crashed after sending but before acknowledging). Sending one welcome email twice is survivable; charging a card twice is not.</li>
+<li><b>Dead letter queue</b> — after N failures, park the job somewhere you can inspect instead of retrying forever.</li>
+<li><b>Visibility</b> — queue depth is a key metric. Growing depth means workers can't keep up.</li>
+</ul>
+<p>Anything that is slow, retryable, or not needed for the response belongs in a <b>background job</b>: emails, image/video processing, report generation, third-party syncs, webhook delivery, bulk imports.</p>
+<div class="flow">API request → enqueue job → respond 202 immediately
+                     ↓
+              Redis / RabbitMQ / Kafka
+                     ↓
+          Worker process (separate from the API)
+             → retries with backoff → dead-letter queue on repeated failure</div>
+<ul>
+<li>Run workers as <b>separate processes</b> so heavy jobs never block the API event loop.</li>
+<li>Make jobs <b>idempotent</b> — at-least-once delivery means a job can run twice.</li>
+<li>Configure <b>retries with exponential backoff</b> and a <b>dead-letter queue</b> for permanent failures.</li>
+<li><b>Tools:</b> BullMQ (Redis, great for Node), RabbitMQ (routing, classic broker), Kafka (high-throughput event log, replayable), SQS (managed).</li>
+<li><b>Scheduled jobs:</b> cron for periodic work. With multiple instances, use a lock or a queue's repeatable jobs so it doesn't run N times.</li>
+<li><b>Outbox pattern:</b> write the DB row and the "to-publish" event in the same transaction, then a relay publishes it — prevents "saved but never notified" bugs.</li>
+</ul>
+</section>
+
+<section id="s28">
+<h3>28. Testing</h3>
+<div class="table-wrap"><table>
+<tr><th>Level</th><th>Tests</th><th>Tooling</th></tr>
+<tr><td><b>Unit</b></td><td>One function/service in isolation, dependencies mocked</td><td>Jest, Vitest</td></tr>
+<tr><td><b>Integration</b></td><td>Route + middleware + real DB</td><td>Supertest + Testcontainers / test DB</td></tr>
+<tr><td><b>E2E</b></td><td>Whole system through the real interface</td><td>Playwright, k6 for load</td></tr>
+<tr><td><b>Contract</b></td><td>Service A's expectations of B</td><td>Pact, OpenAPI validation</td></tr>
+</table></div>
+<ul>
+<li>The <b>test pyramid</b>: many fast unit tests, fewer integration tests, a handful of E2E tests. For backends, integration tests give the best confidence per minute of effort.</li>
+<li>Use a <b>separate test database</b>, reset between tests (transactions rolled back, or truncate).</li>
+<li><b>Mock external services</b> (payments, email) — tests must be deterministic and offline.</li>
+<li>Follow <b>Arrange → Act → Assert</b>; test behaviour and edge cases (empty, unauthorized, duplicate, boundary values), not implementation details.</li>
+<li>Coverage is a smoke detector, not a goal. 100% coverage with weak assertions proves nothing.</li>
+</ul>
+<pre><code>it("rejects duplicate email with 409", async () =&gt; {
+  await createUser({ email: "a@x.com" });
+  const res = await request(app).post("/api/v1/users")
+    .send({ email: "a@x.com", password: "secret123" });
+  expect(res.status).toBe(409);
+});</code></pre>
+</section>
+
+<section id="s29">
+<h3>29. Deployment & DevOps</h3>
+<h4>Environments and config</h4>
+<ul>
+<li>Keep <b>development / staging / production</b> as similar as possible.</li>
+<li>All configuration comes from <b>environment variables</b>; validate them at startup (parse with Zod and crash early if something's missing).</li>
+<li>Secrets live in a secret manager or the platform's env store — never in git.</li>
+</ul>
+<h4>Containers</h4>
+<pre><code># multi-stage build → small, fast, secure image
+FROM node:22-alpine AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+FROM node:22-alpine
+WORKDIR /app
+ENV NODE_ENV=production
+COPY package*.json ./
+RUN npm ci --omit=dev
+COPY --from=build /app/dist ./dist
+USER node                       # don't run as root
+EXPOSE 3000
+CMD ["node", "dist/server.js"]</code></pre>
+<p>Docker solves "works on my machine" by shipping the app <b>with</b> its runtime. <code>docker-compose</code> runs app + Postgres + Redis locally with one command. Orchestrators (Kubernetes, ECS) then handle scaling, restarts and rolling updates.</p>
+<h4>CI/CD</h4>
+<div class="flow">push → CI: install → lint → typecheck → test → build image → scan
+     → CD: deploy to staging → smoke tests → deploy to production
+     → strategies: rolling · blue-green · canary   (+ instant rollback)</div>
+<h4>Production essentials</h4>
+<ul>
+<li><b>Health endpoints:</b> <code>/healthz</code> (process alive) and <code>/readyz</code> (DB reachable) for the load balancer.</li>
+<li><b>Graceful shutdown</b> on <code>SIGTERM</code>: stop accepting new connections, finish in-flight requests, close DB/queue connections, then exit.</li>
+<li><b>Process manager</b> (PM2) or the orchestrator restarts crashed processes; run one process per core.</li>
+<li><b>Backups</b> — automated, offsite, and <mark>restore-tested</mark>. An untested backup is not a backup.</li>
+<li><b>Hosting:</b> Railway/Render/Fly.io (simple), AWS/GCP (full control), Vercel/Lambda (serverless — mind cold starts, execution limits and DB connection limits).</li>
+</ul>
+</section>
+
+<section id="s30">
+<h3>30. Observability</h3>
+<h4>Logs, metrics and traces — why you need all three</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>Answers</th><th>Shape</th><th>Cost</th></tr>
+<tr><td><b>Metrics</b></td><td>"Is something wrong <i>right now</i>?"</td><td>Numbers over time (p95 latency, error rate, queue depth)</td><td>Cheap — aggregated</td></tr>
+<tr><td><b>Logs</b></td><td>"What exactly happened in <i>this</i> request?"</td><td>Timestamped events with context</td><td>Expensive at volume</td></tr>
+<tr><td><b>Traces</b></td><td>"<i>Where</i> did the 3 seconds go?"</td><td>A request's path across services, with timings</td><td>Usually sampled</td></tr>
+</table></div>
+<p>The workflow: a <b>metric</b> alerts you that p95 latency tripled. A <b>trace</b> shows the time is spent in the payment service. <b>Logs</b> from that service at that timestamp show the actual error. Any one of the three alone leaves you guessing.</p>
+<h4>Structured logging</h4>
+<pre><code>// ✗ unsearchable
+console.log("User " + id + " failed to pay");
+
+// ✓ queryable — filter by userId, level, requestId across millions of lines
+logger.error({ userId: id, orderId, requestId: req.id, err }, "payment failed");</code></pre>
+<p>Attach a <b>request ID</b> to every log line for a request (generate one in middleware, pass it down). Without it, concurrent requests interleave in the log and you cannot tell which lines belong together.</p>
+<div class="note"><b>Never log secrets.</b> Passwords, tokens, full card numbers and personal data leak into log aggregators that a wide set of people can read, and they persist long after the request. Redact at the logger, not at each call site.</div>
+<p>The three pillars answer three different questions: <b>logs</b> (what happened), <b>metrics</b> (how much/how often), <b>traces</b> (where the time went).</p>
+<ul>
+<li><b>Structured logging</b> (JSON via pino/winston) so logs are searchable. Include a <b>request/correlation ID</b> on every line and pass it to downstream services.</li>
+<li><b>Levels:</b> error (needs attention), warn (suspicious), info (business events), debug (development only). Never log secrets or personal data.</li>
+<li><b>Metrics</b> — the four golden signals: <b>latency, traffic, errors, saturation</b>. Also track event-loop lag, memory, DB pool usage and queue depth.</li>
+<li><b>Distributed tracing</b> (OpenTelemetry) shows a single request's path across services and where the milliseconds went.</li>
+<li><b>Error tracking</b> (Sentry) groups exceptions with stack traces and release info.</li>
+<li><b>Alerting</b> should be on <b>symptoms users feel</b> (error rate, p99 latency, queue backlog), not on every CPU spike. Alert fatigue is a real outage cause.</li>
+<li><b>SLI / SLO:</b> the indicator you measure vs the target you promise (e.g. 99.9% of requests under 300 ms). Blameless postmortems turn incidents into fixes.</li>
+</ul>
+</section>
+
+<!-- ================= REVISION ================= -->
+<div class="part">Revision</div>
+
+<section id="rev">
+<h3>Interview Q&A — rapid fire</h3>
+<h4>Node & JavaScript</h4>
+<ul>
+<li><b>Why is Node fast despite one thread?</b> Non-blocking I/O — waiting is delegated to the OS/thread pool, so the thread is never idle-blocked.</li>
+<li><b>Event loop phases?</b> timers → pending → poll → check → close, with nextTick and promise microtasks drained between each.</li>
+<li><b>setTimeout(0) vs setImmediate?</b> Different phases; inside an I/O callback <code>setImmediate</code> always runs first.</li>
+<li><b>How do you handle CPU-heavy work?</b> Worker threads, a queue + separate worker service, or a different runtime for that piece.</li>
+<li><b>Streams?</b> Chunked processing with backpressure — constant memory regardless of file size.</li>
+<li><b>Cluster vs worker threads?</b> Separate processes (no shared memory, for scaling I/O across cores) vs threads in one process (for CPU work).</li>
+</ul>
+<h4>HTTP & APIs</h4>
+<ul>
+<li><b>401 vs 403?</b> Not authenticated vs authenticated but not allowed.</li>
+<li><b>PUT vs PATCH?</b> Full replacement vs partial update; PUT is idempotent.</li>
+<li><b>Idempotency, why care?</b> Clients retry; without it, retries create duplicate charges/orders.</li>
+<li><b>What is CORS?</b> A browser rule; the server opts in via headers. It's not authentication.</li>
+<li><b>Middleware?</b> A function in the request pipeline with <code>req, res, next</code>.</li>
+<li><b>How do you version an API?</b> URL prefix, never break old versions, deprecate with notice.</li>
+</ul>
+<h4>Databases</h4>
+<ul>
+<li><b>SQL vs NoSQL?</b> Relations + constraints + ACID vs flexible documents + easy horizontal scale; choose by access patterns.</li>
+<li><b>What does an index cost?</b> Faster reads, slower writes, more storage; leftmost-prefix rule for composites.</li>
+<li><b>ACID? Isolation levels?</b> Atomic/Consistent/Isolated/Durable; Read Committed → Repeatable Read → Serializable trades concurrency for correctness.</li>
+<li><b>How do you prevent overselling stock?</b> Atomic conditional update, <code>SELECT ... FOR UPDATE</code>, or optimistic version checks.</li>
+<li><b>N+1 problem?</b> One query per item; fix with joins/include/populate or batching.</li>
+<li><b>Embed or reference in Mongo?</b> Embed bounded data read together; reference shared or unbounded data.</li>
+</ul>
+<h4>Security & scale</h4>
+<ul>
+<li><b>Why bcrypt not SHA-256?</b> Salted and deliberately slow — brute force becomes impractical.</li>
+<li><b>JWT vs session?</b> Stateless and scalable vs revocable and simple; JWT needs refresh-token rotation.</li>
+<li><b>Where do you store a JWT?</b> HttpOnly cookie with SameSite + CSRF defence, or memory; localStorage is XSS-exposed.</li>
+<li><b>Prevent SQL injection?</b> Parameterized queries — never concatenate input.</li>
+<li><b>How would you scale this API 10×?</b> Measure → indexes/queries → cache → stateless + horizontal scale behind a LB → read replicas → queues for heavy work → CDN.</li>
+<li><b>Monolith or microservices?</b> Modular monolith first; split when a component's scaling or ownership genuinely diverges.</li>
+</ul>
+</section>
+
+<section id="road">
+<h3>Learning Path</h3>
+<ol>
+<li><b>Fundamentals</b> — HTTP, status codes, JSON, how the browser talks to a server.</li>
+<li><b>JavaScript async</b> — promises, async/await, error handling. Don't skip this; everything else depends on it.</li>
+<li><b>Node basics</b> — modules, fs, the http module (build one server without Express, once).</li>
+<li><b>Express</b> — routing, middleware, a proper folder structure.</li>
+<li><b>A database</b> — pick <b>PostgreSQL</b> and learn real SQL, or MongoDB with Mongoose. Learn indexes early.</li>
+<li><b>Auth</b> — hashing, sessions vs JWT, refresh tokens, ownership checks.</li>
+<li><b>Project 1</b> — a complete CRUD REST API with auth, validation, pagination, errors, and tests.</li>
+<li><b>Level up</b> — caching with Redis, background jobs with BullMQ, file uploads to S3.</li>
+<li><b>Project 2</b> — something with real load: a booking system (concurrency!), or a job board with search and queues.</li>
+<li><b>Production skills</b> — Docker, CI/CD, logging and monitoring, graceful shutdown, deploy it publicly.</li>
+<li><b>Then</b> — TypeScript everywhere, system design basics, and one advanced area (WebSockets, event-driven, or Kubernetes).</li>
+</ol>
+<div class="note"><b>The single best habit:</b> for every feature you build, ask "what happens if this is called twice, called by the wrong user, or called 10,000 times a minute?" That question turns tutorial code into backend engineering.</div>
+</section>
+
+</main>
+</div>
+
+<script src="../assets/notes.js"></script>
+</body>
+</html>

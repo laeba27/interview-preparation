@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Node.js &amp; Express — Concept Notes</title>
+<link rel="stylesheet" href="../assets/notes.css">
+<script>
+  try { document.documentElement.setAttribute("data-theme",
+    localStorage.getItem("notes-theme") || "light"); } catch (e) {}
+</script>
+</head>
+<body>
+<div class="scrim"></div>
+<button class="icon-btn" id="reopen" title="Show sidebar ([)" aria-label="Show sidebar">☰</button>
+<div class="layout">
+
+<aside>
+  <div class="sidebar-head">
+    <a class="back-link" href="../index.html">← All topics</a>
+    <button class="icon-btn" id="collapseBtn" title="Hide sidebar ([)" aria-label="Hide sidebar">‹</button>
+  </div>
+  <input id="search" type="text" placeholder="Filter topics…" autocomplete="off">
+
+  <h2>Node Basics</h2>
+  <nav>
+    <a href="#s1">1 · What Node Is</a>
+    <a href="#s2">2 · How Node Runs Your Code</a>
+    <a href="#s3">3 · Blocking vs Non-Blocking</a>
+    <a href="#s4">4 · The Event Loop</a>
+    <a href="#s5">5 · Modules</a>
+    <a href="#s6">6 · Process Lifecycle</a>
+  </nav>
+
+  <h2>Node Core</h2>
+  <nav>
+    <a href="#s7">7 · Events &amp; EventEmitter</a>
+    <a href="#s8">8 · File System</a>
+    <a href="#s9">9 · Streams &amp; Buffers</a>
+    <a href="#s10">10 · Paths, URLs, Process</a>
+    <a href="#s11">11 · HTTP Without Express</a>
+    <a href="#s12">12 · npm &amp; package.json</a>
+  </nav>
+
+  <h2>Express Basics</h2>
+  <nav>
+    <a href="#s13">13 · Why Express</a>
+    <a href="#s14">14 · Routing</a>
+    <a href="#s15">15 · Middleware</a>
+    <a href="#s16">16 · Request &amp; Response</a>
+    <a href="#s17">17 · Request Lifecycle</a>
+    <a href="#s18">18 · Routers &amp; Structure</a>
+  </nav>
+
+  <h2>Building an API</h2>
+  <nav>
+    <a href="#s19">19 · Project Layout</a>
+    <a href="#s20">20 · Validation</a>
+    <a href="#s21">21 · Error Handling</a>
+    <a href="#s22">22 · Databases</a>
+    <a href="#s23">23 · Authentication</a>
+    <a href="#s24">24 · File Uploads</a>
+  </nav>
+
+  <h2>Production</h2>
+  <nav>
+    <a href="#s25">25 · Security</a>
+    <a href="#s26">26 · Performance</a>
+    <a href="#s27">27 · Logging &amp; Debugging</a>
+    <a href="#s28">28 · Testing</a>
+    <a href="#s29">29 · Deployment</a>
+  </nav>
+
+  <h2>Revision</h2>
+  <nav>
+    <a href="#rev">Interview Q&amp;A</a>
+    <a href="#road">Learning Path</a>
+  </nav>
+</aside>
+
+<main>
+<header class="top">
+  <h1>Node.js &amp; Express — Concept Notes</h1>
+  <div class="top-actions">
+    <button class="ghost" id="menuBtn">☰ Topics</button>
+    <button class="ghost" id="theme">Dark mode</button>
+  </div>
+</header>
+<p class="sub">Plain language, real depth. Everything from "what is Node" to a production-ready API. Print this page for a PDF.</p>
+
+<!-- ================= NODE BASICS ================= -->
+<div class="part">Part 1 — Node Basics</div>
+
+<section id="s1">
+<h3>1. What Node.js Actually Is</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Node is <b>JavaScript running outside the browser</b>. Same language, different place.</p>
+<p>In the browser, JavaScript gets tools like <code>document</code> (the web page) and <code>window</code> (the browser tab). Node takes those away and gives different tools instead: read files on your computer, listen for network connections, talk to a database.</p>
+<p>Node is called a <b>runtime</b>. A runtime is simply "the program that runs your code and gives it tools". Chrome is a runtime for browser JavaScript; Node is a runtime for server JavaScript.</p>
+<p class="analogy">Like the same person working from home instead of the office. Same skills, different equipment available.</p></div>
+<h4>What Node is not</h4>
+<ul>
+<li><b>Not a language</b> — it's JavaScript. There's no "Node syntax" to learn.</li>
+<li><b>Not a framework</b> — a framework is a ready-made skeleton that tells you where to put your code. Node doesn't do that. Express (and others) do.</li>
+<li><b>Not a web server by itself</b> — but it gives you the pieces to build one in a few lines.</li>
+</ul>
+<h4>What's inside it</h4>
+<ul>
+<li><b>V8</b> — the <b>JavaScript engine</b> (the part that reads your JavaScript and turns it into machine instructions). Google built it for Chrome; Node reuses it.</li>
+<li><b>libuv</b> — a C library (a bundle of ready-made code written in the C language) that Node uses to talk to the operating system. It handles all the slow stuff: files, network, timers. This is what makes Node good at waiting.</li>
+<li><b>Built-in modules</b> — ready-made toolboxes that ship with Node, so you don't need to install them: <code>fs</code> (files), <code>http</code> (web server), <code>path</code> (file paths), <code>crypto</code> (hashing and encryption) and friends.</li>
+</ul>
+<h4>What Node is good and bad at</h4>
+<div class="table-wrap"><table>
+<tr><th>Great at</th><th>Poor at</th></tr>
+<tr><td>APIs and web servers</td><td>Heavy number-crunching</td></tr>
+<tr><td>Lots of connections at once</td><td>Video/image processing in-process</td></tr>
+<tr><td>Real-time (chat, live updates)</td><td>Long-running calculations</td></tr>
+<tr><td>Reading/writing files, proxying</td><td>Anything that blocks for seconds</td></tr>
+</table></div>
+<p>The pattern: Node is excellent at work that is mostly <b>waiting</b> — waiting for a database, a file, or another API to answer. It struggles with work that is mostly <b>thinking</b> — heavy maths done by the CPU.</p>
+<p>Example: an API that loads a user from the database spends 99% of its time waiting for the database. Node is perfect for that. Resizing a 20MB photo is pure thinking, so Node is a poor fit. <a href="#s3">Section 3</a> explains exactly why.</p>
+</section>
+
+<section id="s2">
+<h3>2. How Node Runs Your Code</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>thread</b> is one line of work inside a program — one worker that can do one thing at a time. Node has <b>one</b> thread running your JavaScript.</p>
+<p>But underneath, it has helpers. When you ask for a file or make a web request, Node hands that job to a helper and goes straight back to running your code. When the helper is done, your <b>callback</b> (the function you gave it, meaning "call this back when you're finished") is put in a queue to run.</p>
+<p class="analogy">A single waiter in a restaurant. They don't stand at the kitchen waiting for one meal — they take other orders, and come back when the bell rings.</p></div>
+<figure class="diagram">
+<svg viewBox="0 0 640 330" role="img" aria-label="Node architecture: your JavaScript runs on one main thread through V8, while libuv delegates slow work to the operating system or a small thread pool and queues callbacks when they finish.">
+  <rect class="d-box-accent" x="160" y="14" width="320" height="48" rx="7"/>
+  <text class="d-accent-text" x="320" y="36" text-anchor="middle">YOUR JAVASCRIPT</text>
+  <text class="d-sub" x="320" y="54" text-anchor="middle">one thread — one line at a time</text>
+
+  <rect class="d-box" x="160" y="78" width="150" height="44" rx="7"/>
+  <text class="d-label" x="235" y="98" text-anchor="middle">V8</text>
+  <text class="d-sub"   x="235" y="114" text-anchor="middle">runs the JS</text>
+
+  <rect class="d-box" x="330" y="78" width="150" height="44" rx="7"/>
+  <text class="d-label" x="405" y="98" text-anchor="middle">Node's modules</text>
+  <text class="d-sub"   x="405" y="114" text-anchor="middle">fs · http · crypto</text>
+
+  <rect class="d-box-accent" x="60" y="142" width="520" height="104" rx="9"/>
+  <text class="d-accent-text" x="78" y="164">libuv — the part that does the waiting</text>
+
+  <rect class="d-box" x="80" y="176" width="230" height="56" rx="6"/>
+  <text class="d-label" x="94" y="196">Event loop</text>
+  <text class="d-sub"   x="94" y="212">asks the OS "anything finished?"</text>
+  <text class="d-sub"   x="94" y="227">queues the callback if so</text>
+
+  <rect class="d-box" x="330" y="176" width="230" height="56" rx="6"/>
+  <text class="d-label" x="344" y="196">Thread pool — 4 by default</text>
+  <text class="d-sub"   x="344" y="212">file reads, DNS, crypto, zip —</text>
+  <text class="d-sub"   x="344" y="227">jobs the OS can't do in the background</text>
+
+  <rect class="d-box" x="160" y="264" width="320" height="42" rx="7"/>
+  <text class="d-label" x="320" y="284" text-anchor="middle">Operating system</text>
+  <text class="d-sub"   x="320" y="300" text-anchor="middle">network sockets are handled here, very efficiently</text>
+
+  <path class="d-line" d="M235 62 V72"/><path class="d-arrow" d="M235 78 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M405 62 V72"/><path class="d-arrow" d="M405 78 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M405 122 V136"/><path class="d-arrow" d="M405 142 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M195 232 V258"/><path class="d-arrow" d="M195 264 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M445 232 V258"/><path class="d-arrow" d="M445 264 l-4.5 -9 h9 z"/>
+
+  <path class="d-line-accent" d="M80 200 H70 V38 H154"/>
+  <path class="d-arrow-accent" d="M160 38 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="14" y="112">callback</text>
+  <text class="d-sub" x="14" y="128">is ready</text>
+</svg>
+<figcaption>"Node is single-threaded" is only true of <b>your code</b>. Underneath, plenty happens at once — which is how one process serves thousands of connections.</figcaption>
+</figure>
+<h4>Why this beats the traditional approach</h4>
+<p>Older servers gave each connection its own thread. A thread costs about 1MB of memory just to exist. The computer also has to keep switching between threads, which wastes time. Ten thousand connections meant ten thousand threads, and most of them were just sitting there waiting.</p>
+<p>Node keeps one thread and a list of "things to do when ready". An idle connection costs almost nothing — it's just one entry that the operating system is watching.</p>
+<p>Two words from the diagram: the <b>operating system (OS)</b> is macOS, Linux or Windows — the base software that controls the hardware. The <b>thread pool</b> is a small team of extra threads (4 by default) that libuv uses for jobs the OS can't do in the background, such as reading files or hashing passwords.</p>
+</section>
+
+<section id="s3">
+<h3>3. Blocking vs Non-Blocking</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Blocking</b> means "everything stops until this finishes". Node has only one thread for your code. So a blocking operation freezes <i>every</i> user's request, not just the one that caused it.</p>
+<p><b>Non-blocking</b> means "start this, and tell me when it's done". Node keeps serving everyone else in the meantime.</p>
+<p class="analogy">Blocking is the cashier who stops the whole queue to go and find a price. Non-blocking is sending a colleague to check while continuing to serve.</p></div>
+<pre><code>// ✗ BLOCKING — nobody else gets served while this file is read
+const data = fs.readFileSync("big.json");
+console.log(data);
+
+// ✓ NON-BLOCKING — Node serves other requests while the file loads
+const data = await fs.promises.readFile("big.json");
+console.log(data);</code></pre>
+<h4>The thing people get wrong</h4>
+<p>Adding the word <code>async</code> does <b>not</b> make code non-blocking. If the work is <i>calculation</i> (the CPU doing maths), it still runs on the one thread. It still freezes everything:</p>
+<pre><code>// Still blocks completely — async doesn't help here
+app.get("/report", async (req, res) =&gt; {
+  let total = 0;
+  for (let i = 0; i &lt; 1e10; i++) total += i;   // ~10 seconds of pure thinking
+  res.json({ total });
+});</code></pre>
+<p><code>async</code> only helps when you're <b>waiting</b> for something outside your code (a database, a file, another server). It can't split a calculation across threads.</p>
+<p class="analogy">Think of a chef. <code>async</code> lets the chef start the oven and do other things while the cake bakes. It does not help if the chef has to chop 10,000 onions by hand — that still takes all of the chef's time.</p>
+<h4>Things that block (and surprise people)</h4>
+<ul>
+<li>Any <code>…Sync</code> function — <code>readFileSync</code>, <code>execSync</code>. "Sync" (synchronous) means "wait right here until it's done".</li>
+<li><code>JSON.parse</code> on a very large string.</li>
+<li>Big loops, sorting huge arrays, complex regular expressions (text-matching patterns like <code>/^a+b$/</code>).</li>
+<li>Password hashing done synchronously (<code>bcrypt.hashSync</code>).</li>
+</ul>
+<h4>What to do about heavy work</h4>
+<ol>
+<li><b>Worker threads</b> — run the calculation on a separate thread, so the main thread stays free.</li>
+<li><b>A queue</b> — push the job to Redis/BullMQ (a job list stored outside your app) and let a separate worker process pick it up and do it.</li>
+<li><b>Break it up</b> — process in small chunks. Between chunks, <b>yield</b> (pause briefly and give control back to Node) so other requests get a turn.</li>
+</ol>
+<pre><code>// Break a long job into chunks so the server stays responsive
+async function processAll(items) {
+  for (let i = 0; i &lt; items.length; i++) {
+    process(items[i]);
+    if (i % 100 === 0) await new Promise(r =&gt; setImmediate(r));  // let others through
+  }
+}</code></pre>
+<div class="note"><b>Startup is the exception.</b> Using <code>readFileSync</code> to load a config file <i>before</i> your server starts listening is fine — no users are connected yet, so nobody is kept waiting. It only becomes a problem once requests are coming in.</div>
+</section>
+
+<section id="s4">
+<h3>4. The Event Loop</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>The event loop is Node's to-do list manager. It keeps asking the same question, over and over: "Has anything finished? Then run its callback."</p>
+<p>It works through <b>phases</b>. A phase is one stop on its round, and each stop holds a different kind of job — timers at one stop, file and network results at another. It clears one phase, moves to the next, and then starts the round again.</p>
+<p class="analogy">A postal sorting office doing rounds: first the letters, then the parcels, then the special delivery — round and round, all day.</p></div>
+<figure class="diagram">
+<svg viewBox="0 0 640 400" role="img" aria-label="The event loop phases in order: timers, pending callbacks, poll where it waits for input output, check for setImmediate, and close callbacks, with nextTick and promise microtasks running between every phase.">
+  <rect class="d-box" x="176" y="16" width="290" height="42" rx="6"/>
+  <text class="d-label" x="192" y="35">1. timers</text>
+  <text class="d-sub"   x="192" y="51">setTimeout / setInterval whose time is up</text>
+
+  <rect class="d-box" x="176" y="68" width="290" height="36" rx="6"/>
+  <text class="d-label" x="192" y="86">2. pending callbacks</text>
+  <text class="d-sub"   x="192" y="99">a few system-level errors</text>
+
+  <rect class="d-fill-accent" x="176" y="114" width="290" height="60" rx="6"/>
+  <rect class="d-box-accent"  x="176" y="114" width="290" height="60" rx="6"/>
+  <text class="d-accent-text" x="192" y="134">3. poll ← spends most time here</text>
+  <text class="d-sub"   x="192" y="151">runs file and network callbacks;</text>
+  <text class="d-sub"   x="192" y="167">waits here if there's nothing else to do</text>
+
+  <rect class="d-box" x="176" y="184" width="290" height="36" rx="6"/>
+  <text class="d-label" x="192" y="202">4. check</text>
+  <text class="d-sub"   x="192" y="215">setImmediate callbacks</text>
+
+  <rect class="d-box" x="176" y="230" width="290" height="36" rx="6"/>
+  <text class="d-label" x="192" y="248">5. close</text>
+  <text class="d-sub"   x="192" y="261">things shutting down, e.g. socket close</text>
+
+  <path class="d-line" d="M321 58 V62"/><path class="d-arrow" d="M321 68 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M321 104 V108"/><path class="d-arrow" d="M321 114 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M321 174 V178"/><path class="d-arrow" d="M321 184 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M321 220 V224"/><path class="d-arrow" d="M321 230 l-4.5 -9 h9 z"/>
+
+  <path class="d-line-accent" d="M176 248 H150 V36 H170"/>
+  <path class="d-arrow-accent" d="M176 36 l-9 -4.5 v9 z"/>
+  <text class="d-accent-text" x="104" y="136">one full</text>
+  <text class="d-accent-text" x="104" y="152">lap =</text>
+  <text class="d-accent-text" x="104" y="168">a "tick"</text>
+
+  <rect class="d-box-accent" x="486" y="112" width="148" height="108" rx="7"/>
+  <text class="d-accent-text" x="500" y="134">Between EVERY</text>
+  <text class="d-accent-text" x="500" y="150">phase and callback:</text>
+  <text class="d-mono" x="500" y="174">nextTick</text>
+  <text class="d-sub"  x="500" y="192">then promises</text>
+  <text class="d-sub"  x="500" y="210">— emptied fully</text>
+  <path class="d-dash" d="M470 166 H482"/><path class="d-arrow" d="M486 166 l-8 -4 v8 z"/>
+
+  <text class="d-sub" x="320" y="306" text-anchor="middle">Promises always jump ahead of setTimeout — they're checked between phases, not in one.</text>
+  <text class="d-sub" x="320" y="332" text-anchor="middle">An endless nextTick chain starves the loop: it never gets to move on to the next phase.</text>
+  <text class="d-sub" x="320" y="358" text-anchor="middle">A long calculation blocks every phase, so every waiting request is stuck behind it.</text>
+</svg>
+<figcaption>The loop clears one phase at a time. Promises and <code>nextTick</code> cut in between phases, which is why they always run before timers.</figcaption>
+</figure>
+<h4>The classic ordering question</h4>
+<pre><code>console.log("1 sync");
+setTimeout(() =&gt; console.log("5 timeout"), 0);
+setImmediate(() =&gt; console.log("6 immediate"));
+Promise.resolve().then(() =&gt; console.log("4 promise"));
+process.nextTick(() =&gt; console.log("3 nextTick"));
+console.log("2 sync");
+
+// 1 sync → 2 sync → 3 nextTick → 4 promise → 5 timeout → 6 immediate</code></pre>
+<p>How to read that result, step by step:</p>
+<ol>
+<li><b>Plain (synchronous) code runs first</b>, top to bottom: "1 sync", then "2 sync".</li>
+<li>Then <code>process.nextTick</code> callbacks (highest priority): "3 nextTick".</li>
+<li>Then promise callbacks, also called <b>microtasks</b> (small jobs that run as soon as the current code finishes, before the loop moves on): "4 promise".</li>
+<li>Then the event loop phases in order: timers ("5 timeout"), then check ("6 immediate").</li>
+</ol>
+<p>One catch: at the top level of a file, the timeout-vs-immediate order isn't guaranteed. But <b>inside a file or network callback, <code>setImmediate</code> always wins</b>. Why? The loop is already past the timers phase at that point, and the check phase comes next.</p>
+<div class="note"><b>Words in this section:</b> a <b>tick</b> is one full lap of the loop. <b>I/O</b> means "input/output" — reading or writing files, network traffic, anything that talks to the outside world. To <b>starve</b> the loop means to keep it so busy with tiny jobs that it never reaches its next phase.</div>
+</section>
+
+<section id="s5">
+<h3>5. Modules</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>module</b> is one file of code. Everything inside it is private unless you choose to share it with <code>export</code>.</p>
+<p>Node has two systems for this. <b>CommonJS</b> (<code>require</code>) is the old one. <b>ES Modules</b> (<code>import</code>) is the modern standard, the same one browsers use. You'll meet both.</p>
+<p class="analogy">Each file is a room with a closed door. <code>export</code> puts something on a shelf outside the door. <code>import</code>/<code>require</code> is another room taking it from that shelf.</p></div>
+<pre><code>// CommonJS — the older style, still everywhere
+const express = require("express");
+module.exports = { createUser };
+
+// ES Modules — the modern standard
+import express from "express";
+export { createUser };</code></pre>
+<h4>Turning on ES Modules</h4>
+<pre><code>// package.json
+{ "type": "module" }        // now .js files use import/export</code></pre>
+<p>Without that line, Node treats every <code>.js</code> file as CommonJS. You can also name one file <code>.mjs</code> to make just that file an ES module, or <code>.cjs</code> to force it to be CommonJS.</p>
+<p>Two table words: <b>top-level <code>await</code></b> means using <code>await</code> directly in a file, outside any function. <b>Unused code removed</b> (also called <b>tree shaking</b>) means a build tool can drop functions you never import, making the final bundle smaller.</p>
+<div class="table-wrap"><table>
+<tr><th></th><th>CommonJS</th><th>ES Modules</th></tr>
+<tr><td>Syntax</td><td><code>require</code> / <code>module.exports</code></td><td><code>import</code> / <code>export</code></td></tr>
+<tr><td>Loads</td><td>When the line runs</td><td>Before anything runs</td></tr>
+<tr><td>Top-level <code>await</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>__dirname</code></td><td>Available</td><td>Must build it yourself</td></tr>
+<tr><td>Unused code removed</td><td>No</td><td>Yes (bundlers can)</td></tr>
+</table></div>
+<pre><code>// __dirname in ES Modules
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+const __dirname = dirname(fileURLToPath(import.meta.url));</code></pre>
+<h4>Modules are cached</h4>
+<pre><code>// db.js
+console.log("connecting…");
+export const db = createConnection();
+
+// imported in five files → "connecting…" prints ONCE</code></pre>
+<p>Node loads each file <b>once</b>, remembers the result (the <b>module cache</b>), and hands the same copy to every file that asks for it. So a database connection or config object created in a module is shared by your whole app. That's useful — but worth knowing so it doesn't surprise you. For example, if one file changes a value on a shared config object, every other file sees the change.</p>
+</section>
+
+<section id="s6">
+<h3>6. Node.js Process Lifecycle</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>process</b> is one running copy of a program. When you type <code>node app.js</code>, the operating system starts a Node process. The <b>lifecycle</b> is everything that happens to that process, from the moment it starts to the moment it exits.</p>
+<p>In short: Node starts its engine, loads your files, runs your code from top to bottom once, and then enters the event loop. It stays in the loop as long as there is something left to wait for (a timer, an open server, a pending file read). When nothing is left, it exits by itself.</p>
+<p class="analogy">A shop's day. Unlock the door and turn on the lights (start V8 and libuv). Stock the shelves (load modules). Do the opening checklist (top-level code). Then serve customers as they come in (the event loop). When there are no customers and nothing is booked, lock up and go home (exit). If the owner phones and says "close now", you finish with the current customer, then lock up (graceful shutdown).</p></div>
+<figure class="diagram">
+<svg viewBox="0 0 640 450" role="img" aria-label="Node process lifecycle: node app.js starts V8 and libuv, loads modules, runs top-level code and drains microtasks, then enters the event loop whose phases are timers, pending callbacks, idle and prepare, poll, check, and close callbacks. After each lap Node checks whether anything is still pending; if yes it loops again, if no it emits beforeExit and exit and the process ends.">
+  <rect class="d-box-accent" x="24" y="14" width="250" height="42" rx="7"/>
+  <text class="d-accent-text" x="40" y="33">1. node app.js</text>
+  <text class="d-sub" x="40" y="49">you (or your host) start the process</text>
+
+  <rect class="d-box" x="24" y="74" width="250" height="42" rx="6"/>
+  <text class="d-label" x="40" y="93">2. Start V8 + libuv</text>
+  <text class="d-sub" x="40" y="109">JS engine and OS helper get ready</text>
+
+  <rect class="d-box" x="24" y="134" width="250" height="42" rx="6"/>
+  <text class="d-label" x="40" y="153">3. Load modules</text>
+  <text class="d-sub" x="40" y="169">require / import, each file cached</text>
+
+  <rect class="d-box" x="24" y="194" width="250" height="42" rx="6"/>
+  <text class="d-label" x="40" y="213">4. Run top-level code</text>
+  <text class="d-sub" x="40" y="229">app.listen(), timers, db.connect()</text>
+
+  <rect class="d-box" x="24" y="254" width="250" height="42" rx="6"/>
+  <text class="d-label" x="40" y="273">5. Drain microtasks</text>
+  <text class="d-sub" x="40" y="289">nextTick queue, then promises</text>
+
+  <path class="d-line" d="M149 56 V68"/><path class="d-arrow" d="M149 74 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M149 116 V128"/><path class="d-arrow" d="M149 134 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M149 176 V188"/><path class="d-arrow" d="M149 194 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M149 236 V248"/><path class="d-arrow" d="M149 254 l-4.5 -9 h9 z"/>
+  <path class="d-line-accent" d="M274 275 H302"/><path class="d-arrow-accent" d="M310 275 l-9 -4.5 v9 z"/>
+
+  <rect class="d-box-accent" x="310" y="14" width="316" height="330" rx="9"/>
+  <text class="d-accent-text" x="328" y="34">6. EVENT LOOP — one lap = one tick</text>
+
+  <rect class="d-box" x="330" y="44" width="266" height="36" rx="6"/>
+  <text class="d-label" x="344" y="60">timers</text>
+  <text class="d-sub" x="344" y="74">setTimeout / setInterval that are due</text>
+
+  <rect class="d-box" x="330" y="90" width="266" height="36" rx="6"/>
+  <text class="d-label" x="344" y="106">pending callbacks</text>
+  <text class="d-sub" x="344" y="120">some delayed system errors</text>
+
+  <rect class="d-box" x="330" y="136" width="266" height="36" rx="6"/>
+  <text class="d-label" x="344" y="152">idle / prepare</text>
+  <text class="d-sub" x="344" y="166">Node's own housekeeping only</text>
+
+  <rect class="d-fill-accent" x="330" y="182" width="266" height="36" rx="6"/>
+  <rect class="d-box-accent" x="330" y="182" width="266" height="36" rx="6"/>
+  <text class="d-accent-text" x="344" y="198">poll ← waits here for I/O</text>
+  <text class="d-sub" x="344" y="212">file + network callbacks, new requests</text>
+
+  <rect class="d-box" x="330" y="228" width="266" height="36" rx="6"/>
+  <text class="d-label" x="344" y="244">check</text>
+  <text class="d-sub" x="344" y="258">setImmediate callbacks</text>
+
+  <rect class="d-box" x="330" y="274" width="266" height="36" rx="6"/>
+  <text class="d-label" x="344" y="290">close callbacks</text>
+  <text class="d-sub" x="344" y="304">socket.on("close"), server closed</text>
+
+  <path class="d-line" d="M463 80 V84"/><path class="d-arrow" d="M463 90 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M463 126 V130"/><path class="d-arrow" d="M463 136 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M463 172 V176"/><path class="d-arrow" d="M463 182 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M463 218 V222"/><path class="d-arrow" d="M463 228 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M463 264 V268"/><path class="d-arrow" d="M463 274 l-4.5 -9 h9 z"/>
+  <path class="d-line-accent" d="M596 292 H614 V62 H604"/><path class="d-arrow-accent" d="M596 62 l9 -4.5 v9 z"/>
+
+  <text class="d-sub" x="468" y="332" text-anchor="middle">between every callback: nextTick, then promises</text>
+
+  <path class="d-line" d="M468 344 V362"/><path class="d-arrow" d="M468 368 l-4.5 -9 h9 z"/>
+  <rect class="d-box" x="310" y="368" width="316" height="46" rx="7"/>
+  <text class="d-label" x="468" y="387" text-anchor="middle">Anything still pending?</text>
+  <text class="d-sub" x="468" y="404" text-anchor="middle">timers, open servers/sockets, file reads</text>
+  <text class="d-accent-text" x="468" y="436" text-anchor="middle">yes → go round the loop again</text>
+
+  <path class="d-line" d="M310 391 H280"/><path class="d-arrow" d="M274 391 l9 -4.5 v9 z"/>
+  <text class="d-sub" x="292" y="384" text-anchor="middle">no</text>
+  <rect class="d-box-accent" x="24" y="368" width="250" height="46" rx="7"/>
+  <text class="d-accent-text" x="40" y="387">7. 'beforeExit' → 'exit'</text>
+  <text class="d-sub" x="40" y="404">process ends with an exit code</text>
+</svg>
+<figcaption>Steps 1–5 happen once. Step 6 repeats for as long as the app has work or something to wait for. A web server never reaches step 7 on its own, because an open server always counts as "pending".</figcaption>
+</figure>
+<h4>Step by step</h4>
+<ol>
+<li><b><code>node app.js</code></b> — the operating system starts a new process. Node reads settings such as environment variables and command-line flags (for example <code>--env-file=.env</code>).</li>
+<li><b>V8 and libuv start.</b> V8 (the JavaScript engine) gets ready to run code. libuv (the C library Node uses to talk to the operating system for files, network and timers) sets up the event loop and the thread pool.</li>
+<li><b>Module loading.</b> Node reads <code>app.js</code>, finds every <code>require</code> or <code>import</code>, and loads those files too. Each file runs <b>once</b> and is stored in the <b>module cache</b>, so the second <code>require("./db")</code> gets the same object back, instantly. With ES Modules, all imports are found and loaded <i>before</i> any code runs. With CommonJS, each <code>require</code> loads when its line is reached.</li>
+<li><b>Top-level code runs.</b> "Top-level" means code that is not inside a function — it runs straight away, top to bottom. This is where you call <code>app.listen()</code>, start timers, and open database connections. These calls <i>register</i> work with the event loop; they don't wait for it.</li>
+<li><b>Microtasks drain.</b> Before the loop starts, Node runs every queued <code>process.nextTick</code> callback, then every promise callback.</li>
+<li><b>The event loop starts</b> and goes round its phases in order: timers → pending callbacks → idle/prepare → poll → check → close callbacks. Between every single callback, Node empties the <code>nextTick</code> queue and then the promise queue.</li>
+<li><b>Exit.</b> After each lap, Node asks "is anything still pending?" If there are no timers, no open servers or sockets, and no file reads in flight, it emits <code>'beforeExit'</code>, then <code>'exit'</code>, and the process ends.</li>
+</ol>
+<h4>The phases, in order</h4>
+<div class="table-wrap"><table>
+<tr><th>Phase</th><th>What runs here</th><th>Example</th></tr>
+<tr><td><b>timers</b></td><td>Timer callbacks whose time is up</td><td><code>setTimeout</code>, <code>setInterval</code></td></tr>
+<tr><td><b>pending callbacks</b></td><td>A few system-level callbacks delayed from the last lap</td><td>Some TCP connection errors</td></tr>
+<tr><td><b>idle / prepare</b></td><td>Node's internal housekeeping — your code never runs here</td><td>—</td></tr>
+<tr><td><b>poll</b></td><td>Results of I/O (input/output: files, network). Waits here if nothing else is due</td><td><code>fs.readFile</code> callback, incoming HTTP request</td></tr>
+<tr><td><b>check</b></td><td>Callbacks scheduled to run right after poll</td><td><code>setImmediate</code></td></tr>
+<tr><td><b>close callbacks</b></td><td>Clean-up events for things that closed</td><td><code>socket.on("close")</code></td></tr>
+<tr><td><i>between every callback</i></td><td>Microtask queues, emptied fully</td><td><code>process.nextTick</code> first, then promise <code>.then</code></td></tr>
+</table></div>
+<h4>When does the process exit?</h4>
+<p>Node exits by itself when the event loop has <b>nothing left to do</b>. "Something to do" means any of these: a timer that hasn't fired yet, an open server or socket, or a file or network operation still in progress.</p>
+<pre><code>// Exits right away — nothing is pending after the log
+console.log("hi");
+
+// Exits after 2 seconds — the timer keeps the loop alive until it fires
+setTimeout(() =&gt; console.log("bye"), 2000);
+
+// Never exits on its own — an open server is always "pending"
+http.createServer(handler).listen(3000);
+
+// timer.unref() = "don't keep the process alive just for me"
+setInterval(sendMetrics, 10000).unref();</code></pre>
+<p>It can also exit early: you call <code>process.exit(code)</code>, an error crashes it, or the operating system sends a signal that stops it.</p>
+<h4>Process events</h4>
+<p>The <code>process</code> object is an EventEmitter (see <a href="#s7">Events &amp; EventEmitter</a>), so you can listen for moments in its life.</p>
+<div class="table-wrap"><table>
+<tr><th>Event</th><th>When it fires</th><th>Can you still do async work?</th></tr>
+<tr><td><code>'beforeExit'</code></td><td>The loop is empty and Node is about to exit on its own. <b>Not</b> fired for <code>process.exit()</code> or crashes</td><td>Yes — scheduling new work here keeps the process alive</td></tr>
+<tr><td><code>'exit'</code></td><td>The process is definitely ending, for any reason. You get the exit code</td><td><b>No</b> — only synchronous code runs; timers and promises are ignored</td></tr>
+<tr><td><code>'uncaughtException'</code></td><td>An error was thrown and nothing caught it</td><td>Log it, then exit — the app is in an unknown state</td></tr>
+<tr><td><code>'unhandledRejection'</code></td><td>A promise failed and had no <code>.catch</code> / <code>try…catch</code>. Since Node 15 this crashes the process by default</td><td>Log it, then shut down</td></tr>
+<tr><td><code>'SIGINT'</code></td><td>A <b>signal</b> (a short message from the operating system) sent when you press Ctrl+C</td><td>Yes — run your shutdown code</td></tr>
+<tr><td><code>'SIGTERM'</code></td><td>The polite "please stop" signal sent by Docker, Kubernetes, PM2 or your host before a deploy</td><td>Yes — run your shutdown code (you usually get ~10–30 seconds)</td></tr>
+</table></div>
+<p><b>Exit codes:</b> a number the process hands back to the system when it ends. <code>0</code> means "all good". Anything else (usually <code>1</code>) means "something went wrong", which tells Docker, CI or your process manager to treat it as a failure.</p>
+<h4>Graceful shutdown</h4>
+<p><b>Graceful shutdown</b> means stopping cleanly: stop taking new work, finish the work you already have, close connections, then exit. The opposite is being killed mid-request, which leaves users with errors and data half-saved.</p>
+<pre><code>const server = app.listen(3000);
+let shuttingDown = false;
+
+async function shutdown(signal) {
+  if (shuttingDown) return;            // ignore a second Ctrl+C / SIGTERM
+  shuttingDown = true;
+  console.log(`${signal} received, shutting down…`);
+
+  // Safety net: if clean-up hangs, force exit after 10 s
+  setTimeout(() =&gt; process.exit(1), 10_000).unref();
+
+  server.close(async (err) =&gt; {        // 1. stop accepting NEW connections;
+                                       //    callback runs once in-flight requests finish
+    try {
+      await db.end();                  // 2. close the database pool
+      await redis.quit();              // 3. close other connections
+      process.exit(err ? 1 : 0);       // 4. exit: 0 = clean, 1 = problem
+    } catch (e) {
+      console.error(e);
+      process.exit(1);
+    }
+  });
+}
+
+process.on("SIGTERM", () =&gt; shutdown("SIGTERM"));   // host / Docker / Kubernetes
+process.on("SIGINT",  () =&gt; shutdown("SIGINT"));    // Ctrl+C
+
+process.on("uncaughtException", (err) =&gt; {
+  console.error("Uncaught:", err);
+  process.exit(1);                     // state is unknown — don't carry on
+});
+process.on("unhandledRejection", (reason) =&gt; {
+  console.error("Unhandled rejection:", reason);
+  shutdown("unhandledRejection");
+});
+
+process.on("exit", (code) =&gt; {
+  console.log("exiting with code", code);   // sync only — no await here
+});</code></pre>
+<div class="note"><b>Common traps:</b> (1) <code>'exit'</code> handlers can't wait for anything — an <code>await db.end()</code> inside one never finishes. Do async clean-up in your signal handler instead. (2) Calling <code>process.exit()</code> straight away in a SIGTERM handler throws away in-flight requests — always <code>server.close()</code> first. (3) <code>SIGKILL</code> (e.g. <code>kill -9</code>) can't be caught at all; that is what the host sends if you take too long.</div>
+</section>
+
+<!-- ================= NODE CORE ================= -->
+<div class="part">Part 2 — Node's Built-in Tools</div>
+
+<section id="s7">
+<h3>7. Events &amp; EventEmitter</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>An <b>EventEmitter</b> lets one part of your code announce "this happened", and other parts listen for it. Neither side needs to know about the other.</p>
+<p>To <b>emit</b> means to announce an event. A <b>listener</b> is a function that waits for a named event and runs when it happens. This pattern is everywhere in Node: servers, streams, and <b>sockets</b> (open network connections) are all EventEmitters underneath.</p>
+<p class="analogy">A doorbell. It doesn't know who's inside or what they'll do. It just rings, and whoever cares responds.</p></div>
+<pre><code>import { EventEmitter } from "events";
+
+const orders = new EventEmitter();
+
+orders.on("created", (order) =&gt; sendEmail(order));      // listener 1
+orders.on("created", (order) =&gt; updateStats(order));    // listener 2
+
+orders.emit("created", { id: 1 });   // both listeners run, in order</code></pre>
+<pre><code>orders.once("ready", fn);        // run at most once, then auto-remove
+orders.off("created", fn);       // remove a specific listener
+orders.listenerCount("created"); // how many are attached</code></pre>
+<h4>Why this matters</h4>
+<p>It <b>decouples</b> your code — meaning the parts don't depend on each other directly. The function that creates orders doesn't need to know that emails and statistics exist. Add a third listener later (say, "notify the warehouse") and you change nothing in the original code.</p>
+<h4>Two traps</h4>
+<pre><code>// 1. Listeners run SYNCHRONOUSLY — a slow one blocks the others
+orders.on("created", () =&gt; { heavyWork(); });   // everything waits
+
+// 2. An "error" event with no listener CRASHES the process
+emitter.on("error", (err) =&gt; log(err));         // always add this</code></pre>
+<p>Node also warns you when one event gets 11 or more listeners ("possible memory leak"). A <b>memory leak</b> is memory your app keeps using and never gives back, so it slowly grows until it crashes. The warning is usually a real bug: a listener is being added inside a function that runs again and again (for example, on every request), and never removed.</p>
+</section>
+
+<section id="s8">
+<h3>8. The File System</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>The <code>fs</code> ("file system") module reads and writes files. It comes in three flavours:</p>
+<ul>
+<li><b>Promise-based</b> — use this. You write <code>await fs.readFile(…)</code>.</li>
+<li><b>Callback-based</b> — the older style. You pass a function to be called when it's done.</li>
+<li><b>Sync</b> — waits and blocks the whole server. Avoid it once the server is running.</li>
+</ul></div>
+<pre><code>import fs from "fs/promises";
+
+const text = await fs.readFile("notes.txt", "utf8");   // without "utf8" you get raw bytes
+await fs.writeFile("out.txt", "hello");                 // overwrites
+await fs.appendFile("log.txt", "line\n");               // adds to the end
+await fs.mkdir("uploads", { recursive: true });         // recursive = make parents too
+const files = await fs.readdir("uploads");
+await fs.rm("old.txt", { force: true });                // force = don't error if missing
+
+const info = await fs.stat("file.txt");
+info.size; info.isDirectory(); info.mtime;</code></pre>
+<h4>Checking whether a file exists</h4>
+<pre><code>// ✗ don't check-then-act — the file can change in between
+if (await exists(path)) { await fs.readFile(path); }
+
+// ✓ just try it and handle the failure
+try {
+  const data = await fs.readFile(path, "utf8");
+} catch (err) {
+  if (err.code === "ENOENT") return null;   // not found
+  throw err;
+}</code></pre>
+<p>Why not check first? Between your check and your read, another process could delete or change the file. This gap is called a <b>race condition</b> (two things "racing" to touch the same thing). Just trying and handling the error avoids the gap.</p>
+<p>Error codes worth recognising: <code>ENOENT</code> (no such file or folder), <code>EACCES</code> (no permission), <code>EISDIR</code> (it's a folder, not a file), <code>EEXIST</code> (already there).</p>
+<h4>Always build paths with the path module</h4>
+<pre><code>import path from "path";
+
+path.join(__dirname, "uploads", "a.png");   // handles / vs \ across operating systems
+path.resolve("uploads");                     // → absolute path
+path.extname("photo.png");                   // ".png"
+path.basename("/a/b/photo.png");             // "photo.png"</code></pre>
+<div class="note"><b>Security:</b> never build a file path directly from user input. <code>..</code> means "go up one folder", so a filename like <code>../../etc/passwd</code> climbs out of your folder and reads a system file. This attack is called <b>path traversal</b>. Use <code>path.basename()</code> to strip the folder parts, and check that the final (resolved) path still starts with the folder you intended.</div>
+</section>
+
+<section id="s9">
+<h3>9. Streams &amp; Buffers</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>stream</b> handles data in small pieces (called <b>chunks</b>) as they arrive, instead of loading everything into memory first.</p>
+<p>A <b>buffer</b> is a chunk of raw binary data — the actual bytes (0s and 1s grouped into numbers from 0 to 255), before they are turned into text or an image.</p>
+<p class="analogy">Reading a file normally is filling a bucket then carrying it. A stream is a hose — the water flows through continuously, and you never hold more than a trickle at once.</p></div>
+<figure class="diagram">
+<svg viewBox="0 0 620 250" role="img" aria-label="Loading a whole file holds all of it in memory at once, while a stream passes small chunks through so memory use stays flat regardless of file size.">
+  <text class="d-sub" x="150" y="18" text-anchor="middle">WITHOUT STREAMS</text>
+  <rect class="d-box" x="24" y="30" width="252" height="88" rx="7"/>
+  <text class="d-mono" x="40" y="54">readFile("2GB.mp4")</text>
+  <rect class="d-box" x="40" y="66" width="220" height="34" rx="5"/>
+  <text class="d-sub" x="150" y="88" text-anchor="middle">entire 2GB held in memory</text>
+  <text class="d-accent-text" x="150" y="136" text-anchor="middle">10 users = 20GB = crash</text>
+
+  <text class="d-accent-text" x="465" y="18" text-anchor="middle">WITH STREAMS</text>
+  <rect class="d-box-accent" x="340" y="30" width="256" height="88" rx="7"/>
+  <text class="d-mono" x="356" y="54">createReadStream(…)</text>
+  <rect class="d-fill-accent" x="356" y="66" width="40" height="34" rx="4"/>
+  <rect class="d-box-accent" x="356" y="66" width="40" height="34" rx="4"/>
+  <text class="d-sub" x="376" y="88" text-anchor="middle">64KB</text>
+  <text class="d-sub" x="410" y="88">→</text>
+  <rect class="d-fill-accent" x="426" y="66" width="40" height="34" rx="4"/>
+  <rect class="d-box-accent" x="426" y="66" width="40" height="34" rx="4"/>
+  <text class="d-sub" x="446" y="88" text-anchor="middle">64KB</text>
+  <text class="d-sub" x="480" y="88">→</text>
+  <rect class="d-box" x="496" y="66" width="40" height="34" rx="4"/>
+  <text class="d-sub" x="516" y="88" text-anchor="middle">64KB</text>
+  <text class="d-sub" x="548" y="88">→ …</text>
+  <text class="d-accent-text" x="465" y="136" text-anchor="middle">10 users = still tiny memory</text>
+
+  <rect class="d-box" x="120" y="164" width="380" height="58" rx="7"/>
+  <text class="d-label" x="140" y="186">Backpressure</text>
+  <text class="d-sub" x="140" y="206">If the destination is slower than the source, a pipe automatically</text>
+  <text class="d-sub" x="140" y="222" >slows the reading down. pipeline() handles this for you.</text>
+</svg>
+<figcaption>Streams keep memory flat no matter how large the data is. That's why they matter for uploads, downloads and big files.</figcaption>
+</figure>
+<pre><code>import { createReadStream, createWriteStream } from "fs";
+import { pipeline } from "stream/promises";
+import { createGzip } from "zlib";
+
+// read → compress → write, in chunks, with errors handled
+await pipeline(
+  createReadStream("big.log"),
+  createGzip(),
+  createWriteStream("big.log.gz")
+);</code></pre>
+<p>Use <code>pipeline()</code> rather than chaining <code>.pipe()</code>. If one step fails, <code>pipeline()</code> closes all the other streams and gives you the error. <code>.pipe()</code> does not, so files can be left open and memory can leak.</p>
+<p><b>Backpressure</b> (in the diagram) means "slow down, I can't keep up". Example: reading from a fast disk while uploading over a slow network. Without backpressure, the unsent chunks would pile up in memory.</p>
+<h4>The four stream types</h4>
+<ul>
+<li><b>Readable</b> — you read from it (a file, an HTTP request body).</li>
+<li><b>Writable</b> — you write to it (a file, an HTTP response).</li>
+<li><b>Duplex</b> — both at once (a network socket: you send and receive).</li>
+<li><b>Transform</b> — reads, changes, writes (gzip compression, encryption).</li>
+</ul>
+<h4>Buffers</h4>
+<pre><code>const buf = Buffer.from("hello");        // text → bytes
+buf.toString("utf8");                     // bytes → text
+buf.toString("base64");                   // bytes → base64 text
+buf.length;                               // size in BYTES, not characters</code></pre>
+<p>That last point matters: <code>"café"</code> is 4 characters but 5 bytes, because <code>é</code> takes two bytes in UTF-8 (the standard way of storing text as bytes). That's why file size limits should be checked in bytes. <b>Base64</b> is a way of writing any bytes as plain letters and digits, so binary data (like an image) can travel inside JSON or a URL.</p>
+</section>
+
+<section id="s10">
+<h3>10. Paths, URLs &amp; Process</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><code>process</code> is a global object (available everywhere, no import needed) that describes the running program itself — its settings, its memory use, and messages from the operating system.</p>
+<p>The most useful part is <b>signals</b>. A signal is a short message the operating system sends to a process, such as "please stop". When your hosting platform wants to stop your app, it politely asks first with a signal. Listening for that lets you finish what you're doing instead of being cut off mid-sentence.</p></div>
+<h4>process — information about the running program</h4>
+<pre><code>process.env.NODE_ENV;         // environment variables
+process.argv;                 // command-line arguments
+process.cwd();                // the folder you ran it from
+process.memoryUsage();
+process.exit(1);              // stop, with an error code
+
+process.on("SIGTERM", shutdown);        // the host is asking you to stop
+process.on("uncaughtException", handler);
+process.on("unhandledRejection", handler);</code></pre>
+<h4>Graceful shutdown — often missed, always asked about</h4>
+<pre><code>const server = app.listen(3000);
+
+async function shutdown() {
+  server.close();                 // stop accepting NEW requests
+  await finishInFlightRequests(); // let current ones complete
+  await db.end();                 // close the database cleanly
+  process.exit(0);
+}
+process.on("SIGTERM", shutdown);
+process.on("SIGINT", shutdown);   // Ctrl+C</code></pre>
+<p>Without this, a deploy kills the process in the middle of requests. Users see errors, and database changes can be left half-written. Every deployment system sends SIGTERM first and then waits a little while, so handling it is free reliability. (The full version, with timeouts and exit codes, is in <a href="#s6">Node.js Process Lifecycle</a>.)</p>
+<h4>Environment variables</h4>
+<p><b>Environment variables</b> are settings passed to your app from outside the code — database address, secret keys, port number. The same code can then run on your laptop and in production with different settings. A <code>.env</code> file is a simple text file that holds them during development.</p>
+<pre><code># .env  — never commit this file
+DATABASE_URL=postgres://…
+JWT_SECRET=…</code></pre>
+<pre><code>import "dotenv/config";               // or: node --env-file=.env app.js
+const url = process.env.DATABASE_URL;
+
+if (!process.env.JWT_SECRET) {        // fail loudly at startup, not at 3am
+  throw new Error("JWT_SECRET is missing");
+}</code></pre>
+<h4>URLs</h4>
+<pre><code>const url = new URL("https://site.com/search?q=node&amp;page=2");
+url.pathname;                     // "/search"
+url.searchParams.get("q");        // "node"</code></pre>
+</section>
+
+<section id="s11">
+<h3>11. An HTTP Server Without Express</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Node can serve web requests on its own — Express is optional. But you have to do everything by hand: work out which URL was asked for, collect the request body piece by piece, and set every <b>header</b> yourself (headers are small labels sent with a request or response, like <code>Content-Type: application/json</code>).</p>
+<p>Writing one is the fastest way to understand what a framework is actually saving you.</p></div>
+<p>Worth building once. It shows you exactly what Express is doing for you.</p>
+<pre><code>import http from "http";
+
+const server = http.createServer((req, res) =&gt; {
+  // No routing — you check the method and URL yourself
+  if (req.method === "GET" &amp;&amp; req.url === "/users") {
+    res.writeHead(200, { "Content-Type": "application/json" });
+    return res.end(JSON.stringify([{ id: 1 }]));
+  }
+
+  if (req.method === "POST" &amp;&amp; req.url === "/users") {
+    // No body parsing — you collect the chunks yourself
+    let body = "";
+    req.on("data", chunk =&gt; { body += chunk; });
+    req.on("end", () =&gt; {
+      const user = JSON.parse(body);      // and handle bad JSON yourself
+      res.writeHead(201, { "Content-Type": "application/json" });
+      res.end(JSON.stringify(user));
+    });
+    return;
+  }
+
+  res.writeHead(404);
+  res.end("Not found");
+});
+
+server.listen(3000);</code></pre>
+<h4>What that reveals</h4>
+<p>Everything Express gives you is missing here:</p>
+<ul>
+<li>no <b>routing</b> (matching a URL to a function),</li>
+<li>no <b>body parsing</b> (turning the raw request text into a JavaScript object),</li>
+<li>no URL parameters (like the <code>42</code> in <code>/users/42</code>) and no query parsing (like <code>?page=2</code>),</li>
+<li>no middleware and no error handling.</li>
+</ul>
+<p>You'd write all of it yourself — and the <code>if</code> chain becomes unmanageable after about five routes.</p>
+<div class="note">Notice the request body arrives in <b>chunks</b> (<a href="#s9">section 9</a>) — it's a stream. That's why body parsing needs a step at all: the data doesn't arrive all at once.</div>
+</section>
+
+<section id="s12">
+<h3>12. npm &amp; package.json</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>npm</b> (Node Package Manager) downloads and installs code other people have written. Each downloadable bundle is called a <b>package</b>. <b>package.json</b> is the list of packages your project uses, plus shortcuts (<b>scripts</b>) for running it.</p>
+<p>A <b>dependency</b> is needed to run the app. A <b>devDependency</b> is only needed while building or testing it, so it isn't shipped to production.</p>
+<p class="analogy">package.json is a shopping list ("some bread, any brand from this year"). The lockfile is the receipt ("this exact loaf, this brand, this batch").</p></div>
+<pre><code>npm init -y                  # create package.json
+npm install express          # add a dependency
+npm install -D nodemon       # dev-only (not shipped to production)
+npm ci                       # clean install from the lockfile — use this in CI
+npm outdated                 # what's behind
+npm audit fix                # patch known vulnerabilities</code></pre>
+<pre><code>{
+  "name": "my-api",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch server.js",
+    "start": "node server.js",
+    "test": "vitest"
+  },
+  "dependencies":    { "express": "^4.19.0" },
+  "devDependencies": { "vitest": "^1.0.0" }
+}</code></pre>
+<h4>Version symbols</h4>
+<p>Versions follow <b>semver</b> (semantic versioning): <code>MAJOR.MINOR.PATCH</code>, e.g. <code>4.19.2</code>. PATCH = bug fixes. MINOR = new features that don't break anything. MAJOR = breaking changes that may need you to change your code.</p>
+<div class="table-wrap"><table>
+<tr><th>Written</th><th>Accepts</th><th>Meaning</th></tr>
+<tr><td><code>^4.19.0</code></td><td>4.x.x</td><td>Bug fixes and new features, no breaking changes</td></tr>
+<tr><td><code>~4.19.0</code></td><td>4.19.x</td><td>Bug fixes only</td></tr>
+<tr><td><code>4.19.0</code></td><td>exactly that</td><td>Locked</td></tr>
+</table></div>
+<h4>The lockfile</h4>
+<p><code>package-lock.json</code> records the <b>exact</b> version of every package, including the packages your packages depend on. Commit it to git. Without it, two developers running <code>npm install</code> on different days can end up with different code — the classic "works on my machine".</p>
+<div class="note"><b><code>npm install</code> vs <code>npm ci</code>:</b> <code>install</code> may update the lockfile. <code>ci</code> installs exactly what the lockfile says, and fails if it disagrees with package.json. Use <code>ci</code> in automated builds (<b>CI</b>, continuous integration — the server that builds and tests your code on every push) so every build is identical, or <b>reproducible</b>.</div>
+</section>
+
+<!-- ================= EXPRESS BASICS ================= -->
+<div class="part">Part 3 — Express</div>
+
+<section id="s13">
+<h3>13. Why Express</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Express is a thin layer on top of Node's HTTP server. It handles the boring, repetitive parts: matching URLs to functions, reading request bodies, and sending responses.</p>
+<p>It's deliberately <b>unopinionated</b> — it doesn't tell you how to organise your project (which folders, which file names). That's freedom, and it's also why two Express codebases can look completely different.</p>
+<p class="analogy">Node's <code>http</code> module is a bare kitchen. Express adds labelled drawers and a recipe board — but you still decide what to cook and where to put things.</p></div>
+<pre><code>import express from "express";
+const app = express();
+
+app.use(express.json());                     // parse JSON bodies
+
+app.get("/users/:id", (req, res) =&gt; {
+  res.json({ id: req.params.id });
+});
+
+app.listen(3000, () =&gt; console.log("ready"));</code></pre>
+<p>Compare that to <a href="#s11">section 11</a>: routing, parameters, body parsing and JSON responses all handled in a few lines.</p>
+<h4>Express 4 vs 5</h4>
+<p>Express 5 (2024) fixes the most annoying thing about Express 4: errors thrown inside <code>async</code> handlers are now caught automatically. In Express 4, such an error becomes an <b>unhandled rejection</b> (a failed promise that nobody caught), which crashes the process unless you wrap every handler.</p>
+<pre><code>// Express 4 — this UNHANDLED rejection crashes the app
+app.get("/x", async (req, res) =&gt; { throw new Error("boom"); });
+
+// Express 4 fix — a wrapper
+const wrap = fn =&gt; (req, res, next) =&gt; Promise.resolve(fn(req, res, next)).catch(next);
+app.get("/x", wrap(async (req, res) =&gt; { … }));
+
+// Express 5 — just works</code></pre>
+<h4>Alternatives</h4>
+<p>"Ecosystem" below means all the extra packages, tutorials and answers online built around a tool. "Edge runtimes" are small JavaScript environments that run on servers close to the user (e.g. Cloudflare Workers).</p>
+<div class="table-wrap"><table>
+<tr><th>Framework</th><th>Trade-off</th></tr>
+<tr><td><b>Express</b></td><td>Huge ecosystem, most tutorials, most jobs. Slowest of these.</td></tr>
+<tr><td><b>Fastify</b></td><td>Much faster, built-in validation and schemas. Smaller ecosystem.</td></tr>
+<tr><td><b>NestJS</b></td><td>Structure decided for you (like Angular). Great for large teams, heavier to learn.</td></tr>
+<tr><td><b>Hono</b></td><td>Tiny and fast; runs on edge runtimes as well as Node.</td></tr>
+</table></div>
+</section>
+
+<section id="s14">
+<h3>14. Routing</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Routing</b> means deciding which function handles which URL — <code>GET /users</code> goes here, <code>POST /orders</code> goes there.</p>
+<p>The <b>method</b> is the verb of the request: GET (read), POST (create), PUT/PATCH (update), DELETE (remove). The <b>path</b> is the part of the URL after the domain, like <code>/users/42</code>. Express matches the method and the path together, and checks your routes in the order you wrote them.</p>
+<p class="analogy">A receptionist with a list: "Deliveries → back door. Interviews → 3rd floor." They read the list from the top and send you to the first match.</p></div>
+<pre><code>app.get("/users", handler);
+app.post("/users", handler);
+app.put("/users/:id", handler);
+app.patch("/users/:id", handler);
+app.delete("/users/:id", handler);
+app.all("/health", handler);         // any method</code></pre>
+<h4>Getting data out of a request</h4>
+<pre><code>// URL parameter:  /users/42
+app.get("/users/:id", (req, res) =&gt; req.params.id);        // "42" — always a string
+
+// Query string:   /search?q=node&amp;page=2
+app.get("/search", (req, res) =&gt; {
+  req.query.q;      // "node"
+  req.query.page;   // "2"  — also a string, convert it yourself
+});
+
+// Body:  needs express.json() first
+app.post("/users", (req, res) =&gt; req.body.name);</code></pre>
+<div class="note"><b>Everything from the URL is a string.</b> <code>req.params.id</code> is <code>"42"</code>, not <code>42</code>. Comparing it with <code>===</code> to a number silently fails (<code>"42" === 42</code> is <code>false</code>). Convert with <code>Number(id)</code> — and check the result isn't <code>NaN</code> ("Not a Number", what you get from <code>Number("abc")</code>).</div>
+<h4>Route order matters</h4>
+<pre><code>// ✗ "/users/new" never runs — ":id" matches "new" first
+app.get("/users/:id", getUser);
+app.get("/users/new", newUserForm);
+
+// ✓ specific routes before dynamic ones
+app.get("/users/new", newUserForm);
+app.get("/users/:id", getUser);</code></pre>
+<p>Express checks routes <b>top to bottom</b> and stops at the first match. <code>:id</code> means "any value here", so it happily matches the word <code>new</code>. This trips people up constantly.</p>
+<h4>Patterns</h4>
+<pre><code>app.get("/files/*", handler);            // anything under /files
+app.get("/posts/:year/:month", handler); // multiple params
+app.get(/^\/ab+cd$/, handler);           // a regular expression</code></pre>
+</section>
+
+<section id="s15">
+<h3>15. Middleware — the heart of Express</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Middleware</b> is a function that sits in the middle — between the incoming request and your final <b>handler</b> (the function that actually answers the request). It can look at the request, change it, stop it, or pass it along.</p>
+<p>Each one calls <code>next()</code> to hand over to the next function in line. Express runs them <b>in the order you registered them</b> (the order of your <code>app.use</code> lines).</p>
+<p class="analogy">Airport security: check-in, then passport, then bag scan, then the gate. Each station can wave you through or stop you.</p></div>
+<figure class="diagram">
+<svg viewBox="0 0 620 250" role="img" aria-label="A request passes through logging, CORS, body parsing and authentication middleware, each calling next, before reaching the route handler; calling next with an error skips straight to the error handler.">
+  <rect class="d-box-accent" x="16" y="46" width="80" height="42" rx="7"/>
+  <text class="d-accent-text" x="56" y="72" text-anchor="middle">Request</text>
+
+  <rect class="d-box" x="116" y="46" width="74" height="42" rx="6"/>
+  <text class="d-sub" x="153" y="63" text-anchor="middle">logger</text>
+  <text class="d-sub" x="153" y="79" text-anchor="middle">next()</text>
+
+  <rect class="d-box" x="202" y="46" width="74" height="42" rx="6"/>
+  <text class="d-sub" x="239" y="63" text-anchor="middle">cors</text>
+  <text class="d-sub" x="239" y="79" text-anchor="middle">next()</text>
+
+  <rect class="d-box" x="288" y="46" width="86" height="42" rx="6"/>
+  <text class="d-sub" x="331" y="63" text-anchor="middle">json body</text>
+  <text class="d-sub" x="331" y="79" text-anchor="middle">next()</text>
+
+  <rect class="d-box" x="386" y="46" width="74" height="42" rx="6"/>
+  <text class="d-sub" x="423" y="63" text-anchor="middle">auth</text>
+  <text class="d-sub" x="423" y="79" text-anchor="middle">next()</text>
+
+  <rect class="d-fill-accent" x="472" y="46" width="132" height="42" rx="6"/>
+  <rect class="d-box-accent"  x="472" y="46" width="132" height="42" rx="6"/>
+  <text class="d-accent-text" x="538" y="63" text-anchor="middle">your handler</text>
+  <text class="d-sub" x="538" y="79" text-anchor="middle">res.json(…)</text>
+
+  <path class="d-line-accent" d="M96 67 H110"/><path class="d-arrow-accent" d="M116 67 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M190 67 H196"/><path class="d-arrow" d="M202 67 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M276 67 H282"/><path class="d-arrow" d="M288 67 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M374 67 H380"/><path class="d-arrow" d="M386 67 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M460 67 H466"/><path class="d-arrow" d="M472 67 l-9 -4.5 v9 z"/>
+
+  <rect class="d-box" x="200" y="166" width="260" height="46" rx="7"/>
+  <text class="d-label" x="330" y="186" text-anchor="middle">Error handler — 4 arguments</text>
+  <text class="d-mono"  x="330" y="203" text-anchor="middle">(err, req, res, next)</text>
+
+  <path class="d-dash" d="M239 90 V160"/><path class="d-arrow" d="M239 166 l-4.5 -9 h9 z"/>
+  <path class="d-dash" d="M423 90 V160"/><path class="d-arrow" d="M423 166 l-4.5 -9 h9 z"/>
+  <text class="d-sub" x="330" y="130" text-anchor="middle">next(err)</text>
+  <text class="d-sub" x="330" y="146" text-anchor="middle">skips everything else</text>
+
+  <text class="d-sub" x="310" y="236" text-anchor="middle">Call next() to continue · send a response to stop · call neither and the request hangs forever.</text>
+</svg>
+<figcaption>A middleware has three choices: pass it on, answer it, or report an error. Forgetting all three is the classic "my request never responds" bug.</figcaption>
+</figure>
+<pre><code>// A middleware is just a function with these three arguments
+function logger(req, res, next) {
+  console.log(req.method, req.url);
+  next();                        // ← without this, the request hangs
+}
+
+app.use(logger);                          // runs for every request
+app.use("/admin", requireAdmin);          // only for paths under /admin
+app.get("/users", requireAuth, getUsers); // only for this one route</code></pre>
+<h4>The order you register them is the order they run</h4>
+<pre><code>// ✗ auth runs AFTER the route — it never protects anything
+app.get("/secret", handler);
+app.use(requireAuth);
+
+// ✓
+app.use(requireAuth);
+app.get("/secret", handler);</code></pre>
+<h4>A typical setup, in the right order</h4>
+<p>Quick glossary for the code below: <b>helmet</b> adds security headers. <b>CORS</b> (Cross-Origin Resource Sharing) decides which other websites' browsers may call your API. <b>morgan</b> logs each request. <b>Rate limiting</b> caps how many requests one client can make in a time window.</p>
+<pre><code>app.use(helmet());                            // security headers
+app.use(cors({ origin: "https://app.com" })); // who may call this API
+app.use(express.json({ limit: "10kb" }));     // parse JSON, cap the size
+app.use(morgan("dev"));                       // request logging
+app.use(rateLimit({ windowMs: 60000, max: 100 }));
+
+app.use("/api/users", userRoutes);            // your routes
+
+app.use(notFound);                            // 404 — after all routes
+app.use(errorHandler);                        // errors — always LAST</code></pre>
+<h4>Passing data between middleware</h4>
+<pre><code>function requireAuth(req, res, next) {
+  const user = verifyToken(req.headers.authorization);
+  if (!user) return res.status(401).json({ error: "Not logged in" });
+
+  req.user = user;      // attach it — later handlers can read it
+  next();
+}
+
+app.get("/me", requireAuth, (req, res) =&gt; res.json(req.user));</code></pre>
+<p>Attaching data to <code>req</code> (like <code>req.user</code>) is the standard way to share it with the functions further down the chain — the same <code>req</code> object travels through all of them. Note the <code>return</code> before <code>res.status(401)</code>. Without it, the code carries on to <code>next()</code>, a second response is attempted, and you get "cannot set headers after they are sent".</p>
+</section>
+
+<section id="s16">
+<h3>16. Request &amp; Response</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><code>req</code> (request) holds everything the <b>client</b> (the browser, app or tool calling your API) sent — the URL, headers, and body. <code>res</code> (response) is how you reply.</p>
+<p>The one rule that catches everyone: you get <b>one</b> response per request. Sending a second one throws an error.</p>
+<p class="analogy">A letter and its reply. You can only post one reply per letter — once it's in the postbox, you can't add another page.</p></div>
+<h4>Reading the request</h4>
+<pre><code>req.params      // URL parts:      /users/:id
+req.query       // after the ?:    ?sort=name
+req.body        // parsed body     (needs express.json())
+req.headers     // all headers, lowercase keys
+req.method      // "GET"
+req.path        // "/users/42"
+req.cookies     // needs cookie-parser
+req.ip</code></pre>
+<h4>Sending the response</h4>
+<pre><code>res.json({ ok: true });                  // sets Content-Type automatically
+res.status(201).json(newUser);           // chain the status
+res.status(204).end();                   // no content
+res.send("plain text");
+res.redirect("/login");
+res.sendFile(path.join(__dirname, "a.pdf"));
+res.set("Cache-Control", "no-store");
+res.cookie("session", id, { httpOnly: true, secure: true, sameSite: "lax" });</code></pre>
+<h4>Status codes you'll actually use</h4>
+<div class="table-wrap"><table>
+<tr><th>Code</th><th>When</th></tr>
+<tr><td><b>200</b> OK</td><td>Normal success</td></tr>
+<tr><td><b>201</b> Created</td><td>Something new was made</td></tr>
+<tr><td><b>204</b> No Content</td><td>Success, nothing to send back (often DELETE)</td></tr>
+<tr><td><b>400</b> Bad Request</td><td>The input was invalid</td></tr>
+<tr><td><b>401</b> Unauthorized</td><td>"I don't know who you are" — log in</td></tr>
+<tr><td><b>403</b> Forbidden</td><td>"I know who you are, and no"</td></tr>
+<tr><td><b>404</b> Not Found</td><td>That thing doesn't exist</td></tr>
+<tr><td><b>409</b> Conflict</td><td>Clashes with current state (duplicate email)</td></tr>
+<tr><td><b>422</b> Unprocessable</td><td>Valid format, failed business rules</td></tr>
+<tr><td><b>429</b> Too Many Requests</td><td>Rate limited</td></tr>
+<tr><td><b>500</b> Server Error</td><td>Your bug</td></tr>
+</table></div>
+<div class="note"><b>401 vs 403</b> is a favourite interview question. 401 = not authenticated (who <i>are</i> you?). 403 = authenticated but not allowed (I know you, you still can't). Rule of thumb for the families: 2xx = success, 4xx = the client made a mistake, 5xx = the server made a mistake.</div>
+<h4>One response per request</h4>
+<pre><code>// ✗ crashes: "Cannot set headers after they are sent"
+if (!user) res.status(404).json({ error: "Not found" });
+res.json(user);                     // runs anyway!
+
+// ✓
+if (!user) return res.status(404).json({ error: "Not found" });
+res.json(user);</code></pre>
+<p>Why? <code>res.status(404).json(…)</code> sends the reply but does <b>not</b> stop your function. JavaScript keeps going to the next line, which tries to send a second reply. The <code>return</code> ends the function right there.</p>
+</section>
+
+<section id="s17">
+<h3>17. Express Request–Response Lifecycle</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>The <b>request–response lifecycle</b> is the journey one request takes through your app: it arrives, passes through each middleware in order, finds a matching route, runs your handler, and ends when a response is sent back.</p>
+<p>Every step has only three choices: call <code>next()</code> to pass it on, send a response to finish, or call <code>next(err)</code> to report a problem. If a step does none of these, the request just sits there until the client gives up.</p>
+<p class="analogy">A parcel in a sorting centre. It goes down one conveyor belt past a series of stations — scan the label, check for danger, weigh it, sort by address — and finally a van delivers it. Any station can push it forward, reject it (an error), or deliver it early. If a station just holds on to it, the parcel never arrives.</p></div>
+<figure class="diagram">
+<svg viewBox="0 0 640 410" role="img" aria-label="Express request lifecycle: the client sends a request to Node's http server, which hands req and res to the Express app. App-level middleware runs in order: helmet, cors, express.json, logger, auth. The router matches the method and path, route-level middleware such as validation runs, then the route handler calls the service and database, and res.json sends the reply, after which res emits finish. If no route matches, a 404 handler answers. If a middleware neither calls next nor responds, the request hangs. Calling next with an error from any step jumps to the four-argument error handler.">
+  <rect class="d-box-accent" x="16" y="14" width="130" height="44" rx="7"/>
+  <text class="d-accent-text" x="81" y="33" text-anchor="middle">Client</text>
+  <text class="d-sub" x="81" y="49" text-anchor="middle">browser / app / curl</text>
+
+  <rect class="d-box" x="166" y="14" width="140" height="44" rx="6"/>
+  <text class="d-label" x="236" y="33" text-anchor="middle">Node http server</text>
+  <text class="d-sub" x="236" y="49" text-anchor="middle">builds req + res</text>
+
+  <rect class="d-box" x="326" y="14" width="144" height="44" rx="6"/>
+  <text class="d-label" x="398" y="33" text-anchor="middle">Express app</text>
+  <text class="d-sub" x="398" y="49" text-anchor="middle">adds res.json() etc.</text>
+
+  <path class="d-line-accent" d="M146 36 H160"/><path class="d-arrow-accent" d="M166 36 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M306 36 H320"/><path class="d-arrow" d="M326 36 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M398 58 V78"/><path class="d-arrow" d="M398 84 l-4.5 -9 h9 z"/>
+
+  <rect class="d-box-accent" x="16" y="84" width="454" height="74" rx="9"/>
+  <text class="d-accent-text" x="30" y="101">App-level middleware — app.use(), in order</text>
+  <rect class="d-box" x="28" y="112" width="78" height="34" rx="5"/>
+  <text class="d-sub" x="67" y="133" text-anchor="middle">helmet</text>
+  <rect class="d-box" x="116" y="112" width="78" height="34" rx="5"/>
+  <text class="d-sub" x="155" y="133" text-anchor="middle">cors</text>
+  <rect class="d-box" x="204" y="112" width="78" height="34" rx="5"/>
+  <text class="d-sub" x="243" y="133" text-anchor="middle">express.json</text>
+  <rect class="d-box" x="292" y="112" width="78" height="34" rx="5"/>
+  <text class="d-sub" x="331" y="133" text-anchor="middle">logger</text>
+  <rect class="d-box" x="380" y="112" width="78" height="34" rx="5"/>
+  <text class="d-sub" x="419" y="133" text-anchor="middle">auth</text>
+  <path class="d-line" d="M106 129 H110"/><path class="d-arrow" d="M116 129 l-8 -4 v8 z"/>
+  <path class="d-line" d="M194 129 H198"/><path class="d-arrow" d="M204 129 l-8 -4 v8 z"/>
+  <path class="d-line" d="M282 129 H286"/><path class="d-arrow" d="M292 129 l-8 -4 v8 z"/>
+  <path class="d-line" d="M370 129 H374"/><path class="d-arrow" d="M380 129 l-8 -4 v8 z"/>
+
+  <path class="d-line" d="M403 158 V178"/><path class="d-arrow" d="M403 184 l-4.5 -9 h9 z"/>
+
+  <rect class="d-box" x="336" y="184" width="134" height="44" rx="6"/>
+  <text class="d-label" x="403" y="203" text-anchor="middle">Router matching</text>
+  <text class="d-sub" x="403" y="219" text-anchor="middle">method + path</text>
+
+  <rect class="d-box" x="176" y="184" width="140" height="44" rx="6"/>
+  <text class="d-label" x="246" y="203" text-anchor="middle">Route middleware</text>
+  <text class="d-sub" x="246" y="219" text-anchor="middle">validate(schema)</text>
+
+  <rect class="d-box-accent" x="16" y="184" width="140" height="44" rx="6"/>
+  <text class="d-accent-text" x="86" y="203" text-anchor="middle">Route handler</text>
+  <text class="d-sub" x="86" y="219" text-anchor="middle">the controller</text>
+
+  <path class="d-line" d="M336 206 H322"/><path class="d-arrow" d="M316 206 l9 -4.5 v9 z"/>
+  <path class="d-line" d="M176 206 H162"/><path class="d-arrow" d="M156 206 l9 -4.5 v9 z"/>
+  <path class="d-line" d="M86 228 V248"/><path class="d-arrow" d="M86 254 l-4.5 -9 h9 z"/>
+
+  <rect class="d-box" x="16" y="254" width="140" height="44" rx="6"/>
+  <text class="d-label" x="86" y="273" text-anchor="middle">Service → DB</text>
+  <text class="d-sub" x="86" y="289" text-anchor="middle">rules + queries</text>
+
+  <rect class="d-fill-accent" x="176" y="254" width="140" height="44" rx="6"/>
+  <rect class="d-box-accent" x="176" y="254" width="140" height="44" rx="6"/>
+  <text class="d-accent-text" x="246" y="273" text-anchor="middle">res.json() / send()</text>
+  <text class="d-sub" x="246" y="289" text-anchor="middle">reply sent, done</text>
+
+  <rect class="d-box" x="336" y="254" width="134" height="44" rx="6"/>
+  <text class="d-label" x="403" y="273" text-anchor="middle">'finish' event</text>
+  <text class="d-sub" x="403" y="289" text-anchor="middle">log status + ms</text>
+
+  <path class="d-line" d="M156 276 H170"/><path class="d-arrow" d="M176 276 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M316 276 H330"/><path class="d-arrow" d="M336 276 l-9 -4.5 v9 z"/>
+
+  <rect class="d-box" x="490" y="84" width="134" height="74" rx="7"/>
+  <text class="d-label" x="557" y="103" text-anchor="middle">Request hangs</text>
+  <text class="d-sub" x="557" y="120" text-anchor="middle">no next() and</text>
+  <text class="d-sub" x="557" y="135" text-anchor="middle">no response sent</text>
+  <text class="d-sub" x="557" y="150" text-anchor="middle">→ client times out</text>
+  <path class="d-dash" d="M470 121 H484"/><path class="d-arrow" d="M490 121 l-8 -4 v8 z"/>
+
+  <rect class="d-box" x="490" y="184" width="134" height="44" rx="6"/>
+  <text class="d-label" x="557" y="203" text-anchor="middle">404 handler</text>
+  <text class="d-sub" x="557" y="219" text-anchor="middle">no route matched</text>
+  <path class="d-dash" d="M470 206 H484"/><path class="d-arrow" d="M490 206 l-8 -4 v8 z"/>
+
+  <path class="d-dash" d="M86 298 V324"/><path class="d-arrow" d="M86 330 l-4.5 -9 h9 z"/>
+  <text class="d-sub" x="96" y="318">next(err) / throw</text>
+  <rect class="d-box-accent" x="16" y="330" width="454" height="48" rx="7"/>
+  <text class="d-accent-text" x="243" y="350" text-anchor="middle">Error handler — 4 args: (err, req, res, next)</text>
+  <text class="d-sub" x="243" y="368" text-anchor="middle">next(err) from ANY step skips all normal middleware and lands here</text>
+
+  <text class="d-sub" x="320" y="400" text-anchor="middle">Every path must end in exactly one response — otherwise the client waits forever.</text>
+</svg>
+<figcaption>Follow the solid arrows for the happy path (left to right, then right to left, then left to right again). Dashed arrows are the ways a request can leave the normal path.</figcaption>
+</figure>
+<h4>Step by step</h4>
+<ol>
+<li><b>Client sends a request</b> — e.g. <code>POST /api/users</code> with a JSON body.</li>
+<li><b>Node's http server receives it.</b> It reads the raw bytes, works out the method, URL and headers, and creates two objects: <code>req</code> (what came in) and <code>res</code> (how to answer). The body is <i>not</i> read yet — it is still a stream.</li>
+<li><b>The Express app takes over.</b> Your <code>app</code> is really just a function that Node calls with <code>(req, res)</code>. Express adds helpers like <code>req.params</code>, <code>res.json()</code> and <code>res.status()</code>.</li>
+<li><b>App-level middleware runs in order</b> — everything registered with <code>app.use()</code>, top to bottom: <code>helmet</code> (security headers) → <code>cors</code> (which websites may call you) → <code>express.json()</code> (reads the body stream and fills <code>req.body</code>) → a logger → <code>auth</code> (checks the token, sets <code>req.user</code>). Each one calls <code>next()</code>.</li>
+<li><b>Router matching.</b> Express compares the method and path against your routes, top to bottom, and picks the first match. <code>/users/:id</code> fills <code>req.params.id</code>.</li>
+<li><b>Route-level middleware</b> runs — functions listed on that one route, such as <code>validate(schema)</code> or <code>requireAdmin</code>.</li>
+<li><b>The route handler (controller)</b> runs. It reads the input from <code>req</code> and calls the service.</li>
+<li><b>Service and database.</b> Business rules run and the database is queried. This is usually <code>await</code>-ed — the event loop serves other requests while this one waits.</li>
+<li><b><code>res.json()</code> / <code>res.send()</code> ends the cycle.</b> Headers and body are written and the reply goes back to the client. After this, calling <code>next()</code> or sending again is a bug.</li>
+<li><b><code>res</code> emits <code>'finish'</code></b> once the last byte has been handed to the operating system. Loggers listen for this to record the status code and how long the request took.</li>
+</ol>
+<h4>Summary</h4>
+<div class="table-wrap"><table>
+<tr><th>Stage</th><th>Registered with</th><th>Its job</th><th>Ends by</th></tr>
+<tr><td>App-level middleware</td><td><code>app.use(fn)</code></td><td>Runs for every request: headers, CORS, body parsing, logging, auth</td><td><code>next()</code></td></tr>
+<tr><td>Router matching</td><td><code>app.get(path, …)</code>, <code>app.use("/api", router)</code></td><td>Find the first route whose method + path fit</td><td>Moves to that route, or falls through</td></tr>
+<tr><td>Route-level middleware</td><td><code>app.post(path, mw, handler)</code></td><td>Checks only this route needs, e.g. validation</td><td><code>next()</code> or an early 400/403 response</td></tr>
+<tr><td>Route handler</td><td>last function on the route</td><td>Read input, call the service, reply</td><td><code>res.json()</code> / <code>res.send()</code></td></tr>
+<tr><td>404 handler</td><td><code>app.use(fn)</code> after all routes</td><td>Catch requests no route matched</td><td><code>res.status(404).json(…)</code></td></tr>
+<tr><td>Error handler</td><td><code>app.use((err, req, res, next) =&gt; …)</code>, last</td><td>Turn any error into one clean response</td><td><code>res.status(…).json(…)</code></td></tr>
+</table></div>
+<h4>What can go wrong</h4>
+<ul>
+<li><b><code>next()</code> is never called and no response is sent</b> → the request <b>hangs</b>. Express has no timeout of its own; the client (or a load balancer) eventually gives up after 30–120 seconds. Common cause: an <code>if</code> branch that forgets to call either.</li>
+<li><b><code>next(err)</code> is called</b> (or, in Express 5 / with a wrapper, an async function throws) → Express <b>skips every normal middleware and route</b> and jumps to the first <b>error-handling middleware</b>. Express recognises that function only because it has <b>four</b> parameters: <code>(err, req, res, next)</code>.</li>
+<li><b>No route matches</b> → the request falls through to the end. Your 404 handler (a normal 3-argument middleware placed after all routes) answers it. Without one, Express sends its own plain "Cannot GET /x".</li>
+<li><b>Two responses are sent</b> → "Cannot set headers after they are sent". You can check <code>res.headersSent</code> if you're unsure.</li>
+</ul>
+<h4>A lifecycle you can watch</h4>
+<pre><code>import express from "express";
+const app = express();
+
+// First middleware: start a timer and log when the response is finished
+app.use((req, res, next) =&gt; {
+  req.start = Date.now();
+  console.log(`1. [app] ${req.method} ${req.url} arrived`);
+  res.on("finish", () =&gt; {            // fires after the response is fully sent
+    console.log(`9. [finish] ${res.statusCode} in ${Date.now() - req.start}ms`);
+  });
+  next();
+});
+
+app.use(express.json());              // fills req.body
+app.use((req, res, next) =&gt; { console.log("2. [app] body parsed", req.body); next(); });
+
+// App-level auth
+app.use((req, res, next) =&gt; {
+  console.log("3. [app] auth check");
+  req.user = { id: 7 };               // pretend we verified a token
+  next();
+});
+
+// Route-level middleware — only runs for this route
+function validateUser(req, res, next) {
+  console.log("5. [route] validating");
+  if (!req.body?.name) return res.status(400).json({ error: "name is required" }); // ends here
+  next();
+}
+
+// Router matching + handler
+app.post("/users", (req, res, next) =&gt; { console.log("4. [router] matched POST /users"); next(); },
+  validateUser,
+  async (req, res, next) =&gt; {
+    try {
+      console.log("6. [handler] calling service");
+      const user = await createUser(req.body);          // service → DB
+      console.log("7. [handler] sending response");
+      res.status(201).json(user);                       // 8. cycle ends here (nothing logged)
+    } catch (err) {
+      next(err);                                        // jump to error handler
+    }
+  });
+
+// 404 — after all routes; only reached if nothing matched
+app.use((req, res) =&gt; {
+  console.log("[404] no route matched");
+  res.status(404).json({ error: "Not found" });
+});
+
+// Error handler — 4 arguments, registered LAST
+app.use((err, req, res, next) =&gt; {
+  console.log("[error]", err.message);
+  res.status(err.statusCode || 500).json({ error: "Something went wrong" });
+});
+
+app.listen(3000);
+
+// POST /users {"name":"Ada"} prints:
+// 1. [app] POST /users arrived
+// 2. [app] body parsed { name: 'Ada' }
+// 3. [app] auth check
+// 4. [router] matched POST /users
+// 5. [route] validating
+// 6. [handler] calling service
+// 7. [handler] sending response
+// 9. [finish] 201 in 12ms</code></pre>
+<div class="note"><b>Order is everything.</b> Middleware registered <i>after</i> a route never runs for that route if the route sends a response. The 404 handler must come after all routes, and the error handler must be the very last <code>app.use</code>. And remember: <code>res.json()</code> doesn't stop your function — use <code>return res.json(…)</code> when more code follows.</div>
+</section>
+
+<section id="s18">
+<h3>18. Routers &amp; Structure</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>Router</b> is a group of related routes bundled into their own file, which you then attach at one URL prefix.</p>
+<p class="analogy">Like departments in a building. The sign at the entrance says where each one is; inside, they organise themselves.</p></div>
+<p>Putting every route in one file works until about 200 lines. A <b>Router</b> is a mini-app you can <b>mount</b> at a path — "mount" just means "attach under this URL prefix", so <code>/</code> inside the router becomes <code>/api/users</code> outside.</p>
+<pre><code>// routes/users.js
+import { Router } from "express";
+const router = Router();
+
+router.get("/",     listUsers);      // → /api/users
+router.get("/:id",  getUser);        // → /api/users/:id
+router.post("/",    createUser);
+
+export default router;</code></pre>
+<pre><code>// app.js
+import userRoutes from "./routes/users.js";
+app.use("/api/users", userRoutes);   // the prefix lives in ONE place</code></pre>
+<p>Change the prefix to <code>/api/v2/users</code> and every route moves with it — you don't touch the router file at all.</p>
+<h4>Middleware on a whole router</h4>
+<pre><code>router.use(requireAuth);             // protects every route below this line
+router.get("/", listUsers);</code></pre>
+</section>
+
+<!-- ================= BUILDING AN API ================= -->
+<div class="part">Part 4 — Building a Real API</div>
+
+<section id="s19">
+<h3>19. Project Layout</h3>
+<pre><code>src/
+  app.js              ← builds the Express app (no listen)
+  server.js           ← starts it. Split so tests can import app alone
+  config/
+    env.js            ← read + validate environment variables once
+  routes/
+    users.routes.js   ← URL → controller
+  controllers/
+    users.controller.js  ← HTTP only: read input, send response
+  services/
+    users.service.js     ← the actual rules. Knows nothing about HTTP
+  repositories/
+    users.repo.js        ← the only place that talks to the database
+  middleware/
+    auth.js  error.js  validate.js
+  utils/
+    AppError.js</code></pre>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>The point of the layers is what each one <b>doesn't</b> know.</p>
+<p>The <b>controller</b> knows about HTTP but not business rules. The <b>service</b> knows the rules but has never heard of <code>req</code> or <code>res</code>. The <b>repository</b> knows the database and nothing else.</p>
+<p><b>Business rules</b> are the decisions that make your app <i>your</i> app — "an email can only be registered once", "orders over £100 ship free". They're not about HTTP or databases.</p>
+<p class="analogy">A restaurant: the waiter (controller) takes the order and brings the plate. The chef (service) decides how to cook it. The storeroom keeper (repository) is the only one who goes into the storeroom. The chef never talks to customers; the waiter never cooks.</p></div>
+<pre><code>// controller — thin. Translate HTTP in, HTTP out.
+export async function createUser(req, res, next) {
+  try {
+    const user = await userService.create(req.body);
+    res.status(201).json(user);
+  } catch (err) { next(err); }
+}
+
+// service — the rules. Testable without a server.
+export async function create(data) {
+  const existing = await userRepo.findByEmail(data.email);
+  if (existing) throw new AppError("Email already registered", 409);
+
+  const hashed = await bcrypt.hash(data.password, 12);
+  return userRepo.insert({ ...data, password: hashed });
+}
+
+// repository — the only file that knows SQL
+export function findByEmail(email) {
+  return db.query("SELECT * FROM users WHERE email = $1", [email]);
+}</code></pre>
+<h4>Why it pays off</h4>
+<ul>
+<li>A scheduled job (code that runs on a timer, e.g. every night) can call <code>userService.create()</code> — there's no fake <code>req</code> to build.</li>
+<li>Swapping Postgres for MongoDB touches only the repository.</li>
+<li>Testing the rules needs no HTTP server at all.</li>
+</ul>
+<div class="note"><b>Don't do this on day one.</b> For a five-endpoint project (an <b>endpoint</b> is one method + URL your API answers, like <code>GET /users</code>), this is more ceremony than it's worth. Add layers when a file becomes hard to read. Knowing <i>when</i> a pattern isn't worth it is a better interview answer than reciting it.</div>
+</section>
+
+<section id="s20">
+<h3>20. Validation</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Validation means checking that incoming data is what you expect <b>before</b> you use it. For example: is <code>email</code> really an email? Is <code>age</code> a positive whole number?</p>
+<p>The frontend already checks? Doesn't matter. Anyone can call your API directly with curl or Postman (tools that send requests without a browser). The browser form is not a <b>security boundary</b> — it's not a wall an attacker has to go through.</p>
+<p class="analogy">A bouncer checks IDs at the club door even if the ticket website already asked for your age. The website only helps honest people; the bouncer stops everyone else.</p></div>
+<pre><code>import { z } from "zod";
+
+const createUserSchema = z.object({
+  name:     z.string().min(2).max(50),
+  email:    z.string().email(),
+  password: z.string().min(8),
+  age:      z.number().int().positive().optional(),
+});
+
+// reusable middleware
+const validate = (schema) =&gt; (req, res, next) =&gt; {
+  const result = schema.safeParse(req.body);
+  if (!result.success) {
+    return res.status(400).json({
+      error: "Validation failed",
+      details: result.error.issues.map(i =&gt; ({
+        field: i.path.join("."), message: i.message,
+      })),
+    });
+  }
+  req.body = result.data;     // now cleaned and correctly typed
+  next();
+};
+
+app.post("/users", validate(createUserSchema), createUser);</code></pre>
+<p>The code above uses <b>zod</b>, a library where you describe the shape of valid data once (a <b>schema</b>) and it checks any object against it. <code>safeParse</code> returns success or a list of problems instead of throwing.</p>
+<h4>Validate everything that comes from outside</h4>
+<ul>
+<li><code>req.body</code> — the obvious one.</li>
+<li><code>req.params</code> — is that id actually a number?</li>
+<li><code>req.query</code> — <code>?limit=99999999</code> will happily try to load your whole database.</li>
+<li>Uploaded files — type and size.</li>
+</ul>
+<pre><code>// A sensible pagination guard
+const limit = Math.min(Number(req.query.limit) || 20, 100);   // never above 100
+const page  = Math.max(Number(req.query.page) || 1, 1);</code></pre>
+</section>
+
+<section id="s21">
+<h3>21. Error Handling</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>The aim is a <b>single place</b> that turns any failure into a sensible response. Without it, error formatting gets copy-pasted into every route, and the copies slowly drift apart.</p>
+<p>Two kinds of failure matter. Ones you <i>expected</i> (bad input, not found): tell the user plainly. Ones you didn't (real bugs): log the detail for yourself and show the user something generic.</p>
+<p class="analogy">A customer-service desk. Staff anywhere in the shop can send a problem to the desk, and the desk decides what the customer is told — so every customer gets the same polite answer.</p></div>
+<p>The goal: <b>one place</b> that decides what the client sees, so you never <b>leak a stack trace</b> (the list of files and line numbers where the error happened — useful to you, useful to attackers too) and never repeat yourself.</p>
+<pre><code>// utils/AppError.js — errors you threw on purpose
+export class AppError extends Error {
+  constructor(message, statusCode = 400) {
+    super(message);
+    this.statusCode = statusCode;
+    this.isOperational = true;     // "expected", not a bug
+  }
+}</code></pre>
+<pre><code>// middleware/error.js — registered LAST
+export function errorHandler(err, req, res, next) {
+  const status = err.statusCode || 500;
+
+  logger.error({ err, url: req.originalUrl, userId: req.user?.id });
+
+  // Never send internal details for unexpected errors
+  const message = err.isOperational ? err.message : "Something went wrong";
+
+  res.status(status).json({
+    error: message,
+    ...(process.env.NODE_ENV === "development" &amp;&amp; { stack: err.stack }),
+  });
+}</code></pre>
+<div class="note"><b>Why hide the message on a 500:</b> a raw database error can reveal table names, column names and query structure — a gift to an attacker. Log the detail on the server; send the user something generic.</div>
+<h4>Two kinds of error</h4>
+<ul>
+<li><b>Operational</b> — expected and handled: invalid input, not found, duplicate email. Tell the user plainly.</li>
+<li><b>Programmer errors</b> — actual bugs: <code>undefined</code> is not a function. Log it, alert someone, show a generic message.</li>
+</ul>
+<h4>Async errors in Express 4</h4>
+<pre><code>// Every async handler needs its errors passed to next()
+const wrap = fn =&gt; (req, res, next) =&gt;
+  Promise.resolve(fn(req, res, next)).catch(next);
+
+app.get("/users", wrap(async (req, res) =&gt; {
+  const users = await userService.list();   // if this throws, wrap catches it
+  res.json(users);
+}));</code></pre>
+<h4>Last-resort safety nets</h4>
+<pre><code>process.on("unhandledRejection", (err) =&gt; { logger.fatal(err); shutdown(); });
+process.on("uncaughtException",  (err) =&gt; { logger.fatal(err); process.exit(1); });</code></pre>
+<p>After an uncaught exception (an error nothing caught), the process is in an unknown state — some work may be half-done, some memory may be broken. So the correct move is to <b>log and restart</b>, not to carry on. Your <b>process manager</b> (a tool like PM2, Docker or Kubernetes that watches your app) will start a fresh one.</p>
+</section>
+
+<section id="s22">
+<h3>22. Databases</h3>
+<h4>Connection pooling — why you never connect per request</h4>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Opening a database connection is slow. There's a <b>handshake</b> (the two sides agreeing how to talk), a login, and memory set aside on the database server — often 20–100ms before any real work.</p>
+<p>A <b>pool</b> opens a fixed set of connections once and lends them out. A request borrows one, runs its query, and gives it back.</p>
+<p class="analogy">A library's copies of a book. You borrow and return; the library doesn't buy a new copy for every reader.</p></div>
+<pre><code>import pg from "pg";
+const pool = new pg.Pool({
+  connectionString: process.env.DATABASE_URL,
+  max: 20,                    // total connections this process will open
+  idleTimeoutMillis: 30000,
+});
+
+const { rows } = await pool.query("SELECT * FROM users WHERE id = $1", [id]);</code></pre>
+<div class="note"><b>Sizing trap:</b> an <b>instance</b> is one running copy of your app. 10 server instances × a pool of 100 = 1000 connections, and Postgres (default limit ~100) falls over. The <i>total</i> across all instances must stay under the database's limit. 10–20 per instance is a normal starting point.</div>
+<h4>Always use placeholders</h4>
+<pre><code>// ✗ SQL injection — the input becomes part of the query
+db.query(`SELECT * FROM users WHERE email = '${email}'`);
+
+// ✓ the value travels separately and can never be read as SQL
+db.query("SELECT * FROM users WHERE email = $1", [email]);</code></pre>
+<p><b>SQL injection</b> is when user input gets mixed into a database command and changes what the command does. Example: an "email" of <code>' OR '1'='1</code> turns the first query into "find users where email is empty OR 1 equals 1" — which matches every user.</p>
+<p>Placeholders aren't just a rule to memorise. The database reads (<b>parses</b>) the query <i>first</i>, with <code>$1</code> as an empty slot, and only then puts the value in. There's no moment where your data could be mistaken for a command. This is also called a <b>parameterised query</b>.</p>
+<h4>The N+1 problem</h4>
+<p>"N+1" means: <b>1</b> query to get a list of N items, then <b>N</b> more queries — one for each item. 100 posts = 101 trips to the database. An <b>ORM</b> (Object-Relational Mapper, like Prisma or Mongoose) is a library that lets you query the database with JavaScript methods instead of raw SQL; its "include" option can fetch related data in one go (a <b>join</b>).</p>
+<pre><code>// 1 query for the posts, then one MORE per post = 101 queries
+const posts = await Post.find();
+for (const p of posts) p.author = await User.findById(p.userId);
+
+// ✓ two queries, whatever the post count
+const posts = await Post.find();
+const users = await User.find({ _id: { $in: posts.map(p =&gt; p.userId) } });
+const byId  = new Map(users.map(u =&gt; [String(u._id), u]));
+posts.forEach(p =&gt; { p.author = byId.get(String(p.userId)); });
+
+// ✓ or let the ORM join
+await prisma.post.findMany({ include: { author: true } });</code></pre>
+<p>It works perfectly with 10 test rows and collapses with 10,000 real ones. <b>Log your queries in development</b> — if one page triggers 200, you've found it.</p>
+<h4>Transactions</h4>
+<p>A <b>transaction</b> groups several database changes into one all-or-nothing unit. <code>BEGIN</code> starts it, <code>COMMIT</code> saves everything, <code>ROLLBACK</code> undoes everything. Example: a bank transfer must take money from one account <i>and</i> add it to the other — never just one of the two.</p>
+<pre><code>const client = await pool.connect();
+try {
+  await client.query("BEGIN");
+  await client.query("UPDATE accounts SET balance = balance - $1 WHERE id = $2", [500, from]);
+  await client.query("UPDATE accounts SET balance = balance + $1 WHERE id = $2", [500, to]);
+  await client.query("COMMIT");
+} catch (err) {
+  await client.query("ROLLBACK");    // both changes undone
+  throw err;
+} finally {
+  client.release();                  // ALWAYS give the connection back
+}</code></pre>
+<p>Either both updates happen or neither does. Keep transactions short, and never call an external API inside one — you'd hold a connection open while waiting on someone else's server.</p>
+</section>
+
+<section id="s23">
+<h3>23. Authentication</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Authentication</b> is "who are you?" — proving identity by logging in.</p>
+<p><b>Authorisation</b> is "are you allowed to do this?" — a different question, checked separately, and the one people forget.</p>
+<p class="analogy">Authentication is showing ID at the door. Authorisation is whether your ticket covers the VIP area.</p></div>
+<h4>Passwords</h4>
+<pre><code>import bcrypt from "bcrypt";
+
+const hash = await bcrypt.hash(password, 12);     // 12 = cost factor
+const ok   = await bcrypt.compare(password, hash);</code></pre>
+<div class="note"><b>Never store passwords you can read back.</b> <b>Hashing</b> turns a password into a scrambled fixed-length string, and it is one-way on purpose — even you shouldn't be able to get the password back. To log in, you hash what the user typed and compare the two hashes. The <b>cost factor</b> makes each hash deliberately slow (about a quarter of a second at 12), so an attacker guessing millions of passwords would need years. Use the async versions; <code>hashSync</code> blocks your whole server.</div>
+<h4>JWT — a signed pass</h4>
+<p>A <b>JWT</b> (JSON Web Token, said "jot") is a small piece of text holding some data (like <code>userId</code>) plus a <b>signature</b>. The signature is made with your secret key, so if anyone changes the data, the signature no longer matches. The client sends it on each request in the <code>Authorization: Bearer &lt;token&gt;</code> header.</p>
+<p class="analogy">A festival wristband. The staff can see at a glance it's genuine (signed) and still valid (not expired), without phoning the ticket office each time.</p>
+<pre><code>import jwt from "jsonwebtoken";
+
+const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: "15m" });
+const payload = jwt.verify(token, process.env.JWT_SECRET);   // throws if tampered/expired</code></pre>
+<pre><code>export function requireAuth(req, res, next) {
+  const header = req.headers.authorization;
+  if (!header?.startsWith("Bearer ")) {
+    return res.status(401).json({ error: "Not authenticated" });
+  }
+  try {
+    req.user = jwt.verify(header.slice(7), process.env.JWT_SECRET);
+    next();
+  } catch {
+    return res.status(401).json({ error: "Invalid or expired token" });
+  }
+}</code></pre>
+<h4>Sessions vs JWT</h4>
+<p>With a <b>session</b>, the server stores "who is logged in" (in Redis or a database) and gives the browser only a random ID in a cookie. With a JWT, the information travels inside the token, so the server doesn't need to store anything. <b>Stateless</b> means exactly that: the server keeps no memory between requests.</p>
+<div class="table-wrap"><table>
+<tr><th></th><th>Session (cookie + store)</th><th>JWT</th></tr>
+<tr><td>Where state lives</td><td>Your server (Redis/DB)</td><td>In the token itself</td></tr>
+<tr><td>Per-request cost</td><td>A lookup</td><td>Just verify a signature</td></tr>
+<tr><td>Log someone out now</td><td>Delete the record ✓</td><td>Can't — valid until it expires</td></tr>
+<tr><td>Scaling</td><td>Needs a shared store</td><td>Works anywhere</td></tr>
+</table></div>
+<div class="note"><b>Base64 is not encryption.</b> A JWT's data is only Base64-encoded (rewritten in plain letters), not locked. Anyone can decode a JWT and read its contents — paste one into jwt.io. The signature proves it hasn't been <i>changed</i>; it hides nothing. Never put a password or secret inside one.</div>
+<p>The usual compromise: a short-lived <b>access token</b> (15 min, sent with every request) plus a long-lived <b>refresh token</b> stored server-side. When the access token expires, the client uses the refresh token to get a new one. Because the refresh token is stored on the server, you <i>can</i> <b>revoke</b> it (cancel it) — for example when a user logs out or a phone is stolen.</p>
+<h4>Authorisation is not authentication</h4>
+<pre><code>// ✗ logged in, but is this THEIR post?
+app.delete("/posts/:id", requireAuth, async (req, res) =&gt; {
+  await Post.deleteOne({ _id: req.params.id });    // anyone can delete anything!
+});
+
+// ✓ check ownership
+const post = await Post.findById(req.params.id);
+if (!post) return res.status(404).json({ error: "Not found" });
+if (String(post.userId) !== req.user.userId) {
+  return res.status(403).json({ error: "Not allowed" });
+}</code></pre>
+<p>This is one of the most common real <b>vulnerabilities</b> (security holes) — checking <i>that</i> someone is logged in, but never <i>whether they own the thing</i>. Example: user 5 changes the URL from <code>/posts/100</code> (their post) to <code>/posts/101</code> (someone else's) and deletes it.</p>
+</section>
+
+<section id="s24">
+<h3>24. File Uploads</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>An upload arrives as a stream of bytes in a special format called <code>multipart/form-data</code>, not as a normal JSON body. That's why you need a separate tool (<code>multer</code>) to handle it — <code>express.json()</code> ignores it.</p>
+<p>Treat every uploaded file as <b>hostile</b> (possibly dangerous) until checked: the name, the size and the claimed type are all chosen by whoever sent it.</p>
+<p class="analogy">A post room opening parcels from strangers. You don't trust the label that says "books" — you weigh it, check it, and give it your own reference number.</p></div>
+<pre><code>import multer from "multer";
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 },     // 5MB cap
+  fileFilter: (req, file, cb) =&gt; {
+    const allowed = ["image/jpeg", "image/png", "image/webp"];
+    cb(allowed.includes(file.mimetype) ? null : new Error("Invalid file type"),
+       allowed.includes(file.mimetype));
+  },
+});
+
+app.post("/avatar", requireAuth, upload.single("avatar"), async (req, res) =&gt; {
+  const url = await uploadToS3(req.file.buffer, req.file.mimetype);
+  res.json({ url });
+});</code></pre>
+<h4>The rules</h4>
+<ul>
+<li><b>Always set a size limit</b> — otherwise one upload can exhaust your memory or disk.</li>
+<li><b>Never trust the filename.</b> Generate your own; <code>../../etc/passwd</code> is a real attack.</li>
+<li><b>Don't trust the reported type</b> (the <b>MIME type</b>, like <code>image/png</code>) either — it's chosen by the client. For anything sensitive, check the actual <b>file signature</b>: the first few bytes of a file, which reveal its real type (every PNG starts with the same bytes).</li>
+<li><b>Store files elsewhere</b> (S3, Cloudinary — online file storage services), not on the server's disk. Disks fill up and don't survive a redeploy.</li>
+</ul>
+<div class="note"><b>Better still: signed upload URLs.</b> Your server hands the browser a short-lived, pre-approved URL, and the file goes straight to S3 without passing through your server at all. No <b>bandwidth</b> cost (the data your server sends and receives), no memory spike, no timeout on big files.</div>
+</section>
+
+<!-- ================= PRODUCTION ================= -->
+<div class="part">Part 5 — Production</div>
+
+<section id="s25">
+<h3>25. Security</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Nearly every web vulnerability comes down to one mistake: <b>trusting input that came from outside</b>.</p>
+<p>The defences all follow the same shape:</p>
+<ul>
+<li>keep data and commands apart (so data can never be run as a command),</li>
+<li>check what each person is allowed to do,</li>
+<li>limit how often anyone can try.</li>
+</ul>
+<p class="analogy">A bank: cash and instructions go through different slots, each teller checks your account before handing anything over, and three wrong PINs lock the card.</p></div>
+<h4>The baseline</h4>
+<pre><code>import helmet from "helmet";
+import rateLimit from "express-rate-limit";
+import cors from "cors";
+
+app.use(helmet());                          // sensible security headers
+app.use(cors({ origin: "https://app.com", credentials: true }));  // not "*"
+app.use(express.json({ limit: "10kb" }));   // reject giant bodies
+
+app.use("/api/auth/login", rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,                                   // 5 login attempts per 15 min per IP
+}));</code></pre>
+<h4>The main risks, and what stops them</h4>
+<p>Two terms for the table: <b>XSS</b> (Cross-Site Scripting) is when an attacker gets their JavaScript to run on your site in someone else's browser — e.g. a comment containing <code>&lt;script&gt;</code>. <b>Escaping</b> means turning special characters like <code>&lt;</code> into harmless text (<code>&amp;lt;</code>) so the browser shows them instead of running them.</p>
+<div class="table-wrap"><table>
+<tr><th>Attack</th><th>What it is</th><th>Defence</th></tr>
+<tr><td><b>SQL injection</b></td><td>Input treated as database commands</td><td>Parameterised queries, always</td></tr>
+<tr><td><b>NoSQL injection</b></td><td>An object like <code>{$gt:""}</code> sent where text was expected</td><td>Validate types before querying</td></tr>
+<tr><td><b>XSS</b></td><td>Attacker's script runs in another user's browser</td><td>Escape on output; sanitise stored HTML</td></tr>
+<tr><td><b>Broken access control</b></td><td>Reading or deleting someone else's data</td><td>Check ownership on every action</td></tr>
+<tr><td><b>Brute force</b></td><td>Guessing passwords repeatedly</td><td>Rate limiting, account lockout</td></tr>
+<tr><td><b>Secrets in git</b></td><td>Keys committed by accident</td><td><code>.env</code> in <code>.gitignore</code>, rotate if leaked</td></tr>
+</table></div>
+<h4>The NoSQL injection people miss</h4>
+<p>In MongoDB, <code>$gt</code> means "greater than". An empty string is the smallest possible string, so "password greater than empty" is true for <i>every</i> password. The attacker logs in without knowing it.</p>
+<pre><code>// Attacker sends: { "email": "a@b.com", "password": { "$gt": "" } }
+await User.findOne({ email, password });     // $gt matches ANY password!
+
+// ✓ validate that they're actually strings first
+if (typeof email !== "string" || typeof password !== "string") {
+  return res.status(400).json({ error: "Invalid input" });
+}</code></pre>
+<h4>Other habits</h4>
+<ul>
+<li><code>npm audit</code> regularly; keep dependencies current.</li>
+<li>Run as a non-root user in Docker (root = the all-powerful admin account; if an attacker breaks in, they get fewer powers).</li>
+<li>HTTPS everywhere; set <code>secure</code> and <code>httpOnly</code> on cookies.</li>
+<li>Never log passwords, tokens or card numbers — logs get read by a lot of people.</li>
+<li>Don't reveal <i>which</i> part of a login was wrong: "invalid email or password", not "no such user" (that confirms which emails are registered).</li>
+</ul>
+</section>
+
+<section id="s26">
+<h3>26. Performance</h3>
+<h4>Use all your CPU cores</h4>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>CPU core</b> is one independent worker inside the processor; most servers have 2–16. One Node process uses <b>one</b> core for your JavaScript. A 4-core server running one process leaves three cores idle.</p>
+<p><b>Clustering</b> runs several copies of your app and shares incoming requests between them.</p>
+<p class="analogy">One checkout open in a supermarket with four tills. Opening all four tills serves four times as many customers — as long as each till doesn't need to know what the others are doing.</p></div>
+<pre><code># Simplest: let a process manager do it
+pm2 start server.js -i max        # one process per core, auto-restart
+
+# Or a container per core, behind a load balancer</code></pre>
+<p>A <b>load balancer</b> is a front door that spreads incoming requests across several copies of your app. This only works if your app is <b>stateless</b> — no session stored in a local variable, no uploads on local disk, no in-memory cache that has to be the same everywhere. Each process has its own memory and knows nothing about the others. Example: if user A logs in and the session is saved in process 1's memory, their next request might land on process 2, which has never heard of them.</p>
+<h4>Caching</h4>
+<pre><code>const cached = await redis.get(`user:${id}`);
+if (cached) return JSON.parse(cached);
+
+const user = await db.getUser(id);
+await redis.set(`user:${id}`, JSON.stringify(user), "EX", 300);  // 5 min
+return user;</code></pre>
+<p>A <b>cache</b> is a fast, temporary copy of data you'd otherwise have to fetch slowly. <b>Redis</b> is an in-memory database often used for this. Cache things that are read far more often than they change. When the real data is updated, delete the cached key — or accept that it will be <b>stale</b> (out of date) until the timer (here 5 minutes) runs out.</p>
+<h4>Other wins, roughly in order of value</h4>
+<ul>
+<li><b>Database indexes</b> — usually the single biggest improvement. An index is like the index at the back of a book: it lets the database jump to the right rows instead of reading every page. A missing index on a column you filter by means scanning every row.</li>
+<li><b>Fix N+1 queries</b> (<a href="#s22">section 22</a>).</li>
+<li><b>Paginate</b> — never <code>SELECT *</code> on a table that grows.</li>
+<li><b>Compression</b> — <code>app.use(compression())</code>, often 70% smaller JSON.</li>
+<li><b>Move slow work to a queue</b> — emails, thumbnails, reports.</li>
+<li><b>Stream large responses</b> instead of building them in memory.</li>
+</ul>
+<div class="note"><b>Measure before optimising.</b> Use a <b>profiler</b> (a tool that shows where time is spent) such as <code>clinic.js</code> or <code>--prof</code>, or just time your database queries. Most "Node is slow" problems turn out to be one unindexed query, not the runtime.</div>
+</section>
+
+<section id="s27">
+<h3>27. Logging &amp; Debugging</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Structured logging</b> means recording facts as labelled fields rather than as a sentence, so you can search and filter them later.</p>
+<p>"User 7 failed to pay" is unsearchable across a million lines. <code>{ userId: 7, event: "payment_failed" }</code> lets you find every failure for that user instantly.</p></div>
+<pre><code>import pino from "pino";
+const logger = pino();
+
+// ✗ unsearchable
+console.log("User " + id + " failed to pay");
+
+// ✓ structured — you can filter by userId across millions of lines
+logger.error({ userId: id, orderId, requestId: req.id }, "payment failed");</code></pre>
+<h4>Request IDs</h4>
+<pre><code>import { randomUUID } from "crypto";
+
+app.use((req, res, next) =&gt; {
+  req.id = req.headers["x-request-id"] || randomUUID();
+  res.setHeader("x-request-id", req.id);
+  next();
+});</code></pre>
+<p>Include <code>req.id</code> in every log line for that request. Without it, requests happening at the same time (<b>concurrent</b> requests) get their log lines mixed together, and you can't tell which lines belong to which request. With it, one search shows a single request's entire journey. A <b>UUID</b> is a long random ID that is practically guaranteed to be unique.</p>
+<h4>Log levels</h4>
+<ul>
+<li><b>error</b> — something broke and needs attention.</li>
+<li><b>warn</b> — unusual but handled (retry succeeded, deprecated route used).</li>
+<li><b>info</b> — significant events (server started, user registered).</li>
+<li><b>debug</b> — detail, switched off in production.</li>
+</ul>
+<h4>Debugging</h4>
+<pre><code>node --inspect server.js       # attach Chrome DevTools or VS Code
+node --watch server.js         # restart on change, no nodemon needed
+node --env-file=.env server.js # load env vars without dotenv</code></pre>
+<p>A real <b>debugger</b> beats <code>console.log</code> for anything non-trivial. You set a <b>breakpoint</b> (a line where the program pauses), then look at every variable and step through the code line by line.</p>
+</section>
+
+<section id="s28">
+<h3>28. Testing</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>unit test</b> checks one function on its own. An <b>integration test</b> checks several parts working together — for an API, usually a real request hitting a real route.</p>
+<p>The most valuable tests cover the paths where things go <i>wrong</i> (the "unhappy paths"), because that's where bugs actually live.</p>
+<p class="analogy">Testing a car: a unit test checks the brakes on a test bench. An integration test drives the car round the block. You need both.</p></div>
+<pre><code>// Unit test — the service, no HTTP involved
+test("rejects a duplicate email", async () =&gt; {
+  userRepo.findByEmail = vi.fn().mockResolvedValue({ id: 1 });
+  await expect(userService.create({ email: "a@b.com" }))
+    .rejects.toThrow("Email already registered");
+});</code></pre>
+<pre><code>// Integration test — the real route, with supertest
+import request from "supertest";
+import app from "../src/app.js";
+
+test("POST /api/users creates a user", async () =&gt; {
+  const res = await request(app)
+    .post("/api/users")
+    .send({ name: "Ada", email: "ada@test.com", password: "secret12" });
+
+  expect(res.status).toBe(201);
+  expect(res.body.email).toBe("ada@test.com");
+  expect(res.body.password).toBeUndefined();   // never leak the hash
+});</code></pre>
+<p>In the unit test, <code>vi.fn().mockResolvedValue(…)</code> creates a <b>mock</b> — a fake function that returns whatever you tell it, so the test doesn't touch a real database. Note that <code>supertest</code> needs no running server — it starts the app in memory. That's exactly why <code>app.js</code> and <code>server.js</code> are separate files (<a href="#s19">section 19</a>).</p>
+<h4>What's worth testing</h4>
+<ul>
+<li><b>Business rules</b> — the service layer. Highest value, cheapest to run.</li>
+<li><b>The unhappy paths</b> — invalid input, missing records, wrong user. Bugs live here, not in the happy path.</li>
+<li><b>Auth boundaries</b> — can user A reach user B's data? Test it explicitly.</li>
+<li>A handful of end-to-end tests (tests that drive the whole system like a real user would) over critical flows (signup, checkout).</li>
+</ul>
+<div class="note">Use a real test database (or an in-memory one), not mocked queries. Mocking the database mostly tests that your mocks match your assumptions — which is how a passing test suite still ships a broken query.</div>
+</section>
+
+<section id="s29">
+<h3>29. Deployment</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Deploying means running your app somewhere permanent (a cloud server), with the settings and secrets supplied from outside the code.</p>
+<p>The recurring theme is <b>assume it will restart</b> — at any moment, for any reason. Anything held only in the process's memory or on its local disk will be lost.</p>
+<p><b>Docker</b> packages your app and everything it needs into an <b>image</b> — a sealed box that runs the same way on any machine. A running image is called a <b>container</b>. A <b>Dockerfile</b> is the recipe for building the image.</p></div>
+<pre><code># Dockerfile
+FROM node:20-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --omit=dev        # install BEFORE copying source → better layer caching
+COPY . .
+USER node                    # don't run as root
+EXPOSE 3000
+CMD ["node", "server.js"]</code></pre>
+<h4>The pre-launch checklist</h4>
+<ul>
+<li><code>NODE_ENV=production</code> — Express skips debug work and caches views.</li>
+<li>All secrets from environment variables, never in the repository.</li>
+<li>Graceful shutdown on SIGTERM (<a href="#s10">section 10</a> and <a href="#s6">Node.js Process Lifecycle</a>).</li>
+<li>A <code>/health</code> endpoint for the load balancer to check.</li>
+<li>A process manager or orchestrator that restarts on crash.</li>
+<li>Structured logs going somewhere you can search.</li>
+<li>Rate limiting and <code>helmet</code> enabled.</li>
+<li>Database has indexes and a backup schedule.</li>
+</ul>
+<pre><code>app.get("/health", (req, res) =&gt; res.json({ status: "ok", uptime: process.uptime() }));
+
+// A deeper check — is the database actually reachable?
+app.get("/ready", async (req, res) =&gt; {
+  try { await db.query("SELECT 1"); res.json({ ready: true }); }
+  catch { res.status(503).json({ ready: false }); }
+});</code></pre>
+<p>The distinction matters: <b>health</b> means "the process is alive"; <b>ready</b> means "it can actually serve traffic". A container that's alive but can't reach the database should be <b>taken out of rotation</b> (the load balancer stops sending it requests for now), not restarted — restarting won't fix a database that's down.</p>
+</section>
+
+<!-- ================= REVISION ================= -->
+<div class="part">Revision</div>
+
+<section id="rev">
+<h3>Interview Q&amp;A — quick answers</h3>
+
+<h4>Node fundamentals</h4>
+<ul>
+<li><b>What is Node.js?</b> A runtime that lets JavaScript run outside the browser, built on V8 and libuv, with tools for files, networking and processes.</li>
+<li><b>Is Node single-threaded?</b> Your JavaScript is — it runs on one thread. Underneath, libuv uses the operating system and a small thread pool, so I/O (files, network) happens in parallel.</li>
+<li><b>Blocking vs non-blocking?</b> Blocking stops the single thread, freezing every request. Non-blocking hands the work off and continues.</li>
+<li><b>Why is Node bad at CPU work?</b> There's one thread for your code. A long calculation can't be interrupted, so every other request waits.</li>
+<li><b>How do you handle CPU-heavy work?</b> Worker threads, a background queue, or breaking the job into chunks that yield.</li>
+<li><b>Explain the event loop.</b> Phases — timers, pending, poll, check, close — run in a cycle. <code>nextTick</code> and promises drain between every phase, so they always beat <code>setTimeout</code>.</li>
+<li><b>setImmediate vs setTimeout(fn, 0)?</b> Different phases. Inside an I/O callback <code>setImmediate</code> always runs first; at the top level the order isn't guaranteed.</li>
+<li><b>process.nextTick vs Promise?</b> <code>nextTick</code> has higher priority and runs first. Overusing it can starve the loop.</li>
+<li><b>CommonJS vs ES Modules?</b> <code>require</code> loads when the line runs; <code>import</code> is resolved up front, before any code runs. ES Modules also support top-level await and tree shaking (build tools dropping unused code).</li>
+<li><b>What is an EventEmitter?</b> Node's publish/subscribe tool (one side announces, any number of others listen) — emit a named event, and every registered listener runs. Streams and servers are built on it.</li>
+<li><b>What are streams for?</b> Processing data in chunks so memory stays flat regardless of size. Essential for large files and uploads.</li>
+<li><b>Buffer?</b> Raw binary data. Note <code>.length</code> is bytes, not characters.</li>
+</ul>
+
+<h4>Express</h4>
+<ul>
+<li><b>What is Express?</b> A minimal layer over Node's HTTP server providing routing, middleware and helpers for requests and responses.</li>
+<li><b>What is middleware?</b> A function <code>(req, res, next)</code> that runs between the request and the handler. It can inspect, modify, end, or pass along.</li>
+<li><b>Why does middleware order matter?</b> Express runs them top to bottom. Auth after a route protects nothing; the error handler must be last.</li>
+<li><b>How does error middleware differ?</b> It takes <b>four</b> arguments — that's how Express recognises it.</li>
+<li><b>How do you reach an error handler?</b> Call <code>next(err)</code>. In Express 4, async handlers need a wrapper; Express 5 does it automatically.</li>
+<li><b>params vs query vs body?</b> URL segment (<code>/users/:id</code>) vs after the <code>?</code> vs the request payload. All params and query values are strings.</li>
+<li><b>"Cannot set headers after they are sent"?</b> You sent two responses. Usually a missing <code>return</code> before <code>res.json()</code>.</li>
+<li><b>What's a Router?</b> A group of routes you can attach (mount) under one URL prefix, so the prefix is defined in one place.</li>
+<li><b>Why does my request hang?</b> A middleware neither called <code>next()</code> nor sent a response.</li>
+<li><b>401 vs 403?</b> Not authenticated vs authenticated but not permitted.</li>
+</ul>
+
+<h4>Lifecycles</h4>
+<ul>
+<li><b>What happens when you run <code>node app.js</code>?</b> Node starts V8 and libuv, loads your modules (each file once, then cached), runs the top-level code, drains <code>nextTick</code> and promise microtasks, then enters the event loop. It stays in the loop while anything is pending, and exits when nothing is.</li>
+<li><b>Name the event loop phases in order.</b> Timers → pending callbacks → idle/prepare → poll → check → close callbacks. Between every callback, the <code>nextTick</code> queue and then the promise queue are emptied.</li>
+<li><b>Why doesn't a web server exit by itself?</b> An open server (a listening socket) counts as pending work, so the loop never becomes empty. A script with only a <code>console.log</code> exits straight away.</li>
+<li><b><code>'beforeExit'</code> vs <code>'exit'</code>?</b> <code>beforeExit</code> fires when the loop is empty and you may still schedule async work (which keeps the process alive); it doesn't fire on <code>process.exit()</code> or crashes. <code>exit</code> always fires, but only synchronous code runs inside it.</li>
+<li><b>How do you shut down gracefully?</b> Listen for SIGTERM and SIGINT, call <code>server.close()</code> so no new requests come in, let in-flight ones finish, close the database and other connections, then <code>process.exit(0)</code> — with a timeout that forces <code>exit(1)</code> if clean-up hangs.</li>
+<li><b>Walk through an Express request's lifecycle.</b> Node's http server builds <code>req</code>/<code>res</code> → Express app → app-level middleware in order (helmet, cors, <code>express.json</code>, logger, auth) → router matches method + path → route middleware (validation) → handler → service/DB → <code>res.json()</code> ends it → <code>res</code> emits <code>'finish'</code>. No match → 404 handler. <code>next(err)</code> → skips to the 4-argument error handler. Neither <code>next()</code> nor a response → the request hangs.</li>
+</ul>
+
+<h4>Building and running APIs</h4>
+<ul>
+<li><b>Why separate controller, service and repository?</b> Each layer is ignorant of the others' concerns, so business rules are reusable and testable without HTTP, and swapping the database touches one file.</li>
+<li><b>Why validate on the server if the frontend already does?</b> Anyone can call the API directly. Frontend validation is for user experience, not security.</li>
+<li><b>How do you prevent SQL injection?</b> Parameterised queries — the value travels separately and is never parsed as SQL.</li>
+<li><b>What is the N+1 problem?</b> One query for a list, then one per item. Fix with a join, eager loading, or one batched query.</li>
+<li><b>Why a connection pool?</b> Connections are expensive to create and limited in number. A pool reuses a fixed set.</li>
+<li><b>How do you store passwords?</b> Hashed with bcrypt or argon2 and a cost factor. Never reversible, never in logs.</li>
+<li><b>Sessions vs JWT?</b> Server-side state you can revoke instantly vs stateless tokens that scale freely but can't be cancelled early.</li>
+<li><b>What is graceful shutdown?</b> On SIGTERM: stop accepting new requests, finish current ones, close the database, then exit.</li>
+<li><b>How do you use multiple CPU cores?</b> Cluster mode or multiple containers — only works if the app keeps no local state.</li>
+<li><b>Health vs readiness?</b> "The process is alive" vs "it can actually serve traffic".</li>
+</ul>
+</section>
+
+<section id="road">
+<h3>Learning Path</h3>
+<ol>
+<li><b>JavaScript async first</b> — promises, <code>async/await</code>, error handling. Every Node concept builds on these.</li>
+<li><b>Node basics</b> — run a script, use <code>fs</code> and <code>path</code>, read environment variables, understand blocking vs non-blocking.</li>
+<li><b>Build one HTTP server with no framework</b> (<a href="#s11">section 11</a>). Once. It makes everything Express does obvious.</li>
+<li><b>Express fundamentals</b> — routing, middleware, request and response. Build a to-do API with in-memory data.</li>
+<li><b>Add a database</b> — Postgres with a query builder, or MongoDB with Mongoose. Learn indexes early.</li>
+<li><b>Proper structure</b> — split into routes, controllers, services, repositories. Add central error handling and validation.</li>
+<li><b>Authentication</b> — register, log in, hash passwords, protect routes, and check ownership as well as identity.</li>
+<li><b>Project 1</b> — a complete REST API: full CRUD, auth, validation, pagination, consistent errors, and tests.</li>
+<li><b>Going further</b> — file uploads to S3, Redis caching, background jobs with BullMQ, rate limiting.</li>
+<li><b>Project 2</b> — something with real pressure: a booking system (concurrency and transactions) or a job board (search and queues).</li>
+<li><b>Production skills</b> — Docker, environment config, graceful shutdown, structured logging, health checks, and a real deploy.</li>
+<li><b>Then</b> — TypeScript throughout, and one deeper area: WebSockets, microservices, or a faster framework like Fastify or NestJS.</li>
+</ol>
+<div class="note"><b>The habit that separates tutorial code from real engineering:</b> for every endpoint you write, ask "what happens if this is called twice, called by the wrong user, called with missing fields, or called ten thousand times a minute?" Answering those four turns a working route into a production one.</div>
+</section>
+
+</main>
+</div>
+
+<script src="../assets/notes.js"></script>
+</body>
+</html>

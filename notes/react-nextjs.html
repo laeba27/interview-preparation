@@ -1,0 +1,1925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>React &amp; Next.js — Concept Notes</title>
+<link rel="stylesheet" href="../assets/notes.css">
+<script>
+  try { document.documentElement.setAttribute("data-theme",
+    localStorage.getItem("notes-theme") || "light"); } catch (e) {}
+</script>
+</head>
+<body>
+<div class="scrim"></div>
+<button class="icon-btn" id="reopen" title="Show sidebar ([)" aria-label="Show sidebar">☰</button>
+<div class="layout">
+
+<aside>
+  <div class="sidebar-head">
+    <a class="back-link" href="../index.html">← All topics</a>
+    <button class="icon-btn" id="collapseBtn" title="Hide sidebar ([)" aria-label="Hide sidebar">‹</button>
+  </div>
+  <input id="search" type="text" placeholder="Filter topics…" autocomplete="off">
+
+  <h2>React Basics</h2>
+  <nav>
+    <a href="#s1">1 · Why React Exists</a>
+    <a href="#s2">2 · Components &amp; JSX</a>
+    <a href="#s3">3 · Props</a>
+    <a href="#s4">4 · State</a>
+    <a href="#s5">5 · Events &amp; Forms</a>
+    <a href="#s6">6 · Lists &amp; Keys</a>
+  </nav>
+
+  <h2>How React Works</h2>
+  <nav>
+    <a href="#s7">7 · The Render Cycle</a>
+    <a href="#s8">8 · Virtual DOM &amp; Diffing</a>
+    <a href="#s9">9 · Batching &amp; Updates</a>
+    <a href="#s10">10 · Reconciliation Rules</a>
+  </nav>
+
+  <h2>Hooks</h2>
+  <nav>
+    <a href="#s11">11 · useState Deeply</a>
+    <a href="#s12">12 · useEffect Deeply</a>
+    <a href="#s13">13 · Component Lifecycle</a>
+    <a href="#s14">14 · useRef</a>
+    <a href="#s15">15 · useMemo &amp; useCallback</a>
+    <a href="#s16">16 · useReducer &amp; useContext</a>
+    <a href="#s17">17 · Custom Hooks</a>
+    <a href="#s18">18 · Rules of Hooks</a>
+  </nav>
+
+  <h2>React in Practice</h2>
+  <nav>
+    <a href="#s19">19 · Data Fetching</a>
+    <a href="#s20">20 · Performance</a>
+    <a href="#s21">21 · Patterns</a>
+    <a href="#s22">22 · Common Mistakes</a>
+  </nav>
+
+  <h2>Next.js</h2>
+  <nav>
+    <a href="#s23">23 · Why Next.js</a>
+    <a href="#s24">24 · Rendering Strategies</a>
+    <a href="#s25">25 · App Router &amp; Files</a>
+    <a href="#s26">26 · Server Components</a>
+    <a href="#s27">27 · Request Lifecycle</a>
+    <a href="#s28">28 · Data Fetching &amp; Caching</a>
+    <a href="#s29">29 · Server Actions &amp; Forms</a>
+    <a href="#s30">30 · Route Handlers &amp; Middleware</a>
+    <a href="#s31">31 · Images, Fonts, SEO</a>
+    <a href="#s32">32 · Deploying</a>
+  </nav>
+
+  <h2>Revision</h2>
+  <nav>
+    <a href="#rev">Interview Q&amp;A</a>
+    <a href="#road">Learning Path</a>
+  </nav>
+</aside>
+
+<main>
+<header class="top">
+  <h1>React &amp; Next.js — Concept Notes</h1>
+  <div class="top-actions">
+    <button class="ghost" id="menuBtn">☰ Topics</button>
+    <button class="ghost" id="theme">Dark mode</button>
+  </div>
+</header>
+<p class="sub">Explained in plain language, but going all the way down to how things actually work. Print this page for a PDF.</p>
+
+<!-- ================= REACT BASICS ================= -->
+<div class="part">Part 1 — React Basics</div>
+
+<section id="s1">
+<h3>1. Why React Exists</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>React</b> is a JavaScript library for building the parts of a web page people see and click — the <b>UI</b> (user interface).</p>
+<p>You tell React <i>what</i> the screen should show. React works out <i>how</i> to change the page to match.</p>
+<p class="analogy">Think of a sat-nav. You type the destination; it works out every turn. You don't give it turn-by-turn instructions yourself.</p></div>
+<p>Before React, you updated the page by hand. If a number changed, you found the element on the page and changed its text yourself. With a few elements, that's fine. With a hundred, you lose track of which parts of the screen need updating. The bugs are always the same kind: "the data changed, but the screen didn't".</p>
+<p>Example: a shopping cart. When you add an item, the item count in the header, the total price, and the "Checkout" button all need to change. Forget one of them, and the screen lies to the user.</p>
+<h4>The one idea behind React</h4>
+<p>You stop writing <i>steps to update the screen</i>. Instead, you write a description of <b>what the screen should look like for the current data</b>. React figures out the steps.</p>
+<p>People write this as <b>UI = f(state)</b>. In words: "the screen is the result of a function, and the input to that function is your data". <b>State</b> just means "the data right now". Same data in, same screen out — every time.</p>
+<figure class="diagram">
+<svg viewBox="0 0 620 250" role="img" aria-label="Comparison: the manual approach requires you to write update steps for every change, while React lets you describe the result and works out the changes itself.">
+  <text class="d-sub" x="150" y="20" text-anchor="middle">THE OLD WAY — you do the work</text>
+  <rect class="d-box" x="24" y="30" width="252" height="88" rx="7"/>
+  <text class="d-mono" x="40" y="52">count = count + 1</text>
+  <text class="d-mono" x="40" y="74">el.textContent = count</text>
+  <text class="d-mono" x="40" y="96">badge.style.display = …</text>
+  <text class="d-sub"  x="150" y="136" text-anchor="middle">you must remember every</text>
+  <text class="d-sub"  x="150" y="152" text-anchor="middle">place that needs changing</text>
+
+  <text class="d-accent-text" x="460" y="20" text-anchor="middle">REACT — you describe the result</text>
+  <rect class="d-box-accent" x="330" y="30" width="266" height="88" rx="7"/>
+  <text class="d-mono" x="346" y="52">setCount(count + 1)</text>
+  <text class="d-sub"  x="346" y="76">…and somewhere you wrote:</text>
+  <text class="d-mono" x="346" y="98">&lt;span&gt;{count}&lt;/span&gt;</text>
+  <text class="d-sub"  x="460" y="136" text-anchor="middle">React finds what changed</text>
+  <text class="d-sub"  x="460" y="152" text-anchor="middle">and updates only that</text>
+
+  <rect class="d-fill-accent" x="120" y="186" width="380" height="42" rx="7"/>
+  <rect class="d-box-accent"  x="120" y="186" width="380" height="42" rx="7"/>
+  <text class="d-accent-text" x="310" y="204" text-anchor="middle">UI = f(state)</text>
+  <text class="d-sub" x="310" y="220" text-anchor="middle">give it the same data, you always get the same screen</text>
+</svg>
+<figcaption>You change the data. React changes the screen. That split is the whole reason the library exists.</figcaption>
+</figure>
+<h4>What you get from that</h4>
+<ul>
+<li><b>Fewer bugs</b> — you can't forget to update part of the screen, because you never update the screen directly.</li>
+<li><b>Reusable pieces</b> — a component is a function you can use in many places.</li>
+<li><b>Easy to read</b> — to know what the screen shows, look at the data. You don't have to replay a history of changes in your head.</li>
+</ul>
+<div class="note"><b>The trade:</b> React does extra work to find what changed. For most apps that cost is tiny and worth it. For a page that's mostly <b>static</b> text (text that never changes after the page loads), plain HTML is faster and simpler — React is not always the right answer.</div>
+</section>
+
+<section id="s2">
+<h3>2. Components &amp; JSX</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>component</b> is one reusable piece of the screen — a button, a card, a whole page. In code, it's a function.</p>
+<p><b>JSX</b> is the HTML-looking syntax you write inside JavaScript. It is not real HTML. A tool turns it into normal JavaScript before the browser runs it.</p>
+<p class="analogy">Components are like LEGO bricks. You build small bricks, then snap them together into bigger things.</p></div>
+<p>A component is just a function that returns what should appear on screen. That's the whole definition.</p>
+<pre><code>function Welcome() {
+  return &lt;h1&gt;Hello&lt;/h1&gt;;
+}
+
+// use it like a tag — the capital letter is required
+&lt;Welcome /&gt;</code></pre>
+<p>The capital letter matters. React treats lowercase tags as real HTML elements (<code>&lt;div&gt;</code>). It treats capitalised ones as your own components (<code>&lt;Welcome&gt;</code>).</p>
+<h4>JSX is not HTML — it's a shortcut for function calls</h4>
+<p>JSX looks like HTML sitting inside JavaScript. But a <b>build tool</b> (a program such as Babel or the one inside Vite, which rewrites your code before it ships) converts it before the browser ever sees it:</p>
+<pre><code>// what you write
+&lt;div className="card"&gt;Hi&lt;/div&gt;
+
+// what it becomes
+React.createElement("div", { className: "card" }, "Hi")
+
+// which just produces a plain object
+{ type: "div", props: { className: "card", children: "Hi" } }</code></pre>
+<p>So in the end, JSX is just a plain object that says "I want a div, with this class, containing this text". Knowing this explains several rules that otherwise seem random:</p>
+<ul>
+<li><b>One parent element only.</b> A function can only return one value. Use <code>&lt;&gt;…&lt;/&gt;</code> (a <b>fragment</b> — an invisible wrapper) to group things without adding a real <code>&lt;div&gt;</code> to the page.</li>
+<li><b><code>className</code> not <code>class</code></b>, <code>htmlFor</code> not <code>for</code> — <code>class</code> and <code>for</code> are <b>reserved words</b> in JavaScript (words the language already uses for its own features).</li>
+<li><b><code>{ }</code> holds any JavaScript expression</b> — an <b>expression</b> is any piece of code that produces a value. So <code>{a + b}</code> and <code>{list.map(…)}</code> work. But <code>{if (x) …}</code> doesn't, because <code>if</code> is a <b>statement</b> (an instruction that does something), not a value.</li>
+</ul>
+<h4>Showing things conditionally</h4>
+<pre><code>{isLoggedIn &amp;&amp; &lt;Dashboard /&gt;}            {/* show only if true */}
+{isLoggedIn ? &lt;Dashboard /&gt; : &lt;Login /&gt;}  {/* either / or */}
+
+// Careful with &amp;&amp; and numbers:
+{items.length &amp;&amp; &lt;List /&gt;}      // when length is 0, React prints "0" on screen!
+{items.length &gt; 0 &amp;&amp; &lt;List /&gt;}  // ✓ force it to a true/false value</code></pre>
+<p>That <code>0</code> trap catches almost everyone once. Here's why. <code>&amp;&amp;</code> returns the left value when it's <b>falsy</b> (a value JavaScript treats as "no", like <code>0</code>, <code>""</code> or <code>null</code>). React shows the number <code>0</code> on screen — but it shows nothing for <code>false</code>, <code>null</code> and <code>undefined</code>.</p>
+</section>
+
+<section id="s3">
+<h3>3. Props — passing data down</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Props</b> (short for "properties") are the inputs a component receives from the component that uses it. The one using it is the <b>parent</b>; the one being used is the <b>child</b>.</p>
+<p>They work like arguments to a function. The child reads them but never changes them.</p>
+<p class="analogy">A parent gives a child a packed lunch. The child can eat what's inside, but it doesn't get to repack the lunchbox and send it back as if the parent had packed it.</p></div>
+<p>Props are the values a parent gives to a child. They arrive as one object, and the child <b>must not change them</b>.</p>
+<pre><code>function Greeting({ name, age = 18 }) {   // pull out values, give age a default
+  return &lt;p&gt;{name} is {age}&lt;/p&gt;;
+}
+
+&lt;Greeting name="Ada" age={36} /&gt;    {/* strings in quotes, everything else in braces */}</code></pre>
+<h4>Why props are read-only</h4>
+<p>The value belongs to the parent. If a child could change it, the parent's data and the screen would disagree. You'd have no idea which component changed what. So data flows <b>one way: down</b> (from parent to child). This is called <b>one-way data flow</b>.</p>
+<p>That's what makes a bug easy to trace. Your components form a <b>tree</b> (App at the top, its children below it, their children below them). To find where a wrong value came from, you walk up the tree, parent by parent.</p>
+<h4>Sending data back up</h4>
+<p>A child can't change props. So the parent passes down a <b>function</b> instead. The child calls it; the parent decides what happens. This kind of function is often called a <b>callback</b> — "call me back when something happens".</p>
+<pre><code>function Parent() {
+  const [count, setCount] = useState(0);
+  return &lt;Child onAdd={() =&gt; setCount(count + 1)} /&gt;;
+}
+
+function Child({ onAdd }) {
+  return &lt;button onClick={onAdd}&gt;Add&lt;/button&gt;;
+}</code></pre>
+<p>The child doesn't know what <code>onAdd</code> does — it just reports "the button was pressed". That's what makes the child reusable anywhere.</p>
+<h4>The children prop</h4>
+<p>Whatever you put between a component's tags arrives as <code>children</code>:</p>
+<pre><code>function Card({ children }) {
+  return &lt;div className="card"&gt;{children}&lt;/div&gt;;
+}
+
+&lt;Card&gt;&lt;h2&gt;Title&lt;/h2&gt;&lt;p&gt;Body&lt;/p&gt;&lt;/Card&gt;</code></pre>
+<p>This is how you build wrappers — a card, a <b>modal</b> (a pop-up box over the page), a layout — that don't care what goes inside them. Like a picture frame: the frame is the same whatever photo you put in it.</p>
+</section>
+
+<section id="s4">
+<h3>4. State — data that changes</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>State</b> is a component's memory — data it keeps and can change, like "is the menu open?" or "what's in the search box?".</p>
+<p>When state changes, React <b>re-renders</b> the component. That means React calls your component function again to get the new picture of the screen, then updates the page to match.</p>
+<p class="analogy">Props are what someone hands you. State is what you write in your own notebook. You can change your notebook whenever you like — and every time you do, React redraws your part of the screen.</p></div>
+<p>State is data a component owns and can change. When it changes, React re-runs the component and updates the screen.</p>
+<pre><code>const [count, setCount] = useState(0);
+//     ↑ value  ↑ the only way to change it    ↑ starting value</code></pre>
+<h4>Why not a normal variable?</h4>
+<pre><code>function Broken() {
+  let count = 0;                      // ✗
+  return &lt;button onClick={() =&gt; count++}&gt;{count}&lt;/button&gt;;
+}</code></pre>
+<p>Two things go wrong:</p>
+<ol>
+<li>React doesn't know anything changed, so it never re-runs the function. The screen stays at 0.</li>
+<li>Even if React did re-run it, <code>let count = 0</code> would run again and reset the value to 0.</li>
+</ol>
+<p><code>useState</code> solves both. Calling <code>setCount</code> tells React "please re-render". And React <b>stores the value outside your function</b>, so it survives between runs.</p>
+<h4>State is a snapshot, not a live value</h4>
+<p>A <b>snapshot</b> is a photo of a moment in time. This is the single most confusing thing about React when you start:</p>
+<pre><code>const [count, setCount] = useState(0);
+
+function handleClick() {
+  setCount(count + 1);
+  console.log(count);      // still 0! not 1
+}</code></pre>
+<p>Inside this run of the function, <code>count</code> is a fixed number — a photo of the value at the moment React called your component. <code>setCount</code> doesn't edit that photo. It asks React to re-run the function <i>later</i> with a new photo.</p>
+<figure class="diagram">
+<svg viewBox="0 0 620 230" role="img" aria-label="Each render is a separate snapshot: in render one count is zero and the click handler sees zero, after the state update React runs the function again with count as one.">
+  <text class="d-sub" x="140" y="20" text-anchor="middle">RENDER 1</text>
+  <rect class="d-box" x="24" y="30" width="232" height="96" rx="7"/>
+  <text class="d-mono" x="40" y="54">count = 0</text>
+  <text class="d-sub"  x="40" y="76">handleClick sees 0</text>
+  <text class="d-sub"  x="40" y="94">— frozen for this run —</text>
+  <text class="d-mono" x="40" y="116">setCount(0 + 1)</text>
+
+  <text class="d-accent-text" x="470" y="20" text-anchor="middle">RENDER 2</text>
+  <rect class="d-fill-accent" x="356" y="30" width="232" height="96" rx="7"/>
+  <rect class="d-box-accent"  x="356" y="30" width="232" height="96" rx="7"/>
+  <text class="d-mono" x="372" y="54">count = 1</text>
+  <text class="d-sub"  x="372" y="76">a brand-new run of</text>
+  <text class="d-sub"  x="372" y="94">your function, with a</text>
+  <text class="d-sub"  x="372" y="116">new frozen value</text>
+
+  <path class="d-line-accent" d="M262 78 H350"/><path class="d-arrow-accent" d="M356 78 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="306" y="70" text-anchor="middle">React</text>
+  <text class="d-sub" x="306" y="100" text-anchor="middle">re-runs</text>
+
+  <text class="d-sub" x="310" y="164" text-anchor="middle">The two runs don't share variables. Each has its own count, its own handleClick.</text>
+  <text class="d-sub" x="310" y="192" text-anchor="middle">This is why reading count right after setCount gives you the old number —</text>
+  <text class="d-sub" x="310" y="210" text-anchor="middle">you are still inside render 1.</text>
+</svg>
+<figcaption>Every render is a fresh, independent run of your function with its own frozen copy of the state.</figcaption>
+</figure>
+<h4>Updating based on the previous value</h4>
+<pre><code>setCount(count + 1);
+setCount(count + 1);       // both read the same frozen 0 → ends up 1
+
+setCount(c =&gt; c + 1);
+setCount(c =&gt; c + 1);      // each gets the latest value → ends up 2 ✓</code></pre>
+<p>Pass a function whenever the new value depends on the old one. React runs those functions in order, and each one receives the result of the one before. This is called an <b>updater function</b>.</p>
+<h4>Never change state directly</h4>
+<pre><code>// ✗ React compares the old and new value. Same object = "nothing changed."
+user.name = "New";  setUser(user);
+items.push(newItem); setItems(items);
+
+// ✓ make a new object or array
+setUser({ ...user, name: "New" });
+setItems([...items, newItem]);
+setItems(items.filter(i =&gt; i.id !== id));
+setItems(items.map(i =&gt; i.id === id ? { ...i, done: true } : i));</code></pre>
+<p>React only checks whether the value is <i>the same thing</i> as before (the same object in memory). It does not check whether the contents differ — comparing every property of every object on every update would be far too slow. This "same thing?" check is called comparing <b>by reference</b>. So you must hand React a new object.</p>
+<p>Changing an object in place is called <b>mutating</b> it. Making a fresh copy with the change is called an <b>immutable update</b>. React wants immutable updates. The <code>...</code> (<b>spread</b>) syntax copies everything from the old object into the new one.</p>
+<p><i>Analogy:</i> imagine React checks a letter by looking at the envelope, not by reading it. If you scribble a change on the same letter and put it back in the same envelope, React thinks nothing arrived. Send a new envelope and React opens it.</p>
+<h4>Where should state live?</h4>
+<p>Put it in the closest component that needs it. If two components need the same data, move it up to their nearest shared parent and pass it down as props. This is called <b>lifting state up</b>.</p>
+<p>Example: a filter box and a product list both need the search text. Keep the text in their parent page, and pass it to both.</p>
+<div class="note"><b>Don't store what you can calculate.</b> If you have <code>items</code>, don't also keep <code>count</code> in state — write <code>const count = items.length</code>. Two copies of the same fact will eventually disagree, and that's a bug you can't reproduce.</div>
+</section>
+
+<section id="s5">
+<h3>5. Events &amp; Forms</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>An <b>event</b> is something the user does — a click, a key press, submitting a form. An <b>event handler</b> is the function you give React to run when that happens.</p>
+<p>A <b>controlled input</b> is a text box whose text lives in React state, not inside the box itself.</p>
+<p class="analogy">An event handler is like leaving a note with a receptionist: "when the delivery arrives, call this number". You hand over the number — you don't phone it yourself right now.</p></div>
+<pre><code>&lt;button onClick={handleClick}&gt;Save&lt;/button&gt;        {/* pass the function */}
+&lt;button onClick={handleClick()}&gt;Save&lt;/button&gt;      {/* ✗ calls it immediately! */}
+&lt;button onClick={() =&gt; remove(id)}&gt;Delete&lt;/button&gt; {/* wrap it to pass arguments */}</code></pre>
+<p>The difference between the first two lines: <code>handleClick</code> hands React the function to call later. <code>handleClick()</code> calls it right now, while the button is being drawn, and hands React whatever it returned.</p>
+<h4>Controlled inputs</h4>
+<p>Normally an input box keeps its own text. In React you usually put that text in state instead, so the input shows exactly what your state says. React becomes the <b>single source of truth</b> — the one place that holds the real value.</p>
+<pre><code>const [email, setEmail] = useState("");
+
+&lt;input value={email} onChange={e =&gt; setEmail(e.target.value)} /&gt;</code></pre>
+<p>Here is the loop, step by step: the user presses a key → <code>onChange</code> runs → state is updated → React re-renders → the input shows the new value. It feels roundabout. But it means you can <b>validate</b> (check the input is allowed), format it, or disable a button while the user types.</p>
+<div class="note"><b>Common error:</b> "You provided a <code>value</code> prop without an <code>onChange</code> handler." You told React the input's value but gave it no way to update — so typing does nothing. Add <code>onChange</code>, or use <code>defaultValue</code> if you don't want to control it. (An input React doesn't control is called <b>uncontrolled</b>; you read its value with a ref when you need it — see the useRef section.)</div>
+<h4>A whole form</h4>
+<pre><code>const [form, setForm] = useState({ name: "", email: "" });
+
+function update(e) {
+  const { name, value } = e.target;
+  setForm(f =&gt; ({ ...f, [name]: value }));   // one handler for every field
+}
+
+&lt;form onSubmit={e =&gt; { e.preventDefault(); save(form); }}&gt;
+  &lt;input name="name"  value={form.name}  onChange={update} /&gt;
+  &lt;input name="email" value={form.email} onChange={update} /&gt;
+  &lt;button&gt;Save&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+<p><code>e</code> is the <b>event object</b> — information about what just happened (which input, what text). <code>e.target</code> is the element the event came from. <code>[name]: value</code> uses the input's <code>name</code> as the key, so one function can update any field.</p>
+<p><code>e.preventDefault()</code> stops the browser's default behaviour. By default, submitting a form reloads the whole page — which would wipe out your React app's state.</p>
+</section>
+
+<section id="s6">
+<h3>6. Lists &amp; Keys</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>To show a list, you turn an array of data into an array of elements with <code>.map()</code>.</p>
+<p>A <b>key</b> is a unique name tag you give each item, so React can recognise the same item next time — even if it moved.</p>
+<p class="analogy">A teacher taking the register by name knows who's missing. A teacher who only counts desks ("desk 3 is empty") gets confused the moment anyone changes seats.</p></div>
+<pre><code>{users.map(user =&gt; &lt;Row key={user.id} user={user} /&gt;)}</code></pre>
+<h4>What a key is actually for</h4>
+<p>When a list changes, React compares the old list with the new one. Without a name for each item, it can only go by position — "the third one changed". With a key, it can say "the item with id 7 moved from position 3 to position 1".</p>
+<figure class="diagram">
+<svg viewBox="0 0 620 300" role="img" aria-label="Deleting the first item: with index keys React thinks every row's content changed, so typed text stays with the position and attaches to the wrong row; with id keys React correctly sees one row removed.">
+  <text class="d-sub" x="150" y="18" text-anchor="middle">key={index}  ✗</text>
+  <rect class="d-box" x="24" y="28" width="250" height="118" rx="7"/>
+  <text class="d-sub" x="40" y="50">before:</text>
+  <text class="d-mono" x="110" y="50">0:Ada  1:Bob  2:Cy</text>
+  <text class="d-sub" x="40" y="74">delete Ada</text>
+  <text class="d-sub" x="40" y="98">after:</text>
+  <text class="d-mono" x="110" y="98">0:Bob  1:Cy</text>
+  <text class="d-sub" x="40" y="126">React: "key 0 changed Ada→Bob,</text>
+  <text class="d-sub" x="40" y="142">key 1 changed Bob→Cy, key 2 gone"</text>
+
+  <text class="d-accent-text" x="465" y="18" text-anchor="middle">key={user.id}  ✓</text>
+  <rect class="d-box-accent" x="340" y="28" width="256" height="118" rx="7"/>
+  <text class="d-sub" x="356" y="50">before:</text>
+  <text class="d-mono" x="426" y="50">a:Ada  b:Bob  c:Cy</text>
+  <text class="d-sub" x="356" y="74">delete Ada</text>
+  <text class="d-sub" x="356" y="98">after:</text>
+  <text class="d-mono" x="426" y="98">b:Bob  c:Cy</text>
+  <text class="d-accent-text" x="356" y="126">React: "a was removed.</text>
+  <text class="d-accent-text" x="356" y="142">b and c are untouched."</text>
+
+  <rect class="d-box" x="24" y="176" width="250" height="88" rx="7"/>
+  <text class="d-sub" x="40" y="198">If each row had a checkbox,</text>
+  <text class="d-sub" x="40" y="216">React keeps the DOM node at</text>
+  <text class="d-sub" x="40" y="234">position 0 and only swaps text —</text>
+  <text class="d-accent-text" x="40" y="254">Ada's tick is now on Bob.</text>
+
+  <rect class="d-box-accent" x="340" y="176" width="256" height="88" rx="7"/>
+  <text class="d-sub" x="356" y="198">React removes row "a" entirely,</text>
+  <text class="d-sub" x="356" y="216">including its checkbox state.</text>
+  <text class="d-sub" x="356" y="234">Bob and Cy keep their own.</text>
+  <text class="d-accent-text" x="356" y="254">Everything stays with its row.</text>
+
+  <text class="d-sub" x="310" y="290" text-anchor="middle">Index keys are only safe when the list never reorders, filters, or has items added or removed.</text>
+</svg>
+<figcaption>A key is a name that sticks to an item. An index is just a position, and positions shift.</figcaption>
+</figure>
+<h4>Rules for keys</h4>
+<ul>
+<li>Use something <b>stable and unique</b> — stable means it stays the same for that item forever. A database id is ideal.</li>
+<li>It only needs to be unique <b>among its siblings</b> (the other items in the same list), not across the whole page.</li>
+<li>Never use <code>Math.random()</code> — a new key every render means React throws the row away and rebuilds it every time.</li>
+<li>Put the key on the <b>outermost element</b> inside <code>map</code>.</li>
+</ul>
+<div class="note"><b>A trick worth knowing:</b> changing a component's <code>key</code> deliberately destroys it and builds a fresh one, wiping its state. <code>&lt;Form key={userId} /&gt;</code> resets the form whenever you switch user — much simpler than clearing every field by hand.</div>
+</section>
+
+<!-- ================= HOW REACT WORKS ================= -->
+<div class="part">Part 2 — How React Works Inside</div>
+
+<section id="s7">
+<h3>7. The Render Cycle</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>In React, <b>render</b> means "call the component function and see what it returns". It does <i>not</i> mean "draw pixels".</p>
+<p><b>Commit</b> is the separate, later step where React actually changes the real page. The real page is called the <b>DOM</b> (Document Object Model) — the browser's live tree of elements that you see.</p>
+<p class="analogy">Render is an architect drawing a new plan and marking what's different from the old plan. Commit is the builders actually moving the walls. Drawing plans is cheap; moving walls is expensive.</p></div>
+<p>"Rendering" in React does <b>not</b> mean drawing on screen. It means React runs your component function to find out what it wants the screen to look like. Actually changing the page is a separate step.</p>
+<figure class="diagram">
+<svg viewBox="0 0 640 310" role="img" aria-label="Three phases: trigger when state changes, render when React calls your function and compares the result, and commit when React applies the differences to the real page and runs effects.">
+  <rect class="d-box-accent" x="30" y="30" width="170" height="54" rx="7"/>
+  <text class="d-accent-text" x="115" y="52" text-anchor="middle">① TRIGGER</text>
+  <text class="d-sub" x="115" y="70" text-anchor="middle">setState was called</text>
+
+  <rect class="d-box-accent" x="235" y="30" width="170" height="54" rx="7"/>
+  <text class="d-accent-text" x="320" y="52" text-anchor="middle">② RENDER</text>
+  <text class="d-sub" x="320" y="70" text-anchor="middle">React runs your function</text>
+
+  <rect class="d-box-accent" x="440" y="30" width="170" height="54" rx="7"/>
+  <text class="d-accent-text" x="525" y="52" text-anchor="middle">③ COMMIT</text>
+  <text class="d-sub" x="525" y="70" text-anchor="middle">React touches the page</text>
+
+  <path class="d-line-accent" d="M200 57 H229"/><path class="d-arrow-accent" d="M235 57 l-9 -4.5 v9 z"/>
+  <path class="d-line-accent" d="M405 57 H434"/><path class="d-arrow-accent" d="M440 57 l-9 -4.5 v9 z"/>
+
+  <rect class="d-box" x="235" y="108" width="170" height="122" rx="6"/>
+  <text class="d-sub" x="250" y="130">• run the function body</text>
+  <text class="d-sub" x="250" y="150">• get the returned tree</text>
+  <text class="d-sub" x="250" y="170">• compare with last time</text>
+  <text class="d-sub" x="250" y="190">• build a to-do list of</text>
+  <text class="d-sub" x="250" y="208">  changes</text>
+  <text class="d-accent-text" x="250" y="226">nothing visible yet</text>
+
+  <rect class="d-box" x="440" y="108" width="170" height="122" rx="6"/>
+  <text class="d-sub" x="455" y="130">• apply the changes to</text>
+  <text class="d-sub" x="455" y="148">  the real page</text>
+  <text class="d-sub" x="455" y="168">• browser paints</text>
+  <text class="d-sub" x="455" y="188">• run useEffect</text>
+  <text class="d-accent-text" x="455" y="212">the user sees it now</text>
+
+  <path class="d-line" d="M320 84 V102"/><path class="d-arrow" d="M320 108 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M525 84 V102"/><path class="d-arrow" d="M525 108 l-4.5 -9 h9 z"/>
+
+  <rect class="d-box" x="30" y="108" width="170" height="70" rx="6"/>
+  <text class="d-sub" x="45" y="130">also triggered by:</text>
+  <text class="d-sub" x="45" y="150">• the parent re-rendering</text>
+  <text class="d-sub" x="45" y="168">• a context value changing</text>
+
+  <text class="d-sub" x="320" y="266" text-anchor="middle">Key point: a render that finds no differences produces NO page changes.</text>
+  <text class="d-sub" x="320" y="290" text-anchor="middle">Re-rendering is cheap. Touching the page is the expensive part — and React skips it when it can.</text>
+</svg>
+<figcaption>Render = "work out what it should look like". Commit = "make it so". People blame slow apps on re-renders, but the commit is what actually costs.</figcaption>
+</figure>
+<h4>What makes a component re-render</h4>
+<ol>
+<li>Its own state changed.</li>
+<li><b>Its parent re-rendered</b> — this happens by default, even if the child's props are identical.</li>
+<li>A context it reads changed.</li>
+</ol>
+<p>Point 2 surprises people. React doesn't check whether props changed before re-running a child. Checking is itself work, and usually just re-running the function is cheaper. If a child is genuinely slow to render, you can ask React to check first, with <code>React.memo</code> (<a href="#s20">section 20</a>).</p>
+<p>A <b>context</b> (point 3) is a way to share a value with many components without passing it as props through every level — covered in the useReducer &amp; useContext section.</p>
+</section>
+
+<section id="s8">
+<h3>8. The Virtual DOM &amp; Diffing</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>The <b>virtual DOM</b> is a lightweight copy of the page, kept as plain JavaScript objects. <b>Diffing</b> means comparing the old copy with the new copy to find the differences (the "diff").</p>
+<p class="analogy">"Spot the difference" puzzle: you compare two small drawings on paper, circle the changes, then repaint only those spots on the real wall — instead of repainting the whole wall.</p></div>
+<p>The "virtual DOM" sounds mysterious. It's just <b>a plain JavaScript object describing what the page should look like</b> — the object we saw JSX compile into in <a href="#s2">section 2</a>.</p>
+<h4>Why a copy is faster than the real thing</h4>
+<p>Real DOM elements are heavy. Each has hundreds of properties. Touching them can force the browser to recalculate the position of everything on the page (this is called <b>layout</b> or <b>reflow</b>). A plain object is tiny.</p>
+<p>So React keeps two descriptions — the previous one and the new one. It compares those cheaply, and then makes only the handful of real changes needed.</p>
+<figure class="diagram">
+<svg viewBox="0 0 640 260" role="img" aria-label="React compares the old element tree with the new one, finds that only the count text differs, and updates just that one text node in the real page.">
+  <text class="d-sub" x="100" y="18" text-anchor="middle">OLD tree (kept from last render)</text>
+  <rect class="d-box" x="24" y="28" width="160" height="112" rx="7"/>
+  <text class="d-mono" x="38" y="50">div</text>
+  <text class="d-mono" x="52" y="72">h1 "Cart"</text>
+  <text class="d-mono" x="52" y="94">span "2"</text>
+  <text class="d-mono" x="52" y="116">button "Add"</text>
+
+  <text class="d-sub" x="320" y="18" text-anchor="middle">NEW tree (just produced)</text>
+  <rect class="d-box" x="240" y="28" width="160" height="112" rx="7"/>
+  <text class="d-mono" x="254" y="50">div</text>
+  <text class="d-mono" x="268" y="72">h1 "Cart"</text>
+  <text class="d-accent-text" x="268" y="94">span "3"</text>
+  <text class="d-mono" x="268" y="116">button "Add"</text>
+
+  <path class="d-line-accent" d="M190 84 H234"/>
+  <text class="d-sub" x="212" y="76" text-anchor="middle">compare</text>
+
+  <rect class="d-fill-accent" x="448" y="28" width="168" height="112" rx="7"/>
+  <rect class="d-box-accent"  x="448" y="28" width="168" height="112" rx="7"/>
+  <text class="d-accent-text" x="464" y="52">Difference found:</text>
+  <text class="d-mono" x="464" y="76">span text</text>
+  <text class="d-mono" x="464" y="96">"2" → "3"</text>
+  <text class="d-sub"  x="464" y="122">…and nothing else</text>
+
+  <path class="d-line-accent" d="M406 84 H442"/><path class="d-arrow-accent" d="M448 84 l-9 -4.5 v9 z"/>
+
+  <rect class="d-box" x="240" y="174" width="376" height="42" rx="7"/>
+  <text class="d-mono" x="258" y="200">realSpan.textContent = "3"   ← the ONLY page change</text>
+  <path class="d-line-accent" d="M532 140 V168"/><path class="d-arrow-accent" d="M532 174 l-4.5 -9 h9 z"/>
+
+  <text class="d-sub" x="320" y="244" text-anchor="middle">The h1 and button were untouched, so their real elements were never even looked at.</text>
+</svg>
+<figcaption>Compare cheap objects, then make expensive changes only where they're genuinely needed.</figcaption>
+</figure>
+<div class="note"><b>Honest framing:</b> the virtual DOM is not magically fast — carefully hand-written DOM code can beat it. What it buys you is near-best updates <i>without writing that code yourself</i>, and without the bugs that come with it.</div>
+</section>
+
+<section id="s9">
+<h3>9. Batching &amp; How Updates Queue</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Batching</b> means React collects several state changes and handles them together in one re-render, instead of one re-render per change.</p>
+<p>A <b>queue</b> is a waiting line: updates join it in order, and React processes them in that order.</p>
+<p class="analogy">A waiter doesn't run to the kitchen after each dish you order. They write down the whole order, then go once.</p></div>
+<p>If you call <code>setState</code> three times in one function, React doesn't re-render three times. It collects them and does <b>one</b> render at the end. This is called batching.</p>
+<pre><code>function handleClick() {
+  setName("Ada");
+  setAge(36);
+  setCity("London");
+  // ONE re-render, not three
+}</code></pre>
+<p>Without batching, the user could briefly see a half-updated screen (new name, old age). And you'd do three times the work. Since React 18 this happens everywhere — including inside <code>setTimeout</code>, promises (code that runs after an async task such as a <code>fetch</code> finishes) and event handlers added outside React.</p>
+<h4>How the queue works</h4>
+<pre><code>const [n, setN] = useState(0);
+
+setN(n + 1);        // queue: "replace with 1"  (n is frozen at 0)
+setN(n + 1);        // queue: "replace with 1"  ← same frozen 0
+// result: 1
+
+setN(x =&gt; x + 1);   // queue: "take what's there, add 1"
+setN(x =&gt; x + 1);   // queue: "take what's there, add 1"
+// result: 2 — each function receives the previous result</code></pre>
+<p>Plain values are instructions to <i>replace</i> ("set it to 1"). Functions are instructions to <i>transform</i> ("add 1 to whatever is there"). When updates depend on each other, you need transform.</p>
+<h4>When you need the update to land immediately</h4>
+<p>This is rare. But if you must measure the page right after an update, <code>flushSync</code> forces React to render and commit <b>synchronously</b> — right now, before the next line of your code runs. It's an <b>escape hatch</b> (an emergency exit from React's normal rules), and it gives up the speed benefit of batching.</p>
+</section>
+
+<section id="s10">
+<h3>10. Reconciliation — the matching rules</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Reconciliation</b> is how React decides, element by element, "is this the same thing as last time, or something new?".</p>
+<p>If it's the same, React keeps it and its state. If it's new, React throws the old one away. Throwing away is called <b>unmounting</b>; creating fresh is called <b>mounting</b>.</p>
+<p class="analogy">Renovating a room: if the new plan still has a sofa in the same spot, you keep the sofa and just change the cushions. If the plan says "bed" where the sofa was, the sofa goes out entirely.</p></div>
+<p>Reconciliation is React's process for matching up old elements with new ones. It follows two simple rules, and knowing them explains a whole category of strange bugs.</p>
+<h4>Rule 1 — a different type means throw it all away</h4>
+<pre><code>// before
+&lt;div&gt;&lt;Profile /&gt;&lt;/div&gt;
+// after
+&lt;section&gt;&lt;Profile /&gt;&lt;/section&gt;</code></pre>
+<p><code>div</code> became <code>section</code>. So React destroys the entire <b>subtree</b> (that element plus everything inside it) and rebuilds it. <code>Profile</code> is unmounted and mounted again, losing all its state. React doesn't try to be clever here, because in practice a changed type almost always means genuinely different content.</p>
+<h4>Rule 2 — same type means keep it and update what differs</h4>
+<pre><code>&lt;div className="a" title="x" /&gt;
+&lt;div className="b" title="x" /&gt;
+// same type → React keeps the element and changes only className</code></pre>
+<h4>The bug this causes</h4>
+<pre><code>// ✗ a new component TYPE is created on every render
+function Page() {
+  function Inner() { return &lt;input /&gt;; }   // defined inside!
+  return &lt;Inner /&gt;;
+}</code></pre>
+<p>Every render creates a brand-new <code>Inner</code> function. React compares the old and new types and sees they're different functions (even though the code looks identical). So it throws away the subtree. The result: the input loses focus and its text on every keystroke. <b>Always define components at the top level of a file</b>, never inside another component.</p>
+<h4>Same idea, different symptom</h4>
+<pre><code>// ✗ the input is remounted whenever isEditing flips
+{isEditing ? &lt;div&gt;&lt;input /&gt;&lt;/div&gt; : &lt;span&gt;&lt;input /&gt;&lt;/span&gt;}
+
+// ✓ same structure, so the input survives
+&lt;div&gt;{isEditing ? &lt;input /&gt; : &lt;input readOnly /&gt;}&lt;/div&gt;</code></pre>
+<div class="note"><b>Rule of thumb:</b> if a component is unexpectedly losing its state, ask "did its type or its position in the tree change?" That's nearly always the cause.</div>
+</section>
+
+<!-- ================= HOOKS ================= -->
+<div class="part">Part 3 — Hooks</div>
+
+<section id="s11">
+<h3>11. useState, Deeply</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>hook</b> is a special React function whose name starts with <code>use</code>. Hooks let a plain function component "hook into" React features like memory (state) and side jobs (effects).</p>
+<p><code>useState</code> gives your component one piece of memory, plus a function to change it.</p>
+<p class="analogy">A coat check: you hand in your coat (the value) and get a ticket. Each time you come back (each render), you show the ticket and get your coat back — even though you left the building in between.</p></div>
+<pre><code>const [value, setValue] = useState(initial);</code></pre>
+<h4>Where the value is actually kept</h4>
+<p>Your function runs and finishes — its local variables disappear. So React stores the state <b>outside</b> your function, in its own internal record for that <b>component instance</b> (one particular copy of the component on the page). Each time React calls your function, it hands back the current value.</p>
+<p>This is why two copies of the same component have separate state. Put two <code>&lt;Counter /&gt;</code>s on a page and each counts on its own: they're separate instances, each with its own record.</p>
+<h4>Expensive starting values</h4>
+<pre><code>useState(buildHugeList());        // ✗ runs on EVERY render, result thrown away
+useState(() =&gt; buildHugeList());  // ✓ runs only on the first render</code></pre>
+<p>The first version calls <code>buildHugeList()</code> every time, just to hand React a value it ignores after the first render. The second passes the function itself (without calling it), so React can call it only when it needs to. This is called <b>lazy initialisation</b> — "don't do the work until it's actually needed".</p>
+<h4>Objects and arrays in state</h4>
+<pre><code>const [user, setUser] = useState({ name: "", address: { city: "" } });
+
+setUser({ ...user, name: "Ada" });                          // one level
+setUser({ ...user, address: { ...user.address, city: "X" }});// spread each level you change</code></pre>
+<p>Deep <b>nesting</b> (objects inside objects inside objects) gets painful fast, because you have to copy every level you pass through. Two ways out: keep state flatter, or use <code>useReducer</code> (<a href="#s16">section 16</a>) to put the update logic in one place.</p>
+<h4>Resetting state when a prop changes</h4>
+<pre><code>// ✗ the old way — an extra render, and easy to get wrong
+useEffect(() =&gt; { setDraft(""); }, [userId]);
+
+// ✓ give the component a key — React rebuilds it fresh
+&lt;Editor key={userId} /&gt;</code></pre>
+<p>When <code>userId</code> changes, the key changes. React sees a "different" <code>Editor</code>, throws the old one away and mounts a fresh one with empty state. No effect needed.</p>
+</section>
+
+<section id="s12">
+<h3>12. useEffect, Deeply</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>side effect</b> is anything your component does besides returning what to show — calling a server, starting a timer, listening to window resize.</p>
+<p><code>useEffect</code> runs that kind of code <i>after</i> React has updated the page. The optional function it returns is the <b>cleanup</b>: code that undoes or stops what the effect started.</p>
+<p class="analogy">Moving into a hotel room: setup is unpacking and plugging in your charger. Cleanup is unplugging and packing before you leave — and you always pack before moving to the next room.</p></div>
+<p><code>useEffect</code> is for talking to things <b>outside React</b> — a server, a timer, the browser, a <b>subscription</b> (a connection that keeps sending you updates, like a chat socket). It is not a general "run this code" box, and that misunderstanding causes most effect bugs.</p>
+<pre><code>useEffect(() =&gt; {
+  // setup — runs after React has updated the page
+  const id = setInterval(tick, 1000);
+
+  return () =&gt; clearInterval(id);   // cleanup
+}, [deps]);</code></pre>
+<h4>When it runs</h4>
+<p>The second argument, <code>[deps]</code>, is the <b>dependency array</b>: the list of values the effect uses. React re-runs the effect only when one of them has changed since the last render.</p>
+<div class="table-wrap"><table>
+<tr><th>Dependency array</th><th>Runs</th></tr>
+<tr><td>left out entirely</td><td>After every single render</td></tr>
+<tr><td><code>[]</code></td><td>Once, after the first render</td></tr>
+<tr><td><code>[a, b]</code></td><td>First render, then whenever <code>a</code> or <code>b</code> becomes a different value</td></tr>
+</table></div>
+<h4>Cleanup, and why it matters more than people think</h4>
+<figure class="diagram">
+<svg viewBox="0 0 620 240" role="img" aria-label="Timeline showing that when a dependency changes, React runs the cleanup from the previous effect before running the new setup, and runs cleanup a final time on unmount.">
+  <rect class="d-box-accent" x="24" y="30" width="150" height="56" rx="7"/>
+  <text class="d-accent-text" x="99" y="52" text-anchor="middle">id = 1</text>
+  <text class="d-sub" x="99" y="70" text-anchor="middle">setup: fetch user 1</text>
+
+  <rect class="d-box" x="235" y="30" width="150" height="56" rx="7"/>
+  <text class="d-label" x="310" y="52" text-anchor="middle">cleanup</text>
+  <text class="d-sub" x="310" y="70" text-anchor="middle">cancel user 1 request</text>
+
+  <rect class="d-box-accent" x="446" y="30" width="150" height="56" rx="7"/>
+  <text class="d-accent-text" x="521" y="52" text-anchor="middle">id = 2</text>
+  <text class="d-sub" x="521" y="70" text-anchor="middle">setup: fetch user 2</text>
+
+  <path class="d-line" d="M180 58 H229"/><path class="d-arrow" d="M235 58 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M391 58 H440"/><path class="d-arrow" d="M446 58 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="204" y="50" text-anchor="middle">id changed</text>
+
+  <text class="d-accent-text" x="310" y="122" text-anchor="middle">Cleanup ALWAYS runs before the next setup</text>
+
+  <rect class="d-box" x="120" y="146" width="380" height="58" rx="7"/>
+  <text class="d-sub" x="140" y="168">Without cleanup: user 1's slow response can arrive AFTER</text>
+  <text class="d-sub" x="140" y="186">user 2's — and overwrite the screen with the wrong person.</text>
+
+  <text class="d-sub" x="310" y="228" text-anchor="middle">Cleanup also runs one final time when the component is removed from the page.</text>
+</svg>
+<figcaption>Every effect that starts something — a request, a timer, a listener — needs a cleanup that stops it.</figcaption>
+</figure>
+<pre><code>useEffect(() =&gt; {
+  const controller = new AbortController();
+
+  fetch(`/api/users/${id}`, { signal: controller.signal })
+    .then(r =&gt; r.json())
+    .then(setUser)
+    .catch(e =&gt; { if (e.name !== "AbortError") setError(e); });
+
+  return () =&gt; controller.abort();   // cancel if id changes or we unmount
+}, [id]);</code></pre>
+<p><code>AbortController</code> is a built-in browser tool for cancelling a <code>fetch</code>. Calling <code>controller.abort()</code> stops the request, and the fetch fails with an <code>"AbortError"</code> — which we ignore on purpose.</p>
+<h4>Why your effect runs twice in development</h4>
+<p><b>StrictMode</b> is a wrapper component (<code>&lt;StrictMode&gt;</code>) that turns on extra checks while you develop. It deliberately runs each effect twice — setup, cleanup, setup — the moment a component appears. It's not a bug; it's a test.</p>
+<p>If your component breaks when this happens, your cleanup is missing or incomplete. That <i>would</i> have been a real bug in <b>production</b> (the live app real users see). Fix the cleanup rather than turning StrictMode off. It only does this in development.</p>
+<h4>Effects you shouldn't be writing</h4>
+<pre><code>// ✗ calculating during an effect — causes a second render and can flash old data
+const [total, setTotal] = useState(0);
+useEffect(() =&gt; { setTotal(items.reduce((s,i) =&gt; s + i.price, 0)); }, [items]);
+
+// ✓ just calculate it while rendering
+const total = items.reduce((s, i) =&gt; s + i.price, 0);
+
+
+// ✗ reacting to a click inside an effect
+useEffect(() =&gt; { if (submitted) sendRequest(); }, [submitted]);
+
+// ✓ do it in the event handler, where the thing actually happened
+function handleSubmit() { sendRequest(); }</code></pre>
+<div class="note"><b>Test to apply:</b> ask "is this <b>synchronising</b> (keeping in step) with something outside React?" If yes, an effect fits. If it's just calculating a value, or responding to a user action, it doesn't.</div>
+<h4>The dependency array is not optional</h4>
+<pre><code>// ✗ leaving deps out to "stop it running" — it now uses a stale count forever
+useEffect(() =&gt; { console.log(count); }, []);</code></pre>
+<p>The effect captures the values from the render it belonged to (remember: each render is a snapshot). Removing a dependency doesn't stop the effect needing that value — it just makes it use an old one. An old, out-of-date value is called <b>stale</b>.</p>
+<p>Let the <b>linter</b> guide you (a tool, here the <code>eslint-plugin-react-hooks</code> rule, that reads your code and warns about missing dependencies). If an effect runs too often, the answer is usually to move a function inside the effect or wrap it in <code>useCallback</code>, not to lie about the deps.</p>
+</section>
+
+<section id="s13">
+<h3>13. React Component Lifecycle</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>The <b>lifecycle</b> is the list of stages every component goes through, from appearing to disappearing:</p>
+<p><b>Mount</b> — the component appears on the page for the first time. <b>Update</b> — it re-renders because something it depends on changed. <b>Unmount</b> — it is removed from the page, and its state is thrown away.</p>
+<p>Effects are how you hook into those stages: <b>setup</b> code runs after the component appears or changes; <b>cleanup</b> code runs before it changes again or disappears.</p>
+<p class="analogy">Think of a new employee. Day one (mount): they get a desk, a laptop and a login (setup). Normal days (updates): their tasks change, so they swap out old files for new ones — tidying the old first (cleanup, then setup). Last day (unmount): they hand back the laptop and the login is switched off (final cleanup). Forgetting that last step is how "leaks" happen.</p></div>
+<p>Class components (the older style) had a separately named method for each stage — <code>componentDidMount</code>, <code>componentDidUpdate</code>, and so on. Function components use hooks instead, mostly <code>useEffect</code>. The stages are the same; only the way you write them changed. Interviewers love asking you to map one to the other, so both are covered below.</p>
+
+<h4>The three stages</h4>
+<ul>
+<li><b>Mounting</b> — React calls your function for the first time, creates the real DOM elements, puts them on the page, and then runs your effects' setup code.</li>
+<li><b>Updating</b> — something changed, so React calls your function again, works out the differences, patches the page, and then re-runs only the effects whose dependencies changed (cleanup of the old one first, then setup of the new one).</li>
+<li><b>Unmounting</b> — the component is no longer in the returned JSX (for example, a <code>{show &amp;&amp; &lt;Modal /&gt;}</code> where <code>show</code> became false). React removes its elements and runs every remaining cleanup. Its state is gone for good — if it comes back later, it mounts fresh with starting values.</li>
+</ul>
+
+<figure class="diagram">
+<svg viewBox="0 -18 640 378" role="img" aria-label="Component lifecycle: mount runs render, commit, layout effects, paint and effects; update repeats render and commit, then runs old cleanups before new setups; unmount runs all cleanups and removes the elements. Underneath, the render phase is pure calculation while the commit phase changes the page and runs effects.">
+  <rect class="d-box-accent" x="24" y="30" width="170" height="54" rx="7"/>
+  <text class="d-accent-text" x="109" y="52" text-anchor="middle">① MOUNT</text>
+  <text class="d-sub" x="109" y="70" text-anchor="middle">appears for the first time</text>
+
+  <rect class="d-box-accent" x="235" y="30" width="170" height="54" rx="7"/>
+  <text class="d-accent-text" x="320" y="52" text-anchor="middle">② UPDATE</text>
+  <text class="d-sub" x="320" y="70" text-anchor="middle">state / props / context</text>
+
+  <rect class="d-box-accent" x="446" y="30" width="170" height="54" rx="7"/>
+  <text class="d-accent-text" x="531" y="52" text-anchor="middle">③ UNMOUNT</text>
+  <text class="d-sub" x="531" y="70" text-anchor="middle">removed from the page</text>
+
+  <path class="d-line-accent" d="M194 57 H229"/><path class="d-arrow-accent" d="M235 57 l-9 -4.5 v9 z"/>
+  <path class="d-line-accent" d="M405 57 H440"/><path class="d-arrow-accent" d="M446 57 l-9 -4.5 v9 z"/>
+  <path class="d-dash" d="M290 30 C290 6 350 6 350 26"/><path class="d-arrow" d="M350 30 l-4.5 -9 h9 z"/>
+  <text class="d-sub" x="320" y="-4" text-anchor="middle">repeats many times</text>
+
+  <path class="d-line" d="M109 84 V102"/><path class="d-arrow" d="M109 108 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M320 84 V102"/><path class="d-arrow" d="M320 108 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M531 84 V102"/><path class="d-arrow" d="M531 108 l-4.5 -9 h9 z"/>
+
+  <rect class="d-box" x="24" y="108" width="170" height="146" rx="6"/>
+  <text class="d-sub" x="38" y="130">• render: run function</text>
+  <text class="d-sub" x="38" y="150">• commit: create DOM</text>
+  <text class="d-sub" x="38" y="170">• refs are filled in</text>
+  <text class="d-sub" x="38" y="190">• useLayoutEffect setup</text>
+  <text class="d-sub" x="38" y="210">• browser paints</text>
+  <text class="d-sub" x="38" y="230">• useEffect setup</text>
+  <text class="d-accent-text" x="38" y="248">user sees it</text>
+
+  <rect class="d-box" x="235" y="108" width="170" height="146" rx="6"/>
+  <text class="d-sub" x="249" y="130">• render: run again</text>
+  <text class="d-sub" x="249" y="150">• commit: patch the DOM</text>
+  <text class="d-sub" x="249" y="170">• layout: cleanup → setup</text>
+  <text class="d-sub" x="249" y="190">• browser paints</text>
+  <text class="d-sub" x="249" y="210">• effect: old cleanup</text>
+  <text class="d-sub" x="249" y="230">• effect: new setup</text>
+  <text class="d-accent-text" x="249" y="248">only if deps changed</text>
+
+  <rect class="d-box" x="446" y="108" width="170" height="146" rx="6"/>
+  <text class="d-sub" x="460" y="130">• layout cleanups run</text>
+  <text class="d-sub" x="460" y="150">• DOM elements removed</text>
+  <text class="d-sub" x="460" y="170">• effect cleanups run</text>
+  <text class="d-sub" x="460" y="190">• state thrown away</text>
+  <text class="d-accent-text" x="460" y="230">comes back later?</text>
+  <text class="d-accent-text" x="460" y="248">= a fresh mount</text>
+
+  <rect class="d-fill-accent" x="24" y="276" width="290" height="62" rx="7"/>
+  <rect class="d-box-accent"  x="24" y="276" width="290" height="62" rx="7"/>
+  <text class="d-accent-text" x="42" y="298">RENDER PHASE — "work it out"</text>
+  <text class="d-sub" x="42" y="316">call functions, compare old vs new tree</text>
+  <text class="d-sub" x="42" y="332">pure — no DOM work; may run twice</text>
+
+  <rect class="d-box" x="334" y="276" width="282" height="62" rx="7"/>
+  <text class="d-label" x="352" y="298">COMMIT PHASE — "make it so"</text>
+  <text class="d-sub" x="352" y="316">change the DOM, set refs, run effects</text>
+  <text class="d-sub" x="352" y="332">runs once, can't be interrupted</text>
+</svg>
+<figcaption>Every stage has the same two halves: first React works out the new picture (render), then it changes the page and runs your effects (commit).</figcaption>
+</figure>
+
+<h4>What triggers a re-render (an update)</h4>
+<ol>
+<li><b>Its own state was set</b> to a new value. (If you set it to the exact same value — checked with <code>Object.is</code>, which is basically <code>===</code> — React can skip the re-render.)</li>
+<li><b>Its parent re-rendered.</b> By default the child re-renders too, even if its props are the same. <code>React.memo</code> can stop this.</li>
+<li><b>A context it reads changed.</b></li>
+</ol>
+<p>Notice what's <i>not</i> on the list: "its props changed". Props only change because the parent re-rendered, so that's really trigger 2. Also, changing a normal variable or a ref never triggers anything.</p>
+<p>One special case: if a component's <code>key</code> or its type changes, that's not an update at all. React unmounts the old one and mounts a brand-new one (see <a href="#s10">section 10</a>).</p>
+
+<h4>Render phase vs commit phase</h4>
+<p><b>Render phase</b> — React calls your component functions and compares the new result with the old one. Nothing on the screen changes yet. Your function must be <b>pure</b> here: given the same props and state, it returns the same JSX and doesn't change anything outside itself (no fetching, no timers, no editing global variables). This matters because React is allowed to call it twice, pause it half-way to handle something more urgent (this is <b>concurrent rendering</b>, added in React 18), or throw the result away.</p>
+<p><b>Commit phase</b> — React applies the changes to the real DOM in one go, fills in refs, runs <code>useLayoutEffect</code>, lets the browser paint, and then runs <code>useEffect</code>. The commit is never done half-way, so the user never sees a half-updated screen.</p>
+<p>Example: typing a letter in a search box. Render phase: React calls <code>SearchBox</code> and <code>Results</code> and notices one list item disappeared. Commit phase: it removes that one <code>&lt;li&gt;</code>, the browser repaints, then your "save search to URL" effect runs.</p>
+
+<h4>When effects and cleanups run</h4>
+<p><code>useLayoutEffect</code> is a twin of <code>useEffect</code> with different timing. It runs right after the DOM is updated but <b>before the browser paints</b>, so the user never sees the in-between state. Use it to measure something and fix the position before it shows — like placing a tooltip. It blocks painting, so keep it rare and fast. <code>useEffect</code> runs <b>after</b> the paint, so it never delays what the user sees; that's why it's the default.</p>
+<div class="table-wrap"><table>
+<tr><th>Moment</th><th>useLayoutEffect</th><th>useEffect</th></tr>
+<tr><td>Mount</td><td>Setup runs after the DOM is created, <b>before paint</b></td><td>Setup runs <b>after paint</b></td></tr>
+<tr><td>Update, a dependency changed</td><td>Old cleanup, then new setup — before paint</td><td>Old cleanup, then new setup — after paint</td></tr>
+<tr><td>Update, dependencies all the same</td><td>Skipped</td><td>Skipped</td></tr>
+<tr><td>Update, no dependency array</td><td>Cleanup + setup every time</td><td>Cleanup + setup every time</td></tr>
+<tr><td>Unmount</td><td>Final cleanup runs</td><td>Final cleanup runs</td></tr>
+<tr><td>On the server (SSR)</td><td>Never runs</td><td>Never runs</td></tr>
+</table></div>
+<p>Two ordering details that come up in interviews:</p>
+<ul>
+<li>In one commit, React runs <b>all the cleanups first, then all the setups</b>. Cleanups always see the values from the render they were created in (the old ones).</li>
+<li><b>Children's effects run before their parent's.</b> A parent's <code>useEffect</code> can rely on its children already being on the page.</li>
+</ul>
+
+<h4>Class lifecycle methods → hooks</h4>
+<div class="table-wrap"><table>
+<tr><th>Class method</th><th>When it ran</th><th>Hooks equivalent</th></tr>
+<tr><td><code>constructor</code></td><td>Once, before the first render — set up starting state</td><td><code>useState(initial)</code>, or <code>useState(() =&gt; expensive())</code> for costly setup; <code>useRef</code> for non-visual values</td></tr>
+<tr><td><code>render</code></td><td>Every render — return the UI</td><td>The function body itself (whatever it returns)</td></tr>
+<tr><td><code>static getDerivedStateFromProps</code></td><td>Before every render — copy props into state</td><td>Usually not needed: calculate the value during render. To reset state when a prop changes, use a <code>key</code>. (Rare: call <code>setState</code> during render with a guard.)</td></tr>
+<tr><td><code>componentDidMount</code></td><td>Once, after first appearing on the page</td><td><code>useEffect(() =&gt; { … }, [])</code></td></tr>
+<tr><td><code>shouldComponentUpdate</code></td><td>Before a re-render — return <code>false</code> to skip it</td><td><code>React.memo(Component)</code>. Careful: memo's optional compare function returns <code>true</code> when props are <i>equal</i> (skip) — the opposite meaning</td></tr>
+<tr><td><code>getSnapshotBeforeUpdate</code></td><td>Just before the DOM changes — read something (like scroll position)</td><td>No hook equivalent. Keep a small class, or get close with a ref plus <code>useLayoutEffect</code></td></tr>
+<tr><td><code>componentDidUpdate</code></td><td>After each update</td><td><code>useEffect(() =&gt; { … }, [deps])</code> — note it also runs on mount</td></tr>
+<tr><td><code>componentWillUnmount</code></td><td>Just before removal</td><td>The cleanup function returned from <code>useEffect(() =&gt; { return () =&gt; { … }; }, [])</code></td></tr>
+<tr><td><code>componentDidCatch</code> (+ <code>getDerivedStateFromError</code>)</td><td>When a child throws while rendering</td><td>No hook equivalent — still needs a class error boundary (<a href="#s21">section 21</a>) or the <code>react-error-boundary</code> package</td></tr>
+</table></div>
+<p>The big mindset change: with classes you thought "what should happen <i>at</i> mount, <i>at</i> update?". With hooks you think "what outside thing must stay <b>in sync</b> with these values?". One effect with cleanup covers mount, update and unmount together — which is why code that used to be split across three methods now lives in one place.</p>
+
+<h4>Seeing it happen</h4>
+<pre><code>function Profile({ userId }) {
+  const [count, setCount] = useState(0);
+
+  // [] → setup once after mount, cleanup once on unmount
+  useEffect(() =&gt; {
+    console.log("mounted");
+    return () =&gt; console.log("unmounted");
+  }, []);
+
+  // [userId] → after mount, and again whenever userId changes
+  useEffect(() =&gt; {
+    console.log("setup for user", userId);
+    return () =&gt; console.log("cleanup for user", userId);  // sees the OLD userId
+  }, [userId]);
+
+  // no array → after every render (mount + every update)
+  useEffect(() =&gt; {
+    console.log("committed, count =", count);
+  });
+
+  console.log("render phase, count =", count);   // runs in the render phase
+
+  return &lt;button onClick={() =&gt; setCount(c =&gt; c + 1)}&gt;{count}&lt;/button&gt;;
+}
+
+/* Console output (production build):
+
+   — MOUNT (userId = 1) —
+   render phase, count = 0
+   mounted
+   setup for user 1
+   committed, count = 0
+
+   — UPDATE: button clicked —
+   render phase, count = 1
+   committed, count = 1          ← only the no-array effect re-ran
+
+   — UPDATE: parent passes userId = 2 —
+   render phase, count = 1
+   cleanup for user 1            ← all cleanups first…
+   setup for user 2              ← …then the setups
+   committed, count = 1
+
+   — UNMOUNT —
+   unmounted
+   cleanup for user 2
+*/</code></pre>
+
+<h4>StrictMode: why everything happens twice in development</h4>
+<p>When your app is wrapped in <code>&lt;StrictMode&gt;</code> (Next.js and Vite templates do this for you), React adds two deliberate tests <b>in development only</b>:</p>
+<ol>
+<li><b>It calls your component function twice</b> for each render (also state initialisers, updater functions, reducers and <code>useMemo</code> callbacks) and throws one result away. If the two runs differ, your render isn't pure. Newer React DevTools show the second log greyed out.</li>
+<li><b>On first mount, it mounts, unmounts, and mounts again.</b> Every effect runs setup → cleanup → setup. This checks that your cleanup really undoes your setup.</li>
+</ol>
+<pre><code>/* Same component, development + StrictMode, first mount:
+   render phase, count = 0
+   render phase, count = 0      ← double render
+   mounted
+   setup for user 1
+   committed, count = 0
+   unmounted                    ← simulated unmount
+   cleanup for user 1
+   mounted                      ← and mount again
+   setup for user 1
+   committed, count = 0
+*/</code></pre>
+<p>If this double run causes a bug — two chat connections, a request sent twice that you can't cancel, a counter that jumps by 2 — then a real user would hit the same bug by navigating away and back. Fix the cleanup; don't remove StrictMode. A production build runs everything once.</p>
+
+<div class="note"><b>Interview one-liner:</b> "A component mounts, updates any number of times, and unmounts. Each time is a render phase (pure calculation, can be repeated) followed by a commit phase (DOM changes, then layout effects, paint, then effects). Cleanups run before the next setup and on unmount. <code>[]</code> is mount/unmount, <code>[deps]</code> is did-update for those deps, and StrictMode doubles it all in development to catch missing cleanups."</div>
+</section>
+
+<section id="s14">
+<h3>14. useRef</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>ref</b> (reference) is a small box with one slot, <code>.current</code>. You can put anything in it and it stays there between renders.</p>
+<p>Unlike state, changing a ref is silent — React is not told, so the screen does not update.</p>
+<p class="analogy">State is a whiteboard in the office: change it and everyone looks up. A ref is a sticky note in your own pocket: you can scribble on it all day and nobody reacts.</p></div>
+<p><code>useRef</code> gives you a box whose contents survive re-renders, and <b>changing it never causes a re-render</b>. That second part is the whole point.</p>
+<pre><code>const ref = useRef(initialValue);
+ref.current;          // read or write freely</code></pre>
+<h4>Job 1 — reaching a real page element</h4>
+<pre><code>const inputRef = useRef(null);
+
+useEffect(() =&gt; { inputRef.current.focus(); }, []);
+
+&lt;input ref={inputRef} /&gt;</code></pre>
+<p>When you write <code>ref={inputRef}</code>, React puts the real input element into <code>inputRef.current</code> after it creates it. Use this for things React has no built-in way to do: focusing, scrolling, measuring size, playing a video, or handing a <b>DOM node</b> (a real page element) to a chart library.</p>
+<h4>Job 2 — remembering a value without re-rendering</h4>
+<pre><code>const timerRef = useRef(null);
+
+function start() { timerRef.current = setInterval(tick, 1000); }
+function stop()  { clearInterval(timerRef.current); }</code></pre>
+<p><code>setInterval</code> returns an id number that you need later to stop the timer. Nobody sees that number on screen. If you stored it in state, every start would re-render for no visual reason.</p>
+<h4>state vs ref</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>useState</th><th>useRef</th></tr>
+<tr><td>Changing it re-renders</td><td>Yes</td><td><b>No</b></td></tr>
+<tr><td>Shown on screen</td><td>Yes — that's the point</td><td>Should not be</td></tr>
+<tr><td>Read during render</td><td>Safe</td><td>Avoid — may be stale</td></tr>
+<tr><td>Use for</td><td>Anything the user sees</td><td>Timers, DOM nodes, previous values</td></tr>
+</table></div>
+<div class="note"><b>Simple test:</b> if changing the value should update the screen, use state. If it shouldn't, use a ref. Putting display data in a ref means the screen won't update; putting a timer id in state means pointless re-renders.</div>
+</section>
+
+<section id="s15">
+<h3>15. useMemo &amp; useCallback</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Memoising</b> (from "memo", a note to self) means saving a result so you can reuse it instead of working it out again.</p>
+<p><code>useMemo</code> saves a calculated value. <code>useCallback</code> saves a function. Both only recompute when their dependencies change.</p>
+<p class="analogy">A student who writes the answer to a long sum on a sticky note, and just reads the note next time — unless the numbers in the question changed.</p></div>
+<p>Both do the same thing — remember a result between renders so it isn't recreated. <code>useMemo</code> remembers a <b>value</b>; <code>useCallback</code> remembers a <b>function</b>.</p>
+<pre><code>const sorted = useMemo(() =&gt; [...items].sort(byName), [items]);
+const handler = useCallback(() =&gt; save(id), [id]);
+
+// they're the same tool:
+useCallback(fn, deps)  ≡  useMemo(() =&gt; fn, deps)</code></pre>
+<h4>Reason 1 — skip expensive work</h4>
+<pre><code>// runs on every render, even when only an unrelated field changed
+const filtered = hugeList.filter(complexCheck);
+
+// runs only when hugeList or query changes
+const filtered = useMemo(() =&gt; hugeList.filter(complexCheck), [hugeList, query]);</code></pre>
+<h4>Reason 2 — keep a value's identity stable</h4>
+<p>A value's <b>identity</b> means "which exact object in memory is this?" — not what's written inside it. This is the one people miss. In JavaScript, two objects with identical contents are still <b>different objects</b> (like two identical twins are still two people):</p>
+<pre><code>{ a: 1 } === { a: 1 }     // false
+() =&gt; {}  === () =&gt; {}     // false</code></pre>
+<p>So every render creates brand-new objects and functions. If you pass one to a child wrapped in <code>React.memo</code> (a wrapper that skips re-rendering when props haven't changed), the child's check ("did my props change?") says yes every time — and the memo does nothing.</p>
+<pre><code>// ✗ new function each render → Child re-renders every time anyway
+&lt;Child onSave={() =&gt; save(id)} /&gt;
+
+// ✓ same function identity between renders → memo can actually skip
+const onSave = useCallback(() =&gt; save(id), [id]);
+&lt;Child onSave={onSave} /&gt;</code></pre>
+<p>The same applies when an object or function is in a <code>useEffect</code> dependency array — an unstable identity makes the effect run every render.</p>
+<div class="note"><b>Don't wrap everything.</b> Memoising isn't free: it stores values and compares dependencies on every render. For cheap calculations that costs more than it saves. Use it when you've seen a real problem, or when you specifically need stable identity. React's newer compiler (the <b>React Compiler</b>, a build step that adds memoisation for you) does much of this automatically.</div>
+</section>
+
+<section id="s16">
+<h3>16. useReducer &amp; useContext</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>reducer</b> is a function that takes the current state and a message describing what happened (an <b>action</b>), and returns the new state. You send actions with <code>dispatch</code>.</p>
+<p><b>Context</b> is a way to make a value available to every component below a certain point, without passing it down as props by hand.</p>
+<p class="analogy">useReducer is a bank teller: you don't open the vault yourself, you fill in a slip ("deposit 50") and the teller applies the rules. Context is the office Wi-Fi: once the router is on, every room can use it — no cable to each desk.</p></div>
+<h4>useReducer — when state changes come in patterns</h4>
+<p>When several pieces of state always change together, three separate <code>useState</code> calls get repetitive. Worse, they let you create impossible combinations — like <code>loading</code> and <code>error</code> both being true at once.</p>
+<pre><code>function reducer(state, action) {
+  switch (action.type) {
+    case "loading": return { loading: true,  data: null,        error: null };
+    case "success": return { loading: false, data: action.data, error: null };
+    case "error":   return { loading: false, data: null,        error: action.error };
+    default: return state;
+  }
+}
+
+const [state, dispatch] = useReducer(reducer, { loading: false, data: null, error: null });
+
+dispatch({ type: "loading" });</code></pre>
+<p>Now every valid state is written down in one place. The component just says <i>what happened</i> ("loading started"); the reducer decides what the state becomes. It's also easy to test, because the reducer is a <b>plain function</b> — give it the same input and it always returns the same output, with no React involved.</p>
+<h4>useContext — sending data deep without passing it through everything</h4>
+<p>Passing a value down five levels means every component in between accepts a prop it doesn't care about, only to hand it on. That's called <b>prop drilling</b>. Context lets a component read a value directly, however deep it is.</p>
+<p>The <b>Provider</b> is the component that holds the value and makes it available. Any component inside it that calls <code>useContext</code> is a <b>consumer</b>.</p>
+<pre><code>const ThemeContext = createContext("light");
+
+function App() {
+  return (
+    &lt;ThemeContext.Provider value={theme}&gt;
+      &lt;Page /&gt;      {/* any depth below can read it */}
+    &lt;/ThemeContext.Provider&gt;
+  );
+}
+
+function DeepButton() {
+  const theme = useContext(ThemeContext);
+}</code></pre>
+<h4>What context is not</h4>
+<p>It's not a performance tool. <b>Every component reading a context re-renders whenever its value changes</b> — so a context holding fast-changing data re-renders half your app.</p>
+<pre><code>// ✗ a new object every render → every consumer re-renders every time
+&lt;Ctx.Provider value={{ user, setUser }}&gt;
+
+// ✓ stable identity
+const value = useMemo(() =&gt; ({ user, setUser }), [user]);
+&lt;Ctx.Provider value={value}&gt;</code></pre>
+<div class="note"><b>Good for context:</b> theme, language, the logged-in user — things that rarely change. <b>Bad for context:</b> form text, mouse position, anything updating many times a second. For that, use a state library (Zustand, Redux Toolkit) that lets components <b>subscribe</b> (listen) to only the <b>slice</b> (the small part of the data) they need.</div>
+</section>
+
+<section id="s17">
+<h3>17. Custom Hooks</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>custom hook</b> is your own function that bundles some hooks together so you can reuse them. The name must start with <code>use</code>.</p>
+<p class="analogy">A recipe card. Two cooks can follow the same recipe, but each ends up with their own cake — they don't share one cake.</p></div>
+<p>A custom hook is just a function whose name starts with <code>use</code> and which calls other hooks. There's no special machinery — the naming <b>convention</b> (agreed habit) is how React's linter knows to check the rules.</p>
+<p>The example below is a <b>debounce</b> hook. Debouncing means "wait until the value stops changing for a moment, then use it" — so a search box searches once when you pause typing, not on every key.</p>
+<pre><code>function useDebounced(value, delay = 300) {
+  const [debounced, setDebounced] = useState(value);
+
+  useEffect(() =&gt; {
+    const t = setTimeout(() =&gt; setDebounced(value), delay);
+    return () =&gt; clearTimeout(t);      // cancel if value changes again first
+  }, [value, delay]);
+
+  return debounced;
+}
+
+// use it: only search when typing pauses
+const query = useDebounced(input);
+useEffect(() =&gt; { if (query) search(query); }, [query]);</code></pre>
+<h4>They share logic, not state</h4>
+<p>Two components calling <code>useDebounced</code> each get their <b>own</b> independent state. The hook is a recipe, not a shared box. If you want shared data, that's context or a state library.</p>
+<pre><code>function useLocalStorage(key, initial) {
+  const [value, setValue] = useState(() =&gt; {
+    try { return JSON.parse(localStorage.getItem(key)) ?? initial; }
+    catch { return initial; }
+  });
+
+  useEffect(() =&gt; {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch {}
+  }, [key, value]);
+
+  return [value, setValue];
+}</code></pre>
+<p>This second hook works like <code>useState</code>, but also saves the value to <code>localStorage</code> (small storage inside the browser that survives a page reload).</p>
+<p>Good reasons to extract one: the same <code>useState</code> + <code>useEffect</code> pair appears in several components, or a component has so much setup logic that the actual <b>markup</b> (the JSX it returns) is hard to find.</p>
+</section>
+
+<section id="s18">
+<h3>18. The Rules of Hooks</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>React remembers your hooks by their <b>order</b> — first hook, second hook, third hook — not by their names. So the order must be exactly the same on every render.</p>
+<p class="analogy">A cloakroom with numbered hooks and no names. If one day you skip hook 1, everyone's coat is handed to the wrong person.</p></div>
+<p>Two rules, and one explanation that makes both obvious.</p>
+<ol>
+<li>Only call hooks at the <b>top level</b> — never inside an <code>if</code>, a loop, or a nested function.</li>
+<li>Only call them from a <b>component</b> or another <b>custom hook</b>.</li>
+</ol>
+<h4>Why rule 1 exists</h4>
+<p>React doesn't know your hooks by name. It stores their values in a list and matches them up <b>by the order they were called</b>. First <code>useState</code> → slot 1, second → slot 2, and so on.</p>
+<figure class="diagram">
+<svg viewBox="0 0 620 250" role="img" aria-label="React matches hooks by call order; skipping a hook inside a condition shifts every later hook onto the wrong stored slot.">
+  <text class="d-accent-text" x="150" y="20" text-anchor="middle">RENDER 1 — condition true</text>
+  <rect class="d-box" x="24" y="30" width="252" height="108" rx="7"/>
+  <text class="d-mono" x="40" y="54">useState("a")</text>
+  <text class="d-sub"  x="196" y="54">→ slot 1</text>
+  <text class="d-mono" x="40" y="80">useState("b")</text>
+  <text class="d-sub"  x="196" y="80">→ slot 2</text>
+  <text class="d-mono" x="40" y="106">useEffect(…)</text>
+  <text class="d-sub"  x="196" y="106">→ slot 3</text>
+  <text class="d-sub"  x="40" y="128">everything lines up ✓</text>
+
+  <text class="d-accent-text" x="465" y="20" text-anchor="middle">RENDER 2 — condition false</text>
+  <rect class="d-box" x="340" y="30" width="256" height="108" rx="7"/>
+  <text class="d-sub"  x="356" y="54">(useState "a" skipped)</text>
+  <text class="d-mono" x="356" y="80">useState("b")</text>
+  <text class="d-accent-text" x="512" y="80">→ slot 1 ✗</text>
+  <text class="d-mono" x="356" y="106">useEffect(…)</text>
+  <text class="d-accent-text" x="512" y="106">→ slot 2 ✗</text>
+  <text class="d-sub"  x="356" y="128">everything shifted up one</text>
+
+  <rect class="d-fill-accent" x="80" y="166" width="460" height="46" rx="7"/>
+  <rect class="d-box-accent"  x="80" y="166" width="460" height="46" rx="7"/>
+  <text class="d-accent-text" x="310" y="186" text-anchor="middle">"b" now reads the value stored for "a"</text>
+  <text class="d-sub" x="310" y="204" text-anchor="middle">and the effect gets the wrong dependency list</text>
+
+  <text class="d-sub" x="310" y="238" text-anchor="middle">The order must be identical on every single render — which is why conditions are banned.</text>
+</svg>
+<figcaption>Hooks are matched by position, not by name. Skip one and everything after it reads the wrong stored value.</figcaption>
+</figure>
+<pre><code>// ✗ breaks the order
+if (isLoggedIn) { const [name, setName] = useState(""); }
+
+// ✓ hook always runs; put the condition inside
+const [name, setName] = useState("");
+useEffect(() =&gt; { if (isLoggedIn) load(); }, [isLoggedIn]);</code></pre>
+<p>Same for <b>early returns</b> (leaving the function before reaching the end): don't <code>return null</code> before calling your hooks. If you do, some renders skip hooks and the order breaks. Call every hook first, then return.</p>
+</section>
+
+<!-- ================= REACT IN PRACTICE ================= -->
+<div class="part">Part 4 — React in Practice</div>
+
+<section id="s19">
+<h3>19. Data Fetching</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Data fetching</b> means asking a server for data (usually JSON over HTTP) and showing it. Every request has three possible states to show: <b>loading</b>, <b>error</b>, and <b>success</b>.</p>
+<p class="analogy">Ordering food by phone: while you wait, show "on its way" (loading); if the restaurant is closed, say so (error); when it arrives, serve it (success). If you change your order, cancel the first one.</p></div>
+<h4>The basic version, done properly</h4>
+<pre><code>function User({ id }) {
+  const [user, setUser]       = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError]     = useState(null);
+
+  useEffect(() =&gt; {
+    const controller = new AbortController();
+    setLoading(true); setError(null);
+
+    fetch(`/api/users/${id}`, { signal: controller.signal })
+      .then(r =&gt; { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+      .then(setUser)
+      .catch(e =&gt; { if (e.name !== "AbortError") setError(e); })
+      .finally(() =&gt; setLoading(false));
+
+    return () =&gt; controller.abort();
+  }, [id]);
+
+  if (loading) return &lt;Spinner /&gt;;
+  if (error)   return &lt;Error message={error.message} /&gt;;
+  return &lt;Profile user={user} /&gt;;
+}</code></pre>
+<p>Three things people forget:</p>
+<ol>
+<li><code>fetch</code> does <b>not</b> throw an error on a 404 ("not found") or 500 ("server error"). It only throws when the network itself fails. So you must check <code>r.ok</code> yourself.</li>
+<li>You need to cancel the request in the cleanup.</li>
+<li>You need to reset error and loading when the id changes.</li>
+</ol>
+<h4>Why people use a library instead</h4>
+<p>That code handles one request in one component. Real apps need more:</p>
+<ul>
+<li><b>Caching</b> — keeping a saved copy of data you already fetched, so you don't fetch it again.</li>
+<li>Refreshing stale (old) data quietly in the background.</li>
+<li>Retrying when a request fails.</li>
+<li><b>Deduping</b> — if two components ask for the same thing at once, sending only one request.</li>
+</ul>
+<p>Writing all that yourself is where bugs pile up.</p>
+<pre><code>// TanStack Query — the above, plus caching, dedupe, retries, background refresh
+const { data, isLoading, error } = useQuery({
+  queryKey: ["user", id],
+  queryFn: () =&gt; fetch(`/api/users/${id}`).then(r =&gt; r.json()),
+});</code></pre>
+<p><code>queryKey</code> is the name the cache stores this data under. Same key in two components = same cached data, one request.</p>
+<div class="note"><b>Server data is not like other state.</b> It's a <i>copy</i> of something that lives elsewhere and can change without telling you. That's why it needs its own tools — caching and <b>staleness</b> (how out-of-date your copy is) are the whole problem, and plain <code>useState</code> has no concept of either.</div>
+</section>
+
+<section id="s20">
+<h3>20. Performance</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Performance</b> work means making the app feel fast: fewer wasted re-renders, less JavaScript to download, fewer elements on the page.</p>
+<p>Rule one: <b>measure first</b>, then fix the slow part you actually found.</p>
+<p class="analogy">A doctor runs tests before prescribing. Guessing at a cure often adds side effects without fixing anything.</p></div>
+<h4>First, find the real problem</h4>
+<p>Install <b>React DevTools</b> (a browser extension) and use its <b>Profiler</b> tab to record an interaction, like typing in a box. It shows which components rendered and how long each took. Optimising without measuring usually makes code more complex and no faster.</p>
+<h4>React.memo</h4>
+<pre><code>const Row = React.memo(function Row({ item, onSelect }) { … });</code></pre>
+<p>This tells React: before re-rendering this component, check whether its props actually changed. If they're all the same, skip it.</p>
+<p>The check is <b>shallow</b> — it compares each prop with <code>===</code> and doesn't look inside objects. So it works for strings and numbers. It fails for objects and functions created fresh each render (they're new objects every time). That's why <code>memo</code> usually needs <code>useCallback</code>/<code>useMemo</code> alongside it to be worth anything.</p>
+<h4>Often better: move state down or pass children</h4>
+<pre><code>// ✗ typing in the input re-renders the expensive chart
+function Page() {
+  const [text, setText] = useState("");
+  return &lt;&gt;&lt;input value={text} onChange={…} /&gt;&lt;Chart /&gt;&lt;/&gt;;
+}
+
+// ✓ isolate the state in its own small component
+function SearchBox() { const [text, setText] = useState(""); return &lt;input … /&gt;; }
+function Page() { return &lt;&gt;&lt;SearchBox /&gt;&lt;Chart /&gt;&lt;/&gt;; }</code></pre>
+<pre><code>// ✓ or pass the expensive part in as children — it isn't re-created here
+function Page({ children }) {
+  const [n, setN] = useState(0);
+  return &lt;&gt;&lt;button onClick={() =&gt; setN(n+1)}&gt;{n}&lt;/button&gt;{children}&lt;/&gt;;
+}
+&lt;Page&gt;&lt;Chart /&gt;&lt;/Page&gt;</code></pre>
+<p><code>children</code> was created by the <i>parent</i> of <code>Page</code>, not by <code>Page</code> itself. So when <code>Page</code> re-renders, that element object is the same one as before. React sees no change and skips it. Restructuring like this beats memoising, because there's nothing to keep in sync.</p>
+<h4>Loading less code</h4>
+<p>The code below uses <b>lazy loading</b> (download a piece of code only when it's needed) and <b>code splitting</b> (cutting your app's JavaScript into several smaller files). <code>Suspense</code> shows the <code>fallback</code> (a stand-in, like a spinner) while that file downloads.</p>
+<pre><code>const Dashboard = lazy(() =&gt; import("./Dashboard"));
+
+&lt;Suspense fallback={&lt;Spinner /&gt;}&gt;
+  &lt;Dashboard /&gt;
+&lt;/Suspense&gt;</code></pre>
+<p>This splits <code>Dashboard</code> into a separate file the browser downloads only when it's needed. Split at page boundaries first, then at heavy components — charts, editors, maps.</p>
+<h4>Long lists</h4>
+<p>Rendering 10,000 rows creates 10,000 real elements and the page crawls. <b>Virtualisation</b> (react-window, TanStack Virtual) renders only the ~20 rows on screen and swaps them as you scroll. It's like a train window: the view changes as you move, but the window itself is always the same size.</p>
+</section>
+
+<section id="s21">
+<h3>21. Patterns Worth Knowing</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>pattern</b> is a common, proven way of arranging components to solve a problem that comes up again and again.</p>
+<p class="analogy">Like standard furniture layouts for a kitchen — you don't invent a new one each time; you pick the one that fits.</p></div>
+<h4>Container and presentational</h4>
+<p>One component (the <b>container</b>) fetches and holds data. Another (the <b>presentational</b> one) just takes props and renders them. The second is easy to test and reuse, because it knows nothing about where the data came from.</p>
+<h4>Compound components</h4>
+<pre><code>&lt;Tabs defaultValue="a"&gt;
+  &lt;Tabs.List&gt;
+    &lt;Tabs.Trigger value="a"&gt;First&lt;/Tabs.Trigger&gt;
+  &lt;/Tabs.List&gt;
+  &lt;Tabs.Panel value="a"&gt;…&lt;/Tabs.Panel&gt;
+&lt;/Tabs&gt;</code></pre>
+<p><b>Compound components</b> are a group of components designed to be used together, like <code>&lt;select&gt;</code> and <code>&lt;option&gt;</code> in HTML. The pieces share state through context, so the developer using them can arrange them freely without wiring anything up.</p>
+<h4>Error boundaries</h4>
+<pre><code>class ErrorBoundary extends React.Component {
+  state = { hasError: false };
+  static getDerivedStateFromError() { return { hasError: true }; }
+  componentDidCatch(error, info) { logToService(error, info); }
+  render() {
+    return this.state.hasError ? &lt;p&gt;Something went wrong.&lt;/p&gt; : this.props.children;
+  }
+}</code></pre>
+<p>An error thrown while rendering unmounts your whole app and leaves a blank page. An <b>error boundary</b> is a component that catches that error and shows a fallback message instead — like a circuit breaker that trips one room's lights instead of blacking out the whole house.</p>
+<p>This is still the one thing that <b>requires a class component</b> (the older way of writing components, using <code>class … extends React.Component</code>) — there's no hook version. Note it catches render errors, not errors inside event handlers or <b>async</b> code (code that finishes later, like a fetch). Use <code>try/catch</code> for those.</p>
+<h4>Portals</h4>
+<pre><code>createPortal(&lt;Modal /&gt;, document.body);</code></pre>
+<p>A <b>portal</b> renders the modal at the bottom of the page (<code>document.body</code>) instead of where it sits in your component tree. So a parent's <code>overflow: hidden</code> (which cuts off anything sticking out) or <b>stacking context</b> (the rules that decide what sits on top of what) can't clip or hide it. It still behaves like a child for props and events.</p>
+</section>
+
+<section id="s22">
+<h3>22. Common Mistakes</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Most React bugs come from a small set of repeat mistakes. Learn this table and you'll recognise them on sight — in your own code and in interview "what's wrong with this code?" questions.</p></div>
+<div class="table-wrap"><table>
+<tr><th>Mistake</th><th>What happens</th><th>Fix</th></tr>
+<tr><td>Changing state directly (<code>arr.push</code>)</td><td>Screen doesn't update</td><td>Create a new array/object</td></tr>
+<tr><td><code>key={index}</code> on a changing list</td><td>State sticks to the wrong row</td><td>Use a stable id</td></tr>
+<tr><td>Component defined inside another</td><td>State lost on every render</td><td>Move it to the top level</td></tr>
+<tr><td>Missing effect dependencies</td><td>Uses stale values</td><td>Add them; restructure if it loops</td></tr>
+<tr><td><code>setState</code> in render</td><td>Infinite loop</td><td>Move it to an event or effect</td></tr>
+<tr><td><code>onClick={fn()}</code></td><td>Runs immediately on render</td><td><code>onClick={fn}</code> or <code>{() =&gt; fn()}</code></td></tr>
+<tr><td><code>{count &amp;&amp; …}</code></td><td>Prints "0" on screen</td><td><code>{count &gt; 0 &amp;&amp; …}</code></td></tr>
+<tr><td>No cleanup in effects</td><td>Leaks, stale data overwrites</td><td>Return a cleanup function</td></tr>
+<tr><td>Storing derived data in state</td><td>Two copies drift apart</td><td>Calculate during render</td></tr>
+<tr><td>Reading state right after setting it</td><td>Gets the old value</td><td>Use the value you just computed</td></tr>
+</table></div>
+<h4>The infinite loop, explained</h4>
+<pre><code>// ✗ effect sets state → state change re-renders → effect runs again → forever
+useEffect(() =&gt; { setCount(count + 1); }, [count]);
+
+// ✗ also a loop: a new object every render is always "different"
+useEffect(() =&gt; { … }, [{ id }]);
+
+// ✓ depend on plain values
+useEffect(() =&gt; { … }, [id]);</code></pre>
+<p>In words: an <b>infinite loop</b> is code that never stops repeating. Here, the effect changes state, the state change causes a render, the render runs the effect again — round and round. Depend on simple values like numbers and strings, which compare equal when they're the same.</p>
+</section>
+
+<!-- ================= NEXT.JS ================= -->
+<div class="part">Part 5 — Next.js</div>
+
+<section id="s23">
+<h3>23. Why Next.js Exists</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Next.js</b> is a <b>framework</b> built on React — a bigger toolkit that decides how your project is organised and adds the missing pieces: server rendering, routing, and a backend.</p>
+<p><b>Server rendering</b> means the server builds the page's HTML before sending it, so the browser can show it straight away.</p>
+<p><b>Hydration</b> is React, in the browser, attaching click handlers and state to HTML the server already sent — making the finished-looking page actually work.</p>
+<p class="analogy">Plain React sends a flat-pack wardrobe and makes the visitor build it. Next.js sends it already built; then hydration is just screwing the handles on.</p></div>
+<p>Plain React ships an almost-empty HTML file plus a JavaScript <b>bundle</b> (all your app's code packed into one or a few files). The browser downloads the JS, runs it, and only then does anything appear.</p>
+<figure class="diagram">
+<svg viewBox="0 0 640 260" role="img" aria-label="Plain React sends an empty page and the browser must download and run JavaScript before anything appears, while Next.js sends finished HTML that displays immediately and then activates it.">
+  <text class="d-sub" x="150" y="18" text-anchor="middle">PLAIN REACT (client only)</text>
+  <rect class="d-box" x="24" y="28" width="256" height="128" rx="7"/>
+  <text class="d-mono" x="40" y="50">&lt;div id="root"&gt;&lt;/div&gt;</text>
+  <text class="d-sub"  x="40" y="70">↓ download 300KB of JS</text>
+  <text class="d-sub"  x="40" y="90">↓ run it</text>
+  <text class="d-sub"  x="40" y="110">↓ fetch the data</text>
+  <text class="d-sub"  x="40" y="130">↓ finally render</text>
+  <text class="d-accent-text" x="40" y="150">user stares at white screen</text>
+
+  <text class="d-accent-text" x="470" y="18" text-anchor="middle">NEXT.JS (rendered on the server)</text>
+  <rect class="d-box-accent" x="340" y="28" width="276" height="128" rx="7"/>
+  <text class="d-mono" x="356" y="50">&lt;h1&gt;Products&lt;/h1&gt;…</text>
+  <text class="d-accent-text" x="356" y="70">visible immediately ✓</text>
+  <text class="d-sub"  x="356" y="92">↓ JS arrives in the background</text>
+  <text class="d-sub"  x="356" y="112">↓ "hydration" — React attaches</text>
+  <text class="d-sub"  x="356" y="130">   event handlers to that HTML</text>
+  <text class="d-sub"  x="356" y="150">now it's interactive too</text>
+
+  <text class="d-sub" x="320" y="192" text-anchor="middle">Search engines and link previews read HTML. An empty div tells them nothing —</text>
+  <text class="d-sub" x="320" y="212" text-anchor="middle">which is why plain React is a poor fit for public, searchable pages.</text>
+  <text class="d-sub" x="320" y="240" text-anchor="middle">Hydration = taking server-made HTML and wiring up the interactivity, without rebuilding it.</text>
+</svg>
+<figcaption>Next.js sends a finished page first, then makes it interactive. The user sees content while the JavaScript is still loading.</figcaption>
+</figure>
+<h4>What Next.js adds</h4>
+<ul>
+<li><b>Server rendering</b> — HTML built before it reaches the browser.</li>
+<li><b>Routing from your folder structure</b> — <b>routing</b> means "which page shows for which URL". Next.js works it out from your folders, so there's no route config file to maintain.</li>
+<li><b>A backend in the same project</b> — API endpoints (URLs that return data instead of pages) and server code beside your components.</li>
+<li><b>Automatic optimisation</b> — code splitting per page, image resizing, font handling.</li>
+<li><b>Caching</b> (saving results to reuse them) at several levels, built in.</li>
+</ul>
+<div class="note"><b>When you don't need it:</b> an internal dashboard behind a login has no <b>SEO</b> requirement (Search Engine Optimisation — being found on Google) and no first-visit-speed pressure. Plain React with Vite (a fast build tool) is simpler and perfectly good. Next.js earns its keep on public, content-heavy, or SEO-sensitive sites.</div>
+</section>
+
+<section id="s24">
+<h3>24. Rendering Strategies — the core idea</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>rendering strategy</b> is simply your answer to "when is this page's HTML made?" — once at deploy, now and then, on every visit, or in the browser.</p>
+<p>The short names: <b>SSG</b> = Static Site Generation, <b>ISR</b> = Incremental Static Regeneration, <b>SSR</b> = Server-Side Rendering, <b>CSR</b> = Client-Side Rendering. A <b>CDN</b> (Content Delivery Network) is a set of servers around the world that keep copies of your files close to users.</p>
+<p class="analogy">A bakery. SSG: bake all the bread before opening. ISR: bake ahead, but bake a fresh batch every hour. SSR: bake each loaf when the customer orders it. CSR: hand the customer flour and a recipe and let them bake at home.</p></div>
+<p>The real question Next.js asks is: <b>when should this page's HTML be built?</b> There are three answers, and one variation.</p>
+<figure class="diagram">
+<svg viewBox="0 0 640 290" role="img" aria-label="Four rendering strategies compared on when HTML is built: static at build time, incremental with periodic rebuilds, server side on each request, and client side in the browser.">
+  <rect class="d-box-accent" x="24" y="26" width="290" height="110" rx="7"/>
+  <text class="d-accent-text" x="42" y="48">STATIC (SSG)</text>
+  <text class="d-sub" x="42" y="70">Built once, when you deploy.</text>
+  <text class="d-sub" x="42" y="90">Same HTML for everyone, served</text>
+  <text class="d-sub" x="42" y="108">instantly from a CDN.</text>
+  <text class="d-sub" x="42" y="128">Blog posts · docs · marketing</text>
+
+  <rect class="d-box" x="334" y="26" width="282" height="110" rx="7"/>
+  <text class="d-label" x="352" y="48">INCREMENTAL (ISR)</text>
+  <text class="d-sub" x="352" y="70">Static, but rebuilt in the</text>
+  <text class="d-sub" x="352" y="90">background every N seconds.</text>
+  <text class="d-sub" x="352" y="108">Fast, with fresh-enough data.</text>
+  <text class="d-sub" x="352" y="128">Product lists · news</text>
+
+  <rect class="d-box" x="24" y="152" width="290" height="110" rx="7"/>
+  <text class="d-label" x="42" y="174">SERVER (SSR)</text>
+  <text class="d-sub" x="42" y="196">Built fresh on every request.</text>
+  <text class="d-sub" x="42" y="216">Always current, can be personal.</text>
+  <text class="d-sub" x="42" y="234">Slower — the user waits for it.</text>
+  <text class="d-sub" x="42" y="254">Dashboards · search results</text>
+
+  <rect class="d-box" x="334" y="152" width="282" height="110" rx="7"/>
+  <text class="d-label" x="352" y="174">CLIENT (CSR)</text>
+  <text class="d-sub" x="352" y="196">Built in the browser after load.</text>
+  <text class="d-sub" x="352" y="216">No SEO, slower first paint,</text>
+  <text class="d-sub" x="352" y="234">but fully interactive.</text>
+  <text class="d-sub" x="352" y="254">Charts · editors · maps</text>
+</svg>
+<figcaption>Static is fastest but can go stale. Server is always fresh but makes the user wait. ISR is the practical middle ground for most content sites.</figcaption>
+</figure>
+<h4>How you choose in code</h4>
+<pre><code>// STATIC — the default in the App Router when nothing is dynamic
+async function Page() {
+  const posts = await fetch("https://api.site.com/posts").then(r =&gt; r.json());
+  return &lt;List posts={posts} /&gt;;
+}
+
+// ISR — rebuild at most once a minute
+fetch(url, { next: { revalidate: 60 } });
+
+// SSR — never cache, build fresh every time
+fetch(url, { cache: "no-store" });
+
+// CSR — a component marked "use client" that fetches in useEffect</code></pre>
+<h4>Mixing them</h4>
+<p>You don't pick one per site. You pick per page, and even per part of a page. A product page can be static, while the "3 people are viewing this" badge inside it is client-rendered. That's the main advantage over the old all-or-nothing approach.</p>
+<p>In the code above, <code>revalidate: 60</code> means "this saved copy is good for 60 seconds; after that, rebuild it in the background". <code>cache: "no-store"</code> means "never save a copy".</p>
+</section>
+
+<section id="s25">
+<h3>25. The App Router &amp; File Structure</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>The <b>App Router</b> is Next.js's current routing system. It lives in the <code>app/</code> folder. (The older one, in <code>pages/</code>, is called the Pages Router.)</p>
+<p>Each folder is a piece of the URL. Special file names inside a folder — <code>page</code>, <code>layout</code>, <code>loading</code>, <code>error</code> — each have one job.</p>
+<p class="analogy">A building: folders are floors and rooms, the URL is the room's address, <code>layout</code> is the corridor you walk through to reach every room on that floor, and <code>page</code> is the room itself.</p></div>
+<p>In Next.js, <b>folders are your URLs</b> and specific filenames have special jobs.</p>
+<pre><code>app/
+  layout.tsx          → wraps everything (required at the root)
+  page.tsx            → the page at  /
+  loading.tsx         → shown automatically while the page loads
+  error.tsx           → shown if the page throws
+  not-found.tsx       → shown for 404s
+
+  about/
+    page.tsx          → /about
+
+  blog/
+    page.tsx          → /blog
+    [slug]/
+      page.tsx        → /blog/anything   (a dynamic segment)
+
+  (marketing)/        → grouping only — NOT part of the URL
+    pricing/page.tsx  → /pricing
+
+  api/
+    users/route.ts    → an API endpoint at /api/users</code></pre>
+<div class="table-wrap"><table>
+<tr><th>Filename</th><th>What it does</th></tr>
+<tr><td><code>page.tsx</code></td><td>Makes the folder a real, visitable URL</td></tr>
+<tr><td><code>layout.tsx</code></td><td>Shared shell (nav, footer). <b>Keeps its state when you navigate between child pages</b></td></tr>
+<tr><td><code>loading.tsx</code></td><td>Instant loading UI while the page's data is fetched</td></tr>
+<tr><td><code>error.tsx</code></td><td>Catches errors in that part of the tree; must be a client component</td></tr>
+<tr><td><code>template.tsx</code></td><td>Like a layout, but rebuilt on every navigation (state resets)</td></tr>
+<tr><td><code>route.ts</code></td><td>An API endpoint instead of a page</td></tr>
+</table></div>
+<h4>Layouts nest</h4>
+<pre><code>app/layout.tsx            → wraps every page
+app/shop/layout.tsx       → also wraps everything under /shop</code></pre>
+<p>Visiting <code>/shop/items</code> renders root layout → shop layout → the page, nested inside each other like boxes inside boxes. Because the layout isn't rebuilt when you move between pages inside it, a sidebar's scroll position and open menus survive <b>navigation</b> (moving from page to page).</p>
+<h4>Dynamic segments</h4>
+<p>A <b>dynamic segment</b> is a folder name in square brackets, like <code>[slug]</code>. It matches any value in that part of the URL, and gives you that value in <code>params</code>. (A <b>slug</b> is the readable part of a URL, like <code>my-first-post</code>.)</p>
+<pre><code>// app/blog/[slug]/page.tsx
+export default async function Post({ params }) {
+  const { slug } = await params;        // params is a promise in Next 15+
+  const post = await getPost(slug);
+  return &lt;article&gt;{post.title}&lt;/article&gt;;
+}</code></pre>
+<h4>Navigation</h4>
+<pre><code>import Link from "next/link";
+&lt;Link href="/about"&gt;About&lt;/Link&gt;      {/* prefetches automatically */}
+
+"use client";
+const router = useRouter();
+router.push("/dashboard");</code></pre>
+<p>Use <code>&lt;Link&gt;</code> rather than <code>&lt;a&gt;</code>. It navigates without a full page reload. It also <b>prefetches</b> — quietly downloads the target page in advance when the link scrolls into view — so the click feels instant. <code>router.push</code> does the same navigation from code, e.g. after a form is saved.</p>
+</section>
+
+<section id="s26">
+<h3>26. Server Components — the big idea</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>Server Component</b> is a React component that runs only on the server. It can read a database directly. Its code is never sent to the browser — only its result is.</p>
+<p>A <b>Client Component</b> (a file starting with <code>"use client"</code>) is one whose code <i>is</i> sent to the browser, so it can use state, effects and click handlers.</p>
+<p class="analogy">A restaurant: the kitchen (server components) cooks and sends out finished plates — you never see the kitchen's knives or recipes. The salt shaker on your table (a client component) is the bit you can actually pick up and use yourself.</p></div>
+<p>This is the biggest change in modern React, and the one most worth understanding properly. <b>By default in the App Router, your components run on the server and never reach the browser at all.</b></p>
+<figure class="diagram">
+<svg viewBox="0 0 640 300" role="img" aria-label="Server components run on the server and send only HTML, while client components marked use client are also sent to the browser as JavaScript to become interactive.">
+  <text class="d-accent-text" x="160" y="18" text-anchor="middle">SERVER COMPONENT (default)</text>
+  <rect class="d-box-accent" x="24" y="28" width="272" height="152" rx="7"/>
+  <text class="d-sub" x="42" y="52">Runs: on the server only</text>
+  <text class="d-sub" x="42" y="76">Sent to browser: HTML only</text>
+  <text class="d-sub" x="42" y="100">JS cost to the user: zero</text>
+  <text class="d-accent-text" x="42" y="128">CAN:</text>
+  <text class="d-sub" x="42" y="148">read the database directly,</text>
+  <text class="d-sub" x="42" y="166">use secrets, use async/await</text>
+
+  <text class="d-label" x="470" y="18" text-anchor="middle">CLIENT COMPONENT ("use client")</text>
+  <rect class="d-box" x="344" y="28" width="272" height="152" rx="7"/>
+  <text class="d-sub" x="362" y="52">Runs: server first, then browser</text>
+  <text class="d-sub" x="362" y="76">Sent to browser: HTML + its JS</text>
+  <text class="d-sub" x="362" y="100">JS cost to the user: yes</text>
+  <text class="d-label" x="362" y="128">NEEDED FOR:</text>
+  <text class="d-sub" x="362" y="148">useState, useEffect, onClick,</text>
+  <text class="d-sub" x="362" y="166">browser APIs, any interactivity</text>
+
+  <rect class="d-box" x="120" y="204" width="400" height="76" rx="7"/>
+  <text class="d-label" x="140" y="226">The rule that follows from this:</text>
+  <text class="d-sub" x="140" y="248">Keep pages as server components. Push "use client" DOWN to the</text>
+  <text class="d-sub" x="140" y="268">small interactive leaves — a button, a form — not the whole page.</text>
+</svg>
+<figcaption>A server component's code never ships to the browser. That's why moving data-heavy work to the server makes the bundle smaller.</figcaption>
+</figure>
+<h4>What server components let you do</h4>
+<pre><code>// app/users/page.tsx — no "use client", so this runs on the server
+import { db } from "@/lib/db";
+
+export default async function Users() {
+  const users = await db.user.findMany();   // straight to the database!
+  return &lt;ul&gt;{users.map(u =&gt; &lt;li key={u.id}&gt;{u.name}&lt;/li&gt;)}&lt;/ul&gt;;
+}</code></pre>
+<p>No API route, no <code>useEffect</code>, no loading state, no fetch. The component <i>is</i> the backend for this page. Your database password stays on the server, because none of this code is sent to the browser.</p>
+<p>Strictly, what the server sends is HTML for the first load plus a compact description of the rendered result called the <b>RSC payload</b> (RSC = React Server Components). The browser uses it to fill in the page — no component code included.</p>
+<h4>When you need "use client"</h4>
+<pre><code>"use client";                       // must be the first line of the file
+
+import { useState } from "react";
+
+export default function Counter() {
+  const [n, setN] = useState(0);
+  return &lt;button onClick={() =&gt; setN(n + 1)}&gt;{n}&lt;/button&gt;;
+}</code></pre>
+<p>Add it when you need state, effects, event handlers, or anything that only exists in the browser (<code>window</code>, <code>localStorage</code>). If you forget, you get an error telling you exactly this.</p>
+<p>Note: client components still render once on the server to produce the first HTML. Then they hydrate in the browser. "Client" means "also runs in the browser", not "only runs in the browser".</p>
+<h4>How they combine</h4>
+<pre><code>// Server component — fetches data, ships no JS
+export default async function Page() {
+  const product = await getProduct();
+
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;{product.name}&lt;/h1&gt;       {/* static — server rendered */}
+      &lt;AddToCart id={product.id} /&gt;  {/* the only interactive bit — client */}
+    &lt;/div&gt;
+  );
+}</code></pre>
+<p>Only <code>AddToCart</code>'s JavaScript is sent to the browser. The heading, description and images cost nothing.</p>
+<div class="note"><b>Important rule:</b> once a component is a client component, <b>everything it imports becomes client too</b>. <code>"use client"</code> marks a <b>boundary</b> — a line where server code ends and browser code begins. That's why you push it as far down the tree as possible. But a client component <i>can</i> receive a server component through <code>children</code> — that stays on the server.</div>
+<h4>What server components can't do</h4>
+<ul>
+<li>No <code>useState</code>, <code>useEffect</code>, or any hook that involves interactivity.</li>
+<li>No event handlers (<code>onClick</code>, <code>onChange</code>).</li>
+<li>No browser objects — there is no <code>window</code> on a server.</li>
+</ul>
+</section>
+
+<section id="s27">
+<h3>27. Next.js Request Lifecycle</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>The <b>request lifecycle</b> is everything that happens between a user typing a URL and a page that works — plus what happens on the next click and the next form submit.</p>
+<p>In short: the server checks the request, finds the right files, runs your Server Components to build the page, and streams it to the browser. The browser shows the HTML at once, downloads JavaScript, and <b>hydrates</b> (attaches click handlers and state to) the Client Components. After that, clicking a link only fetches the changed part of the page.</p>
+<p class="analogy">A restaurant visit. The host at the door checks your booking (middleware). A waiter finds your table (route matching). The kitchen cooks, using anything already prepped (Server Components + cache). Dishes arrive as each one is ready — starters first (streaming). You can see the food straight away (HTML), but you can't eat until the cutlery arrives (hydration). When you order dessert, they bring only the dessert — they don't reset the whole table (client-side navigation). Asking the waiter to change your order is a Server Action: one trip to the kitchen and back with the updated plate.</p></div>
+<p>This section ties together pieces from the previous sections — rendering (<a href="#s24">section 24</a>), the App Router (<a href="#s25">25</a>), Server Components (<a href="#s26">26</a>) — and the next ones: caching (<a href="#s28">28</a>), Server Actions (<a href="#s29">29</a>) and middleware (<a href="#s30">30</a>). "Walk me through what happens when a user opens a page" is a very common senior-level interview question.</p>
+
+<figure class="diagram">
+<svg viewBox="0 0 640 520" role="img" aria-label="Sequence of a Next.js request: the browser sends a request, middleware runs, the route is matched, Server Components render with data and cache, HTML and the RSC payload stream back, the browser shows HTML, loads JavaScript and hydrates Client Components; later, Link clicks fetch only the RSC payload and Server Actions make one round trip that returns the result plus refreshed UI.">
+  <text class="d-accent-text" x="162" y="18" text-anchor="middle">BROWSER</text>
+  <text class="d-label" x="478" y="18" text-anchor="middle">SERVER</text>
+
+  <!-- row 1 -->
+  <rect class="d-box-accent" x="24" y="30" width="276" height="40" rx="7"/>
+  <text class="d-label" x="40" y="47">① Request</text>
+  <text class="d-sub" x="40" y="62">user opens /shop/shoes</text>
+  <path class="d-line-accent" d="M300 50 H331"/><path class="d-arrow-accent" d="M340 50 l-9 -4.5 v9 z"/>
+  <rect class="d-box" x="340" y="30" width="276" height="40" rx="7"/>
+  <text class="d-label" x="356" y="47">② Middleware</text>
+  <text class="d-sub" x="356" y="62">check cookie · redirect or continue</text>
+
+  <!-- browser waits -->
+  <path class="d-dash" d="M162 70 V198"/>
+  <text class="d-sub" x="172" y="130">waiting — nothing</text>
+  <text class="d-sub" x="172" y="146">on screen yet</text>
+
+  <!-- row 2 -->
+  <path class="d-line" d="M478 70 V77"/><path class="d-arrow" d="M478 86 l-4.5 -9 h9 z"/>
+  <rect class="d-box" x="340" y="86" width="276" height="40" rx="7"/>
+  <text class="d-label" x="356" y="103">③ Route matching</text>
+  <text class="d-sub" x="356" y="118">app/shop/[slug]/page.tsx + its layouts</text>
+
+  <!-- row 3 -->
+  <path class="d-line" d="M478 126 V133"/><path class="d-arrow" d="M478 142 l-4.5 -9 h9 z"/>
+  <rect class="d-box" x="340" y="142" width="276" height="40" rx="7"/>
+  <text class="d-label" x="356" y="159">④ Render Server Components</text>
+  <text class="d-sub" x="356" y="174">await db / fetch · use the cache if fresh</text>
+
+  <!-- row 4 -->
+  <path class="d-line" d="M478 182 V189"/><path class="d-arrow" d="M478 198 l-4.5 -9 h9 z"/>
+  <rect class="d-fill-accent" x="340" y="198" width="276" height="40" rx="7"/>
+  <rect class="d-box-accent" x="340" y="198" width="276" height="40" rx="7"/>
+  <text class="d-accent-text" x="356" y="215">⑤ Stream the response</text>
+  <text class="d-sub" x="356" y="230">HTML + RSC payload · slow parts later</text>
+  <path class="d-line-accent" d="M340 218 H309"/><path class="d-arrow-accent" d="M300 218 l9 -4.5 v9 z"/>
+  <rect class="d-box-accent" x="24" y="198" width="276" height="40" rx="7"/>
+  <text class="d-accent-text" x="40" y="215">⑥ Show the HTML</text>
+  <text class="d-sub" x="40" y="230">visible — but buttons don't work yet</text>
+
+  <!-- row 5 -->
+  <path class="d-line" d="M162 238 V245"/><path class="d-arrow" d="M162 254 l-4.5 -9 h9 z"/>
+  <rect class="d-box" x="24" y="254" width="276" height="40" rx="7"/>
+  <text class="d-label" x="40" y="271">⑦ Load JavaScript</text>
+  <text class="d-sub" x="40" y="286">React + your Client Components' code</text>
+  <text class="d-sub" x="478" y="278" text-anchor="middle">(Suspense parts keep streaming in)</text>
+
+  <!-- row 6 -->
+  <path class="d-line" d="M162 294 V301"/><path class="d-arrow" d="M162 310 l-4.5 -9 h9 z"/>
+  <rect class="d-fill-accent" x="24" y="310" width="276" height="40" rx="7"/>
+  <rect class="d-box-accent" x="24" y="310" width="276" height="40" rx="7"/>
+  <text class="d-accent-text" x="40" y="327">⑧ Hydration</text>
+  <text class="d-sub" x="40" y="342">attach handlers to Client Components only</text>
+
+  <!-- row 7 -->
+  <path class="d-line" d="M162 350 V357"/><path class="d-arrow" d="M162 366 l-4.5 -9 h9 z"/>
+  <rect class="d-box" x="24" y="366" width="276" height="40" rx="7"/>
+  <text class="d-label" x="40" y="383">⑨ Click a &lt;Link&gt;</text>
+  <text class="d-sub" x="40" y="398">no reload · shared layouts are kept</text>
+  <path class="d-line" d="M300 379 H331"/><path class="d-arrow" d="M340 379 l-9 -4.5 v9 z"/>
+  <path class="d-dash" d="M340 395 H309"/><path class="d-arrow" d="M300 395 l9 -4.5 v9 z"/>
+  <rect class="d-box" x="340" y="366" width="276" height="40" rx="7"/>
+  <text class="d-label" x="356" y="383">Render only the new segment</text>
+  <text class="d-sub" x="356" y="398">send RSC payload (often prefetched)</text>
+
+  <!-- row 8 -->
+  <path class="d-line" d="M162 406 V413"/><path class="d-arrow" d="M162 422 l-4.5 -9 h9 z"/>
+  <rect class="d-box" x="24" y="422" width="276" height="40" rx="7"/>
+  <text class="d-label" x="40" y="439">⑩ Submit a form (Server Action)</text>
+  <text class="d-sub" x="40" y="454">POST: action id + form data</text>
+  <path class="d-line" d="M300 435 H331"/><path class="d-arrow" d="M340 435 l-9 -4.5 v9 z"/>
+  <path class="d-dash" d="M340 451 H309"/><path class="d-arrow" d="M300 451 l9 -4.5 v9 z"/>
+  <rect class="d-box" x="340" y="422" width="276" height="40" rx="7"/>
+  <text class="d-label" x="356" y="439">Run the action</text>
+  <text class="d-sub" x="356" y="454">validate · save · revalidate → fresh UI</text>
+
+  <text class="d-sub" x="320" y="490" text-anchor="middle">First visit: HTML first, then hydrate. Later clicks: only the RSC payload travels.</text>
+  <text class="d-sub" x="320" y="508" text-anchor="middle">Middleware runs for every matching request — page loads, link clicks and actions.</text>
+</svg>
+<figcaption>Solid arrows are requests; dashed arrows are what comes back. The server does the heavy lifting once; the browser only wakes up the interactive parts.</figcaption>
+</figure>
+
+<h4>Step by step</h4>
+<ol>
+<li><b>The browser sends a request</b> — for example <code>GET /shop/shoes</code>. Nothing is on screen yet.</li>
+<li><b>Middleware runs first</b> (if <code>middleware.ts</code> exists and its <code>matcher</code> matches). It can redirect (not logged in → <code>/login</code>), <b>rewrite</b> (quietly serve a different page without changing the URL), or set headers and cookies. It runs even when the page itself is cached, which is why it must be fast.</li>
+<li><b>Route matching.</b> The App Router turns the URL into folders: <code>/shop/shoes</code> → <code>app/shop/[slug]/page.tsx</code> with <code>slug = "shoes"</code>. It collects every <code>layout.tsx</code> on the way down (root → shop), plus the nearest <code>loading.tsx</code>, <code>error.tsx</code> and <code>not-found.tsx</code>.</li>
+<li><b>Server Components render on the server.</b> Layouts and the page run as <code>async</code> functions. They <code>await</code> the database or <code>fetch</code>. Caching can skip work here:
+  <ul>
+  <li><b>Full Route Cache</b> — a static page was already built at deploy time (or by ISR), so the finished result is sent straight away.</li>
+  <li><b>Data Cache</b> — a saved <code>fetch</code> result is reused until it's revalidated.</li>
+  <li><b>Request memoization</b> — the same <code>fetch</code> called in several components during one request only really happens once.</li>
+  </ul>
+  Client Components in the tree are rendered to HTML too (that's SSR), but their code is also marked "send this to the browser".</li>
+<li><b>The response is streamed.</b> The server sends two things together:
+  <ul>
+  <li><b>HTML</b> — so the browser can show something immediately.</li>
+  <li>The <b>RSC payload</b> — a compact description of the Server Component result. It says what to show, where each Client Component goes, which props it gets, and which JS file holds its code.</li>
+  </ul>
+  It doesn't wait for everything. The layout shell and the <code>loading.tsx</code> fallback go first; each <code>&lt;Suspense&gt;</code> section is sent later, when its data is ready.</li>
+<li><b>The browser shows the HTML.</b> The user can already read the page. But clicking a button does nothing yet — no JavaScript has run.</li>
+<li><b>JavaScript loads</b> — React, the Next.js <b>runtime</b> (its browser-side code, including the router), and only the code for your Client Components. Server Components add zero JavaScript.</li>
+<li><b>Hydration.</b> React walks the page and attaches event handlers and state to each Client Component, matching the HTML that's already there instead of rebuilding it. Server Component HTML is never hydrated — there's nothing to attach. With Suspense, sections hydrate independently (<b>selective hydration</b>), and a section the user clicks on gets hydrated first.</li>
+<li><b>Client-side navigation with <code>&lt;Link&gt;</code>.</b> When a link scrolls into view, Next.js <b>prefetches</b> the next route in the background (production builds only). On click there is no full page reload: the browser asks the server only for the <b>RSC payload</b> of the parts that changed. Shared layouts are not re-rendered and keep their state (open menus, scroll position, typed text). Visited and prefetched payloads are kept in the browser's <b>Router Cache</b>, so Back/Forward is instant.</li>
+<li><b>Server Action round trip.</b> Submitting a <code>&lt;form action={createPost}&gt;</code> sends a <code>POST</code> to the current URL with a hidden action id and the form data. The server runs the function (check the user, validate, write to the database), then <code>revalidatePath</code>/<code>revalidateTag</code> clears stale cache. In the <b>same response</b> it sends back the action's return value <i>and</i> the freshly rendered RSC payload, so the page updates without a reload and without a second request.</li>
+</ol>
+
+<h4>Summary table</h4>
+<div class="table-wrap"><table>
+<tr><th>#</th><th>Step</th><th>Runs where</th><th>What happens</th><th>Files / APIs involved</th></tr>
+<tr><td>1</td><td>Request</td><td>Browser → server</td><td>User opens a URL</td><td>—</td></tr>
+<tr><td>2</td><td>Middleware</td><td>Server (before routing)</td><td>Redirect, rewrite, set cookies/headers</td><td><code>middleware.ts</code>, <code>matcher</code></td></tr>
+<tr><td>3</td><td>Route matching</td><td>Server</td><td>URL → folder; gather layouts and special files</td><td><code>app/</code>, <code>page</code>, <code>layout</code>, <code>loading</code>, <code>error</code>, <code>[slug]</code></td></tr>
+<tr><td>4</td><td>Render Server Components</td><td>Server</td><td>Await data; reuse cache where allowed</td><td><code>async</code> components, <code>fetch</code> options, <code>revalidate</code></td></tr>
+<tr><td>5</td><td>Stream response</td><td>Server → browser</td><td>HTML + RSC payload, slow parts later</td><td><code>&lt;Suspense&gt;</code>, <code>loading.tsx</code></td></tr>
+<tr><td>6</td><td>Show HTML</td><td>Browser</td><td>Page visible, not yet interactive</td><td>—</td></tr>
+<tr><td>7</td><td>Load JS</td><td>Browser</td><td>Download React + Client Component code</td><td><code>"use client"</code> files</td></tr>
+<tr><td>8</td><td>Hydration</td><td>Browser</td><td>Attach handlers/state to Client Components</td><td>Client Components only</td></tr>
+<tr><td>9</td><td>Client navigation</td><td>Browser ⇄ server</td><td>Fetch only the RSC payload; keep layouts</td><td><code>&lt;Link&gt;</code>, <code>router.push</code>, prefetch, Router Cache</td></tr>
+<tr><td>10</td><td>Server Action</td><td>Browser ⇄ server</td><td>Run server code, revalidate, return result + fresh UI</td><td><code>"use server"</code>, <code>&lt;form action&gt;</code>, <code>revalidatePath</code></td></tr>
+</table></div>
+
+<h4>The files, labelled with their step</h4>
+<pre><code>// middleware.ts                   ② runs before anything else
+// app/layout.tsx                  ③④ root layout — Server Component
+// app/shop/layout.tsx             ③④ shop layout — kept on client navigation ⑨
+// app/shop/loading.tsx            ⑤ sent instantly as the fallback
+// app/shop/[slug]/page.tsx        ③④ the page itself
+
+import { Suspense } from "react";
+import AddToCart from "./AddToCart";         // "use client" → JS sent ⑦, hydrated ⑧
+import { addToCart } from "./actions";       // "use server" → Server Action ⑩
+
+export default async function Page({ params }) {
+  const { slug } = await params;
+  const product = await getProduct(slug);    // ④ runs on the server, may be cached
+
+  console.log("rendering", slug);            // prints in the SERVER terminal, not the browser
+
+  return (
+    &lt;&gt;
+      &lt;h1&gt;{product.name}&lt;/h1&gt;                 {/* plain HTML — never hydrated */}
+      &lt;AddToCart id={product.id} action={addToCart} /&gt;
+      &lt;Suspense fallback={&lt;p&gt;Loading reviews…&lt;/p&gt;}&gt;
+        &lt;Reviews slug={slug} /&gt;              {/* ⑤ streams in when its data is ready */}
+      &lt;/Suspense&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+<p>A quick way to feel the lifecycle: put a <code>console.log</code> in a Server Component and one in a Client Component. The server one only ever prints in your terminal. The client one prints in the terminal (during the first server render) <i>and</i> in the browser console (during hydration and every re-render after).</p>
+
+<div class="note"><b>Common interview traps:</b> (1) "Server Components are hydrated" — no, only Client Components are; Server Components send no JavaScript at all. (2) "Clicking a Link reloads the page" — no, it fetches only the RSC payload for the changed segment, and layouts keep their state. (3) A <b>hydration mismatch</b> error means the HTML from step 5 didn't match what React produced in step 8 — usually from <code>Date.now()</code>, <code>Math.random()</code>, or reading <code>window</code> during render. (4) Middleware is not just for the first page load — it also runs for Link navigations and Server Actions that match.</div>
+</section>
+
+<section id="s28">
+<h3>28. Data Fetching &amp; Caching</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>In Next.js you fetch data inside server components with plain <code>await</code>. Next.js can <b>cache</b> the result (keep a saved copy) so later visitors get it instantly.</p>
+<p><b>Revalidating</b> means throwing away a saved copy so the next request fetches fresh data.</p>
+<p class="analogy">A cache is a printed timetable on the wall. Fast to read, but someone has to reprint it when the times change — that reprint is revalidation.</p></div>
+<h4>Fetching in a server component</h4>
+<pre><code>export default async function Page() {
+  const res = await fetch("https://api.site.com/posts");
+  const posts = await res.json();
+  return &lt;List posts={posts} /&gt;;
+}</code></pre>
+<p>The component is an <code>async</code> function and simply <b>awaits</b> (pauses until the data arrives). No loading state needed here — Next.js shows your <code>loading.tsx</code> automatically while this runs.</p>
+<p>A <b>tag</b> (below) is a label you attach to cached data, so you can later say "clear everything labelled <code>posts</code>" after someone writes a new post.</p>
+<h4>Controlling the cache</h4>
+<pre><code>fetch(url)                                  // may be cached — the default varies by version
+fetch(url, { cache: "no-store" })            // never cache; fresh on every request
+fetch(url, { next: { revalidate: 60 } })     // cache, refresh at most once a minute
+fetch(url, { next: { tags: ["posts"] } })    // label it, so you can clear it on demand</code></pre>
+<pre><code>// Clear a tagged cache after changing data
+import { revalidateTag, revalidatePath } from "next/cache";
+revalidateTag("posts");
+revalidatePath("/blog");</code></pre>
+<div class="note"><b>Caching defaults changed between Next 13, 14 and 15</b> and caused a lot of confusion. Don't rely on memory — be explicit about <code>cache</code> or <code>revalidate</code> on every fetch that matters, and check the docs for your version.</div>
+<h4>Fetch several things at once</h4>
+<p>If one request doesn't need the other's result, start both together with <code>Promise.all</code>. Waiting for each in turn is called a <b>waterfall</b> — each request waits for the one above it to finish. (The timings in the comments are just example numbers.)</p>
+<pre><code>// ✗ waits for each in turn — 3 seconds
+const user  = await getUser();
+const posts = await getPosts();
+
+// ✓ all at once — 1 second
+const [user, posts] = await Promise.all([getUser(), getPosts()]);</code></pre>
+<h4>Streaming — show the fast parts first</h4>
+<p><b>Streaming</b> means sending the page in pieces as each piece becomes ready, instead of waiting to send it all at once. <code>&lt;Suspense&gt;</code> marks a piece that may be slow; its <code>fallback</code> (here a <b>skeleton</b> — grey placeholder shapes) shows until the real content arrives.</p>
+<pre><code>import { Suspense } from "react";
+
+export default function Page() {
+  return (
+    &lt;&gt;
+      &lt;Header /&gt;                        {/* instant */}
+      &lt;Suspense fallback={&lt;Skeleton /&gt;}&gt;
+        &lt;SlowComments /&gt;                {/* streams in when ready */}
+      &lt;/Suspense&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+<p>Without this, one slow query holds up the entire page. With it, Next.js sends the finished parts immediately and streams the rest in as it completes — the user reads the article while comments are still loading.</p>
+</section>
+
+<section id="s29">
+<h3>29. Server Actions &amp; Forms</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>Server Action</b> is a function you write next to your components, marked <code>"use server"</code>. You call it from the browser like a normal function, but it actually runs on the server.</p>
+<p>Next.js secretly turns the call into a network request for you.</p>
+<p class="analogy">Like a hotel room phone with a "room service" button. You press one button; behind the scenes it dials the kitchen, places the order and brings the answer back. You never deal with the phone line yourself.</p></div>
+<p>A server action is a function that runs <b>on the server</b> but is called directly from your component — no API route, no fetch call.</p>
+<pre><code>// app/actions.ts
+"use server";                       // marks everything here as server-only
+
+export async function createPost(formData) {
+  const title = formData.get("title");
+
+  if (!title) return { error: "Title required" };     // always validate on the server
+
+  await db.post.create({ data: { title } });
+  revalidatePath("/posts");         // refresh the cached list
+}</code></pre>
+<pre><code>// the form — note: no onSubmit, no fetch, no useState
+import { createPost } from "./actions";
+
+export default function NewPost() {
+  return (
+    &lt;form action={createPost}&gt;
+      &lt;input name="title" /&gt;
+      &lt;button&gt;Create&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}</code></pre>
+<p>Next.js creates the endpoint, <b>serialises</b> the call (turns the arguments into text that can travel over the network) and handles the response for you. A useful side effect: because this is a real <code>&lt;form&gt;</code> with an <code>action</code>, <b>it still works if JavaScript hasn't loaded yet</b>. This is called <b>progressive enhancement</b> — the basic version works for everyone, and JavaScript makes it nicer.</p>
+<p><code>formData</code> is the browser's standard object holding every field of the submitted form; <code>formData.get("title")</code> reads the input named <code>title</code>.</p>
+<h4>Showing progress</h4>
+<p><code>useFormStatus</code> tells a component inside a form whether that form is currently being submitted (<code>pending</code>). It must be used in a client component placed inside the <code>&lt;form&gt;</code>.</p>
+<pre><code>"use client";
+import { useFormStatus } from "react-dom";
+
+function Submit() {
+  const { pending } = useFormStatus();
+  return &lt;button disabled={pending}&gt;{pending ? "Saving…" : "Save"}&lt;/button&gt;;
+}</code></pre>
+<div class="note"><b>Treat a server action like a public API endpoint</b>, because that's what it becomes. Anyone can call it with any data. Always check authentication and validate input inside the action — never assume it was only called from your form.</div>
+</section>
+
+<section id="s30">
+<h3>30. Route Handlers &amp; Middleware</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>Route Handler</b> is a file (<code>route.ts</code>) that answers HTTP requests with data instead of a page — your own small API.</p>
+<p><b>Middleware</b> is code that runs <i>before</i> a request reaches any page, and can let it through, redirect it, or change it.</p>
+<p class="analogy">Middleware is the security guard at the building's front door: checks your badge before you reach any office. A route handler is a service counter inside that hands out information rather than showing you a room.</p></div>
+<h4>API endpoints</h4>
+<pre><code>// app/api/users/route.ts
+import { NextResponse } from "next/server";
+
+export async function GET(request) {
+  const users = await db.user.findMany();
+  return NextResponse.json(users);
+}
+
+export async function POST(request) {
+  const body = await request.json();
+  const user = await db.user.create({ data: body });
+  return NextResponse.json(user, { status: 201 });
+}</code></pre>
+<p>Export one function per <b>HTTP method</b> (the type of request: <code>GET</code> reads data, <code>POST</code> creates it, and so on). Use these when something <i>other</i> than your own pages needs the data — a mobile app, a <b>webhook</b> from Stripe (a message another service sends to your URL when something happens, like "payment succeeded"), a public API. For your own pages, server components and server actions are usually simpler.</p>
+<h4>Middleware — runs before every matching request</h4>
+<pre><code>// middleware.ts, at the project root
+import { NextResponse } from "next/server";
+
+export function middleware(request) {
+  const token = request.cookies.get("session");
+
+  if (!token) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+  return NextResponse.next();
+}
+
+export const config = { matcher: ["/dashboard/:path*", "/settings/:path*"] };</code></pre>
+<p>The <code>matcher</code> lists which URLs the middleware runs for. <code>NextResponse.next()</code> means "let the request carry on"; <code>redirect</code> sends the user somewhere else.</p>
+<p>Good for redirects, <b>auth</b> checks (authentication — "is this user logged in?"), <b>locale</b> detection (which language/country to show), and <b>A/B splits</b> (showing two versions of a page to different users to see which works better). It runs on every matching request before the page does, so keep it <b>fast</b> — no database queries, no heavy work.</p>
+</section>
+
+<section id="s31">
+<h3>31. Images, Fonts &amp; SEO</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Next.js ships ready-made components for images and fonts that do the fiddly speed work for you, plus a simple way to set each page's title and description for Google and link previews (<b>metadata</b>).</p>
+<p class="analogy">Like a camera's auto mode: it picks sensible settings so the photo comes out well, without you tuning each dial.</p></div>
+<h4>next/image</h4>
+<pre><code>import Image from "next/image";
+
+&lt;Image src="/hero.jpg" alt="Our team" width={800} height={450} priority /&gt;</code></pre>
+<p>What it does for you:</p>
+<ul>
+<li>Converts images to modern, smaller formats (like WebP or AVIF).</li>
+<li>Makes several sizes and serves the right one for each screen.</li>
+<li><b>Lazy-loads</b> anything <b>below the fold</b> — images you'd have to scroll down to see are only downloaded when you get near them.</li>
+<li>Because you gave width and height, it reserves the space, so the page doesn't jump as images load. (That jumping is called <b>layout shift</b>.)</li>
+</ul>
+<p>Add <code>priority</code> to the one big image at the top; that one shouldn't be lazy-loaded.</p>
+<h4>next/font</h4>
+<pre><code>import { Inter } from "next/font/google";
+const inter = Inter({ subsets: ["latin"] });
+
+&lt;body className={inter.className}&gt;</code></pre>
+<p>Downloads the font at <b>build time</b> (when you run <code>npm run build</code>) and serves it from your own domain. No request to Google at <b>runtime</b> (while users are visiting), and no flash of the wrong font while it loads.</p>
+<h4>Metadata</h4>
+<pre><code>export const metadata = {
+  title: "Products — My Shop",
+  description: "Shown in Google results and link previews",
+  openGraph: { title: "Products", images: ["/og.png"] },
+};
+
+// or generate it from the data
+export async function generateMetadata({ params }) {
+  const post = await getPost((await params).slug);
+  return { title: post.title, description: post.excerpt };
+}</code></pre>
+<p>Because this runs on the server, the tags are in the HTML itself — which is exactly what search engines and social previews need. (<code>openGraph</code> is the standard set of tags that WhatsApp, Slack, LinkedIn and others read to build the preview card when someone shares your link.)</p>
+</section>
+
+<section id="s32">
+<h3>32. Deploying</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Deploying</b> means putting your app on a server on the internet so real users can reach it. Common homes for Next.js apps: Vercel, Netlify, or your own server running Node.</p>
+<p><b>Environment variables</b> are settings (like a database address or a secret key) kept outside your code, so they can differ between your laptop and the live site.</p>
+<p class="analogy">Deploying is moving from rehearsal to opening night. Environment variables are the keys to the venue — different keys for the rehearsal room and the real theatre, and never printed on the posters.</p></div>
+<pre><code>npm run build       # check it builds before you push — most errors surface here
+npm run start       # run the production build locally</code></pre>
+<h4>Environment variables</h4>
+<pre><code>DATABASE_URL=postgres://…          # server only — safe
+NEXT_PUBLIC_API_URL=https://…      # NEXT_PUBLIC_ = sent to the browser</code></pre>
+<div class="note"><b>Anything prefixed <code>NEXT_PUBLIC_</code> is baked into the JavaScript bundle and readable by anyone.</b> Never use that prefix for a database URL, an API secret or a private key. The prefix exists precisely so this choice is visible in the variable's name.</div>
+<h4>What to check before going live</h4>
+<ul>
+<li>Every page has a <code>title</code> and <code>description</code>.</li>
+<li><code>loading.tsx</code> and <code>error.tsx</code> exist for slow or fragile routes.</li>
+<li>Images use <code>next/image</code> with width and height.</li>
+<li>Caching is explicit (written out, not left to defaults) where freshness matters.</li>
+<li>Server actions validate input and check the user is allowed.</li>
+<li>Run <b>Lighthouse</b> (a speed and quality checker built into Chrome DevTools); check the bundle for anything unexpectedly large.</li>
+</ul>
+</section>
+
+<!-- ================= REVISION ================= -->
+<div class="part">Revision</div>
+
+<section id="rev">
+<h3>Interview Q&amp;A — quick answers</h3>
+
+<h4>React basics</h4>
+<ul>
+<li><b>What is React?</b> A library for building UIs where you describe what the screen should look like for the current data, and it works out the changes.</li>
+<li><b>Props vs state?</b> Props come from the parent and are read-only; state is owned by the component and changing it re-renders.</li>
+<li><b>What is JSX?</b> A shorthand that compiles to <code>React.createElement</code> calls, which produce plain objects describing the UI.</li>
+<li><b>Why keys?</b> So React can tell which item is which when a list changes. Index keys break on reorder or deletion and can attach state to the wrong row.</li>
+<li><b>Why can't I change state directly?</b> React compares by reference. The same object means "nothing changed", so no re-render.</li>
+<li><b>Controlled vs uncontrolled input?</b> Value held in React state vs held by the DOM and read with a ref.</li>
+</ul>
+
+<h4>How it works</h4>
+<ul>
+<li><b>What is the virtual DOM?</b> A plain-object description of the UI. React compares the old and new versions and applies only the real differences.</li>
+<li><b>What is reconciliation?</b> The matching process: a different element type throws the subtree away; the same type is kept and updated; children are matched by key.</li>
+<li><b>When does a component re-render?</b> Its state changed, its parent re-rendered, or a context it reads changed.</li>
+<li><b>Why is state not updated immediately?</b> Updates are batched; the current render holds a frozen snapshot. Use <code>setX(x =&gt; …)</code> when the new value depends on the old.</li>
+<li><b>What is batching?</b> Several state updates in one event are collected into a single re-render.</li>
+</ul>
+
+<h4>Hooks</h4>
+<ul>
+<li><b>Rules of hooks, and why?</b> Top level only, components or custom hooks only — because React matches hooks by call order, so the order must never change.</li>
+<li><b>useEffect dependency array?</b> Omitted → every render; <code>[]</code> → once; <code>[a]</code> → when <code>a</code> changes. Return a cleanup for anything you started.</li>
+<li><b>Why does my effect run twice?</b> StrictMode in development, on purpose, to reveal missing cleanup.</li>
+<li><b>useMemo vs useCallback?</b> Cache a value vs cache a function's identity. <code>useCallback(fn, d)</code> is <code>useMemo(() =&gt; fn, d)</code>.</li>
+<li><b>useState vs useRef?</b> State re-renders when it changes; a ref doesn't. Refs are for timers, DOM nodes and values the user never sees.</li>
+<li><b>When useReducer?</b> When several pieces of state change together, or the transitions are complex enough to be worth writing in one place.</li>
+<li><b>Context vs Redux?</b> Context avoids prop drilling but re-renders every consumer; a state library adds selectors so components only re-render for the slice they use.</li>
+<li><b>What is a custom hook?</b> A <code>use…</code> function that calls other hooks. Shares logic, not state.</li>
+</ul>
+
+<h4>Lifecycle</h4>
+<ul>
+<li><b>What are the lifecycle stages of a React component?</b> Mount (first appears), update (re-renders because its state, its parent, or a context changed), unmount (removed; state discarded). Each render is a render phase (pure calculation) followed by a commit phase (DOM changes, then effects).</li>
+<li><b>How do you write componentDidMount / componentDidUpdate / componentWillUnmount with hooks?</b> <code>useEffect(fn, [])</code> for mount; <code>useEffect(fn, [deps])</code> for "after update when these change" (it also runs on mount); the function returned from an effect is the unmount/cleanup. <code>shouldComponentUpdate</code> → <code>React.memo</code>. Error boundaries and <code>getSnapshotBeforeUpdate</code> still have no hook.</li>
+<li><b>Render phase vs commit phase?</b> Render: React calls components and diffs the trees — must be pure, may run more than once or be thrown away. Commit: React applies changes to the DOM in one go, sets refs, runs <code>useLayoutEffect</code>, the browser paints, then <code>useEffect</code> runs.</li>
+<li><b>useEffect vs useLayoutEffect?</b> Both run after the DOM update. <code>useLayoutEffect</code> runs before paint (blocks it — use for measuring/positioning); <code>useEffect</code> runs after paint (the default). Cleanup runs before the next setup and on unmount, for both.</li>
+<li><b>Why does my component mount, unmount and mount again in development?</b> StrictMode simulates an unmount/remount (and double-calls render) in development only, to expose missing cleanups and impure renders. Production runs once.</li>
+<li><b>Walk me through a Next.js App Router request.</b> Middleware → route matching (folders, layouts) → Server Components render on the server with data and caching → HTML + RSC payload stream back (Suspense/<code>loading.js</code> first) → browser shows HTML → JS loads → Client Components hydrate. After that, <code>&lt;Link&gt;</code> fetches only the (often prefetched) RSC payload and keeps layouts; a Server Action is one POST that returns the result plus refreshed UI.</li>
+<li><b>Are Server Components hydrated?</b> No. They send HTML and RSC payload but no JavaScript. Only Client Components are hydrated.</li>
+</ul>
+
+<h4>Next.js</h4>
+<ul>
+<li><b>Why Next.js over plain React?</b> Server rendering for speed and SEO, file-based routing, a backend in the same project, and built-in optimisation.</li>
+<li><b>SSG vs ISR vs SSR vs CSR?</b> Built at deploy / rebuilt periodically / built per request / built in the browser.</li>
+<li><b>What is hydration?</b> React attaching event handlers to server-rendered HTML to make it interactive. A "hydration mismatch" means server and client produced different markup — usually from <code>Date.now()</code>, <code>Math.random()</code> or reading <code>window</code> during render.</li>
+<li><b>Server vs client components?</b> Server is the default and ships no JavaScript but can't be interactive; <code>"use client"</code> adds interactivity at the cost of bundle size.</li>
+<li><b>Why push "use client" down the tree?</b> Everything a client component imports also becomes client. Keeping it at the leaves keeps the bundle small.</li>
+<li><b>What is a server action?</b> A server function callable straight from a component or form, with no API route. Must still validate and check auth.</li>
+<li><b>Route handler vs server action?</b> Handlers are for external consumers (mobile apps, webhooks); actions are for your own UI.</li>
+<li><b>What does middleware do?</b> Runs before matching requests — auth redirects, locale, A/B tests. Must be fast.</li>
+<li><b>What is streaming with Suspense?</b> Sending the finished parts of a page immediately and streaming slow parts in as they're ready.</li>
+<li><b>NEXT_PUBLIC_?</b> Marks a variable as safe to send to the browser. Never use it for secrets.</li>
+</ul>
+</section>
+
+<section id="road">
+<h3>Learning Path</h3>
+<ol>
+<li><b>Solid JavaScript first</b> — array methods, destructuring, spread, promises, <code>async/await</code>. React is JavaScript; gaps here feel like React confusion.</li>
+<li><b>Components and props</b> — build a static page out of small components with no state at all.</li>
+<li><b>State and events</b> — a counter, a toggle, a form. Get comfortable with the snapshot idea from <a href="#s4">section 4</a>.</li>
+<li><b>Lists and conditionals</b> — a to-do app: add, delete, toggle, filter. This drills keys and immutable updates.</li>
+<li><b>Effects and fetching</b> — load from a public API with real loading, error and empty states. Add cleanup.</li>
+<li><b>Project 1</b> — a multi-page app with routing, forms with validation, and proper error handling.</li>
+<li><b>The hooks that need practice</b> — <code>useRef</code>, <code>useMemo</code>, <code>useCallback</code>, <code>useReducer</code>, <code>useContext</code>. Write two custom hooks of your own.</li>
+<li><b>Data properly</b> — swap hand-written fetching for TanStack Query and notice what it removes.</li>
+<li><b>Next.js basics</b> — App Router, layouts, server components, a page with real data.</li>
+<li><b>Next.js properly</b> — rendering strategies, caching, server actions, streaming with Suspense.</li>
+<li><b>Project 2</b> — a full-stack Next.js app: database, auth, forms via server actions, deployed publicly.</li>
+<li><b>Then</b> — TypeScript everywhere, testing with React Testing Library, and an accessibility and performance pass.</li>
+</ol>
+<div class="note"><b>The habit that matters most:</b> for every component, ask "what does this look like while loading, when the request fails, when the list is empty, when the text is three times longer, and with only a keyboard?" Answering those five turns tutorial code into real engineering.</div>
+</section>
+
+</main>
+</div>
+
+<script src="../assets/notes.js"></script>
+</body>
+</html>

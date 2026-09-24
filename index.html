@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Notes — Interview Preparation</title>
+<link rel="stylesheet" href="assets/notes.css">
+<script>
+  try { document.documentElement.setAttribute("data-theme",
+    localStorage.getItem("notes-theme") || "light"); } catch (e) {}
+</script>
+<style>
+.home{max-width:960px;margin:0 auto;padding:60px 22px 100px;}
+.home header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;}
+.home h1{font-size:34px;margin:0;letter-spacing:-.025em;}
+.home .tagline{color:var(--muted);font-size:15px;margin:10px 0 44px;max-width:560px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;}
+.card{display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit;background:var(--panel);
+  border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+  transition:border-color .16s ease, transform .16s ease, box-shadow .16s ease;}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow);}
+.card h3{margin:0;font-size:16.5px;font-weight:620;letter-spacing:-.01em;flex:1;}
+.icon{flex:0 0 44px;width:44px;height:44px;border-radius:10px;display:grid;place-items:center;
+  color:var(--accent);background:color-mix(in srgb,var(--accent) 11%,transparent);}
+.icon svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;
+  stroke-linecap:round;stroke-linejoin:round;}
+.arrow{width:18px;height:18px;fill:none;stroke:var(--muted);stroke-width:1.8;stroke-linecap:round;
+  stroke-linejoin:round;transition:transform .16s ease, stroke .16s ease;}
+.card:hover .arrow{transform:translateX(3px);stroke:var(--accent);}
+.card.soon{cursor:default;pointer-events:none;background:transparent;border-style:dashed;}
+.card.soon h3{color:var(--muted);}
+.card.soon .icon{color:var(--muted);background:var(--code-bg);}
+.badge{font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:600;}
+.section-label{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--muted);margin:42px 0 14px;}
+.foot{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
+  color:var(--muted);font-size:13px;}
+@media (max-width:520px){.home{padding:34px 18px 70px}.home h1{font-size:26px}}
+</style>
+</head>
+<body>
+
+<div class="home">
+
+  <header>
+    <div>
+      <h1>My Notes</h1>
+    </div>
+    <button class="ghost" id="theme">Dark mode</button>
+  </header>
+
+  <p class="tagline">Concept-first interview notes, written to be re-read the night before.
+     Pick a track and go through it end to end.</p>
+
+  <div class="section-label">Available now</div>
+  <div class="grid">
+
+    <a class="card" href="notes/frontend.html">
+      <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11"/></svg></span>
+      <h3>Frontend Development</h3>
+      <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <a class="card" href="notes/javascript.html">
+      <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4H7a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2 2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h1M16 4h1a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2 2 2 0 0 0-2 2v4a2 2 0 0 1-2 2h-1"/></svg></span>
+      <h3>JavaScript</h3>
+      <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <a class="card" href="notes/react-nextjs.html">
+      <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="1.6"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/></svg></span>
+      <h3>React &amp; Next.js</h3>
+      <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <a class="card" href="notes/node-express.html">
+      <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l8.5 4.9v9.2L12 21.5l-8.5-4.9V7.4z"/><path d="M12 8v8M9 10.5l3-2.5 3 2.5"/></svg></span>
+      <h3>Node.js &amp; Express</h3>
+      <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <a class="card" href="notes/databases.html">
+      <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v13c0 1.7 3.6 3 8 3s8-1.3 8-3v-13M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></span>
+      <h3>Databases</h3>
+      <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <a class="card" href="notes/ai-ml.html">
+      <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></span>
+      <h3>AI &amp; ML</h3>
+      <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <a class="card" href="notes/backend.html">
+      <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3.5" width="18" height="7" rx="1.8"/><rect x="3" y="13.5" width="18" height="7" rx="1.8"/><path d="M7 7h.01M7 17h.01M11 7h6M11 17h6"/></svg></span>
+      <h3>Backend Development</h3>
+      <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+
+  </div>
+
+  <div class="section-label">Coming soon</div>
+  <div class="grid">
+
+    <div class="card soon">
+      <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12c-2-2.7-4-4-6-4a4 4 0 0 0 0 8c2 0 4-1.3 6-4zm0 0c2 2.7 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.3-6 4z"/></svg></span>
+      <h3>DevOps</h3>
+      <span class="badge">Soon</span>
+    </div>
+    <div class="card soon">
+      <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="5" rx="1"/><rect x="3" y="16" width="6" height="5" rx="1"/><rect x="15" y="16" width="6" height="5" rx="1"/><path d="M12 8v4M6 16v-2h12v2"/></svg></span>
+      <h3>System Design</h3>
+      <span class="badge">Soon</span>
+    </div>
+    <div class="card soon">
+      <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="2.2"/><circle cx="6" cy="12" r="2.2"/><circle cx="18" cy="12" r="2.2"/><circle cx="3.8" cy="19.5" r="1.8"/><circle cx="9.5" cy="19.5" r="1.8"/><path d="M10.4 6.6 7.6 10.4M13.6 6.6l2.8 3.8M5.2 14.1l-.8 3.6M6.9 14.1l1.8 3.7"/></svg></span>
+      <h3>DSA</h3>
+      <span class="badge">Soon</span>
+    </div>
+    <div class="card soon">
+      <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></svg></span>
+      <h3>Behavioural</h3>
+      <span class="badge">Soon</span>
+    </div>
+
+  </div>
+
+  <p class="foot">Tip: each track prints cleanly — use your browser's Print to save a PDF.</p>
+
+</div>
+
+<script src="assets/notes.js"></script>
+</body>
+</html>

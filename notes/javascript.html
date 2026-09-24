@@ -1,0 +1,1951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JavaScript — Concept Notes</title>
+<link rel="stylesheet" href="../assets/notes.css">
+<script>
+  try { document.documentElement.setAttribute("data-theme",
+    localStorage.getItem("notes-theme") || "light"); } catch (e) {}
+</script>
+</head>
+<body>
+<div class="scrim"></div>
+<button class="icon-btn" id="reopen" title="Show sidebar ([)" aria-label="Show sidebar">☰</button>
+<div class="layout">
+
+<aside>
+  <div class="sidebar-head">
+    <a class="back-link" href="../index.html">← All topics</a>
+    <button class="icon-btn" id="collapseBtn" title="Hide sidebar ([)" aria-label="Hide sidebar">‹</button>
+  </div>
+  <input id="search" type="text" placeholder="Filter topics…" autocomplete="off">
+
+  <h2>Core Language</h2>
+  <nav>
+    <a href="#s1">1 · How JS Runs</a>
+    <a href="#s2">2 · Types &amp; Memory</a>
+    <a href="#s3">3 · Coercion &amp; Equality</a>
+    <a href="#s4">4 · Operators &amp; Truthiness</a>
+  </nav>
+
+  <h2>Scope &amp; Functions</h2>
+  <nav>
+    <a href="#s5">5 · Execution Context</a>
+    <a href="#s6">6 · Hoisting &amp; TDZ</a>
+    <a href="#s7">7 · Scope Chain</a>
+    <a href="#s8">8 · Closures</a>
+    <a href="#s9">9 · Functions in Depth</a>
+    <a href="#s10">10 · this &amp; Binding</a>
+  </nav>
+
+  <h2>Objects</h2>
+  <nav>
+    <a href="#s11">11 · Objects in Depth</a>
+    <a href="#s12">12 · Prototypes</a>
+    <a href="#s13">13 · Classes</a>
+    <a href="#s14">14 · Arrays &amp; Iteration</a>
+    <a href="#s15">15 · Map, Set, Symbol</a>
+    <a href="#s16">16 · Destructuring &amp; Spread</a>
+  </nav>
+
+  <h2>Async</h2>
+  <nav>
+    <a href="#s17">17 · The Event Loop</a>
+    <a href="#s18">18 · Callbacks</a>
+    <a href="#s19">19 · Promises</a>
+    <a href="#s20">20 · async / await</a>
+    <a href="#s21">21 · Async Patterns</a>
+  </nav>
+
+  <h2>Advanced</h2>
+  <nav>
+    <a href="#s22">22 · Iterators &amp; Generators</a>
+    <a href="#s23">23 · Error Handling</a>
+    <a href="#s24">24 · Modules</a>
+    <a href="#s25">25 · Memory &amp; Garbage Collection</a>
+    <a href="#s26">26 · Functional Patterns</a>
+    <a href="#s27">27 · Modern JS Features</a>
+    <a href="#s28">28 · The JS Lifecycle</a>
+  </nav>
+
+  <h2>Revision</h2>
+  <nav>
+    <a href="#tricky">Tricky Outputs</a>
+    <a href="#rev">Interview Q&amp;A</a>
+    <a href="#polyfills">Polyfills to Know</a>
+  </nav>
+</aside>
+
+<main>
+<header class="top">
+  <h1>JavaScript — Concept Notes</h1>
+  <div class="top-actions">
+    <button class="ghost" id="menuBtn">☰ Topics</button>
+    <button class="ghost" id="theme">Dark mode</button>
+  </div>
+</header>
+<p class="sub">The language itself, in depth — the parts interviews actually probe. Print this page for a PDF.</p>
+
+<!-- ================= CORE LANGUAGE ================= -->
+<div class="part">Part 1 — Core Language</div>
+
+<section id="s1">
+<h3>1. How JavaScript Actually Runs</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Single-threaded</b> means JavaScript does one thing at a time — there's one worker, not a team. <b>Compiled</b> means your code gets translated into instructions the computer runs directly, rather than being read line by line forever.</p>
+<p>The <b>engine</b> is the program that reads and runs your JavaScript. Chrome and Node use one called <b>V8</b>.</p>
+<p class="analogy">Think of a chef who first reads the whole recipe and memorises the tricky parts they cook often, instead of re-reading every line each time.</p></div>
+<p>Three words describe how JavaScript runs:</p>
+<ul>
+<li><b>Single-threaded</b> — one line of work at a time.</li>
+<li><b>Synchronous</b> at its core — each line finishes before the next one starts.</li>
+<li><b>Just-in-time (JIT) compiled</b> — the code is turned into machine code <i>while</i> the program runs, not ahead of time.</li>
+</ul>
+<p>If an interviewer asks "is JS interpreted?", the old answer was yes. The modern answer: engines compile it, just in time.</p>
+<h4>Inside the engine (V8)</h4>
+<p>Here is the path your code takes inside V8, in plain words:</p>
+<ol>
+<li>The <b>parser</b> reads your text and builds an <b>AST</b> (Abstract Syntax Tree — a tree-shaped map of your code's structure).</li>
+<li><b>Ignition</b> (the interpreter) turns the AST into <b>bytecode</b> (simple, compact instructions) and starts running it straight away.</li>
+<li>If a function runs a lot (it's "hot"), <b>TurboFan</b> (the optimiser) compiles it into fast <b>machine code</b>.</li>
+<li>TurboFan's speed-ups rely on guesses, like "this variable is always a number". If a guess turns out wrong, the code is <b>deoptimised</b> — thrown back to the slower bytecode.</li>
+</ol>
+<figure class="diagram">
+<svg viewBox="0 0 640 250" role="img" aria-label="V8 pipeline: source code is parsed into an AST, interpreted by Ignition into bytecode, and hot functions are optimised by TurboFan into machine code, with deoptimisation flowing back.">
+  <rect class="d-box" x="8"   y="40" width="108" height="46" rx="7"/>
+  <text class="d-label" x="62" y="60" text-anchor="middle">Source</text>
+  <text class="d-sub"   x="62" y="76" text-anchor="middle">your .js file</text>
+
+  <rect class="d-box" x="146" y="40" width="108" height="46" rx="7"/>
+  <text class="d-label" x="200" y="60" text-anchor="middle">Parser</text>
+  <text class="d-sub"   x="200" y="76" text-anchor="middle">→ AST</text>
+
+  <rect class="d-box" x="284" y="40" width="118" height="46" rx="7"/>
+  <text class="d-label" x="343" y="60" text-anchor="middle">Ignition</text>
+  <text class="d-sub"   x="343" y="76" text-anchor="middle">interpreter</text>
+
+  <rect class="d-box-accent" x="432" y="40" width="118" height="46" rx="7"/>
+  <text class="d-accent-text" x="491" y="60" text-anchor="middle">TurboFan</text>
+  <text class="d-sub"   x="491" y="76" text-anchor="middle">optimiser</text>
+
+  <rect class="d-box" x="432" y="150" width="118" height="46" rx="7"/>
+  <text class="d-label" x="491" y="170" text-anchor="middle">Machine code</text>
+  <text class="d-sub"   x="491" y="186" text-anchor="middle">fast path</text>
+
+  <rect class="d-box" x="284" y="150" width="118" height="46" rx="7"/>
+  <text class="d-label" x="343" y="170" text-anchor="middle">Bytecode</text>
+  <text class="d-sub"   x="343" y="186" text-anchor="middle">runs immediately</text>
+
+  <path class="d-line" d="M116 63 H140"/><path class="d-arrow" d="M146 63 l-8 -4 v8 z"/>
+  <path class="d-line" d="M254 63 H278"/><path class="d-arrow" d="M284 63 l-8 -4 v8 z"/>
+  <path class="d-line" d="M402 63 H426"/><path class="d-arrow" d="M432 63 l-8 -4 v8 z"/>
+  <path class="d-line" d="M343 86 V144"/><path class="d-arrow" d="M343 150 l-4 -8 h8 z"/>
+  <path class="d-line-accent" d="M491 86 V144"/><path class="d-arrow-accent" d="M491 150 l-4 -8 h8 z"/>
+
+  <text class="d-sub" x="416" y="30" text-anchor="middle">"this function is hot"</text>
+  <path class="d-dash" d="M550 173 H592 V63 H556"/>
+  <path class="d-arrow" d="M550 63 l8 -4 v8 z"/>
+  <text class="d-sub" x="604" y="122">deopt</text>
+
+  <text class="d-sub" x="320" y="228" text-anchor="middle">Hot code gets optimised on assumptions; break an assumption (change a type) and it deoptimises back.</text>
+</svg>
+<figcaption>V8 starts running your code right away (slowly), then speeds up the functions that run often. Keeping your variable types the same is what keeps code on the fast path.</figcaption>
+</figure>
+<div class="note"><b>Practical takeaway:</b> <b>monomorphic</b> code ("one shape" — a variable that's always a number, an object whose properties never change) stays optimised. Adding or deleting properties on a hot object, or mixing types in an array (e.g. <code>[1, "two", 3]</code>), forces deoptimisation — the engine has to drop its fast version.</div>
+<h4>The runtime is not the engine</h4>
+<p>The engine only understands the language itself: variables, functions, loops, objects.</p>
+<p>Everything else — <code>setTimeout</code>, <code>fetch</code>, the DOM (the page's elements), <code>console</code> — is supplied by the <b>host environment</b>. The host is whatever program is running the engine: a browser or Node.</p>
+<p>That's why <code>setTimeout</code> isn't in the ECMAScript spec (the official JavaScript rulebook), and why <code>window</code> doesn't exist in Node — Node is a different host.</p>
+<p class="analogy">The engine is a car's motor. The host is the whole car around it — the wheels, radio and lights. Same motor, different car, different extras.</p>
+</section>
+
+<section id="s2">
+<h3>2. Types &amp; Memory</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>primitive</b> is a simple, single value — a number, a piece of text, true/false. An <b>object</b> is a container that holds several values together.</p>
+<p>The big difference: copying a primitive gives you a real <b>copy</b>. Copying an object only gives you <b>directions to the same thing</b>.</p>
+<p class="analogy">Writing a phone number on a new piece of paper = a copy (primitive). Giving someone your house address = you both still walk to the same house (object).</p></div>
+<h4>Seven primitives + object</h4>
+<p>There are seven primitive types: <code>string</code>, <code>number</code>, <code>boolean</code>, <code>null</code>, <code>undefined</code>, <code>symbol</code>, <code>bigint</code>.</p>
+<p>Everything else is an object — including arrays, functions, dates and regexes (regular expressions, the <code>/pattern/</code> text-matching tool).</p>
+<h4>Stack vs heap — the key mental model</h4>
+<p>JavaScript keeps values in two areas of memory:</p>
+<ul>
+<li>The <b>stack</b> — a small, fast, tidy area. Primitives live here, stored <b>by value</b> (the actual value itself).</li>
+<li>The <b>heap</b> — a big, loose storage area. Objects live here. A variable only holds a <b>reference</b> — an address that points to where the object sits in the heap.</li>
+</ul>
+<figure class="diagram">
+<svg viewBox="0 0 620 260" role="img" aria-label="Diagram showing primitives stored by value on the stack, and objects stored on the heap with the stack holding a reference to them.">
+  <text class="d-accent-text" x="130" y="22" text-anchor="middle">STACK — by value</text>
+  <rect class="d-box" x="24" y="34" width="212" height="180" rx="7"/>
+
+  <rect class="d-box" x="40" y="50"  width="180" height="30" rx="5"/>
+  <text class="d-mono" x="52" y="70">let a = 10</text>
+  <rect class="d-box" x="40" y="88"  width="180" height="30" rx="5"/>
+  <text class="d-mono" x="52" y="108">let b = a  → 10</text>
+
+  <rect class="d-fill-accent" x="40" y="130" width="180" height="30" rx="5"/>
+  <rect class="d-box-accent"  x="40" y="130" width="180" height="30" rx="5"/>
+  <text class="d-mono" x="52" y="150">let o  ●────</text>
+  <rect class="d-fill-accent" x="40" y="168" width="180" height="30" rx="5"/>
+  <rect class="d-box-accent"  x="40" y="168" width="180" height="30" rx="5"/>
+  <text class="d-mono" x="52" y="188">let p  ●────</text>
+
+  <text class="d-accent-text" x="450" y="22" text-anchor="middle">HEAP — by reference</text>
+  <rect class="d-box" x="330" y="34" width="240" height="180" rx="7"/>
+  <rect class="d-box-accent" x="352" y="112" width="196" height="76" rx="7"/>
+  <text class="d-mono" x="368" y="136">{ name: "Ada",</text>
+  <text class="d-mono" x="368" y="158">  age: 36 }</text>
+  <text class="d-sub"  x="450" y="180" text-anchor="middle">one object, two references</text>
+
+  <path class="d-line-accent" d="M196 145 C 260 145, 280 150, 348 150"/>
+  <path class="d-arrow-accent" d="M354 150 l-9 -4.5 v9 z"/>
+  <path class="d-line-accent" d="M196 183 C 260 183, 280 156, 348 152"/>
+  <path class="d-arrow-accent" d="M354 151 l-9 -4 v9 z"/>
+
+  <text class="d-sub" x="300" y="240" text-anchor="middle">p.age = 37 changes what BOTH o and p see — they point at the same box.</text>
+</svg>
+<figcaption>Copying a primitive copies the value itself. Copying an object only copies the reference (the address). This one picture explains most "why did my other variable change?" bugs.</figcaption>
+</figure>
+<pre><code>let a = 10; let b = a; b = 20;        // a is still 10
+
+let o = { n: 1 }; let p = o; p.n = 2; // o.n is now 2  ← same object
+let q = { n: 1 };
+o === q;                              // false — different objects, same shape</code></pre>
+<h4>Copying properly</h4>
+<p>A <b>shallow copy</b> copies only the top level. Any objects nested inside are still shared with the original. A <b>deep copy</b> copies every level, so nothing is shared.</p>
+<pre><code>const shallow = { ...obj };              // one level only
+const shallow2 = Object.assign({}, obj);
+const deep = structuredClone(obj);       // built-in deep copy (handles Map/Set/Date)
+// JSON.parse(JSON.stringify(obj)) — loses undefined, functions, Dates, Infinity</code></pre>
+<h4>typeof gotchas</h4>
+<p><code>typeof</code> tells you a value's type as a string. It has a few surprising answers you should memorise. (A "gotcha" is a trap that catches people out.)</p>
+<pre><code>typeof null           // "object"   ← historic bug, never fixed
+typeof []             // "object"   → use Array.isArray([])
+typeof function(){}   // "function"
+typeof NaN            // "number"
+typeof undeclaredVar  // "undefined" — doesn't throw, unlike let in TDZ</code></pre>
+</section>
+
+<section id="s3">
+<h3>3. Coercion &amp; Equality</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Coercion</b> means JavaScript silently converting one type into another to make a comparison or calculation work — turning the text <code>"5"</code> into the number <code>5</code>, for example.</p>
+<p>It's trying to be helpful, but the rules are strange enough that it causes bugs. That's why you use <code>===</code>, which does no converting at all.</p>
+<p class="analogy">Like a shop assistant who, when you hand over dollars, quietly swaps them for euros without asking. Handy sometimes — but you may not get what you expected.</p></div>
+<h4>== vs ===</h4>
+<p><code>===</code> (<b>strict equality</b>) checks that the type <i>and</i> the value are the same. It never converts anything. So <code>5 === "5"</code> is <code>false</code>.</p>
+<p><code>==</code> (<b>loose equality</b>) converts the two sides to a common type first, then compares. So <code>5 == "5"</code> is <code>true</code>. Its conversion rules give some famously odd results:</p>
+<pre><code>0 == "";            // true   — "" → 0
+0 == "0";           // true   — "0" → 0
+"" == "0";          // false  — both strings, compared directly. Not transitive!
+[] == false;        // true   — [] → "" → 0, false → 0
+[] == ![];          // true   — ![] is false, then as above
+null == undefined;  // true   — special-cased
+null == 0;          // false  — null only equals undefined
+NaN == NaN;         // false  — NaN equals nothing, including itself</code></pre>
+<div class="note"><b>Rule:</b> always use <code>===</code>. The one sensible exception is <code>x == null</code>. It checks "is x null <i>or</i> undefined?" in a single comparison.</div>
+<h4>The coercion rules, briefly</h4>
+<ul>
+<li><b>Object → primitive</b>: when an object must become a simple value, JS first calls <code>valueOf()</code>, then <code>toString()</code>. Arrays turn into strings by joining their items with commas: <code>[1,2] + ""</code> → <code>"1,2"</code>; <code>[]</code> → <code>""</code>; <code>{}</code> → <code>"[object Object]"</code>.</li>
+<li><b><code>+</code> is overloaded</b> (it has two jobs): if either side is a string, it concatenates (joins text together); otherwise it adds numbers.</li>
+<li><b>Every other maths operator</b> (<code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>) always converts both sides to numbers.</li>
+</ul>
+<pre><code>1 + "2";       // "12"   string wins for +
+1 - "2";       // -1     other operators go numeric
+"3" * "4";     // 12
+[] + {};       // "[object Object]"
+[] + [];       // ""
+true + true;   // 2      booleans → 1/0
+"5" - - "2";   // 7      unary minus coerces first</code></pre>
+<h4>Object.is</h4>
+<p><code>Object.is</code> is like <code>===</code> but fixes its two odd cases: it says <code>NaN</code> equals <code>NaN</code>, and it treats <code>0</code> and <code>-0</code> as different. (<code>NaN</code> means "Not a Number" — the result of bad maths like <code>"abc" * 2</code>.)</p>
+<pre><code>Object.is(NaN, NaN);   // true   ← unlike ===
+Object.is(0, -0);      // false  ← unlike ===
+Number.isNaN(NaN);     // true   — the safe NaN check
+isNaN("abc");          // true   — coerces first, avoid it</code></pre>
+</section>
+
+<section id="s4">
+<h3>4. Operators &amp; Truthiness</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Truthy</b> and <b>falsy</b> describe what a value becomes when JavaScript needs a yes/no answer — like inside an <code>if</code>.</p>
+<p>Eight values count as "no" (falsy). Everything else counts as "yes" — <i>including</i> an empty array and an empty object, which surprises most people.</p>
+<p class="analogy">Like a bouncer with a short "not allowed in" list. If your name isn't one of the eight on that list, you get in — even if you look empty.</p></div>
+<h4>The eight falsy values</h4>
+<p><code>false</code>, <code>0</code>, <code>-0</code>, <code>0n</code>, <code>""</code>, <code>null</code>, <code>undefined</code>, <code>NaN</code>. <b>Everything else is truthy</b> — including <code>[]</code>, <code>{}</code>, <code>"0"</code>, <code>"false"</code>, and <code>function(){}</code>.</p>
+<h4>Logical operators return values, not booleans</h4>
+<p><code>||</code> (OR) and <code>&amp;&amp;</code> (AND) don't always give back <code>true</code> or <code>false</code>. They give back one of the two values you gave them.</p>
+<p>They also <b>short-circuit</b>: they stop checking as soon as the answer is known. <code>||</code> stops at the first truthy value; <code>&amp;&amp;</code> stops at the first falsy value. That's what makes the "guard" and "default" tricks below work.</p>
+<pre><code>"a" || "b";      // "a"  — returns the first TRUTHY, else the last
+null || "b";     // "b"
+"a" &amp;&amp; "b";      // "b"  — returns the first FALSY, else the last
+null &amp;&amp; "b";     // null
+
+// Short-circuiting is the point
+user &amp;&amp; user.name;              // guard before access
+const name = input || "Guest";  // default</code></pre>
+<h4><code>??</code> vs <code>||</code> — a real bug source</h4>
+<p><code>??</code> is the <b>nullish coalescing</b> operator. "Nullish" just means <code>null</code> or <code>undefined</code>. It uses the fallback only for those two — so real values like <code>0</code> or <code>""</code> are kept.</p>
+<pre><code>const count = input ?? 10;   // falls back only on null/undefined
+const count = input || 10;   // ALSO falls back on 0, "" and false ✗
+
+// input = 0  →  ?? gives 0 (correct), || gives 10 (wrong)</code></pre>
+<h4>Optional chaining &amp; logical assignment</h4>
+<p><b>Optional chaining</b> (<code>?.</code>) means "only continue if the thing on the left exists". <b>Logical assignment</b> (<code>||=</code>, <code>&amp;&amp;=</code>, <code>??=</code>) is a short way to write "assign only if…".</p>
+<pre><code>user?.address?.city;      // undefined instead of a TypeError
+user?.greet?.();          // call only if it exists
+arr?.[0];                 // optional index access
+
+a ||= b;    // a = a || b   — assign if falsy
+a &amp;&amp;= b;    // a = a && b   — assign if truthy
+a ??= b;    // a = a ?? b   — assign only if null/undefined</code></pre>
+<div class="note"><code>?.</code> stops the whole chain and returns <code>undefined</code> the moment it hits null/undefined. But it only protects the spot where you wrote it. For example, <code>user?.address.city</code> still throws if <code>user</code> exists but <code>address</code> is missing — you'd need <code>user?.address?.city</code>.</div>
+</section>
+
+<!-- ================= SCOPE & FUNCTIONS ================= -->
+<div class="part">Part 2 — Scope &amp; Functions</div>
+
+<section id="s5">
+<h3>5. Execution Context &amp; the Call Stack</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>An <b>execution context</b> is the workspace JavaScript sets up each time a function runs — a box holding that function's variables.</p>
+<p>The <b>call stack</b> is the pile of those boxes. When a function calls another, a new box goes on top. When a function finishes, its box is removed.</p>
+<p class="analogy">Like a stack of plates: you add to the top and remove from the top. The bottom plate can't leave until everything above it is gone — which is why a function that calls itself forever crashes with "maximum call stack size exceeded".</p></div>
+<p>Every time a function is called, the engine creates an <b>execution context</b> and <b>pushes</b> it (puts it on top) onto the <b>call stack</b>. When the function returns, the context is <b>popped</b> (taken off the top).</p>
+<p>Each context holds three things:</p>
+<ul>
+<li>a <b>variable environment</b> — the function's own variables and parameters;</li>
+<li>a <b>scope chain</b> — a link to the outer code, so it can find variables defined outside;</li>
+<li>a <b><code>this</code> binding</b> — which object <code>this</code> refers to for this call.</li>
+</ul>
+<p>The stack is <b>LIFO</b> — "last in, first out". The last function called is the first one to finish.</p>
+<figure class="diagram">
+<svg viewBox="0 0 620 270" role="img" aria-label="Call stack diagram showing global context at the bottom, then first(), then second() on top, with each frame popping off as it returns.">
+  <text class="d-accent-text" x="150" y="20" text-anchor="middle">CALL STACK (LIFO)</text>
+
+  <rect class="d-box-accent" x="40" y="34"  width="220" height="40" rx="6"/>
+  <text class="d-mono" x="56" y="59">second()  ← running now</text>
+
+  <rect class="d-box" x="40" y="82"  width="220" height="40" rx="6"/>
+  <text class="d-mono" x="56" y="107">first()   ← paused</text>
+
+  <rect class="d-box" x="40" y="130" width="220" height="40" rx="6"/>
+  <text class="d-mono" x="56" y="155">Global    ← paused</text>
+
+  <path class="d-line-accent" d="M276 54 H300"/>
+  <path class="d-arrow-accent" d="M306 54 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="284" y="40">push / pop here</text>
+
+  <text class="d-accent-text" x="450" y="20" text-anchor="middle">EACH FRAME HOLDS</text>
+  <rect class="d-box" x="330" y="34" width="250" height="136" rx="7"/>
+  <text class="d-label" x="348" y="58">• Variable environment</text>
+  <text class="d-sub"   x="360" y="74">let / const / var / params</text>
+  <text class="d-label" x="348" y="98">• Scope chain</text>
+  <text class="d-sub"   x="360" y="114">link to the OUTER scope</text>
+  <text class="d-label" x="348" y="138">• this binding</text>
+  <text class="d-sub"   x="360" y="154">decided by the call site</text>
+
+  <text class="d-sub" x="300" y="200" text-anchor="middle">When second() returns, its frame pops and its local variables become garbage —</text>
+  <text class="d-sub" x="300" y="218" text-anchor="middle">UNLESS a closure still references them.</text>
+  <text class="d-sub" x="300" y="246" text-anchor="middle">Infinite recursion never pops → "Maximum call stack size exceeded".</text>
+</svg>
+<figcaption>Each box on the stack is called a <b>frame</b>. Only the top frame runs; every frame below it is paused. That one-at-a-time rule is what "single-threaded" means in practice.</figcaption>
+</figure>
+<h4>Two phases per context</h4>
+<p>Each context is built in two steps:</p>
+<ol>
+<li><b>Creation</b> — the engine scans the code first. It sets aside memory for every declared variable and function, links up the scope chain, and decides <code>this</code>. No code runs yet. This is where hoisting happens (section 6).</li>
+<li><b>Execution</b> — the engine now runs the code line by line, filling in the real values.</li>
+</ol>
+<p class="analogy">Like setting a table before a meal: first you lay out a labelled plate for each guest (creation), then the food actually arrives (execution).</p>
+</section>
+
+<section id="s6">
+<h3>6. Hoisting &amp; the Temporal Dead Zone</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Hoisting</b> means JavaScript notices all your variable and function names <i>before</i> running the code — so it already knows they exist.</p>
+<p>But knowing a name exists isn't the same as knowing its value. <code>var</code> gets a temporary <code>undefined</code>; <code>let</code> and <code>const</code> get nothing at all, and using them early throws an error. That error zone is the <b>Temporal Dead Zone (TDZ)</b>.</p>
+<p class="analogy">Like a guest list read out before the party: the name is on the list, but the person hasn't arrived yet. <code>var</code> lets you shout at an empty chair; <code>let</code> stops you and says "not here yet".</p></div>
+<p>During the creation phase (section 5), every declaration is noted down before any code runs. What happens next depends on the keyword:</p>
+<ul>
+<li><code>var</code> is <b>initialised</b> (given a starting value) to <code>undefined</code>.</li>
+<li><code>let</code> and <code>const</code> are noted but left <b>uninitialised</b> — no value at all. From the start of the scope until their declaration line, they're in the TDZ. Touching them there throws a <code>ReferenceError</code>.</li>
+</ul>
+<figure class="diagram">
+<svg viewBox="0 0 620 250" role="img" aria-label="Timeline showing var initialised as undefined from the start of scope, while let and const sit in a temporal dead zone until their declaration line is reached.">
+  <text class="d-accent-text" x="310" y="20" text-anchor="middle">SCOPE TIMELINE →</text>
+
+  <text class="d-sub" x="8" y="58">var x</text>
+  <rect class="d-box" x="70" y="42" width="180" height="26" rx="5"/>
+  <text class="d-sub" x="160" y="59" text-anchor="middle">undefined</text>
+  <rect class="d-fill-accent" x="250" y="42" width="300" height="26" rx="5"/>
+  <rect class="d-box-accent"  x="250" y="42" width="300" height="26" rx="5"/>
+  <text class="d-sub" x="400" y="59" text-anchor="middle">value assigned</text>
+
+  <text class="d-sub" x="8" y="108">let y</text>
+  <rect class="d-box" x="70" y="92" width="180" height="26" rx="5"/>
+  <text class="d-sub" x="160" y="109" text-anchor="middle">TDZ — ReferenceError</text>
+  <rect class="d-fill-accent" x="250" y="92" width="300" height="26" rx="5"/>
+  <rect class="d-box-accent"  x="250" y="92" width="300" height="26" rx="5"/>
+  <text class="d-sub" x="400" y="109" text-anchor="middle">value assigned</text>
+
+  <text class="d-sub" x="8" y="158">fn()</text>
+  <rect class="d-fill-accent" x="70" y="142" width="480" height="26" rx="5"/>
+  <rect class="d-box-accent"  x="70" y="142" width="480" height="26" rx="5"/>
+  <text class="d-sub" x="310" y="159" text-anchor="middle">function declarations are fully hoisted — callable anywhere</text>
+
+  <path class="d-dash" d="M250 32 V186"/>
+  <text class="d-accent-text" x="250" y="204" text-anchor="middle">the declaration line</text>
+
+  <path class="d-line" d="M70 224 H550"/>
+  <path class="d-arrow" d="M556 224 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="78" y="242">scope starts</text>
+</svg>
+<figcaption>Everything is hoisted. What differs is whether it gets a starting value (<i>initialised</i>). The TDZ turns a silent <code>undefined</code> bug into a loud error you can see and fix.</figcaption>
+</figure>
+<pre><code>console.log(a);  // undefined      — var is hoisted AND initialised
+console.log(b);  // ReferenceError — b is in the TDZ
+var a = 1;
+let b = 2;
+
+greet();               // "hi" — function declarations hoist completely
+function greet(){ console.log("hi"); }
+
+notYet();              // TypeError: notYet is not a function
+var notYet = () =&gt; {}; // only the var binding hoisted, not the function</code></pre>
+<div class="table-wrap"><table>
+<tr><th></th><th><code>var</code></th><th><code>let</code></th><th><code>const</code></th></tr>
+<tr><td>Scope</td><td>Function</td><td>Block</td><td>Block</td></tr>
+<tr><td>Hoisted as</td><td><code>undefined</code></td><td>TDZ</td><td>TDZ</td></tr>
+<tr><td>Redeclare</td><td>Yes</td><td>No</td><td>No</td></tr>
+<tr><td>Reassign</td><td>Yes</td><td>Yes</td><td><b>No</b></td></tr>
+<tr><td>Global <code>window</code> prop</td><td>Yes</td><td>No</td><td>No</td></tr>
+</table></div>
+<p>A <b>binding</b> is the link between a name and a value. <code>const</code> locks the <b>binding</b>, not the value. You can't point <code>o</code> at something else, but you can still change what's inside it: <code>const o = {}; o.x = 1;</code> is legal.</p>
+<p>To lock the contents too, use <code>Object.freeze(o)</code>. It is <b>shallow</b> — only the top level is frozen; objects nested inside can still change.</p>
+</section>
+
+<section id="s7">
+<h3>7. The Scope Chain</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Scope</b> means "where a variable can be seen from". The <b>scope chain</b> is the search path JavaScript follows when looking for a variable: check here, then just outside, then further out, until it finds it or gives up.</p>
+<p><b>Lexical</b> is the word for "decided by where you wrote the code", not by who called the function. You can tell the path just by looking at the file.</p>
+<p class="analogy">Like looking for scissors: your desk, then the room, then the whole house. You stop at the first pair you find.</p></div>
+<p>When you read a variable, the engine looks in the current scope first. If it isn't there, it looks one level out, then the next, all the way to the <b>global scope</b> (the outermost level of the file). If it's still not found, you get a <code>ReferenceError</code>.</p>
+<p>This path is fixed by <b>where the code is written</b> (lexical scoping), not by who calls the function.</p>
+<pre><code>const g = "global";
+function outer() {
+  const o = "outer";
+  function inner() {
+    const i = "inner";
+    console.log(i, o, g);   // reaches all three by walking up
+  }
+  inner();
+}
+// inner → outer → global → ReferenceError if still not found</code></pre>
+<h4>Block scope in practice</h4>
+<p>A <b>block</b> is any code between curly braces <code>{ }</code> — an <code>if</code>, a loop, and so on. <code>let</code> and <code>const</code> stay inside their block. <code>var</code> ignores blocks and only respects function boundaries.</p>
+<pre><code>if (true) { var v = 1; let l = 2; }
+console.log(v);   // 1 — var ignores blocks
+console.log(l);   // ReferenceError
+
+for (var i = 0; i &lt; 3; i++) {}
+console.log(i);   // 3 — leaked to function scope
+for (let j = 0; j &lt; 3; j++) {}
+console.log(j);   // ReferenceError — contained</code></pre>
+<div class="note"><b>Shadowing:</b> an inner variable with the same name hides the outer one. For example, <code>const x = 1; function f(){ const x = 2; }</code> — inside <code>f</code>, <code>x</code> is 2. It's legal, but in a long function it makes code hard to read.</div>
+</section>
+
+<section id="s8">
+<h3>8. Closures</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>closure</b> is a function that remembers the variables from where it was created — even long after that surrounding code has finished.</p>
+<p>Normally when a function ends, its variables are thrown away. But if an inner function still needs them, JavaScript keeps them alive just for it.</p>
+<p class="analogy">Like taking a photo of your desk before leaving the office. The desk is gone, but you can still read what was on it — and nobody else can see your photo.</p></div>
+<p>The formal definition: a closure is a function bundled together with the <b>lexical environment where it was defined</b>. "Lexical environment" just means the variables that were in scope at the spot where the function was written.</p>
+<p>When the outer function returns, its variables would normally be <b>garbage collected</b> (thrown away to free memory). But the inner function still holds a <b>live reference</b> to them — a real link, not a copy — so they survive. If the closure changes them, the next call sees the change.</p>
+<figure class="diagram">
+<svg viewBox="0 0 620 280" role="img" aria-label="Closure diagram: counter() has returned and its frame is gone from the stack, but the returned function still holds a reference to the count variable living on in the heap.">
+  <text class="d-sub" x="120" y="20" text-anchor="middle">CALL STACK</text>
+  <rect class="d-box" x="24" y="30" width="196" height="58" rx="7" opacity=".45"/>
+  <text class="d-mono" x="40" y="55" opacity=".5">counter()</text>
+  <text class="d-sub"  x="40" y="74" opacity=".5">— returned, popped —</text>
+
+  <rect class="d-box" x="24" y="100" width="196" height="40" rx="7"/>
+  <text class="d-mono" x="40" y="125">Global</text>
+
+  <rect class="d-fill-accent" x="24" y="152" width="196" height="46" rx="7"/>
+  <rect class="d-box-accent"  x="24" y="152" width="196" height="46" rx="7"/>
+  <text class="d-mono" x="40" y="172">const c = {inc, get}</text>
+  <text class="d-sub"  x="40" y="190">holds a closure ●───</text>
+
+  <text class="d-sub" x="450" y="20" text-anchor="middle">HEAP — kept alive</text>
+  <rect class="d-box" x="320" y="30" width="270" height="168" rx="7"/>
+
+  <rect class="d-box-accent" x="344" y="52" width="222" height="52" rx="6"/>
+  <text class="d-accent-text" x="360" y="74">Closure scope</text>
+  <text class="d-mono"  x="360" y="94">count: 2</text>
+
+  <rect class="d-box" x="344" y="120" width="222" height="60" rx="6"/>
+  <text class="d-mono" x="360" y="142">inc: () =&gt; ++count</text>
+  <text class="d-mono" x="360" y="164">get: () =&gt; count</text>
+
+  <path class="d-line-accent" d="M222 178 C 270 178, 280 90, 338 82"/>
+  <path class="d-arrow-accent" d="M344 81 l-9 -3.5 v9 z"/>
+  <path class="d-dash" d="M420 120 V108"/>
+  <path class="d-arrow" d="M420 102 l-4 8 h8 z"/>
+
+  <text class="d-sub" x="310" y="228" text-anchor="middle">count is unreachable from outside — no one can read or corrupt it except inc and get.</text>
+  <text class="d-sub" x="310" y="252" text-anchor="middle">This is genuine private state, and the basis of the module pattern.</text>
+</svg>
+<figcaption>The function's stack frame is gone, but its variables live on in the heap, because a closure still points at them.</figcaption>
+</figure>
+<pre><code>function counter() {
+  let count = 0;                    // private
+  return {
+    inc: () =&gt; ++count,
+    get: () =&gt; count,
+  };
+}
+const c = counter();
+c.inc(); c.inc();
+c.get();        // 2
+c.count;        // undefined — genuinely inaccessible</code></pre>
+<h4>The loop question, explained</h4>
+<pre><code>for (var i = 0; i &lt; 3; i++) setTimeout(() =&gt; console.log(i));  // 3 3 3
+for (let i = 0; i &lt; 3; i++) setTimeout(() =&gt; console.log(i));  // 0 1 2</code></pre>
+<p><code>var</code> creates <b>one</b> variable <code>i</code> shared by the whole loop. All three callbacks "close over" (remember) that same variable. The timers only run after the loop has finished, and by then <code>i</code> is 3 — so all three print 3.</p>
+<p><code>let</code> creates a <b>fresh variable for each iteration</b> (each pass through the loop). So each callback remembers its own <code>i</code>: 0, 1 and 2.</p>
+<p>Before <code>let</code> existed (pre-ES6, i.e. before 2015), people used an <b>IIFE</b> — an Immediately Invoked Function Expression, a function that runs the moment it's defined — to create a new scope on each pass:</p>
+<pre><code>// The pre-ES6 fix — an IIFE to force a new scope per iteration
+for (var i = 0; i &lt; 3; i++) {
+  (function (j) { setTimeout(() =&gt; console.log(j)); })(i);
+}</code></pre>
+<h4>Closures in real code</h4>
+<p>Each helper below returns a new function that remembers a private variable (<code>timer</code>, <code>waiting</code>, <code>called</code>, <code>cache</code>) between calls. That remembered variable is the closure.</p>
+<ul>
+<li><b>Debounce</b> — wait until calls stop for a moment, then run once.</li>
+<li><b>Throttle</b> — run at most once per time window, however often it's called.</li>
+<li><b>Once</b> — run only the first time; later calls return the first result.</li>
+<li><b>Memoize</b> — remember (cache) results so the same input isn't worked out twice.</li>
+</ul>
+<pre><code>// Debounce — fire only after activity stops
+function debounce(fn, delay = 300) {
+  let timer;                                   // ← closed over
+  return (...args) =&gt; {
+    clearTimeout(timer);
+    timer = setTimeout(() =&gt; fn.apply(this, args), delay);
+  };
+}
+
+// Throttle — at most once per interval
+function throttle(fn, limit = 300) {
+  let waiting = false;
+  return (...args) =&gt; {
+    if (waiting) return;
+    fn.apply(this, args);
+    waiting = true;
+    setTimeout(() =&gt; { waiting = false; }, limit);
+  };
+}
+
+// Once — run a function a single time
+function once(fn) {
+  let called = false, result;
+  return (...args) =&gt; called ? result : (called = true, result = fn(...args));
+}
+
+// Memoize — cache results by argument
+function memoize(fn) {
+  const cache = new Map();
+  return (...args) =&gt; {
+    const key = JSON.stringify(args);
+    if (!cache.has(key)) cache.set(key, fn(...args));
+    return cache.get(key);
+  };
+}</code></pre>
+<div class="note"><b>Debounce vs throttle:</b> use debounce for search-as-you-type and window resize — only the final value matters. Use throttle for scroll and mousemove — you want steady updates while it's happening. Underneath, both are just closures holding a timer.</div>
+</section>
+
+<section id="s9">
+<h3>9. Functions in Depth</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Functions in JavaScript are <b>values</b>, just like numbers and strings. You can store one in a variable, pass it to another function, or return it.</p>
+<p>A <b>higher-order function</b> is simply one that takes or returns another function — <code>map</code>, <code>filter</code> and <code>setTimeout</code> all are.</p>
+<p class="analogy">Like handing someone a set of instructions instead of doing the task yourself — they decide when to follow it.</p></div>
+<h4>Declaration vs expression vs arrow</h4>
+<p>There are three common ways to write a function:</p>
+<ul>
+<li>A <b>declaration</b> starts with the word <code>function</code> on its own line.</li>
+<li>An <b>expression</b> creates a function and stores it in a variable.</li>
+<li>An <b>arrow function</b> uses the short <code>=&gt;</code> syntax.</li>
+</ul>
+<p>"Newable" below means "can be called with <code>new</code> to build an object".</p>
+<pre><code>function decl() {}            // hoisted fully, has its own this/arguments
+const expr = function () {};  // only the binding hoists
+const arrow = () =&gt; {};       // no this, no arguments, no prototype, not newable</code></pre>
+<div class="table-wrap"><table>
+<tr><th></th><th>Regular</th><th>Arrow</th></tr>
+<tr><td><code>this</code></td><td>Call site decides</td><td>Inherited lexically, fixed</td></tr>
+<tr><td><code>arguments</code></td><td>Yes</td><td>No — use rest <code>...args</code></td></tr>
+<tr><td><code>new</code></td><td>Constructible</td><td>Throws TypeError</td></tr>
+<tr><td><code>prototype</code></td><td>Has one</td><td>None</td></tr>
+<tr><td>Hoisting</td><td>Declarations hoist</td><td>TDZ like any const</td></tr>
+</table></div>
+<h4>Parameters</h4>
+<p><b>Parameters</b> are the named inputs in a function's definition. A <b>default</b> value is used when the caller leaves that input out. <code>f.length</code> tells you how many parameters the function expects.</p>
+<pre><code>function f(a, b = a * 2, ...rest) {}   // defaults can reference earlier params
+f.length;                               // 1 — counts params BEFORE the first default
+function g({ id, name = "?" } = {}) {}  // destructured params with a safe default</code></pre>
+<h4>First-class functions</h4>
+<p>"First-class" means functions are treated like any other value. You can assign them to variables, pass them into other functions, return them, and store them in arrays and objects.</p>
+<p>A <b>higher-order function</b> takes or returns a function. That's all <code>map</code>, <code>filter</code>, <code>debounce</code> and <b>middleware</b> (functions that sit in the middle of a request, like in Express) really are.</p>
+<h4>IIFE and pure functions</h4>
+<p>An <b>IIFE</b> (Immediately Invoked Function Expression) is a function that runs the moment it's written. It gives you a private scope. A <b>pure function</b> always returns the same output for the same input and has no <b>side effects</b> (it doesn't change anything outside itself).</p>
+<pre><code>(function () { /* private scope */ })();
+(() =&gt; { /* modern form */ })();
+
+// Pure: same input → same output, no side effects. Easy to test and cache.
+const add = (a, b) =&gt; a + b;            // pure
+const addToCart = (item) =&gt; cart.push(item);  // impure — mutates outside state</code></pre>
+</section>
+
+<section id="s10">
+<h3>10. <code>this</code> &amp; Binding</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><code>this</code> means "the object I'm currently working on". The catch: its value is decided by <b>how the function gets called</b>, not where it was written.</p>
+<p>The same function can have a different <code>this</code> on two different lines. That's why it confuses people — and why arrow functions, which never get their own <code>this</code>, are often the simpler choice.</p>
+<p class="analogy">Like the word "here". What it means depends entirely on where you're standing when you say it.</p></div>
+<p><code>this</code> is decided by <b>how a function is called</b> (the <b>call site</b> — the line where it's called), not where it's defined. To work it out, check the rules below in order. The first one that matches wins.</p>
+<figure class="diagram">
+<svg viewBox="0 0 620 250" role="img" aria-label="Decision flow for determining the value of this: arrow function uses lexical scope, new binds the instance, call or bind binds the given object, method call binds the object before the dot, otherwise undefined or window.">
+  <rect class="d-box-accent" x="180" y="12" width="260" height="34" rx="6"/>
+  <text class="d-accent-text" x="310" y="34" text-anchor="middle">How was the function called?</text>
+
+  <path class="d-line" d="M310 46 V64"/>
+
+  <rect class="d-box" x="24" y="64" width="250" height="32" rx="6"/>
+  <text class="d-mono" x="38" y="85">1. Arrow function?</text>
+  <rect class="d-fill-accent" x="300" y="64" width="290" height="32" rx="6"/>
+  <text class="d-label" x="316" y="85">→ lexical — from the enclosing scope</text>
+
+  <rect class="d-box" x="24" y="106" width="250" height="32" rx="6"/>
+  <text class="d-mono" x="38" y="127">2. new Fn()</text>
+  <rect class="d-fill-accent" x="300" y="106" width="290" height="32" rx="6"/>
+  <text class="d-label" x="316" y="127">→ the brand-new object</text>
+
+  <rect class="d-box" x="24" y="148" width="250" height="32" rx="6"/>
+  <text class="d-mono" x="38" y="169">3. fn.call/apply/bind(o)</text>
+  <rect class="d-fill-accent" x="300" y="148" width="290" height="32" rx="6"/>
+  <text class="d-label" x="316" y="169">→ o, explicitly</text>
+
+  <rect class="d-box" x="24" y="190" width="250" height="32" rx="6"/>
+  <text class="d-mono" x="38" y="211">4. obj.fn()</text>
+  <rect class="d-fill-accent" x="300" y="190" width="290" height="32" rx="6"/>
+  <text class="d-label" x="316" y="211">→ obj — whatever is left of the dot</text>
+
+  <path class="d-line" d="M149 96 V106"/><path class="d-line" d="M149 138 V148"/>
+  <path class="d-line" d="M149 180 V190"/>
+  <text class="d-sub" x="310" y="242" text-anchor="middle">5. Plain fn() → undefined in strict mode / modules, otherwise globalThis</text>
+</svg>
+<figcaption>Work down the list; the first rule that applies decides <code>this</code>. Arrow functions come first because they never get their own <code>this</code> — they borrow it from the code around them. ("Strict mode" in rule 5 is a safer mode of JS, switched on with <code>"use strict"</code> and always on inside modules and classes.)</figcaption>
+</figure>
+<pre><code>const user = {
+  name: "Ada",
+  regular() { return this.name; },
+  arrow: () =&gt; this?.name,
+};
+user.regular();               // "Ada"
+user.arrow();                 // undefined — `this` came from the module scope
+
+const fn = user.regular;
+fn();                         // undefined — lost the object on assignment
+fn.call(user);                // "Ada"
+fn.bind(user)();              // "Ada" — permanently bound</code></pre>
+<h4>The callback trap</h4>
+<p>When you pass a regular function as a callback, the code that calls it later calls it plainly — not as <code>obj.fn()</code>. So <code>this</code> is lost. An arrow function fixes it because it keeps the <code>this</code> of the surrounding method.</p>
+<pre><code>class Timer {
+  constructor() { this.secs = 0; }
+  broken() { setInterval(function () { this.secs++; }, 1000); }  // this = window
+  fixed()  { setInterval(() =&gt; { this.secs++; }, 1000); }        // arrow inherits
+}</code></pre>
+<h4>call vs apply vs bind</h4>
+<p>All three let you choose <code>this</code> yourself. <code>call</code> and <code>apply</code> run the function right now; <code>bind</code> gives you back a new function to run later. <b>Partial application</b> means fixing some arguments in advance.</p>
+<p class="analogy">Memory trick: <b>A</b>pply takes an <b>A</b>rray; <b>C</b>all takes <b>C</b>ommas.</p>
+<pre><code>fn.call(ctx, a, b);      // invoke now, args listed
+fn.apply(ctx, [a, b]);   // invoke now, args in an array
+const bound = fn.bind(ctx, a);  // returns a NEW function; partial application
+// bind is permanent — bound.call(other) still uses ctx</code></pre>
+<div class="note"><b>Losing <code>this</code></b> happens whenever a method is separated from its object — passed as a callback, pulled out with destructuring, or stored in a variable. Once separated, there's no "object before the dot" any more. The fix: wrap it in an arrow (<code>() =&gt; obj.fn()</code>) or use <code>bind</code>.</div>
+</section>
+
+<!-- ================= OBJECTS ================= -->
+<div class="part">Part 3 — Objects</div>
+
+<section id="s11">
+<h3>11. Objects in Depth</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>An <b>object</b> is a set of labelled values — a key (the label) and a value, repeated.</p>
+<p>Two things worth knowing early: keys are always text underneath (so <code>obj[1]</code> and <code>obj["1"]</code> are the same key), and objects are compared by <b>identity</b>, not contents — two objects with identical values are still not equal.</p>
+<p class="analogy">Two identical twins are still two different people. <code>{a:1} === {a:1}</code> is false for the same reason — same looks, different objects.</p></div>
+<p>The example below shows the main ways to write keys. A <b>computed key</b> uses a variable's value as the key name. A <b>getter</b> is a property that runs a function when you read it; a <b>setter</b> runs a function when you assign to it.</p>
+<pre><code>const key = "dynamic";
+const obj = {
+  a: 1,
+  [key]: 2,              // computed key
+  method() {},           // shorthand
+  get full() { return this.a; },   // getter
+  set full(v) { this.a = v; },     // setter
+};
+
+obj.a; obj["a"];                  // dot vs bracket (bracket for dynamic keys)
+delete obj.a;
+"a" in obj;                       // true — includes inherited
+Object.hasOwn(obj, "a");          // own properties only (modern)
+obj.hasOwnProperty("a");          // older form</code></pre>
+<h4>Iterating</h4>
+<pre><code>Object.keys(o);     Object.values(o);     Object.entries(o);
+Object.fromEntries(entries);            // rebuild from [k,v] pairs
+for (const [k, v] of Object.entries(o)) {}
+
+// for...in also walks the prototype chain — usually not what you want
+for (const k in o) if (Object.hasOwn(o, k)) {}</code></pre>
+<h4>Property descriptors</h4>
+<p>Every property has hidden settings called <b>descriptors</b>: <code>writable</code> (can the value change?), <code>enumerable</code> (does it show up in loops and <code>Object.keys</code>?), and <code>configurable</code> (can it be deleted or its settings changed?). <code>freeze</code> blocks all changes; <code>seal</code> blocks adding or removing keys but still lets you edit existing values.</p>
+<pre><code>Object.defineProperty(o, "id", {
+  value: 1, writable: false, enumerable: false, configurable: false
+});
+Object.freeze(o);      // shallow — nested objects stay mutable
+Object.seal(o);        // can edit existing props, can't add or delete
+Object.isFrozen(o);</code></pre>
+<h4>Merging &amp; comparing</h4>
+<pre><code>const merged = { ...a, ...b };          // b wins on conflicts, shallow
+const merged2 = Object.assign({}, a, b);
+
+// Objects compare by reference — never by content
+{ a: 1 } === { a: 1 };                  // false
+JSON.stringify(a) === JSON.stringify(b);// crude deep compare (key order matters)</code></pre>
+<div class="note">Object keys are always strings (or symbols). <code>obj[1]</code> and <code>obj["1"]</code> are the same key. When you loop over an object, keys that look like whole numbers come first, sorted smallest to largest. Other string keys follow, in the order you added them. Example: <code>{b:1, 2:1, a:1, 1:1}</code> loops as <code>1, 2, b, a</code>.</div>
+</section>
+
+<section id="s12">
+<h3>12. Prototypes &amp; the Prototype Chain</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>prototype</b> is a backup object. When you ask an object for something it doesn't have, JavaScript checks its backup — then that backup's backup, and so on. That search path is the <b>prototype chain</b>.</p>
+<p>This is how one object borrows abilities from another, and it's the only inheritance JavaScript actually has.</p>
+<p class="analogy">Like asking your older sibling when you don't know something, who asks a parent, who asks a grandparent. Eventually someone answers — or nobody does, and you get <code>undefined</code>.</p></div>
+<p>Every object has a hidden link to another object — its <b>prototype</b> (written <code>[[Prototype]]</code> in the spec). When you read a property, JS checks the object itself, then follows this link, then the next one, until it finds a match or reaches <code>null</code> (the end).</p>
+<p><b>Inheritance</b> means one object getting abilities from another. This chain of links is JavaScript's entire inheritance model.</p>
+<figure class="diagram">
+<svg viewBox="0 0 620 320" role="img" aria-label="Prototype chain from a dog instance up through Dog.prototype, Animal.prototype, Object.prototype, ending at null, showing where speak and toString are found.">
+  <rect class="d-box-accent" x="200" y="12" width="220" height="52" rx="7"/>
+  <text class="d-mono"  x="216" y="34">rex = { name: "Rex" }</text>
+  <text class="d-sub"   x="216" y="52">the instance — own props only</text>
+
+  <rect class="d-box" x="200" y="88" width="220" height="52" rx="7"/>
+  <text class="d-mono" x="216" y="110">Dog.prototype</text>
+  <text class="d-sub"  x="216" y="128">bark()  ·  fetch()</text>
+
+  <rect class="d-box" x="200" y="164" width="220" height="52" rx="7"/>
+  <text class="d-mono" x="216" y="186">Animal.prototype</text>
+  <text class="d-accent-text" x="216" y="204">speak()   ← found here</text>
+
+  <rect class="d-box" x="200" y="240" width="220" height="52" rx="7"/>
+  <text class="d-mono" x="216" y="262">Object.prototype</text>
+  <text class="d-sub"  x="216" y="280">toString()  ·  hasOwnProperty()</text>
+
+  <path class="d-line-accent" d="M310 64 V82"/><path class="d-arrow-accent" d="M310 88 l-4.5 -9 h9 z"/>
+  <path class="d-line-accent" d="M310 140 V158"/><path class="d-arrow-accent" d="M310 164 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M310 216 V234"/><path class="d-arrow" d="M310 240 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M310 292 V308"/>
+  <text class="d-sub" x="310" y="318" text-anchor="middle">null — end of the chain</text>
+
+  <text class="d-sub" x="436" y="76">[[Prototype]]</text>
+  <text class="d-sub" x="436" y="152">[[Prototype]]</text>
+  <text class="d-sub" x="436" y="228">[[Prototype]]</text>
+
+  <text class="d-accent-text" x="128" y="34" text-anchor="middle">rex.speak()</text>
+  <text class="d-sub" x="128" y="58" text-anchor="middle">not own…</text>
+  <text class="d-sub" x="128" y="76" text-anchor="middle">not on Dog…</text>
+  <text class="d-accent-text" x="128" y="94" text-anchor="middle">found on Animal ✓</text>
+  <path class="d-dash" d="M40 104 V190 H194"/>
+  <path class="d-arrow" d="M200 190 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="128" y="218" text-anchor="middle">`this` is still rex</text>
+</svg>
+<figcaption>The search walks up the chain, but <code>this</code> still points at the original object (<code>rex</code>). A missing property returns <code>undefined</code> only after the whole chain has been searched.</figcaption>
+</figure>
+<pre><code>const animal = { speak() { return `${this.name} makes a sound`; } };
+const dog = Object.create(animal);      // dog.__proto__ === animal
+dog.name = "Rex";
+dog.speak();                            // "Rex makes a sound"
+
+Object.getPrototypeOf(dog) === animal;  // true — the modern accessor
+dog.hasOwnProperty("speak");            // false — it's inherited
+"speak" in dog;                         // true  — in follows the chain</code></pre>
+<h4>Constructor functions (the pre-class form)</h4>
+<p>A <b>constructor function</b> is a normal function meant to be called with <code>new</code> to build objects. This is how "classes" were written before the <code>class</code> keyword existed.</p>
+<pre><code>function Animal(name) { this.name = name; }
+Animal.prototype.speak = function () { return this.name + " speaks"; };
+
+const a = new Animal("Rex");
+// `new` does four things:
+//   1. create {}          2. link its [[Prototype]] to Animal.prototype
+//   3. bind this and run  4. return this (unless you return an object)</code></pre>
+<h4>Shadowing</h4>
+<p>If you give an object its own property with the same name as one on its prototype, the object's own one wins. The prototype's version is hidden, not changed.</p>
+<pre><code>dog.speak = () =&gt; "custom";   // writes an OWN property; the prototype is untouched
+delete dog.speak;             // removes the shadow, the inherited one is visible again</code></pre>
+<div class="note"><b>Why methods go on the prototype:</b> there's one shared copy for every <b>instance</b> (every object made from the constructor). If you define methods inside the constructor instead, each instance gets its own new copy of every function — wasteful when you have thousands of objects.</div>
+</section>
+
+<section id="s13">
+<h3>13. Classes</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>class</b> is a blueprint for making objects that all share the same shape and abilities.</p>
+<p><b>"Syntactic sugar"</b> means it's a nicer way to write something that already existed — classes are just prototypes (section 12) with cleaner spelling. Nothing new was added to the language underneath.</p>
+<p class="analogy">A cookie cutter. The class is the cutter; each cookie you make with it is an instance.</p></div>
+<p>Classes are <b>syntactic sugar over prototypes</b> — a nicer way of writing, not a new system underneath. Proof: <code>typeof Dog === "function"</code> (a class is really a function), and its methods still live on <code>Dog.prototype</code>.</p>
+<p>Key words in the example: <code>static</code> puts something on the class itself rather than on each object; <code>#</code> makes a field truly <b>private</b> (unreadable from outside); <code>extends</code> makes one class inherit from another; <code>super</code> calls the parent class.</p>
+<pre><code>class Animal {
+  static count = 0;               // on the class itself
+  #secret = "private";            // true private — enforced by the engine
+  constructor(name) { this.name = name; Animal.count++; }
+  speak() { return `${this.name} speaks`; }        // → Animal.prototype
+  get label() { return this.name.toUpperCase(); }  // getter
+  static create(n) { return new Animal(n); }       // called as Animal.create()
+  #hidden() {}                                     // private method
+}
+
+class Dog extends Animal {
+  constructor(name, breed) {
+    super(name);                  // MUST come before using `this`
+    this.breed = breed;
+  }
+  speak() { return `${super.speak()} — woof`; }
+}</code></pre>
+<h4>Differences from functions</h4>
+<ul>
+<li>You can't use a class before the line that declares it. It's hoisted but sits in the TDZ, like <code>let</code>.</li>
+<li>Code inside a class always runs in <b>strict mode</b> (JS's stricter, safer mode).</li>
+<li>Calling a class without <code>new</code> throws a TypeError.</li>
+<li><code>#private</code> fields truly can't be reached from outside. The older <code>_underscore</code> naming habit was only a polite "please don't touch" — anyone could still read it.</li>
+</ul>
+<h4>Class fields and <code>this</code></h4>
+<p>A normal method lives on the prototype, so it loses <code>this</code> when pulled off the object. An arrow function stored as a <b>field</b> is created per object when it's built, and it locks in that object as <code>this</code>.</p>
+<pre><code>class Button {
+  label = "Click";                       // instance field
+  handleA() { console.log(this.label); } // on prototype — `this` can be lost
+  handleB = () =&gt; console.log(this.label); // field arrow — `this` always bound
+}
+const b = new Button();
+const { handleA, handleB } = b;
+handleA();   // TypeError — this is undefined
+handleB();   // "Click"  — arrow captured this at construction</code></pre>
+</section>
+
+<section id="s14">
+<h3>14. Arrays &amp; Iteration</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>The important split is between methods that <b>change the original array</b> (called <b>mutating</b> — to mutate means to change) and ones that <b>return a new array</b> and leave the original alone.</p>
+<p><code>push</code>, <code>splice</code>, <code>sort</code> and <code>reverse</code> change the original. <code>map</code>, <code>filter</code> and <code>slice</code> don't. Mixing these up causes bugs where data changes somewhere you didn't expect — especially in React, which relies on the original staying untouched.</p></div>
+<div class="table-wrap"><table>
+<tr><th>Method</th><th>Returns</th><th>Mutates?</th></tr>
+<tr><td><code>map</code></td><td>New array, same length</td><td>No</td></tr>
+<tr><td><code>filter</code></td><td>New array, subset</td><td>No</td></tr>
+<tr><td><code>reduce</code></td><td>Any single value</td><td>No</td></tr>
+<tr><td><code>find</code> / <code>findIndex</code></td><td>First match / index</td><td>No</td></tr>
+<tr><td><code>some</code> / <code>every</code></td><td>Boolean</td><td>No</td></tr>
+<tr><td><code>slice(s, e)</code></td><td>Copy of a range</td><td>No</td></tr>
+<tr><td><code>splice(s, n, ...add)</code></td><td>Removed items</td><td><b>Yes</b></td></tr>
+<tr><td><code>sort</code> / <code>reverse</code></td><td>The same array</td><td><b>Yes</b></td></tr>
+<tr><td><code>push/pop/shift/unshift</code></td><td>Length / element</td><td><b>Yes</b></td></tr>
+<tr><td><code>flat(d)</code> / <code>flatMap</code></td><td>Flattened copy</td><td>No</td></tr>
+<tr><td><code>at(-1)</code></td><td>Element, negative OK</td><td>No</td></tr>
+<tr><td><code>toSorted</code>/<code>toReversed</code>/<code>with</code></td><td>New array</td><td>No — modern, safe</td></tr>
+</table></div>
+<h4>reduce is the general case</h4>
+<p><code>reduce</code> walks through the array and builds up one result as it goes. That running result is called the <b>accumulator</b> (<code>sum</code> or <code>acc</code> below). The last argument (<code>0</code>, <code>{}</code>, <code>[]</code>) is its starting value.</p>
+<pre><code>const total = items.reduce((sum, i) =&gt; sum + i.price, 0);
+
+// group by a key
+const byRole = users.reduce((acc, u) =&gt; {
+  (acc[u.role] ||= []).push(u);
+  return acc;
+}, {});
+
+// map and filter are both reduce underneath
+const doubled = nums.reduce((a, n) =&gt; [...a, n * 2], []);</code></pre>
+<h4>sort — the classic trap</h4>
+<p>By default, <code>sort</code> turns every item into a string and sorts alphabetically. So <code>"10"</code> comes before <code>"9"</code>, just as "apple" comes before "banana". Pass a compare function to sort numbers properly.</p>
+<pre><code>[10, 9, 1].sort();                  // [1, 10, 9] — sorts as STRINGS
+[10, 9, 1].sort((a, b) =&gt; a - b);   // [1, 9, 10]
+users.sort((a, b) =&gt; a.name.localeCompare(b.name));   // proper string sort
+const copy = [...items].sort(fn);   // sort mutates — copy first</code></pre>
+<h4>Loop choice</h4>
+<pre><code>for (const v of arr) {}        // values; supports break/continue and await
+for (const k in obj) {}        // KEYS, includes inherited — avoid on arrays
+arr.forEach(fn);               // can't break; IGNORES async callbacks
+
+// The forEach async bug
+items.forEach(async i =&gt; { await save(i); });
+console.log("done");           // prints BEFORE any save finishes ✗
+
+for (const i of items) await save(i);            // sequential ✓
+await Promise.all(items.map(i =&gt; save(i)));      // parallel ✓</code></pre>
+<h4>Sparse arrays &amp; holes</h4>
+<p>A <b>sparse array</b> has "holes" — slots that were never filled in at all (different from holding <code>undefined</code>). Most array methods skip holes, which can be confusing.</p>
+<pre><code>const a = [1, , 3];
+a.length;                    // 3
+a.map(x =&gt; x * 2);           // [2, &lt;1 empty&gt;, 6] — map SKIPS holes
+Array.from({length: 3}, (_, i) =&gt; i);  // [0,1,2] — the safe way to build
+new Array(3).fill(0);                  // [0,0,0]</code></pre>
+</section>
+
+<section id="s15">
+<h3>15. Map, Set, Symbol &amp; friends</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>Map</b> is a lookup table — like an object, but its keys can be <i>anything</i>, not just text, and it remembers the order you added things.</p>
+<p>A <b>Set</b> is a list that automatically refuses duplicates. Add the same value twice and it's still only there once.</p>
+<p>A <b>Symbol</b> is a guaranteed-unique label, used for keys nobody will accidentally overwrite.</p>
+<p class="analogy">A Set is like a guest list — writing the same name twice doesn't invite that person twice. A Map is like a coat check — you can hand in anything (even an object) and get a ticket for it.</p></div>
+<div class="table-wrap"><table>
+<tr><th></th><th>Object</th><th>Map</th></tr>
+<tr><td>Keys</td><td>String / Symbol only</td><td><b>Any type</b>, including objects</td></tr>
+<tr><td>Order</td><td>Integer keys first, then insertion</td><td>Pure insertion order</td></tr>
+<tr><td>Size</td><td><code>Object.keys(o).length</code></td><td><code>map.size</code></td></tr>
+<tr><td>Iterating</td><td>Needs <code>Object.entries</code></td><td>Directly iterable</td></tr>
+<tr><td>Performance</td><td>Fine for fixed shapes</td><td>Better for frequent add/delete</td></tr>
+</table></div>
+<pre><code>const m = new Map();
+m.set("a", 1).set(objKey, 2);
+m.get("a"); m.has("a"); m.delete("a"); m.size;
+for (const [k, v] of m) {}
+Object.fromEntries(m);            // → plain object
+
+const s = new Set([1, 2, 2, 3]);
+s.size;                           // 3 — duplicates dropped
+[...new Set(arr)];                // deduplicate an array
+s.add(4); s.has(2); s.delete(1);</code></pre>
+<h4>WeakMap &amp; WeakSet</h4>
+<p>In a WeakMap or WeakSet, keys must be objects, and they are held <b>weakly</b>. That means the WeakMap doesn't keep the key alive: if nothing else in your code points to the key object, the entry is garbage collected (removed automatically).</p>
+<p>Because entries can vanish at any time, you can't loop over them (not <b>iterable</b>) and there's no <code>.size</code>.</p>
+<p>They're perfect for attaching <b>metadata</b> (extra info about something) to DOM nodes without causing a <b>memory leak</b> (memory that's never freed).</p>
+<pre><code>const meta = new WeakMap();
+meta.set(domNode, { clicks: 0 });
+// when domNode is removed and dereferenced, the entry disappears automatically</code></pre>
+<h4>Symbols</h4>
+<p>Every <code>Symbol()</code> is unique, even if two have the same description. Symbol keys are hidden from normal listing. <b>Well-known symbols</b> like <code>Symbol.iterator</code> are special keys that let your object plug into built-in language features, such as <code>for...of</code> and spread.</p>
+<pre><code>const id = Symbol("id");          // always unique, even with the same description
+obj[id] = 123;                    // hidden from Object.keys and JSON.stringify
+Symbol.for("app");                // global registry — same symbol every call
+
+// Well-known symbols hook into language behaviour
+obj[Symbol.iterator] = function* () { yield 1; };   // makes obj spreadable</code></pre>
+</section>
+
+<section id="s16">
+<h3>16. Destructuring, Spread &amp; Rest</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Destructuring</b> means unpacking values out of an object or array into their own variables, in one line instead of several.</p>
+<p><b>Spread</b> (<code>...</code>) pours the contents of one thing into another — copying or combining.</p>
+<p><b>Rest</b> (also <code>...</code>) does the opposite: it gathers leftover items into a single group. Same three dots, opposite direction — which side of the <code>=</code> it sits on tells you which one it is.</p>
+<p class="analogy">Spread is emptying a bag of shopping onto the table. Rest is sweeping whatever's left on the table back into one bag.</p></div>
+<pre><code>// objects
+const { a, b: renamed, c = 10, ...rest } = obj;
+const { user: { address: { city } = {} } = {} } = data;   // nested, with guards
+
+// arrays
+const [first, , third = 0] = arr;      // skip with a bare comma
+[x, y] = [y, x];                       // swap without a temp
+
+// parameters
+function f({ id, name = "?" } = {}) {}
+const handler = ({ target: { value } }) =&gt; value;   // destructure an event</code></pre>
+<h4>Spread vs rest — same <code>...</code>, opposite jobs</h4>
+<pre><code>// SPREAD — expands
+const merged = { ...a, ...b };
+const combined = [...arr1, ...arr2];
+Math.max(...nums);
+const copy = [...arr];             // shallow copy
+
+// REST — collects
+function sum(...nums) {}           // must be the LAST parameter
+const [head, ...tail] = arr;
+const { id, ...others } = obj;     // omit a key cleanly</code></pre>
+<div class="note">Spread is always a <b>shallow</b> copy — only the top level is copied. <code>{...user}</code> copies <code>user.address</code> as the same reference (the same nested object). So changing <code>copy.address.city</code> also changes the original's city.</div>
+</section>
+
+<!-- ================= ASYNC ================= -->
+<div class="part">Part 4 — Asynchronous JavaScript</div>
+
+<section id="s17">
+<h3>17. The Event Loop</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>JavaScript can only do one thing at a time. So when something slow comes up — waiting for a server, a timer — it hands that job to the browser and carries on.</p>
+<p>The <b>event loop</b> is the system that checks "am I free now?" and, if so, runs the next finished job's callback.</p>
+<p>A <b>microtask</b> is a high-priority job (promises). A <b>macrotask</b> is a normal one (<code>setTimeout</code>, clicks). <mark>All microtasks run before the next macrotask</mark> — that one rule answers most "what prints first?" questions.</p>
+<p class="analogy">A chef who puts a cake in the oven and keeps cooking instead of standing there watching. When the timer dings, they deal with it — but only once they've finished what's in their hands.</p></div>
+<p>JavaScript has <b>one</b> call stack, so it does one thing at a time.</p>
+<p>So how does it juggle many jobs at once (<b>concurrency</b>)? It hands slow work — timers, network requests, <b>I/O</b> (input/output, like reading files) — to the host environment (the browser or Node). The host does the waiting. When the work is done, it puts the <b>callback</b> (the function to run next) into a <b>queue</b> — a waiting line. The event loop runs it once the stack is free.</p>
+<figure class="diagram">
+<svg viewBox="0 0 640 420" role="img" aria-label="Event loop diagram: call stack, Web APIs, microtask queue and macrotask queue, with the loop checking that the stack is empty, draining all microtasks, rendering, then taking one macrotask.">
+  <rect class="d-box-accent" x="24" y="24" width="180" height="120" rx="7"/>
+  <text class="d-accent-text" x="114" y="46" text-anchor="middle">CALL STACK</text>
+  <rect class="d-box" x="44" y="58" width="140" height="24" rx="4"/>
+  <text class="d-mono" x="54" y="75">inner()</text>
+  <rect class="d-box" x="44" y="86" width="140" height="24" rx="4"/>
+  <text class="d-mono" x="54" y="103">outer()</text>
+  <rect class="d-box" x="44" y="114" width="140" height="24" rx="4"/>
+  <text class="d-mono" x="54" y="131">main()</text>
+
+  <rect class="d-box" x="436" y="24" width="180" height="120" rx="7"/>
+  <text class="d-label" x="526" y="46" text-anchor="middle">WEB APIs / HOST</text>
+  <text class="d-sub" x="452" y="70">setTimeout · fetch</text>
+  <text class="d-sub" x="452" y="90">DOM events · I/O</text>
+  <text class="d-sub" x="452" y="110">(run outside the</text>
+  <text class="d-sub" x="452" y="128">main thread)</text>
+
+  <path class="d-line" d="M210 62 H430"/><path class="d-arrow" d="M436 62 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="320" y="56" text-anchor="middle">offloaded</text>
+
+  <rect class="d-fill-accent" x="360" y="176" width="256" height="66" rx="7"/>
+  <rect class="d-box-accent"  x="360" y="176" width="256" height="66" rx="7"/>
+  <text class="d-accent-text" x="376" y="198">① MICROTASK QUEUE</text>
+  <text class="d-sub" x="376" y="216">.then · await · queueMicrotask</text>
+  <text class="d-sub" x="376" y="234">drained COMPLETELY, every time</text>
+
+  <rect class="d-box" x="360" y="330" width="256" height="62" rx="7"/>
+  <text class="d-label" x="376" y="352">③ MACROTASK QUEUE</text>
+  <text class="d-sub" x="376" y="370">setTimeout · setInterval · events</text>
+  <text class="d-sub" x="376" y="386">exactly ONE per turn</text>
+
+  <rect class="d-box" x="360" y="258" width="256" height="54" rx="7"/>
+  <text class="d-label" x="376" y="280">② RENDER (if needed)</text>
+  <text class="d-sub" x="376" y="298">rAF → style → layout → paint</text>
+
+  <rect class="d-box-accent" x="24" y="200" width="200" height="170" rx="85"/>
+  <text class="d-accent-text" x="124" y="264" text-anchor="middle">EVENT LOOP</text>
+  <text class="d-sub" x="124" y="288" text-anchor="middle">"is the stack empty?"</text>
+  <text class="d-sub" x="124" y="310" text-anchor="middle">if yes → ① then ② then ③</text>
+
+  <path class="d-line-accent" d="M354 209 H230"/><path class="d-arrow-accent" d="M224 209 l9 -4.5 v9 z"/>
+  <path class="d-line" d="M354 285 H230"/><path class="d-arrow" d="M224 285 l9 -4.5 v9 z"/>
+  <path class="d-line" d="M354 361 H230"/><path class="d-arrow" d="M224 361 l9 -4.5 v9 z"/>
+
+  <path class="d-line" d="M124 200 V150 H114"/><path class="d-arrow" d="M114 150 l0 0 z"/>
+  <path class="d-line" d="M124 196 V152"/><path class="d-arrow" d="M124 146 l-4.5 9 h9 z"/>
+  <text class="d-sub" x="150" y="176">pushes onto the stack</text>
+
+  <path class="d-dash" d="M526 144 V176"/><path class="d-arrow" d="M526 176 l-4.5 -9 h9 z"/>
+  <path class="d-dash" d="M600 144 V330"/><path class="d-arrow" d="M600 330 l-4.5 -9 h9 z"/>
+  <text class="d-sub" x="560" y="162">callback ready</text>
+</svg>
+<figcaption>One full turn of the loop (one "tick"): empty the stack → run <b>all</b> microtasks → maybe redraw the screen (render) → run <b>one</b> macrotask → repeat.</figcaption>
+</figure>
+<h4>The interview question</h4>
+<pre><code>console.log("1");
+setTimeout(() =&gt; console.log("2"), 0);
+Promise.resolve().then(() =&gt; console.log("3"));
+queueMicrotask(() =&gt; console.log("4"));
+console.log("5");
+
+// 1, 5, 3, 4, 2</code></pre>
+<p>Step by step:</p>
+<ol>
+<li>Normal (synchronous) code runs first, top to bottom: <code>1</code>, <code>5</code>.</li>
+<li>The stack is now empty, so <b>all</b> microtasks run ("drain"): <code>3</code>, <code>4</code>.</li>
+<li>Only then does one macrotask run: <code>2</code>.</li>
+</ol>
+<p>That's why <code>setTimeout(fn, 0)</code> never really means 0 ms. It means "as soon as everything else is done".</p>
+<h4>A harder one</h4>
+<pre><code>console.log("A");
+setTimeout(() =&gt; {
+  console.log("B");
+  Promise.resolve().then(() =&gt; console.log("C"));
+}, 0);
+Promise.resolve().then(() =&gt; {
+  console.log("D");
+  setTimeout(() =&gt; console.log("E"), 0);
+});
+console.log("F");
+
+// A, F, D, B, C, E</code></pre>
+<p>Walk through it: <code>A</code> and <code>F</code> are normal code. Then the microtask runs: <code>D</code> (and it schedules timer <code>E</code>). Then the first timer (macrotask) runs: <code>B</code>, which queues microtask <code>C</code>.</p>
+<p>Microtasks added <i>during</i> a macrotask run before the next macrotask. So <code>C</code> comes right after <code>B</code>, and <code>E</code> waits for the next turn.</p>
+<div class="note"><b>Why it matters:</b> a long synchronous loop <b>blocks</b> clicks, scrolling and painting — none of them can run until the stack clears, so the page freezes. An endless microtask chain is even worse: it <b>starves</b> rendering (the screen never gets a turn to redraw), because microtasks must all finish before the browser is allowed to paint.</div>
+<h4>Node's extras</h4>
+<p>Node has its own event loop with named <b>phases</b> (stages it cycles through), plus two extra scheduling tools:</p>
+<pre><code>process.nextTick(fn);   // runs BEFORE other microtasks — highest priority
+setImmediate(fn);       // check phase, after I/O callbacks
+// Node phases: timers → pending → poll → check → close</code></pre>
+</section>
+
+<section id="s18">
+<h3>18. Callbacks</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>callback</b> is a function you hand to someone else, to be run later — usually when a slow job finishes.</p>
+<p><b>Callback hell</b> is what happens when each callback needs another one inside it. The code drifts further right with every step and error handling has to be repeated at every level. Promises exist to fix exactly this.</p>
+<p class="analogy">Leaving your number and saying "call me when it's ready" — instead of standing at the counter waiting.</p></div>
+<pre><code>// Node-style: error first, result second
+fs.readFile("a.txt", (err, data) =&gt; {
+  if (err) return handle(err);
+  use(data);
+});</code></pre>
+<h4>Callback hell</h4>
+<pre><code>getUser(id, (err, user) =&gt; {
+  getOrders(user.id, (err, orders) =&gt; {
+    getItems(orders[0].id, (err, items) =&gt; {
+      // nesting grows sideways; error handling repeats at every level
+    });
+  });
+});</code></pre>
+<p>Three problems:</p>
+<ol>
+<li><b>Unreadable nesting</b> — the code forms a sideways pyramid.</li>
+<li><b>Repeated error handling</b> — every level needs its own <code>if (err)</code>.</li>
+<li><b>Inversion of control</b> — you hand your callback to someone else's code and simply trust it to call it once, and only once. You've given up control. A buggy library might call it twice, or never.</li>
+</ol>
+<p>Promises fix all three.</p>
+</section>
+
+<section id="s19">
+<h3>19. Promises</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>promise</b> is a receipt for a value you don't have yet. It doesn't hold the result — it holds the guarantee that a result is coming, whether that turns out to be success or failure.</p>
+<p>It has three states: <b>pending</b> (still waiting), <b>fulfilled</b> (worked), <b>rejected</b> (failed). Once it settles it never changes again.</p>
+<p class="analogy">A restaurant buzzer. You don't have food yet, but you have something that will tell you when it's ready — or that the kitchen ran out.</p></div>
+<p>A promise is an object standing in for a value that isn't ready yet. It has three states. It <b>settles</b> (finishes, one way or the other) <b>exactly once</b>. After that it's <b>immutable</b> — it can never change again.</p>
+<figure class="diagram">
+<svg viewBox="0 0 620 230" role="img" aria-label="Promise state diagram: pending moves to either fulfilled via resolve or rejected via reject, and once settled it never changes.">
+  <rect class="d-box" x="40" y="86" width="140" height="52" rx="26"/>
+  <text class="d-label" x="110" y="110" text-anchor="middle">PENDING</text>
+  <text class="d-sub"   x="110" y="128" text-anchor="middle">not settled yet</text>
+
+  <rect class="d-fill-accent" x="400" y="24" width="170" height="52" rx="26"/>
+  <rect class="d-box-accent"  x="400" y="24" width="170" height="52" rx="26"/>
+  <text class="d-accent-text" x="485" y="48" text-anchor="middle">FULFILLED</text>
+  <text class="d-sub"   x="485" y="66" text-anchor="middle">has a value → .then()</text>
+
+  <rect class="d-box" x="400" y="148" width="170" height="52" rx="26"/>
+  <text class="d-label" x="485" y="172" text-anchor="middle">REJECTED</text>
+  <text class="d-sub"   x="485" y="190" text-anchor="middle">has a reason → .catch()</text>
+
+  <path class="d-line-accent" d="M182 100 C 270 92, 300 60, 394 52"/>
+  <path class="d-arrow-accent" d="M400 51 l-9 -3.5 v9 z"/>
+  <text class="d-accent-text" x="286" y="68" text-anchor="middle">resolve(v)</text>
+
+  <path class="d-line" d="M182 124 C 270 132, 300 164, 394 172"/>
+  <path class="d-arrow" d="M400 173 l-9 -4 v9 z"/>
+  <text class="d-sub" x="286" y="160" text-anchor="middle">reject(err) / throw</text>
+
+  <text class="d-sub" x="310" y="222" text-anchor="middle">Settled is final — a second resolve() or reject() is silently ignored.</text>
+</svg>
+<figcaption>Pending → fulfilled or rejected, once. "Settled" means either outcome has happened.</figcaption>
+</figure>
+<pre><code>const p = new Promise((resolve, reject) =&gt; {
+  setTimeout(() =&gt; resolve("done"), 1000);
+});
+
+p.then(v =&gt; v.toUpperCase())     // each .then returns a NEW promise
+ .then(v =&gt; console.log(v))
+ .catch(err =&gt; console.error(err))   // catches any rejection above it
+ .finally(() =&gt; stopSpinner());      // runs either way, passes the value through</code></pre>
+<h4>Chaining rules</h4>
+<p><b>Chaining</b> means linking <code>.then</code> calls one after another. Each <code>.then</code> creates a new promise, and what you do inside it decides what happens to that new promise:</p>
+<ul>
+<li>Returning a <b>value</b> from <code>.then</code> <b>fulfils</b> (successfully completes) the next promise with that value.</li>
+<li>Returning a <b>promise</b> makes the chain wait for it. This is how you avoid nesting — each step sits on its own line instead of inside the last.</li>
+<li><b>Throwing</b> inside <code>.then</code> rejects the next promise. The error skips down to the nearest <code>.catch</code>.</li>
+<li>A <code>.then</code> placed after a <code>.catch</code> still runs — the chain recovers and carries on.</li>
+</ul>
+<pre><code>getUser(id)
+  .then(user =&gt; getOrders(user.id))     // return a promise → chain waits
+  .then(orders =&gt; getItems(orders[0]))
+  .catch(err =&gt; console.error(err));    // one handler for the whole chain</code></pre>
+<h4>Combinators</h4>
+<p><b>Combinators</b> are helpers that take several promises and combine them into one. "Fail fast" means: give up as soon as one fails.</p>
+<div class="table-wrap"><table>
+<tr><th>Method</th><th>Fulfils when</th><th>Rejects when</th><th>Use for</th></tr>
+<tr><td><code>Promise.all</code></td><td>All fulfil → array</td><td><b>Any</b> rejects (fail fast)</td><td>All-or-nothing parallel work</td></tr>
+<tr><td><code>Promise.allSettled</code></td><td>All settle → <code>{status,…}[]</code></td><td>Never</td><td>Independent calls; partial failure OK</td></tr>
+<tr><td><code>Promise.race</code></td><td>First to <i>settle</i></td><td>If that first one rejected</td><td>Timeouts</td></tr>
+<tr><td><code>Promise.any</code></td><td>First to <b>fulfil</b></td><td>Only if all reject</td><td>Fastest mirror wins</td></tr>
+</table></div>
+<pre><code>// Sequential — 3s
+const a = await getA(); const b = await getB(); const c = await getC();
+// Parallel — 1s. Use this whenever the calls are independent.
+const [a, b, c] = await Promise.all([getA(), getB(), getC()]);
+
+// Don't let one failure kill everything
+const results = await Promise.allSettled([getA(), getB()]);
+const ok = results.filter(r =&gt; r.status === "fulfilled").map(r =&gt; r.value);
+
+// Timeout with race
+const withTimeout = (p, ms) =&gt; Promise.race([
+  p,
+  new Promise((_, rej) =&gt; setTimeout(() =&gt; rej(new Error("timeout")), ms)),
+]);</code></pre>
+<div class="note"><b>Two traps.</b> (1) <code>Promise.all</code> rejects on the first failure, but the other promises keep running in the background — they aren't cancelled. (2) An <b>unhandled rejection</b> (a failed promise with no <code>.catch</code>) is a silent bug in browsers, and crashes Node. Always attach a <code>.catch</code>.</div>
+</section>
+
+<section id="s20">
+<h3>20. async / await</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><code>async</code>/<code>await</code> lets you write waiting code that <i>reads</i> top-to-bottom, like normal code, instead of chaining <code>.then()</code> calls.</p>
+<p><code>await</code> means "pause here until this finishes". Important: it only pauses <b>that one function</b> — the rest of your page keeps running perfectly well.</p>
+<p class="analogy">Waiting for the kettle. You stop making tea, but the world doesn't stop — other people carry on around you.</p></div>
+<p><code>async</code>/<code>await</code> is just a nicer way to write promises — the same thing underneath.</p>
+<ul>
+<li>An <code>async</code> function <b>always</b> returns a promise, even if you return a plain value.</li>
+<li><code>await</code> pauses <i>that function only</i> — not the whole <b>thread</b> (the single line of work JS runs on) — until the promise settles.</li>
+</ul>
+<pre><code>async function load(id) {
+  try {
+    const res = await fetch(`/api/users/${id}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);  // fetch does NOT throw on 404/500
+    return await res.json();
+  } catch (err) {
+    console.error(err);
+    throw err;               // rethrow, or the caller thinks it succeeded
+  } finally {
+    stopSpinner();
+  }
+}</code></pre>
+<h4>What <code>await</code> actually does</h4>
+<p>Three things happen at an <code>await</code>:</p>
+<ol>
+<li>The function is <b>suspended</b> (paused and set aside).</li>
+<li>The rest of the function — the <b>continuation</b> — is scheduled as a <b>microtask</b>.</li>
+<li>Control goes back to whoever called the function, and their code keeps running.</li>
+</ol>
+<p>Everything after the <code>await</code> picks up again once the promise settles and the stack is clear.</p>
+<pre><code>async function f() {
+  console.log("1");
+  await null;              // even awaiting a non-promise defers the rest
+  console.log("3");        // ← this became a microtask
+}
+f();
+console.log("2");
+// 1, 2, 3</code></pre>
+<h4>Common mistakes</h4>
+<pre><code>// ✗ sequential when it could be parallel
+const a = await getA();  const b = await getB();
+// ✓
+const [a, b] = await Promise.all([getA(), getB()]);
+
+// ✗ await inside forEach does nothing
+items.forEach(async i =&gt; { await save(i); });
+// ✓ sequential
+for (const i of items) await save(i);
+// ✓ parallel
+await Promise.all(items.map(save));
+
+// ✗ top-level await only works in ES modules
+// ✓ or wrap in an async IIFE
+(async () =&gt; { await main(); })();</code></pre>
+<h4>Error handling choices</h4>
+<p>Wrapping every <code>await</code> in <code>try/catch</code> gets noisy. A small helper can turn a promise into a <b>tuple</b> (a fixed pair of values) of <code>[error, data]</code>, so you check the error with a simple <code>if</code>.</p>
+<pre><code>// try/catch per call is noisy — a tuple helper reads better in loops
+const to = (p) =&gt; p.then(d =&gt; [null, d]).catch(e =&gt; [e, null]);
+const [err, user] = await to(getUser(id));
+if (err) return handle(err);</code></pre>
+</section>
+
+<section id="s21">
+<h3>21. Async Patterns</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Sequential</b> means one after another — each waits for the last. <b>Parallel</b> means all started at once, so the total time is just the slowest one rather than the sum.</p>
+<p>If two requests don't depend on each other, running them sequentially is wasted time. That single choice is often the biggest easy speed win in a codebase.</p>
+<p class="analogy">Sequential is one cashier serving three customers in turn. Parallel is three cashiers serving all three at once.</p></div>
+<h4>Sequential vs parallel vs limited concurrency</h4>
+<p><b>Limited concurrency</b> is the middle ground: run several at once, but never more than N. This protects <b>rate limits</b> (how many requests a server allows per second) and memory.</p>
+<pre><code>// Run at most N at a time — protects rate limits and memory
+async function pool(items, worker, limit = 5) {
+  const results = [];
+  const running = new Set();
+  for (const item of items) {
+    const p = Promise.resolve().then(() =&gt; worker(item));
+    results.push(p);
+    running.add(p);
+    p.finally(() =&gt; running.delete(p));
+    if (running.size &gt;= limit) await Promise.race(running);
+  }
+  return Promise.all(results);
+}</code></pre>
+<h4>Retry with backoff</h4>
+<p><b>Backoff</b> means waiting longer after each failed try (here the wait doubles), so you don't hammer a struggling server.</p>
+<pre><code>async function retry(fn, attempts = 3, delay = 300) {
+  for (let i = 0; i &lt; attempts; i++) {
+    try { return await fn(); }
+    catch (err) {
+      if (i === attempts - 1) throw err;
+      await new Promise(r =&gt; setTimeout(r, delay * 2 ** i));  // 300, 600, 1200…
+    }
+  }
+}</code></pre>
+<h4>Cancellation</h4>
+<p>An <code>AbortController</code> gives you a <b>signal</b> to pass into <code>fetch</code>. Calling <code>abort()</code> cancels the request — useful when the result is no longer needed.</p>
+<pre><code>const ac = new AbortController();
+fetch(url, { signal: ac.signal })
+  .catch(e =&gt; { if (e.name !== "AbortError") throw e; });
+ac.abort();        // cancel a stale search or an unmounted component's request</code></pre>
+<h4>Promisifying a callback API</h4>
+<p>"Promisifying" means wrapping an old callback-style function so it returns a promise instead — then you can <code>await</code> it.</p>
+<pre><code>const readFile = (path) =&gt; new Promise((resolve, reject) =&gt;
+  fs.readFile(path, (err, data) =&gt; err ? reject(err) : resolve(data)));</code></pre>
+<h4>A sleep helper</h4>
+<pre><code>const sleep = (ms) =&gt; new Promise(r =&gt; setTimeout(r, ms));
+await sleep(1000);</code></pre>
+</section>
+
+<!-- ================= ADVANCED ================= -->
+<div class="part">Part 5 — Advanced</div>
+
+<section id="s22">
+<h3>22. Iterators &amp; Generators</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Iterable</b> just means "you can loop over it one item at a time". Arrays and strings are iterable; plain objects are not, which is why <code>for...of</code> works on one and not the other.</p>
+<p>A <b>generator</b> is a function that can pause in the middle, hand you a value, and continue later from exactly where it stopped.</p>
+<p class="analogy">A vending machine: it gives you one item, then waits. It doesn't dump the whole stock on the floor — which is how a generator can represent an endless list without running out of memory.</p></div>
+<p>The rule (the "contract") is short. An object is <b>iterable</b> if it has a <code>Symbol.iterator</code> method. That method must return an <b>iterator</b> — an object with a <code>next()</code> method. Each call to <code>next()</code> returns <code>{ value, done }</code>: the next item, and whether the list is finished.</p>
+<p>That's all <code>for...of</code>, spread and destructuring need to work.</p>
+<pre><code>const range = {
+  from: 1, to: 3,
+  [Symbol.iterator]() {
+    let cur = this.from, last = this.to;
+    return { next: () =&gt; cur &lt;= last
+      ? { value: cur++, done: false }
+      : { value: undefined, done: true } };
+  },
+};
+[...range];                     // [1, 2, 3]
+for (const n of range) {}       // works now</code></pre>
+<h4>Generators</h4>
+<p>A generator function is written <code>function*</code> (note the star). It can <b>pause</b> at each <code>yield</code> and <b>resume</b> later from the same spot. Calling it doesn't run the body — it hands you an iterator, and each <code>next()</code> runs until the next <code>yield</code>.</p>
+<p>Generators are <b>lazy</b>: they only work out a value when you ask for it. <code>yield*</code> hands over to another generator until it's finished.</p>
+<pre><code>function* idGen() {
+  let id = 1;
+  while (true) yield id++;       // infinite, but lazy — nothing computed ahead
+}
+const ids = idGen();
+ids.next().value;                // 1
+ids.next().value;                // 2
+
+function* range(a, b) { for (let i = a; i &lt;= b; i++) yield i; }
+[...range(1, 5)];                // [1,2,3,4,5]
+
+// delegate to another generator
+function* all() { yield* range(1, 3); yield "done"; }</code></pre>
+<h4>Two-way communication</h4>
+<p>You can also send a value <i>into</i> a generator. Whatever you pass to <code>next(x)</code> becomes the result of the <code>yield</code> where the generator is paused.</p>
+<pre><code>function* dialogue() {
+  const name = yield "What's your name?";   // yield RECEIVES the next next() arg
+  yield `Hello ${name}`;
+}
+const d = dialogue();
+d.next().value;          // "What's your name?"
+d.next("Ada").value;     // "Hello Ada"</code></pre>
+<h4>Async iteration</h4>
+<p>An <code>async function*</code> can <code>await</code> and <code>yield</code>. You loop over it with <code>for await</code>. Great for <b>paginated</b> APIs — ones that return results a page at a time.</p>
+<pre><code>async function* pages(url) {
+  let next = url;
+  while (next) {
+    const res = await fetch(next);
+    const data = await res.json();
+    yield* data.items;
+    next = data.nextUrl;
+  }
+}
+for await (const item of pages("/api/items")) console.log(item);</code></pre>
+<div class="note">Generators shine for lazy sequences, paginated APIs and infinite streams. You work out each value only when someone asks for it, instead of building a huge array up front.</div>
+</section>
+
+<section id="s23">
+<h3>23. Error Handling</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><code>try</code> means "attempt this". <code>catch</code> means "if it goes wrong, do this instead of crashing". <code>finally</code> means "do this either way" — usually cleanup.</p>
+<p><b>Throwing</b> is how code signals that something went wrong and it can't continue. The error travels up until something catches it — or the program stops.</p>
+<p class="analogy">A safety net. The fall still happens; the net decides whether it's a disaster.</p></div>
+<pre><code>try {
+  risky();
+} catch (err) {                       // `catch {}` without a binding is legal
+  if (err instanceof TypeError) {}
+  console.error(err.name, err.message, err.stack);
+} finally {
+  cleanup();                          // runs even if you return inside try
+}</code></pre>
+<h4>Built-in error types</h4>
+<ul>
+<li><code>TypeError</code> — a value is the wrong type for what you did. E.g. calling something that isn't a function, or reading a property of <code>undefined</code>.</li>
+<li><code>ReferenceError</code> — the variable doesn't exist, or you used it in the TDZ (before its <code>let</code>/<code>const</code> line).</li>
+<li><code>SyntaxError</code> — the code itself is written wrongly. It's thrown at <b>parse time</b> (when the engine first reads the file, before anything runs), so a <code>try/catch</code> around it can't help.</li>
+<li><code>RangeError</code> — a number is outside the allowed range, e.g. an invalid array length, or a stack overflow (too many nested calls).</li>
+</ul>
+<h4>Custom errors</h4>
+<p>You can make your own error types by extending <code>Error</code>. This lets callers check <code>err instanceof ValidationError</code> and carry extra details, like which field failed.</p>
+<pre><code>class ValidationError extends Error {
+  constructor(field, message) {
+    super(message);
+    this.name = "ValidationError";
+    this.field = field;
+    Error.captureStackTrace?.(this, ValidationError);
+  }
+}
+throw new ValidationError("email", "Invalid email");</code></pre>
+<h4>Async errors</h4>
+<p>A <code>try/catch</code> only catches errors thrown while it's on the call stack. A timer callback runs later, after the <code>try</code> block has already finished — so the error slips past. Catch it inside the callback, use promises, or add a global handler as a last resort.</p>
+<pre><code>// ✗ try/catch does NOT catch async callbacks
+try { setTimeout(() =&gt; { throw new Error("boom"); }, 0); } catch (e) {}
+
+// ✓ inside the callback, or via promises
+process.on("unhandledRejection", handler);     // Node
+window.addEventListener("unhandledrejection", handler);  // browser
+window.addEventListener("error", handler);               // sync errors</code></pre>
+<div class="note"><b>Always throw <code>Error</code> objects</b>, never strings. Only an <code>Error</code> carries a <b>stack trace</b> (the list of function calls that led to the error — your map for debugging). And <code>err.message</code> is <code>undefined</code> when you throw a plain string.</div>
+</section>
+
+<section id="s24">
+<h3>24. Modules</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>module</b> is one file that keeps its contents private unless it deliberately shares them.</p>
+<p><code>export</code> means "other files may use this". <code>import</code> means "give me that". Anything not exported is invisible outside the file — which is what stops large codebases turning into a soup of clashing global names.</p>
+<p class="analogy">A shop: the shelves are public, the stockroom isn't.</p></div>
+<pre><code>// named — many per file, imported by exact name
+export const PI = 3.14;
+export function area(r) { return PI * r * r; }
+import { PI, area as circleArea } from "./math.js";
+
+// default — one per file, any name on import
+export default class Button {}
+import Btn from "./Button.js";
+
+import * as math from "./math.js";     // namespace object
+export { x } from "./other.js";        // re-export
+const mod = await import("./heavy.js");// dynamic — returns a promise</code></pre>
+<p>A <b>named export</b> is imported by its exact name, in curly braces. A <b>default export</b> is the file's one main thing, and you can call it anything when importing. A <b>dynamic import</b> loads a file only when that line runs — handy for loading heavy code on demand.</p>
+<h4>ESM vs CommonJS</h4>
+<p>There are two module systems. <b>ESM</b> (ES Modules) is the modern standard, using <code>import</code>/<code>export</code>. <b>CommonJS</b> is Node's older system, using <code>require</code>.</p>
+<ul>
+<li><b>Static</b> means imports are known before the code runs (they must be at the top level). <b>Dynamic</b> means <code>require</code> can be called anywhere, at runtime.</li>
+<li><b>Live bindings</b>: if the exporting file later changes a value, importers see the new value. CommonJS gives you a copy taken at the moment you required it.</li>
+<li><b>Tree shaking</b>: a build tool removes exports nobody imports, making the final bundle smaller. It needs static imports to work.</li>
+</ul>
+<div class="table-wrap"><table>
+<tr><th></th><th>ESM</th><th>CommonJS</th></tr>
+<tr><td>Syntax</td><td><code>import</code>/<code>export</code></td><td><code>require</code>/<code>module.exports</code></td></tr>
+<tr><td>Loading</td><td>Static, asynchronous</td><td>Dynamic, synchronous</td></tr>
+<tr><td>Bindings</td><td><b>Live</b> — reflect later changes</td><td>A copy at require time</td></tr>
+<tr><td>Tree shaking</td><td>Yes</td><td>No</td></tr>
+<tr><td>Top-level await</td><td>Yes</td><td>No</td></tr>
+</table></div>
+<p>Modules are <b>singletons</b> — there's only ever one of each. A module runs once, the first time it's imported, and the result is <b>cached</b> (stored). Every other file that imports it gets that same shared copy.</p>
+<p>Modules also always run in strict mode, and in the browser they are <b>deferred</b> by default — they wait until the HTML has finished parsing before running.</p>
+<h4>The module pattern (pre-ESM, still seen)</h4>
+<p>Before real modules existed, people used an IIFE plus a closure to get private variables and a public interface.</p>
+<pre><code>const Counter = (function () {
+  let count = 0;                       // private via closure
+  return { inc: () =&gt; ++count, get: () =&gt; count };
+})();</code></pre>
+</section>
+
+<section id="s25">
+<h3>25. Memory &amp; Garbage Collection</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Garbage collection</b> is JavaScript automatically freeing memory you're no longer using. You never do this by hand.</p>
+<p>It decides by <b>reachability</b>: can this value still be reached from code that's running? If yes, keep it. If nothing points to it any more, throw it away.</p>
+<p>A <b>memory leak</b> is when you accidentally keep pointing at something you've finished with — so it can never be cleaned up.</p>
+<p class="analogy">Like clearing a table: plates nobody is still holding get taken away. A leak is holding onto a plate you forgot you had.</p></div>
+<p>JavaScript frees memory using <b>reachability</b>. It starts from the <b>roots</b> — global variables, the current call stack, and closures. Anything it can reach by following links from those roots is kept. Everything else is collected.</p>
+<p>Modern engines use <b>mark-and-sweep</b>: first <i>mark</i> everything reachable, then <i>sweep</i> away everything unmarked. It's <b>generational</b>: new objects are checked often (most die young), while long-lived objects are checked less often.</p>
+<h4>The four classic leaks</h4>
+<p>Each of these keeps a reference alive by accident, so the garbage collector can never free it. A <b>detached DOM node</b> is an element removed from the page that your code still holds on to.</p>
+<pre><code>// 1. Accidental globals
+function f() { leaked = "oops"; }        // no declaration → window.leaked
+"use strict";                            // makes this a ReferenceError
+
+// 2. Forgotten timers
+const id = setInterval(poll, 1000);
+clearInterval(id);                       // ← without this it runs forever
+
+// 3. Detached DOM nodes
+const cache = [];
+cache.push(document.getElementById("big"));
+document.body.removeChild(el);           // removed from the page, but cache
+                                         // still references it → never collected
+
+// 4. Listeners on long-lived objects
+window.addEventListener("resize", handler);
+window.removeEventListener("resize", handler);   // same reference required</code></pre>
+<h4>Closures hold more than you think</h4>
+<pre><code>function makeHandler() {
+  const hugeData = new Array(1e6).fill("x");
+  return () =&gt; console.log("clicked");   // still keeps hugeData alive in some engines
+}
+// Null out what you don't need, or don't capture it in the first place</code></pre>
+<p>Use <b>WeakMap/WeakSet</b> when you want an entry to disappear along with its key.</p>
+<p>If you suspect a leak, open the <b>Memory</b> panel in browser DevTools. Take a <b>heap snapshot</b> (a picture of everything in memory), do the action a few times, take another, and compare. Anything that keeps growing is your suspect.</p>
+</section>
+
+<section id="s26">
+<h3>26. Functional Patterns</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>pure</b> function always gives the same answer for the same input and changes nothing outside itself. Easy to test, easy to trust.</p>
+<p><b>Immutable</b> means "never edited in place" — instead of changing an object, you make a new one with the change applied.</p>
+<p><b>Currying</b> means taking a function's arguments one at a time instead of all at once, so you can fill in some now and the rest later.</p>
+<p><b>Composition</b> means joining small functions into a pipeline, where each one's output becomes the next one's input.</p>
+<p class="analogy">Composition is an assembly line: wash → cut → pack. Each station does one small job and passes the result on.</p></div>
+<h4>Pure functions &amp; immutability</h4>
+<pre><code>// pure — same input, same output, no side effects
+const add = (a, b) =&gt; a + b;
+
+// immutable updates
+const next = { ...state, count: state.count + 1 };
+const added = [...items, item];
+const removed = items.filter(i =&gt; i.id !== id);
+const updated = items.map(i =&gt; i.id === id ? { ...i, done: true } : i);</code></pre>
+<h4>Composition &amp; currying</h4>
+<p><code>pipe</code> runs functions left to right; <code>compose</code> runs them right to left. Same idea, opposite order.</p>
+<pre><code>const compose = (...fns) =&gt; (x) =&gt; fns.reduceRight((v, f) =&gt; f(v), x);
+const pipe    = (...fns) =&gt; (x) =&gt; fns.reduce((v, f) =&gt; f(v), x);
+
+const slug = pipe(s =&gt; s.trim(), s =&gt; s.toLowerCase(), s =&gt; s.replace(/\s+/g, "-"));
+slug("  Hello World ");                 // "hello-world"
+
+// currying — one argument at a time
+const curry = (fn) =&gt; (...args) =&gt;
+  args.length &gt;= fn.length ? fn(...args) : curry(fn.bind(null, ...args));
+
+const add3 = curry((a, b, c) =&gt; a + b + c);
+add3(1)(2)(3);    // 6
+add3(1, 2)(3);    // 6</code></pre>
+<h4>Partial application</h4>
+<p><b>Partial application</b> means fixing some of a function's arguments now and getting back a smaller function that takes the rest.</p>
+<pre><code>const log = (level, msg) =&gt; console.log(`[${level}] ${msg}`);
+const error = log.bind(null, "ERROR");
+error("failed");        // [ERROR] failed</code></pre>
+</section>
+
+<section id="s27">
+<h3>27. Modern JS Features</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>These are newer conveniences added over the last few years. None of them let you do anything that was impossible before — they just make common tasks shorter and less error-prone.</p>
+<p>Worth learning because you'll meet them constantly in other people's code, even if you never reach for them yourself.</p></div>
+<pre><code>// Optional chaining & nullish (ES2020)
+obj?.a?.b ?? "default";
+
+// Logical assignment (ES2021)
+a ||= b;  a &amp;&amp;= b;  a ??= b;
+
+// Numeric separators & BigInt
+const million = 1_000_000;
+const big = 9007199254740993n;
+
+// String helpers
+"abc".at(-1);           "abc".replaceAll("a", "b");
+"  x ".trimStart();     "5".padStart(3, "0");     // "005"
+
+// Array helpers (ES2022–2023)
+arr.at(-1);
+arr.findLast(fn);  arr.findLastIndex(fn);
+arr.toSorted(fn);  arr.toReversed();  arr.with(0, "new");  // non-mutating
+Object.groupBy(items, i =&gt; i.type);
+
+// Object & structured data
+Object.hasOwn(o, "k");
+structuredClone(obj);
+Array.prototype.flat(Infinity);
+
+// Top-level await (ES modules only)
+const data = await fetch(url).then(r =&gt; r.json());</code></pre>
+<p>(The "ES2020" style labels are the year each feature was added to the language. ES = ECMAScript, the official name of the JavaScript standard.)</p>
+<h4>Labelled templates &amp; tagged literals</h4>
+<p><b>Template literals</b> are strings in backticks that can include <code>${expressions}</code>. A <b>tagged template</b> puts a function name in front of the backticks. That function receives the text pieces and the values separately, so it can process them — for example, escaping user input to make HTML safe.</p>
+<pre><code>const name = "Ada";
+`Hello ${name}, ${1 + 1} items`;        // interpolation
+String.raw`C:\new\path`;                // no escape processing
+
+function html(strings, ...values) {      // tagged template
+  return strings.reduce((out, s, i) =&gt; out + s + (escape(values[i]) ?? ""), "");
+}</code></pre>
+</section>
+
+<section id="s28">
+<h3>28. The JavaScript Lifecycle</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>lifecycle</b> is the list of stages something goes through, from being created to being thrown away.</p>
+<p>In JavaScript, lots of things have one: the whole script, each variable, each function call, the web page itself, and every promise. Knowing the stages in order ties together most of the other sections on this page — hoisting, the call stack, the event loop and garbage collection are all just <i>stages</i> of the same story.</p>
+<p class="analogy">Think of a restaurant order. The order arrives (download), the chef reads it (parse), plans the steps (compile), lays out the ingredients (creation phase), cooks (execution). Slow jobs like the oven are handed off (Web APIs) and picked up when the timer dings (event loop). At the end, the dirty plates are cleared away (garbage collection).</p></div>
+
+<h4>(a) The lifecycle of a script</h4>
+<p>Here is everything that happens from the moment the browser finds a <code>&lt;script&gt;</code> tag to the moment memory is cleaned up:</p>
+<figure class="diagram">
+<svg viewBox="0 0 640 370" role="img" aria-label="Script lifecycle: load, parse, compile, creation phase, execution phase, call stack runs synchronous code, async work goes to Web APIs, the event loop feeds callbacks back to the stack, and garbage collection frees unreachable memory.">
+  <rect class="d-box" x="24"  y="40" width="170" height="50" rx="7"/>
+  <text class="d-label" x="109" y="60" text-anchor="middle">① Load</text>
+  <text class="d-sub"   x="109" y="77" text-anchor="middle">download the .js file</text>
+
+  <rect class="d-box" x="235" y="40" width="170" height="50" rx="7"/>
+  <text class="d-label" x="320" y="60" text-anchor="middle">② Parse</text>
+  <text class="d-sub"   x="320" y="77" text-anchor="middle">text → AST</text>
+
+  <rect class="d-box" x="446" y="40" width="170" height="50" rx="7"/>
+  <text class="d-label" x="531" y="60" text-anchor="middle">③ Compile (JIT)</text>
+  <text class="d-sub"   x="531" y="77" text-anchor="middle">AST → bytecode</text>
+
+  <rect class="d-box" x="446" y="150" width="170" height="50" rx="7"/>
+  <text class="d-label" x="531" y="170" text-anchor="middle">④ Creation phase</text>
+  <text class="d-sub"   x="531" y="187" text-anchor="middle">hoisting · memory set-up</text>
+
+  <rect class="d-box" x="235" y="150" width="170" height="50" rx="7"/>
+  <text class="d-label" x="320" y="170" text-anchor="middle">⑤ Execution phase</text>
+  <text class="d-sub"   x="320" y="187" text-anchor="middle">run line by line</text>
+
+  <rect class="d-box" x="24"  y="150" width="170" height="50" rx="7"/>
+  <text class="d-label" x="109" y="170" text-anchor="middle">⑥ Call stack</text>
+  <text class="d-sub"   x="109" y="187" text-anchor="middle">runs sync code</text>
+
+  <rect class="d-box" x="24"  y="260" width="170" height="50" rx="7"/>
+  <text class="d-label" x="109" y="280" text-anchor="middle">⑦ Web APIs / Node</text>
+  <text class="d-sub"   x="109" y="297" text-anchor="middle">timers · fetch · I/O</text>
+
+  <rect class="d-fill-accent" x="235" y="260" width="170" height="50" rx="7"/>
+  <rect class="d-box-accent"  x="235" y="260" width="170" height="50" rx="7"/>
+  <text class="d-accent-text" x="320" y="280" text-anchor="middle">⑧ Event loop</text>
+  <text class="d-sub"   x="320" y="297" text-anchor="middle">microtasks → macrotasks</text>
+
+  <rect class="d-box" x="446" y="260" width="170" height="50" rx="7"/>
+  <text class="d-label" x="531" y="280" text-anchor="middle">⑨ Garbage collection</text>
+  <text class="d-sub"   x="531" y="297" text-anchor="middle">free unreachable memory</text>
+
+  <path class="d-line" d="M194 65 H227"/><path class="d-arrow" d="M235 65 l-8 -4 v8 z"/>
+  <path class="d-line" d="M405 65 H438"/><path class="d-arrow" d="M446 65 l-8 -4 v8 z"/>
+  <path class="d-line" d="M531 90 V142"/><path class="d-arrow" d="M531 150 l-4 -8 h8 z"/>
+  <path class="d-line" d="M446 175 H413"/><path class="d-arrow" d="M405 175 l8 -4 v8 z"/>
+  <path class="d-line" d="M235 175 H202"/><path class="d-arrow" d="M194 175 l8 -4 v8 z"/>
+  <path class="d-line" d="M109 200 V252"/><path class="d-arrow" d="M109 260 l-4 -8 h8 z"/>
+  <text class="d-sub" x="116" y="236">async work</text>
+  <path class="d-line-accent" d="M194 285 H227"/><path class="d-arrow-accent" d="M235 285 l-8 -4 v8 z"/>
+  <path class="d-line" d="M405 285 H438"/><path class="d-arrow" d="M446 285 l-8 -4 v8 z"/>
+
+  <path class="d-dash" d="M300 260 V228 H160 V208"/>
+  <path class="d-arrow" d="M160 200 l-4 8 h8 z"/>
+  <text class="d-sub" x="232" y="222" text-anchor="middle">callbacks back onto the stack</text>
+
+  <text class="d-sub" x="320" y="340" text-anchor="middle">①–③ happen once per file. ④–⑤ happen for the global code and again for every function call.</text>
+  <text class="d-sub" x="320" y="358" text-anchor="middle">⑥ → ⑦ → ⑧ → ⑥ repeats for as long as the page is open; ⑨ runs quietly in the background.</text>
+</svg>
+<figcaption>The script lifecycle in one picture. The top row is "getting ready"; the middle row is running your code; the bottom row is everything that happens later.</figcaption>
+</figure>
+<ol>
+<li><b>Load / download</b> — the browser fetches the <code>.js</code> file over the network (or reads the inline <code>&lt;script&gt;</code>). A normal script pauses HTML parsing while it downloads and runs; <code>defer</code> and <code>async</code> let the page keep parsing.</li>
+<li><b>Parse</b> — the engine reads the text and checks the grammar. If the code is written wrongly, you get a <code>SyntaxError</code> here, and <i>none</i> of the file runs. The result is an <b>AST</b> (a tree-shaped map of the code).</li>
+<li><b>Compile (JIT)</b> — the AST is turned into bytecode, and later, hot functions are turned into fast machine code (section 1).</li>
+<li><b>Global execution context — creation phase</b> — before any line runs, the engine creates the global context. It sets aside memory for every variable and function (this is <b>hoisting</b>): <code>var</code> gets <code>undefined</code>, <code>let</code>/<code>const</code> go into the TDZ, function declarations are stored whole. It also sets up <code>this</code> and the scope chain (sections 5–6).</li>
+<li><b>Execution phase</b> — now the code runs top to bottom, putting real values into those variables.</li>
+<li><b>The call stack runs synchronous code</b> — every function call pushes a new context onto the stack; every return pops it off. Only the top one runs.</li>
+<li><b>Async work is handed off</b> — timers, <code>fetch</code>, file reads and event listeners are given to the <b>host</b> (Web APIs in the browser, <code>libuv</code> — Node's built-in helper library — in Node). JS doesn't wait; it carries on with the next line.</li>
+<li><b>The event loop</b> — when the stack is empty, it runs <b>all</b> waiting microtasks (promise callbacks), then <b>one</b> macrotask (a timer or event callback), then checks again. Each callback it runs goes back onto the call stack (step 6). This cycle continues for as long as the page is open (section 17).</li>
+<li><b>Garbage collection</b> — in the background, the engine finds memory that nothing can reach any more and frees it (section 25).</li>
+</ol>
+<div class="table-wrap"><table>
+<tr><th>Stage</th><th>What happens</th><th>What can go wrong</th></tr>
+<tr><td>Load</td><td>File is downloaded</td><td>Network error; a blocking script delays the page</td></tr>
+<tr><td>Parse</td><td>Text → AST, grammar is checked</td><td><code>SyntaxError</code> — nothing in the file runs</td></tr>
+<tr><td>Compile</td><td>AST → bytecode → optimised machine code</td><td>Changing types forces deoptimisation (slower)</td></tr>
+<tr><td>Creation phase</td><td>Memory set up, hoisting, <code>this</code>, scope chain</td><td>Later: <code>undefined</code> from <code>var</code>, TDZ errors from <code>let</code>/<code>const</code></td></tr>
+<tr><td>Execution phase</td><td>Code runs line by line on the call stack</td><td><code>TypeError</code>, <code>ReferenceError</code>, stack overflow</td></tr>
+<tr><td>Async hand-off</td><td>Host does the slow waiting</td><td>Errors thrown in callbacks escape <code>try/catch</code></td></tr>
+<tr><td>Event loop</td><td>All microtasks, then one macrotask, repeat</td><td>Long tasks freeze the page; endless microtasks block rendering</td></tr>
+<tr><td>Garbage collection</td><td>Unreachable memory is freed</td><td>Memory leaks from references you forgot about</td></tr>
+</table></div>
+
+<h4>(b) The lifecycle of a variable, and of a function call</h4>
+<p>A single variable goes through six stages:</p>
+<ol>
+<li><b>Created</b> — during the creation phase, the engine notes the name and reserves space for it.</li>
+<li><b>Hoisted</b> — the name is known from the top of its scope, before its line is reached.</li>
+<li><b>Initialised</b> — it gets its first value. For <code>var</code> that's <code>undefined</code> straight away; for <code>let</code>/<code>const</code> it's only when the declaration line runs (until then: TDZ).</li>
+<li><b>Used</b> — read and (unless it's <code>const</code>) reassigned while the code runs.</li>
+<li><b>Out of scope</b> — the block or function it lives in finishes, so no code can name it any more.</li>
+<li><b>Garbage collected</b> — once nothing (including a closure) can reach its value, the memory is freed.</li>
+</ol>
+<pre><code>function demo() {
+  // created + hoisted: count exists here but is in the TDZ
+  let count = 0;          // initialised
+  count++;                // used
+  return count;
+}                         // function ends → count is out of scope
+demo();                   // nothing references count now → garbage collected</code></pre>
+<p>A <b>function call</b> has its own shorter lifecycle:</p>
+<ol>
+<li>A new <b>execution context</b> is created and <b>pushed</b> onto the call stack.</li>
+<li>Its creation phase runs: parameters and local variables are set up (hoisting), and <code>this</code> is decided.</li>
+<li>Its execution phase runs the body line by line.</li>
+<li>It <b>returns</b>, and its context is <b>popped</b> off the stack. Control goes back to the caller.</li>
+<li>Its local variables become garbage — <i>unless</i> a closure still references them (section 8).</li>
+</ol>
+
+<h4>(c) The browser page lifecycle</h4>
+<p>The web page itself also goes through stages, and the browser fires an <b>event</b> (a signal your code can listen for) at each one:</p>
+<ul>
+<li><b>HTML parsing</b> — the browser reads the HTML top to bottom and builds the <b>DOM</b> (the tree of elements your JS can work with). Normal <code>&lt;script&gt;</code> tags pause parsing while they run.</li>
+<li><b><code>DOMContentLoaded</code></b> — the HTML is fully parsed and the DOM is ready (and <code>defer</code> scripts have run). Images and stylesheets may still be loading. This is the earliest safe moment to find and change elements.</li>
+<li><b><code>load</code></b> — everything has finished loading: images, stylesheets, iframes, fonts.</li>
+<li><b><code>visibilitychange</code></b> — the user switched tabs, minimised the window, or came back. Check <code>document.visibilityState</code> (<code>"visible"</code> or <code>"hidden"</code>). Good for pausing videos or saving progress.</li>
+<li><b><code>pagehide</code> / <code>beforeunload</code></b> — the user is leaving the page. <code>beforeunload</code> can show the "Leave site? Changes you made may not be saved" prompt. <code>pagehide</code> is the reliable place for last-moment cleanup. (The older <code>unload</code> event is unreliable, especially on mobile — avoid it.)</li>
+</ul>
+<pre><code>document.addEventListener("DOMContentLoaded", () =&gt; {
+  console.log("DOM ready — safe to query elements");
+});
+
+window.addEventListener("load", () =&gt; {
+  console.log("Everything loaded, including images");
+});
+
+document.addEventListener("visibilitychange", () =&gt; {
+  if (document.visibilityState === "hidden") saveDraft();   // user left the tab
+});
+
+window.addEventListener("beforeunload", (e) =&gt; {
+  if (hasUnsavedChanges) e.preventDefault();   // asks "Leave site?"
+});
+
+window.addEventListener("pagehide", () =&gt; {
+  navigator.sendBeacon("/log", "page closed");   // survives the page closing
+});</code></pre>
+<p class="analogy">Moving into a house: the walls go up (HTML parsing), the rooms are usable (<code>DOMContentLoaded</code>), the furniture has all arrived (<code>load</code>), you step outside for a while (<code>visibilitychange</code>), and finally you move out (<code>pagehide</code>).</p>
+
+<h4>(d) The Promise lifecycle</h4>
+<p>A promise has the shortest lifecycle of all (see section 19 for the diagram):</p>
+<ol>
+<li><b>Pending</b> — created, the work is still going on. No value yet.</li>
+<li><b>Fulfilled</b> (success, via <code>resolve(value)</code>) <i>or</i> <b>rejected</b> (failure, via <code>reject(error)</code> or a thrown error).</li>
+<li><b>Settled</b> — the word for "either fulfilled or rejected". It's the end of the line: a settled promise never changes again. Any later <code>resolve</code>/<code>reject</code> call is ignored.</li>
+</ol>
+<pre><code>const p = new Promise((resolve) =&gt; {
+  // pending…
+  setTimeout(() =&gt; resolve("ok"), 1000);  // → fulfilled after 1s
+});
+p.then(v =&gt; console.log(v))     // runs as a microtask once settled
+ .finally(() =&gt; console.log("settled"));</code></pre>
+<div class="note"><b>Interview tip:</b> if asked "what happens when JS runs?", answer with the script lifecycle in order — <b>load → parse → compile → creation phase → execution → call stack → async hand-off → event loop → garbage collection</b>. Then offer to zoom into any one stage. It shows you understand how hoisting, the call stack, the event loop and memory all fit together, rather than knowing them as separate facts.</div>
+</section>
+
+<!-- ================= REVISION ================= -->
+<div class="part">Revision</div>
+
+<section id="tricky">
+<h3>Tricky Outputs — predict before you read</h3>
+<p>Cover the comment on each line, guess the output, then check. Each one tests a rule from the sections above.</p>
+<pre><code>// 1
+console.log(typeof null, typeof NaN, typeof []);
+// "object" "number" "object"
+
+// 2
+console.log(0.1 + 0.2 === 0.3);
+// false — IEEE 754 floats (computers store decimals in binary, so tiny rounding errors creep in).
+//         Use Math.abs(a-b) &lt; Number.EPSILON
+
+// 3
+console.log([1,2,3] + [4,5]);
+// "1,2,34,5" — both stringify, then concatenate
+
+// 4
+var x = 1;
+{ var x = 2; }  console.log(x);      // 2  — var ignores blocks
+let y = 1;
+{ let y = 2; }  console.log(y);      // 1  — let is block scoped
+
+// 5
+console.log(a); var a = 5;           // undefined (hoisted)
+console.log(b); let b = 5;           // ReferenceError (TDZ)
+
+// 6
+for (var i=0;i&lt;3;i++) setTimeout(()=&gt;console.log(i));   // 3 3 3
+for (let i=0;i&lt;3;i++) setTimeout(()=&gt;console.log(i));   // 0 1 2
+
+// 7
+const obj = { a: 1, b: { c: 2 } };
+const copy = { ...obj };
+copy.b.c = 99;  console.log(obj.b.c);   // 99 — shallow copy shares nested refs
+
+// 8
+console.log([..."hello"]);           // ["h","e","l","l","o"] — strings are iterable
+
+// 9
+const o = { n: 1, get double(){ return this.n * 2; } };
+const { double } = o;  console.log(double);   // 2 — the getter ran once, at the moment of destructuring
+
+// 10
+console.log([1,2,3].map(parseInt));
+// [1, NaN, NaN] — map passes (value, index); parseInt reads index as the number base (radix):
+//                 parseInt(2,1) and parseInt(3,2) are invalid → NaN
+
+// 11
+setTimeout(() =&gt; console.log("t"), 0);
+Promise.resolve().then(() =&gt; console.log("p"));
+console.log("s");                     // s, p, t
+
+// 12
+console.log(1 &lt; 2 &lt; 3, 3 &gt; 2 &gt; 1);
+// true, false — (3>2) is true → true > 1 → 1 > 1 → false
+
+// 13
+const arr = [1,2,3];  arr.length = 0;  console.log(arr);   // [] — truncates
+
+// 14
+console.log("5" - 3, "5" + 3);        // 2, "53"
+
+// 15
+(function(){ console.log(typeof arguments); })();  // "object", not "array"</code></pre>
+</section>
+
+<section id="rev">
+<h3>Interview Q&amp;A — quick answers</h3>
+
+<h4>Fundamentals</h4>
+<ul>
+<li><b>Is JS interpreted or compiled?</b> JIT-compiled (compiled just in time, while it runs). V8 parses the code into an AST (a tree of its structure), runs it as bytecode with the Ignition interpreter, then optimises hot (frequently run) functions into machine code with TurboFan.</li>
+<li><b>== vs ===?</b> Loose equality (<code>==</code>) converts the types first, then compares. Strict equality (<code>===</code>) compares type and value with no converting. Always use <code>===</code>, except for <code>x == null</code>.</li>
+<li><b>Primitive vs reference types?</b> Primitives are copied by value (a real copy). Objects copy only the reference (the address), so two variables can point at one object.</li>
+<li><b>Shallow vs deep copy?</b> Spread/<code>Object.assign</code> copy one level only — nested objects are still shared. <code>structuredClone</code> copies every level.</li>
+<li><b>Falsy values?</b> <code>false, 0, -0, 0n, "", null, undefined, NaN</code> — eight of them. Everything else is truthy.</li>
+<li><b><code>null</code> vs <code>undefined</code>?</b> <code>undefined</code> = never given a value; <code>null</code> = deliberately set to "empty".</li>
+</ul>
+
+<h4>Scope &amp; functions</h4>
+<ul>
+<li><b>What is hoisting?</b> Before code runs (the creation phase), declarations are registered. <code>var</code> starts as <code>undefined</code>; <code>let</code>/<code>const</code> have no value yet and sit in the TDZ (using them throws); function declarations are hoisted completely, so you can call them early.</li>
+<li><b>What is a closure?</b> A function plus the variables from where it was defined (its lexical environment), kept alive even after the outer function returns. It powers private state, debounce, memoize and the module pattern.</li>
+<li><b>var vs let vs const?</b> Function scope vs block scope; <code>undefined</code> vs TDZ when hoisted; <code>const</code> can't be reassigned, but the contents of a <code>const</code> object can still change.</li>
+<li><b>How does <code>this</code> work?</b> It depends on how the function is called: arrow → taken from the surrounding code; <code>new</code> → the new object; <code>call/bind</code> → the object you pass; <code>obj.fn()</code> → obj; plain call → undefined (strict mode) or the global object.</li>
+<li><b>call vs apply vs bind?</b> Run now with arguments listed / run now with arguments in an array / return a new function with <code>this</code> locked in permanently.</li>
+<li><b>Arrow vs regular function?</b> Arrows have no own <code>this</code>, no <code>arguments</code>, no <code>prototype</code>, and can't be used with <code>new</code>.</li>
+<li><b>Debounce vs throttle?</b> Debounce waits until activity stops, then runs once; throttle runs at most once per time window.</li>
+<li><b>IIFE?</b> An Immediately Invoked Function Expression — a function that runs as soon as it's defined, to create a private scope. The pre-module way to avoid global variables.</li>
+</ul>
+
+<h4>Objects</h4>
+<ul>
+<li><b>Prototypal inheritance?</b> Objects link to other objects. When a property is missing, JS follows the links up the chain until it finds it or reaches <code>null</code>. Classes are just nicer syntax over this.</li>
+<li><b><code>__proto__</code> vs <code>prototype</code>?</b> <code>__proto__</code> (better: <code>Object.getPrototypeOf</code>) is the link on an instance, pointing to its prototype. <code>prototype</code> is a property on a constructor function: the object that every instance it creates will link to.</li>
+<li><b>What does <code>new</code> do?</b> Four steps: creates an empty object, links its prototype, runs the constructor with <code>this</code> set to that object, and returns it (unless the constructor returns a different object).</li>
+<li><b>Map vs Object?</b> Map accepts any type as a key, keeps insertion order, has <code>.size</code>, and is faster for frequent adding/removing.</li>
+<li><b>WeakMap use case?</b> Storing extra data about objects/DOM nodes that should disappear automatically when the object is garbage collected — avoids memory leaks.</li>
+</ul>
+
+<h4>Async</h4>
+<ul>
+<li><b>Explain the event loop.</b> Wait until the call stack is empty → run <b>all</b> microtasks → redraw the screen if needed → run <b>one</b> macrotask → repeat.</li>
+<li><b>Microtask vs macrotask?</b> Microtasks: promises, <code>await</code>, <code>queueMicrotask</code>. Macrotasks: <code>setTimeout</code>, <code>setInterval</code>, events. Microtasks always go first.</li>
+<li><b>Why isn't <code>setTimeout(fn, 0)</code> immediate?</b> It queues a macrotask, which has to wait for the stack to clear and every microtask to finish.</li>
+<li><b>Promise states?</b> Pending → fulfilled or rejected. It settles exactly once, and can't change after that.</li>
+<li><b>all vs allSettled vs race vs any?</b> Fails as soon as one fails / never rejects, reports every result / first to finish either way / first to succeed.</li>
+<li><b>Does <code>await</code> block the thread?</b> No — it pauses only that one function and schedules the rest of it as a microtask. Other code keeps running.</li>
+<li><b>Callback hell &amp; the fix?</b> Deeply nested callbacks, with error handling repeated at each level and inversion of control (trusting other code to call you correctly). Fixed by promise chaining and async/await.</li>
+</ul>
+
+<h4>Advanced</h4>
+<ul>
+<li><b>Generators?</b> Functions that can pause and resume (<code>function*</code> + <code>yield</code>). They produce values lazily, one at a time — good for infinite sequences and pagination.</li>
+<li><b>Common memory leaks?</b> Accidental globals, timers never cleared, references kept to removed DOM elements, and event listeners never removed.</li>
+<li><b>Currying?</b> Turning <code>f(a,b,c)</code> into <code>f(a)(b)(c)</code> — lets you fill in some arguments now and reuse the result.</li>
+<li><b>ESM vs CommonJS?</b> ESM: static imports, loaded asynchronously, live bindings, supports tree shaking. CommonJS: dynamic <code>require</code>, loaded synchronously, copies values.</li>
+<li><b>Why is <code>0.1 + 0.2 !== 0.3</code>?</b> Computers store numbers in binary floating point, which can't represent those decimals exactly, so tiny rounding errors appear. Compare within <code>Number.EPSILON</code> instead.</li>
+</ul>
+
+<h4>Lifecycle</h4>
+<ul>
+<li><b>Walk me through what happens when a script runs.</b> The file is downloaded, parsed into an AST, compiled to bytecode (JIT). A global execution context is created (creation phase: hoisting, memory set up), then the code runs line by line on the call stack. Async work is handed to Web APIs/Node; when it finishes, the event loop runs microtasks, then macrotasks. Memory nothing can reach any more is freed by the garbage collector.</li>
+<li><b>DOMContentLoaded vs load?</b> <code>DOMContentLoaded</code> fires when the HTML is fully parsed and the DOM is built (deferred scripts have run). <code>load</code> fires later, once images, stylesheets, iframes and other resources have also finished.</li>
+<li><b>What's the lifecycle of a function call?</b> A new execution context is created and pushed on the call stack → creation phase (hoisting, <code>this</code>) → execution phase → return → popped off the stack. Its local variables become garbage unless a closure still references them.</li>
+<li><b>Where should you save state before a user leaves the page?</b> On <code>visibilitychange</code> (when <code>document.visibilityState</code> becomes <code>"hidden"</code>) or <code>pagehide</code> — not <code>unload</code>, which is unreliable, especially on mobile. Use <code>navigator.sendBeacon</code> to send data safely.</li>
+</ul>
+</section>
+
+<section id="polyfills">
+<h3>Polyfills to Know</h3>
+<p>A <b>polyfill</b> is your own code that recreates a built-in feature — originally so older browsers that lacked it could still run modern code.</p>
+<p>Interviewers often ask you to write one from scratch. It's a standard way to test whether you understand <code>this</code>, closures and the prototype chain.</p>
+<pre><code>// map
+Array.prototype.myMap = function (cb, thisArg) {
+  const out = [];
+  for (let i = 0; i &lt; this.length; i++)
+    if (i in this) out[i] = cb.call(thisArg, this[i], i, this);
+  return out;
+};
+
+// filter
+Array.prototype.myFilter = function (cb, thisArg) {
+  const out = [];
+  for (let i = 0; i &lt; this.length; i++)
+    if (i in this &amp;&amp; cb.call(thisArg, this[i], i, this)) out.push(this[i]);
+  return out;
+};
+
+// reduce
+Array.prototype.myReduce = function (cb, init) {
+  let acc = init, start = 0;
+  if (acc === undefined) { acc = this[0]; start = 1; }
+  for (let i = start; i &lt; this.length; i++) acc = cb(acc, this[i], i, this);
+  return acc;
+};
+
+// bind
+Function.prototype.myBind = function (ctx, ...bound) {
+  const fn = this;
+  return function (...args) {
+    return fn.apply(this instanceof fn ? this : ctx, [...bound, ...args]);
+  };
+};
+
+// call
+Function.prototype.myCall = function (ctx, ...args) {
+  ctx = ctx ?? globalThis;
+  const key = Symbol();
+  ctx[key] = this;
+  const result = ctx[key](...args);
+  delete ctx[key];
+  return result;
+};
+
+// Promise.all
+function myAll(promises) {
+  return new Promise((resolve, reject) =&gt; {
+    const out = []; let done = 0;
+    if (!promises.length) return resolve(out);
+    promises.forEach((p, i) =&gt; {
+      Promise.resolve(p).then(v =&gt; {
+        out[i] = v;
+        if (++done === promises.length) resolve(out);
+      }, reject);
+    });
+  });
+}
+
+// deep clone
+function deepClone(v, seen = new WeakMap()) {
+  if (v === null || typeof v !== "object") return v;
+  if (seen.has(v)) return seen.get(v);              // handles circular refs
+  const out = Array.isArray(v) ? [] : {};
+  seen.set(v, out);
+  for (const k of Object.keys(v)) out[k] = deepClone(v[k], seen);
+  return out;
+}
+
+// flatten
+const flatten = (arr, depth = 1) =&gt;
+  depth &lt; 1 ? arr.slice()
+            : arr.reduce((a, v) =&gt;
+                a.concat(Array.isArray(v) ? flatten(v, depth - 1) : v), []);</code></pre>
+</section>
+
+</main>
+</div>
+
+<script src="../assets/notes.js"></script>
+</body>
+</html>

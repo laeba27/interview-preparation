@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Databases — SQL &amp; NoSQL Concept Notes</title>
+<link rel="stylesheet" href="../assets/notes.css">
+<script>
+  try { document.documentElement.setAttribute("data-theme",
+    localStorage.getItem("notes-theme") || "light"); } catch (e) {}
+</script>
+</head>
+<body>
+<div class="scrim"></div>
+<button class="icon-btn" id="reopen" title="Show sidebar ([)" aria-label="Show sidebar">☰</button>
+<div class="layout">
+
+<aside>
+  <div class="sidebar-head">
+    <a class="back-link" href="../index.html">← All topics</a>
+    <button class="icon-btn" id="collapseBtn" title="Hide sidebar ([)" aria-label="Hide sidebar">‹</button>
+  </div>
+  <input id="search" type="text" placeholder="Filter topics…" autocomplete="off">
+
+  <h2>Foundations</h2>
+  <nav>
+    <a href="#s1">1 · What a Database Is</a>
+    <a href="#s2">2 · Relational vs Non-Relational</a>
+    <a href="#s3">3 · Choosing One</a>
+  </nav>
+
+  <h2>Relational (SQL)</h2>
+  <nav>
+    <a href="#s4">4 · Tables, Rows, Columns</a>
+    <a href="#s5">5 · Keys &amp; Relationships</a>
+    <a href="#s6">6 · Normalization</a>
+    <a href="#s7">7 · SQL Basics</a>
+    <a href="#s8">8 · Joins</a>
+    <a href="#s9">9 · Grouping &amp; Aggregates</a>
+    <a href="#s10">10 · Subqueries &amp; CTEs</a>
+    <a href="#s11">11 · Constraints &amp; Data Types</a>
+  </nav>
+
+  <h2>Non-Relational</h2>
+  <nav>
+    <a href="#s12">12 · The Four Types</a>
+    <a href="#s13">13 · Document Databases</a>
+    <a href="#s14">14 · Embed vs Reference</a>
+    <a href="#s15">15 · MongoDB in Practice</a>
+    <a href="#s16">16 · Key-Value &amp; Redis</a>
+    <a href="#s17">17 · Wide-Column &amp; Graph</a>
+  </nav>
+
+  <h2>Core Concepts</h2>
+  <nav>
+    <a href="#s18">18 · Indexes</a>
+    <a href="#s19">19 · Transactions &amp; ACID</a>
+    <a href="#s20">20 · Isolation &amp; Race Conditions</a>
+    <a href="#s21">21 · Query Performance</a>
+    <a href="#s22">22 · Connections &amp; Pooling</a>
+  </nav>
+
+  <h2>Scale &amp; Practice</h2>
+  <nav>
+    <a href="#s23">23 · Replication</a>
+    <a href="#s24">24 · Sharding &amp; Partitioning</a>
+    <a href="#s25">25 · CAP &amp; Consistency</a>
+    <a href="#s26">26 · Caching</a>
+    <a href="#s27">27 · Migrations &amp; ORMs</a>
+    <a href="#s28">28 · Security &amp; Backups</a>
+  </nav>
+
+  <h2>Revision</h2>
+  <nav>
+    <a href="#rev">Interview Q&amp;A</a>
+    <a href="#road">Learning Path</a>
+  </nav>
+</aside>
+
+<main>
+<header class="top">
+  <h1>Databases — SQL &amp; NoSQL</h1>
+  <div class="top-actions">
+    <button class="ghost" id="menuBtn">☰ Topics</button>
+    <button class="ghost" id="theme">Dark mode</button>
+  </div>
+</header>
+<p class="sub">Relational and non-relational, side by side. Plain language, real depth. Print this page for a PDF.</p>
+
+<!-- ================= FOUNDATIONS ================= -->
+<div class="part">Part 1 — Foundations</div>
+
+<section id="s1">
+<h3>1. What a Database Really Is</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A database is a program whose whole job is to <b>store data safely and find it again fast</b>.</p>
+<p>You could use files. But then you'd have to handle two people writing at once, crashes mid-write, finding one record among millions, and keeping related data in step. A database solves all of that for you.</p>
+<p class="analogy">A filing cabinet is storage. A librarian is a database — they know where everything is, stop two people taking the same book, and won't let you file a page in the wrong place.</p></div>
+<h4>What you're really paying a database to do</h4>
+<ul>
+<li><b>Durability</b> — once it says "saved", it survives a power cut.</li>
+<li><b>Concurrency</b> — hundreds of people reading and writing at once without corrupting each other.</li>
+<li><b>Fast lookup</b> — find one row among 50 million without reading all 50 million.</li>
+<li><b>Integrity</b> — refuse data that breaks your rules (an order with no customer).</li>
+<li><b>Querying</b> — answer questions you didn't plan for, without rewriting your app.</li>
+</ul>
+<div class="note"><b>Why not just use files?</b> Two requests writing to the same file at the same time corrupt it. A crash halfway through leaves a broken file. Finding one record means reading the whole thing. Databases exist because every app eventually hits all three.</div>
+</section>
+
+<section id="s2">
+<h3>2. Relational vs Non-Relational</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Relational</b> (SQL) stores data in <b>tables</b> — like spreadsheets with strict columns. Every row has the same shape, and tables link to each other.</p>
+<p><b>Non-relational</b> (NoSQL) is an umbrella term for everything else. The most common kind stores <b>documents</b> — each record is a flexible object that can hold nested data and doesn't have to match its neighbours.</p>
+<p class="analogy">Relational is a form everyone must fill in identically. Non-relational is a folder where each file can look however it needs to.</p></div>
+<figure class="diagram">
+<svg viewBox="0 0 640 330" role="img" aria-label="A relational database splits a user and their addresses across linked tables with fixed columns, while a document database stores the same information as one nested object with a flexible shape.">
+  <text class="d-accent-text" x="160" y="18" text-anchor="middle">RELATIONAL — split across tables</text>
+  <rect class="d-box" x="20" y="28" width="284" height="180" rx="7"/>
+
+  <text class="d-sub" x="36" y="48">users</text>
+  <rect class="d-box" x="36" y="56" width="252" height="52" rx="5"/>
+  <text class="d-mono" x="46" y="74">id  name   email</text>
+  <text class="d-mono" x="46" y="96">1   Ada    a@b.com</text>
+
+  <text class="d-sub" x="36" y="128">addresses</text>
+  <rect class="d-fill-accent" x="36" y="136" width="252" height="60" rx="5"/>
+  <rect class="d-box-accent"  x="36" y="136" width="252" height="60" rx="5"/>
+  <text class="d-mono" x="46" y="154">id  user_id  city</text>
+  <text class="d-mono" x="46" y="174">9   1        London</text>
+  <text class="d-mono" x="46" y="192">10  1        Pune</text>
+
+  <path class="d-line-accent" d="M292 96 C 314 96, 314 152, 292 152"/>
+  <text class="d-accent-text" x="306" y="118" text-anchor="middle">1 → many</text>
+  <text class="d-sub" x="160" y="228" text-anchor="middle">Data stored once. Joined when you need it.</text>
+
+  <text class="d-accent-text" x="478" y="18" text-anchor="middle">DOCUMENT — one nested object</text>
+  <rect class="d-box-accent" x="336" y="28" width="284" height="180" rx="7"/>
+  <text class="d-mono" x="352" y="52">{</text>
+  <text class="d-mono" x="366" y="72">_id: 1,</text>
+  <text class="d-mono" x="366" y="92">name: "Ada",</text>
+  <text class="d-mono" x="366" y="112">email: "a@b.com",</text>
+  <text class="d-accent-text" x="366" y="132">addresses: [</text>
+  <text class="d-mono" x="380" y="152">{ city: "London" },</text>
+  <text class="d-mono" x="380" y="172">{ city: "Pune" }</text>
+  <text class="d-accent-text" x="366" y="192">] }</text>
+  <text class="d-sub" x="478" y="228" text-anchor="middle">Everything together. One read gets it all.</text>
+
+  <rect class="d-box" x="60" y="252" width="520" height="62" rx="7"/>
+  <text class="d-label" x="80" y="274">The trade in one line</text>
+  <text class="d-sub" x="80" y="296">Relational avoids duplicated data and enforces rules. Document is faster to read</text>
+  <text class="d-sub" x="80" y="310">as one piece, and lets each record have its own shape.</text>
+</svg>
+<figcaption>Same information, two philosophies: split it up and link it, or keep it together in one object.</figcaption>
+</figure>
+<h4>Side by side</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>Relational (SQL)</th><th>Document (NoSQL)</th></tr>
+<tr><td>Structure</td><td>Tables with fixed columns</td><td>Flexible documents</td></tr>
+<tr><td>Schema</td><td>Defined up front, enforced</td><td>Optional, enforced in your app</td></tr>
+<tr><td>Relationships</td><td>Joins, enforced by the database</td><td>Embed, or link and join manually</td></tr>
+<tr><td>Language</td><td>SQL — standard across products</td><td>Different for every database</td></tr>
+<tr><td>Scaling</td><td>Bigger machine first; sharding is work</td><td>Designed to spread across machines</td></tr>
+<tr><td>Best when</td><td>Data is structured and related</td><td>Data is varied or naturally nested</td></tr>
+<tr><td>Examples</td><td>PostgreSQL, MySQL, SQLite</td><td>MongoDB, DynamoDB, Firestore</td></tr>
+</table></div>
+<div class="note"><b>"NoSQL" is a bad name.</b> It doesn't mean "no SQL" — some NoSQL databases support SQL-like queries. It originally meant "not only SQL". The useful distinction is <i>how data is structured</i>, not which language you type.</div>
+</section>
+
+<section id="s3">
+<h3>3. How to Actually Choose</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>There's no "better" database, only a better fit. The decision comes down to <b>how connected your data is</b> and <b>whether every record has the same shape</b>.</p>
+<p>If you genuinely can't decide, pick relational. It's the easier one to change your mind about later.</p></div>
+<h4>Start relational unless you have a reason not to</h4>
+<p>This is the honest default, and a strong interview answer. Postgres handles JSON, scales further than most apps ever need, and gives you transactions and constraints for free. Most "we need NoSQL" decisions are made before the app has any users.</p>
+<h4>Questions that actually decide it</h4>
+<div class="table-wrap"><table>
+<tr><th>Question</th><th>Points to relational</th><th>Points to document</th></tr>
+<tr><td>Is the data highly connected?</td><td>Yes — users, orders, products, payments</td><td>No — mostly standalone records</td></tr>
+<tr><td>Do records all have the same fields?</td><td>Yes</td><td>No — every product has different attributes</td></tr>
+<tr><td>Do you need multi-step operations to be safe?</td><td>Yes — money, bookings, stock</td><td>Less critical</td></tr>
+<tr><td>Will you ask unplanned questions of it?</td><td>Yes — reports, analytics</td><td>No — you read by a known key</td></tr>
+<tr><td>Is write volume enormous?</td><td>Manageable</td><td>Huge — logs, events, sensor data</td></tr>
+</table></div>
+<h4>Using both is normal</h4>
+<pre><code>Postgres  → users, orders, payments      (needs correctness and joins)
+MongoDB   → product catalogue             (every category has different fields)
+Redis     → sessions, cache, rate limits  (speed, short-lived)
+Elastic   → full-text search              (searching descriptions properly)</code></pre>
+<p>This is called <b>polyglot persistence</b> — using the right store for each job. The cost is more systems to run and back up, so don't do it until one database genuinely stops fitting.</p>
+<div class="note"><b>The myth worth correcting:</b> "SQL can't scale." Postgres and MySQL run some of the largest systems in the world. Scaling is harder past a certain point, but that point is far beyond where most applications ever get.</div>
+</section>
+
+<!-- ================= RELATIONAL ================= -->
+<div class="part">Part 2 — Relational Databases</div>
+
+<section id="s4">
+<h3>4. Tables, Rows &amp; Columns</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>table</b> is one kind of thing — users, orders, products. A <b>column</b> is a property every one of them has. A <b>row</b> is one actual thing.</p>
+<p>The rule that defines relational databases: every row in a table has <b>exactly the same columns</b>. No exceptions.</p></div>
+<pre><code>CREATE TABLE users (
+  id         SERIAL PRIMARY KEY,       -- auto-numbering unique id
+  name       VARCHAR(100) NOT NULL,    -- must have a value
+  email      VARCHAR(255) UNIQUE NOT NULL,
+  age        INTEGER CHECK (age &gt;= 0),
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);</code></pre>
+<h4>Why the fixed structure helps</h4>
+<ul>
+<li>The database <b>rejects bad data</b> — you can't save a user with no email.</li>
+<li>Queries are predictable — every row definitely has that column.</li>
+<li>Storage is compact — the shape is stored once, not on every record.</li>
+<li>The structure documents itself — reading the table tells you what a user <i>is</i>.</li>
+</ul>
+<h4>And where it hurts</h4>
+<p>Adding a column to a table with 100 million rows can lock it. Storing things with genuinely different shapes means either lots of empty columns or many small tables. This is exactly the pain document databases were built to remove.</p>
+</section>
+
+<section id="s5">
+<h3>5. Keys &amp; Relationships</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>primary key</b> is the unique id of a row — the thing that identifies it.</p>
+<p>A <b>foreign key</b> is a column that points at another table's primary key. That's the entire mechanism behind "relational": rows referring to other rows.</p>
+<p class="analogy">A primary key is your passport number. A foreign key is a form that says "passenger: that passport number" — it points at you without copying your details.</p></div>
+<pre><code>CREATE TABLE orders (
+  id      SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  total   NUMERIC(10,2) NOT NULL
+);</code></pre>
+<p><code>REFERENCES users(id)</code> tells the database: this must match a real user. Try to insert an order for user 999 who doesn't exist, and it refuses. That's <b>referential integrity</b> — the database protecting you from orphaned data.</p>
+<h4>ON DELETE options</h4>
+<div class="table-wrap"><table>
+<tr><th>Option</th><th>When the user is deleted</th></tr>
+<tr><td><code>CASCADE</code></td><td>Their orders are deleted too</td></tr>
+<tr><td><code>SET NULL</code></td><td>Orders stay, <code>user_id</code> becomes null</td></tr>
+<tr><td><code>RESTRICT</code></td><td>Refuse to delete the user while orders exist</td></tr>
+</table></div>
+<h4>The three relationship shapes</h4>
+<figure class="diagram">
+<svg viewBox="0 0 640 300" role="img" aria-label="Three relationship types: one to one where a user has one profile, one to many where a user has many orders, and many to many where students and courses are linked through a join table.">
+  <text class="d-accent-text" x="320" y="18" text-anchor="middle">ONE-TO-ONE</text>
+  <rect class="d-box" x="130" y="28" width="150" height="34" rx="6"/>
+  <text class="d-mono" x="205" y="50" text-anchor="middle">users</text>
+  <rect class="d-box" x="360" y="28" width="150" height="34" rx="6"/>
+  <text class="d-mono" x="435" y="50" text-anchor="middle">profiles</text>
+  <path class="d-line" d="M280 45 H354"/><path class="d-arrow" d="M360 45 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="317" y="38" text-anchor="middle">1 — 1</text>
+  <text class="d-sub" x="524" y="50">user_id UNIQUE</text>
+
+  <text class="d-accent-text" x="320" y="96" text-anchor="middle">ONE-TO-MANY  (the common one)</text>
+  <rect class="d-box" x="130" y="106" width="150" height="34" rx="6"/>
+  <text class="d-mono" x="205" y="128" text-anchor="middle">users</text>
+  <rect class="d-fill-accent" x="360" y="106" width="150" height="34" rx="6"/>
+  <rect class="d-box-accent"  x="360" y="106" width="150" height="34" rx="6"/>
+  <text class="d-mono" x="435" y="128" text-anchor="middle">orders</text>
+  <path class="d-line-accent" d="M280 123 H354"/><path class="d-arrow-accent" d="M360 123 l-9 -4.5 v9 z"/>
+  <text class="d-accent-text" x="317" y="116" text-anchor="middle">1 — ∞</text>
+  <text class="d-sub" x="524" y="128">user_id</text>
+
+  <text class="d-accent-text" x="320" y="174" text-anchor="middle">MANY-TO-MANY  (needs a third table)</text>
+  <rect class="d-box" x="24" y="186" width="140" height="34" rx="6"/>
+  <text class="d-mono" x="94" y="208" text-anchor="middle">students</text>
+  <rect class="d-fill-accent" x="230" y="186" width="180" height="34" rx="6"/>
+  <rect class="d-box-accent"  x="230" y="186" width="180" height="34" rx="6"/>
+  <text class="d-mono" x="320" y="208" text-anchor="middle">enrolments</text>
+  <rect class="d-box" x="476" y="186" width="140" height="34" rx="6"/>
+  <text class="d-mono" x="546" y="208" text-anchor="middle">courses</text>
+  <path class="d-line-accent" d="M164 203 H224"/><path class="d-arrow-accent" d="M230 203 l-9 -4.5 v9 z"/>
+  <path class="d-line-accent" d="M410 203 H470"/><path class="d-arrow-accent" d="M476 203 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="320" y="240" text-anchor="middle">student_id + course_id — one row per enrolment</text>
+  <text class="d-sub" x="320" y="270" text-anchor="middle">A student takes many courses; a course has many students.</text>
+  <text class="d-sub" x="320" y="288" text-anchor="middle">Neither table can hold that, so a join table sits in the middle.</text>
+</svg>
+<figcaption>One-to-many is by far the most common. Many-to-many always needs a third table — there's no other way to express it.</figcaption>
+</figure>
+</section>
+
+<section id="s6">
+<h3>6. Normalization</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Normalization</b> means storing each fact in exactly <b>one place</b>.</p>
+<p>If a customer's address appears on 500 orders and they move house, you'd have 500 rows to update — and you'll miss some. Store it once, point at it from everywhere.</p>
+<p class="analogy">Saving a friend's number in your contacts once, instead of writing it on every note you send them.</p></div>
+<pre><code>-- ✗ Not normalized: the same facts repeated on every row
+orders: id | customer_name | customer_email | customer_city | product | price
+        1  | Ada           | a@b.com        | London        | Laptop  | 999
+        2  | Ada           | a@b.com        | London        | Mouse   | 25
+
+-- ✓ Normalized: each fact lives once
+customers: id | name | email   | city
+           1  | Ada  | a@b.com | London
+orders:    id | customer_id | product | price
+           1  | 1           | Laptop  | 999
+           2  | 1           | Mouse   | 25</code></pre>
+<h4>The forms, in plain terms</h4>
+<ul>
+<li><b>1NF</b> — no lists crammed into one cell. <code>"red,blue,green"</code> in a column should be three rows.</li>
+<li><b>2NF</b> — every column depends on the <i>whole</i> key, not part of it.</li>
+<li><b>3NF</b> — no column depends on another non-key column. Storing <code>city</code> and <code>country</code> where country is determined by city breaks this.</li>
+</ul>
+<p>In practice: <b>aim for 3NF and stop</b>. The higher forms rarely change a real design.</p>
+<h4>When to deliberately break it</h4>
+<p><b>Denormalization</b> means copying data on purpose, to avoid a join. It's a trade: faster reads, but now you must keep the copies in sync.</p>
+<pre><code>-- Store a running count instead of counting rows every time
+posts: id | title | comment_count
+
+-- Fast to read. But every new comment must update it,
+-- and if that update fails the number is silently wrong.</code></pre>
+<div class="note"><b>Normalize first, denormalize when you measure a problem.</b> Duplicated data that drifts out of sync is a much worse bug than a slow query — a slow query is visible, wrong data is not.</div>
+</section>
+
+<section id="s7">
+<h3>7. SQL Basics</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>SQL</b> is the language for talking to relational databases. You describe <i>what</i> you want, not how to fetch it — the database works out the fastest route.</p>
+<p>Four commands do almost everything: <code>SELECT</code> (read), <code>INSERT</code> (create), <code>UPDATE</code> (change), <code>DELETE</code> (remove).</p></div>
+<pre><code>SELECT name, email FROM users WHERE age &gt; 18 ORDER BY name LIMIT 10;
+
+INSERT INTO users (name, email) VALUES ('Ada', 'a@b.com') RETURNING id;
+
+UPDATE users SET name = 'Ada L' WHERE id = 1;
+
+DELETE FROM users WHERE id = 1;</code></pre>
+<div class="note"><b>Always write the <code>WHERE</code> first.</b> <code>UPDATE users SET name = 'x'</code> with no WHERE renames every user in the table. Run a <code>SELECT</code> with the same WHERE first to see exactly which rows you're about to change.</div>
+<h4>Filtering</h4>
+<pre><code>WHERE age BETWEEN 18 AND 65
+WHERE city IN ('London', 'Pune')
+WHERE name LIKE 'A%'              -- starts with A
+WHERE email IS NULL               -- NOT "= NULL" — that never matches
+WHERE active = true AND (role = 'admin' OR verified = true)</code></pre>
+<h4>NULL behaves strangely — and it's a classic question</h4>
+<pre><code>NULL = NULL        → NULL (not true!)
+NULL + 5           → NULL
+WHERE x != 'a'     → skips rows where x is NULL
+
+-- Use IS / IS NOT
+WHERE x IS NULL
+WHERE x IS DISTINCT FROM 'a'      -- treats NULL as a real value
+COALESCE(x, 'default')            -- replace NULL with something</code></pre>
+<p>NULL doesn't mean zero or empty — it means <b>unknown</b>. Is an unknown value equal to another unknown value? The database refuses to guess, so the answer is also unknown.</p>
+<h4>Execution order — why an alias fails in WHERE</h4>
+<figure class="diagram">
+<svg viewBox="0 0 620 250" role="img" aria-label="SQL runs FROM, then JOIN, WHERE, GROUP BY, HAVING, SELECT, ORDER BY and finally LIMIT — so aliases created in SELECT are not available in WHERE.">
+  <text class="d-sub" x="120" y="20" text-anchor="middle">YOU WRITE</text>
+  <rect class="d-box" x="24" y="30" width="200" height="182" rx="7"/>
+  <text class="d-mono" x="40" y="54">SELECT</text>
+  <text class="d-mono" x="40" y="76">FROM</text>
+  <text class="d-mono" x="40" y="98">JOIN</text>
+  <text class="d-mono" x="40" y="120">WHERE</text>
+  <text class="d-mono" x="40" y="142">GROUP BY</text>
+  <text class="d-mono" x="40" y="164">HAVING</text>
+  <text class="d-mono" x="40" y="186">ORDER BY</text>
+  <text class="d-mono" x="40" y="206">LIMIT</text>
+
+  <text class="d-accent-text" x="430" y="20" text-anchor="middle">IT RUNS</text>
+  <rect class="d-box-accent" x="330" y="30" width="200" height="182" rx="7"/>
+  <text class="d-mono" x="346" y="54">1  FROM</text>
+  <text class="d-mono" x="346" y="76">2  JOIN</text>
+  <text class="d-mono" x="346" y="98">3  WHERE</text>
+  <text class="d-mono" x="346" y="120">4  GROUP BY</text>
+  <text class="d-mono" x="346" y="142">5  HAVING</text>
+  <text class="d-accent-text" x="346" y="164">6  SELECT  ← aliases born here</text>
+  <text class="d-mono" x="346" y="186">7  ORDER BY</text>
+  <text class="d-mono" x="346" y="206">8  LIMIT</text>
+
+  <path class="d-line-accent" d="M230 120 H324"/><path class="d-arrow-accent" d="M330 120 l-9 -4.5 v9 z"/>
+
+  <text class="d-sub" x="310" y="236" text-anchor="middle">WHERE runs at step 3, SELECT at step 6 — so an alias doesn't exist yet in WHERE. ORDER BY is step 7, so it works there.</text>
+</svg>
+<figcaption>SQL is written in one order and executed in another. This single fact explains most "column does not exist" errors.</figcaption>
+</figure>
+<pre><code>-- ✗ fails: total_price doesn't exist yet at WHERE
+SELECT price * qty AS total_price FROM items WHERE total_price &gt; 100;
+
+-- ✓ repeat the expression, or use a subquery
+SELECT price * qty AS total_price FROM items WHERE price * qty &gt; 100;
+
+-- ✓ ORDER BY runs after SELECT, so the alias is fine there
+SELECT price * qty AS total_price FROM items ORDER BY total_price DESC;</code></pre>
+</section>
+
+<section id="s8">
+<h3>8. Joins</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>join</b> combines rows from two tables by matching a value — usually a foreign key pointing at a primary key.</p>
+<p>The type of join decides what happens to rows that <b>don't</b> match. That's the only real difference between them.</p></div>
+<figure class="diagram">
+<svg viewBox="0 0 640 300" role="img" aria-label="Four join types shown as overlapping circles: inner join keeps only the overlap, left join keeps all of the left circle, right join keeps all of the right, and full join keeps both circles entirely.">
+  <defs>
+    <clipPath id="clipL"><circle cx="68" cy="76" r="38"/></clipPath>
+    <clipPath id="clipR"><circle cx="112" cy="76" r="38"/></clipPath>
+  </defs>
+
+  <text class="d-accent-text" x="90" y="20" text-anchor="middle">INNER JOIN</text>
+  <g transform="translate(0,0)">
+    <circle class="d-box" cx="68" cy="76" r="38"/>
+    <circle class="d-box" cx="112" cy="76" r="38"/>
+    <g clip-path="url(#clipL)"><circle class="d-fill-accent" cx="112" cy="76" r="38"/></g>
+    <circle class="d-box-accent" cx="68" cy="76" r="38" fill="none"/>
+    <circle class="d-box-accent" cx="112" cy="76" r="38" fill="none"/>
+  </g>
+  <text class="d-sub" x="90" y="134" text-anchor="middle">only the overlap —</text>
+  <text class="d-sub" x="90" y="150" text-anchor="middle">rows matching in BOTH</text>
+
+  <text class="d-accent-text" x="250" y="20" text-anchor="middle">LEFT JOIN</text>
+  <g transform="translate(160,0)">
+    <circle class="d-fill-accent" cx="68" cy="76" r="38"/>
+    <circle class="d-box" cx="112" cy="76" r="38" fill-opacity="0"/>
+    <circle class="d-box-accent" cx="68" cy="76" r="38" fill="none"/>
+    <circle class="d-box" cx="112" cy="76" r="38" fill="none"/>
+  </g>
+  <text class="d-sub" x="250" y="134" text-anchor="middle">ALL of the left,</text>
+  <text class="d-sub" x="250" y="150" text-anchor="middle">matches where they exist</text>
+
+  <text class="d-accent-text" x="410" y="20" text-anchor="middle">RIGHT JOIN</text>
+  <g transform="translate(320,0)">
+    <circle class="d-fill-accent" cx="112" cy="76" r="38"/>
+    <circle class="d-box" cx="68" cy="76" r="38" fill="none"/>
+    <circle class="d-box-accent" cx="112" cy="76" r="38" fill="none"/>
+  </g>
+  <text class="d-sub" x="410" y="134" text-anchor="middle">ALL of the right,</text>
+  <text class="d-sub" x="410" y="150" text-anchor="middle">matches where they exist</text>
+
+  <text class="d-accent-text" x="566" y="20" text-anchor="middle">FULL JOIN</text>
+  <g transform="translate(476,0)">
+    <circle class="d-fill-accent" cx="68" cy="76" r="38"/>
+    <circle class="d-fill-accent" cx="112" cy="76" r="38"/>
+    <circle class="d-box-accent" cx="68" cy="76" r="38" fill="none"/>
+    <circle class="d-box-accent" cx="112" cy="76" r="38" fill="none"/>
+  </g>
+  <text class="d-sub" x="566" y="134" text-anchor="middle">everything from</text>
+  <text class="d-sub" x="566" y="150" text-anchor="middle">both sides</text>
+
+  <rect class="d-box" x="60" y="180" width="520" height="104" rx="7"/>
+  <text class="d-label" x="80" y="202">The practical difference</text>
+  <text class="d-mono" x="80" y="226">INNER: users WITH orders   → a user with no orders vanishes</text>
+  <text class="d-mono" x="80" y="248">LEFT:  ALL users           → no orders shows as NULL columns</text>
+  <text class="d-sub"  x="80" y="272">"Show every customer and their spend" needs LEFT — or you silently drop new customers.</text>
+</svg>
+<figcaption>Unmatched rows are the whole story. INNER drops them; LEFT keeps them with NULLs where the other table had nothing.</figcaption>
+</figure>
+<pre><code>-- Only users who have placed orders
+SELECT u.name, o.total
+FROM users u
+INNER JOIN orders o ON o.user_id = u.id;
+
+-- Every user, including those with none (their total is NULL)
+SELECT u.name, o.total
+FROM users u
+LEFT JOIN orders o ON o.user_id = u.id;
+
+-- Find users with NO orders — a very common pattern
+SELECT u.name
+FROM users u
+LEFT JOIN orders o ON o.user_id = u.id
+WHERE o.id IS NULL;</code></pre>
+<h4>The mistake that silently changes your results</h4>
+<pre><code>-- ✗ this turns a LEFT JOIN back into an INNER JOIN
+SELECT u.name, o.total
+FROM users u
+LEFT JOIN orders o ON o.user_id = u.id
+WHERE o.status = 'paid';        -- NULL rows fail this test and disappear
+
+-- ✓ put the condition in the JOIN instead
+LEFT JOIN orders o ON o.user_id = u.id AND o.status = 'paid';</code></pre>
+<p>Filtering the right-hand table in <code>WHERE</code> removes the NULL rows that LEFT JOIN just carefully kept. Conditions on the joined table belong in <code>ON</code>; conditions on the main table belong in <code>WHERE</code>.</p>
+<h4>Self join</h4>
+<pre><code>-- Employees and their managers, from one table
+SELECT e.name AS employee, m.name AS manager
+FROM employees e
+LEFT JOIN employees m ON e.manager_id = m.id;</code></pre>
+</section>
+
+<section id="s9">
+<h3>9. Grouping &amp; Aggregates</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Aggregate</b> functions squash many rows into one number — count, sum, average.</p>
+<p><code>GROUP BY</code> means "do that separately for each ___". Group by city, and you get one number per city instead of one for everything.</p></div>
+<pre><code>SELECT COUNT(*), SUM(total), AVG(total), MIN(total), MAX(total) FROM orders;
+
+-- One row per user
+SELECT user_id, COUNT(*) AS order_count, SUM(total) AS spent
+FROM orders
+GROUP BY user_id;</code></pre>
+<h4>WHERE vs HAVING</h4>
+<pre><code>SELECT user_id, SUM(total) AS spent
+FROM orders
+WHERE created_at &gt; '2024-01-01'    -- filters ROWS, before grouping
+GROUP BY user_id
+HAVING SUM(total) &gt; 1000;           -- filters GROUPS, after grouping</code></pre>
+<p>Look back at the execution order diagram in section 7: <code>WHERE</code> runs at step 3 (before grouping), <code>HAVING</code> at step 5 (after). That's why you can't use an aggregate in <code>WHERE</code> — the groups don't exist yet.</p>
+<h4>The COUNT trap</h4>
+<pre><code>COUNT(*)           -- counts rows
+COUNT(column)      -- counts rows where that column is NOT NULL
+COUNT(DISTINCT x)  -- counts unique values</code></pre>
+<p>In a LEFT JOIN, <code>COUNT(*)</code> gives 1 for a user with no orders (their NULL row still counts). <code>COUNT(o.id)</code> correctly gives 0.</p>
+<h4>Window functions — aggregates that keep the rows</h4>
+<pre><code>-- Each row keeps its detail AND gets a running total
+SELECT name, total,
+       SUM(total) OVER (ORDER BY created_at) AS running_total,
+       RANK()     OVER (ORDER BY total DESC) AS rank
+FROM orders;
+
+-- Top 3 per category, without a messy subquery
+SELECT * FROM (
+  SELECT *, ROW_NUMBER() OVER (PARTITION BY category ORDER BY sales DESC) AS rn
+  FROM products
+) t WHERE rn &lt;= 3;</code></pre>
+<p><code>GROUP BY</code> collapses rows; a <b>window function</b> calculates across a set of rows but leaves every row intact. Worth knowing — it's a common mid-level interview topic.</p>
+</section>
+
+<section id="s10">
+<h3>10. Subqueries &amp; CTEs</h3>
+<pre><code>-- Subquery: a query inside a query
+SELECT name FROM users
+WHERE id IN (SELECT user_id FROM orders WHERE total &gt; 500);
+
+-- CTE (WITH): the same thing, but readable
+WITH big_spenders AS (
+  SELECT user_id, SUM(total) AS spent
+  FROM orders
+  GROUP BY user_id
+  HAVING SUM(total) &gt; 1000
+)
+SELECT u.name, b.spent
+FROM users u
+JOIN big_spenders b ON b.user_id = u.id
+ORDER BY b.spent DESC;</code></pre>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>CTE</b> ("common table expression", the <code>WITH</code> clause) is a named temporary result you can use in the rest of the query.</p>
+<p>It does the same job as a subquery but reads top-to-bottom instead of inside-out. For anything beyond one level, it's far easier to follow — and to debug, because you can run each piece alone.</p></div>
+<h4>EXISTS is usually the better check</h4>
+<pre><code>-- EXISTS stops at the first match — often faster than IN
+SELECT name FROM users u
+WHERE EXISTS (SELECT 1 FROM orders o WHERE o.user_id = u.id);
+
+-- NOT IN is dangerous with NULLs: if the subquery returns ANY null,
+-- the whole thing returns no rows. NOT EXISTS is safe.
+SELECT name FROM users u
+WHERE NOT EXISTS (SELECT 1 FROM orders o WHERE o.user_id = u.id);</code></pre>
+<h4>Recursive CTEs — for tree-shaped data</h4>
+<pre><code>-- Every employee under a manager, however deep
+WITH RECURSIVE chain AS (
+  SELECT id, name, manager_id FROM employees WHERE id = 1
+  UNION ALL
+  SELECT e.id, e.name, e.manager_id
+  FROM employees e JOIN chain c ON e.manager_id = c.id
+)
+SELECT * FROM chain;</code></pre>
+<p>This is one thing relational databases do genuinely well that document databases struggle with — walking a hierarchy of unknown depth in a single query.</p>
+</section>
+
+<section id="s11">
+<h3>11. Constraints &amp; Data Types</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>constraint</b> is a rule the database enforces itself. Break it and the write is rejected.</p>
+<p>The point: your app has bugs, and it isn't the only thing touching the database. Rules enforced by the database can't be bypassed by a buggy deploy or a manual script.</p></div>
+<div class="table-wrap"><table>
+<tr><th>Constraint</th><th>Guarantees</th></tr>
+<tr><td><code>PRIMARY KEY</code></td><td>Unique and never NULL — identifies the row</td></tr>
+<tr><td><code>FOREIGN KEY</code></td><td>Must point at a row that exists</td></tr>
+<tr><td><code>UNIQUE</code></td><td>No duplicates in this column</td></tr>
+<tr><td><code>NOT NULL</code></td><td>A value is required</td></tr>
+<tr><td><code>CHECK</code></td><td>Any condition you write</td></tr>
+<tr><td><code>DEFAULT</code></td><td>Value used when none is given</td></tr>
+</table></div>
+<pre><code>CREATE TABLE products (
+  id       SERIAL PRIMARY KEY,
+  sku      VARCHAR(50) UNIQUE NOT NULL,
+  price    NUMERIC(10,2) NOT NULL CHECK (price &gt;= 0),
+  stock    INTEGER NOT NULL DEFAULT 0 CHECK (stock &gt;= 0),
+  status   VARCHAR(20) NOT NULL DEFAULT 'draft'
+           CHECK (status IN ('draft','live','archived'))
+);</code></pre>
+<h4>A UNIQUE constraint is also how you avoid a race</h4>
+<pre><code>-- ✗ two simultaneous signups can both pass this check
+const exists = await db.query("SELECT 1 FROM users WHERE email = $1", [email]);
+if (!exists) await db.query("INSERT INTO users …");
+
+-- ✓ let the database decide, and handle the error
+try { await db.query("INSERT INTO users …"); }
+catch (e) { if (e.code === "23505") return res.status(409).json({ error: "Email taken" }); }</code></pre>
+<p>Check-then-insert always has a gap between the two steps. A <code>UNIQUE</code> constraint has no gap — the database guarantees it.</p>
+<h4>Types worth getting right</h4>
+<div class="table-wrap"><table>
+<tr><th>Use</th><th>Not</th><th>Why</th></tr>
+<tr><td><code>NUMERIC(10,2)</code> for money</td><td><code>FLOAT</code></td><td>Floats can't store 0.1 exactly — pennies go missing</td></tr>
+<tr><td><code>TIMESTAMPTZ</code></td><td><code>TIMESTAMP</code></td><td>Stores the timezone; otherwise "3pm" is ambiguous</td></tr>
+<tr><td><code>TEXT</code> / <code>VARCHAR</code></td><td><code>CHAR(n)</code></td><td>CHAR pads with spaces</td></tr>
+<tr><td><code>BOOLEAN</code></td><td><code>INTEGER 0/1</code></td><td>Says what it means</td></tr>
+<tr><td><code>UUID</code> or <code>BIGSERIAL</code></td><td><code>SERIAL</code></td><td>A 32-bit id runs out at ~2 billion</td></tr>
+<tr><td><code>JSONB</code></td><td><code>TEXT</code> holding JSON</td><td>JSONB can be indexed and queried</td></tr>
+</table></div>
+<div class="note"><b>Postgres has JSONB</b> — a real JSON column you can index and query into. So "I need flexible fields" is not by itself a reason to leave relational. You can keep the structured parts as columns and the variable parts as JSONB in the same table.</div>
+</section>
+
+<!-- ================= NON-RELATIONAL ================= -->
+<div class="part">Part 3 — Non-Relational Databases</div>
+
+<section id="s12">
+<h3>12. The Four Types</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>"NoSQL" covers four quite different families. Lumping them together is the main reason the topic feels confusing — they solve different problems.</p></div>
+<div class="table-wrap"><table>
+<tr><th>Type</th><th>Stores</th><th>Good at</th><th>Examples</th></tr>
+<tr><td><b>Document</b></td><td>JSON-like objects</td><td>Flexible records, nested data</td><td>MongoDB, Firestore, CouchDB</td></tr>
+<tr><td><b>Key-value</b></td><td>A key → a value</td><td>Speed. Caching, sessions</td><td>Redis, Memcached, DynamoDB</td></tr>
+<tr><td><b>Wide-column</b></td><td>Rows with dynamic columns</td><td>Huge write volume, time-series</td><td>Cassandra, HBase, ScyllaDB</td></tr>
+<tr><td><b>Graph</b></td><td>Nodes and connections</td><td>Relationships as the main thing</td><td>Neo4j, Neptune</td></tr>
+</table></div>
+<h4>What they share</h4>
+<ul>
+<li><b>No fixed schema</b> — records don't have to match each other.</li>
+<li><b>Built to spread across machines</b> from the start, rather than as an afterthought.</li>
+<li><b>Fewer guarantees by default</b> — often trading strict correctness for speed and availability.</li>
+<li><b>No standard language</b> — what you learn for MongoDB doesn't transfer to Cassandra.</li>
+</ul>
+</section>
+
+<section id="s13">
+<h3>13. Document Databases</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>document</b> is one record stored as a JSON-like object. A <b>collection</b> is a group of them — the rough equivalent of a table.</p>
+<p>The key freedom: two documents in the same collection can have completely different fields.</p></div>
+<div class="table-wrap"><table>
+<tr><th>Relational</th><th>Document</th></tr>
+<tr><td>Table</td><td>Collection</td></tr>
+<tr><td>Row</td><td>Document</td></tr>
+<tr><td>Column</td><td>Field</td></tr>
+<tr><td>Join</td><td>Embed, or <code>$lookup</code></td></tr>
+<tr><td>Primary key</td><td><code>_id</code></td></tr>
+</table></div>
+<pre><code>{
+  _id: ObjectId("..."),
+  name: "Ada",
+  email: "a@b.com",
+  addresses: [                        // nested array, no second table
+    { type: "home", city: "London" },
+    { type: "work", city: "Pune" }
+  ],
+  preferences: { theme: "dark" }      // nested object
+}</code></pre>
+<h4>Where the flexibility genuinely helps</h4>
+<pre><code>// A product catalogue where every category has different attributes
+{ name: "T-shirt", size: "M", colour: "blue" }
+{ name: "Laptop",  ram: "16GB", cpu: "M3", screen: 14 }
+{ name: "Book",    author: "…", pages: 320, isbn: "…" }</code></pre>
+<p>In a table you'd need either dozens of mostly-empty columns, or a separate table per category, or a messy attribute-value table. Here it's natural.</p>
+<h4>Where it hurts</h4>
+<ul>
+<li><b>Nothing stops bad data.</b> A typo in a field name creates a new field instead of an error. You need validation in your app — or MongoDB's schema validation, which most people don't enable.</li>
+<li><b>Joins are awkward.</b> <code>$lookup</code> exists but is slower and clumsier than a SQL join.</li>
+<li><b>Duplicated data drifts.</b> If you copy a product name into 10,000 orders, renaming the product means updating 10,000 documents.</li>
+<li><b>Unplanned queries are harder</b> — you design the shape around how you'll read it, so a new question may not fit.</li>
+</ul>
+<div class="note"><b>The honest summary:</b> document databases move work from the database into your application. The flexibility is real, and so is the responsibility — <i>you</i> now enforce the rules the database used to.</div>
+</section>
+
+<section id="s14">
+<h3>14. Embed vs Reference — the central decision</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>This is <b>the</b> modelling question in a document database, the equivalent of designing tables in SQL.</p>
+<p><b>Embed</b> = put the related data inside the document. One read gets everything, but the data is duplicated.</p>
+<p><b>Reference</b> = store an id and look it up separately. No duplication, but you need a second query.</p></div>
+<figure class="diagram">
+<svg viewBox="0 0 640 310" role="img" aria-label="Embedding puts comments inside the post document for a single fast read, while referencing stores user ids that must be looked up separately but avoids duplicating user data.">
+  <text class="d-accent-text" x="158" y="18" text-anchor="middle">EMBED</text>
+  <rect class="d-box-accent" x="20" y="28" width="276" height="150" rx="7"/>
+  <text class="d-mono" x="36" y="50">post = {</text>
+  <text class="d-mono" x="36" y="70">  title: "Hello",</text>
+  <text class="d-accent-text" x="36" y="90">  comments: [</text>
+  <text class="d-mono" x="36" y="110">    { by: "Ada", text: "…" },</text>
+  <text class="d-mono" x="36" y="130">    { by: "Bob", text: "…" }</text>
+  <text class="d-accent-text" x="36" y="150">  ]</text>
+  <text class="d-mono" x="36" y="170">}</text>
+
+  <text class="d-accent-text" x="478" y="18" text-anchor="middle">REFERENCE</text>
+  <rect class="d-box" x="340" y="28" width="280" height="150" rx="7"/>
+  <text class="d-mono" x="356" y="50">post = {</text>
+  <text class="d-mono" x="356" y="70">  title: "Hello",</text>
+  <text class="d-mono" x="356" y="90">  authorId: 7</text>
+  <text class="d-mono" x="356" y="110">}</text>
+  <text class="d-sub"  x="356" y="136">…then a second query:</text>
+  <text class="d-mono" x="356" y="158">users.findOne({ _id: 7 })</text>
+
+  <rect class="d-box" x="20" y="196" width="276" height="100" rx="7"/>
+  <text class="d-accent-text" x="36" y="216">✓ one read gets everything</text>
+  <text class="d-sub" x="36" y="236">✓ fast, no join</text>
+  <text class="d-sub" x="36" y="258">✗ duplicated if shared elsewhere</text>
+  <text class="d-sub" x="36" y="278">✗ document has a 16MB limit</text>
+
+  <rect class="d-box" x="340" y="196" width="280" height="100" rx="7"/>
+  <text class="d-accent-text" x="356" y="216">✓ stored once — update once</text>
+  <text class="d-sub" x="356" y="236">✓ unlimited growth</text>
+  <text class="d-sub" x="356" y="258">✗ extra query per lookup</text>
+  <text class="d-sub" x="356" y="278">✗ no database-enforced integrity</text>
+</svg>
+<figcaption>Embed what is read together and owned by the parent. Reference what is shared, grows without limit, or changes often.</figcaption>
+</figure>
+<h4>The decision rules</h4>
+<div class="table-wrap"><table>
+<tr><th>Embed when…</th><th>Reference when…</th></tr>
+<tr><td>You always read them together</td><td>You often need one without the other</td></tr>
+<tr><td>The child belongs to one parent</td><td>The data is shared by many parents</td></tr>
+<tr><td>The list is bounded (a few hundred)</td><td>It grows without limit</td></tr>
+<tr><td>It rarely changes</td><td>It changes often</td></tr>
+</table></div>
+<pre><code>// ✓ Embed — addresses belong to this user and are read with them
+{ name: "Ada", addresses: [{ city: "London" }] }
+
+// ✗ Don't embed — comments grow forever and hit the 16MB document limit
+{ title: "Post", comments: [ …50,000 of them… ] }
+
+// ✓ Reference instead
+posts:    { _id: 1, title: "Post" }
+comments: { postId: 1, text: "…" }
+
+// ✓ The hybrid — embed a copy of what you display, reference for the rest
+{ postId: 1, author: { id: 7, name: "Ada" }, text: "…" }
+// Shows the name without a second query. If Ada renames herself,
+// old comments keep the old name — which for a comment is often correct.</code></pre>
+<div class="note"><b>The rule of thumb:</b> model around <i>how you read the data</i>, not how it's naturally shaped. In SQL you design for correctness and join on the way out. In document databases you design for the query — which means knowing your access patterns before you model.</div>
+</section>
+
+<section id="s15">
+<h3>15. MongoDB in Practice</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>MongoDB queries are written as <b>objects</b>, not as a sentence like SQL. <code>{ age: { $gt: 30 } }</code> means "age greater than 30".</p>
+<p>The <b>aggregation pipeline</b> is its version of GROUP BY and joins: data flows through a list of stages, each one reshaping what came before.</p></div>
+<pre><code>db.users.insertOne({ name: "Ada", age: 36 });
+db.users.find({ age: { $gt: 30 } });
+db.users.updateOne({ _id: id }, { $set: { name: "Ada L" } });
+db.users.deleteOne({ _id: id });</code></pre>
+<h4>Query operators</h4>
+<pre><code>{ age: { $gt: 30, $lte: 65 } }            // greater than, less than or equal
+{ city: { $in: ["London", "Pune"] } }
+{ name: { $regex: /^A/i } }                // starts with A, case-insensitive
+{ $and: [{ active: true }, { age: { $gt: 18 } }] }
+{ "address.city": "London" }               // reach into nested fields
+{ tags: "urgent" }                         // matches if the ARRAY contains it</code></pre>
+<h4>Update operators — never replace the whole document</h4>
+<pre><code>{ $set:   { name: "Ada" } }        // change a field
+{ $inc:   { views: 1 } }            // add to a number, atomically
+{ $push:  { tags: "new" } }         // append to an array
+{ $pull:  { tags: "old" } }         // remove from an array
+{ $unset: { temp: "" } }            // delete a field</code></pre>
+<div class="note"><b>A classic mistake:</b> <code>updateOne({_id}, {name: "Ada"})</code> without <code>$set</code> <b>replaces the entire document</b> — every other field is deleted. Always use an operator.</div>
+<h4>The aggregation pipeline</h4>
+<p>MongoDB's answer to <code>GROUP BY</code> and joins. Data flows through stages, each transforming what the last produced.</p>
+<pre><code>db.orders.aggregate([
+  { $match:  { status: "paid" } },                        // like WHERE — put it first
+  { $group:  { _id: "$userId", total: { $sum: "$amount" } } },  // like GROUP BY
+  { $sort:   { total: -1 } },                             // like ORDER BY
+  { $limit:  10 },
+  { $lookup: {                                            // like a LEFT JOIN
+      from: "users", localField: "_id",
+      foreignField: "_id", as: "user"
+  }}
+]);</code></pre>
+<p><b>Put <code>$match</code> as early as possible.</b> Filtering 1,000 documents then grouping is far cheaper than grouping a million and filtering after — and it lets the stage use an index.</p>
+<h4>Transactions exist now</h4>
+<pre><code>const session = client.startSession();
+await session.withTransaction(async () =&gt; {
+  await accounts.updateOne({ _id: a }, { $inc: { balance: -500 } }, { session });
+  await accounts.updateOne({ _id: b }, { $inc: { balance:  500 } }, { session });
+});</code></pre>
+<p>MongoDB has supported multi-document transactions since 4.0. The old "NoSQL has no transactions" line is out of date — but they're slower than in Postgres, and needing them often means the data should have been embedded together.</p>
+<h4>Schema validation — worth turning on</h4>
+<pre><code>db.createCollection("users", {
+  validator: { $jsonSchema: {
+    required: ["email"],
+    properties: { email: { bsonType: "string", pattern: "@" } }
+  }}
+});</code></pre>
+<p>Flexible doesn't have to mean unchecked. Most teams that regret MongoDB regret not enabling this.</p>
+</section>
+
+<section id="s16">
+<h3>16. Key-Value &amp; Redis</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>key-value store</b> is the simplest database: you give it a key, it gives you back a value. No queries, no joins, no searching by content.</p>
+<p>Redis keeps everything in <b>memory</b>, which is why it answers in under a millisecond — and why it's used alongside a main database, not instead of one.</p>
+<p class="analogy">A cloakroom. You hand over a ticket, you get your coat. You can't ask "which coats are blue?" — that's not what it's for.</p></div>
+<pre><code>SET user:1 "{\"name\":\"Ada\"}"
+GET user:1
+SET session:abc "userId=7" EX 3600     # expires automatically after an hour
+DEL user:1
+INCR page:views                         # atomic — safe with many clients</code></pre>
+<h4>What Redis is actually used for</h4>
+<div class="table-wrap"><table>
+<tr><th>Use</th><th>Why Redis</th></tr>
+<tr><td><b>Caching</b></td><td>Avoid repeating an expensive query</td></tr>
+<tr><td><b>Sessions</b></td><td>Shared across all your server instances</td></tr>
+<tr><td><b>Rate limiting</b></td><td><code>INCR</code> + expiry counts requests atomically</td></tr>
+<tr><td><b>Job queues</b></td><td>Lists make a simple, fast queue (BullMQ)</td></tr>
+<tr><td><b>Leaderboards</b></td><td>Sorted sets keep rankings in order automatically</td></tr>
+<tr><td><b>Locks</b></td><td><code>SET key NX</code> — only succeeds if nobody else holds it</td></tr>
+</table></div>
+<pre><code># Rate limiting in two commands
+INCR    rate:user:7
+EXPIRE  rate:user:7 60        # if the count exceeds your limit, reject
+
+# A lock only one process can hold
+SET lock:job "worker1" NX EX 30</code></pre>
+<h4>The thing to remember</h4>
+<p>Memory is limited and not permanent. Redis can save to disk, but it's designed for data you can <b>afford to lose</b> — a cache you can rebuild, a session someone can re-create by logging in. Never make it the only copy of something important.</p>
+</section>
+
+<section id="s17">
+<h3>17. Wide-Column &amp; Graph</h3>
+<h4>Wide-column (Cassandra)</h4>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Built for <b>enormous write volume</b> spread across many machines — sensor readings, logs, message history.</p>
+<p>The catch: you must know your queries <i>before</i> you design the tables. There are no ad-hoc joins, and you organise data by how it will be read.</p></div>
+<pre><code>-- You design the table around ONE query pattern
+CREATE TABLE messages_by_room (
+  room_id   UUID,
+  sent_at   TIMESTAMP,
+  message   TEXT,
+  PRIMARY KEY (room_id, sent_at)     -- partition key, then clustering key
+) WITH CLUSTERING ORDER BY (sent_at DESC);</code></pre>
+<p>The <b>partition key</b> decides which machine the row lives on; the <b>clustering key</b> decides the order within it. Get the partition key wrong and one machine takes all the traffic — the "hot partition" problem.</p>
+<p>It's normal here to store the same data several times, once per query pattern. That would be a design error in SQL; here it's the intended approach.</p>
+<h4>Graph (Neo4j)</h4>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A graph database stores <b>connections</b> as first-class things, not as foreign keys you join on.</p>
+<p>It's built for questions about relationships: "friends of friends", "shortest route", "who else bought this".</p></div>
+<pre><code>// Friends of friends, two hops out
+MATCH (me:Person {name: "Ada"})-[:FRIEND]-&gt;()-[:FRIEND]-&gt;(fof)
+WHERE NOT (me)-[:FRIEND]-&gt;(fof)
+RETURN fof.name;</code></pre>
+<p>In SQL that's a self-join per hop, and it gets painful fast. Six degrees of separation would be six joins. A graph database walks the connections directly, so depth barely costs anything.</p>
+<div class="note"><b>Be honest about when you need one.</b> Graph databases are excellent for fraud detection, recommendations and network analysis. For an app with users and posts, a relational database with a foreign key is simpler and entirely sufficient.</div>
+</section>
+
+<!-- ================= CORE CONCEPTS ================= -->
+<div class="part">Part 4 — Concepts That Apply to Both</div>
+
+<section id="s18">
+<h3>18. Indexes</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>An <b>index</b> is a sorted lookup structure kept beside your data. Without one, finding a row means checking every single row.</p>
+<p>It's the single biggest performance lever in any database — relational or not.</p>
+<p class="analogy">The index at the back of a book. Without it you read every page to find "photosynthesis". With it you jump straight to page 231.</p></div>
+<figure class="diagram">
+<svg viewBox="0 0 660 300" role="img" aria-label="A B-tree index lets a lookup descend three levels to find a row, instead of scanning all ten million rows in the table.">
+  <rect class="d-box-accent" x="256" y="14" width="150" height="36" rx="6"/>
+  <text class="d-mono" x="331" y="37" text-anchor="middle">&lt;50 | 50-99 | 100+</text>
+  <text class="d-sub" x="416" y="37">root</text>
+
+  <rect class="d-box" x="50" y="90" width="150" height="36" rx="6"/>
+  <text class="d-mono" x="125" y="113" text-anchor="middle">1-24 | 25-49</text>
+  <rect class="d-fill-accent" x="256" y="90" width="150" height="36" rx="6"/>
+  <rect class="d-box-accent"  x="256" y="90" width="150" height="36" rx="6"/>
+  <text class="d-mono" x="331" y="113" text-anchor="middle">50-74 | 75-99</text>
+  <rect class="d-box" x="462" y="90" width="150" height="36" rx="6"/>
+  <text class="d-mono" x="537" y="113" text-anchor="middle">100-149 | 150+</text>
+  <text class="d-sub" x="622" y="76">branch</text>
+
+  <rect class="d-box" x="50" y="166" width="108" height="42" rx="6"/>
+  <text class="d-sub" x="104" y="184" text-anchor="middle">1 … 24</text>
+  <text class="d-sub" x="104" y="200" text-anchor="middle">→ rows</text>
+  <rect class="d-box" x="172" y="166" width="108" height="42" rx="6"/>
+  <text class="d-sub" x="226" y="184" text-anchor="middle">25 … 49</text>
+  <text class="d-sub" x="226" y="200" text-anchor="middle">→ rows</text>
+  <rect class="d-fill-accent" x="294" y="166" width="108" height="42" rx="6"/>
+  <rect class="d-box-accent"  x="294" y="166" width="108" height="42" rx="6"/>
+  <text class="d-accent-text" x="348" y="184" text-anchor="middle">50 … 74</text>
+  <text class="d-sub" x="348" y="200" text-anchor="middle">id 62 ✓</text>
+  <rect class="d-box" x="416" y="166" width="108" height="42" rx="6"/>
+  <text class="d-sub" x="470" y="184" text-anchor="middle">75 … 99</text>
+  <text class="d-sub" x="470" y="200" text-anchor="middle">→ rows</text>
+  <rect class="d-box" x="538" y="166" width="74" height="42" rx="6"/>
+  <text class="d-sub" x="575" y="190" text-anchor="middle">100 …</text>
+  <text class="d-sub" x="622" y="152">leaf</text>
+
+  <path class="d-line" d="M290 50 L160 86"/><path class="d-arrow" d="M154 88 l7 -7 l2 9 z"/>
+  <path class="d-line-accent" d="M331 50 V84"/><path class="d-arrow-accent" d="M331 90 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M372 50 L500 86"/><path class="d-arrow" d="M506 88 l-9 -2 l2 9 z"/>
+  <path class="d-line-accent" d="M320 126 L348 160"/><path class="d-arrow-accent" d="M348 166 l-6 -8 l9 -1 z"/>
+
+  <path class="d-dash" d="M104 208 V232 H575 V208"/>
+  <text class="d-sub" x="331" y="250" text-anchor="middle">leaves are linked in order — which is what makes ranges and ORDER BY fast</text>
+
+  <text class="d-accent-text" x="130" y="36" text-anchor="middle">WHERE id = 62</text>
+  <text class="d-sub" x="130" y="56" text-anchor="middle">3 hops, not 10M rows</text>
+  <text class="d-sub" x="331" y="282" text-anchor="middle">Cost is O(log n): 10× the data adds only one more hop.</text>
+</svg>
+<figcaption>A B-tree stays balanced, so lookups cost roughly the same whether you have a thousand rows or ten million.</figcaption>
+</figure>
+<pre><code>-- SQL
+CREATE INDEX idx_users_email ON users(email);
+CREATE UNIQUE INDEX idx_sku ON products(sku);
+CREATE INDEX idx_orders_user_date ON orders(user_id, created_at);  -- composite
+
+-- MongoDB
+db.users.createIndex({ email: 1 });
+db.orders.createIndex({ userId: 1, createdAt: -1 });</code></pre>
+<h4>What to index</h4>
+<ul>
+<li>Columns in <code>WHERE</code>, <code>JOIN</code> conditions and <code>ORDER BY</code>.</li>
+<li>Every foreign key — most databases don't index these automatically, and it makes joins slow.</li>
+<li>Anything you look up by: email, username, slug.</li>
+</ul>
+<h4>Why not index everything</h4>
+<p>Every index must be <b>updated on every write</b>, and takes disk and memory. Five indexes means an insert does six writes. It's a straight trade: faster reads, slower writes.</p>
+<h4>Composite indexes and the leftmost rule</h4>
+<pre><code>CREATE INDEX idx ON orders(user_id, status, created_at);
+
+WHERE user_id = 1                                  ✓ uses it
+WHERE user_id = 1 AND status = 'paid'              ✓ uses it
+WHERE user_id = 1 AND status = 'paid' AND created_at &gt; …  ✓ fully
+WHERE status = 'paid'                              ✗ can't — skipped the first column</code></pre>
+<p>Think of a phone book sorted by (surname, first name). You can find "Smith", and "Smith, John" — but not everyone called "John", because the sorting starts with surname.</p>
+<h4>Things that stop an index working</h4>
+<pre><code>WHERE LOWER(email) = 'a@b.com'     ✗ function on the column
+WHERE email = 'a@b.com'             ✓
+-- or build the index to match: CREATE INDEX ON users(LOWER(email));
+
+WHERE name LIKE '%ada%'             ✗ leading wildcard — can't use sort order
+WHERE name LIKE 'ada%'              ✓</code></pre>
+</section>
+
+<section id="s19">
+<h3>19. Transactions &amp; ACID</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>transaction</b> groups several operations so they <b>all succeed or all fail</b>. There's no halfway.</p>
+<p>The classic case: moving money. Take £500 from one account, add it to another. If the second step fails, the first must be undone — otherwise the money vanishes.</p></div>
+<pre><code>BEGIN;
+  UPDATE accounts SET balance = balance - 500 WHERE id = 1;
+  UPDATE accounts SET balance = balance + 500 WHERE id = 2;
+COMMIT;        -- or ROLLBACK, and neither change happened</code></pre>
+<h4>ACID</h4>
+<div class="table-wrap"><table>
+<tr><th>Letter</th><th>Means</th><th>In practice</th></tr>
+<tr><td><b>A</b>tomicity</td><td>All or nothing</td><td>A crash mid-transfer loses neither money nor creates it</td></tr>
+<tr><td><b>C</b>onsistency</td><td>Rules always hold</td><td>Constraints can't be broken, even temporarily</td></tr>
+<tr><td><b>I</b>solation</td><td>Transactions don't see each other's half-done work</td><td>Nobody reads a balance mid-transfer</td></tr>
+<tr><td><b>D</b>urability</td><td>Committed means saved</td><td>Survives an immediate power cut</td></tr>
+</table></div>
+<h4>How durability actually works</h4>
+<p>Before changing the data, the database writes what it's <i>about to do</i> to a <b>write-ahead log</b>. If the power fails mid-write, it reads the log on restart and finishes or undoes the work. That's also what makes replication possible — the log can be streamed to another server.</p>
+<h4>Rules for using them</h4>
+<ul>
+<li><b>Keep them short.</b> A transaction holds locks; long ones block other users.</li>
+<li><b>Never call an external API inside one.</b> You'd hold a database lock while waiting on someone else's server.</li>
+<li><b>Always release the connection</b> in a <code>finally</code> block, whatever happens.</li>
+</ul>
+<pre><code>const client = await pool.connect();
+try {
+  await client.query("BEGIN");
+  await client.query("UPDATE …");
+  await client.query("UPDATE …");
+  await client.query("COMMIT");
+} catch (e) {
+  await client.query("ROLLBACK");
+  throw e;
+} finally {
+  client.release();          // ALWAYS
+}</code></pre>
+</section>
+
+<section id="s20">
+<h3>20. Isolation &amp; Race Conditions</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>race condition</b> is two operations happening at once and interfering. The result depends on timing — which is why these bugs are so hard to reproduce.</p>
+<p>The classic: one item in stock, two people buy it simultaneously, both succeed.</p></div>
+<figure class="diagram">
+<svg viewBox="0 0 620 290" role="img" aria-label="Two transactions both read stock as one and both write zero, so one item is sold twice; the fix moves the check into a single atomic update.">
+  <text class="d-accent-text" x="140" y="20" text-anchor="middle">Request A</text>
+  <text class="d-accent-text" x="480" y="20" text-anchor="middle">Request B</text>
+  <text class="d-sub" x="310" y="20" text-anchor="middle">stock = 1</text>
+  <path class="d-dash" d="M140 30 V200"/>
+  <path class="d-dash" d="M310 30 V200"/>
+  <path class="d-dash" d="M480 30 V200"/>
+
+  <rect class="d-box" x="46" y="42" width="188" height="28" rx="5"/>
+  <text class="d-mono" x="140" y="61" text-anchor="middle">read stock → 1</text>
+  <path class="d-line" d="M234 56 H304"/><path class="d-arrow" d="M310 56 l-9 -4.5 v9 z"/>
+
+  <rect class="d-box" x="386" y="84" width="188" height="28" rx="5"/>
+  <text class="d-mono" x="480" y="103" text-anchor="middle">read stock → 1</text>
+  <path class="d-line" d="M386 98 H316"/><path class="d-arrow" d="M310 98 l9 -4.5 v9 z"/>
+
+  <text class="d-sub" x="140" y="136" text-anchor="middle">"1 &gt; 0, so I can sell it"</text>
+  <text class="d-sub" x="480" y="136" text-anchor="middle">"1 &gt; 0, so I can sell it"</text>
+
+  <rect class="d-box" x="46" y="150" width="188" height="28" rx="5"/>
+  <text class="d-mono" x="140" y="169" text-anchor="middle">write stock = 0</text>
+  <rect class="d-box" x="386" y="150" width="188" height="28" rx="5"/>
+  <text class="d-mono" x="480" y="169" text-anchor="middle">write stock = 0</text>
+
+  <text class="d-accent-text" x="310" y="222" text-anchor="middle">One item. Sold twice. Stock still says 0.</text>
+
+  <rect class="d-fill-accent" x="50" y="244" width="520" height="30" rx="5"/>
+  <rect class="d-box-accent"  x="50" y="244" width="520" height="30" rx="5"/>
+  <text class="d-mono" x="310" y="264" text-anchor="middle">UPDATE products SET stock = stock - 1 WHERE id = ? AND stock &gt; 0</text>
+</svg>
+<figcaption>The gap between reading and writing is where the bug lives. The fix removes the gap by making the check part of the write.</figcaption>
+</figure>
+<h4>Three ways to fix it</h4>
+<pre><code>-- 1. Atomic update — the database does the check. Simplest, use when you can.
+UPDATE products SET stock = stock - 1 WHERE id = 1 AND stock &gt; 0;
+-- if 0 rows were affected, it was out of stock
+
+-- 2. Pessimistic lock — claim the row, make others wait
+BEGIN;
+  SELECT * FROM products WHERE id = 1 FOR UPDATE;   -- others block here
+  UPDATE products SET stock = stock - 1 WHERE id = 1;
+COMMIT;
+
+-- 3. Optimistic lock — detect the clash instead of preventing it
+UPDATE products SET stock = 0, version = version + 1
+WHERE id = 1 AND version = 5;
+-- 0 rows affected means someone else got there first → retry or show a conflict</code></pre>
+<p>Pessimistic suits high-contention data (concert tickets). Optimistic suits low contention and user-facing edits, where blocking would feel worse than occasionally saying "someone else changed this".</p>
+<h4>Isolation levels</h4>
+<div class="table-wrap"><table>
+<tr><th>Level</th><th>Dirty read</th><th>Non-repeatable read</th><th>Phantom read</th></tr>
+<tr><td>Read Uncommitted</td><td>Possible</td><td>Possible</td><td>Possible</td></tr>
+<tr><td>Read Committed <i>(Postgres default)</i></td><td>No</td><td>Possible</td><td>Possible</td></tr>
+<tr><td>Repeatable Read <i>(MySQL default)</i></td><td>No</td><td>No</td><td>Possible</td></tr>
+<tr><td>Serializable</td><td>No</td><td>No</td><td>No</td></tr>
+</table></div>
+<ul>
+<li><b>Dirty read</b> — seeing changes another transaction hasn't committed (and may undo).</li>
+<li><b>Non-repeatable read</b> — reading the same row twice and getting different values.</li>
+<li><b>Phantom read</b> — running the same search twice and finding new rows.</li>
+</ul>
+<p>Higher isolation means more correctness and less concurrency. <b>Serializable</b> behaves as if transactions ran one at a time — safest, slowest.</p>
+<h4>Deadlocks</h4>
+<p>A holds row 1 and wants row 2; B holds row 2 and wants row 1. Neither can continue. The database detects this and kills one. Prevent it by <b>always locking rows in a consistent order</b> (e.g. ascending id) and keeping transactions short.</p>
+</section>
+
+<section id="s21">
+<h3>21. Query Performance</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Slow queries almost always come down to one of three things: <b>no index</b>, <b>too many queries</b> (N+1), or <b>fetching too much data</b>.</p>
+<p>Before guessing, ask the database. <code>EXPLAIN</code> shows exactly what it intends to do — including whether it's about to read every single row.</p></div>
+<h4>EXPLAIN — ask the database what it plans to do</h4>
+<pre><code>EXPLAIN ANALYZE SELECT * FROM users WHERE email = 'a@b.com';</code></pre>
+<pre><code>Seq Scan on users  (cost=0.00..2341.00 rows=1 width=123)   ← reading EVERY row
+  Filter: (email = 'a@b.com')
+
+-- after CREATE INDEX:
+Index Scan using idx_users_email  (cost=0.29..8.31 rows=1)  ← jumping straight there</code></pre>
+<p><b>Seq Scan</b> on a large table is the signal to add an index. <code>ANALYZE</code> actually runs the query and shows real timings, so you can see where the time went.</p>
+<h4>The N+1 problem — the most common real-world bug</h4>
+<pre><code>// 1 query for posts, then 1 MORE per post = 101 queries
+const posts = await Post.find();
+for (const p of posts) p.author = await User.findById(p.userId);
+
+// ✓ SQL — let the database join
+SELECT p.*, u.name FROM posts p JOIN users u ON u.id = p.user_id;
+
+// ✓ ORM — eager load
+await prisma.post.findMany({ include: { author: true } });
+await Post.find().populate("author");            // Mongoose
+
+// ✓ Or batch it yourself — 2 queries, whatever the count
+const users = await User.find({ _id: { $in: posts.map(p =&gt; p.userId) } });
+const byId  = new Map(users.map(u =&gt; [String(u._id), u]));
+posts.forEach(p =&gt; { p.author = byId.get(String(p.userId)); });</code></pre>
+<p>It works fine with 10 test rows and collapses with 10,000 real ones. <b>Log your queries in development</b> — one page firing 200 queries is easy to spot and easy to miss.</p>
+<h4>Other things that matter</h4>
+<ul>
+<li><b>Select only what you need.</b> <code>SELECT *</code> on a table with a large text column moves far more data than you use.</li>
+<li><b>Always paginate.</b> Any list that grows needs <code>LIMIT</code>.</li>
+<li><b>Keyset pagination beats OFFSET.</b> <code>OFFSET 100000</code> makes the database count through 100,000 rows to skip them.</li>
+</ul>
+<pre><code>-- ✗ gets slower the deeper you go
+SELECT * FROM posts ORDER BY id LIMIT 20 OFFSET 100000;
+
+-- ✓ same speed at any depth — jumps straight in via the index
+SELECT * FROM posts WHERE id &gt; 100000 ORDER BY id LIMIT 20;</code></pre>
+</section>
+
+<section id="s22">
+<h3>22. Connections &amp; Pooling</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Opening a database connection is slow — a network handshake, a login, memory allocated on the database server.</p>
+<p>A <b>pool</b> opens a fixed set once and lends them out. A request borrows one, runs its query, and gives it straight back.</p>
+<p class="analogy">A library's copies of a book. Everyone borrows and returns; nobody buys a new copy for each reader.</p></div>
+<pre><code>const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  max: 20,                       // this process will open at most 20
+  idleTimeoutMillis: 30000,
+});
+
+const { rows } = await pool.query("SELECT * FROM users WHERE id = $1", [id]);</code></pre>
+<div class="note"><b>The sizing trap:</b> 10 server instances × a pool of 100 = 1,000 connections, and Postgres (default limit ~100) falls over. The <b>total across all instances</b> must stay under the database's limit. Ten to twenty per instance is a normal starting point — more connections than the database has CPU cores rarely helps anyway.</div>
+<p>In serverless environments each function invocation can open its own connection, which exhausts the limit fast. That's what connection proxies (PgBouncer, Prisma Accelerate, RDS Proxy) exist to solve.</p>
+</section>
+
+<!-- ================= SCALE ================= -->
+<div class="part">Part 5 — Scale &amp; Practice</div>
+
+<section id="s23">
+<h3>23. Replication</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Replication</b> means keeping copies of your database on other machines, updated automatically.</p>
+<p>Two reasons: <b>safety</b> (a machine dies, you have copies) and <b>read capacity</b> (spread reads across copies).</p></div>
+<figure class="diagram">
+<svg viewBox="0 0 620 280" role="img" aria-label="All writes go to the primary database, which streams changes to read replicas; the application sends reads to the replicas, with a small replication lag meaning a just-written value may not appear immediately.">
+  <rect class="d-box" x="230" y="14" width="160" height="36" rx="6"/>
+  <text class="d-label" x="310" y="37" text-anchor="middle">Application</text>
+
+  <rect class="d-box-accent" x="200" y="86" width="220" height="48" rx="7"/>
+  <text class="d-accent-text" x="310" y="106" text-anchor="middle">PRIMARY</text>
+  <text class="d-sub" x="310" y="124" text-anchor="middle">all writes go here</text>
+
+  <rect class="d-box" x="30" y="184" width="170" height="48" rx="7"/>
+  <text class="d-label" x="115" y="204" text-anchor="middle">Replica 1</text>
+  <text class="d-sub"   x="115" y="221" text-anchor="middle">reads</text>
+
+  <rect class="d-box" x="225" y="184" width="170" height="48" rx="7"/>
+  <text class="d-label" x="310" y="204" text-anchor="middle">Replica 2</text>
+  <text class="d-sub"   x="310" y="221" text-anchor="middle">reads</text>
+
+  <rect class="d-box" x="420" y="184" width="170" height="48" rx="7"/>
+  <text class="d-label" x="505" y="204" text-anchor="middle">Replica 3</text>
+  <text class="d-sub"   x="505" y="221" text-anchor="middle">reads · backups</text>
+
+  <path class="d-line-accent" d="M290 50 V80"/><path class="d-arrow-accent" d="M290 86 l-4.5 -9 h9 z"/>
+  <text class="d-accent-text" x="238" y="70">WRITE</text>
+
+  <path class="d-line" d="M270 134 L150 178"/><path class="d-arrow" d="M144 180 l7 -7 l2 9 z"/>
+  <path class="d-line" d="M310 134 V178"/><path class="d-arrow" d="M310 184 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M350 134 L470 178"/><path class="d-arrow" d="M476 180 l-9 -3 l1 9 z"/>
+  <text class="d-sub" x="392" y="160">copies stream out</text>
+
+  <path class="d-dash" d="M390 32 C 470 32, 560 90, 560 178"/>
+  <path class="d-arrow" d="M560 184 l-4.5 -9 h9 z"/>
+  <text class="d-sub" x="470" y="46">READ</text>
+
+  <text class="d-sub" x="310" y="262" text-anchor="middle">Replication lag: a replica may be milliseconds behind — so a just-saved value can briefly be missing.</text>
+</svg>
+<figcaption>One machine takes all writes; copies serve reads. This works because most applications read far more than they write.</figcaption>
+</figure>
+<h4>Replication lag — the bug it causes</h4>
+<pre><code>// User saves their profile → goes to the PRIMARY
+await db.write("UPDATE users SET name = 'Ada L' WHERE id = 1");
+
+// Immediately redirected, and the read hits a REPLICA
+const user = await db.read("SELECT * FROM users WHERE id = 1");
+// → may still show the OLD name. The user thinks the save failed.</code></pre>
+<p>The fix: <b>read your own writes from the primary</b> for a short window after a write, or wait for the replica to catch up. This is a real production bug people hit and don't understand.</p>
+<h4>Failover</h4>
+<p>If the primary dies, a replica is promoted to take its place. Managed databases do this automatically in seconds. It's the main reason to run replicas even if you don't need the read capacity.</p>
+</section>
+
+<section id="s24">
+<h3>24. Sharding &amp; Partitioning</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Replication</b> copies the whole database to several machines. <b>Sharding</b> splits it — each machine holds a <i>different slice</i> of the data.</p>
+<p>You shard when the data no longer fits on one machine, or the write volume exceeds what one machine can take. Replication doesn't help with writes; sharding does.</p></div>
+<pre><code>Shard 1: users with id 1 – 1,000,000
+Shard 2: users with id 1,000,001 – 2,000,000
+Shard 3: users with id 2,000,001 – 3,000,000</code></pre>
+<h4>Choosing the shard key is the whole game</h4>
+<div class="table-wrap"><table>
+<tr><th>Strategy</th><th>How</th><th>Problem</th></tr>
+<tr><td><b>Range</b></td><td>Split by id or date range</td><td>New data all lands on one shard — a hot spot</td></tr>
+<tr><td><b>Hash</b></td><td>Hash the key to pick a shard</td><td>Even spread, but range queries hit every shard</td></tr>
+<tr><td><b>Directory</b></td><td>A lookup table decides</td><td>Flexible, but the lookup becomes a bottleneck</td></tr>
+</table></div>
+<h4>What you lose</h4>
+<ul>
+<li><b>Joins across shards</b> become application work, or impossible.</li>
+<li><b>Transactions across shards</b> are slow and complicated.</li>
+<li><b>Unique constraints</b> across shards can't be enforced by the database.</li>
+<li><b>Rebalancing</b> when you add a shard means moving data around while live.</li>
+</ul>
+<div class="note"><b>Avoid sharding for as long as you possibly can.</b> A single Postgres instance on a decent machine handles tens of thousands of transactions per second and terabytes of data. Read replicas, caching, indexes and archiving old data will get you much further, with a fraction of the complexity.</div>
+<h4>Partitioning — sharding's simpler cousin</h4>
+<pre><code>-- One database, but the table is stored in separate physical chunks
+CREATE TABLE logs (…) PARTITION BY RANGE (created_at);
+CREATE TABLE logs_2024_01 PARTITION OF logs
+  FOR VALUES FROM ('2024-01-01') TO ('2024-02-01');</code></pre>
+<p>Queries that filter by date only touch the relevant partitions, and dropping last year's data becomes instant instead of a huge DELETE. All within one machine — much less painful than sharding.</p>
+</section>
+
+<section id="s25">
+<h3>25. CAP &amp; Consistency</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>When your database runs on several machines, the network between them <i>will</i> sometimes fail. When it does, you have to choose:</p>
+<p><b>Stay consistent</b> — refuse to answer rather than risk giving out stale data. Or <b>stay available</b> — keep answering, accepting some answers may be out of date.</p>
+<p>You can't have both during a network failure. That's the CAP theorem.</p></div>
+<figure class="diagram">
+<svg viewBox="0 0 620 250" role="img" aria-label="During a network partition a system must choose between consistency, refusing to answer with possibly stale data, and availability, answering with data that may be out of date.">
+  <rect class="d-box-accent" x="190" y="12" width="240" height="38" rx="7"/>
+  <text class="d-accent-text" x="310" y="36" text-anchor="middle">The network splits in two</text>
+
+  <path class="d-line" d="M270 50 L170 84"/><path class="d-arrow" d="M164 86 l7 -7 l2 9 z"/>
+  <path class="d-line" d="M350 50 L450 84"/><path class="d-arrow" d="M456 86 l-9 -3 l1 9 z"/>
+
+  <rect class="d-box" x="24" y="92" width="266" height="110" rx="7"/>
+  <text class="d-label" x="44" y="116">CHOOSE CONSISTENCY (CP)</text>
+  <text class="d-sub" x="44" y="140">"I can't confirm this is current,</text>
+  <text class="d-sub" x="44" y="158">so I'll return an error."</text>
+  <text class="d-sub" x="44" y="182">Banks · bookings · stock</text>
+
+  <rect class="d-box" x="330" y="92" width="266" height="110" rx="7"/>
+  <text class="d-label" x="350" y="116">CHOOSE AVAILABILITY (AP)</text>
+  <text class="d-sub" x="350" y="140">"Here's my copy. It might be</text>
+  <text class="d-sub" x="350" y="158">a few seconds out of date."</text>
+  <text class="d-sub" x="350" y="182">Feeds · likes · product views</text>
+
+  <text class="d-sub" x="310" y="232" text-anchor="middle">Partition tolerance isn't optional — networks fail. So the real choice is only ever C or A.</text>
+</svg>
+<figcaption>CAP is often misquoted as "pick two of three". You don't get to skip partition tolerance, so the actual decision is consistency <i>or</i> availability during a failure.</figcaption>
+</figure>
+<h4>Eventual consistency</h4>
+<p>"Eventually consistent" means the copies will agree <i>soon</i>, just not instantly. For a like count or a view counter, that's completely fine. For an account balance, it isn't.</p>
+<p>The useful question isn't "is this database ACID or eventually consistent" — it's <b>"what happens if this particular piece of data is a few seconds stale?"</b> Often the answer is "nothing", and then you can take the faster option.</p>
+<div class="note"><b>A correction worth knowing:</b> CAP only describes behaviour <i>during a network failure</i>. Normally, a well-run distributed database is both consistent and available. CAP is about the exceptional case, not everyday operation.</div>
+</section>
+
+<section id="s26">
+<h3>26. Caching</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>cache</b> keeps a copy of an answer so you don't have to work it out again. Checking it first turns a 50ms query into a 1ms lookup.</p>
+<p>The price is <b>staleness</b>: the moment the real data changes, your copy is wrong until you delete or refresh it.</p></div>
+<pre><code>// Cache-aside — the pattern you'll use most
+async function getUser(id) {
+  const cached = await redis.get(`user:${id}`);
+  if (cached) return JSON.parse(cached);          // hit
+
+  const user = await db.getUser(id);              // miss
+  await redis.set(`user:${id}`, JSON.stringify(user), "EX", 300);
+  return user;
+}</code></pre>
+<h4>The two hard parts</h4>
+<ul>
+<li><b>Invalidation.</b> When the row changes, the cached copy is wrong. Either delete the key on write (<code>DEL user:7</code>) or accept staleness until the TTL expires. Deleting is more correct; TTL is simpler and usually enough.</li>
+<li><b>Stampede.</b> A popular key expires and 500 requests miss at once, all hitting the database together. Fix with a short lock so one request refills while the rest wait, or vary the expiry times so keys don't all die at once.</li>
+</ul>
+<h4>What's worth caching</h4>
+<p>Data read far more often than it changes, and expensive to produce. Caching a fast query that changes constantly adds complexity and a new class of bug for no gain.</p>
+<div class="note"><b>Fix the database first.</b> Reaching for a cache to hide a missing index means you now have two problems — a slow query <i>and</i> stale data. Add the index, then cache what's still slow.</div>
+</section>
+
+<section id="s27">
+<h3>27. Migrations &amp; ORMs</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>migration</b> is a versioned, repeatable change to your database structure, kept in your code repository.</p>
+<p>Without them, the production database structure is whatever someone typed by hand months ago, and nobody can recreate it.</p></div>
+<pre><code>// migrations/001_add_users.sql
+CREATE TABLE users (id SERIAL PRIMARY KEY, email TEXT UNIQUE NOT NULL);
+
+// migrations/002_add_phone.sql
+ALTER TABLE users ADD COLUMN phone VARCHAR(20);</code></pre>
+<p>The tool records which have run, so each applies exactly once, in order, on every environment.</p>
+<h4>Safe migrations on a live database</h4>
+<ul>
+<li><b>Adding a nullable column</b> is safe and fast.</li>
+<li><b>Adding NOT NULL with a default</b> can rewrite the whole table and lock it — add the column, backfill in batches, <i>then</i> add the constraint.</li>
+<li><b>Dropping a column</b> breaks any running old code. Deploy code that stops using it first, then drop it later.</li>
+<li><b>Adding an index</b> locks writes — use <code>CREATE INDEX CONCURRENTLY</code> in Postgres.</li>
+<li><b>Always write the rollback</b> before you run the migration.</li>
+</ul>
+<h4>ORMs</h4>
+<div class="table-wrap"><table>
+<tr><th>Gives you</th><th>Costs you</th></tr>
+<tr><td>Type safety and autocomplete</td><td>Generates SQL you didn't write</td></tr>
+<tr><td>Migrations built in</td><td>Easy to cause N+1 by accident</td></tr>
+<tr><td>Less repetitive code</td><td>Complex queries get awkward</td></tr>
+<tr><td>Swap databases more easily</td><td>Another layer to learn and debug</td></tr>
+</table></div>
+<div class="note"><b>Learn SQL first, then use an ORM.</b> Otherwise you can't tell when the ORM is generating something terrible — and you won't recognise an N+1 when you see one. In interviews, "I use Prisma so I don't need SQL" is a weak answer.</div>
+</section>
+
+<section id="s28">
+<h3>28. Security &amp; Backups</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Almost every database vulnerability is the same mistake: <b>letting user input be treated as a command</b> instead of as data.</p>
+<p>And the backup rule is blunt — a backup you have never restored is a guess, not a backup.</p></div>
+<h4>SQL injection — and why parameters actually work</h4>
+<pre><code>// ✗ the input becomes part of the query text
+db.query(`SELECT * FROM users WHERE email = '${email}'`);
+// input: '; DROP TABLE users; --
+
+// ✓ the value travels separately
+db.query("SELECT * FROM users WHERE email = $1", [email]);</code></pre>
+<p>It's not a magic escape. The database <b>parses and plans the query first</b>, with <code>$1</code> as a placeholder, and only then binds the value. There is no point at which your data could be read as a command.</p>
+<h4>NoSQL injection — the one people miss</h4>
+<pre><code>// Attacker sends: { "email": "a@b.com", "password": { "$gt": "" } }
+await User.findOne({ email, password });        // $gt matches ANY password
+
+// ✓ check the types first
+if (typeof password !== "string") return res.status(400).json({ error: "Invalid" });</code></pre>
+<p>Document databases take objects as queries, so an object arriving where you expected a string becomes a query operator. Validate types before querying.</p>
+<h4>Other essentials</h4>
+<ul>
+<li><b>Least privilege</b> — your app user should not be able to <code>DROP TABLE</code>.</li>
+<li><b>Encrypt in transit</b> (TLS) and at rest.</li>
+<li><b>Never store passwords</b> you can read back — hash with bcrypt or argon2.</li>
+<li><b>Don't log query parameters</b> that contain personal data.</li>
+<li><b>Soft delete</b> (<code>deleted_at</code>) for anything a user might want back.</li>
+</ul>
+<h4>Backups</h4>
+<pre><code>pg_dump mydb &gt; backup.sql          # logical — portable, slower to restore
+# plus continuous archiving for point-in-time recovery</code></pre>
+<div class="note"><b>An untested backup is not a backup.</b> Restore it somewhere, on a schedule, and time how long it takes. Plenty of teams discover their backups were empty only when they need them. Also check the backup isn't stored solely on the machine it's backing up.</div>
+</section>
+
+<!-- ================= REVISION ================= -->
+<div class="part">Revision</div>
+
+<section id="rev">
+<h3>Interview Q&amp;A — quick answers</h3>
+
+<h4>Choosing and comparing</h4>
+<ul>
+<li><b>SQL vs NoSQL?</b> Relational stores fixed-shape rows in linked tables with enforced rules and joins; NoSQL covers flexible documents, key-value, wide-column and graph stores that trade some guarantees for flexibility and easier horizontal scaling.</li>
+<li><b>When would you pick MongoDB over Postgres?</b> Records with genuinely different shapes, naturally nested data read as one unit, or very high write volume with simple access patterns. Not "because it scales" — Postgres scales further than most apps need.</li>
+<li><b>When would you pick Postgres?</b> Nearly always by default: connected data, transactions that must be safe, unplanned queries and reporting. It also has JSONB if you need flexible fields.</li>
+<li><b>What is polyglot persistence?</b> Using different databases for different jobs in one system — Postgres for orders, Redis for sessions, Elasticsearch for search.</li>
+</ul>
+
+<h4>Relational</h4>
+<ul>
+<li><b>Primary vs foreign key?</b> Primary uniquely identifies a row; foreign points at another table's primary key and is enforced by the database.</li>
+<li><b>What is normalization?</b> Storing each fact once to avoid duplication and update anomalies. Aim for 3NF, then denormalize deliberately if you measure a problem.</li>
+<li><b>INNER vs LEFT JOIN?</b> INNER keeps only matching rows; LEFT keeps all rows from the left table with NULLs where there's no match.</li>
+<li><b>Why did my LEFT JOIN behave like an INNER JOIN?</b> A <code>WHERE</code> condition on the right table filters out the NULL rows. Move it into the <code>ON</code> clause.</li>
+<li><b>WHERE vs HAVING?</b> WHERE filters rows before grouping; HAVING filters groups after. That's why aggregates can't appear in WHERE.</li>
+<li><b>Why can't I use a SELECT alias in WHERE?</b> WHERE executes before SELECT, so the alias doesn't exist yet. It works in ORDER BY, which runs after.</li>
+<li><b>What's special about NULL?</b> It means unknown, so <code>NULL = NULL</code> is not true. Use <code>IS NULL</code>, and beware <code>NOT IN</code> with nullable columns.</li>
+<li><b>What is a CTE?</b> A named temporary result (<code>WITH</code>) that makes complex queries readable and supports recursion for tree data.</li>
+<li><b>DELETE vs TRUNCATE vs DROP?</b> Delete rows (can be filtered, rolled back) / empty the table fast / remove the table entirely.</li>
+</ul>
+
+<h4>Non-relational</h4>
+<ul>
+<li><b>Embed or reference?</b> Embed when read together, owned by one parent and bounded in size. Reference when shared, unbounded, or frequently changed.</li>
+<li><b>MongoDB's document size limit?</b> 16MB — which is why unbounded arrays like comments must be referenced, not embedded.</li>
+<li><b>Does MongoDB have transactions?</b> Yes, multi-document since 4.0. They work but are slower; needing them often signals the data should have been modelled together.</li>
+<li><b>What is Redis used for?</b> Caching, sessions, rate limiting, job queues, leaderboards and locks — anything where speed matters and losing the data is survivable.</li>
+<li><b>Why is a graph database better for "friends of friends"?</b> Each extra hop is another self-join in SQL; a graph database walks the connections directly, so depth costs little.</li>
+</ul>
+
+<h4>Core concepts</h4>
+<ul>
+<li><b>What is an index and what does it cost?</b> A sorted structure making lookups O(log n) instead of scanning every row. It costs disk, memory, and slower writes since every index updates on every write.</li>
+<li><b>Why isn't my index being used?</b> A function wrapped around the column, a leading wildcard in LIKE, or a composite index whose first column you skipped.</li>
+<li><b>Explain ACID.</b> Atomicity (all or nothing), Consistency (rules hold), Isolation (no half-done work visible), Durability (committed survives a crash).</li>
+<li><b>What is a race condition, and how do you fix it?</b> Two operations interleaving on the same data. Fix with an atomic update, a pessimistic lock (<code>FOR UPDATE</code>), or optimistic locking with a version column.</li>
+<li><b>Isolation levels?</b> Read Uncommitted → Read Committed → Repeatable Read → Serializable, each preventing more anomalies at the cost of concurrency.</li>
+<li><b>What is a deadlock?</b> Two transactions each holding what the other wants. Prevent by locking in a consistent order and keeping transactions short.</li>
+<li><b>What is the N+1 problem?</b> One query for a list plus one per item. Fix with a join, eager loading, or one batched query.</li>
+<li><b>Why a connection pool?</b> Connections are slow to create and limited in number, so a fixed set is reused.</li>
+</ul>
+
+<h4>Scale</h4>
+<ul>
+<li><b>Replication vs sharding?</b> Replication copies the whole database for redundancy and read capacity; sharding splits it so each machine holds different data, which is what helps with writes.</li>
+<li><b>What is replication lag?</b> Replicas trail the primary slightly, so a just-written value may not appear on a read. Read from the primary briefly after writing.</li>
+<li><b>Explain CAP.</b> During a network partition you must choose consistency or availability. Partition tolerance isn't optional, so it's really a two-way choice — and only applies during a failure.</li>
+<li><b>What is eventual consistency?</b> Copies converge shortly rather than instantly. Fine for like counts, not for balances.</li>
+<li><b>How do you speed up a slow query?</b> <code>EXPLAIN ANALYZE</code> first. Then: add the right index, fix N+1, select fewer columns, paginate by keyset, and only then consider caching.</li>
+</ul>
+</section>
+
+<section id="road">
+<h3>Learning Path</h3>
+<ol>
+<li><b>SQL basics</b> — SELECT, WHERE, ORDER BY, LIMIT on a real dataset. Type the queries; don't just read them.</li>
+<li><b>Design a small schema</b> — users, posts, comments. Get the keys and relationships right on paper first.</li>
+<li><b>Joins until they're automatic</b> — especially LEFT JOIN and the "find rows with no match" pattern.</li>
+<li><b>Grouping and aggregates</b> — GROUP BY, HAVING, and the difference from WHERE.</li>
+<li><b>Indexes</b> — run <code>EXPLAIN</code> before and after adding one. Seeing Seq Scan become Index Scan makes it click.</li>
+<li><b>Transactions</b> — write a money transfer, then deliberately break it halfway and watch the rollback.</li>
+<li><b>Connect from code</b> — a pool, parameterised queries, and a migration tool. Build a small CRUD API.</li>
+<li><b>Race conditions</b> — build a stock counter, hit it with concurrent requests, watch it break, then fix it three ways.</li>
+<li><b>MongoDB</b> — the same app modelled as documents. Feel the embed-vs-reference decision for yourself.</li>
+<li><b>Redis</b> — add caching and rate limiting to that API. Measure the difference.</li>
+<li><b>Performance</b> — seed 100,000 rows, find the slow queries, fix the N+1s, add keyset pagination.</li>
+<li><b>Then</b> — replication and read replicas, backup and restore drills, and window functions and CTEs for reporting.</li>
+</ol>
+<div class="note"><b>The habit that matters most:</b> for every query you write, ask "what does this do when the table has ten million rows?" Most database problems are invisible during development and obvious in production — and that single question surfaces them early.</div>
+</section>
+
+</main>
+</div>
+
+<script src="../assets/notes.js"></script>
+</body>
+</html>
