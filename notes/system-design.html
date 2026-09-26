@@ -1,0 +1,2475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>System Design — Concept Notes</title>
+<link rel="stylesheet" href="../assets/notes.css">
+<script>
+  try { document.documentElement.setAttribute("data-theme",
+    localStorage.getItem("notes-theme") || "light"); } catch (e) {}
+</script>
+</head>
+<body>
+<div class="scrim"></div>
+<button class="icon-btn" id="reopen" title="Show sidebar ([)" aria-label="Show sidebar">☰</button>
+<div class="layout">
+
+<aside>
+  <div class="sidebar-head">
+    <a class="back-link" href="../index.html">← All topics</a>
+    <button class="icon-btn" id="collapseBtn" title="Hide sidebar ([)" aria-label="Hide sidebar">‹</button>
+  </div>
+  <input id="search" type="text" placeholder="Filter topics…" autocomplete="off">
+
+  <h2>How to Answer</h2>
+  <nav>
+    <a href="#s1">1 · What Is Being Tested</a>
+    <a href="#s2">2 · The Framework</a>
+    <a href="#s3">3 · Estimation</a>
+    <a href="#s4">4 · Non-Functional Terms</a>
+  </nav>
+
+  <h2>Core Building Blocks</h2>
+  <nav>
+    <a href="#s5">5 · How a Request Travels</a>
+    <a href="#s6">6 · Scaling Up vs Out</a>
+    <a href="#s7">7 · Load Balancers</a>
+    <a href="#s8">8 · Caching</a>
+    <a href="#s9">9 · CDN</a>
+  </nav>
+
+  <h2>Data</h2>
+  <nav>
+    <a href="#s10">10 · Choosing a Database</a>
+    <a href="#s11">11 · Replication</a>
+    <a href="#s12">12 · Sharding</a>
+    <a href="#s13">13 · Indexes &amp; Read Paths</a>
+    <a href="#s14">14 · CAP &amp; Consistency</a>
+  </nav>
+
+  <h2>Communication</h2>
+  <nav>
+    <a href="#s15">15 · Queues &amp; Streams</a>
+    <a href="#s16">16 · API Design</a>
+    <a href="#s17">17 · Rate Limiting</a>
+    <a href="#s18">18 · Object Storage</a>
+    <a href="#s19">19 · Search</a>
+  </nav>
+
+  <h2>Architecture &amp; Operations</h2>
+  <nav>
+    <a href="#s20">20 · Monolith vs Microservices</a>
+    <a href="#s21">21 · Reliability Patterns</a>
+    <a href="#s22">22 · Distributed Essentials</a>
+    <a href="#s23">23 · Observability</a>
+    <a href="#s24">24 · Security</a>
+  </nav>
+
+  <h2>Case Studies</h2>
+  <nav>
+    <a href="#s25">25 · URL Shortener</a>
+    <a href="#s26">26 · Rate Limiter Service</a>
+    <a href="#s27">27 · Chat App</a>
+    <a href="#s28">28 · News Feed</a>
+    <a href="#s29">29 · Notification System</a>
+    <a href="#s30">30 · File Storage &amp; Sync</a>
+    <a href="#s31">31 · Video Streaming</a>
+    <a href="#s32">32 · Ride Sharing</a>
+    <a href="#s33">33 · Web Crawler</a>
+    <a href="#s34">34 · Search Autocomplete</a>
+  </nav>
+
+  <h2>Revision</h2>
+  <nav>
+    <a href="#cheat">If You Hear X, Reach for Y</a>
+    <a href="#tradeoffs">Trade-offs to Mention</a>
+    <a href="#numbers">Numbers to Remember</a>
+    <a href="#mistakes">Common Mistakes</a>
+    <a href="#rev">Interview Q&amp;A</a>
+    <a href="#written">Written-Exam Template</a>
+    <a href="#road">Learning Path</a>
+  </nav>
+</aside>
+
+<main>
+<header class="top">
+  <h1>System Design — Concept Notes</h1>
+  <div class="top-actions">
+    <button class="ghost" id="menuBtn">☰ Topics</button>
+    <button class="ghost" id="theme">Dark mode</button>
+  </div>
+</header>
+<p class="sub">Easy words, full depth. How to run a system design interview or written exam, every building block you will be asked about, ten worked case studies, and a revision kit for the night before. Print this page for a PDF.</p>
+
+<!-- ================= HOW TO ANSWER ================= -->
+<div class="part">Part 1 — How to Answer</div>
+
+<section id="s1">
+<h3>1. What Interviewers Actually Test</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A system design question is an open problem like "Design Twitter" or "Design a URL shortener". There is <b>no single correct answer</b>. The interviewer wants to watch <b>how you think</b>: do you ask good questions, make sensible choices, and explain why?</p>
+<p>A <b>system</b> here means all the parts that make a product work together: servers, databases, caches, queues, and the connections between them. <b>Design</b> means choosing those parts and explaining the trade-offs.</p>
+<p class="analogy">It is like an architect meeting a client. Nobody expects the final blueprint in 45 minutes. They expect good questions, a sensible sketch, and clear reasons for every wall.</p></div>
+
+<h4>What they score you on</h4>
+<div class="table-wrap"><table>
+<tr><th>Signal</th><th>What it looks like when you do it well</th></tr>
+<tr><td><b>Problem scoping</b></td><td>You ask questions before drawing. You write down what is in and out of scope.</td></tr>
+<tr><td><b>Structured thinking</b></td><td>You follow a clear order (the framework in <a href="#s2">section 2</a>) instead of jumping around.</td></tr>
+<tr><td><b>Technical depth</b></td><td>You can go deep on one or two parts: how the cache is invalidated, how the data is sharded.</td></tr>
+<tr><td><b>Trade-off reasoning</b></td><td>Every choice comes with "I chose X over Y because…, the cost is…".</td></tr>
+<tr><td><b>Scale awareness</b></td><td>You use rough numbers to justify choices. You know when one database is enough and when it is not.</td></tr>
+<tr><td><b>Communication</b></td><td>You think out loud, check in with the interviewer, and accept hints gracefully.</td></tr>
+</table></div>
+
+<h4>Level expectations</h4>
+<ul>
+<li><b>Junior / new grad:</b> a working high-level design, basic building blocks (load balancer, cache, database), sensible API. Depth is a bonus.</li>
+<li><b>Mid-level:</b> all of the above, plus you drive the conversation, make estimates, and go deep on one area.</li>
+<li><b>Senior:</b> you find the hard part yourself, discuss failure modes, consistency, cost and operations without being asked.</li>
+</ul>
+
+<h4>Written exam vs live interview</h4>
+<p>In a written exam (university paper, online assessment, take-home) nobody can answer your questions. So you <b>state your assumptions</b> instead of asking them. The marker is looking for the same signals, but on paper.</p>
+<div class="table-wrap"><table>
+<tr><th>Live interview</th><th>Written exam</th></tr>
+<tr><td>Ask clarifying questions</td><td>Write "Assumptions:" as a list at the top</td></tr>
+<tr><td>Draw and talk at the same time</td><td>Draw a labelled diagram, then explain each box in numbered points</td></tr>
+<tr><td>Interviewer steers you to the deep dive</td><td>You pick 1–2 deep dives yourself and label them clearly</td></tr>
+<tr><td>Trade-offs mentioned as you go</td><td>A separate "Trade-offs" heading, ideally a small table</td></tr>
+<tr><td>Time: 35–45 minutes</td><td>Time: split marks by headings; do not spend it all on one part</td></tr>
+</table></div>
+
+<h4>How to structure a written answer</h4>
+<ol>
+<li><b>Assumptions and requirements</b> — functional (what it does) and non-functional (how well), as bullet points.</li>
+<li><b>Estimates</b> — 3–5 lines of numbers: users, requests per second, storage.</li>
+<li><b>API</b> — 3–5 endpoints.</li>
+<li><b>Data model</b> — tables or collections with key fields.</li>
+<li><b>Architecture diagram</b> — boxes and arrows, every box labelled, numbered arrows for the main flow.</li>
+<li><b>Component explanation</b> — one short paragraph per box, following the arrow numbers.</li>
+<li><b>Scaling and deep dives</b> — the hard part of this problem, explained properly.</li>
+<li><b>Trade-offs and alternatives</b> — a table: choice, why, cost.</li>
+<li><b>Conclusion</b> — two sentences summarising the design.</li>
+</ol>
+<p>The full template is in the revision section: <a href="#written">Written-exam template</a>.</p>
+<div class="note"><b>Say this in the interview:</b> "Before I design anything, I'd like to spend a few minutes on requirements and scale, so I build the right thing." That one sentence shows maturity and buys you time to think.</div>
+</section>
+
+<section id="s2">
+<h3>2. The Step-by-Step Framework</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Use the same eight steps for every question. The steps keep you calm, make sure nothing important is forgotten, and show the interviewer you have a process.</p>
+<p><b>Functional requirements</b> are the features: "users can post a photo". <b>Non-functional requirements</b> are the qualities: "the feed loads in under 200 ms", "the system never loses a photo".</p>
+<p class="analogy">Like a pilot's checklist. Experienced pilots still use it, because under pressure memory fails and checklists do not.</p></div>
+
+<figure class="diagram">
+<svg viewBox="0 0 640 250" role="img" aria-label="The eight step framework in order: clarify requirements, estimate, API, data model, high-level design, deep dive, bottlenecks and scaling, wrap-up, with rough minutes for each step in a 45 minute interview.">
+  <rect class="d-box-accent" x="14" y="20" width="140" height="56" rx="7"/>
+  <text class="d-accent-text" x="84" y="42" text-anchor="middle">1 Requirements</text>
+  <text class="d-sub" x="84" y="60" text-anchor="middle">5 min</text>
+
+  <rect class="d-box" x="170" y="20" width="140" height="56" rx="7"/>
+  <text class="d-label" x="240" y="42" text-anchor="middle">2 Estimates</text>
+  <text class="d-sub" x="240" y="60" text-anchor="middle">3 min</text>
+
+  <rect class="d-box" x="326" y="20" width="140" height="56" rx="7"/>
+  <text class="d-label" x="396" y="42" text-anchor="middle">3 API</text>
+  <text class="d-sub" x="396" y="60" text-anchor="middle">3 min</text>
+
+  <rect class="d-box" x="482" y="20" width="140" height="56" rx="7"/>
+  <text class="d-label" x="552" y="42" text-anchor="middle">4 Data model</text>
+  <text class="d-sub" x="552" y="60" text-anchor="middle">4 min</text>
+
+  <rect class="d-box" x="482" y="150" width="140" height="56" rx="7"/>
+  <text class="d-label" x="552" y="172" text-anchor="middle">5 High-level</text>
+  <text class="d-sub" x="552" y="190" text-anchor="middle">10 min</text>
+
+  <rect class="d-fill-accent" x="326" y="150" width="140" height="56" rx="7"/>
+  <rect class="d-box-accent" x="326" y="150" width="140" height="56" rx="7"/>
+  <text class="d-accent-text" x="396" y="172" text-anchor="middle">6 Deep dive</text>
+  <text class="d-sub" x="396" y="190" text-anchor="middle">10–12 min</text>
+
+  <rect class="d-box" x="170" y="150" width="140" height="56" rx="7"/>
+  <text class="d-label" x="240" y="172" text-anchor="middle">7 Bottlenecks</text>
+  <text class="d-sub" x="240" y="190" text-anchor="middle">5 min</text>
+
+  <rect class="d-box" x="14" y="150" width="140" height="56" rx="7"/>
+  <text class="d-label" x="84" y="172" text-anchor="middle">8 Wrap-up</text>
+  <text class="d-sub" x="84" y="190" text-anchor="middle">2 min</text>
+
+  <path class="d-line-accent" d="M154 48 H164"/><path class="d-arrow-accent" d="M170 48 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M310 48 H320"/><path class="d-arrow" d="M326 48 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M466 48 H476"/><path class="d-arrow" d="M482 48 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M552 76 V144"/><path class="d-arrow" d="M552 150 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M482 178 H472"/><path class="d-arrow" d="M466 178 l9 -4.5 v9 z"/>
+  <path class="d-line" d="M326 178 H316"/><path class="d-arrow" d="M310 178 l9 -4.5 v9 z"/>
+  <path class="d-line" d="M170 178 H160"/><path class="d-arrow" d="M154 178 l9 -4.5 v9 z"/>
+  <text class="d-sub" x="320" y="236" text-anchor="middle">Total about 45 minutes. Steps 1 and 6 decide most of your score.</text>
+</svg>
+<figcaption>The framework as a loop around the board. Spend real time on requirements and the deep dive; keep estimates and API short.</figcaption>
+</figure>
+
+<h4>Step 1 — Clarify requirements (about 5 min)</h4>
+<p>Split them into two lists and write both on the board.</p>
+<ul>
+<li><b>Functional:</b> "Who uses it? What are the 3–5 core actions?" Pick the core ones and say the rest are out of scope.</li>
+<li><b>Non-functional:</b> scale, latency (speed), availability (uptime), consistency (does everyone see the same data at once?), durability (never lose data).</li>
+</ul>
+<p>Good questions to ask:</p>
+<ul>
+<li>"How many daily active users (DAU) should I design for?"</li>
+<li>"Is it read-heavy or write-heavy? Roughly what ratio?"</li>
+<li>"Is it global, or one region?"</li>
+<li>"What matters more if we must choose: always available, or always correct?"</li>
+<li>"Do we need real-time updates, or is a few seconds of delay fine?"</li>
+<li>"Mobile, web, or both? Any existing systems I must integrate with?"</li>
+<li>"How long do we keep data? Is there anything we must never lose?"</li>
+</ul>
+
+<h4>Step 2 — Back-of-the-envelope estimates (about 3 min)</h4>
+<p>Rough maths for requests per second, storage and bandwidth (<a href="#s3">section 3</a>). The point is not precision; the point is to decide things like "one database is fine" or "we must shard".</p>
+
+<h4>Step 3 — API (about 3 min)</h4>
+<p>List the main endpoints: method, path, inputs, output. This makes the functional requirements concrete.</p>
+<pre><code>POST /api/v1/urls          { longUrl }        -&gt; { shortUrl }
+GET  /{shortCode}                             -&gt; 302 redirect</code></pre>
+
+<h4>Step 4 — Data model (about 4 min)</h4>
+<p>Main entities (things you store) and their key fields. Say which database type you will use and why (<a href="#s10">section 10</a>).</p>
+
+<h4>Step 5 — High-level design (about 10 min)</h4>
+<p>Draw the boxes: client, load balancer, services, cache, database, queue, storage. Walk through one request end to end. Start simple; do not add Kafka before you need it.</p>
+
+<h4>Step 6 — Deep dive (10–12 min)</h4>
+<p>Pick the hardest part of <i>this</i> problem, or let the interviewer pick. Examples: generating unique short codes, fan-out for a feed, matching riders to drivers. Go properly deep here.</p>
+
+<h4>Step 7 — Bottlenecks and scaling (about 5 min)</h4>
+<p>Ask "what breaks first at 10x the traffic?" Then fix it: caching, replicas, sharding, queues. Mention single points of failure (one box whose failure takes everything down).</p>
+
+<h4>Step 8 — Wrap-up (about 2 min)</h4>
+<p>Summarise the design in 3–4 sentences, list what you would add with more time (monitoring, security, analytics), and name one trade-off you consciously made.</p>
+
+<div class="note"><b>Rule of thumb:</b> if the interviewer interrupts, follow them. The framework is your default path, not a script to finish at any cost. An interviewer steering you to a topic is telling you where the points are.</div>
+</section>
+
+<section id="s3">
+<h3>3. Back-of-the-Envelope Estimation</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>"Back of the envelope" means quick, rough maths you could do on the back of an envelope. You round aggressively and aim for the right <b>order of magnitude</b> (is it 100, 10,000 or 1,000,000?).</p>
+<p>The estimates answer three questions: how many <b>requests per second</b> hit the system, how much <b>storage</b> it needs, and how much <b>bandwidth</b> (data moved per second) it uses.</p>
+<p class="analogy">Like planning a party: you do not count grains of rice, you just check whether you need one pot or ten.</p></div>
+
+<h4>Powers of two (data sizes)</h4>
+<div class="table-wrap"><table>
+<tr><th>Power</th><th>Approx value</th><th>Name</th><th>Feel for it</th></tr>
+<tr><td>2<sup>10</sup></td><td>1 thousand</td><td>1 KB (kilobyte)</td><td>A short text message with metadata</td></tr>
+<tr><td>2<sup>20</sup></td><td>1 million</td><td>1 MB (megabyte)</td><td>A photo from a phone, compressed</td></tr>
+<tr><td>2<sup>30</sup></td><td>1 billion</td><td>1 GB (gigabyte)</td><td>An hour of HD video, roughly</td></tr>
+<tr><td>2<sup>40</sup></td><td>1 trillion</td><td>1 TB (terabyte)</td><td>A large laptop disk</td></tr>
+<tr><td>2<sup>50</sup></td><td>1 quadrillion</td><td>1 PB (petabyte)</td><td>A big company's data warehouse</td></tr>
+</table></div>
+<p>Handy sizes: a character is 1 byte (ASCII), a number (int64) is 8 bytes, a UUID is 16 bytes, a timestamp is 8 bytes. A typical database row is 100 bytes to 1 KB.</p>
+
+<h4>Latency numbers every engineer should know</h4>
+<p><b>Latency</b> is how long one operation takes. You do not need exact values, just the ladder.</p>
+<div class="table-wrap"><table>
+<tr><th>Operation</th><th>Approx time</th><th>Takeaway</th></tr>
+<tr><td>L1 CPU cache read</td><td>~1 ns</td><td>Basically free</td></tr>
+<tr><td>Main memory (RAM) read</td><td>~100 ns</td><td>Memory is fast; this is why caches live in RAM</td></tr>
+<tr><td>Compress 1 KB</td><td>~2–10 µs</td><td>Cheap; compress before sending over a network</td></tr>
+<tr><td>Read 1 MB sequentially from RAM</td><td>~10–250 µs</td><td>RAM reads are very fast</td></tr>
+<tr><td>Round trip inside one data centre</td><td>~0.5 ms</td><td>Every extra service hop costs this</td></tr>
+<tr><td>SSD random read</td><td>~100 µs</td><td>About 1000x slower than RAM</td></tr>
+<tr><td>Read 1 MB sequentially from SSD</td><td>~1 ms</td><td>Sequential beats random</td></tr>
+<tr><td>HDD disk seek</td><td>~10 ms</td><td>Avoid random reads on spinning disks</td></tr>
+<tr><td>Read 1 MB sequentially from HDD</td><td>~20 ms</td><td>Fine for logs and big scans</td></tr>
+<tr><td>Round trip across continents</td><td>~150 ms</td><td>Why CDNs and regional servers exist</td></tr>
+</table></div>
+<p>(ns = nanosecond, a billionth of a second; µs = microsecond, a millionth; ms = millisecond, a thousandth.)</p>
+<p><b>The three lessons:</b> memory is much faster than disk; disk is much faster than a network hop across the world; avoid round trips, especially cross-region ones.</p>
+
+<h4>The formulas</h4>
+<pre><code>Seconds in a day     ≈ 86,400  ≈ 100,000 (round up, easier maths)
+
+Average QPS          = daily requests / 86,400
+                     ≈ daily requests / 100,000
+Peak QPS             ≈ 2x to 3x average (say "peak factor")
+
+Write QPS            = DAU x writes per user per day / 86,400
+Read QPS             = write QPS x read:write ratio
+
+Storage per day      = writes per day x size per item
+Storage total        = storage per day x 365 x years  (x replication factor, often 3)
+
+Bandwidth (ingress)  = write QPS x size per item      (data coming in)
+Bandwidth (egress)   = read QPS x size per item       (data going out)
+
+Servers needed       ≈ peak QPS / QPS one server handles (assume ~1,000 for a simple API)
+Cache memory         ≈ 20% of daily read data (80/20 rule: 20% of items get 80% of reads)</code></pre>
+<p><b>QPS</b> means queries (or requests) per second. <b>DAU</b> means daily active users.</p>
+
+<h4>A fully worked example: a photo-sharing app</h4>
+<p>Assumptions, stated out loud: 100 million DAU. Each user uploads 1 photo every 10 days (0.1 per day) and views 50 photos per day. Average photo 500 KB. Keep photos for 10 years.</p>
+<pre><code>Writes per day   = 100M x 0.1          = 10M uploads/day
+Write QPS        = 10M / 100k          = ~100 uploads/sec   (peak ~300)
+
+Reads per day    = 100M x 50           = 5B views/day
+Read QPS         = 5B / 100k           = ~50,000 views/sec  (peak ~150k)
+Read:write ratio = 50,000 / 100        = 500 : 1  -&gt; very read-heavy
+
+Storage per day  = 10M x 500 KB        = 5 TB/day
+Storage 10 years = 5 TB x 365 x 10     = ~18 PB  (before replication)
+
+Egress bandwidth = 50,000 x 500 KB     = 25 GB/sec  -&gt; must use a CDN
+
+Metadata         = 10M rows/day x ~500 bytes = 5 GB/day -&gt; ~18 TB in 10 years
+                   -&gt; too big for one comfortable DB node, plan to shard</code></pre>
+<p>What the numbers tell you, and what to say:</p>
+<ul>
+<li>500:1 read-heavy → heavy caching and a CDN matter more than write speed.</li>
+<li>18 PB of photos → object storage like S3 (<a href="#s18">section 18</a>), not a database.</li>
+<li>25 GB/s outgoing → no single server can do that; a CDN serves the photos (<a href="#s9">section 9</a>).</li>
+<li>18 TB of metadata → shard the metadata database or use a wide-column store.</li>
+</ul>
+<div class="note"><b>Say this in the interview:</b> "I'll round 86,400 to 100,000 seconds to keep the maths simple — I only need the order of magnitude." Then always finish each number with a <i>decision</i>: "so we need a CDN", "so one Postgres is enough". A number without a decision earns nothing.</div>
+</section>
+
+<section id="s4">
+<h3>4. Key Non-Functional Terms</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>These are the words for "how well" a system works, rather than "what" it does. You will use them in every answer, so you must be able to define each in one sentence.</p>
+<p class="analogy">Features are what a car does (drive, carry five people). Non-functional qualities are how well: top speed, fuel use, how often it breaks down, whether it is safe in a crash.</p></div>
+
+<div class="table-wrap"><table>
+<tr><th>Term</th><th>One-line meaning</th><th>How you improve it</th></tr>
+<tr><td><b>Scalability</b></td><td>Handling more load by adding resources, without a redesign</td><td>Stateless servers, horizontal scaling, sharding, caching</td></tr>
+<tr><td><b>Availability</b></td><td>The percentage of time the system is up and answering</td><td>Redundancy, failover, no single point of failure, multi-zone</td></tr>
+<tr><td><b>Reliability</b></td><td>Working <i>correctly</i> over time, even when parts fail</td><td>Retries, replication, testing, graceful degradation</td></tr>
+<tr><td><b>Latency</b></td><td>Time for one request to complete (how fast)</td><td>Caching, CDN, fewer hops, indexes, closer servers</td></tr>
+<tr><td><b>Throughput</b></td><td>How many requests the system completes per second (how much)</td><td>More servers, batching, async processing, parallelism</td></tr>
+<tr><td><b>Consistency</b></td><td>All readers see the same, latest data</td><td>Single leader, synchronous replication, quorums, transactions</td></tr>
+<tr><td><b>Durability</b></td><td>Once saved, data is never lost</td><td>Write to disk, replicate to several machines, backups</td></tr>
+<tr><td><b>Maintainability</b></td><td>Easy for engineers to change and operate</td><td>Simple design, clear boundaries, observability</td></tr>
+</table></div>
+
+<h4>Availability and the "nines"</h4>
+<p>Availability is written as a percentage. Each extra 9 cuts allowed downtime by ten.</p>
+<div class="table-wrap"><table>
+<tr><th>Availability</th><th>Downtime per year</th><th>Per month</th><th>Per day</th><th>Typical for</th></tr>
+<tr><td>99% (two nines)</td><td>3.65 days</td><td>~7.3 hours</td><td>~14.4 min</td><td>Internal tools</td></tr>
+<tr><td>99.9% (three nines)</td><td>8.76 hours</td><td>~43.8 min</td><td>~1.44 min</td><td>Most web apps</td></tr>
+<tr><td>99.99% (four nines)</td><td>52.6 min</td><td>~4.4 min</td><td>~8.6 s</td><td>Payments, big consumer apps</td></tr>
+<tr><td>99.999% (five nines)</td><td>5.26 min</td><td>~26 s</td><td>~0.86 s</td><td>Telecom, core infrastructure</td></tr>
+</table></div>
+<p><b>Components in series multiply:</b> if a request needs service A (99.9%) <i>and</i> B (99.9%), total availability is 99.9% x 99.9% ≈ 99.8%. More required hops means lower availability.</p>
+<p><b>Components in parallel add up:</b> two redundant copies each at 99% give 1 − (0.01 x 0.01) = 99.99%. Redundancy is how you buy nines.</p>
+
+<h4>Latency vs throughput</h4>
+<p>Latency is how long one car takes to drive down a road. Throughput is how many cars pass per hour. Widening the road (more lanes) raises throughput but does not make any single car faster. You can have high throughput and bad latency at the same time — for example, a batch system.</p>
+<p>Measure latency with <b>percentiles</b>, not averages. <b>p50</b> is the median (half of requests are faster). <b>p99</b> means 99% of requests are faster than this; the slowest 1% are slower. Users notice the p99, and a page making 100 calls hits a p99 on almost every load.</p>
+
+<h4>Availability vs reliability vs durability</h4>
+<ul>
+<li>A system that answers every request with wrong data is <b>available</b> but not <b>reliable</b>.</li>
+<li>A system that is down for an hour but loses nothing is not very available, but is <b>durable</b>.</li>
+</ul>
+<div class="note"><b>Say this in the interview:</b> "For this system I'd prioritise availability and low read latency over strong consistency — a user seeing a like count one second late is fine." Naming the priority early lets you justify every later choice with it.</div>
+</section>
+
+<!-- ================= BUILDING BLOCKS ================= -->
+<div class="part">Part 2 — Building Blocks</div>
+
+<section id="s5">
+<h3>5. How a Request Travels</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>When you type a web address, several things happen in order. The browser finds the server's address (DNS), opens a secure connection (TCP + TLS), sends an HTTP request, and the server sends back a response.</p>
+<p><b>DNS</b> (Domain Name System) is the internet's phone book: it turns a name like <code>example.com</code> into an <b>IP address</b> like <code>93.184.216.34</code>, which is the actual location of a machine.</p>
+<p><b>Client-server</b> means one side asks (the client: a browser or app) and the other side answers (the server).</p>
+<p class="analogy">Sending a letter: look up the address in a directory (DNS), drive to the building (TCP connection), show ID at the door (TLS), hand over the letter (HTTP request), wait for the reply (HTTP response).</p></div>
+
+<figure class="diagram">
+<svg viewBox="0 0 640 300" role="img" aria-label="Request flow: the client asks DNS for the IP address, then connects to the CDN for static files or to the load balancer, which forwards to one of several stateless app servers; the app servers read from a cache and fall back to the database.">
+  <rect class="d-box-accent" x="14" y="120" width="96" height="52" rx="7"/>
+  <text class="d-accent-text" x="62" y="142" text-anchor="middle">Client</text>
+  <text class="d-sub" x="62" y="160" text-anchor="middle">browser / app</text>
+
+  <rect class="d-box" x="14" y="22" width="96" height="46" rx="7"/>
+  <text class="d-label" x="62" y="42" text-anchor="middle">DNS</text>
+  <text class="d-sub" x="62" y="58" text-anchor="middle">name -&gt; IP</text>
+
+  <rect class="d-box" x="160" y="22" width="110" height="46" rx="7"/>
+  <text class="d-label" x="215" y="42" text-anchor="middle">CDN</text>
+  <text class="d-sub" x="215" y="58" text-anchor="middle">images, JS, CSS</text>
+
+  <rect class="d-box" x="160" y="120" width="110" height="52" rx="7"/>
+  <text class="d-label" x="215" y="142" text-anchor="middle">Load balancer</text>
+  <text class="d-sub" x="215" y="160" text-anchor="middle">spreads traffic</text>
+
+  <rect class="d-box" x="320" y="84" width="110" height="38" rx="6"/>
+  <text class="d-label" x="375" y="108" text-anchor="middle">App server 1</text>
+  <rect class="d-box" x="320" y="128" width="110" height="38" rx="6"/>
+  <text class="d-label" x="375" y="152" text-anchor="middle">App server 2</text>
+  <rect class="d-box" x="320" y="172" width="110" height="38" rx="6"/>
+  <text class="d-label" x="375" y="196" text-anchor="middle">App server 3</text>
+
+  <rect class="d-fill-accent" x="490" y="84" width="130" height="46" rx="7"/>
+  <rect class="d-box-accent" x="490" y="84" width="130" height="46" rx="7"/>
+  <text class="d-accent-text" x="555" y="104" text-anchor="middle">Cache</text>
+  <text class="d-sub" x="555" y="120" text-anchor="middle">Redis, in memory</text>
+
+  <rect class="d-box" x="490" y="166" width="130" height="46" rx="7"/>
+  <text class="d-label" x="555" y="186" text-anchor="middle">Database</text>
+  <text class="d-sub" x="555" y="202" text-anchor="middle">source of truth</text>
+
+  <path class="d-line" d="M62 120 V74"/><path class="d-arrow" d="M62 68 l-4.5 9 h9 z"/>
+  <text class="d-sub" x="68" y="100">1</text>
+  <path class="d-dash" d="M110 132 H130 V45 H154"/><path class="d-arrow" d="M160 45 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="114" y="95">2a</text>
+  <path class="d-line-accent" d="M110 150 H154"/><path class="d-arrow-accent" d="M160 150 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="128" y="168">2b</text>
+  <path class="d-line" d="M270 146 H290 V103 H314"/><path class="d-arrow" d="M320 103 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M290 146 H314"/><path class="d-arrow" d="M320 147 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M290 146 V191 H314"/><path class="d-arrow" d="M320 191 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="280" y="226">3</text>
+  <path class="d-line-accent" d="M430 107 H484"/><path class="d-arrow-accent" d="M490 107 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="446" y="100">4 hit?</text>
+  <path class="d-dash" d="M430 189 H484"/><path class="d-arrow" d="M490 189 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="444" y="182">5 miss</text>
+
+  <text class="d-sub" x="320" y="258" text-anchor="middle">1 look up IP · 2a static files from the CDN · 2b API calls to the load balancer</text>
+  <text class="d-sub" x="320" y="276" text-anchor="middle">3 pick a server · 4 try the cache · 5 on a miss, read the database</text>
+</svg>
+<figcaption>The standard web architecture. Almost every case study starts from this picture and adds pieces (queues, object storage, search) as needed.</figcaption>
+</figure>
+
+<h4>The steps in order</h4>
+<ol>
+<li><b>DNS lookup</b> — the browser asks "what is the IP for <code>api.example.com</code>?" The answer is cached at several levels (browser, OS, internet provider) for a set time called the <b>TTL</b> (time to live).</li>
+<li><b>TCP connection</b> — TCP is the protocol that guarantees bytes arrive in order and complete. Opening one costs a round trip (the "three-way handshake").</li>
+<li><b>TLS handshake</b> — TLS is the encryption behind the padlock and <code>https://</code>. It proves the server is who it claims (with a certificate) and agrees a secret key. Costs 1–2 more round trips.</li>
+<li><b>HTTP request</b> — method (<code>GET</code>, <code>POST</code>…), path, headers, maybe a body.</li>
+<li><b>Server side</b> — load balancer → app server → cache / database → build the response.</li>
+<li><b>HTTP response</b> — a status code (200 OK, 404 Not Found, 500 Server Error), headers and body.</li>
+</ol>
+
+<h4>HTTP in one table</h4>
+<div class="table-wrap"><table>
+<tr><th>Method</th><th>Meaning</th><th>Safe to repeat?</th></tr>
+<tr><td><code>GET</code></td><td>Read something</td><td>Yes — no changes</td></tr>
+<tr><td><code>POST</code></td><td>Create something / trigger an action</td><td>No — may create duplicates</td></tr>
+<tr><td><code>PUT</code></td><td>Replace something completely</td><td>Yes — same result each time (idempotent)</td></tr>
+<tr><td><code>PATCH</code></td><td>Change part of something</td><td>Not guaranteed</td></tr>
+<tr><td><code>DELETE</code></td><td>Remove something</td><td>Yes — gone is gone</td></tr>
+</table></div>
+<p><b>Idempotent</b> means doing it twice has the same effect as doing it once. This matters for retries (<a href="#s16">section 16</a>).</p>
+<p>Versions: <b>HTTP/1.1</b> uses one request at a time per connection. <b>HTTP/2</b> sends many requests over one connection at once (multiplexing). <b>HTTP/3</b> runs over QUIC (on UDP) to avoid delays when a packet is lost — good on mobile networks.</p>
+<div class="note"><b>Say this in the interview:</b> "Static assets go through a CDN, API calls go through a load balancer to stateless app servers, which read through a cache in front of the database." That sentence is the skeleton of 80% of designs — say it, draw it, then customise.</div>
+</section>
+
+<section id="s6">
+<h3>6. Vertical vs Horizontal Scaling</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Vertical scaling</b> (scaling up) means buying a bigger machine: more CPU, more RAM. <b>Horizontal scaling</b> (scaling out) means adding more machines and splitting the work between them.</p>
+<p>A <b>stateless</b> server keeps nothing about a user between requests in its own memory. Any server can handle any request, because all the state (sessions, carts, uploads) lives in a shared store like Redis or a database.</p>
+<p class="analogy">A busy restaurant can hire one super-chef (vertical) or hire more normal chefs (horizontal). One super-chef has limits and if they get sick, the kitchen closes. Many chefs can keep growing, but they need a shared order board — that is the shared state store.</p></div>
+<div class="table-wrap"><table>
+<tr><th></th><th>Vertical (scale up)</th><th>Horizontal (scale out)</th></tr>
+<tr><td>How</td><td>Bigger machine</td><td>More machines</td></tr>
+<tr><td>Code changes</td><td>None</td><td>App must be stateless; need a load balancer</td></tr>
+<tr><td>Limit</td><td>Hard ceiling — the biggest machine you can buy</td><td>Nearly unlimited</td></tr>
+<tr><td>Failure</td><td>One machine = single point of failure</td><td>One machine dies, others carry on</td></tr>
+<tr><td>Cost</td><td>Big machines get expensive fast</td><td>Cheap commodity machines, but more to operate</td></tr>
+<tr><td>Good for</td><td>Early stage, databases (for a while)</td><td>Web/app servers, anything at scale</td></tr>
+</table></div>
+
+<h4>Making a server stateless</h4>
+<ul>
+<li><b>Sessions</b> → a shared store (Redis) or a signed token the client holds (JWT, <a href="#s24">section 24</a>).</li>
+<li><b>Uploaded files</b> → object storage (S3), never the server's local disk.</li>
+<li><b>In-memory caches</b> → fine for data everyone shares (config), but user-specific data belongs in a shared cache.</li>
+<li><b>Scheduled jobs</b> → a single scheduler or a queue, so ten servers don't run the same job ten times.</li>
+</ul>
+<p>Once servers are stateless you can use <b>auto-scaling</b>: the cloud adds servers when CPU or queue length goes up, and removes them when traffic drops.</p>
+<div class="note"><b>Rule of thumb:</b> scale the app tier horizontally from day one (it is easy once stateless). Scale the database vertically as long as you can (it is simpler), then add read replicas, then shard only when forced to.</div>
+</section>
+
+<section id="s7">
+<h3>7. Load Balancers</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>load balancer</b> (LB) sits in front of a group of servers and decides which server gets each request. It spreads the load, and it stops sending traffic to a server that is broken.</p>
+<p class="analogy">The host at a restaurant door: they see which waiters are free and seat you at their table. If a waiter goes home sick, the host simply stops seating people there.</p></div>
+
+<figure class="diagram">
+<svg viewBox="0 0 640 250" role="img" aria-label="A load balancer receives requests from clients and forwards them to three servers. It sends regular health checks; server 3 fails its health check and is removed from rotation, so traffic goes only to servers 1 and 2.">
+  <rect class="d-box-accent" x="14" y="100" width="100" height="50" rx="7"/>
+  <text class="d-accent-text" x="64" y="122" text-anchor="middle">Clients</text>
+  <text class="d-sub" x="64" y="139" text-anchor="middle">many requests</text>
+
+  <rect class="d-fill-accent" x="190" y="86" width="150" height="78" rx="8"/>
+  <rect class="d-box-accent" x="190" y="86" width="150" height="78" rx="8"/>
+  <text class="d-accent-text" x="265" y="110" text-anchor="middle">Load balancer</text>
+  <text class="d-sub" x="265" y="128" text-anchor="middle">algorithm: least conn</text>
+  <text class="d-sub" x="265" y="145" text-anchor="middle">health checks every 5s</text>
+
+  <rect class="d-box" x="440" y="26" width="160" height="46" rx="7"/>
+  <text class="d-label" x="520" y="46" text-anchor="middle">Server 1</text>
+  <text class="d-sub" x="520" y="62" text-anchor="middle">healthy · 12 conns</text>
+
+  <rect class="d-box" x="440" y="102" width="160" height="46" rx="7"/>
+  <text class="d-label" x="520" y="122" text-anchor="middle">Server 2</text>
+  <text class="d-sub" x="520" y="138" text-anchor="middle">healthy · 9 conns</text>
+
+  <rect class="d-box" x="440" y="178" width="160" height="46" rx="7"/>
+  <text class="d-label" x="520" y="198" text-anchor="middle">Server 3  ✗</text>
+  <text class="d-sub" x="520" y="214" text-anchor="middle">failed /health · removed</text>
+
+  <path class="d-line-accent" d="M114 125 H184"/><path class="d-arrow-accent" d="M190 125 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M340 110 H390 V49 H434"/><path class="d-arrow" d="M440 49 l-9 -4.5 v9 z"/>
+  <path class="d-line-accent" d="M340 125 H434"/><path class="d-arrow-accent" d="M440 125 l-9 -4.5 v9 z"/>
+  <text class="d-accent-text" x="388" y="118" text-anchor="middle">next</text>
+  <path class="d-dash" d="M340 140 H390 V201 H434"/>
+  <text class="d-sub" x="396" y="236">no traffic sent</text>
+</svg>
+<figcaption>Least-connections sends the next request to Server 2 (fewest open connections). Server 3 failed its health check, so it gets nothing until it recovers.</figcaption>
+</figure>
+
+<h4>Layer 4 vs Layer 7</h4>
+<p>The "layers" come from the OSI network model. <b>Layer 4</b> is the transport layer (TCP/UDP: IP addresses and ports). <b>Layer 7</b> is the application layer (HTTP: URLs, headers, cookies).</p>
+<div class="table-wrap"><table>
+<tr><th></th><th>L4 load balancer</th><th>L7 load balancer</th></tr>
+<tr><td>Looks at</td><td>IP and port only</td><td>Full HTTP request: path, headers, cookies</td></tr>
+<tr><td>Speed</td><td>Very fast, very cheap</td><td>Slower (must read and often decrypt the request)</td></tr>
+<tr><td>Smart routing</td><td>No</td><td>Yes: <code>/api</code> to one group, <code>/images</code> to another</td></tr>
+<tr><td>TLS</td><td>Usually passes it through</td><td>Usually terminates it (decrypts at the LB)</td></tr>
+<tr><td>Examples</td><td>AWS NLB, HAProxy (TCP mode)</td><td>AWS ALB, Nginx, Envoy, HAProxy (HTTP mode)</td></tr>
+</table></div>
+
+<h4>Algorithms</h4>
+<div class="table-wrap"><table>
+<tr><th>Algorithm</th><th>How it works</th><th>Use when</th></tr>
+<tr><td>Round robin</td><td>1, 2, 3, 1, 2, 3…</td><td>Servers are identical, requests are similar</td></tr>
+<tr><td>Weighted round robin</td><td>Bigger servers get more turns</td><td>Mixed server sizes</td></tr>
+<tr><td>Least connections</td><td>Send to the server with the fewest open connections</td><td>Requests vary a lot in duration (WebSockets, uploads)</td></tr>
+<tr><td>Least response time</td><td>Send to the fastest-responding server</td><td>Performance varies between servers</td></tr>
+<tr><td>IP hash</td><td>Hash of client IP picks the server</td><td>Need the same client on the same server, without cookies</td></tr>
+<tr><td>Consistent hashing</td><td>Hash of a key (user ID) on a ring (<a href="#s12">section 12</a>)</td><td>Routing to caches or stateful shards</td></tr>
+</table></div>
+
+<h4>Health checks</h4>
+<p>The LB calls an endpoint like <code>/health</code> every few seconds. After a few failures in a row, the server is removed; after a few passes, it comes back. <b>Active</b> checks are these regular pings; <b>passive</b> checks watch real traffic for errors.</p>
+
+<h4>Sticky sessions</h4>
+<p><b>Sticky sessions</b> (session affinity) send the same user to the same server every time, usually via a cookie. They make a stateful app work behind an LB, but they cause uneven load and lose the user's state when that server dies. Prefer stateless servers; use stickiness only when you must (for example, a WebSocket connection is naturally sticky).</p>
+
+<h4>Is the load balancer a single point of failure?</h4>
+<p>It can be. Fixes: run two LBs in <b>active-passive</b> (one takes over via a shared floating IP) or <b>active-active</b> mode, or use a managed cloud LB that is already redundant. At the global level, <b>DNS load balancing</b> or <b>GeoDNS</b> sends users to the nearest region.</p>
+<div class="note"><b>Say this in the interview:</b> "I'll put an L7 load balancer in front of stateless app servers, using least-connections and health checks. The LB itself is redundant — a managed one, or an active-passive pair." That covers algorithm, health, and single point of failure in one breath.</div>
+</section>
+
+<section id="s8">
+<h3>8. Caching</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>cache</b> is a small, fast store that keeps copies of data you read often, so you don't fetch it from the slow source (database, another service) every time. Caches usually live in RAM, which is about 1000x faster than disk.</p>
+<p>A <b>cache hit</b> is when the data is in the cache. A <b>cache miss</b> is when it isn't and you must go to the source. The <b>hit ratio</b> is hits divided by all reads; aim for 80–95%+.</p>
+<p class="analogy">Keeping the salt next to the stove instead of in the basement pantry. You still keep a full supply in the pantry (the database), but everyday use comes from the shelf.</p></div>
+
+<h4>Where caches live (layers)</h4>
+<div class="table-wrap"><table>
+<tr><th>Layer</th><th>Example</th><th>Caches</th></tr>
+<tr><td>Browser / client</td><td>HTTP cache headers (<code>Cache-Control</code>), local storage</td><td>Static files, some API responses</td></tr>
+<tr><td>CDN</td><td>Cloudflare, CloudFront</td><td>Images, video, JS, CSS, even whole pages</td></tr>
+<tr><td>Load balancer / reverse proxy</td><td>Nginx, Varnish</td><td>Full HTTP responses</td></tr>
+<tr><td>Application (in-process)</td><td>A map in the server's memory</td><td>Config, small hot lookups — fast but not shared</td></tr>
+<tr><td>Distributed cache</td><td>Redis, Memcached</td><td>Query results, sessions, computed objects — shared by all servers</td></tr>
+<tr><td>Database</td><td>Buffer pool, query cache</td><td>Pages of data on disk</td></tr>
+</table></div>
+
+<figure class="diagram">
+<svg viewBox="0 0 640 260" role="img" aria-label="Cache-aside: the app first asks the cache. On a hit it returns the data. On a miss it reads from the database, writes the result into the cache with a TTL, and returns it. On a write it updates the database and deletes the cache key.">
+  <rect class="d-box-accent" x="240" y="20" width="160" height="52" rx="7"/>
+  <text class="d-accent-text" x="320" y="42" text-anchor="middle">App server</text>
+  <text class="d-sub" x="320" y="60" text-anchor="middle">owns the logic</text>
+
+  <rect class="d-fill-accent" x="40" y="170" width="170" height="56" rx="7"/>
+  <rect class="d-box-accent" x="40" y="170" width="170" height="56" rx="7"/>
+  <text class="d-accent-text" x="125" y="192" text-anchor="middle">Cache (Redis)</text>
+  <text class="d-sub" x="125" y="210" text-anchor="middle">key -&gt; value, TTL</text>
+
+  <rect class="d-box" x="430" y="170" width="170" height="56" rx="7"/>
+  <text class="d-label" x="515" y="192" text-anchor="middle">Database</text>
+  <text class="d-sub" x="515" y="210" text-anchor="middle">source of truth</text>
+
+  <path class="d-line-accent" d="M260 72 V120 H110 V164"/><path class="d-arrow-accent" d="M110 170 l-4.5 -9 h9 z"/>
+  <text class="d-accent-text" x="150" y="113">1 GET key</text>
+  <path class="d-line" d="M140 170 V136 H280 V78"/><path class="d-arrow" d="M280 72 l-4.5 9 h9 z"/>
+  <text class="d-sub" x="160" y="152">2 hit: value</text>
+
+  <path class="d-line" d="M380 72 V120 H540 V164"/><path class="d-arrow" d="M540 170 l-4.5 -9 h9 z"/>
+  <text class="d-sub" x="420" y="113">3 miss: SELECT</text>
+  <path class="d-line" d="M500 170 V136 H360 V78"/><path class="d-arrow" d="M360 72 l-4.5 9 h9 z"/>
+  <text class="d-sub" x="400" y="152">rows</text>
+
+  <path class="d-dash" d="M240 40 H20 V198 H34"/><path class="d-arrow" d="M40 198 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="28" y="60">4 SET key</text>
+  <text class="d-sub" x="28" y="74">with TTL</text>
+
+  <text class="d-sub" x="320" y="248" text-anchor="middle">On write: UPDATE the database, then DELETE the cache key (next read refills it)</text>
+</svg>
+<figcaption>Cache-aside (lazy loading) — the most common pattern. The cache only ever holds data that someone actually asked for.</figcaption>
+</figure>
+
+<h4>Cache patterns (how reads and writes flow)</h4>
+<div class="table-wrap"><table>
+<tr><th>Pattern</th><th>How it works</th><th>Good</th><th>Bad</th></tr>
+<tr><td><b>Cache-aside</b> (lazy loading)</td><td>App checks cache; on miss reads DB and fills cache. On write, updates DB and deletes key.</td><td>Simple; cache holds only hot data; cache down = still works (slower)</td><td>First read is slow; possible stale data between DB write and key delete</td></tr>
+<tr><td><b>Read-through</b></td><td>App only talks to the cache; the cache itself loads from DB on a miss.</td><td>Cleaner app code</td><td>Needs a cache library/provider that supports it</td></tr>
+<tr><td><b>Write-through</b></td><td>Every write goes to cache <i>and</i> DB synchronously.</td><td>Cache always fresh</td><td>Slower writes; caches data nobody may read</td></tr>
+<tr><td><b>Write-back</b> (write-behind)</td><td>Write to cache only; cache flushes to DB later in batches.</td><td>Very fast writes; absorbs spikes</td><td>Data loss if cache dies before flushing</td></tr>
+<tr><td><b>Write-around</b></td><td>Writes go straight to DB, skipping cache; reads use cache-aside.</td><td>Cache not flooded with write-once data</td><td>Recent writes always miss the first time</td></tr>
+</table></div>
+
+<h4>Eviction — what to throw out when the cache is full</h4>
+<ul>
+<li><b>LRU</b> (Least Recently Used) — drop what hasn't been read for the longest time. The default choice.</li>
+<li><b>LFU</b> (Least Frequently Used) — drop what is read least often. Better when some items are always popular.</li>
+<li><b>FIFO</b> (First In, First Out) — drop the oldest entry. Simple, rarely the best.</li>
+<li><b>TTL</b> (Time To Live) — each entry expires after a set time. Not really eviction, but always set one: it limits how stale data can get.</li>
+</ul>
+
+<h4>Invalidation — keeping the cache correct</h4>
+<p>"There are only two hard things in computer science: cache invalidation and naming things." When the database changes, the cached copy is <b>stale</b> (out of date). Options:</p>
+<ul>
+<li><b>Delete on write</b> — after updating the DB, delete the key. The next read refills it. Prefer delete over update: updating can race with another writer and leave the wrong value.</li>
+<li><b>Short TTL</b> — accept up to N seconds of staleness. Simple and robust.</li>
+<li><b>Event-driven</b> — the DB's change stream (CDC, change data capture) publishes events that delete keys.</li>
+<li><b>Versioned keys</b> — <code>user:42:v7</code>; bump the version on change so old keys are simply never read again.</li>
+</ul>
+
+<h4>Problems you should name</h4>
+<div class="table-wrap"><table>
+<tr><th>Problem</th><th>What happens</th><th>Fix</th></tr>
+<tr><td><b>Cache stampede</b> (thundering herd)</td><td>A hot key expires; thousands of requests miss at once and all hit the DB</td><td>Lock so only one request refills (others wait or get stale value); refresh early before expiry; add random jitter to TTLs</td></tr>
+<tr><td><b>Hot key</b></td><td>One key (a celebrity's profile) gets so many reads that one cache node melts</td><td>Replicate the key to several nodes (<code>key#1</code>…<code>key#N</code>, pick randomly); local in-process cache for it</td></tr>
+<tr><td><b>Cache penetration</b></td><td>Requests for keys that don't exist always miss and hit the DB (often an attack)</td><td>Cache the "not found" result briefly; use a Bloom filter (a compact "definitely not present" check)</td></tr>
+<tr><td><b>Cache avalanche</b></td><td>Many keys expire at the same moment, or the cache cluster restarts</td><td>Jittered TTLs; cache warm-up; redundancy in the cache cluster</td></tr>
+</table></div>
+
+<h4>Redis vs Memcached</h4>
+<p><b>Redis</b>: rich data types (lists, sets, sorted sets, hashes), persistence, replication, pub/sub, Lua scripts. <b>Memcached</b>: plain key-value strings, multi-threaded, very simple. Default to Redis unless you only need a dumb, huge cache.</p>
+<div class="note"><b>Say this in the interview:</b> "I'll use cache-aside with Redis, a TTL of a few minutes, and delete-on-write. For hot keys I'd add a small local cache, and to avoid a stampede I'd let only one request refill an expired key." Then mention the trade-off: "the cost is a short window of staleness, which is acceptable here."</div>
+</section>
+
+<section id="s9">
+<h3>9. CDN (Content Delivery Network)</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>CDN</b> is a worldwide network of cache servers, called <b>edge servers</b> or <b>points of presence (PoPs)</b>, placed close to users. They keep copies of your static files — images, video, JavaScript, CSS — so a user in Tokyo downloads them from Tokyo, not from your server in Virginia.</p>
+<p>Your own server, where the original files live, is called the <b>origin</b>.</p>
+<p class="analogy">A publisher prints books in one factory but ships copies to bookshops in every city. Readers buy from their local shop; only when a shop runs out does it order from the factory.</p></div>
+
+<h4>Push vs pull CDN</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>Pull CDN</th><th>Push CDN</th></tr>
+<tr><td>How content gets there</td><td>Edge fetches from origin on the first request, then caches it</td><td>You upload content to the CDN in advance</td></tr>
+<tr><td>First request</td><td>Slow (miss, goes to origin)</td><td>Fast (already there)</td></tr>
+<tr><td>Effort</td><td>Low — just point the CDN at your origin</td><td>You manage uploads and updates</td></tr>
+<tr><td>Best for</td><td>Sites with lots of content, unpredictable popularity</td><td>Large files that rarely change, known in advance (video releases, game patches)</td></tr>
+</table></div>
+
+<h4>What to know</h4>
+<ul>
+<li><b>Cache control:</b> the origin sets <code>Cache-Control: max-age=…</code> to tell the CDN how long to keep a file.</li>
+<li><b>Cache busting:</b> put a version or hash in the filename (<code>app.3f9a2c.js</code>). A new deploy means a new name, so users never get an old file. Much easier than asking the CDN to purge.</li>
+<li><b>Dynamic content:</b> modern CDNs also speed up API calls by keeping warm connections to the origin, and can run small bits of code at the edge.</li>
+<li><b>Bonus:</b> CDNs absorb DDoS attacks (<a href="#s24">section 24</a>) and reduce your bandwidth bill.</li>
+<li><b>Cost:</b> you pay per GB delivered; stale content is possible until TTL expires.</li>
+</ul>
+<div class="note"><b>Rule of thumb:</b> any time a design serves images, video or files to many users, say "served from object storage through a CDN". If your estimate shows GB/s of outgoing traffic, a CDN is not optional.</div>
+</section>
+
+<!-- ================= DATA ================= -->
+<div class="part">Part 2 — Data</div>
+
+<section id="s10">
+<h3>10. Choosing a Database</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>SQL databases</b> (relational: PostgreSQL, MySQL) store data in tables with fixed columns, link tables with keys, and support <b>transactions</b> — a group of changes that all succeed or all fail together.</p>
+<p><b>NoSQL</b> is a family of "not only SQL" databases. Each type gives up some SQL features (joins, strict schema, sometimes transactions) to gain something else: easy horizontal scaling, flexible shape, or speed for one access pattern.</p>
+<p class="analogy">SQL is a well-organised filing cabinet with strict forms: every form has the same boxes, and you can cross-reference forms easily. NoSQL is a set of specialised containers: a key rack, a folder box, a huge ledger, a web of strings on a pinboard — each great for one job.</p></div>
+
+<h4>ACID vs BASE</h4>
+<ul>
+<li><b>ACID</b> (typical of SQL): <b>A</b>tomic (all or nothing), <b>C</b>onsistent (rules like "balance can't go negative" always hold), <b>I</b>solated (concurrent transactions don't see each other's half-done work), <b>D</b>urable (committed means saved).</li>
+<li><b>BASE</b> (typical of many NoSQL): <b>B</b>asically <b>A</b>vailable, <b>S</b>oft state, <b>E</b>ventually consistent — replicas agree <i>eventually</i>, not instantly.</li>
+</ul>
+
+<h4>The database types and when to use each</h4>
+<div class="table-wrap"><table>
+<tr><th>Type</th><th>Examples</th><th>Data looks like</th><th>Use when</th><th>Avoid when</th></tr>
+<tr><td><b>Relational (SQL)</b></td><td>PostgreSQL, MySQL</td><td>Tables, rows, foreign keys</td><td>Structured data, relationships, transactions: payments, orders, users, inventory</td><td>Massive write scale across many machines (possible but hard)</td></tr>
+<tr><td><b>Key-value</b></td><td>Redis, DynamoDB, etcd</td><td><code>key → value</code></td><td>Lookups by one key: sessions, caches, carts, feature flags, rate-limit counters</td><td>You need to query by anything other than the key</td></tr>
+<tr><td><b>Document</b></td><td>MongoDB, Couchbase, Firestore</td><td>JSON-like documents</td><td>Flexible or nested data read as a whole: product catalogues, user profiles, CMS content</td><td>Lots of cross-document joins and transactions</td></tr>
+<tr><td><b>Wide-column</b></td><td>Cassandra, HBase, ScyllaDB, Bigtable</td><td>Rows with a partition key and sorted columns</td><td>Huge write volume, time-ordered data per key: chat messages, activity feeds, IoT, logs</td><td>Ad-hoc queries, joins, strong transactions</td></tr>
+<tr><td><b>Graph</b></td><td>Neo4j, Amazon Neptune</td><td>Nodes and edges</td><td>Relationship-heavy queries: friends-of-friends, recommendations, fraud rings</td><td>Simple lookups or huge bulk scans</td></tr>
+<tr><td><b>Time-series</b></td><td>InfluxDB, TimescaleDB, Prometheus</td><td>Timestamp + value + tags</td><td>Metrics, monitoring, sensor readings, stock ticks</td><td>General app data</td></tr>
+<tr><td><b>Search engine</b></td><td>Elasticsearch, OpenSearch</td><td>Inverted index over documents</td><td>Full-text search, filters, fuzzy matching (<a href="#s19">section 19</a>)</td><td>As the primary source of truth</td></tr>
+<tr><td><b>Object storage</b></td><td>S3, GCS, Azure Blob</td><td>Files (blobs) by key</td><td>Images, video, backups, big files (<a href="#s18">section 18</a>)</td><td>Small, frequently updated records</td></tr>
+</table></div>
+
+<h4>How to choose (the questions to ask yourself)</h4>
+<ol>
+<li><b>Do I need transactions across several records?</b> (money, stock levels) → SQL.</li>
+<li><b>What is the access pattern?</b> Always by one key → key-value. Whole object at once → document. Append-heavy, time-ordered per user → wide-column.</li>
+<li><b>How much write volume?</b> Tens of thousands of writes per second across regions → Cassandra/DynamoDB style.</li>
+<li><b>Is the schema stable?</b> Stable → SQL. Changing often or varied → document.</li>
+<li><b>Are relationships the point?</b> → graph.</li>
+</ol>
+<p><b>Polyglot persistence</b> means using several databases in one system, each for what it does best — for example Postgres for users and orders, Redis for sessions, Cassandra for messages, S3 for photos, Elasticsearch for search.</p>
+<div class="note"><b>Say this in the interview:</b> "I'll default to PostgreSQL for the core data because we need transactions and the relationships are clear. Messages are append-heavy and read by conversation, so I'd put them in Cassandra partitioned by conversation ID." Always tie the choice to the <i>access pattern</i>, never to fashion.</div>
+</section>
+
+<section id="s11">
+<h3>11. Replication</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Replication</b> means keeping copies of the same data on several machines. Each copy is a <b>replica</b>. It gives you three things: <b>durability</b> (a disk dies, data survives), <b>availability</b> (a machine dies, another answers), and <b>read scaling</b> (spread reads across copies).</p>
+<p class="analogy">Important documents kept in three offices. If one office floods, you still have the papers, and staff in all three can read them. The hard part is keeping all three copies up to date when something changes.</p></div>
+
+<figure class="diagram">
+<svg viewBox="0 0 640 290" role="img" aria-label="Leader-follower replication: the app sends writes to the leader. The leader copies changes synchronously to follower 1, waiting for acknowledgement, and asynchronously to follower 2 without waiting, so follower 2 may lag. Reads can go to followers. If the leader fails, a follower is promoted.">
+  <rect class="d-box" x="14" y="40" width="120" height="48" rx="7"/>
+  <text class="d-label" x="74" y="60" text-anchor="middle">App</text>
+  <text class="d-sub" x="74" y="76" text-anchor="middle">writes</text>
+
+  <rect class="d-fill-accent" x="250" y="34" width="150" height="60" rx="8"/>
+  <rect class="d-box-accent" x="250" y="34" width="150" height="60" rx="8"/>
+  <text class="d-accent-text" x="325" y="58" text-anchor="middle">Leader</text>
+  <text class="d-sub" x="325" y="76" text-anchor="middle">accepts all writes</text>
+
+  <rect class="d-box" x="170" y="190" width="140" height="52" rx="7"/>
+  <text class="d-label" x="240" y="210" text-anchor="middle">Follower 1</text>
+  <text class="d-sub" x="240" y="228" text-anchor="middle">sync copy</text>
+
+  <rect class="d-box" x="350" y="190" width="140" height="52" rx="7"/>
+  <text class="d-label" x="420" y="210" text-anchor="middle">Follower 2</text>
+  <text class="d-sub" x="420" y="228" text-anchor="middle">async copy, may lag</text>
+
+  <rect class="d-box" x="520" y="110" width="106" height="48" rx="7"/>
+  <text class="d-label" x="573" y="130" text-anchor="middle">App</text>
+  <text class="d-sub" x="573" y="146" text-anchor="middle">reads</text>
+
+  <path class="d-line-accent" d="M134 64 H244"/><path class="d-arrow-accent" d="M250 64 l-9 -4.5 v9 z"/>
+  <text class="d-accent-text" x="190" y="56" text-anchor="middle">write</text>
+  <path class="d-line-accent" d="M300 94 V150 H240 V184"/><path class="d-arrow-accent" d="M240 190 l-4.5 -9 h9 z"/>
+  <text class="d-sub" x="232" y="144" text-anchor="end">sync: wait for ack</text>
+  <path class="d-dash" d="M350 94 V150 H420 V184"/><path class="d-arrow" d="M420 190 l-4.5 -9 h9 z"/>
+  <text class="d-sub" x="364" y="144">async: don't wait</text>
+  <path class="d-line" d="M573 158 V216 H496"/><path class="d-arrow" d="M490 216 l9 -4.5 v9 z"/>
+  <text class="d-sub" x="580" y="190">read</text>
+
+  <text class="d-sub" x="320" y="272" text-anchor="middle">If the leader dies, a follower is promoted (failover). Async followers may lose the last few writes.</text>
+</svg>
+<figcaption>Leader-follower with one synchronous and one asynchronous follower ("semi-synchronous") — a common real-world compromise between safety and speed.</figcaption>
+</figure>
+
+<h4>Three replication styles</h4>
+<div class="table-wrap"><table>
+<tr><th>Style</th><th>How it works</th><th>Good</th><th>Bad</th><th>Seen in</th></tr>
+<tr><td><b>Leader-follower</b> (primary-replica, master-slave)</td><td>One leader takes all writes and streams changes to followers. Reads from any.</td><td>Simple, no write conflicts</td><td>Leader is a write bottleneck; failover takes seconds</td><td>PostgreSQL, MySQL, MongoDB, Redis</td></tr>
+<tr><td><b>Multi-leader</b></td><td>Several leaders (often one per region) each accept writes and sync with each other.</td><td>Low write latency in every region; survives a region outage</td><td>Write conflicts (two people edit the same row) must be resolved</td><td>Multi-region setups, offline-first apps, collaborative editing</td></tr>
+<tr><td><b>Leaderless</b></td><td>Client writes to several replicas at once and reads from several; quorums decide (<a href="#s14">section 14</a>).</td><td>No failover needed; very available</td><td>Weaker consistency; conflict handling needed</td><td>Cassandra, DynamoDB, Riak</td></tr>
+</table></div>
+
+<h4>Synchronous vs asynchronous</h4>
+<ul>
+<li><b>Synchronous:</b> the leader waits for the follower to confirm before telling the client "saved". Safe (no data loss on failover) but slower, and a slow follower blocks writes.</li>
+<li><b>Asynchronous:</b> the leader confirms immediately and ships changes in the background. Fast, but if the leader dies the last few writes may be lost.</li>
+<li><b>Semi-synchronous:</b> one follower is synchronous, the rest async. Common compromise.</li>
+</ul>
+
+<h4>Replication lag and its symptoms</h4>
+<p><b>Replication lag</b> is the delay before a follower has the latest data. Usually milliseconds, sometimes seconds under load. It causes visible bugs:</p>
+<ul>
+<li><b>Read-your-own-write fails</b> — you post a comment, the page reloads from a lagging follower, your comment is missing. <i>Fix:</i> read from the leader for a few seconds after the user writes, or read the user's own data from the leader.</li>
+<li><b>Time going backwards</b> — two reads hit different followers; the second is further behind. <i>Fix:</i> <b>monotonic reads</b> — pin a user to one follower.</li>
+</ul>
+
+<h4>Failover</h4>
+<p><b>Failover</b> is switching to a replica when the leader dies: detect the failure (heartbeats time out), pick the most up-to-date follower, point writes at it. Danger: <b>split brain</b> — the old leader comes back and both think they are leader. Fixed with fencing (the old leader's writes are rejected) and consensus (<a href="#s22">section 22</a>).</p>
+<div class="note"><b>Say this in the interview:</b> "Single leader with two followers across availability zones: one synchronous for durability, one async for read scaling. Reads that must see the user's own writes go to the leader." Mentioning replication lag and read-your-writes unprompted is a strong signal.</div>
+</section>
+
+<section id="s12">
+<h3>12. Sharding (Partitioning)</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Sharding</b> means splitting one big dataset across several machines, so each machine (a <b>shard</b>) holds only part of the data. Replication copies the <i>same</i> data; sharding splits <i>different</i> data. Real systems do both: each shard is replicated.</p>
+<p>The <b>shard key</b> (partition key) is the field used to decide which shard a row lives on — for example <code>user_id</code>.</p>
+<p class="analogy">A library too big for one building. You split it: A–F in building 1, G–M in building 2, and so on. Each building can also keep a spare copy in a warehouse (replication).</p></div>
+
+<h4>Sharding strategies</h4>
+<div class="table-wrap"><table>
+<tr><th>Strategy</th><th>How</th><th>Good</th><th>Bad</th></tr>
+<tr><td><b>Range</b></td><td>Rows by key range: users A–F on shard 1, G–M on shard 2; or by date</td><td>Range queries are easy ("all orders in March")</td><td>Hotspots: all new data lands on the latest range</td></tr>
+<tr><td><b>Hash</b></td><td><code>shard = hash(key) % N</code></td><td>Even spread</td><td>Range queries hit every shard; changing N moves almost every key</td></tr>
+<tr><td><b>Consistent hashing</b></td><td>Keys and shards on a ring; key goes to the next shard clockwise</td><td>Adding a shard moves only ~1/N of keys</td><td>More complex; needs virtual nodes for balance</td></tr>
+<tr><td><b>Directory</b> (lookup)</td><td>A lookup table maps key → shard</td><td>Total flexibility; move single tenants</td><td>The directory is an extra hop and a possible single point of failure</td></tr>
+<tr><td><b>Geographic</b></td><td>By user region: EU users in EU shard</td><td>Low latency; data residency laws</td><td>Uneven region sizes</td></tr>
+</table></div>
+
+<h4>Consistent hashing</h4>
+<p>With plain <code>hash(key) % N</code>, going from 4 to 5 servers changes the answer for about 80% of keys — a huge, painful data move. <b>Consistent hashing</b> fixes this.</p>
+<figure class="diagram">
+<svg viewBox="0 0 640 300" role="img" aria-label="Consistent hashing ring: nodes A, B and C sit on a ring. Each key walks clockwise to the first node it meets: k1 goes to B, k2 to C, k3 to A. Adding a new node D between A and B moves only k1, from B to D; all other keys stay put.">
+  <circle class="d-line" cx="200" cy="150" r="100"/>
+
+  <circle class="d-fill-accent" cx="200" cy="50" r="10"/>
+  <circle class="d-box-accent" cx="200" cy="50" r="10"/>
+  <text class="d-accent-text" x="200" y="32" text-anchor="middle">Node A</text>
+
+  <circle class="d-fill-accent" cx="287" cy="200" r="10"/>
+  <circle class="d-box-accent" cx="287" cy="200" r="10"/>
+  <text class="d-accent-text" x="300" y="222">Node B</text>
+
+  <circle class="d-fill-accent" cx="113" cy="200" r="10"/>
+  <circle class="d-box-accent" cx="113" cy="200" r="10"/>
+  <text class="d-accent-text" x="100" y="222" text-anchor="end">Node C</text>
+
+  <circle class="d-dash" cx="298" cy="133" r="10"/>
+  <text class="d-sub" x="314" y="130">Node D (new)</text>
+
+  <circle class="d-arrow" cx="277" cy="86" r="5"/>
+  <text class="d-mono" x="286" y="80">k1 → B, then D</text>
+  <circle class="d-arrow" cx="217" cy="248" r="5"/>
+  <text class="d-mono" x="226" y="266">k2 → C</text>
+  <circle class="d-arrow" cx="106" cy="116" r="5"/>
+  <text class="d-mono" x="96" y="112" text-anchor="end">k3 → A</text>
+
+  <path class="d-line-accent" d="M165 89 A70 70 0 0 1 235 89"/>
+  <path class="d-arrow-accent" d="M239 92 L228.5 90.5 L233 82.5 z"/>
+  <text class="d-sub" x="200" y="118" text-anchor="middle">walk clockwise</text>
+
+  <text class="d-label" x="420" y="60">How it works</text>
+  <text class="d-sub" x="420" y="84">1 Hash each node onto the ring</text>
+  <text class="d-sub" x="420" y="104">2 Hash each key onto the ring</text>
+  <text class="d-sub" x="420" y="124">3 Walk clockwise; first node owns it</text>
+  <text class="d-sub" x="420" y="152">Add node D: only keys between</text>
+  <text class="d-sub" x="420" y="168">A and D move (k1). Others stay.</text>
+  <text class="d-sub" x="420" y="196">Virtual nodes: each server sits</text>
+  <text class="d-sub" x="420" y="212">at 100+ points so load is even</text>
+</svg>
+<figcaption>Adding or removing a node only moves the keys in one arc of the ring — about 1/N of the data — instead of reshuffling everything.</figcaption>
+</figure>
+<p><b>Virtual nodes</b>: with only three points on the ring, one node may get a huge arc and most of the keys. So each physical server is placed at many points (for example 100–200 "virtual nodes"). This evens out load, and a stronger server can simply get more virtual nodes. Used by Cassandra, DynamoDB, and many caches.</p>
+
+<h4>Resharding</h4>
+<p><b>Resharding</b> is changing how data is split — usually adding shards as data grows. It is expensive: data must be copied while the system keeps serving. Ways to make it easier:</p>
+<ul>
+<li>Consistent hashing so only a fraction moves.</li>
+<li>Start with many <b>logical shards</b> (say 1024) mapped onto a few physical machines. Growing means moving whole logical shards to new machines, never re-splitting data.</li>
+<li>Double-write during migration: write to old and new location, backfill, then switch reads.</li>
+</ul>
+
+<h4>Hotspots and the celebrity problem</h4>
+<p>A <b>hotspot</b> is one shard getting far more traffic than the others — for example a celebrity with 100 million followers when sharding by <code>user_id</code>. Fixes: add a random suffix to hot keys to spread them (<code>celebrity_id#0..9</code>), cache hot items, or give hot tenants their own shard.</p>
+
+<h4>What sharding costs you</h4>
+<ul>
+<li><b>Cross-shard queries</b> — a query not on the shard key must ask every shard (scatter-gather) — slow.</li>
+<li><b>Cross-shard joins and transactions</b> — mostly gone; you design around them (denormalise, sagas).</li>
+<li><b>Operational complexity</b> — backups, schema changes, monitoring times N.</li>
+</ul>
+<div class="note"><b>Rule of thumb for choosing a shard key:</b> (1) high cardinality (many different values), (2) spreads writes evenly, (3) most queries include it. Say out loud: "I'll shard by <code>user_id</code> because almost every query is per-user, and it spreads evenly. The risk is celebrity hotspots, which I'd handle with caching."</div>
+</section>
+
+<section id="s13">
+<h3>13. Indexing, Denormalisation, Read Replicas</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>These are the three cheapest ways to make reads faster before you reach for sharding.</p>
+<p>An <b>index</b> is a sorted lookup structure on one or more columns, so the database can jump straight to matching rows instead of reading the whole table (a <b>full table scan</b>).</p>
+<p><b>Denormalisation</b> means deliberately storing the same data in more than one place to avoid joins at read time.</p>
+<p class="analogy">An index is the index at the back of a textbook: go straight to page 214 instead of reading every page. Denormalisation is writing the author's name on every book spine instead of making people look it up in a separate catalogue.</p></div>
+
+<h4>Indexes</h4>
+<ul>
+<li><b>B-tree index</b> — the default. A balanced tree, good for equality (<code>=</code>) and ranges (<code>&gt;</code>, <code>BETWEEN</code>, <code>ORDER BY</code>). Lookup cost grows slowly (log n).</li>
+<li><b>Hash index</b> — only equality lookups, very fast.</li>
+<li><b>Composite index</b> — on several columns, e.g. <code>(user_id, created_at)</code>. Follows the <b>leftmost prefix rule</b>: it helps queries on <code>user_id</code>, or <code>user_id + created_at</code>, but not on <code>created_at</code> alone.</li>
+<li><b>Covering index</b> — the index includes every column the query needs, so the table itself is never read.</li>
+<li><b>LSM tree</b> (log-structured merge tree) — used by Cassandra, RocksDB. Writes go to memory then are flushed to sorted files; very fast writes, reads may check several files.</li>
+</ul>
+<p><b>The cost:</b> every index slows down writes (it must be updated too) and uses storage. Index the columns you filter, join and sort on — not everything.</p>
+
+<h4>Normalisation vs denormalisation</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>Normalised</th><th>Denormalised</th></tr>
+<tr><td>Idea</td><td>Each fact stored once; join to combine</td><td>Copy data where it is read; no joins</td></tr>
+<tr><td>Reads</td><td>Slower (joins)</td><td>Faster (one lookup)</td></tr>
+<tr><td>Writes</td><td>Simple, one place</td><td>Must update every copy</td></tr>
+<tr><td>Risk</td><td>Join cost at scale</td><td>Copies drifting out of sync</td></tr>
+<tr><td>Use for</td><td>Write-heavy, correctness-critical data</td><td>Read-heavy views, NoSQL, sharded data</td></tr>
+</table></div>
+<p>Related: a <b>materialised view</b> is a precomputed query result stored like a table, refreshed periodically. <b>CQRS</b> (Command Query Responsibility Segregation) means using separate models (even separate databases) for writes and for reads, synced via events.</p>
+
+<h4>Read replicas</h4>
+<p>Followers from <a href="#s11">section 11</a> used to serve read traffic. A read-heavy app (most are) can add replicas to multiply read capacity. Remember replication lag: route "read after my own write" to the leader.</p>
+
+<h4>The scaling ladder for a database</h4>
+<ol>
+<li>Add the right indexes; fix slow queries.</li>
+<li>Add a cache in front (<a href="#s8">section 8</a>).</li>
+<li>Scale the machine up (vertical).</li>
+<li>Add read replicas.</li>
+<li>Denormalise hot read paths / use materialised views.</li>
+<li>Split by feature (users DB, orders DB) — <b>vertical partitioning</b>.</li>
+<li>Shard (<a href="#s12">section 12</a>).</li>
+</ol>
+<div class="note"><b>Say this in the interview:</b> "Before sharding, I'd exhaust indexes, caching and read replicas — sharding is a one-way door that makes joins and transactions much harder." Interviewers love hearing that you don't jump to the most complex tool.</div>
+</section>
+
+<section id="s14">
+<h3>14. CAP Theorem, PACELC and Consistency</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>The <b>CAP theorem</b> says a distributed data store can't guarantee all three at once: <b>C</b>onsistency (every read sees the latest write), <b>A</b>vailability (every request gets a non-error answer), and <b>P</b>artition tolerance (keeps working when the network between machines breaks).</p>
+<p>Networks <i>do</i> break, so P is not optional. The real choice is: <b>when a partition happens, do you stay consistent (refuse some requests) or stay available (maybe return stale data)?</b></p>
+<p class="analogy">Two bank branches lose their phone line. A customer wants to withdraw. The branch can refuse until the line is back (consistent), or allow it and risk the account going negative (available). It can't be both.</p></div>
+
+<div class="table-wrap"><table>
+<tr><th>Choice during a partition</th><th>Behaviour</th><th>Good for</th><th>Examples</th></tr>
+<tr><td><b>CP</b> — consistency</td><td>Some requests fail or wait rather than return stale data</td><td>Payments, bookings, inventory, leader election</td><td>HBase, ZooKeeper, etcd, MongoDB (default), Spanner</td></tr>
+<tr><td><b>AP</b> — availability</td><td>Always answers, maybe with stale data; syncs later</td><td>Social feeds, likes, carts, DNS, product catalogue</td><td>Cassandra, DynamoDB (default), CouchDB</td></tr>
+</table></div>
+
+<h4>PACELC — the fuller picture</h4>
+<p>CAP only talks about failures. <b>PACELC</b> adds normal times: "if <b>P</b>artition, choose <b>A</b> or <b>C</b>; <b>E</b>lse (normal operation), choose <b>L</b>atency or <b>C</b>onsistency." Even with a healthy network, waiting for replicas to agree costs time.</p>
+<ul>
+<li><b>PA/EL</b> — Cassandra, DynamoDB: available and fast, eventually consistent.</li>
+<li><b>PC/EC</b> — Spanner, HBase: consistent always, pays in latency.</li>
+</ul>
+
+<h4>Consistency models (strongest to weakest)</h4>
+<div class="table-wrap"><table>
+<tr><th>Model</th><th>Promise</th><th>Example need</th></tr>
+<tr><td><b>Strong / linearisable</b></td><td>Every read sees the latest write, as if there were one copy</td><td>Bank balance, seat booking</td></tr>
+<tr><td><b>Sequential / causal</b></td><td>Everyone sees related events in the same order (a reply after its question)</td><td>Comments and replies, chat</td></tr>
+<tr><td><b>Read-your-writes</b></td><td>You always see your own updates (others may not yet)</td><td>Editing your profile</td></tr>
+<tr><td><b>Monotonic reads</b></td><td>You never see data go back in time</td><td>Refreshing a feed</td></tr>
+<tr><td><b>Eventual</b></td><td>If writes stop, all replicas converge eventually</td><td>Like counts, view counts, DNS</td></tr>
+</table></div>
+
+<h4>Quorums (tunable consistency)</h4>
+<p>In leaderless systems with <b>N</b> replicas, a write waits for <b>W</b> confirmations and a read asks <b>R</b> replicas. A <b>quorum</b> is a majority.</p>
+<pre><code>If  W + R &gt; N   -&gt; every read overlaps at least one replica with the latest write
+                   -&gt; strong-ish consistency
+
+Typical: N = 3, W = 2, R = 2   (2 + 2 &gt; 3)       balanced
+         N = 3, W = 1, R = 1   fast, eventual
+         N = 3, W = 3, R = 1   fast reads, slow and fragile writes</code></pre>
+<p>Conflicts in eventually consistent stores are resolved with <b>last-write-wins</b> (timestamps; simple but can lose data), <b>version vectors</b> (detect concurrent writes and let the app merge), or <b>CRDTs</b> (data types that merge automatically, like counters).</p>
+<div class="note"><b>Say this in the interview:</b> "Since network partitions will happen, the real choice is C or A during one. For the payment ledger I'd choose consistency; for the feed and like counts, availability with eventual consistency." Picking <i>per feature</i> rather than per system is the senior answer.</div>
+</section>
+
+<!-- ================= COMMUNICATION ================= -->
+<div class="part">Part 2 — Communication</div>
+
+<section id="s15">
+<h3>15. Message Queues &amp; Event Streaming</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>message queue</b> is a waiting line for work between services. One service (the <b>producer</b>) drops a message in; another (the <b>consumer</b>) picks it up when ready. The producer doesn't wait. This is called <b>asynchronous</b> processing and <b>decoupling</b> — the two sides don't need to be up, fast, or even know about each other at the same time.</p>
+<p class="analogy">The order spike at a restaurant: waiters pin tickets on a rail and go back to customers. Cooks take tickets at their own pace. A rush of orders makes the rail longer, but nobody is turned away and nobody waits at the kitchen door.</p></div>
+
+<figure class="diagram">
+<svg viewBox="0 0 640 260" role="img" aria-label="Two producers put messages into a queue. Two workers pull messages from the queue and acknowledge each one after processing. Messages that fail repeatedly are moved to a dead-letter queue.">
+  <rect class="d-box" x="14" y="30" width="120" height="40" rx="7"/>
+  <text class="d-label" x="74" y="55" text-anchor="middle">Producer A</text>
+  <rect class="d-box" x="14" y="90" width="120" height="40" rx="7"/>
+  <text class="d-label" x="74" y="115" text-anchor="middle">Producer B</text>
+
+  <text class="d-accent-text" x="310" y="50" text-anchor="middle">Message queue</text>
+  <rect class="d-fill-accent" x="200" y="60" width="220" height="62" rx="8"/>
+  <rect class="d-box-accent" x="200" y="60" width="220" height="62" rx="8"/>
+  <rect class="d-box" x="222" y="70" width="26" height="28" rx="3"/>
+  <rect class="d-box" x="256" y="70" width="26" height="28" rx="3"/>
+  <rect class="d-box" x="290" y="70" width="26" height="28" rx="3"/>
+  <rect class="d-box" x="324" y="70" width="26" height="28" rx="3"/>
+  <rect class="d-box" x="358" y="70" width="26" height="28" rx="3"/>
+  <text class="d-sub" x="310" y="115" text-anchor="middle">messages wait here, in order</text>
+
+  <rect class="d-box" x="490" y="30" width="136" height="40" rx="7"/>
+  <text class="d-label" x="558" y="55" text-anchor="middle">Worker 1</text>
+  <rect class="d-box" x="490" y="90" width="136" height="40" rx="7"/>
+  <text class="d-label" x="558" y="115" text-anchor="middle">Worker 2</text>
+
+  <rect class="d-box" x="240" y="182" width="140" height="44" rx="7"/>
+  <text class="d-label" x="310" y="201" text-anchor="middle">Dead-letter queue</text>
+  <text class="d-sub" x="310" y="217" text-anchor="middle">for humans to inspect</text>
+
+  <path class="d-line" d="M134 50 H170 V91 H194"/><path class="d-arrow" d="M200 91 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M134 110 H170 V91"/>
+  <text class="d-sub" x="150" y="146" text-anchor="middle">publish &amp; move on</text>
+  <path class="d-line-accent" d="M420 91 H455 V50 H484"/><path class="d-arrow-accent" d="M490 50 l-9 -4.5 v9 z"/>
+  <path class="d-line-accent" d="M455 91 V110 H484"/><path class="d-arrow-accent" d="M490 110 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="558" y="152" text-anchor="middle">pull, process, ack</text>
+  <path class="d-dash" d="M310 122 V176"/><path class="d-arrow" d="M310 182 l-4.5 -9 h9 z"/>
+  <text class="d-sub" x="318" y="156">after N failed tries</text>
+
+  <text class="d-sub" x="320" y="250" text-anchor="middle">The queue absorbs spikes: producers never wait, workers go at their own pace, add workers to go faster.</text>
+</svg>
+<figcaption>A work queue with a dead-letter queue. The message is removed only after a worker acknowledges it, so a crashed worker's message is delivered again.</figcaption>
+</figure>
+
+<h4>Why use a queue</h4>
+<ul>
+<li><b>Absorb spikes</b> — 10x traffic for a minute just makes the queue longer; the database isn't crushed.</li>
+<li><b>Do slow work later</b> — send emails, resize images, generate reports without making the user wait.</li>
+<li><b>Survive failures</b> — the consumer is down? Messages wait until it's back.</li>
+<li><b>Decouple teams and services</b> — the producer doesn't know or care who consumes.</li>
+</ul>
+
+<h4>Queue vs publish/subscribe</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>Point-to-point queue</th><th>Pub/sub (topic)</th></tr>
+<tr><td>Who gets a message</td><td>Exactly <b>one</b> consumer from the group</td><td><b>Every</b> subscriber gets a copy</td></tr>
+<tr><td>Use for</td><td>Distributing work: "resize this image"</td><td>Broadcasting events: "order placed" → email, analytics, inventory all react</td></tr>
+<tr><td>Examples</td><td>RabbitMQ queues, AWS SQS</td><td>Kafka topics, AWS SNS, Google Pub/Sub, Redis pub/sub</td></tr>
+</table></div>
+
+<h4>Kafka in plain words</h4>
+<p><b>Apache Kafka</b> is an <b>event streaming</b> platform: a durable, append-only <b>log</b> of events that many consumers can read, and re-read, at their own pace.</p>
+<ul>
+<li><b>Topic</b> — a named stream of events, like <code>orders</code>.</li>
+<li><b>Partition</b> — a topic is split into partitions for parallelism. Order is guaranteed <i>within</i> a partition only. Messages with the same key (say <code>order_id</code>) always go to the same partition, so they stay in order.</li>
+<li><b>Offset</b> — a message's position in the partition. Each consumer remembers its offset, so it can pause, resume or replay.</li>
+<li><b>Consumer group</b> — consumers sharing the work; each partition is read by one consumer in the group. More partitions = more parallel consumers.</li>
+<li><b>Retention</b> — messages are kept for a set time (days) even after being read, unlike a classic queue that deletes on ack.</li>
+<li><b>Replication</b> — each partition is copied to several brokers (Kafka servers).</li>
+</ul>
+<div class="table-wrap"><table>
+<tr><th></th><th>RabbitMQ / SQS (message queue)</th><th>Kafka (event log)</th></tr>
+<tr><td>After reading</td><td>Message deleted</td><td>Message kept; can replay</td></tr>
+<tr><td>Throughput</td><td>High</td><td>Very high (millions/sec)</td></tr>
+<tr><td>Ordering</td><td>Per queue (FIFO queues) or best-effort</td><td>Per partition</td></tr>
+<tr><td>Routing</td><td>Rich (RabbitMQ exchanges)</td><td>Simple: topic + key</td></tr>
+<tr><td>Best for</td><td>Task queues, jobs</td><td>Event streams, analytics pipelines, many consumers, event sourcing</td></tr>
+</table></div>
+
+<h4>Delivery guarantees</h4>
+<div class="table-wrap"><table>
+<tr><th>Guarantee</th><th>Meaning</th><th>How</th><th>Risk</th></tr>
+<tr><td><b>At-most-once</b></td><td>Delivered 0 or 1 times</td><td>Ack before processing</td><td>Lost messages</td></tr>
+<tr><td><b>At-least-once</b></td><td>Delivered 1 or more times</td><td>Ack after processing; retry on failure</td><td>Duplicates</td></tr>
+<tr><td><b>Exactly-once</b></td><td>Effect happens exactly once</td><td>At-least-once + idempotent consumer, or transactional systems (Kafka transactions)</td><td>Complex, slower</td></tr>
+</table></div>
+<p>In practice: use <b>at-least-once delivery with idempotent consumers</b>. <b>Idempotent</b> means processing a message twice has the same effect as once — for example, store processed message IDs and skip repeats, or use "set status = paid" rather than "add 10 to balance".</p>
+
+<h4>Dead-letter queue and backpressure</h4>
+<ul>
+<li><b>Dead-letter queue (DLQ)</b> — after N failed attempts, a "poison" message is moved aside so it doesn't block the queue forever. Alert on it; inspect and replay later.</li>
+<li><b>Backpressure</b> — signalling upstream to slow down when consumers can't keep up. Options: bounded queue that rejects when full, rate-limit producers, auto-scale consumers on queue length, or shed low-priority work.</li>
+<li><b>Visibility timeout</b> (SQS) — a taken message is hidden for N seconds; if not acked in time, it reappears for another worker.</li>
+</ul>
+<div class="note"><b>Say this in the interview:</b> "The upload API just writes the job to a queue and returns 202 Accepted. Workers process at-least-once and are idempotent, keyed on the job ID. Failed jobs go to a dead-letter queue with an alert." That covers async, guarantees, idempotency and failure in four lines.</div>
+</section>
+
+<section id="s16">
+<h3>16. API Design &amp; Communication</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>An <b>API</b> (Application Programming Interface) is the contract for how one program talks to another: which requests are allowed, what they must contain, and what comes back.</p>
+<p>There are two questions: <b>what style</b> of API (REST, GraphQL, gRPC) and <b>how the conversation flows</b> (client asks each time, or server pushes updates).</p>
+<p class="analogy">A restaurant menu is an API. REST is a fixed menu of dishes. GraphQL is "build your own plate" — you list exactly what you want. gRPC is the kitchen's internal shorthand between chefs: fast and precise, but not meant for customers.</p></div>
+
+<h4>REST vs GraphQL vs gRPC</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>REST</th><th>GraphQL</th><th>gRPC</th></tr>
+<tr><td>Shape</td><td>Resources at URLs + HTTP verbs</td><td>One endpoint; client sends a query describing the fields it wants</td><td>Call remote functions defined in a <code>.proto</code> file</td></tr>
+<tr><td>Format</td><td>JSON (text)</td><td>JSON</td><td>Protocol Buffers (compact binary)</td></tr>
+<tr><td>Strengths</td><td>Simple, cacheable by HTTP, universal</td><td>No over-fetching or under-fetching; one round trip for nested data; great for varied clients</td><td>Very fast, strongly typed, streaming, code generation</td></tr>
+<tr><td>Weaknesses</td><td>Over/under-fetching; many round trips</td><td>Harder caching; expensive queries possible; more server complexity</td><td>Not browser-native; not human-readable</td></tr>
+<tr><td>Use for</td><td>Public APIs, most CRUD apps</td><td>Mobile + web apps with complex, changing UI needs</td><td>Internal service-to-service calls</td></tr>
+</table></div>
+<p><b>Over-fetching</b> = getting fields you don't need. <b>Under-fetching</b> = needing several calls to get everything.</p>
+
+<h4>Good REST habits</h4>
+<pre><code>GET    /api/v1/users/42/posts?limit=20&amp;cursor=abc   list a user's posts
+POST   /api/v1/posts                                create (201 Created)
+GET    /api/v1/posts/987                            read one
+PATCH  /api/v1/posts/987                            partial update
+DELETE /api/v1/posts/987                            delete (204 No Content)</code></pre>
+<ul>
+<li>Nouns in URLs, verbs are HTTP methods. Plural collections.</li>
+<li>Version the API (<code>/v1</code>) so you can change it without breaking old clients.</li>
+<li>Correct status codes: 200, 201, 204, 400 (bad input), 401 (who are you?), 403 (not allowed), 404, 409 (conflict), 429 (too many requests), 500, 503.</li>
+</ul>
+
+<h4>Polling vs long polling vs WebSockets vs SSE</h4>
+<div class="table-wrap"><table>
+<tr><th>Technique</th><th>How it works</th><th>Good</th><th>Bad</th><th>Use for</th></tr>
+<tr><td><b>Short polling</b></td><td>Client asks "anything new?" every N seconds</td><td>Dead simple</td><td>Wasteful; delay up to N seconds</td><td>Rare updates, simple dashboards</td></tr>
+<tr><td><b>Long polling</b></td><td>Client asks; server holds the request open until there's news (or timeout), then client asks again</td><td>Near real-time with plain HTTP</td><td>A connection held per client; reconnect overhead</td><td>Fallback when WebSockets aren't possible</td></tr>
+<tr><td><b>WebSockets</b></td><td>One persistent, two-way connection</td><td>Real-time both directions, low overhead</td><td>Stateful connections — harder to load-balance and scale</td><td>Chat, multiplayer games, collaborative editing</td></tr>
+<tr><td><b>Server-Sent Events (SSE)</b></td><td>One persistent, server-to-client stream over HTTP</td><td>Simple, auto-reconnect, works with HTTP infra</td><td>One direction only; text only</td><td>Live feeds, notifications, stock tickers, streaming AI responses</td></tr>
+<tr><td><b>Webhooks</b></td><td>Server calls <i>your</i> URL when something happens</td><td>No polling between servers</td><td>Receiver must be public and reliable</td><td>Payment events (Stripe), GitHub events</td></tr>
+</table></div>
+
+<h4>Pagination</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>Offset pagination</th><th>Cursor (keyset) pagination</th></tr>
+<tr><td>Request</td><td><code>?limit=20&amp;offset=40</code></td><td><code>?limit=20&amp;cursor=&lt;last id or timestamp&gt;</code></td></tr>
+<tr><td>Good</td><td>Simple; jump to page N</td><td>Fast at any depth; stable when new items arrive</td></tr>
+<tr><td>Bad</td><td>Slow for deep pages (DB still skips rows); items shift and duplicate when new ones are inserted</td><td>No "jump to page 50"</td></tr>
+<tr><td>Use for</td><td>Admin tables, small data</td><td>Feeds, infinite scroll, large datasets</td></tr>
+</table></div>
+
+<h4>Idempotency keys</h4>
+<p>Networks fail. A client sends "pay $50", the response is lost, the client retries — did we charge twice? An <b>idempotency key</b> is a unique ID the client generates and sends with the request (header <code>Idempotency-Key: 7f3a…</code>). The server stores the key with the result; a repeat with the same key returns the stored result instead of acting again.</p>
+<pre><code>POST /payments   Idempotency-Key: 7f3a9c   { amount: 50 }
+server: key seen before?  yes -&gt; return saved response
+                          no  -&gt; process, save (key -&gt; response) with a TTL, return</code></pre>
+<div class="note"><b>Say this in the interview:</b> "Public API is REST with cursor pagination; internal services talk gRPC. Real-time updates go over WebSockets. Any request that creates or charges something takes an idempotency key so client retries are safe."</div>
+</section>
+
+<section id="s17">
+<h3>17. Rate Limiting</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Rate limiting</b> caps how many requests a client can make in a time window — for example 100 requests per minute per user. Extra requests get <code>429 Too Many Requests</code>.</p>
+<p>It protects against abuse (scraping, brute-force password guessing), keeps one noisy customer from hurting everyone, and controls cost.</p>
+<p class="analogy">A nightclub bouncer letting in a set number of people per minute. The algorithms below are just different rules the bouncer can follow.</p></div>
+
+<h4>The algorithms</h4>
+<div class="table-wrap"><table>
+<tr><th>Algorithm</th><th>How it works</th><th>Good</th><th>Bad</th></tr>
+<tr><td><b>Token bucket</b></td><td>A bucket holds up to B tokens and refills at R per second. Each request takes a token; empty bucket = reject.</td><td>Allows short bursts (up to B), smooth average (R); tiny memory. Most popular (AWS, Stripe).</td><td>Two parameters to tune</td></tr>
+<tr><td><b>Leaky bucket</b></td><td>Requests enter a fixed-size queue that drains at a constant rate. Full = reject.</td><td>Perfectly smooth output rate; protects a fragile backend</td><td>Bursts are delayed or dropped; old requests can starve new ones</td></tr>
+<tr><td><b>Fixed window counter</b></td><td>Count per window (per minute, reset on the minute)</td><td>Simplest; one counter per user</td><td>Edge burst: 100 at 0:59 plus 100 at 1:00 = 200 in two seconds</td></tr>
+<tr><td><b>Sliding window log</b></td><td>Store the timestamp of every request; count those in the last 60 s</td><td>Exact</td><td>Memory heavy (one entry per request)</td></tr>
+<tr><td><b>Sliding window counter</b></td><td>Blend current and previous window counts: <code>prev x overlap% + current</code></td><td>Close to exact, cheap memory</td><td>An approximation (assumes even spread in the previous window)</td></tr>
+</table></div>
+<pre><code>Token bucket (per user), run on each request:
+  tokens = min(capacity, tokens + (now - last_refill) x rate)
+  last_refill = now
+  if tokens &gt;= 1: tokens -= 1; allow
+  else: reject with 429 and Retry-After header
+
+Sliding window counter example (limit 100/min):
+  previous minute: 80 requests, current minute: 30, we are 25% into it
+  estimate = 80 x 0.75 + 30 = 90   -&gt; allow (90 &lt; 100)</code></pre>
+
+<h4>Where to put it</h4>
+<ul>
+<li><b>Client side</b> — nice for UX, never trusted (easily bypassed).</li>
+<li><b>API gateway / load balancer / edge</b> — the usual place; rejects bad traffic before it costs you anything.</li>
+<li><b>In each service</b> — protects specific expensive endpoints.</li>
+<li><b>Distributed</b> — with many gateway servers, counters live in a shared <b>Redis</b> so all servers see the same count. Use atomic operations (<code>INCR</code> + <code>EXPIRE</code>, or a Lua script) to avoid race conditions.</li>
+</ul>
+
+<h4>What to limit by</h4>
+<p>User ID or API key (best), IP address (for anonymous traffic — but many users can share one IP), endpoint (login stricter than reads), and plan tier (free vs paid). Return headers such as <code>X-RateLimit-Limit</code>, <code>X-RateLimit-Remaining</code> and <code>Retry-After</code>.</p>
+<div class="note"><b>Say this in the interview:</b> "Token bucket at the API gateway, keyed by user ID, counters in Redis with an atomic Lua script. If Redis is unreachable I'd fail open — allow requests — so the limiter can't take the whole API down." (Fail <b>closed</b> instead for security-critical limits like login attempts.) Full case study in <a href="#s26">section 26</a>.</div>
+</section>
+
+<section id="s18">
+<h3>18. Blob / Object Storage &amp; File Uploads</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>blob</b> (binary large object) is any file: an image, video, PDF, backup. <b>Object storage</b> (Amazon S3, Google Cloud Storage, Azure Blob) stores blobs by key in <b>buckets</b>, is nearly unlimited, very durable (S3 advertises eleven nines, 99.999999999%), and cheap.</p>
+<p>Databases are bad at big files: they bloat backups, eat memory and slow queries. The rule is: <b>file in object storage, metadata (name, owner, size, key) in the database.</b></p>
+<p class="analogy">A cloakroom. You hand over a heavy coat (the file) and get a small ticket (the key). Your table only needs the ticket, not the coat.</p></div>
+
+<h4>Presigned URLs — upload straight to storage</h4>
+<p>Sending a 2 GB video through your app servers wastes their bandwidth and memory. Instead:</p>
+<ol>
+<li>Client asks your API: "I want to upload <code>video.mp4</code>, 2 GB".</li>
+<li>API checks permissions, creates a metadata row (status: <code>pending</code>), and asks S3 for a <b>presigned URL</b> — a temporary URL with a signature that allows exactly one upload to one key for, say, 15 minutes.</li>
+<li>Client uploads directly to S3 using that URL.</li>
+<li>S3 sends an event (or the client calls "upload complete"); the API marks the row <code>uploaded</code> and queues processing (thumbnails, virus scan, transcoding).</li>
+</ol>
+<p>Downloads work the same way: presigned GET URLs for private files, or a CDN in front of public ones.</p>
+
+<h4>Chunked (multipart) uploads</h4>
+<p>Big files are split into <b>chunks</b> (say 5–10 MB each) uploaded separately, even in parallel. If the network drops, only the failed chunk is retried — the upload is <b>resumable</b>. The server (S3 multipart upload) stitches them together at the end. Each chunk can carry a checksum (a short fingerprint of its contents) to detect corruption.</p>
+
+<h4>Storage classes</h4>
+<p>Hot (frequently read, standard price), infrequent access (cheaper storage, pay per read), and archive (Glacier: very cheap, hours to retrieve). <b>Lifecycle rules</b> move old files to cheaper classes automatically.</p>
+<div class="note"><b>Rule of thumb:</b> "Files never go through the app servers or into the database. Presigned URL for upload, multipart for anything over ~100 MB, metadata in SQL, CDN for downloads, async workers for processing."</div>
+</section>
+
+<section id="s19">
+<h3>19. Search</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><code>WHERE title LIKE '%phone%'</code> scans every row and can't rank results. Real search uses an <b>inverted index</b>: a map from each <b>word</b> to the list of documents containing it — the reverse of "document → words".</p>
+<p class="analogy">The index at the back of a cookbook: "garlic — pages 12, 45, 88". You don't read every recipe to find garlic; you look it up and go straight to the pages.</p></div>
+
+<h4>How an inverted index is built</h4>
+<pre><code>Doc 1: "Red running shoes"      Doc 2: "Blue shoes for running"   Doc 3: "Red dress"
+
+Tokenise, lowercase, stem ("running" -&gt; "run"), drop stop words ("for"):
+  red   -&gt; [1, 3]
+  run   -&gt; [1, 2]
+  shoe  -&gt; [1, 2]
+  blue  -&gt; [2]
+  dress -&gt; [3]
+
+Query "red shoes" -&gt; red [1,3]  AND  shoe [1,2]  -&gt; doc 1 (then rank)</code></pre>
+<p><b>Ranking</b> uses scores like <b>TF-IDF</b> / <b>BM25</b>: a word counts more if it appears often in this document (term frequency) but rarely across all documents (inverse document frequency) — "the" is worthless, "Bluetooth" is meaningful.</p>
+
+<h4>Elasticsearch / OpenSearch</h4>
+<ul>
+<li>A distributed search engine built on the Lucene library. Data is split into <b>shards</b> with replicas, across nodes.</li>
+<li>Supports full-text search, filters, fuzzy matching (typos), aggregations (facets like "brand: 12 results").</li>
+<li><b>Not the source of truth.</b> The main database is. Sync changes to the search index via a queue or CDC (change data capture) stream. The index is <b>near real-time</b> — searchable after about a second.</li>
+</ul>
+
+<h4>Typeahead with a trie</h4>
+<p>A <b>trie</b> (prefix tree) stores words letter by letter; every path from the root spells a prefix. To suggest completions for "ca", walk c → a and collect words below. Store the <b>top-k</b> most popular completions at each node so lookup is instant. Full design in <a href="#s34">section 34</a>.</p>
+<div class="note"><b>Say this in the interview:</b> "Postgres stays the source of truth. Changes flow through Kafka into Elasticsearch, which serves search queries. Results may lag by a second or two — acceptable for search." For small apps, mention Postgres full-text search is enough and avoids a new system.</div>
+</section>
+
+<!-- ================= ARCHITECTURE & OPERATIONS ================= -->
+<div class="part">Part 2 — Architecture &amp; Operations</div>
+
+<section id="s20">
+<h3>20. Monolith vs Microservices</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>monolith</b> is one application, deployed as one unit, containing all features. <b>Microservices</b> split the product into many small services (users, orders, payments), each owning its own data, deployed independently, talking over the network.</p>
+<p class="analogy">A monolith is one big department store: everything under one roof, easy to walk between departments, but renovating one floor disturbs everyone. Microservices are a street of specialist shops: each can renovate or open late independently, but you need roads, signs and delivery vans between them.</p></div>
+<div class="table-wrap"><table>
+<tr><th></th><th>Monolith</th><th>Microservices</th></tr>
+<tr><td>Development</td><td>Simple to start, one codebase</td><td>Each team owns a service</td></tr>
+<tr><td>Deploy</td><td>All or nothing</td><td>Independent, frequent</td></tr>
+<tr><td>Scaling</td><td>Scale the whole app</td><td>Scale just the hot service</td></tr>
+<tr><td>Calls between parts</td><td>Function calls (fast, reliable)</td><td>Network calls (slow, can fail)</td></tr>
+<tr><td>Data</td><td>One database, easy joins and transactions</td><td>Database per service; no cross-service joins; sagas for transactions</td></tr>
+<tr><td>Failure</td><td>A bug can take down everything</td><td>Failures isolated — if you add timeouts and circuit breakers</td></tr>
+<tr><td>Operations</td><td>Easy</td><td>Hard: tracing, discovery, many pipelines</td></tr>
+<tr><td>Best for</td><td>Small teams, early products</td><td>Many teams, large scale, parts with very different needs</td></tr>
+</table></div>
+<p>A <b>modular monolith</b> — one deployable, but with strict internal boundaries between modules — is often the best of both, and makes a later split easy.</p>
+
+<h4>The supporting pieces</h4>
+<ul>
+<li><b>API gateway</b> — the single front door for clients. It routes requests to the right service and handles cross-cutting jobs: authentication, rate limiting, TLS, request logging, response aggregation. Examples: Kong, AWS API Gateway, Nginx, Envoy. A <b>BFF</b> (Backend for Frontend) is a gateway tailored to one client type (mobile vs web).</li>
+<li><b>Service discovery</b> — services start and stop constantly, with changing IPs. A <b>service registry</b> (Consul, etcd, Eureka, or Kubernetes DNS) keeps the live list; callers look up "where is the payment service right now?"</li>
+<li><b>Service mesh</b> — a small proxy (a <b>sidecar</b>, e.g. Envoy) runs next to every service and handles networking: retries, timeouts, mutual TLS encryption, metrics, traffic splitting. The app code stays simple. Examples: Istio, Linkerd.</li>
+<li><b>Communication</b> — synchronous (REST/gRPC: caller waits) for queries that need an answer now; asynchronous (events via Kafka) for "something happened" notifications. Prefer async between services to reduce coupling.</li>
+</ul>
+<div class="note"><b>Say this in the interview:</b> "I'd start with a modular monolith and split out services only where there's a clear reason — a part that needs to scale separately, or a separate team." In a design interview it's fine to draw services as separate boxes, but show you know the costs: network failures, distributed data, and operational load.</div>
+</section>
+
+<section id="s21">
+<h3>21. Reliability Patterns</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>In a big system something is always broken: a disk, a server, a network link, a slow dependency. Reliability patterns make sure <b>one failure stays small</b> instead of spreading into a total outage (a <b>cascading failure</b>).</p>
+<p class="analogy">A ship is built with watertight compartments (bulkheads), spare lifeboats (redundancy), and a captain who stops sending crew into a flooded room (circuit breaker). A hole sinks one room, not the ship.</p></div>
+
+<h4>The patterns</h4>
+<div class="table-wrap"><table>
+<tr><th>Pattern</th><th>What it does</th><th>Watch out for</th></tr>
+<tr><td><b>Redundancy</b></td><td>Two or more of everything important, across availability zones (separate data centres in one region) or regions</td><td>Cost; keeping copies in sync</td></tr>
+<tr><td><b>Failover</b></td><td>Switch to the standby when the primary dies. <i>Active-passive</i>: standby idle until needed. <i>Active-active</i>: all copies serve traffic.</td><td>Detection time; split brain</td></tr>
+<tr><td><b>Timeouts</b></td><td>Never wait forever on a call; give up after e.g. 1–2 s</td><td>Too long = threads pile up; too short = false failures</td></tr>
+<tr><td><b>Retries with exponential backoff + jitter</b></td><td>Retry failed calls, waiting 100 ms, 200 ms, 400 ms… plus a random extra so clients don't retry in sync</td><td>Only retry idempotent operations and transient errors; cap attempts; retry storms</td></tr>
+<tr><td><b>Circuit breaker</b></td><td>After many failures, stop calling a broken dependency for a while; fail fast instead</td><td>Needs a sensible fallback</td></tr>
+<tr><td><b>Bulkhead</b></td><td>Separate resource pools (threads, connections) per dependency so one slow dependency can't use up everything</td><td>Tuning pool sizes</td></tr>
+<tr><td><b>Graceful degradation</b></td><td>Turn off non-essential features under stress: show cached recommendations, hide the "trending" box</td><td>Must be designed in advance</td></tr>
+<tr><td><b>Load shedding</b></td><td>When overloaded, reject some requests early (503) to protect the rest</td><td>Choose what to drop (low priority first)</td></tr>
+<tr><td><b>Health checks &amp; auto-restart</b></td><td>Remove and replace broken instances automatically</td><td>Distinguish "alive" from "ready"</td></tr>
+</table></div>
+
+<pre><code>Exponential backoff with jitter:
+  delay = min(cap, base x 2^attempt)
+  sleep(random(0, delay))        # "full jitter"
+
+  attempt 0: up to 100 ms, 1: up to 200 ms, 2: up to 400 ms, 3: up to 800 ms ... cap at 10 s</code></pre>
+
+<h4>Circuit breaker states</h4>
+<figure class="diagram">
+<svg viewBox="0 0 640 225" role="img" aria-label="Circuit breaker states: closed lets requests through; after failures pass a threshold it becomes open and fails fast; after a cool-down it becomes half-open and lets a test request through; success returns it to closed, failure returns it to open.">
+  <rect class="d-fill-accent" x="40" y="66" width="160" height="60" rx="8"/>
+  <rect class="d-box-accent" x="40" y="66" width="160" height="60" rx="8"/>
+  <text class="d-accent-text" x="120" y="90" text-anchor="middle">CLOSED</text>
+  <text class="d-sub" x="120" y="108" text-anchor="middle">requests flow normally</text>
+
+  <rect class="d-box" x="440" y="66" width="160" height="60" rx="8"/>
+  <text class="d-label" x="520" y="90" text-anchor="middle">OPEN</text>
+  <text class="d-sub" x="520" y="108" text-anchor="middle">fail fast, no calls made</text>
+
+  <rect class="d-box" x="240" y="150" width="160" height="56" rx="8"/>
+  <text class="d-label" x="320" y="172" text-anchor="middle">HALF-OPEN</text>
+  <text class="d-sub" x="320" y="190" text-anchor="middle">let one test call through</text>
+
+  <path class="d-line" d="M200 82 H434"/><path class="d-arrow" d="M440 82 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="320" y="74" text-anchor="middle">failures pass threshold (e.g. 50% in 10 s)</text>
+  <path class="d-line" d="M520 126 V178 H406"/><path class="d-arrow" d="M400 178 l9 -4.5 v9 z"/>
+  <text class="d-sub" x="528" y="152">after cool-down (30 s)</text>
+  <path class="d-line-accent" d="M240 178 H120 V132"/><path class="d-arrow-accent" d="M120 126 l-4.5 9 h9 z"/>
+  <text class="d-accent-text" x="132" y="196">test call succeeds</text>
+  <path class="d-dash" d="M370 150 V112 H434"/><path class="d-arrow" d="M440 112 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="378" y="140">test fails</text>
+</svg>
+<figcaption>Like the fuse box at home: when too many failures happen, the breaker trips so a broken dependency stops dragging the whole system down.</figcaption>
+</figure>
+<div class="note"><b>Say this in the interview:</b> "Every outbound call gets a timeout, bounded retries with exponential backoff and jitter — only for idempotent calls — and a circuit breaker with a fallback. That stops one slow dependency from cascading." Name all three together; they work as a set.</div>
+</section>
+
+<section id="s22">
+<h3>22. Distributed Systems Essentials</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Once data and work live on many machines, simple things become hard: making a unique ID, updating two databases together, deciding who's in charge, locking something, even agreeing what time it is. These are the standard answers.</p>
+<p class="analogy">A group project with members in different cities and no shared room. You need rules for numbering documents, for agreeing on decisions, for who holds the pen, and you can't trust everyone's watch.</p></div>
+
+<h4>Unique ID generation</h4>
+<div class="table-wrap"><table>
+<tr><th>Approach</th><th>How</th><th>Good</th><th>Bad</th></tr>
+<tr><td><b>DB auto-increment</b></td><td>The database hands out 1, 2, 3…</td><td>Simple, short, ordered</td><td>Single point of failure and bottleneck; doesn't work across shards (unless each shard steps by N: 1, 4, 7…)</td></tr>
+<tr><td><b>UUID v4</b></td><td>128-bit random number generated anywhere</td><td>No coordination at all</td><td>Long (36 chars); random order hurts B-tree index inserts; not sortable by time</td></tr>
+<tr><td><b>UUID v7 / ULID</b></td><td>Timestamp prefix + randomness</td><td>No coordination and roughly time-sortable</td><td>Still 128 bits</td></tr>
+<tr><td><b>Snowflake</b> (Twitter)</td><td>64-bit: 41 bits timestamp (ms) + 10 bits machine ID + 12 bits sequence</td><td>Compact, time-sortable, ~4096 IDs per ms per machine, no coordination per ID</td><td>Needs unique machine IDs; clock going backwards causes trouble</td></tr>
+<tr><td><b>Ticket server / range allocation</b></td><td>A central service hands out blocks (IDs 1–1000 to server A)</td><td>Short IDs, little coordination</td><td>Central service must be highly available</td></tr>
+</table></div>
+
+<h4>Distributed transactions: 2PC vs saga</h4>
+<p>Placing an order might need to charge payment (payment service), reserve stock (inventory service) and create the order (order service) — three databases. How do they succeed or fail together?</p>
+<div class="table-wrap"><table>
+<tr><th></th><th>Two-phase commit (2PC)</th><th>Saga</th></tr>
+<tr><td>How</td><td>A coordinator asks everyone "can you commit?" (prepare). If all say yes, it says "commit"; if anyone says no, "abort".</td><td>A sequence of local transactions. If a step fails, run <b>compensating actions</b> to undo earlier steps (refund, release stock).</td></tr>
+<tr><td>Consistency</td><td>Strong (atomic)</td><td>Eventual; intermediate states are visible</td></tr>
+<tr><td>Availability</td><td>Blocking: if the coordinator dies mid-way, participants hold locks and wait</td><td>Non-blocking, services stay independent</td></tr>
+<tr><td>Styles</td><td>—</td><td><b>Choreography</b>: each service reacts to events. <b>Orchestration</b>: a central orchestrator tells each step what to do.</td></tr>
+<tr><td>Use for</td><td>Few participants, same data centre, strict needs</td><td>Microservices, long-running business flows</td></tr>
+</table></div>
+<p>The <b>outbox pattern</b> solves "update my DB and publish an event" atomically: write the event into an <code>outbox</code> table in the same local transaction, and a separate process publishes outbox rows to the queue.</p>
+
+<h4>Leader election and consensus (Raft in plain words)</h4>
+<p><b>Consensus</b> means several machines agreeing on one value (who is leader, what the next log entry is) even if some crash. <b>Raft</b> is the most common algorithm:</p>
+<ol>
+<li>Every node starts as a <b>follower</b>. The leader sends regular heartbeats.</li>
+<li>If a follower hears nothing for a random timeout, it becomes a <b>candidate</b>, increases the <b>term</b> (election number) and asks others for votes.</li>
+<li>A candidate that gets votes from a <b>majority</b> becomes leader for that term. Majority means only one leader per term is possible.</li>
+<li>The leader receives writes, appends them to its log, and copies them to followers. An entry is <b>committed</b> once a majority has it.</li>
+<li>That's why clusters have an odd number of nodes: 3 nodes survive 1 failure, 5 survive 2.</li>
+</ol>
+<p>You rarely implement Raft; you use a system built on it: <b>etcd</b>, <b>Consul</b>, or <b>ZooKeeper</b> (which uses a similar protocol, ZAB). Paxos is the older, harder-to-explain relative.</p>
+
+<h4>Distributed locks</h4>
+<p>A <b>distributed lock</b> makes sure only one process across many machines does something at a time (e.g. only one worker processes a given payment).</p>
+<ul>
+<li><b>Redis</b>: <code>SET lock:order42 &lt;owner&gt; NX PX 30000</code> — set only if not exists, auto-expire in 30 s. Release only if you're still the owner. Simple, but not perfectly safe during failovers.</li>
+<li><b>ZooKeeper / etcd</b>: consensus-backed, safer, slower.</li>
+<li><b>Fencing tokens</b>: the lock service hands out an increasing number with each lock; the storage rejects writes with an old number. Protects against a paused process that wakes up thinking it still holds the lock.</li>
+<li>Often better: avoid locks with <b>optimistic concurrency</b> — a version column, <code>UPDATE … WHERE version = 7</code>; if 0 rows change, someone else won, retry.</li>
+</ul>
+
+<h4>Clocks</h4>
+<p>Machine clocks drift and can jump (NTP corrections), so "compare timestamps from two machines" is unreliable for ordering events.</p>
+<ul>
+<li><b>Lamport clocks</b> — a counter each node increments and attaches to messages; gives a consistent order of cause and effect.</li>
+<li><b>Vector clocks</b> — one counter per node; can tell whether two events are ordered or truly concurrent (a conflict).</li>
+<li><b>TrueTime</b> (Google Spanner) — GPS and atomic clocks with a known error bound; waits out the uncertainty to give global ordering.</li>
+</ul>
+<div class="note"><b>Rule of thumb:</b> Snowflake-style IDs for sortable unique IDs; sagas plus the outbox pattern for cross-service workflows; etcd/ZooKeeper when you need a leader; optimistic locking before distributed locks; never trust wall-clock time to order events across machines.</div>
+</section>
+
+<section id="s23">
+<h3>23. Observability</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Observability</b> is how well you can tell what's happening inside the system from the outside — especially <i>why</i> something is broken. It rests on three "pillars": <b>logs</b>, <b>metrics</b> and <b>traces</b>.</p>
+<p class="analogy">A hospital patient: metrics are the heart-rate monitor (numbers over time), logs are the nurse's notes (what happened, when), and a trace is following one blood sample through every lab it visits.</p></div>
+<div class="table-wrap"><table>
+<tr><th>Pillar</th><th>What it is</th><th>Answers</th><th>Tools</th></tr>
+<tr><td><b>Logs</b></td><td>Timestamped records of events, ideally structured (JSON) with a request ID</td><td>"What exactly happened to this request?"</td><td>ELK (Elasticsearch, Logstash, Kibana), Loki, Datadog</td></tr>
+<tr><td><b>Metrics</b></td><td>Numbers over time: request rate, error rate, latency percentiles, CPU, queue depth</td><td>"Is something wrong right now? Since when?"</td><td>Prometheus + Grafana, CloudWatch</td></tr>
+<tr><td><b>Traces</b></td><td>The path of one request across services, with timing for each step (spans)</td><td>"Which service made this slow?"</td><td>OpenTelemetry, Jaeger, Zipkin</td></tr>
+</table></div>
+<p><b>What to measure:</b> the <b>RED</b> method for services — <b>R</b>ate, <b>E</b>rrors, <b>D</b>uration. The four <b>golden signals</b> (Google SRE): latency, traffic, errors, saturation (how full a resource is).</p>
+
+<h4>SLI, SLO, SLA</h4>
+<div class="table-wrap"><table>
+<tr><th>Term</th><th>Meaning</th><th>Example</th></tr>
+<tr><td><b>SLI</b> — Service Level Indicator</td><td>The measurement</td><td>% of requests answered successfully in under 300 ms</td></tr>
+<tr><td><b>SLO</b> — Service Level Objective</td><td>The internal target for the SLI</td><td>99.9% of requests under 300 ms, over 30 days</td></tr>
+<tr><td><b>SLA</b> — Service Level Agreement</td><td>A promise to customers, with penalties</td><td>99.5% uptime or we refund 10%</td></tr>
+</table></div>
+<p>SLA is looser than SLO so you get warned before you owe money. The gap between 100% and the SLO is the <b>error budget</b>: if you have budget left, ship features fast; if it's used up, focus on reliability.</p>
+
+<h4>Alerting</h4>
+<ul>
+<li>Alert on <b>symptoms users feel</b> (error rate, latency SLO burn), not every CPU spike.</li>
+<li>Every alert must be <b>actionable</b>, with a <b>runbook</b> (step-by-step fix guide). Noisy alerts get ignored.</li>
+<li>Pages (wake someone up) for urgent user impact; tickets for everything else.</li>
+</ul>
+<div class="note"><b>Say this in the interview:</b> "Each service emits structured logs with a request ID, RED metrics to Prometheus, and OpenTelemetry traces. We alert on SLO burn rate — for example, error rate eating the monthly budget too fast — with a runbook per alert." Mention this in the wrap-up of every design.</div>
+</section>
+
+<section id="s24">
+<h3>24. Security in Design</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Authentication</b> (authn) answers "who are you?". <b>Authorisation</b> (authz) answers "what are you allowed to do?". Security in system design is about putting the right checks at the right boxes in your diagram, and protecting data both when it moves and when it sits still.</p>
+<p class="analogy">A hotel: showing your passport at the front desk is authentication. Your key card only opening your own room (and the gym) is authorisation.</p></div>
+
+<h4>Authentication and authorisation</h4>
+<ul>
+<li><b>Sessions</b> — server stores a session in Redis; the browser holds a random session ID in a cookie. Easy to revoke.</li>
+<li><b>JWT</b> (JSON Web Token) — a signed token containing the user ID and claims. Any service can verify it without a database lookup (stateless). Hard to revoke before it expires, so keep access tokens short-lived (15 min) with a <b>refresh token</b> to get new ones.</li>
+<li><b>OAuth 2.0</b> — a standard for letting one app access another on a user's behalf ("Sign in with Google", "allow this app to read your calendar") without sharing the password. <b>OpenID Connect</b> adds login (identity) on top.</li>
+<li><b>Authorisation models</b> — <b>RBAC</b> (role-based: admin, editor, viewer) and <b>ABAC</b> (attribute-based: "owner of the document, in the same org"). Always check ownership on the server: "can user 7 read order 42?"</li>
+<li>In microservices, authenticate once at the API gateway, pass a verified identity (token) inward; services still authorise.</li>
+</ul>
+
+<h4>Protecting data</h4>
+<ul>
+<li><b>In transit</b> — <b>HTTPS/TLS</b> everywhere. TLS encrypts traffic and proves the server's identity via a certificate. Inside the network, <b>mutual TLS</b> (mTLS: both sides show certificates) between services, often via a service mesh.</li>
+<li><b>At rest</b> — disks, databases and backups encrypted (AES-256), with keys in a <b>KMS</b> (Key Management Service).</li>
+<li><b>Passwords</b> — never stored; hash with bcrypt/argon2.</li>
+<li><b>Secrets</b> (API keys, DB passwords) — in a secrets manager (Vault, AWS Secrets Manager), never in code or logs; rotate them.</li>
+<li><b>Least privilege</b> — every service and person gets only the access it needs.</li>
+<li><b>PII</b> (personally identifiable information) — minimise, mask in logs, respect laws like GDPR (data residency, right to deletion).</li>
+</ul>
+
+<h4>Attacks to name</h4>
+<div class="table-wrap"><table>
+<tr><th>Threat</th><th>Defence</th></tr>
+<tr><td><b>DDoS</b> (Distributed Denial of Service — a flood of traffic from many machines)</td><td>CDN / edge protection (Cloudflare, AWS Shield), rate limiting, auto-scaling, WAF</td></tr>
+<tr><td>SQL injection</td><td>Parameterised queries</td></tr>
+<tr><td>XSS (injected scripts in pages)</td><td>Escape output, Content-Security-Policy</td></tr>
+<tr><td>CSRF (tricking a logged-in browser into sending a request)</td><td>SameSite cookies, CSRF tokens</td></tr>
+<tr><td>Brute-force login</td><td>Strict rate limits, lockouts, MFA</td></tr>
+<tr><td>Broken access control (reading other users' data by changing an ID)</td><td>Server-side ownership checks on every request</td></tr>
+</table></div>
+<p>A <b>WAF</b> (Web Application Firewall) filters known-bad request patterns at the edge.</p>
+<div class="note"><b>Say this in the interview:</b> "TLS everywhere and mTLS between services, encryption at rest with KMS-managed keys, auth at the gateway with short-lived JWTs, per-request ownership checks, secrets in a vault, and a CDN with DDoS protection at the edge." One sentence, and security is covered in your wrap-up.</div>
+</section>
+
+<!-- ================= CASE STUDIES ================= -->
+<div class="part">Part 3 — Case Studies</div>
+
+<div class="note"><b>How to use these.</b> Every case study follows the same eight steps as the framework in <a href="#s2">section 2</a>: Requirements → Estimates → API → Data model → High-level design → Deep dives → Bottlenecks &amp; trade-offs → Summary to say out loud. Learn the <i>shape</i>, not the exact numbers. In the interview, the same shape works for questions you have never seen.</div>
+
+<section id="s25">
+<h3>25. URL Shortener (TinyURL / bit.ly)</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Turn a long link into a short one like <code>sho.rt/aZ3k9</code>. When someone opens the short link, send them to the long one.</p>
+<p>It looks tiny, but it tests the basics: ID generation, a read-heavy workload, caching and redirects.</p>
+<p class="analogy">A cloakroom ticket. You hand over a big coat (the long URL), you get a small ticket (the short code). Show the ticket later and you get the coat back.</p></div>
+
+<h4>1. Requirements</h4>
+<ul>
+<li><b>Functional:</b> create a short URL from a long URL; redirect short → long; optional custom alias; optional expiry.</li>
+<li><b>Non-functional:</b> redirects must be very fast (&lt; 50 ms) and highly available; short codes must be unique and hard to guess in order; reads far outnumber writes (about 100 : 1).</li>
+</ul>
+
+<h4>2. Estimates</h4>
+<pre><code>New URLs:     100M per month  → ~40 writes/sec  (peak ~200)
+Redirects:    100 × writes    → ~4,000 reads/sec (peak ~20,000)
+Storage:      100M × 12 months × 5 years = 6B rows
+              6B × ~500 bytes ≈ 3 TB   (fits a small sharded DB)
+Code length:  base62 (a–z, A–Z, 0–9) → 62^7 ≈ 3.5 trillion codes
+              7 characters is plenty</code></pre>
+
+<h4>3. API</h4>
+<pre><code>POST /api/urls        { longUrl, customAlias?, expiresAt? }  → 201 { shortUrl }
+GET  /{code}          → 301/302 redirect to longUrl, or 404
+DELETE /api/urls/{code}                                        → 204</code></pre>
+
+<h4>4. Data model</h4>
+<pre><code>urls
+  code        VARCHAR(10)  PRIMARY KEY   -- "aZ3k9x1"
+  long_url    TEXT
+  user_id     BIGINT
+  created_at  TIMESTAMP
+  expires_at  TIMESTAMP NULL</code></pre>
+<p>A key-value lookup by <code>code</code> is the only hot query, so either a SQL table or a key-value store (DynamoDB, Cassandra) works.</p>
+
+<h4>5. High-level design</h4>
+<figure class="diagram">
+<svg viewBox="0 0 640 270" role="img" aria-label="URL shortener: clients go through a load balancer to stateless app servers. Writes get an ID from an ID generator, encode it to base62 and store it in the database. Reads check a Redis cache first and fall back to the database, then return a redirect.">
+  <rect class="d-box-accent" x="14" y="104" width="90" height="46" rx="7"/>
+  <text class="d-accent-text" x="59" y="131" text-anchor="middle">Client</text>
+
+  <rect class="d-box" x="134" y="104" width="100" height="46" rx="7"/>
+  <text class="d-label" x="184" y="124" text-anchor="middle">Load</text>
+  <text class="d-label" x="184" y="140" text-anchor="middle">balancer</text>
+
+  <rect class="d-fill-accent" x="266" y="92" width="130" height="70" rx="8"/>
+  <rect class="d-box-accent" x="266" y="92" width="130" height="70" rx="8"/>
+  <text class="d-accent-text" x="331" y="116" text-anchor="middle">App servers</text>
+  <text class="d-sub" x="331" y="134" text-anchor="middle">stateless</text>
+  <text class="d-sub" x="331" y="150" text-anchor="middle">encode base62</text>
+
+  <rect class="d-box" x="440" y="20" width="180" height="46" rx="7"/>
+  <text class="d-label" x="530" y="40" text-anchor="middle">ID generator</text>
+  <text class="d-sub" x="530" y="56" text-anchor="middle">counter ranges / Snowflake</text>
+
+  <rect class="d-box" x="440" y="104" width="180" height="46" rx="7"/>
+  <text class="d-label" x="530" y="124" text-anchor="middle">Redis cache</text>
+  <text class="d-sub" x="530" y="140" text-anchor="middle">code → long URL (hot)</text>
+
+  <rect class="d-box" x="440" y="188" width="180" height="46" rx="7"/>
+  <text class="d-label" x="530" y="208" text-anchor="middle">Database</text>
+  <text class="d-sub" x="530" y="224" text-anchor="middle">sharded by code</text>
+
+  <path class="d-line" d="M104 127 H128"/><path class="d-arrow" d="M134 127 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M234 127 H260"/><path class="d-arrow" d="M266 127 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M396 105 H418 V43 H434"/><path class="d-arrow" d="M440 43 l-9 -4.5 v9 z"/>
+  <path class="d-line-accent" d="M396 127 H434"/><path class="d-arrow-accent" d="M440 127 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M396 149 H418 V211 H434"/><path class="d-arrow" d="M440 211 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="331" y="254" text-anchor="middle">read path: cache hit → redirect; miss → DB → fill cache → redirect</text>
+</svg>
+<figcaption>Writes need a unique ID; reads are a single key lookup served mostly from cache.</figcaption>
+</figure>
+
+<h4>6. Deep dives</h4>
+<ul>
+<li><b>Generating the code.</b> Three options:
+  <ul>
+  <li><b>Hash the long URL</b> (MD5, take 7 chars) — simple, but collisions need a check-and-retry, and the same URL always gives the same code.</li>
+  <li><b>Counter + base62</b> — a unique number (e.g. 125) becomes a short string. No collisions. Give each app server a <i>range</i> of numbers (1–1M, 1M–2M…) from a coordinator like ZooKeeper so they never clash and never wait.</li>
+  <li><b>Random 7 chars</b> — check the DB for a clash; fine because clashes are rare in 3.5 trillion.</li>
+  </ul>
+  Counter ranges are the usual best answer. Mention that sequential codes are guessable; shuffle the bits if that matters.</li>
+<li><b>301 vs 302.</b> <code>301</code> (permanent) lets browsers cache the redirect — less load, but you lose click analytics. <code>302</code> (temporary) sends every click through you — more load, but you can count clicks.</li>
+<li><b>Caching.</b> A small fraction of links get most clicks. Cache-aside in Redis with LRU eviction handles most reads.</li>
+<li><b>Analytics.</b> Don't slow the redirect down. Push a click event onto a queue (Kafka) and count it asynchronously.</li>
+<li><b>Expiry.</b> Check <code>expires_at</code> on read, and clean up with a background job.</li>
+</ul>
+
+<h4>7. Bottlenecks &amp; trade-offs</h4>
+<div class="table-wrap"><table>
+<tr><th>Concern</th><th>Answer</th></tr>
+<tr><td>Hot links</td><td>Cache + CDN edge redirects</td></tr>
+<tr><td>DB growth</td><td>Shard by hash of code</td></tr>
+<tr><td>ID coordinator down</td><td>Servers hold a pre-fetched range, so they keep working for a while</td></tr>
+<tr><td>Abuse / spam links</td><td>Rate-limit creation per user/IP; scan URLs against blocklists</td></tr>
+</table></div>
+
+<div class="note"><b>Say this out loud:</b> "It's a read-heavy key-value problem. I'll generate codes from a counter encoded in base62, with each server taking ID ranges so there are no collisions. Redirects hit a Redis cache first, then a DB sharded by code. I'll use 302 if we need analytics, and send click events to Kafka so the redirect stays fast."</div>
+</section>
+
+<section id="s26">
+<h3>26. Rate Limiter as a Service</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Limit how many requests a user (or IP, or API key) can make in a period — for example 100 per minute. Extra requests get <code>429 Too Many Requests</code>.</p>
+<p>The hard part isn't the algorithm (see <a href="#s17">section 17</a>). It's making the count <b>shared and fast</b> across many servers.</p>
+<p class="analogy">A club with a strict headcount. Every door (server) must check the <i>same</i> clicker counter, or each door lets in its own 100 people.</p></div>
+
+<h4>1. Requirements</h4>
+<ul>
+<li><b>Functional:</b> limit by user, IP or API key; different rules per endpoint; return 429 with a <code>Retry-After</code> header.</li>
+<li><b>Non-functional:</b> adds &lt; 5 ms per request; works across many servers; if the limiter fails, the API must still work (<b>fail open</b>).</li>
+</ul>
+
+<h4>2. Estimates</h4>
+<pre><code>API traffic:  50,000 req/sec  → 50,000 counter checks/sec
+Keys:         10M active users × ~50 bytes ≈ 500 MB   (fits in Redis memory)</code></pre>
+
+<h4>3. API / interface</h4>
+<pre><code>// internal call from the gateway, or a middleware in each service
+isAllowed(key = "user:42:/api/search", rule = { limit: 100, window: 60s })
+  → { allowed: true, remaining: 57, resetAt: 1727340060 }
+
+HTTP response headers:
+  X-RateLimit-Limit: 100
+  X-RateLimit-Remaining: 57
+  Retry-After: 12          (only on 429)</code></pre>
+
+<h4>4. Data model</h4>
+<pre><code>Redis key:   rl:{userId}:{endpoint}:{windowStart}   → count   (TTL = window)
+Rules:       stored in a config DB / file, cached in each gateway</code></pre>
+
+<h4>5. High-level design</h4>
+<figure class="diagram">
+<svg viewBox="0 0 640 230" role="img" aria-label="Rate limiter: requests reach the API gateway, which runs rate-limit middleware. The middleware atomically increments a counter in a shared Redis cluster. If under the limit the request goes to the backend services; if over, the gateway returns 429. Rules are loaded from a rules store.">
+  <rect class="d-box-accent" x="14" y="80" width="90" height="46" rx="7"/>
+  <text class="d-accent-text" x="59" y="107" text-anchor="middle">Client</text>
+
+  <rect class="d-fill-accent" x="150" y="66" width="170" height="74" rx="8"/>
+  <rect class="d-box-accent" x="150" y="66" width="170" height="74" rx="8"/>
+  <text class="d-accent-text" x="235" y="90" text-anchor="middle">API gateway</text>
+  <text class="d-sub" x="235" y="108" text-anchor="middle">rate-limit middleware</text>
+  <text class="d-sub" x="235" y="125" text-anchor="middle">rules cached locally</text>
+
+  <rect class="d-box" x="400" y="20" width="220" height="46" rx="7"/>
+  <text class="d-label" x="510" y="40" text-anchor="middle">Redis cluster</text>
+  <text class="d-sub" x="510" y="56" text-anchor="middle">INCR + EXPIRE in a Lua script</text>
+
+  <rect class="d-box" x="400" y="140" width="220" height="46" rx="7"/>
+  <text class="d-label" x="510" y="160" text-anchor="middle">Backend services</text>
+  <text class="d-sub" x="510" y="176" text-anchor="middle">only allowed requests</text>
+
+  <rect class="d-box" x="150" y="170" width="170" height="40" rx="7"/>
+  <text class="d-sub" x="235" y="195" text-anchor="middle">Rules store (config)</text>
+
+  <path class="d-line" d="M104 103 H144"/><path class="d-arrow" d="M150 103 l-9 -4.5 v9 z"/>
+  <path class="d-line-accent" d="M320 80 H370 V43 H394"/><path class="d-arrow-accent" d="M400 43 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M320 125 H370 V163 H394"/><path class="d-arrow" d="M400 163 l-9 -4.5 v9 z"/>
+  <path class="d-dash" d="M235 170 V146"/>
+  <text class="d-accent-text" x="60" y="160" text-anchor="middle">over limit</text>
+  <text class="d-accent-text" x="60" y="178" text-anchor="middle">→ 429</text>
+</svg>
+<figcaption>All gateways share one counter store, so the limit is global rather than per server.</figcaption>
+</figure>
+
+<h4>6. Deep dives</h4>
+<ul>
+<li><b>Algorithm choice.</b> Token bucket allows short bursts and is the most common answer. Sliding-window counter is accurate and cheap. Fixed window is simplest but lets through 2× at window edges.</li>
+<li><b>Race conditions.</b> Two servers read "99", both allow, the count ends at 101. Fix: do read-and-increment atomically — Redis <code>INCR</code>, or a Lua script that runs as one step.</li>
+<li><b>Latency.</b> One Redis round trip is ~1 ms. For extreme scale, keep a small local counter and sync to Redis every few hundred ms — slightly inaccurate, much faster.</li>
+<li><b>Failure.</b> If Redis is down, <b>fail open</b> (allow requests) for normal APIs; <b>fail closed</b> for things like login attempts or payments.</li>
+<li><b>Where to put it.</b> At the API gateway for global rules; inside a service for business rules ("3 password resets per hour").</li>
+</ul>
+
+<h4>7. Bottlenecks &amp; trade-offs</h4>
+<div class="table-wrap"><table>
+<tr><th>Choice</th><th>Gain</th><th>Cost</th></tr>
+<tr><td>Central Redis</td><td>Accurate global limit</td><td>Extra network hop; Redis must be highly available</td></tr>
+<tr><td>Local counters + sync</td><td>Near-zero latency</td><td>Can overshoot the limit slightly</td></tr>
+<tr><td>Fail open</td><td>API stays up</td><td>No protection during the outage</td></tr>
+</table></div>
+
+<div class="note"><b>Say this out loud:</b> "A token-bucket limiter in the API gateway, with counters in a shared Redis cluster updated atomically by a Lua script. Rules are cached in each gateway. Over-limit requests get 429 with Retry-After. If Redis fails we fail open for normal endpoints and closed for sensitive ones like login."</div>
+</section>
+
+<section id="s27">
+<h3>27. Chat App (WhatsApp / Messenger)</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Users send messages one-to-one and in groups. Messages should arrive instantly when the receiver is online, and be waiting for them when they come back online.</p>
+<p>The key ideas: a <b>persistent connection</b> (WebSocket) to push messages, a way to find <i>which server</i> a user is connected to, and <b>durable storage</b> so nothing is lost.</p>
+<p class="analogy">A postal service with phone lines. If your friend is on the phone (online), the operator reads the letter to them right away. If not, the letter waits in their mailbox.</p></div>
+
+<h4>1. Requirements</h4>
+<ul>
+<li><b>Functional:</b> 1:1 and group chat (up to ~500 members); sent / delivered / read ticks; online status and last seen; message history on any device; media (images, video).</li>
+<li><b>Non-functional:</b> low latency (&lt; 200 ms delivery when online); messages never lost; messages in order within a chat; very high availability.</li>
+</ul>
+
+<h4>2. Estimates</h4>
+<pre><code>Users:       500M daily active
+Messages:    40 per user per day → 20B/day → ~230,000 msg/sec (peak ~1M)
+Storage:     20B × 100 bytes ≈ 2 TB of text per day
+Connections: ~100M concurrent WebSockets; ~50K per server → ~2,000 chat servers</code></pre>
+
+<h4>3. API</h4>
+<pre><code>WebSocket (persistent):
+  → send     { chatId, clientMsgId, text }
+  ← ack      { clientMsgId, msgId, timestamp }
+  ← message  { chatId, msgId, from, text, timestamp }
+  → receipt  { msgId, status: "delivered" | "read" }
+
+REST:
+  GET  /chats/{chatId}/messages?before={msgId}&amp;limit=50   (history, paginated)
+  POST /media  → presigned upload URL</code></pre>
+
+<h4>4. Data model</h4>
+<pre><code>messages  (Cassandra — partition key = chat_id, clustering key = msg_id)
+  chat_id, msg_id (time-ordered, e.g. Snowflake), sender_id, body, created_at
+
+chats            chat_id, type (direct | group), members
+user_inbox       user_id → undelivered msg_ids   (for offline users)
+presence (Redis) user_id → { chatServerId, lastSeen }</code></pre>
+<p>Cassandra (wide-column) fits because the main query is "latest messages of chat X", writes are huge, and it scales horizontally.</p>
+
+<h4>5. High-level design</h4>
+<figure class="diagram">
+<svg viewBox="0 0 640 280" role="img" aria-label="Chat app: sender and receiver each hold a WebSocket to a chat server. The sender's chat server stores the message in Cassandra, looks up the receiver's server in the presence store in Redis, and forwards the message through a message queue to the receiver's chat server, which pushes it down the receiver's WebSocket. If the receiver is offline, a push notification service is triggered.">
+  <rect class="d-box-accent" x="14" y="30" width="96" height="44" rx="7"/>
+  <text class="d-accent-text" x="62" y="57" text-anchor="middle">Sender</text>
+  <rect class="d-box-accent" x="530" y="30" width="96" height="44" rx="7"/>
+  <text class="d-accent-text" x="578" y="57" text-anchor="middle">Receiver</text>
+
+  <rect class="d-box" x="130" y="24" width="130" height="56" rx="7"/>
+  <text class="d-label" x="195" y="47" text-anchor="middle">Chat server A</text>
+  <text class="d-sub" x="195" y="64" text-anchor="middle">holds WebSocket</text>
+  <rect class="d-box" x="380" y="24" width="130" height="56" rx="7"/>
+  <text class="d-label" x="445" y="47" text-anchor="middle">Chat server B</text>
+  <text class="d-sub" x="445" y="64" text-anchor="middle">holds WebSocket</text>
+
+  <rect class="d-fill-accent" x="270" y="24" width="100" height="56" rx="7"/>
+  <rect class="d-box-accent" x="270" y="24" width="100" height="56" rx="7"/>
+  <text class="d-accent-text" x="320" y="47" text-anchor="middle">Queue</text>
+  <text class="d-sub" x="320" y="64" text-anchor="middle">Kafka</text>
+
+  <rect class="d-box" x="100" y="140" width="190" height="46" rx="7"/>
+  <text class="d-label" x="195" y="160" text-anchor="middle">Message store</text>
+  <text class="d-sub" x="195" y="176" text-anchor="middle">Cassandra, by chat_id</text>
+
+  <rect class="d-box" x="310" y="140" width="190" height="46" rx="7"/>
+  <text class="d-label" x="405" y="160" text-anchor="middle">Presence (Redis)</text>
+  <text class="d-sub" x="405" y="176" text-anchor="middle">user → which chat server</text>
+
+  <rect class="d-box" x="310" y="214" width="190" height="46" rx="7"/>
+  <text class="d-label" x="405" y="234" text-anchor="middle">Push notifications</text>
+  <text class="d-sub" x="405" y="250" text-anchor="middle">APNs / FCM if offline</text>
+
+  <path class="d-line-accent" d="M110 52 H124"/><path class="d-arrow-accent" d="M130 52 l-9 -4.5 v9 z"/>
+  <path class="d-line-accent" d="M260 52 H264"/><path class="d-arrow-accent" d="M270 52 l-7 -4 v8 z"/>
+  <path class="d-line-accent" d="M370 52 H374"/><path class="d-arrow-accent" d="M380 52 l-7 -4 v8 z"/>
+  <path class="d-line-accent" d="M510 52 H524"/><path class="d-arrow-accent" d="M530 52 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M195 80 V134"/><path class="d-arrow" d="M195 140 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M240 80 V110 H405 V134"/><path class="d-arrow" d="M405 140 l-4.5 -9 h9 z"/>
+  <path class="d-dash" d="M500 163 H560 V237 H506"/>
+  <text class="d-sub" x="566" y="205">offline</text>
+</svg>
+<figcaption>Save first, then deliver. The presence store tells server A which server holds the receiver's connection.</figcaption>
+</figure>
+
+<h4>6. Deep dives</h4>
+<ul>
+<li><b>Send flow.</b> (1) Sender's app sends over WebSocket with a <code>clientMsgId</code>. (2) Server A stores the message in Cassandra, then acks the sender (one grey tick). (3) Server A looks up the receiver in presence. (4) If online, it routes the message via the queue to server B, which pushes it; the receiver's app sends a "delivered" receipt (two ticks). (5) If offline, the message stays in the receiver's inbox and a push notification is sent.</li>
+<li><b>Why WebSockets.</b> The server needs to <i>push</i> to the client. Polling wastes battery and bandwidth; a WebSocket is one long-lived two-way connection.</li>
+<li><b>Ordering.</b> Use a per-chat, time-ordered ID (Snowflake) and sort by it. Kafka partitioned by <code>chat_id</code> keeps one chat's messages in order.</li>
+<li><b>Duplicates.</b> Networks retry. The <code>clientMsgId</code> is an idempotency key — if the server has already stored it, just ack again.</li>
+<li><b>Groups.</b> For small groups, fan out: write the message once, deliver to each online member's server. For huge groups/channels, members pull instead.</li>
+<li><b>Presence.</b> The app sends a heartbeat every ~30 s; if heartbeats stop, the user is marked offline after a timeout. Only broadcast presence to contacts who have the chat open, or it floods the system.</li>
+<li><b>Media.</b> Upload directly to object storage with a presigned URL; the message only carries the file link.</li>
+<li><b>End-to-end encryption</b> (Signal protocol): the server only stores and forwards ciphertext it cannot read. Mention it; don't design the crypto.</li>
+</ul>
+
+<h4>7. Bottlenecks &amp; trade-offs</h4>
+<div class="table-wrap"><table>
+<tr><th>Concern</th><th>Answer</th></tr>
+<tr><td>A chat server dies</td><td>Clients reconnect (via LB) to another server; presence updates; undelivered messages are still in the store</td></tr>
+<tr><td>Millions of connections</td><td>Chat servers only hold connections; keep them light; scale horizontally</td></tr>
+<tr><td>Hot group chats</td><td>Pull model for very large groups</td></tr>
+<tr><td>Multi-device</td><td>Each device has its own connection and its own "last synced msg_id"</td></tr>
+</table></div>
+
+<div class="note"><b>Say this out loud:</b> "Clients keep a WebSocket to a stateless-ish chat server. A message is stored in Cassandra partitioned by chat_id first, then acked, then routed: presence in Redis tells us which server holds the receiver, and Kafka carries it there. Offline users get a push notification and sync on reconnect using their last seen msg_id. Snowflake IDs keep order; a client message ID makes retries safe."</div>
+</section>
+
+<section id="s28">
+<h3>28. News Feed (Twitter / Instagram)</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Users post. Each user's home feed shows recent posts from the people they follow, newest (or most relevant) first.</p>
+<p>The whole question is one decision: do you build each feed <b>when a post is written</b> (fan-out on write) or <b>when the feed is read</b> (fan-out on read)?</p>
+<p class="analogy">Newspapers. Fan-out on write = printing and delivering a copy to every subscriber's doorstep in advance. Fan-out on read = every reader walks to every journalist's desk each morning to collect the news.</p></div>
+
+<h4>1. Requirements</h4>
+<ul>
+<li><b>Functional:</b> create a post (text, images); follow/unfollow; see the home feed; like and comment.</li>
+<li><b>Non-functional:</b> feed loads fast (&lt; 200 ms); a new post can take a few seconds to appear (eventual consistency is fine); very read-heavy.</li>
+</ul>
+
+<h4>2. Estimates</h4>
+<pre><code>Users:        300M daily active, each opens feed ~10×/day → 3B feed reads/day → ~35,000/sec
+Posts:        each user posts ~0.5/day → 150M/day → ~1,700/sec
+Avg follows:  200   →  fan-out on write = 1,700 × 200 ≈ 340,000 feed inserts/sec
+Feed cache:   keep 500 post IDs × 8 bytes per user ≈ 4 KB × 300M ≈ 1.2 TB (Redis cluster)</code></pre>
+
+<h4>3. API</h4>
+<pre><code>POST /posts                         { text, mediaIds[] }
+GET  /feed?cursor={lastPostId}&amp;limit=20
+POST /users/{id}/follow
+DELETE /users/{id}/follow</code></pre>
+
+<h4>4. Data model</h4>
+<pre><code>posts       post_id (Snowflake), author_id, text, media_urls, created_at
+follows     follower_id, followee_id           (both directions indexed)
+feed cache  Redis list  feed:{userId} → [post_id, post_id, ...]  (latest ~500)</code></pre>
+
+<h4>5. High-level design</h4>
+<figure class="diagram">
+<svg viewBox="0 0 640 260" role="img" aria-label="News feed: a new post is saved to the posts database and an event goes onto a queue. Fan-out workers read the author's followers from the graph store and push the post ID into each follower's feed cache in Redis. When a user reads their feed, the feed service reads their cached list of post IDs, merges in posts from celebrities they follow, and hydrates the posts from a post cache.">
+  <rect class="d-box-accent" x="14" y="30" width="96" height="44" rx="7"/>
+  <text class="d-accent-text" x="62" y="57" text-anchor="middle">Author</text>
+  <rect class="d-box" x="140" y="30" width="110" height="44" rx="7"/>
+  <text class="d-label" x="195" y="57" text-anchor="middle">Post service</text>
+  <rect class="d-box" x="140" y="110" width="110" height="44" rx="7"/>
+  <text class="d-label" x="195" y="130" text-anchor="middle">Posts DB</text>
+  <text class="d-sub" x="195" y="145" text-anchor="middle">+ post cache</text>
+
+  <rect class="d-box" x="280" y="30" width="90" height="44" rx="7"/>
+  <text class="d-label" x="325" y="57" text-anchor="middle">Queue</text>
+  <rect class="d-fill-accent" x="400" y="24" width="120" height="56" rx="7"/>
+  <rect class="d-box-accent" x="400" y="24" width="120" height="56" rx="7"/>
+  <text class="d-accent-text" x="460" y="47" text-anchor="middle">Fan-out</text>
+  <text class="d-sub" x="460" y="64" text-anchor="middle">workers</text>
+  <rect class="d-box" x="540" y="24" width="86" height="56" rx="7"/>
+  <text class="d-label" x="583" y="47" text-anchor="middle">Follow</text>
+  <text class="d-sub" x="583" y="64" text-anchor="middle">graph</text>
+
+  <rect class="d-box" x="400" y="120" width="226" height="46" rx="7"/>
+  <text class="d-label" x="513" y="140" text-anchor="middle">Feed cache (Redis)</text>
+  <text class="d-sub" x="513" y="156" text-anchor="middle">feed:{userId} → post IDs</text>
+
+  <rect class="d-box-accent" x="14" y="196" width="96" height="44" rx="7"/>
+  <text class="d-accent-text" x="62" y="223" text-anchor="middle">Reader</text>
+  <rect class="d-fill-accent" x="200" y="190" width="170" height="56" rx="7"/>
+  <rect class="d-box-accent" x="200" y="190" width="170" height="56" rx="7"/>
+  <text class="d-accent-text" x="285" y="213" text-anchor="middle">Feed service</text>
+  <text class="d-sub" x="285" y="230" text-anchor="middle">merge + hydrate + rank</text>
+
+  <path class="d-line" d="M110 52 H134"/><path class="d-arrow" d="M140 52 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M195 74 V104"/><path class="d-arrow" d="M195 110 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M250 52 H274"/><path class="d-arrow" d="M280 52 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M370 52 H394"/><path class="d-arrow" d="M400 52 l-9 -4.5 v9 z"/>
+  <path class="d-dash" d="M520 52 H540"/>
+  <path class="d-line-accent" d="M460 80 V114"/><path class="d-arrow-accent" d="M460 120 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M110 218 H194"/><path class="d-arrow" d="M200 218 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M370 205 H513 V172"/><path class="d-arrow" d="M513 166 l-4.5 9 h9 z"/>
+  <path class="d-line" d="M250 132 H285 V184"/><path class="d-arrow" d="M285 190 l-4.5 -9 h9 z"/>
+</svg>
+<figcaption>Post IDs are pushed into followers' feeds at write time. At read time the feed service fetches IDs, adds celebrity posts, and fills in the post content from cache.</figcaption>
+</figure>
+
+<h4>6. Deep dives — the fan-out decision</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>Fan-out on write (push)</th><th>Fan-out on read (pull)</th></tr>
+<tr><td>When work happens</td><td>When a post is created</td><td>When a feed is opened</td></tr>
+<tr><td>Feed read speed</td><td>Very fast — already built</td><td>Slow — query all followees and merge</td></tr>
+<tr><td>Write cost</td><td>Huge for users with millions of followers</td><td>Cheap</td></tr>
+<tr><td>Wasted work</td><td>Builds feeds for inactive users</td><td>None</td></tr>
+<tr><td>Best for</td><td>Normal users</td><td>Celebrities</td></tr>
+</table></div>
+<p><b>The standard answer is hybrid.</b> Push posts from normal users into followers' feeds. For celebrities (say &gt; 100K followers), <i>don't</i> fan out; instead, when a user opens their feed, pull recent posts from the few celebrities they follow and merge them in.</p>
+<ul>
+<li><b>Store IDs, not posts,</b> in the feed cache. Hydrate from a post cache. Editing a post then updates one place.</li>
+<li><b>Only active users</b> get pre-built feeds. For someone returning after months, build the feed on demand.</li>
+<li><b>Ranking.</b> Chronological is simplest. For "relevant" feeds, fetch ~500 candidates, score them (likes, relationship, recency) with a ranking service, return the top 20.</li>
+<li><b>Pagination.</b> Cursor-based (<code>?cursor=lastPostId</code>), not offset — new posts arriving would shift offsets.</li>
+<li><b>Media</b> via object storage + CDN.</li>
+</ul>
+
+<h4>7. Bottlenecks &amp; trade-offs</h4>
+<ul>
+<li>Celebrity posts → hybrid model.</li>
+<li>Fan-out lag → acceptable; the feed is eventually consistent. The author sees their own post immediately (read-your-writes by inserting it client-side or into their own feed first).</li>
+<li>Redis memory → cap each feed at ~500 IDs; older pages fall back to the DB.</li>
+</ul>
+
+<div class="note"><b>Say this out loud:</b> "Hybrid fan-out. On post, a worker pushes the post ID into each follower's Redis feed list — except for celebrity accounts, whose posts are pulled and merged at read time. Feeds store IDs only and are hydrated from a post cache, paginated with a cursor. It's eventually consistent, which is fine for a feed."</div>
+</section>
+
+<section id="s29">
+<h3>29. Notification System</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Other services say "tell user 42 their order shipped". The notification system decides <b>how</b> (push, SMS, email, in-app), respects the user's preferences, and delivers reliably — without spamming or sending twice.</p>
+<p class="analogy">A company's mailroom. Departments drop off messages; the mailroom checks how each person likes to be contacted, then hands letters to the right courier (post, phone, email).</p></div>
+
+<h4>1. Requirements</h4>
+<ul>
+<li><b>Functional:</b> send via push (iOS/Android), SMS, email, in-app; templates; user preferences and opt-outs; scheduled and bulk sends; delivery status.</li>
+<li><b>Non-functional:</b> at-least-once delivery (no silent loss), no duplicates the user notices, soft real-time (seconds), handle spikes (a marketing blast to 10M users).</li>
+</ul>
+
+<h4>2. Estimates</h4>
+<pre><code>Daily:   10M push + 1M SMS + 5M email  ≈ 16M/day ≈ 200/sec avg, spikes of 50,000/sec</code></pre>
+<p>The spike number matters more than the average — it's why queues are essential here.</p>
+
+<h4>3. API</h4>
+<pre><code>POST /notifications
+{ userId, type: "order_shipped", data: { orderId: 4471 },
+  channels?: ["push", "email"], idempotencyKey: "order-4471-shipped" }
+→ 202 Accepted { notificationId }</code></pre>
+<p><code>202</code>, not <code>200</code>: the request is accepted and will be processed asynchronously.</p>
+
+<h4>4. Data model</h4>
+<pre><code>user_preferences  user_id, channel, opted_in, quiet_hours
+devices           user_id, device_token, platform
+templates         type, channel, subject, body_with_{placeholders}
+notification_log  notification_id, user_id, channel, status (queued|sent|failed|opened), attempts</code></pre>
+
+<h4>5. High-level design</h4>
+<figure class="diagram">
+<svg viewBox="0 0 640 250" role="img" aria-label="Notification system: services call the notification service, which validates, checks preferences and rate limits, renders the template, and puts a message on a per-channel queue. Workers for push, SMS and email consume their queues and call third-party providers APNs/FCM, Twilio and SES. Status is written to a notification log, and failures go to retry and a dead-letter queue.">
+  <rect class="d-box-accent" x="14" y="100" width="100" height="50" rx="7"/>
+  <text class="d-accent-text" x="64" y="122" text-anchor="middle">Services</text>
+  <text class="d-sub" x="64" y="139" text-anchor="middle">orders, auth…</text>
+
+  <rect class="d-fill-accent" x="140" y="84" width="150" height="82" rx="8"/>
+  <rect class="d-box-accent" x="140" y="84" width="150" height="82" rx="8"/>
+  <text class="d-accent-text" x="215" y="106" text-anchor="middle">Notification svc</text>
+  <text class="d-sub" x="215" y="124" text-anchor="middle">prefs · dedupe</text>
+  <text class="d-sub" x="215" y="140" text-anchor="middle">rate limit · template</text>
+
+  <rect class="d-box" x="320" y="30" width="110" height="40" rx="6"/>
+  <text class="d-label" x="375" y="55" text-anchor="middle">push queue</text>
+  <rect class="d-box" x="320" y="105" width="110" height="40" rx="6"/>
+  <text class="d-label" x="375" y="130" text-anchor="middle">SMS queue</text>
+  <rect class="d-box" x="320" y="180" width="110" height="40" rx="6"/>
+  <text class="d-label" x="375" y="205" text-anchor="middle">email queue</text>
+
+  <rect class="d-box" x="460" y="30" width="166" height="40" rx="6"/>
+  <text class="d-sub" x="543" y="55" text-anchor="middle">workers → APNs / FCM</text>
+  <rect class="d-box" x="460" y="105" width="166" height="40" rx="6"/>
+  <text class="d-sub" x="543" y="130" text-anchor="middle">workers → Twilio</text>
+  <rect class="d-box" x="460" y="180" width="166" height="40" rx="6"/>
+  <text class="d-sub" x="543" y="205" text-anchor="middle">workers → SES / SendGrid</text>
+
+  <path class="d-line" d="M114 125 H134"/><path class="d-arrow" d="M140 125 l-9 -4.5 v9 z"/>
+  <path class="d-line-accent" d="M290 110 H305 V50 H314"/><path class="d-arrow-accent" d="M320 50 l-7 -4 v8 z"/>
+  <path class="d-line-accent" d="M290 125 H314"/><path class="d-arrow-accent" d="M320 125 l-7 -4 v8 z"/>
+  <path class="d-line-accent" d="M290 140 H305 V200 H314"/><path class="d-arrow-accent" d="M320 200 l-7 -4 v8 z"/>
+  <path class="d-line" d="M430 50 H454"/><path class="d-arrow" d="M460 50 l-7 -4 v8 z"/>
+  <path class="d-line" d="M430 125 H454"/><path class="d-arrow" d="M460 125 l-7 -4 v8 z"/>
+  <path class="d-line" d="M430 200 H454"/><path class="d-arrow" d="M460 200 l-7 -4 v8 z"/>
+  <text class="d-sub" x="430" y="240" text-anchor="middle">failures → retry with backoff → dead-letter queue</text>
+</svg>
+<figcaption>One queue per channel, so a slow email provider can't hold up urgent push notifications.</figcaption>
+</figure>
+
+<h4>6. Deep dives</h4>
+<ul>
+<li><b>Why queues.</b> They absorb spikes, let each channel scale separately, and survive provider outages — messages wait instead of being lost.</li>
+<li><b>Reliability.</b> Workers ack the queue only after the provider accepts the message. Failures retry with exponential backoff; after N attempts they go to a <b>dead-letter queue</b> for inspection.</li>
+<li><b>No duplicates.</b> Retries mean at-least-once, so deduplicate: store the <code>idempotencyKey</code> (or notificationId) in Redis with a TTL and skip if already sent.</li>
+<li><b>Preferences &amp; quiet hours</b> are checked before queueing. Legal requirement for marketing email: honour unsubscribes.</li>
+<li><b>Rate limiting per user</b> — nobody wants 40 pushes an hour. Group or digest low-priority ones.</li>
+<li><b>Priority.</b> Separate high-priority queues (OTP codes, security alerts) from bulk marketing.</li>
+<li><b>Tracking.</b> Providers call back webhooks for delivered/bounced/opened; update the log.</li>
+</ul>
+
+<div class="note"><b>Say this out loud:</b> "Services call one notification API that returns 202. It checks preferences, deduplicates with an idempotency key, renders the template and puts the job on a per-channel, per-priority queue. Channel workers call APNs/FCM, Twilio and SES, retry with backoff, and send permanent failures to a dead-letter queue. Delivery status is logged from provider webhooks."</div>
+</section>
+
+<section id="s30">
+<h3>30. File Storage &amp; Sync (Dropbox / Google Drive)</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Users upload files, and the files appear on all their devices. When a file changes, only the <i>changed part</i> is uploaded, and every other device is told to update.</p>
+<p>Key ideas: split files into <b>chunks</b>, store chunks in <b>object storage</b>, keep <b>metadata</b> (which chunks make up which file version) in a database, and <b>notify</b> other devices.</p>
+<p class="analogy">A book stored as numbered pages in a warehouse. The catalogue (metadata) says "Book v3 = pages 1, 2, 7, 4". Edit one page, and you only ship that one page and update the catalogue.</p></div>
+
+<h4>1. Requirements</h4>
+<ul>
+<li><b>Functional:</b> upload/download files; sync across devices; version history; share with others; offline edits that sync later.</li>
+<li><b>Non-functional:</b> never lose data (very high durability); large files (up to 50 GB); save bandwidth; sync within seconds.</li>
+</ul>
+
+<h4>2. Estimates</h4>
+<pre><code>Users:     50M, avg 10 GB each → 500 PB total (object storage, not a DB)
+Uploads:   ~2M file changes/day → ~25/sec avg, but each can be large
+Chunk:     4 MB → a 1 GB file = 256 chunks</code></pre>
+
+<h4>3. API</h4>
+<pre><code>POST /files/upload-session  { path, size, chunkHashes[] }
+     → { missingChunks[], presignedUrls[] }      // only upload what the server lacks
+PUT  {presignedUrl}          (client → object storage directly)
+POST /files/commit          { path, chunkHashes[], baseVersion }
+GET  /files/changes?cursor=  → list of changes since cursor   (sync)
+GET  /files/{id}/download    → chunk URLs</code></pre>
+
+<h4>4. Data model</h4>
+<pre><code>files          file_id, owner_id, path, latest_version, is_deleted
+file_versions  file_id, version, chunk_hashes[], size, modified_by, created_at
+chunks         chunk_hash (SHA-256) → object storage key, ref_count
+changes        user_id, cursor (increasing), file_id, version    // sync journal</code></pre>
+
+<h4>5. High-level design</h4>
+<figure class="diagram">
+<svg viewBox="0 0 640 260" role="img" aria-label="File sync: a desktop client splits a file into chunks and hashes them, asks the metadata service which chunks are missing, uploads only those directly to object storage using presigned URLs, then commits the new version to the metadata database. A notification service tells the user's other devices, which fetch the change list and download the new chunks, served via CDN.">
+  <rect class="d-box-accent" x="14" y="30" width="120" height="56" rx="7"/>
+  <text class="d-accent-text" x="74" y="54" text-anchor="middle">Device A</text>
+  <text class="d-sub" x="74" y="71" text-anchor="middle">chunk + hash</text>
+
+  <rect class="d-fill-accent" x="200" y="30" width="170" height="56" rx="7"/>
+  <rect class="d-box-accent" x="200" y="30" width="170" height="56" rx="7"/>
+  <text class="d-accent-text" x="285" y="54" text-anchor="middle">Metadata service</text>
+  <text class="d-sub" x="285" y="71" text-anchor="middle">which chunks missing?</text>
+
+  <rect class="d-box" x="440" y="30" width="186" height="56" rx="7"/>
+  <text class="d-label" x="533" y="54" text-anchor="middle">Metadata DB</text>
+  <text class="d-sub" x="533" y="71" text-anchor="middle">SQL: files, versions</text>
+
+  <rect class="d-box" x="200" y="150" width="170" height="56" rx="7"/>
+  <text class="d-label" x="285" y="174" text-anchor="middle">Object storage (S3)</text>
+  <text class="d-sub" x="285" y="191" text-anchor="middle">chunks by hash</text>
+
+  <rect class="d-box" x="440" y="150" width="186" height="56" rx="7"/>
+  <text class="d-label" x="533" y="174" text-anchor="middle">Notification svc</text>
+  <text class="d-sub" x="533" y="191" text-anchor="middle">long poll / WebSocket</text>
+
+  <rect class="d-box-accent" x="14" y="150" width="120" height="56" rx="7"/>
+  <text class="d-accent-text" x="74" y="174" text-anchor="middle">Device B</text>
+  <text class="d-sub" x="74" y="191" text-anchor="middle">pulls changes</text>
+
+  <path class="d-line" d="M134 58 H194"/><path class="d-arrow" d="M200 58 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="167" y="50" text-anchor="middle">1</text>
+  <path class="d-line" d="M370 58 H434"/><path class="d-arrow" d="M440 58 l-9 -4.5 v9 z"/>
+  <path class="d-line-accent" d="M110 86 V120 H240 V144"/><path class="d-arrow-accent" d="M240 150 l-4.5 -9 h9 z"/>
+  <text class="d-accent-text" x="175" y="114" text-anchor="middle">2 upload missing</text>
+  <path class="d-line" d="M533 86 V144"/><path class="d-arrow" d="M533 150 l-4.5 -9 h9 z"/>
+  <text class="d-sub" x="560" y="122">3 notify</text>
+  <path class="d-line" d="M440 196 H400 V230 H74 V212"/><path class="d-arrow" d="M74 206 l-4.5 9 h9 z"/>
+  <text class="d-sub" x="260" y="246" text-anchor="middle">4 "you have changes" → Device B fetches change list + new chunks</text>
+</svg>
+<figcaption>Bytes go straight to object storage; the servers only handle small metadata requests.</figcaption>
+</figure>
+
+<h4>6. Deep dives</h4>
+<ul>
+<li><b>Chunking + dedup.</b> Each chunk is named by its content hash. If the server already has that hash (from any user, or an earlier version), it isn't uploaded again. Editing one paragraph of a 1 GB file re-uploads one 4 MB chunk.</li>
+<li><b>Resumable uploads.</b> A dropped connection only loses the chunk in flight.</li>
+<li><b>Presigned URLs.</b> Clients upload directly to S3, so app servers never carry the heavy bytes.</li>
+<li><b>Metadata consistency.</b> Use a SQL database with transactions: committing a new version must be all-or-nothing.</li>
+<li><b>Conflicts.</b> Two devices edit offline. The commit includes <code>baseVersion</code>; if it's not the latest, the server rejects it and the client saves a "conflicted copy" rather than silently overwriting.</li>
+<li><b>Sync.</b> Each device keeps a cursor into the <code>changes</code> journal and asks "what changed since cursor X?". A long-poll or WebSocket just says "something changed, go ask".</li>
+<li><b>Durability.</b> Object storage replicates across zones (S3 promises 11 nines). Old versions are kept; chunks are deleted only when no version references them (<code>ref_count</code> = 0).</li>
+</ul>
+
+<div class="note"><b>Say this out loud:</b> "Files are split into 4 MB content-hashed chunks. The client asks the metadata service which hashes are missing and uploads only those, straight to S3 with presigned URLs. Committing a version is a SQL transaction with an optimistic-lock base version to detect conflicts. Other devices get a push that something changed and pull from a change journal using their cursor."</div>
+</section>
+
+<section id="s31">
+<h3>31. Video Streaming (YouTube / Netflix)</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Creators upload a video. It is converted into many sizes and qualities, cut into small segments, and pushed to CDNs near viewers. The player picks a quality that suits the viewer's internet speed and switches as it changes.</p>
+<p class="analogy">A restaurant that cooks every dish in small, medium and large portions ahead of time, and keeps them in fridges near every neighbourhood. You get served from the nearest fridge, in the size your appetite (bandwidth) can handle right now.</p></div>
+
+<h4>1. Requirements</h4>
+<ul>
+<li><b>Functional:</b> upload video; watch on any device; multiple resolutions; search; view counts, likes.</li>
+<li><b>Non-functional:</b> smooth playback with fast start (&lt; 2 s) worldwide; uploads can take minutes to process; huge storage and bandwidth; very read-heavy.</li>
+</ul>
+
+<h4>2. Estimates</h4>
+<pre><code>Uploads:    500 hours of video per minute
+Storage:    1 hour ≈ 1 GB raw → ~3 GB across all renditions
+            500 × 60 × 24 × 3 GB ≈ 2 PB per day
+Viewing:    1B hours watched/day; bandwidth is the #1 cost → CDN is mandatory</code></pre>
+
+<h4>3. API</h4>
+<pre><code>POST /videos                 { title, description } → { videoId, uploadUrl (presigned, resumable) }
+GET  /videos/{id}            → metadata + manifest URL
+GET  {cdn}/videos/{id}/master.m3u8   → list of qualities
+GET  {cdn}/videos/{id}/720p/seg_0042.ts   → 4-second segment</code></pre>
+
+<h4>4. Data model</h4>
+<pre><code>videos      video_id, owner_id, title, status (uploading|processing|ready), duration, created_at
+renditions  video_id, resolution, bitrate, manifest_path
+views       counted in a stream processor, stored as aggregates (not one row per view)</code></pre>
+
+<h4>5. High-level design</h4>
+<figure class="diagram">
+<svg viewBox="0 0 640 250" role="img" aria-label="Video pipeline: the creator uploads the raw file to object storage. An event triggers a queue of transcoding jobs; workers convert the video into several resolutions and split them into segments with manifests, storing results in object storage and marking the video ready in the metadata DB. Viewers get the manifest from the API and stream segments from the nearest CDN edge, which pulls from object storage on a miss.">
+  <rect class="d-box-accent" x="14" y="30" width="100" height="46" rx="7"/>
+  <text class="d-accent-text" x="64" y="57" text-anchor="middle">Creator</text>
+  <rect class="d-box" x="140" y="30" width="120" height="46" rx="7"/>
+  <text class="d-label" x="200" y="50" text-anchor="middle">Raw storage</text>
+  <text class="d-sub" x="200" y="66" text-anchor="middle">S3 original</text>
+  <rect class="d-box" x="290" y="30" width="90" height="46" rx="7"/>
+  <text class="d-label" x="335" y="57" text-anchor="middle">Job queue</text>
+  <rect class="d-fill-accent" x="410" y="22" width="216" height="62" rx="8"/>
+  <rect class="d-box-accent" x="410" y="22" width="216" height="62" rx="8"/>
+  <text class="d-accent-text" x="518" y="45" text-anchor="middle">Transcoding workers</text>
+  <text class="d-sub" x="518" y="63" text-anchor="middle">1080p · 720p · 480p · 240p</text>
+  <text class="d-sub" x="518" y="77" text-anchor="middle">4-second segments + manifest</text>
+
+  <rect class="d-box" x="410" y="120" width="216" height="46" rx="7"/>
+  <text class="d-label" x="518" y="140" text-anchor="middle">Processed storage</text>
+  <text class="d-sub" x="518" y="156" text-anchor="middle">segments by quality</text>
+
+  <rect class="d-fill-accent" x="200" y="120" width="170" height="46" rx="7"/>
+  <rect class="d-box-accent" x="200" y="120" width="170" height="46" rx="7"/>
+  <text class="d-accent-text" x="285" y="140" text-anchor="middle">CDN edges</text>
+  <text class="d-sub" x="285" y="156" text-anchor="middle">near the viewer</text>
+
+  <rect class="d-box-accent" x="14" y="120" width="100" height="46" rx="7"/>
+  <text class="d-accent-text" x="64" y="140" text-anchor="middle">Viewer</text>
+  <text class="d-sub" x="64" y="156" text-anchor="middle">adaptive player</text>
+
+  <rect class="d-box" x="200" y="196" width="170" height="40" rx="7"/>
+  <text class="d-sub" x="285" y="221" text-anchor="middle">API + metadata DB</text>
+
+  <path class="d-line" d="M114 53 H134"/><path class="d-arrow" d="M140 53 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M260 53 H284"/><path class="d-arrow" d="M290 53 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M380 53 H404"/><path class="d-arrow" d="M410 53 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M518 84 V114"/><path class="d-arrow" d="M518 120 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M410 143 H376"/><path class="d-arrow" d="M370 143 l9 -4.5 v9 z"/>
+  <path class="d-line-accent" d="M200 143 H120"/><path class="d-arrow-accent" d="M114 143 l9 -4.5 v9 z"/>
+  <path class="d-dash" d="M64 166 V216 H194"/>
+  <text class="d-sub" x="120" y="210">manifest</text>
+</svg>
+<figcaption>Upload once, transcode in parallel, serve segments from the edge.</figcaption>
+</figure>
+
+<h4>6. Deep dives</h4>
+<ul>
+<li><b>Transcoding</b> (converting to different formats/sizes) is slow and CPU-heavy, so it's a queue of jobs. Split the video into pieces and transcode them in parallel on many workers; stitch the results. Status goes processing → ready.</li>
+<li><b>Adaptive bitrate streaming</b> (HLS or DASH). Each quality is cut into ~4-second segments. The <b>manifest</b> file lists them. The player measures download speed and picks the best quality it can sustain — switching mid-video without stopping.</li>
+<li><b>CDN.</b> Popular videos are cached at edges worldwide. Netflix even places servers inside ISPs. The long tail of rarely watched videos is served from origin or regional caches.</li>
+<li><b>Resumable uploads</b> for large files — upload in parts, retry just the failed part.</li>
+<li><b>View counts</b> — don't write one DB row per view. Stream events through Kafka, count in batches, and accept that counts lag slightly.</li>
+<li><b>Cost.</b> Bandwidth and storage dominate. Keep fewer renditions for unpopular videos; use cheaper cold storage for old ones.</li>
+</ul>
+
+<div class="note"><b>Say this out loud:</b> "Upload the raw file to object storage via a resumable presigned URL. An event creates transcoding jobs on a queue; workers produce several resolutions, each cut into short HLS segments with a manifest. Segments are served from a CDN, and the player does adaptive bitrate — switching quality as bandwidth changes. Metadata lives in a DB; view counts are aggregated from a stream."</div>
+</section>
+
+<section id="s32">
+<h3>32. Ride Sharing (Uber / Lyft)</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Riders request a ride; the system finds nearby available drivers fast, matches one, and both see each other's live location until the trip ends.</p>
+<p>The special problem is <b>location</b>: millions of drivers send their position every few seconds, and we need "which drivers are within 2 km of this point?" in milliseconds. The answer is a <b>geospatial index</b> — geohash or quadtree.</p>
+<p class="analogy">A city map divided into a grid of numbered squares. To find nearby taxis you don't check every taxi in the city — you look in your square and the eight squares around it.</p></div>
+
+<h4>1. Requirements</h4>
+<ul>
+<li><b>Functional:</b> rider requests a ride; see nearby drivers; match a driver; live tracking; fare estimate; payment; ratings.</li>
+<li><b>Non-functional:</b> matching in seconds; location updates in near real time; a driver must never be matched to two riders; high availability.</li>
+</ul>
+
+<h4>2. Estimates</h4>
+<pre><code>Active drivers:     5M, location update every 4 s → 1.25M writes/sec
+Ride requests:      20M/day → ~250/sec (peak ~2,000)
+Location data:      mostly in memory; only the latest position per driver matters for matching</code></pre>
+<p>The location write rate is the headline number. It rules out writing every update into a normal SQL database.</p>
+
+<h4>3. API</h4>
+<pre><code>PUT  /drivers/me/location     { lat, lng }         (every 4 s, often over WebSocket)
+POST /rides                    { pickup, dropoff }  → { rideId, fareEstimate }
+GET  /rides/{id}                → status, driver, driver location
+POST /rides/{id}/accept         (driver)
+WebSocket: live location + status updates for an active trip</code></pre>
+
+<h4>4. Data model</h4>
+<pre><code>driver_locations (Redis GEO / in-memory)  driver_id → lat, lng, geohash, status, updated_at
+rides (SQL)      ride_id, rider_id, driver_id, status, pickup, dropoff, fare, timestamps
+trip_path        ride_id, points[]   (written in batches, for receipts and disputes)</code></pre>
+
+<h4>5. High-level design</h4>
+<figure class="diagram">
+<svg viewBox="0 0 640 250" role="img" aria-label="Ride sharing: drivers send location updates to a location service, which stores the latest position in an in-memory geospatial index keyed by geohash. A rider's request goes to the ride service, which asks the matching service for nearby available drivers from the geo index, offers the ride to the best driver, and locks that driver. The ride is recorded in a SQL database and both apps receive live updates over WebSockets.">
+  <rect class="d-box-accent" x="14" y="24" width="100" height="46" rx="7"/>
+  <text class="d-accent-text" x="64" y="51" text-anchor="middle">Drivers</text>
+  <rect class="d-box" x="150" y="24" width="140" height="46" rx="7"/>
+  <text class="d-label" x="220" y="44" text-anchor="middle">Location service</text>
+  <text class="d-sub" x="220" y="60" text-anchor="middle">1.25M updates/sec</text>
+  <rect class="d-fill-accent" x="330" y="18" width="200" height="58" rx="8"/>
+  <rect class="d-box-accent" x="330" y="18" width="200" height="58" rx="8"/>
+  <text class="d-accent-text" x="430" y="41" text-anchor="middle">Geo index (in memory)</text>
+  <text class="d-sub" x="430" y="59" text-anchor="middle">geohash cell → driver IDs</text>
+
+  <rect class="d-box-accent" x="14" y="130" width="100" height="46" rx="7"/>
+  <text class="d-accent-text" x="64" y="157" text-anchor="middle">Rider</text>
+  <rect class="d-box" x="150" y="130" width="140" height="46" rx="7"/>
+  <text class="d-label" x="220" y="150" text-anchor="middle">Ride service</text>
+  <text class="d-sub" x="220" y="166" text-anchor="middle">trip state machine</text>
+  <rect class="d-fill-accent" x="330" y="124" width="200" height="58" rx="8"/>
+  <rect class="d-box-accent" x="330" y="124" width="200" height="58" rx="8"/>
+  <text class="d-accent-text" x="430" y="147" text-anchor="middle">Matching service</text>
+  <text class="d-sub" x="430" y="165" text-anchor="middle">nearest + ETA + lock driver</text>
+
+  <rect class="d-box" x="150" y="200" width="140" height="40" rx="7"/>
+  <text class="d-sub" x="220" y="225" text-anchor="middle">Rides DB (SQL)</text>
+  <rect class="d-box" x="330" y="200" width="200" height="40" rx="7"/>
+  <text class="d-sub" x="430" y="225" text-anchor="middle">WebSocket gateway → both apps</text>
+
+  <path class="d-line" d="M114 47 H144"/><path class="d-arrow" d="M150 47 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M290 47 H324"/><path class="d-arrow" d="M330 47 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M114 153 H144"/><path class="d-arrow" d="M150 153 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M290 153 H324"/><path class="d-arrow" d="M330 153 l-9 -4.5 v9 z"/>
+  <path class="d-line-accent" d="M430 124 V82"/><path class="d-arrow-accent" d="M430 76 l-4.5 9 h9 z"/>
+  <text class="d-accent-text" x="500" y="104">query nearby</text>
+  <path class="d-line" d="M220 176 V194"/><path class="d-arrow" d="M220 200 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M430 182 V194"/><path class="d-arrow" d="M430 200 l-4.5 -9 h9 z"/>
+</svg>
+<figcaption>Hot, fast-changing location data lives in memory; durable trip records live in SQL.</figcaption>
+</figure>
+
+<h4>6. Deep dives</h4>
+<ul>
+<li><b>Geohash.</b> Encodes a lat/lng into a short string like <code>tdr1w</code>. Nearby points share a prefix. Longer string = smaller cell. To find drivers near a rider: take the rider's cell plus its 8 neighbours, list drivers in those cells, then sort by real distance or ETA. Redis has this built in (<code>GEOADD</code>, <code>GEOSEARCH</code>).</li>
+<li><b>Quadtree.</b> A tree that splits the map into four squares, and keeps splitting busy squares until each holds a manageable number of drivers. Adapts to density (Manhattan gets tiny cells, the countryside huge ones). Geohash is simpler to shard; quadtree adapts better.</li>
+<li><b>Handling 1.25M updates/sec.</b> Keep only the latest position in memory; shard the geo index by region/city. Write the full path to durable storage in batches, not per update.</li>
+<li><b>No double booking.</b> When offering a ride to a driver, atomically set their status from <code>available</code> to <code>offered</code> (a Redis <code>SET NX</code> lock or a conditional DB update). If they don't accept in ~10 s, release and try the next driver.</li>
+<li><b>Trip state machine:</b> requested → matched → driver arriving → in progress → completed / cancelled. Every transition is validated and stored.</li>
+<li><b>Surge pricing</b> — compare demand (requests) vs supply (free drivers) per geohash cell every minute.</li>
+<li><b>Payments</b> go through an external provider with idempotency keys so a retried charge never bills twice.</li>
+</ul>
+
+<div class="note"><b>Say this out loud:</b> "Drivers stream locations every few seconds to a location service that keeps only the latest position in an in-memory geo index — geohash cells in Redis, sharded by city. A ride request goes to matching, which searches the rider's cell and its neighbours, ranks by ETA, and atomically locks the chosen driver to prevent double booking. Trips are a state machine stored in SQL, and both apps get live updates over WebSockets."</div>
+</section>
+
+<section id="s33">
+<h3>33. Web Crawler</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Start from some seed URLs, download each page, pull out its links, and add new links to the to-do list. Repeat for billions of pages — politely, without downloading the same thing twice.</p>
+<p class="analogy">Exploring a library by following every "see also" reference, with a notebook of shelves already visited, and a rule not to bother any one librarian more than once a second.</p></div>
+
+<h4>1. Requirements</h4>
+<ul>
+<li><b>Functional:</b> crawl pages from seeds; store page content for indexing; re-crawl pages periodically.</li>
+<li><b>Non-functional:</b> scale to billions of pages; <b>polite</b> (obey <code>robots.txt</code>, don't overload any site); robust to bad HTML, traps and slow servers; avoid duplicates.</li>
+</ul>
+
+<h4>2. Estimates</h4>
+<pre><code>Target:    1B pages per month → ~400 pages/sec
+Page size: ~500 KB → 500 TB per month of raw HTML (compress, store in object storage)</code></pre>
+
+<h4>3. Components (the "API" here is the pipeline)</h4>
+<pre><code>Seed URLs → URL Frontier (queue) → Fetcher → Parser → Link extractor
+                 ^                                         |
+                 |---- URL filter + "seen?" check ---------|
+Fetched pages → content "seen?" check → object storage → indexer</code></pre>
+
+<h4>4. Data</h4>
+<pre><code>URL frontier     priority queues + per-host queues
+seen URLs        Bloom filter / hash set of normalised URLs (billions)
+seen content     hash (SimHash) of page content, to skip mirrors and duplicates
+pages            object storage: url, fetched_at, content (compressed)
+robots cache     host → robots.txt rules, crawl delay</code></pre>
+
+<h4>5. Deep dives</h4>
+<ul>
+<li><b>URL frontier</b> is the heart. Two levels: <i>priority</i> queues (important/frequently changing pages first) feed <i>per-host</i> queues. Each worker takes one host at a time and waits between requests to that host — that's politeness.</li>
+<li><b>Dedup URLs.</b> Normalise first (lowercase host, remove fragments and tracking params), then check a <b>Bloom filter</b> — a compact structure that answers "definitely new" or "probably seen". Billions of URLs in a few GB of memory.</li>
+<li><b>Dedup content.</b> Many URLs serve the same page. Hash the content; skip if seen.</li>
+<li><b>DNS</b> is a hidden bottleneck — cache DNS results.</li>
+<li><b>Traps.</b> Infinite calendars or <code>?page=1,2,3…</code> loops. Cap URL length and depth per site.</li>
+<li><b>Distribution.</b> Partition by host (hash of hostname → worker), so one worker owns each site and politeness is easy.</li>
+<li><b>Re-crawling.</b> Pages that change often get crawled more often; track change frequency per URL.</li>
+</ul>
+
+<div class="note"><b>Say this out loud:</b> "A URL frontier with priority queues feeding per-host queues for politeness, partitioned across workers by hostname. Fetchers respect a cached robots.txt, parsers extract links, and new URLs are normalised and checked against a Bloom filter before being enqueued. Content is hashed to skip duplicates and stored compressed in object storage for the indexer."</div>
+</section>
+
+<section id="s34">
+<h3>34. Search Autocomplete (Typeahead)</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>As the user types "new y", suggest the top 5 completions — "new york", "new year", "new york times" — in under ~100 ms, on every keystroke.</p>
+<p>The trick: <b>precompute</b> the top suggestions for every prefix, so a lookup is just "fetch the answer", not "search and sort".</p>
+<p class="analogy">A shop assistant who has memorised the five best-selling items for every first few letters, instead of walking the aisles each time you start a sentence.</p></div>
+
+<h4>1. Requirements</h4>
+<ul>
+<li><b>Functional:</b> top-k (e.g. 5) suggestions per prefix, ranked by popularity; optionally personalised and trending.</li>
+<li><b>Non-functional:</b> &lt; 100 ms end to end; very high read rate; suggestions can be minutes to hours stale.</li>
+</ul>
+
+<h4>2. Estimates</h4>
+<pre><code>Searches:   5B/day, ~6 keystrokes each → 30B lookups/day → ~350,000/sec
+            (debouncing on the client cuts this a lot)</code></pre>
+
+<h4>3. API</h4>
+<pre><code>GET /suggest?q=new%20y&amp;limit=5  → ["new york", "new year", "new york times", ...]</code></pre>
+
+<h4>4. Data structure — the trie</h4>
+<pre><code>(root)
+ └ n
+   └ e
+     └ w          top5: [new york, new year, news, ...]
+       └ " "
+         └ y      top5: [new york, new year, new york times, ...]</code></pre>
+<p>A <b>trie</b> (prefix tree) has one node per character. The key optimisation is to <b>store the top-k results in each node</b>, so answering a prefix is a walk down a few nodes — no sorting at request time.</p>
+
+<h4>5. Design</h4>
+<ul>
+<li><b>Two paths.</b> The <i>serve path</i> reads a prebuilt trie from memory (or a key-value store of <code>prefix → top5</code> in Redis). The <i>build path</i> runs offline: collect search logs → count query frequency (e.g. hourly/daily with Spark) → build a new trie → swap it in.</li>
+<li><b>Sharding.</b> Split by prefix range (a–f, g–m…), balanced by traffic rather than alphabet, since some letters are far more common.</li>
+<li><b>Caching.</b> Short prefixes ("a", "th") are requested constantly — cache them at the CDN and in the browser.</li>
+<li><b>Client tricks.</b> Debounce (wait ~150 ms after typing stops), cancel stale requests, and reuse results: if you already have suggestions for "new", filter them locally for "new y".</li>
+<li><b>Trending.</b> A streaming job (Kafka + Flink) boosts queries spiking in the last few minutes, merged with the daily results.</li>
+<li><b>Filtering.</b> Remove offensive or dangerous suggestions before publishing the trie.</li>
+</ul>
+
+<div class="note"><b>Say this out loud:</b> "Precompute. An offline pipeline aggregates search logs into query frequencies and builds a trie where every node already stores its top 5 completions. The serving layer holds the trie in memory, sharded by prefix range, with short prefixes cached at the CDN. The client debounces keystrokes. A streaming job adds trending queries between rebuilds."</div>
+</section>
+
+<!-- ================= REVISION ================= -->
+<div class="part">Revision — the night before</div>
+
+<section id="cheat">
+<h3>Cheat Sheet — If You Hear X, Reach for Y</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Interviewers drop hints. Each phrase below points to a standard tool. Name the tool <i>and</i> the reason.</p></div>
+<div class="table-wrap"><table>
+<tr><th>If you hear…</th><th>Reach for…</th><th>Because…</th></tr>
+<tr><td>"Read-heavy", "slow queries", "same data requested again"</td><td>Cache (Redis) + read replicas</td><td>Serve repeats from memory; spread reads</td></tr>
+<tr><td>"Global users", "images/videos", "static files"</td><td>CDN + object storage</td><td>Serve bytes close to the user</td></tr>
+<tr><td>"Too much traffic for one server"</td><td>Stateless servers + load balancer</td><td>Scale horizontally</td></tr>
+<tr><td>"Too much data for one database"</td><td>Sharding (consistent hashing)</td><td>Split data across machines</td></tr>
+<tr><td>"Slow task", "email", "video processing", "spikes"</td><td>Message queue + workers</td><td>Do it asynchronously, absorb bursts</td></tr>
+<tr><td>"Many services need the same event"</td><td>Pub/sub (Kafka)</td><td>One event, many consumers</td></tr>
+<tr><td>"Real-time", "chat", "live updates"</td><td>WebSockets (or SSE for one-way)</td><td>Server can push</td></tr>
+<tr><td>"Money", "bookings", "inventory"</td><td>SQL with transactions, idempotency keys</td><td>Strong consistency, no double charges</td></tr>
+<tr><td>"Flexible schema", "huge write volume"</td><td>NoSQL (document / wide-column)</td><td>Scales writes, easy schema change</td></tr>
+<tr><td>"Relationships", "friends of friends"</td><td>Graph database</td><td>Traversals are cheap</td></tr>
+<tr><td>"Search text", "fuzzy matching"</td><td>Elasticsearch (inverted index)</td><td>Full-text search</td></tr>
+<tr><td>"Autocomplete"</td><td>Trie with top-k per node</td><td>Precomputed prefix answers</td></tr>
+<tr><td>"Nearby", "location"</td><td>Geohash / quadtree, Redis GEO</td><td>Spatial lookups</td></tr>
+<tr><td>"Abuse", "too many requests"</td><td>Rate limiter (token bucket)</td><td>Protect the system</td></tr>
+<tr><td>"Unique IDs across servers"</td><td>Snowflake IDs</td><td>Unique, time-sortable, no coordination</td></tr>
+<tr><td>"Transaction across services"</td><td>Saga pattern</td><td>Local steps + compensations</td></tr>
+<tr><td>"A dependency keeps failing"</td><td>Circuit breaker, timeouts, retries with backoff</td><td>Fail fast, don't cascade</td></tr>
+<tr><td>"Have we seen this before?" at huge scale</td><td>Bloom filter</td><td>Tiny memory, no false negatives</td></tr>
+<tr><td>"Leaderboard", "top N"</td><td>Redis sorted set</td><td>Ranked reads in O(log n)</td></tr>
+<tr><td>"Analytics", "counts", "metrics over time"</td><td>Stream processing + columnar / time-series DB</td><td>Aggregate, don't store every row</td></tr>
+</table></div>
+</section>
+
+<section id="tradeoffs">
+<h3>Trade-offs to Mention</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>There's no perfect design — only choices with costs. Saying the cost out loud is what makes an answer sound senior.</p></div>
+<div class="table-wrap"><table>
+<tr><th>Choice</th><th>You gain</th><th>You pay</th></tr>
+<tr><td>SQL vs NoSQL</td><td>Joins, transactions, strong consistency</td><td>Harder horizontal scaling</td></tr>
+<tr><td>Strong vs eventual consistency</td><td>Always-correct reads</td><td>Higher latency, lower availability during partitions</td></tr>
+<tr><td>Cache</td><td>Speed, less DB load</td><td>Stale data, invalidation complexity</td></tr>
+<tr><td>Normalise vs denormalise</td><td>No duplication, easy writes</td><td>Slower reads (joins)</td></tr>
+<tr><td>Sync vs async processing</td><td>Simple, immediate result</td><td>Slow requests, tight coupling</td></tr>
+<tr><td>Push (fan-out on write) vs pull</td><td>Fast reads</td><td>Expensive writes for popular users</td></tr>
+<tr><td>Monolith vs microservices</td><td>Simple deploys, easy debugging</td><td>Harder to scale teams and parts independently</td></tr>
+<tr><td>Sync vs async replication</td><td>No data loss on failover</td><td>Slower writes</td></tr>
+<tr><td>Polling vs WebSockets</td><td>Simple, stateless</td><td>Wasted requests, delay</td></tr>
+<tr><td>Batch vs stream processing</td><td>Simple, cheap, accurate</td><td>Results are hours old</td></tr>
+<tr><td>Vertical vs horizontal scaling</td><td>No code changes</td><td>Hard ceiling, single point of failure</td></tr>
+</table></div>
+</section>
+
+<section id="numbers">
+<h3>Numbers to Remember</h3>
+<div class="table-wrap"><table>
+<tr><th>What</th><th>Roughly</th></tr>
+<tr><td>Seconds in a day</td><td>~86,400 → use <b>100,000</b> for quick maths</td></tr>
+<tr><td>1M requests/day</td><td>≈ 12 per second</td></tr>
+<tr><td>1B requests/day</td><td>≈ 12,000 per second</td></tr>
+<tr><td>Peak traffic</td><td>2–5× the average</td></tr>
+<tr><td>Memory read</td><td>~100 ns</td></tr>
+<tr><td>SSD read</td><td>~100 µs</td></tr>
+<tr><td>Network round trip, same data centre</td><td>~0.5 ms</td></tr>
+<tr><td>Network round trip, across continents</td><td>~150 ms</td></tr>
+<tr><td>Redis operation</td><td>&lt; 1 ms; ~100K ops/sec per node</td></tr>
+<tr><td>One well-tuned SQL database</td><td>~1–10K queries/sec (more with replicas)</td></tr>
+<tr><td>One app server</td><td>~1–10K simple requests/sec</td></tr>
+<tr><td>WebSocket connections per server</td><td>~50K–100K+</td></tr>
+<tr><td>Kafka</td><td>~1M messages/sec per cluster is ordinary</td></tr>
+<tr><td>Availability: 99.9% / 99.99% / 99.999%</td><td>~8.8 hours / 52 minutes / 5 minutes of downtime per year</td></tr>
+<tr><td>1 char = 1 byte (ASCII); 1 KB = 10³, 1 MB = 10⁶, 1 GB = 10⁹, 1 TB = 10¹², 1 PB = 10¹⁵</td><td></td></tr>
+</table></div>
+</section>
+
+<section id="mistakes">
+<h3>Common Mistakes in Interviews</h3>
+<ul>
+<li><b>Jumping into drawing</b> before asking about requirements and scale. Spend the first 5 minutes asking.</li>
+<li><b>Staying silent.</b> They grade your thinking. Talk through every choice.</li>
+<li><b>Buzzword soup</b> — "Kafka, Kubernetes, microservices" with no reason. Every box needs a "because".</li>
+<li><b>Over-engineering</b> a system for 1,000 users. Design for the stated scale, then explain how you'd grow.</li>
+<li><b>No numbers.</b> Even rough estimates show you know what's big and what's small.</li>
+<li><b>Ignoring failure.</b> Always say what happens when a server, DB or dependency dies.</li>
+<li><b>Only the happy path.</b> Mention retries, duplicates, timeouts, and hot spots.</li>
+<li><b>Single points of failure</b> left in the diagram — one DB, one LB. Show replicas.</li>
+<li><b>Not driving.</b> Don't wait to be asked; propose the next step ("Shall I go deeper on the feed generation?").</li>
+<li><b>Defending a choice to the death.</b> If the interviewer pushes back, weigh their point — adapting is a plus.</li>
+</ul>
+</section>
+
+<section id="rev">
+<h3>Interview Q&amp;A — quick answers</h3>
+
+<h4>Fundamentals</h4>
+<ul>
+<li><b>Vertical vs horizontal scaling?</b> Bigger machine vs more machines. Vertical is simple but has a ceiling and one point of failure; horizontal needs stateless servers and a load balancer but scales far.</li>
+<li><b>Why make servers stateless?</b> So any server can handle any request. Then you can add, remove or replace servers freely. Keep session data in Redis or a token.</li>
+<li><b>Latency vs throughput?</b> Latency is how long one request takes; throughput is how many requests per second you handle.</li>
+<li><b>What does 99.99% availability mean?</b> About 52 minutes of downtime a year. Each extra nine costs much more.</li>
+<li><b>What is a single point of failure?</b> A component whose failure takes down the whole system. Remove it with redundancy.</li>
+<li><b>L4 vs L7 load balancer?</b> L4 routes by IP/port (fast, blind to content); L7 reads HTTP (can route by path, header, cookie).</li>
+</ul>
+
+<h4>Caching &amp; data</h4>
+<ul>
+<li><b>Cache-aside?</b> App checks cache; on a miss it reads the DB and fills the cache. The most common pattern.</li>
+<li><b>Write-through vs write-back?</b> Write-through writes cache and DB together (safe, slower). Write-back writes cache first and DB later (fast, can lose data).</li>
+<li><b>How do you invalidate a cache?</b> TTLs plus deleting the key on update. Delete rather than update to avoid races.</li>
+<li><b>Cache stampede?</b> A popular key expires and thousands of requests hit the DB at once. Fix with a lock so one request refills, or refresh early.</li>
+<li><b>SQL or NoSQL?</b> SQL for relationships, transactions and correctness. NoSQL for huge scale, simple access patterns and flexible schemas.</li>
+<li><b>Replication vs sharding?</b> Replication copies the same data (more reads, fault tolerance). Sharding splits different data across machines (more writes, more storage).</li>
+<li><b>What is consistent hashing?</b> Servers and keys on a ring; a key goes to the next server clockwise. Adding or removing a server moves only ~1/n of keys.</li>
+<li><b>What is replication lag?</b> Followers are behind the leader, so a read right after a write may return old data. Fix with read-your-writes (read from the leader for that user briefly).</li>
+<li><b>What is an index's cost?</b> Faster reads, slower writes, more storage.</li>
+</ul>
+
+<h4>Distributed systems</h4>
+<ul>
+<li><b>CAP theorem?</b> During a network partition you must choose consistency or availability. Partitions will happen, so it's really C vs A when things break.</li>
+<li><b>PACELC?</b> If Partition, choose A or C; Else, choose Latency or Consistency.</li>
+<li><b>Eventual consistency?</b> All copies will match if writes stop — but reads may briefly be stale.</li>
+<li><b>Queue vs pub/sub?</b> A queue gives each message to one consumer (work sharing); pub/sub gives each message to every subscriber (broadcast).</li>
+<li><b>At-least-once vs exactly-once?</b> At-least-once may duplicate; make consumers idempotent. True exactly-once is expensive and rare.</li>
+<li><b>What is idempotency?</b> Doing it twice has the same effect as once. Essential for retries — use idempotency keys.</li>
+<li><b>2PC vs saga?</b> 2PC locks all participants until everyone agrees (consistent, slow, fragile). A saga runs local transactions and undoes finished steps with compensating actions if a later one fails.</li>
+<li><b>How do you generate unique IDs at scale?</b> Snowflake: timestamp + machine ID + sequence — unique, sortable, no central coordinator.</li>
+<li><b>What is a circuit breaker?</b> After repeated failures it stops calling a dependency for a while and fails fast, so one bad service doesn't take everything down.</li>
+<li><b>Why add jitter to retries?</b> So thousands of clients don't retry at the same instant and overload the recovering service again.</li>
+</ul>
+
+<h4>Communication &amp; APIs</h4>
+<ul>
+<li><b>REST vs GraphQL vs gRPC?</b> REST: simple, cacheable, public APIs. GraphQL: client picks fields, good for varied frontends. gRPC: fast binary calls between internal services.</li>
+<li><b>Polling vs long polling vs WebSocket vs SSE?</b> Polling asks repeatedly; long polling holds the request until data arrives; WebSocket is a two-way open connection; SSE is a one-way server-to-client stream.</li>
+<li><b>Offset vs cursor pagination?</b> Offset is simple but slow on deep pages and skips/duplicates when data changes; cursor ("after id X") is stable and fast.</li>
+<li><b>What does an API gateway do?</b> One entry point: routing, auth, rate limiting, logging, SSL termination.</li>
+<li><b>Why presigned URLs for uploads?</b> The client uploads straight to object storage, so your servers don't carry large files.</li>
+</ul>
+
+<h4>Case-study one-liners</h4>
+<ul>
+<li><b>URL shortener:</b> counter ranges + base62, cache-aside redirects, 301 vs 302 for analytics.</li>
+<li><b>Chat:</b> WebSockets, presence map to route to the right server, store then deliver, Snowflake ordering.</li>
+<li><b>News feed:</b> hybrid fan-out — push for normal users, pull for celebrities.</li>
+<li><b>Notifications:</b> per-channel queues, retries + dead-letter queue, dedupe with idempotency keys.</li>
+<li><b>Dropbox:</b> content-hashed chunks, upload only missing chunks, metadata in SQL.</li>
+<li><b>YouTube:</b> transcode to many qualities, HLS segments, CDN, adaptive bitrate.</li>
+<li><b>Uber:</b> in-memory geohash index, lock the driver when matching.</li>
+<li><b>Crawler:</b> URL frontier with per-host politeness, Bloom filter for seen URLs.</li>
+<li><b>Autocomplete:</b> trie with top-k stored per node, rebuilt offline, cached at the edge.</li>
+</ul>
+</section>
+
+<section id="written">
+<h3>Written-Exam Answer Template</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>In a written exam no one can ask you follow-up questions, so your page must show the whole thought process. Use headings — examiners skim for them.</p></div>
+<pre><code>Q: Design a ______.
+
+1. Requirements
+   Functional:      3–5 bullet points (what the user can do)
+   Non-functional:  scale, latency, availability, consistency
+   Assumptions:     "Assume 10M daily users, read:write = 100:1"
+
+2. Estimates
+   QPS (avg and peak), storage per year, bandwidth — show the working
+
+3. API
+   3–5 endpoints with method, path, request and response
+
+4. Data model
+   Main tables/collections with key fields; SQL or NoSQL and WHY
+
+5. High-level design
+   A labelled box-and-arrow diagram:
+   client → LB → services → cache → DB / queue / object storage / CDN
+   One sentence describing the main read path and write path
+
+6. Deep dive (2–3 components)
+   The hardest part of THIS problem (e.g. fan-out, matching, ID generation)
+
+7. Scaling &amp; reliability
+   Sharding, replication, caching, queues; what happens when X fails
+
+8. Trade-offs
+   2–3 "I chose A over B because…, the cost is…"
+
+9. Summary
+   3 lines: the core idea of the design</code></pre>
+<div class="note"><b>Marks tip:</b> a neat diagram plus explicit trade-offs usually earns more marks than extra components. If time is short, write the headings and one line under each rather than finishing only half.</div>
+</section>
+
+<section id="road">
+<h3>Learning Path</h3>
+<ol>
+<li><b>Learn the framework</b> (<a href="#s2">section 2</a>) until you can run it without notes.</li>
+<li><b>Practise estimates</b> — do the maths for 3 systems out loud with round numbers.</li>
+<li><b>Master the building blocks</b> — for each, be able to say what it is, when to use it, and its cost.</li>
+<li><b>Do the case studies</b> — URL shortener first, then chat, news feed, and notifications. Draw each from memory.</li>
+<li><b>Mock interviews</b> — 45 minutes, timer on, talking out loud. Record yourself once; you'll spot silences and hand-waving.</li>
+<li><b>Read real architectures</b> — engineering blogs from Netflix, Uber, Discord, Slack and Instagram show these patterns in production.</li>
+<li><b>Night before</b> — read the cheat sheet, trade-offs, numbers and case-study one-liners on this page. Nothing new.</li>
+</ol>
+<div class="note"><b>The mindset that matters:</b> a system design interview is a conversation, not a quiz. There's no single right answer. Clarify, estimate, draw something simple that works, then improve it — and say out loud why each choice beats the alternative. Do that calmly and you'll do well.</div>
+</section>
+
+</main>
+</div>
+
+<script src="../assets/notes.js"></script>
+</body>
+</html>
