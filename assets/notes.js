@@ -88,3 +88,80 @@
   }));
   document.addEventListener("keydown", e => { if (e.key === "Escape") close(); });
 })();
+
+/* Interview Q&A pages: expand / collapse all answers */
+(function qa(){
+  const items = [...document.querySelectorAll("details.qa")];
+  const btn = document.getElementById("toggleAll");
+  const count = document.getElementById("qaCount");
+  if (count) count.textContent = items.length + " questions";
+  if (!btn || !items.length) return;
+  const label = () => btn.textContent =
+    items.every(d => d.open) ? "Collapse all" : "Expand all";
+  btn.onclick = () => {
+    const open = !items.every(d => d.open);
+    items.forEach(d => d.open = open);
+    label();
+  };
+  items.forEach(d => d.addEventListener("toggle", label));
+  /* print everything expanded */
+  window.addEventListener("beforeprint", () => items.forEach(d => d.open = true));
+})();
+
+/* LeetCode cheat sheet: tabs + "solved" tracking */
+(function cheatSheet(){
+  const tabs = [...document.querySelectorAll(".tab")];
+  if (!tabs.length) return;
+  const panels = tabs.map(t => document.getElementById(t.getAttribute("aria-controls")));
+  const show = (i) => {
+    tabs.forEach((t, j) => { t.setAttribute("aria-selected", String(i === j)); t.tabIndex = i === j ? 0 : -1; });
+    panels.forEach((p, j) => p && (p.hidden = i !== j));
+    try { localStorage.setItem("cheat-tab", tabs[i].id); } catch (e) {}
+  };
+  tabs.forEach((t, i) => {
+    t.addEventListener("click", () => show(i));
+    t.addEventListener("keydown", e => {
+      if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+        const n = (i + (e.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+        show(n); tabs[n].focus();
+      }
+    });
+  });
+  let saved = null;
+  try { saved = localStorage.getItem("cheat-tab"); } catch (e) {}
+  show(Math.max(0, tabs.findIndex(t => t.id === saved)));
+
+  /* "Solved" checkbox on every problem, remembered in this browser */
+  let done = {};
+  try { done = JSON.parse(localStorage.getItem("cheat-solved") || "{}"); } catch (e) {}
+  const items = [...document.querySelectorAll("details.lc")];
+  const refresh = () => panels.forEach(p => {
+    if (!p) return;
+    const all = p.querySelectorAll("details.lc"), n = p.querySelectorAll("details.lc.done").length;
+    const fill = p.querySelector(".progress .fill"), label = p.querySelector(".progress .count");
+    if (fill) fill.style.width = all.length ? (100 * n / all.length) + "%" : "0";
+    if (label) label.textContent = n + " / " + all.length + " solved";
+  });
+  items.forEach(d => {
+    const id = d.id;
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "solved";
+    btn.innerHTML = '<span class="box" aria-hidden="true"></span>Solved';
+    const set = (on) => {
+      btn.setAttribute("aria-pressed", String(on));
+      d.classList.toggle("done", on);
+    };
+    set(!!done[id]);
+    btn.addEventListener("click", e => {
+      e.preventDefault(); e.stopPropagation();                     // don't open/close the problem
+      const on = btn.getAttribute("aria-pressed") !== "true";
+      set(on);
+      if (on) done[id] = true; else delete done[id];
+      try { localStorage.setItem("cheat-solved", JSON.stringify(done)); } catch (e) {}
+      refresh();
+    });
+    d.querySelector("summary").appendChild(btn);
+  });
+  refresh();
+})();
