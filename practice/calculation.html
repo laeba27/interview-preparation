@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculation Practice</title>
+<link rel="stylesheet" href="../assets/notes.css">
+<script>
+  try { document.documentElement.setAttribute("data-theme",
+    localStorage.getItem("notes-theme") || "light"); } catch (e) {}
+</script>
+<style>
+:root{ --good:#0ca30c; --crit:#d03b3b; --miss:#8a939c; --grid:#ececea; }
+html[data-theme="dark"]{ --good:#0ca30c; --crit:#d03b3b; --miss:#8a939c; --grid:#2a2e34; }
+
+.wrap{max-width:860px;margin:0 auto;padding:40px 22px 90px;}
+.wrap header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:6px;}
+.wrap h1{font-size:28px;margin:6px 0 0;letter-spacing:-.02em;}
+.lead{color:var(--muted);font-size:14.5px;margin:6px 0 26px;max-width:620px;}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 24px;box-shadow:var(--shadow);}
+.screen[hidden]{display:none;}
+
+/* setup */
+.field{margin:0 0 22px;}
+.field > .label{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:9px;}
+.chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.chip{font:inherit;font-size:14.5px;font-weight:600;min-width:46px;padding:8px 14px;border-radius:10px;cursor:pointer;
+  background:var(--bg);color:var(--text);border:1.5px solid var(--line);transition:border-color .15s,background .15s;}
+.chip:hover{border-color:var(--sea-ink);}
+.chip[aria-pressed="true"]{background:var(--sea);border-color:var(--sea-ink);color:var(--sea-ink);}
+.chip.op{font-size:20px;min-width:56px;padding:6px 14px;}
+.chip small{display:block;font-size:11px;font-weight:500;color:var(--muted);}
+.chip[aria-pressed="true"] small{color:var(--sea-ink);}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.num-in{font:inherit;font-size:14.5px;width:84px;padding:8px 10px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--text);}
+.num-in:focus,.answer:focus{outline:none;border-color:var(--sea-ink);}
+.hint{font-size:13px;color:var(--muted);margin-top:8px;}
+.check{display:inline-flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;margin-top:10px;}
+.check input{accent-color:var(--sea-ink);width:16px;height:16px;}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:8px;}
+.btn{font:inherit;font-size:15px;font-weight:650;padding:11px 22px;border-radius:10px;cursor:pointer;border:1.5px solid transparent;}
+.btn.primary{background:var(--sea-ink);color:var(--panel);}
+.btn.primary:hover{filter:brightness(1.08);}
+.btn.plain{background:var(--panel);color:var(--text);border-color:var(--line);}
+.btn.plain:hover{border-color:var(--sea-ink);}
+.btn.link{background:none;color:var(--muted);padding:8px 6px;font-weight:500;font-size:14px;}
+.btn.link:hover{color:var(--text);}
+.pull-up{margin-top:-12px;}
+.custom-time{margin:0 0 0 6px;display:inline-flex;align-items:center;gap:8px;}
+.hint.flush{margin:0;}
+.error{color:var(--crit);font-size:13.5px;min-height:18px;margin-top:6px;}
+
+/* practice */
+.topbar{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--muted);margin-bottom:14px;}
+.timer{position:relative;height:10px;border-radius:10px;background:var(--code-bg);overflow:hidden;border:1px solid var(--line);}
+.timer .fill{position:absolute;inset:0 auto 0 0;width:100%;background:var(--sea-ink);border-radius:10px;}
+.timer.over .fill{background:var(--crit);}
+.clock{display:flex;justify-content:space-between;align-items:center;margin:8px 0 26px;font-size:13.5px;color:var(--muted);}
+.clock b{font:700 20px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--text);}
+.over-tag{display:none;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:var(--coral);color:var(--coral-ink);border:1px solid var(--crit);}
+.is-over .over-tag{display:inline-block;}
+.is-over .clock b{color:var(--crit);}
+.question{text-align:center;font:700 clamp(34px,8vw,58px)/1.1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.02em;margin:10px 0 26px;word-break:break-all;}
+.is-over .question{color:var(--crit);}
+.answer-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.answer{font:600 26px ui-monospace,SFMono-Regular,Menlo,monospace;width:min(280px,100%);text-align:center;padding:10px 14px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--text);}
+.answer.wrong{border-color:var(--crit);animation:shake .3s;}
+.answer.right{border-color:var(--good);}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{text-align:center;min-height:24px;margin:14px 0 4px;font-size:14.5px;}
+.feedback.bad{color:var(--crit);}
+.feedback.good{color:var(--sea-ink);font-weight:600;}
+.reveal{text-align:center;margin-top:6px;}
+.reveal[hidden]{display:none;}
+.reveal p{margin:0 0 12px;font-size:15px;}
+.reveal b{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:18px;}
+.under{display:flex;justify-content:space-between;margin-top:22px;font-size:13px;color:var(--muted);}
+kbd{font:12px ui-monospace,Menlo,monospace;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:1px 6px;background:var(--bg);}
+
+/* results */
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:4px 0 24px;}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;}
+.tile .k{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:650;}
+.tile .v{font-size:28px;font-weight:700;letter-spacing:-.02em;margin-top:4px;}
+.tile .s{font-size:12.5px;color:var(--muted);}
+.chart-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px 12px;margin:0 0 18px;position:relative;}
+.chart-card h3{margin:0;font-size:15.5px;}
+.chart-card .sub2{font-size:13px;color:var(--muted);margin:2px 0 10px;}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--muted);margin:0 0 8px;}
+.legend span{display:inline-flex;align-items:center;gap:6px;}
+.legend svg{width:14px;height:14px;}
+.chart svg{display:block;width:100%;height:auto;overflow:visible;}
+.chart text{font:11.5px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:var(--muted);}
+.chart .val{fill:var(--text);font-weight:600;}
+.tip{position:fixed;pointer-events:none;background:var(--text);color:var(--bg);font-size:12.5px;line-height:1.45;
+  padding:7px 10px;border-radius:8px;white-space:nowrap;opacity:0;transform:translate(-50%,-110%);transition:opacity .1s;z-index:5;}
+.tip.on{opacity:1;}
+details.table{margin-top:6px;}
+details.table summary{cursor:pointer;font-size:14px;color:var(--sea-ink);font-weight:600;}
+details.table table{margin-top:10px;min-width:520px;}
+.st{display:inline-flex;align-items:center;gap:6px;font-size:13px;}
+.st i{width:10px;height:10px;border-radius:3px;display:inline-block;}
+.st-in{background:var(--good);} .st-over{background:var(--crit);} .st-missed{border:1.5px dashed var(--miss);}
+.empty-note{font-size:13.5px;color:var(--muted);}
+@media (max-width:560px){ .tiles{grid-template-columns:repeat(2,1fr);} .row{grid-template-columns:1fr;} .panel{padding:18px 16px;} .wrap{padding:26px 16px 70px;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div>
+    <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="../index.html#aptitude">Aptitude</a></li><li><span aria-current="page">Calculation Practice</span></li></ol></nav>
+    <h1>Calculation Practice</h1>
+  </div>
+  <button class="ghost" id="theme">Dark mode</button>
+</header>
+<p class="lead">Pick the operations, the size of the numbers and a time limit. You stay on a question until you get it right. If the time runs out you get a little overtime, shown in red, and at the end you see how fast you were on every question.</p>
+
+<!-- ============ SETUP ============ -->
+<section class="screen panel" id="setup" aria-label="Practice settings">
+  <div class="field">
+    <span class="label">Operations</span>
+    <div class="chips" id="ops">
+      <button class="chip op" data-op="+" aria-pressed="true" aria-label="Addition">+</button>
+      <button class="chip op" data-op="-" aria-pressed="true" aria-label="Subtraction">−</button>
+      <button class="chip op" data-op="*" aria-pressed="true" aria-label="Multiplication">×</button>
+      <button class="chip op" data-op="/" aria-pressed="false" aria-label="Division">÷</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="field">
+      <span class="label">First number: digits</span>
+      <div class="chips" id="d1">
+        <button class="chip" data-v="1">1</button><button class="chip" data-v="2" aria-pressed="true">2</button>
+        <button class="chip" data-v="3">3</button><button class="chip" data-v="4">4</button><button class="chip" data-v="5">5</button>
+      </div>
+    </div>
+    <div class="field">
+      <span class="label">Second number: digits</span>
+      <div class="chips" id="d2">
+        <button class="chip" data-v="1" aria-pressed="true">1</button><button class="chip" data-v="2">2</button>
+        <button class="chip" data-v="3">3</button><button class="chip" data-v="4">4</button><button class="chip" data-v="5">5</button>
+      </div>
+    </div>
+  </div>
+  <p class="hint pull-up">For division, the first number is what gets divided and the second is the divisor. Answers always come out whole.</p>
+
+  <div class="field">
+    <span class="label">Time per question</span>
+    <div class="chips" id="time">
+      <button class="chip" data-v="15">15s</button><button class="chip" data-v="20">20s</button>
+      <button class="chip" data-v="30" aria-pressed="true">30s</button><button class="chip" data-v="40">40s</button>
+      <button class="chip" data-v="60">60s</button>
+      <label class="hint custom-time">or
+        <input class="num-in" id="timeCustom" type="number" min="5" max="600" placeholder="secs" aria-label="Custom seconds"></label>
+    </div>
+    <p class="hint" id="overHint">When 30 s run out you get 15 s of red overtime (45 s in total). If that runs out too, the answer is shown and the question counts as missed.</p>
+  </div>
+
+  <div class="field">
+    <span class="label">Number of questions</span>
+    <div class="chips" id="count">
+      <button class="chip" data-v="10" aria-pressed="true">10</button><button class="chip" data-v="20">20</button>
+      <button class="chip" data-v="30">30</button><button class="chip" data-v="50">50</button>
+    </div>
+    <label class="check"><input type="checkbox" id="noNeg" checked> No negative answers in subtraction</label>
+  </div>
+
+  <div class="actions">
+    <button class="btn primary" id="start">Start practice</button>
+    <span class="hint flush">Type your answer and press <kbd>Enter</kbd>.</span>
+  </div>
+  <div class="error" id="setupError" role="alert"></div>
+</section>
+
+<!-- ============ PRACTICE ============ -->
+<section class="screen panel" id="play" hidden aria-label="Practice">
+  <div class="topbar"><span id="qPos">Question 1 of 10</span><span id="qScore">0 correct</span></div>
+  <div class="timer" id="timer" role="progressbar" aria-label="Time left" aria-valuemin="0" aria-valuemax="100"><div class="fill" id="timerFill"></div></div>
+  <div class="clock"><span><b id="clock">30.0</b> s left</span><span class="over-tag">Overtime</span></div>
+
+  <div class="question" id="question" aria-live="polite">47 × 8</div>
+  <form class="answer-row" id="answerForm" autocomplete="off">
+    <input class="answer" id="answer" inputmode="numeric" pattern="-?[0-9]*" aria-label="Your answer" placeholder="?">
+    <button class="btn primary" type="submit">Check</button>
+  </form>
+  <div class="feedback" id="feedback" role="status"></div>
+  <div class="reveal" id="reveal" hidden>
+    <p>Time's up. The answer is <b id="revealAns">376</b>.</p>
+    <button class="btn plain" id="nextBtn">Next question</button>
+  </div>
+  <div class="under">
+    <button class="btn link" id="skipBtn">Skip (counts as missed)</button>
+    <button class="btn link" id="endBtn">End and see results</button>
+  </div>
+</section>
+
+<!-- ============ RESULTS ============ -->
+<section class="screen" id="results" hidden aria-label="Results">
+  <div class="tiles" id="tiles"></div>
+
+  <div class="chart-card">
+    <h3>Time taken on each question</h3>
+    <p class="sub2" id="perQSub">Seconds from showing the question to your correct answer.</p>
+    <div class="legend" id="perQLegend"></div>
+    <div class="chart" id="perQChart"></div>
+  </div>
+
+  <div class="chart-card">
+    <h3>Average time by operation</h3>
+    <p class="sub2">Only questions you answered (in time or in overtime).</p>
+    <div class="chart" id="opChart"></div>
+  </div>
+
+  <div class="chart-card">
+    <h3>Your progress across sessions</h3>
+    <p class="sub2" id="histSub">Average seconds per answered question, last 20 sessions in this browser.</p>
+    <div class="chart" id="histChart"></div>
+  </div>
+
+  <div class="chart-card">
+    <details class="table">
+      <summary>Show every question</summary>
+      <div class="table-wrap"><table id="qTable"></table></div>
+    </details>
+  </div>
+
+  <div class="actions">
+    <button class="btn primary" id="againBtn">Practice again</button>
+    <button class="btn plain" id="retryBtn">Retry the slow and missed ones</button>
+    <button class="btn link" id="settingsBtn">Change settings</button>
+  </div>
+</section>
+
+</div>
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script src="../assets/notes.js"></script>
+<script>
+(function calcPractice(){
+  const $ = (id) => document.getElementById(id);
+  const SYMBOL = { "+": "+", "-": "−", "*": "×", "/": "÷" };
+  const OP_NAME = { "+": "Addition", "-": "Subtraction", "*": "Multiplication", "/": "Division" };
+  const OVERTIME = 0.5;                                  // extra time = 50% of the limit
+
+  /* ---------- settings (remembered in this browser) ---------- */
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
+  };
+  const single = (groupId) => {
+    const g = $(groupId);
+    g.addEventListener("click", e => {
+      const b = e.target.closest(".chip"); if (!b) return;
+      g.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", String(c === b)));
+      if (groupId === "time") $("timeCustom").value = "";
+      onSettingsChange();
+    });
+  };
+  ["d1", "d2", "time", "count"].forEach(single);
+  $("ops").addEventListener("click", e => {
+    const b = e.target.closest(".chip"); if (!b) return;
+    b.setAttribute("aria-pressed", String(b.getAttribute("aria-pressed") !== "true"));
+    onSettingsChange();
+  });
+  $("timeCustom").addEventListener("input", () => {
+    if ($("timeCustom").value) $("time").querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", "false"));
+    onSettingsChange();
+  });
+  $("noNeg").addEventListener("change", onSettingsChange);
+
+  const picked = (id) => { const b = $(id).querySelector('.chip[aria-pressed="true"]'); return b ? +b.dataset.v : null; };
+  function readSettings() {
+    const custom = parseInt($("timeCustom").value, 10);
+    return {
+      ops: [...$("ops").querySelectorAll('.chip[aria-pressed="true"]')].map(b => b.dataset.op),
+      d1: picked("d1"), d2: picked("d2"),
+      time: custom >= 5 ? Math.min(custom, 600) : (picked("time") || 30),
+      count: picked("count") || 10,
+      noNeg: $("noNeg").checked,
+    };
+  }
+  function applySettings(s) {
+    const press = (id, v) => $(id).querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", String(+c.dataset.v === v)));
+    $("ops").querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", String(s.ops.includes(c.dataset.op))));
+    press("d1", s.d1); press("d2", s.d2); press("count", s.count);
+    if ([15, 20, 30, 40, 60].includes(s.time)) { press("time", s.time); $("timeCustom").value = ""; }
+    else { press("time", -1); $("timeCustom").value = s.time; }
+    $("noNeg").checked = s.noNeg;
+  }
+  function onSettingsChange() {
+    const s = readSettings();
+    const extra = Math.round(s.time * OVERTIME);
+    $("overHint").textContent = `When ${s.time} s run out you get ${extra} s of red overtime (${s.time + extra} s in total). If that runs out too, the answer is shown and the question counts as missed.`;
+    $("setupError").textContent = "";
+    store.set("calc-settings", s);
+  }
+  applySettings(Object.assign({ ops: ["+", "-", "*"], d1: 2, d2: 1, time: 30, count: 10, noNeg: true }, store.get("calc-settings", {})));
+  onSettingsChange();
+
+  /* ---------- question generator ---------- */
+  const rnd = (lo, hi) => lo + Math.floor(Math.random() * (hi - lo + 1));
+  const ofDigits = (d, min = 0) => rnd(Math.max(d === 1 ? 1 : 10 ** (d - 1), min), 10 ** d - 1);
+  function makeQuestion(s, avoid) {
+    for (let tries = 0; tries < 50; tries++) {
+      const op = s.ops[rnd(0, s.ops.length - 1)];
+      let a, b;
+      if (op === "/") {
+        // divisor has d2 digits (never 1); the dividend has d1 digits and divides exactly
+        b = ofDigits(s.d2, 2);
+        const lo = s.d1 === 1 ? 1 : 10 ** (s.d1 - 1), hi = 10 ** s.d1 - 1;
+        const qmin = Math.max(2, Math.ceil(lo / b)), qmax = Math.floor(hi / b);
+        const q = qmin <= qmax ? rnd(qmin, qmax) : rnd(2, 9);   // first number too short: small whole quotient
+        a = b * q;
+      } else {
+        a = ofDigits(s.d1); b = ofDigits(s.d2, op === "*" ? 2 : 1);
+        if (op === "-" && s.noNeg && b > a) [a, b] = [b, a];
+      }
+      const ans = op === "+" ? a + b : op === "-" ? a - b : op === "*" ? a * b : a / b;
+      const text = `${a} ${SYMBOL[op]} ${b}`;
+      if (text !== avoid) return { a, b, op, ans, text };
+    }
+  }
+
+  /* ---------- practice loop ---------- */
+  let S, list, i, q, t0, raf, phase, wrong, results, retryPool = null;
+
+  function show(id) {
+    ["setup", "play", "results"].forEach(x => $(x).hidden = x !== id);
+    window.scrollTo(0, 0);
+  }
+  $("start").onclick = () => {
+    const s = readSettings();
+    if (!s.ops.length) { $("setupError").textContent = "Pick at least one operation."; return; }
+    begin(s, null);
+  };
+  function begin(s, pool) {
+    S = s; results = []; i = 0;
+    list = pool ? pool.map(p => ({ ...p })) : [];
+    if (!pool) { let prev = ""; for (let k = 0; k < s.count; k++) { const x = makeQuestion(s, prev); list.push(x); prev = x.text; } }
+    show("play"); next();
+  }
+  function next() {
+    if (i >= list.length) return finish();
+    q = list[i]; wrong = 0; phase = "normal";
+    $("question").textContent = q.text;
+    $("qPos").textContent = `Question ${i + 1} of ${list.length}`;
+    $("qScore").textContent = `${results.filter(r => r.status !== "missed").length} correct`;
+    $("answer").value = ""; $("answer").className = "answer"; $("answer").disabled = false;
+    $("feedback").textContent = ""; $("feedback").className = "feedback";
+    $("reveal").hidden = true; $("answerForm").hidden = false;
+    $("play").classList.remove("is-over"); $("timer").classList.remove("over");
+    $("answer").focus();
+    t0 = performance.now(); clearInterval(raf); raf = setInterval(tick, 50); tick();
+  }
+  function tick() {
+    const el = (performance.now() - t0) / 1000;
+    const limit = S.time, extra = S.time * OVERTIME;
+    if (phase === "normal" && el >= limit) {                 // time up: stay on the question, switch to red overtime
+      phase = "over";
+      $("play").classList.add("is-over"); $("timer").classList.add("over");
+      $("feedback").textContent = "Time's up, keep going. You are in overtime."; $("feedback").className = "feedback bad";
+    }
+    if (phase === "over" && el >= limit + extra) return timeOut();
+    const left = phase === "normal" ? limit - el : limit + extra - el;
+    const frac = phase === "normal" ? left / limit : left / extra;
+    $("clock").textContent = Math.max(0, left).toFixed(1);
+    $("timerFill").style.width = (Math.max(0, frac) * 100) + "%";
+    $("timer").setAttribute("aria-valuenow", Math.round(frac * 100));
+  }
+  function record(status, given) {
+    const el = Math.min((performance.now() - t0) / 1000, S.time * (1 + OVERTIME));
+    results.push({ ...q, n: i + 1, time: +el.toFixed(1), status, wrong, given });
+  }
+  $("answerForm").addEventListener("submit", e => {
+    e.preventDefault();
+    if (phase === "done") return;
+    const raw = $("answer").value.trim();
+    if (raw === "" || isNaN(+raw)) return;
+    if (+raw === q.ans) {
+      clearInterval(raf);
+      record(phase === "normal" ? "in" : "over", +raw); phase = "done";
+      $("answer").className = "answer right";
+      $("feedback").textContent = "Correct"; $("feedback").className = "feedback good";
+      i++; setTimeout(next, 450);
+    } else {
+      wrong++;
+      const box = $("answer"); box.className = "answer"; void box.offsetWidth; box.className = "answer wrong";
+      $("feedback").textContent = `Not quite. Try again${phase === "over" ? " (overtime)" : ""}.`; $("feedback").className = "feedback bad";
+      box.select();
+    }
+  });
+  function timeOut() {
+    clearInterval(raf);
+    record("missed", null); phase = "done";
+    $("clock").textContent = "0.0"; $("timerFill").style.width = "0%";
+    $("answerForm").hidden = true; $("feedback").textContent = "";
+    $("revealAns").textContent = q.ans; $("reveal").hidden = false; $("nextBtn").focus();
+    i++;
+  }
+  $("nextBtn").onclick = () => next();
+  $("skipBtn").onclick = () => { if (phase === "done") return; clearInterval(raf); record("missed", null); phase = "done"; i++; next(); };
+  $("endBtn").onclick = () => { clearInterval(raf); if (phase !== "done" && (performance.now() - t0) > 1500) record("missed", null); finish(); };
+  document.addEventListener("keydown", e => {
+    if (e.key === "Enter" && !$("reveal").hidden && !$("play").hidden && document.activeElement !== $("nextBtn")) { e.preventDefault(); next(); }
+  });
+
+  /* ---------- results ---------- */
+  const STATUS = {
+    in:     { label: "In time",    color: "var(--good)" },
+    over:   { label: "Overtime",   color: "var(--crit)" },
+    missed: { label: "Missed",     color: "var(--miss)" },
+  };
+  const avg = (xs) => xs.length ? xs.reduce((s, x) => s + x, 0) / xs.length : 0;
+
+  function finish() {
+    clearInterval(raf);
+    show("results");
+    const answered = results.filter(r => r.status !== "missed");
+    const inTime = results.filter(r => r.status === "in");
+    const over = results.filter(r => r.status === "over");
+    const missed = results.filter(r => r.status === "missed");
+    const times = answered.map(r => r.time);
+    const acc = results.length ? Math.round(100 * inTime.length / results.length) : 0;
+    const tiles = [
+      ["In time", `${inTime.length}/${results.length}`, `${acc}% solved within ${S.time} s`],
+      ["Average time", times.length ? avg(times).toFixed(1) + " s" : "–", "per answered question"],
+      ["Fastest", times.length ? Math.min(...times).toFixed(1) + " s" : "–", fastestText(answered)],
+      ["Overtime", String(over.length), "solved after the limit"],
+      ["Missed", String(missed.length), "timed out or skipped"],
+      ["Wrong tries", String(results.reduce((s, r) => s + r.wrong, 0)), "before the right answer"],
+    ];
+    $("tiles").innerHTML = tiles.map(([k, v, s]) => `<div class="tile"><div class="k">${k}</div><div class="v">${v}</div><div class="s">${s}</div></div>`).join("");
+
+    // save this session for the progress chart
+    if (results.length) {
+      const hist = store.get("calc-history", []);
+      hist.push({ at: Date.now(), avg: times.length ? +avg(times).toFixed(2) : null, acc, n: results.length,
+                  ops: S.ops.join(""), d: `${S.d1}x${S.d2}`, time: S.time });
+      store.set("calc-history", hist.slice(-50));
+    }
+    drawPerQuestion(); drawByOp(); drawHistory(); fillTable();
+    // retry pool: overtime + missed questions
+    retryPool = results.filter(r => r.status !== "in").map(({ a, b, op, ans, text }) => ({ a, b, op, ans, text }));
+    $("retryBtn").hidden = !retryPool.length;
+  }
+  function fastestText(ans) {
+    if (!ans.length) return "no answers yet";
+    const f = ans.reduce((m, r) => r.time < m.time ? r : m);
+    return `Q${f.n}: ${f.text.replace(/\s/g, " ")}`;
+  }
+
+  /* SVG helpers */
+  const NS = "http://www.w3.org/2000/svg";
+  const el = (tag, attrs, text) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); if (text != null) n.textContent = text; return n; };
+  const niceMax = (v) => { if (v <= 0) return 1; const p = 10 ** Math.floor(Math.log10(v)); const m = v / p; return (m <= 1 ? 1 : m <= 2 ? 2 : m <= 5 ? 5 : 10) * p; };
+  const topRounded = (x, y, w, h, r) => { r = Math.min(r, w / 2, h); return `M${x},${y + h}V${y + r}Q${x},${y} ${x + r},${y}H${x + w - r}Q${x + w},${y} ${x + w},${y + r}V${y + h}Z`; };
+  const rightRounded = (x, y, w, h, r) => { r = Math.min(r, h / 2, w); return `M${x},${y}H${x + w - r}Q${x + w},${y} ${x + w},${y + r}V${y + h - r}Q${x + w},${y + h} ${x + w - r},${y + h}H${x}Z`; };
+  const swatch = (kind) => kind === "over"
+    ? `<svg viewBox="0 0 14 14" aria-hidden="true"><rect width="14" height="14" rx="3" fill="url(#hatch-legend)"/></svg>`
+    : kind === "missed"
+    ? `<svg viewBox="0 0 14 14" aria-hidden="true"><rect x="1" y="1" width="12" height="12" rx="3" fill="none" stroke="var(--miss)" stroke-width="1.5" stroke-dasharray="3 2"/></svg>`
+    : kind === "limit"
+    ? `<svg viewBox="0 0 14 14" aria-hidden="true"><line x1="0" y1="7" x2="14" y2="7" stroke="var(--text)" stroke-width="1.5" stroke-dasharray="4 3"/></svg>`
+    : `<svg viewBox="0 0 14 14" aria-hidden="true"><rect width="14" height="14" rx="3" fill="${STATUS[kind].color}"/></svg>`;
+  const hatchDef = (id) => `<pattern id="${id}" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+      <rect width="6" height="6" fill="var(--crit)"/><line x1="0" y1="0" x2="0" y2="6" stroke="var(--panel)" stroke-width="2.2" opacity=".55"/></pattern>`;
+
+  const tip = $("tip");
+  function bindTip(node, html, card) {
+    const move = (e) => {
+      tip.innerHTML = html; tip.classList.add("on");
+      tip.style.left = e.clientX + "px"; tip.style.top = (e.clientY - 6) + "px";
+    };
+    node.addEventListener("mousemove", move);
+    node.addEventListener("mouseleave", () => tip.classList.remove("on"));
+  }
+
+  function drawPerQuestion() {
+    const host = $("perQChart"); host.innerHTML = "";
+    $("perQLegend").innerHTML =
+      ["in", "over", "missed"].map(k => `<span>${swatch(k)}${STATUS[k].label}</span>`).join("") +
+      `<span>${swatch("limit")}Time limit (${S.time} s)</span>`;
+    if (!results.length) { host.innerHTML = `<p class="empty-note">No questions answered.</p>`; return; }
+    const W = 760, H = 260, L = 38, R = 10, T = 14, B = 30;
+    const maxT = niceMax(S.time * (1 + OVERTIME));
+    const n = results.length, slot = (W - L - R) / n, bw = Math.min(24, slot - 2);
+    const y = (v) => T + (H - T - B) * (1 - v / maxT);
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img",
+      "aria-label": `Seconds taken on each of ${n} questions. ${results.filter(r => r.status === "in").length} in time, ${results.filter(r => r.status === "over").length} in overtime, ${results.filter(r => r.status === "missed").length} missed. Time limit ${S.time} seconds.` });
+    svg.innerHTML = `<defs>${hatchDef("hatch")}${hatchDef("hatch-legend")}</defs>`;
+    // hidden legend pattern holder so the legend swatch can reference it
+    const ticks = 4;
+    for (let k = 0; k <= ticks; k++) {
+      const v = maxT * k / ticks, yy = y(v);
+      svg.append(el("line", { x1: L, x2: W - R, y1: yy, y2: yy, stroke: "var(--grid)", "stroke-width": 1 }));
+      svg.append(el("text", { x: L - 8, y: yy + 4, "text-anchor": "end" }, (Math.round(v * 10) / 10) + "s"));
+    }
+    const card = host.closest(".chart-card");
+    results.forEach((r, k) => {
+      const x = L + slot * k + (slot - bw) / 2;
+      const v = r.status === "missed" ? S.time * (1 + OVERTIME) : Math.max(r.time, 0.3);
+      const h = (H - T - B) * v / maxT, top = y(v);
+      let mark;
+      if (r.status === "missed") {
+        mark = el("path", { d: topRounded(x + .75, top + .75, bw - 1.5, h - .75, 4), fill: "none", stroke: "var(--miss)", "stroke-width": 1.5, "stroke-dasharray": "3 2" });
+      } else {
+        mark = el("path", { d: topRounded(x, top, bw, h, 4), fill: r.status === "over" ? "url(#hatch)" : "var(--good)" });
+      }
+      svg.append(mark);
+      // generous hit target over the whole slot
+      const hit = el("rect", { x: L + slot * k, y: T, width: slot, height: H - T - B, fill: "transparent" });
+      svg.append(hit);
+      const tries = r.wrong ? ` · ${r.wrong} wrong ${r.wrong > 1 ? "tries" : "try"}` : "";
+      bindTip(hit, `<b>Q${r.n}</b> ${r.text} = ${r.ans}<br>${r.status === "missed" ? "Missed" : r.time.toFixed(1) + " s · " + STATUS[r.status].label}${tries}`, card);
+      if (n <= 20 || k % Math.ceil(n / 20) === 0)
+        svg.append(el("text", { x: x + bw / 2, y: H - B + 16, "text-anchor": "middle" }, r.n));
+    });
+    // time-limit reference line
+    const ly = y(S.time);
+    svg.append(el("line", { x1: L, x2: W - R, y1: ly, y2: ly, stroke: "var(--text)", "stroke-width": 1.2, "stroke-dasharray": "5 4", opacity: .7 }));
+    svg.append(el("text", { x: W - R, y: ly - 5, "text-anchor": "end", class: "val" }, `limit ${S.time}s`));
+    svg.append(el("line", { x1: L, x2: W - R, y1: H - B, y2: H - B, stroke: "var(--line)", "stroke-width": 1 }));
+    host.append(svg);
+    $("perQSub").textContent = "Seconds from showing the question to your correct answer. Hover a bar for details.";
+  }
+
+  function drawByOp() {
+    const host = $("opChart"); host.innerHTML = "";
+    const rows = S.ops.map(op => {
+      const rs = results.filter(r => r.op === op && r.status !== "missed");
+      return { op, n: rs.length, total: results.filter(r => r.op === op).length, v: avg(rs.map(r => r.time)) };
+    }).filter(r => r.total);
+    if (!rows.some(r => r.n)) { host.innerHTML = `<p class="empty-note">No answered questions to average.</p>`; return; }
+    const W = 760, rowH = 34, L = 130, R = 70, T = 6;
+    const H = T + rows.length * rowH + 6, maxV = niceMax(Math.max(...rows.map(r => r.v)));
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img",
+      "aria-label": "Average seconds by operation: " + rows.map(r => `${OP_NAME[r.op]} ${r.n ? r.v.toFixed(1) + " s" : "no answers"}`).join(", ") });
+    const card = host.closest(".chart-card");
+    rows.forEach((r, k) => {
+      const yy = T + k * rowH, bh = 18, w = r.n ? (W - L - R) * r.v / maxV : 0;
+      svg.append(el("text", { x: L - 12, y: yy + bh / 2 + 4, "text-anchor": "end", class: "val" }, `${OP_NAME[r.op]} (${SYMBOL[r.op]})`));
+      if (r.n) svg.append(el("path", { d: rightRounded(L, yy, Math.max(w, 2), bh, 4), fill: "var(--sky-ink)" }));
+      svg.append(el("text", { x: L + w + 8, y: yy + bh / 2 + 4, class: "val" }, r.n ? r.v.toFixed(1) + " s" : "no answers"));
+      const hit = el("rect", { x: 0, y: yy - 6, width: W, height: rowH, fill: "transparent" }); svg.append(hit);
+      bindTip(hit, `<b>${OP_NAME[r.op]}</b><br>${r.n ? r.v.toFixed(1) + " s average" : "none answered"} · ${r.n} of ${r.total} answered`, card);
+    });
+    host.append(svg);
+  }
+
+  function drawHistory() {
+    const host = $("histChart"); host.innerHTML = "";
+    const hist = store.get("calc-history", []).filter(h => h.avg != null).slice(-20);
+    if (hist.length < 2) { host.innerHTML = `<p class="empty-note">Finish one more session to see your progress line.</p>`; return; }
+    const W = 760, H = 200, L = 38, R = 64, T = 14, B = 26;
+    const maxV = niceMax(Math.max(...hist.map(h => h.avg)));
+    const x = (k) => L + (W - L - R) * (hist.length === 1 ? 0 : k / (hist.length - 1));
+    const y = (v) => T + (H - T - B) * (1 - v / maxV);
+    const first = hist[0].avg, last = hist[hist.length - 1].avg;
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img",
+      "aria-label": `Average seconds per question over the last ${hist.length} sessions, from ${first.toFixed(1)} s to ${last.toFixed(1)} s.` });
+    for (let k = 0; k <= 4; k++) {
+      const v = maxV * k / 4, yy = y(v);
+      svg.append(el("line", { x1: L, x2: W - R, y1: yy, y2: yy, stroke: "var(--grid)", "stroke-width": 1 }));
+      svg.append(el("text", { x: L - 8, y: yy + 4, "text-anchor": "end" }, (Math.round(v * 10) / 10) + "s"));
+    }
+    const pts = hist.map((h, k) => `${x(k)},${y(h.avg)}`).join(" ");
+    svg.append(el("polygon", { points: `${x(0)},${y(0)} ${pts} ${x(hist.length - 1)},${y(0)}`, fill: "var(--sky-ink)", opacity: .1 }));
+    svg.append(el("polyline", { points: pts, fill: "none", stroke: "var(--sky-ink)", "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" }));
+    const card = host.closest(".chart-card");
+    hist.forEach((h, k) => {
+      const isLast = k === hist.length - 1;
+      svg.append(el("circle", { cx: x(k), cy: y(h.avg), r: isLast ? 5 : 3.5, fill: "var(--sky-ink)", stroke: "var(--panel)", "stroke-width": 2 }));
+      const hit = el("circle", { cx: x(k), cy: y(h.avg), r: 12, fill: "transparent" }); svg.append(hit);
+      const d = new Date(h.at);
+      bindTip(hit, `<b>Session ${k + 1}</b> · ${d.toLocaleDateString()} ${d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}<br>${h.avg.toFixed(1)} s average · ${h.acc}% in time · ${h.n} questions`, card);
+    });
+    svg.append(el("text", { x: x(hist.length - 1) + 10, y: y(last) + 4, class: "val" }, last.toFixed(1) + " s"));
+    svg.append(el("text", { x: L, y: H - 6 }, "older"));
+    svg.append(el("text", { x: W - R, y: H - 6, "text-anchor": "end" }, "latest"));
+    svg.append(el("line", { x1: L, x2: W - R, y1: H - B, y2: H - B, stroke: "var(--line)", "stroke-width": 1 }));
+    host.append(svg);
+    const change = first - last;
+    $("histSub").textContent = `Average seconds per answered question, last ${hist.length} sessions in this browser. ` +
+      (Math.abs(change) < 0.05 ? "About the same as your first session." : change > 0 ? `${change.toFixed(1)} s faster than your first one.` : `${(-change).toFixed(1)} s slower than your first one.`);
+  }
+
+  function fillTable() {
+    const dot = (k) => `<span class="st"><i class="st-${k}"></i>${STATUS[k].label}</span>`;
+    $("qTable").innerHTML = `<tr><th>#</th><th>Question</th><th>Answer</th><th>Time</th><th>Result</th><th>Wrong tries</th></tr>` +
+      results.map(r => `<tr><td>${r.n}</td><td>${r.text}</td><td>${r.ans}</td><td>${r.status === "missed" ? "–" : r.time.toFixed(1) + " s"}</td><td>${dot(r.status)}</td><td>${r.wrong}</td></tr>`).join("");
+  }
+
+  $("againBtn").onclick = () => begin(S, null);
+  $("retryBtn").onclick = () => retryPool && retryPool.length && begin({ ...S, count: retryPool.length }, retryPool);
+  $("settingsBtn").onclick = () => show("setup");
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SSC Exams — Syllabus</title>
+<link rel="stylesheet" href="../assets/notes.css">
+<script>
+  try { document.documentElement.setAttribute("data-theme",
+    localStorage.getItem("notes-theme") || "light"); } catch (e) {}
+</script>
+<style>
+.wrap{max-width:1080px;margin:0 auto;padding:34px 22px 100px;}
+.wrap > header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;}
+.wrap h1{font-size:28px;margin:0;letter-spacing:-.02em;}
+.lead{color:var(--muted);font-size:14.5px;margin:8px 0 18px;max-width:760px;}
+/* status tags */
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.03em;padding:2px 9px;border-radius:20px;
+  white-space:nowrap;vertical-align:1px;border:1px solid transparent;}
+.tag.done{background:var(--code-bg);color:var(--muted);border-color:var(--line);}
+.tag.official{background:var(--sea);color:var(--sea-ink);border-color:var(--sea-ink);}
+.tag.expected{background:var(--sun);color:var(--sun-ink);border-color:var(--sun-ink);}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;font-size:13px;color:var(--muted);
+  background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 22px;}
+.legend b{color:var(--text);font-weight:600;}
+/* overview */
+.overview h2{font-size:17px;margin:0 0 8px;}
+.overview td:first-child a{font-weight:600;text-decoration:none;}
+.overview{margin-bottom:26px;}
+/* grouped tabs */
+.tabbar{display:flex;flex-wrap:wrap;gap:10px 22px;padding:12px 0 14px;border-bottom:1px solid var(--line);margin-bottom:24px;
+  position:sticky;top:0;background:var(--bg);z-index:5;}
+.tab-group{display:flex;align-items:center;gap:8px;}
+.tg-label{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--muted);}
+.tg-tabs{display:flex;gap:6px;flex-wrap:wrap;}
+.xtab{font:inherit;font-size:13.5px;font-weight:600;padding:6px 12px;border-radius:8px;cursor:pointer;
+  background:var(--panel);color:var(--text);border:1.5px solid var(--line);}
+.xtab:hover{border-color:var(--sea-ink);}
+.xtab[aria-selected="true"]{background:var(--sea);color:var(--sea-ink);border-color:var(--sea-ink);}
+/* exam panel */
+.exam[hidden]{display:none;}
+.exam-head h2{font-size:24px;margin:0;letter-spacing:-.015em;}
+.exam-sub{color:var(--muted);margin:6px 0 10px;font-size:14.5px;}
+.exam-status .tag{font-size:12.5px;padding:4px 12px;}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-flow:dense;gap:10px;margin:20px 0 6px;}
+.fact{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;}
+.fact.wide{grid-column:1/-1;}
+.fact .k{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:3px;}
+.fact .v{font-size:14px;line-height:1.5;}
+.exam h3{font-size:18px;margin:30px 0 10px;padding-top:6px;border-top:1px solid var(--line);}
+.exam h4{margin:18px 0 6px;}
+table.timeline td:first-child{font-weight:600;}
+tr.total td{font-weight:700;background:var(--code-bg);}
+.stages{list-style:none;padding:0;margin:10px 0;display:flex;flex-wrap:wrap;gap:10px;counter-reset:st;}
+.stages li{flex:1 1 180px;position:relative;background:var(--sky);border:1px solid var(--sky-ink);border-radius:10px;
+  padding:10px 12px 10px 42px;margin:0;counter-increment:st;}
+.stages li::before{content:counter(st);position:absolute;left:12px;top:11px;width:21px;height:21px;border-radius:50%;
+  background:var(--sky-ink);color:var(--panel);font-size:12px;font-weight:700;display:grid;place-items:center;}
+.stages b{display:block;color:var(--sky-ink);}
+.stages span{font-size:13.5px;color:var(--text);}
+.pattern-note{font-size:13.8px;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--sun-ink);
+  border-radius:0 8px 8px 0;padding:8px 12px;}
+details.syl{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin:8px 0;}
+details.syl summary{cursor:pointer;list-style:none;padding:11px 44px 11px 14px;font-weight:600;position:relative;}
+details.syl summary::-webkit-details-marker{display:none;}
+details.syl summary::after{content:"";position:absolute;right:18px;top:18px;width:7px;height:7px;border-right:1.8px solid var(--muted);
+  border-bottom:1.8px solid var(--muted);transform:rotate(45deg);transition:transform .18s;}
+details.syl[open] summary::after{transform:rotate(225deg);top:21px;}
+details.syl .w{font-weight:500;font-size:12.5px;color:var(--muted);margin-left:8px;}
+details.syl ul{margin:0;padding:4px 18px 14px 34px;border-top:1px solid var(--line);columns:2;column-gap:30px;}
+details.syl li{break-inside:avoid;font-size:14.2px;}
+.prep li{margin:6px 0;}
+.sources{margin-top:26px;font-size:13px;color:var(--muted);background:var(--panel);border:1px dashed var(--line);border-radius:10px;padding:10px 14px;line-height:1.7;}
+.expand-row{display:flex;justify-content:flex-end;margin:-4px 0 4px;}
+@media (max-width:860px){ .facts{grid-template-columns:repeat(2,1fr);} details.syl ul{columns:1;} }
+@media (max-width:520px){ .wrap{padding:24px 16px 80px;} .facts{grid-template-columns:1fr;} .tabbar{position:static;} }
+@media print{ .tabbar,.legend,.overview{display:none;} .exam[hidden]{display:block;} details.syl ul{display:block;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div>
+    <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="../index.html#syllabus">Syllabus</a></li><li><span aria-current="page">SSC Exams</span></li></ol></nav>
+    <h1>SSC Exams — Syllabus</h1>
+  </div>
+  <button class="ghost" id="theme">Dark mode</button>
+</header>
+<p class="lead">Staff Selection Commission exams, grouped by the minimum education they need. Every exam in one place: when the next cycle is, how the selection works, the exact pattern of each phase, eligibility and the full syllabus. Pick an exam from the tabs. Information was researched on 27 September 2026 from the SSC exam calendar and official notices; always confirm dates on the official website before you apply.</p>
+
+<div class="legend" role="note">
+  <b>Date labels:</b>
+  <span><span class="tag done">Completed</span> already held</span>
+  <span><span class="tag official">Official</span> announced by the exam body</span>
+  <span><span class="tag expected">Expected</span> not announced yet; estimated from the usual yearly pattern</span>
+</div>
+
+<section class="overview" aria-labelledby="ovh">
+<h2 id="ovh">Next cycle at a glance</h2>
+<div class="table-wrap"><table>
+<tr><th>Exam</th><th>Group</th><th>Status</th></tr>
+<tr><td><a href="#ssc-cgl" data-go="ssc-cgl">SSC CGL</a></td><td>Graduate level</td><td><span class="tag official">Tier-I: 30 Sep – 30 Oct 2026 (official)</span> <span class="tag official">Tier-II: December 2026 (tentative in the notice)</span> <span class="tag expected">Next cycle (CGLE 2027) notification: May–June 2027 (expected)</span></td></tr><tr><td><a href="#ssc-cpo" data-go="ssc-cpo">SSC CPO</a></td><td>Graduate level</td><td><span class="tag official">2026 applications close: 30 Sep 2026 (official)</span> <span class="tag expected">2026 Paper-I: Dec 2026 – Jan 2027 (expected)</span> <span class="tag expected">2025 cycle Paper-II: Nov 2026 – Jan 2027 (expected)</span></td></tr><tr><td><a href="#ssc-je" data-go="ssc-je">SSC JE</a></td><td>Graduate level</td><td><span class="tag official">Correction window: 28–30 Sep 2026 (official)</span> <span class="tag official">Paper-I: Oct–Nov 2026 · Paper-II: Dec 2026 (tentative in the notice)</span> <span class="tag expected">Next cycle (JE 2027) notification: June–September 2027 (expected)</span></td></tr><tr><td><a href="#ssc-chsl" data-go="ssc-chsl">SSC CHSL</a></td><td>12th level</td><td><span class="tag official">CHSLE 2026 applications open: 7 Sep – 7 Oct 2026 (official)</span> <span class="tag expected">Tier-I: Dec 2026 – Feb 2027 (expected; notice says "to be notified later")</span></td></tr><tr><td><a href="#ssc-steno" data-go="ssc-steno">SSC Stenographer</a></td><td>12th level</td><td><span class="tag done">CBE held 9–12 and 15 Sep 2026</span> <span class="tag expected">CBE result: Nov–Dec 2026 · skill test: Jan–Feb 2027 (expected)</span> <span class="tag expected">Next notification (2027): Apr–Jun 2027 (expected)</span></td></tr><tr><td><a href="#ssc-mts" data-go="ssc-mts">SSC MTS &amp; Havaldar</a></td><td>10th level</td><td><span class="tag done">2025 cycle: CBE and Havaldar PET/PST done</span> <span class="tag expected">Final result (2025 cycle): Oct–Dec 2026 (expected)</span> <span class="tag expected">MTS 2026 notification: Oct–Dec 2026 (expected; the calendar date of 30 Jun 2026 has passed)</span></td></tr><tr><td><a href="#ssc-gd" data-go="ssc-gd">SSC GD Constable</a></td><td>10th level</td><td><span class="tag expected">GD 2026 CBE result: Oct 2026 (expected; not declared as of 27 Sep 2026)</span> <span class="tag official">GD 2027 notification: 30 Sep 2026 (official calendar, tentative)</span></td></tr><tr><td><a href="#ssc-selection-post" data-go="ssc-selection-post">SSC Selection Post</a></td><td>10th level</td><td><span class="tag done">Phase XIV CBE: 16–26 Sep 2026</span> <span class="tag expected">Answer key: Oct 2026 (expected)</span> <span class="tag expected">Phase XV notification: Mar–Jun 2027 (expected)</span></td></tr>
+</table></div>
+</section>
+
+<div class="tabbar" role="tablist" aria-label="Exams">
+<div class="tab-group" role="presentation"><span class="tg-label">Graduate level</span><div class="tg-tabs"><button class="xtab" role="tab" id="t-ssc-cgl" aria-controls="ex-ssc-cgl" aria-selected="false">SSC CGL</button><button class="xtab" role="tab" id="t-ssc-cpo" aria-controls="ex-ssc-cpo" aria-selected="false">SSC CPO</button><button class="xtab" role="tab" id="t-ssc-je" aria-controls="ex-ssc-je" aria-selected="false">SSC JE</button></div></div>
+<div class="tab-group" role="presentation"><span class="tg-label">12th level</span><div class="tg-tabs"><button class="xtab" role="tab" id="t-ssc-chsl" aria-controls="ex-ssc-chsl" aria-selected="false">SSC CHSL</button><button class="xtab" role="tab" id="t-ssc-steno" aria-controls="ex-ssc-steno" aria-selected="false">SSC Stenographer</button></div></div>
+<div class="tab-group" role="presentation"><span class="tg-label">10th level</span><div class="tg-tabs"><button class="xtab" role="tab" id="t-ssc-mts" aria-controls="ex-ssc-mts" aria-selected="false">SSC MTS &amp; Havaldar</button><button class="xtab" role="tab" id="t-ssc-gd" aria-controls="ex-ssc-gd" aria-selected="false">SSC GD Constable</button><button class="xtab" role="tab" id="t-ssc-selection-post" aria-controls="ex-ssc-selection-post" aria-selected="false">SSC Selection Post</button></div></div>
+</div>
+
+<div class="exam" role="tabpanel" aria-labelledby="t-ssc-cgl" id="ex-ssc-cgl" data-group="Graduate level" data-label="SSC CGL">
+<div class="exam-head">
+<h2>SSC Combined Graduate Level Examination (CGLE), 2026</h2>
+<p class="exam-sub">Group B and Group C posts (Pay Level 4 to Level 8) · Staff Selection Commission (SSC) · the main graduate-level entry into central ministries, tax and audit departments, CBI/NIA/IB and the Department of Posts.</p>
+<div class="exam-status"><span class="tag official">Tier-I: 30 Sep – 30 Oct 2026 (official)</span> <span class="tag official">Tier-II: December 2026 (tentative in the notice)</span> <span class="tag expected">Next cycle (CGLE 2027) notification: May–June 2027 (expected)</span></div>
+</div>
+
+<div class="facts">
+<div class="fact"><span class="k">Conducted by</span><span class="v">Staff Selection Commission, New Delhi (ssc.gov.in), for ministries, departments and constitutional/statutory bodies of the Government of India</span></div>
+<div class="fact"><span class="k">Post / grade</span><span class="v">Group B (gazetted and non-gazetted) and Group C posts from Pay Level 4 (₹25,500) to Level 8 (₹47,600); post and department are allotted by Tier-II merit and your online preferences</span></div>
+<div class="fact wide"><span class="k">Posts you can get</span><span class="v"><b>Level 8:</b> Assistant Audit Officer, Assistant Accounts Officer (C&amp;AG) · <b>Level 7:</b> ASO (CSS, IB, Railways, MEA, AFHQ, MeitY), Inspector of Income Tax, Inspector (Central Excise / Preventive Officer / Examiner), Assistant Enforcement Officer (ED), Sub-Inspector (CBI), Inspector Posts, Inspector (CBN) · <b>Level 6:</b> Assistant/ASO (other departments), Executive Assistant (CBIC), Research Assistant (NHRC), Divisional Accountant, SI (NIA), SI/JIO (NCB), Junior Statistical Officer, Statistical Investigator Gr-II, Office Superintendent (CBDT), Section Head (DGFT) · <b>Level 5:</b> Auditor, Accountant/Junior Accountant · <b>Level 4:</b> Postal/Sorting Assistant, UDC/SSA, Senior Administrative Assistant (MES), Tax Assistant (CBDT/CBIC), Sub-Inspector (CBN)</span></div>
+<div class="fact"><span class="k">Latest vacancies</span><span class="v">10,731 tentative (as on 24.09.2026, CGLE 2026); the notice of 21.05.2026 had said about 12,256</span></div>
+<div class="fact"><span class="k">Age limit</span><span class="v">As on 01.08.2026, by post: 18–27 (Level 4–5 posts), 18–30 (most Level 6–8 posts), 20–30 (ASO in CSS/Railways/MEA/AFHQ, SI in CBI), 18–32 (JSO). Relaxation: SC/ST 5 yrs, OBC 3 yrs, PwBD 10 yrs (13 OBC, 15 SC/ST), ex-servicemen 3 yrs after service; more for central government employees in Group C posts</span></div>
+<div class="fact"><span class="k">Education</span><span class="v">Bachelor's degree from a recognised university by 01.08.2026 (final-year students may apply). JSO: 60% in Class 12 maths or statistics in the degree. Statistical Investigator Gr-II: degree in Statistics/Maths/Economics/CS/IT/Data Science and similar. AAO/AAO (State cadre): also the state's language at matriculation level</span></div>
+<div class="fact"><span class="k">Attempts</span><span class="v">No limit on attempts in the notice; you can appear as long as you are within the age limit</span></div>
+<div class="fact"><span class="k">Pay (starting)</span><span class="v">Basic ₹25,500 (Level 4), ₹29,200 (Level 5), ₹35,400 (Level 6), ₹44,900 (Level 7), ₹47,600 (Level 8), plus DA, HRA and transport allowance, which depend on the city</span></div>
+<div class="fact"><span class="k">Mode</span><span class="v">Two computer-based tiers (Tier-I screening, Tier-II merit), then option form, allotment and document verification. Fee ₹100; women, SC, ST, PwBD and ex-servicemen do not pay</span></div>
+</div>
+
+<h3>Timeline</h3>
+<div class="table-wrap"><table class="timeline">
+<tr><th>Stage</th><th>Previous cycle (CGLE 2025)</th><th>Latest cycle (CGLE 2026)</th><th>Next cycle (CGLE 2027)</th></tr>
+<tr><td>SSC annual calendar</td><td>Calendar for 2025-26 <span class="tag done">Completed</span></td><td>Calendar dated 12.01.2026 put the notification on 31.03.2026 and Tier-I in May–June 2026; SSC is running about four months behind it <span class="tag done">Completed</span></td><td>December 2026 – January 2027 <span class="tag expected">Expected</span> (the 2026-27 calendar came out on 12.01.2026; no 2027 CGL entry is published yet)</td></tr>
+<tr><td>Notification</td><td>9 Jun 2025 <span class="tag done">Completed</span></td><td>21 May 2026 <span class="tag done">Completed</span></td><td>May–June 2027 <span class="tag expected">Expected</span> (notices came on 9 Jun 2025 and 21 May 2026)</td></tr>
+<tr><td>Online application</td><td>June–July 2025 <span class="tag done">Completed</span></td><td>21 May – 22 Jun 2026, reopened 23–25 Jun 2026; fee until 26 Jun; correction window 1–3 Jul 2026 <span class="tag done">Completed</span></td><td>June–July 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Tier-I</td><td>12–26 Sep 2025, plus a re-exam on 14 Oct 2025 for affected candidates <span class="tag done">Completed</span></td><td>30 Sep – 30 Oct 2026 (notice of 12.09.2026; exam city is shown now, admit card 2–3 days before your date) <span class="tag official">Official</span></td><td>September–October 2027 <span class="tag expected">Expected</span> (September in 2025, Sep–Oct in 2026)</td></tr>
+<tr><td>Tier-I result</td><td>18 Dec 2025 <span class="tag done">Completed</span></td><td>December 2026 – January 2027 <span class="tag expected">Expected</span> (about 2–3 months after Tier-I ended in 2025)</td><td>December 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Tier-II</td><td>18–19 Jan 2026 (DEST on day 1, Paper-I and Statistics on day 2) <span class="tag done">Completed</span></td><td>December 2026 (tentative month in the notice) <span class="tag official">Official</span>; given the late Tier-I, January 2027 is also possible <span class="tag expected">Expected</span></td><td>December 2027 – January 2028 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Option form and first allocation (FRTA)</td><td>Option form Mar 2026; FRTA 8 Apr 2026; sliding/identity verification 13–22 Apr 2026 <span class="tag done">Completed</span></td><td>March–April 2027 <span class="tag expected">Expected</span></td><td>March–April 2028 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Final result</td><td>14 May 2026 (15,118 vacancies) <span class="tag done">Completed</span></td><td>April–June 2027 <span class="tag expected">Expected</span> (the 2025 cycle ended about four months after Tier-II)</td><td>April–June 2028 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Document verification</td><td>By the user departments after the final result <span class="tag done">Completed</span></td><td>Done by the user departments after the final result, mid-2027 <span class="tag expected">Expected</span></td><td>Mid-2028 <span class="tag expected">Expected</span></td></tr>
+</table></div>
+
+<h3>Selection process</h3>
+<ol class="stages">
+<li><b>Tier-I · CBE</b><span>100 questions, 200 marks, 1 hour · screening only; separate cut-offs for JSO/SI Gr-II, for AAO/AAO and for all other posts</span></li>
+<li><b>Tier-II · Paper-I (all candidates)</b><span>Maths, reasoning, English and GA count for merit · Computer Knowledge Test and DEST are qualifying only, with higher standards for some posts</span></li>
+<li><b>Tier-II · Paper-II / Paper-III</b><span>Paper-II (Statistics) only for JSO and SI Gr-II; Paper-III (Finance &amp; Economics) only for AAO/AAO · counts for merit for those posts</span></li>
+<li><b>Option form, FRTA and sliding</b><span>You fill in post preferences online; allocation is by Tier-II merit and preference; you attend identity verification at the regional office and choose Fix or Float</span></li>
+<li><b>Final result and document verification</b><span>User departments check documents; posts like Inspector (CBIC/CBN), SI (CBI/NIA/NCB) also carry physical and medical standards, checked after selection</span></li>
+</ol>
+
+<h3>Exam pattern</h3>
+<p class="pattern-note"><b>What changed recently:</b> in CGLE 2026 each Tier-I section has its own 15-minute timer and you can no longer move between sections; the two Tier-II Paper-I sections now also have internal timers; and Paper-III (Finance &amp; Economics) is back because the Level 8 AAO/AAO posts are in this cycle (CGLE 2025 had no Level 8 posts and no Paper-III).</p>
+<h4>Tier-I</h4>
+<div class="table-wrap"><table>
+<tr><th>Section</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>General Intelligence and Reasoning</td><td>25</td><td>50</td><td>15 min</td></tr>
+<tr><td>General Awareness</td><td>25</td><td>50</td><td>15 min</td></tr>
+<tr><td>Quantitative Aptitude</td><td>25</td><td>50</td><td>15 min</td></tr>
+<tr><td>English Comprehension</td><td>25</td><td>50</td><td>15 min</td></tr>
+<tr class="total"><td>Total</td><td>100</td><td>200</td><td>60 min (80 min with scribe)</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 0.50 per wrong answer · <b>Minimum qualifying marks:</b> UR 30%, OBC/EWS 25%, others 20% · <b>Level:</b> Quantitative Aptitude at Class 10 level, the rest at graduation level · <b>Language:</b> English and Hindi (except English) · <b>Scores:</b> normalised across shifts</p>
+
+<h4>Tier-II · Paper-I (compulsory, one day, two sessions)</h4>
+<div class="table-wrap"><table>
+<tr><th>Section</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>Section-I · A: Mathematical Abilities</td><td>30</td><td>90</td><td>30 min</td></tr>
+<tr><td>Section-I · B: Reasoning and General Intelligence</td><td>30</td><td>90</td><td>30 min</td></tr>
+<tr><td>Section-II · A: English Language and Comprehension</td><td>45</td><td>135</td><td>40 min</td></tr>
+<tr><td>Section-II · B: General Awareness</td><td>25</td><td>75</td><td>20 min</td></tr>
+<tr><td>Section-III: Computer Knowledge Test (qualifying)</td><td>20</td><td>60</td><td>15 min</td></tr>
+<tr><td>Section-IV: Data Entry Speed Test (qualifying, Session-II)</td><td>1 task</td><td>–</td><td>15 min</td></tr>
+<tr class="total"><td>Total (merit on Sections I and II)</td><td>150 + DEST</td><td>390 for merit (+60 qualifying)</td><td>2 h 15 min + 15 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 1 mark per wrong answer in Sections I–III (each question is worth 3) · <b>You must qualify every section</b> · <b>DEST:</b> about 2,000 key depressions in 15 minutes; allowed errors UR 20%, OBC/EWS 25%, others 30%; higher standards for posts that need them (Tax Assistant, CSS/MEA/AFHQ ASO, CBIC Inspectors, Postal Assistant and others) · <b>Level:</b> maths at Class 10 level, English at Class 12 level</p>
+
+<h4>Tier-II · Paper-II and Paper-III (only for the posts named)</h4>
+<div class="table-wrap"><table>
+<tr><th>Paper</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>Paper-II · Statistics (JSO, Statistical Investigator Gr-II)</td><td>100</td><td>200</td><td>2 h</td></tr>
+<tr><td>Paper-III · General Studies (Finance and Economics) (AAO, AAO)</td><td>100</td><td>200</td><td>2 h</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 0.50 per wrong answer · <b>Merit:</b> JSO/SI Gr-II = Paper-I Sections I + II + Paper-II; AAO/AAO = Paper-I Sections I + II + Paper-III; all other posts = Paper-I Sections I + II only · <b>Level:</b> graduation</p>
+
+<h3>Detailed syllabus</h3>
+<details class="syl"><summary>Quantitative Aptitude / Mathematical Abilities <span class="w">Tier-I 25 Q / 50 marks · Tier-II 30 Q / 90 marks</span></summary>
+<ul><li><b>Arithmetic:</b> number system, decimals and fractions, percentage, ratio and proportion, square roots, averages, simple and compound interest, profit and loss, discount, partnership, mixture and alligation, time and distance, time and work</li>
+<li><b>Algebra:</b> school identities, elementary surds, graphs of linear equations</li>
+<li><b>Geometry:</b> triangle centres, congruence and similarity, circles (chords, tangents, angles), common tangents</li>
+<li><b>Mensuration:</b> triangles, quadrilaterals, regular polygons, circles, prism, cone, cylinder, sphere, hemisphere, cuboid, pyramid</li>
+<li><b>Trigonometry:</b> ratios, degree and radian, standard identities, complementary angles, heights and distances</li>
+<li><b>Data and statistics:</b> histogram, frequency polygon, bar and pie charts; Tier-II adds mean, median, mode, standard deviation and simple probability</li>
+</ul></details>
+<details class="syl"><summary>General Intelligence and Reasoning <span class="w">Tier-I 25 Q / 50 marks · Tier-II 30 Q / 90 marks</span></summary>
+<ul><li>Semantic, symbolic/number and figural analogy, classification and series</li>
+<li>Coding-decoding, numerical and symbolic operations, word building, trends</li>
+<li>Venn diagrams, syllogism and drawing inferences, critical thinking</li>
+<li><b>Non-verbal:</b> space orientation and visualisation, paper folding and punched holes, figure completion, embedded figures, mirror/water images</li>
+<li>Indexing, address and date-city matching, roll number and centre-code classification</li>
+<li>Emotional and social intelligence questions</li>
+</ul></details>
+<details class="syl"><summary>English Comprehension / English Language <span class="w">Tier-I 25 Q / 50 marks · Tier-II 45 Q / 135 marks</span></summary>
+<ul><li>Spot the error, fill in the blanks, sentence improvement, active/passive voice, direct/indirect speech</li>
+<li>Synonyms, antonyms, homonyms, spelling errors, idioms and phrases, one-word substitution</li>
+<li>Shuffling of sentence parts and of sentences in a passage, cloze passage</li>
+<li>Comprehension: in Tier-II, three or more passages (one simple story-based, others on current affairs or editorials)</li>
+</ul></details>
+<details class="syl"><summary>General Awareness <span class="w">Tier-I 25 Q / 50 marks · Tier-II 25 Q / 75 marks</span></summary>
+<ul><li>History, culture, geography and economy of India and its neighbours</li>
+<li>Polity and general policy, scientific research, everyday science</li>
+<li>Current events: appointments, awards, schemes, sports, summits, reports and indices</li>
+<li>Static GK: books and authors, important days, organisations and headquarters</li>
+</ul></details>
+<details class="syl"><summary>Computer Knowledge Test <span class="w">Tier-II 20 Q / 60 marks · qualifying</span></summary>
+<ul><li><b>Computer basics:</b> organisation of a computer, CPU, input/output devices, memory and its organisation, backup devices, ports, Windows Explorer, keyboard shortcuts</li>
+<li><b>Software:</b> Windows, MS Word, Excel and PowerPoint</li>
+<li><b>Internet and e-mail:</b> browsing and searching, downloading and uploading, managing e-mail, e-banking</li>
+<li><b>Networking and cyber security:</b> devices and protocols, threats (hacking, viruses, worms, Trojans) and prevention</li>
+</ul></details>
+<details class="syl"><summary>Data Entry Speed Test (DEST) <span class="w">Tier-II · 15 min · qualifying</span></summary>
+<ul><li>Typing an English passage of about 2,000 key depressions (about 8,000 key depressions per hour) on the computer</li>
+<li>Judged on errors against the passage; accuracy matters more than raw speed</li>
+<li>PwBD-OH candidates can be exempted with a medical certificate, except for posts that need computer proficiency or DEST (Tax Assistant in CBDT excepted)</li>
+</ul></details>
+<details class="syl"><summary>Paper-II · Statistics <span class="w">100 Q / 200 marks · JSO and SI Gr-II only</span></summary>
+<ul><li>Collection, classification and presentation of data; frequency distributions</li>
+<li>Central tendency, partition values, dispersion, moments, skewness and kurtosis</li>
+<li>Correlation and regression (incl. rank, multiple and partial correlation for three variables)</li>
+<li>Probability theory, Bayes' theorem; random variables; binomial, Poisson, normal and exponential distributions</li>
+<li>Sampling theory and techniques; statistical inference (estimation, Z, t, chi-square and F tests); ANOVA</li>
+<li>Time series analysis and index numbers</li>
+</ul></details>
+<details class="syl"><summary>Paper-III · General Studies (Finance and Economics) <span class="w">100 Q / 200 marks · AAO/AAO only</span></summary>
+<ul><li><b>Finance and Accounts (80 marks):</b> financial accounting concepts and GAAP; double entry, journal, ledger, trial balance, bank reconciliation, rectification of errors; final accounts; capital vs revenue; depreciation; inventory valuation; non-profit accounts; bills of exchange; self-balancing ledgers</li>
+<li><b>Economics and Governance (120 marks):</b> CAG and Finance Commission; micro economics (demand, supply, elasticity, consumer behaviour, production and cost, market forms)</li>
+<li><b>Indian economy:</b> sectors, national income, population, poverty and unemployment, infrastructure, reforms since 1991</li>
+<li><b>Money and banking:</b> RBI and monetary/fiscal policy, banks/RRBs/payments banks, budget, fiscal deficit, balance of payments, FRBM Act 2003; IT in governance</li>
+</ul></details>
+
+<h3>How to prepare</h3>
+<ul class="prep"><li>Tier-I is now four locked 15-minute sections: practise sectional mocks with a strict timer so that one slow section does not cost you the others. Tier-I only shortlists, so aim to clear the cut-off comfortably rather than chase a perfect score.</li>
+<li>Maths decides most ranks: work through the Quantitative Aptitude notes on this site, then add geometry, trigonometry and mensuration (big in SSC and not covered by bank syllabi), and do the Calculation Practice page daily for speed.</li>
+<li>Tier-II English carries 135 of the 390 merit marks: use the Verbal Ability notes and read one editorial a day for the comprehension passages; revise idioms, one-word substitutions and spellings from a fixed list.</li>
+<li>For reasoning, use the Logical Reasoning notes, and practise non-verbal items (paper folding, embedded figures, mirror images) that bank exams do not test.</li>
+<li>Tier-II negative marking is a full mark on 3-mark questions: attempt only what you are fairly sure of, and track your accuracy in every mock.</li>
+<li>Do not ignore the qualifying parts: practise DEST typing for 15 minutes a few times a week and revise the computer basics list; failing either removes you whatever your other scores.</li>
+<li>If you want JSO/SI Gr-II or AAO, prepare Statistics or Paper-III from the start, because those papers also count for merit for those posts.</li>
+<li>Fill the option form carefully: allocation follows your preferences strictly, and posts with physical standards (CBIC Inspectors, SI in CBI/NIA/NCB) reject you if you cannot meet them.</li>
+</ul>
+
+<div class="sources"><b>Sources</b> (checked 28 Sep 2026): <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Notice_of_adv_cgl_2026.pdf" target="_blank" rel="noopener">SSC: Notice of CGLE 2026 (21.05.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/CGLE_Reopen_23062026.pdf" target="_blank" rel="noopener">SSC: application window reopened (23.06.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Important%20Notice%202026_cgle_2026_12092026.pdf" target="_blank" rel="noopener">SSC: Tier-I schedule (12.09.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/cgle_2026_city_live_21092026.pdf" target="_blank" rel="noopener">SSC: exam city and admit card (21.09.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Tentative_vacancy_CGLE2026_24092026.pdf" target="_blank" rel="noopener">SSC: tentative vacancies (24.09.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/CGLE_2025%20Notice_Approved%20final_09062025.pdf" target="_blank" rel="noopener">SSC: Notice of CGLE 2025</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/writeup_181225.pdf" target="_blank" rel="noopener">SSC: CGLE 2025 Tier-I result</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Notice_02012026.pdf" target="_blank" rel="noopener">SSC: CGLE 2025 Tier-II schedule</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/writeup_14052026.pdf" target="_blank" rel="noopener">SSC: CGLE 2025 final result</a> · <a href="https://ssc.gov.in/ssc-calender" target="_blank" rel="noopener">SSC calendar 2026-27 (12.01.2026)</a> · <a href="https://testbook.com/news/ssc-new-exam-calendar-2026-27-out/" target="_blank" rel="noopener">Testbook: SSC calendar 2026-27</a> · <a href="https://www.careerpower.in/ssc-cgl.html" target="_blank" rel="noopener">Career Power: SSC CGL 2026</a>
+<br>Always confirm dates on the official website before applying.</div>
+</div>
+
+<div class="exam" role="tabpanel" aria-labelledby="t-ssc-cpo" id="ex-ssc-cpo" data-group="Graduate level" data-label="SSC CPO">
+<div class="exam-head">
+<h2>SSC Sub-Inspector in Delhi Police and CAPFs Examination (SSC CPO), 2026</h2>
+<p class="exam-sub">Sub-Inspector (Level 6) · Staff Selection Commission (SSC) · field officer posts in Delhi Police and the Central Armed Police Forces (CRPF, BSF, ITBP, CISF, SSB), leading investigation, patrol and security teams.</p>
+<div class="exam-status"><span class="tag official">2026 applications close: 30 Sep 2026 (official)</span> <span class="tag expected">2026 Paper-I: Dec 2026 – Jan 2027 (expected)</span> <span class="tag expected">2025 cycle Paper-II: Nov 2026 – Jan 2027 (expected)</span></div>
+</div>
+
+<div class="facts">
+<div class="fact"><span class="k">Conducted by</span><span class="v">Staff Selection Commission; PET/PST, medical and document checks run with the CAPFs and Delhi Police</span></div>
+<div class="fact"><span class="k">Post / grade</span><span class="v">SI (GD) in CAPFs, Group B non-gazetted · SI (Executive) Male/Female in Delhi Police, Group C · SI (Fire) Male in CISF, Group B (new in 2026). All Pay Level 6</span></div>
+<div class="fact"><span class="k">Latest vacancies</span><span class="v">1,871 tentative (2026 notice, 10.09.2026): Delhi Police male 205, female 112; CAPFs 1,320 (CRPF 254, BSF 457, ITBP 187, CISF 250, SSB 172); CISF SI (Fire) 234. The 2025 cycle had 3,073 (as on 16.02.2026)</span></div>
+<div class="fact"><span class="k">Age limit</span><span class="v">20–25 years as on 01.08.2026 (born 02.08.2001 to 01.08.2006); SI (Fire) in CISF 18–30. Relaxation: SC/ST 5 yrs, OBC 3 yrs, ex-servicemen 3 yrs after service; Delhi Police departmental candidates up to 30 (OBC 33, SC/ST 35); widows/divorced women up to 35 (SC/ST 40) for Delhi Police</span></div>
+<div class="fact"><span class="k">Education</span><span class="v">Bachelor's degree in any subject by 30.09.2026. SI (Fire): B.Sc. with Physics, Chemistry and Maths, or Class 10 plus a 3-year engineering diploma (Mechanical, Civil, Electrical and others). Delhi Police men need a valid LMV licence (motorcycle and car) by the PE&amp;MT date</span></div>
+<div class="fact"><span class="k">Attempts</span><span class="v">No limit on attempts in the notice; you can appear as long as you are within the age limit</span></div>
+<div class="fact"><span class="k">Pay (starting)</span><span class="v">Basic ₹35,400 (Level 6, ₹35,400–1,12,400) plus DA, HRA and force-specific allowances</span></div>
+<div class="fact"><span class="k">Mode</span><span class="v">Paper-I (CBE), PST/PET, Paper-II (CBE), medical examination and document verification. Fee ₹100; women, SC, ST and ex-servicemen do not pay. NCC certificate holders get bonus marks (2–5% of each paper)</span></div>
+</div>
+
+<h3>Timeline</h3>
+<div class="table-wrap"><table class="timeline">
+<tr><th>Stage</th><th>Previous cycle (CPO 2025, still running)</th><th>Latest cycle (CPO 2026)</th><th>Next cycle (CPO 2027)</th></tr>
+<tr><td>SSC annual calendar</td><td>2025-26 calendar <span class="tag done">Completed</span></td><td>Calendar dated 12.01.2026 put the notice on 31.05.2026 and Paper-I in Oct–Nov 2026; the notice actually came on 10.09.2026 <span class="tag done">Completed</span></td><td>December 2026 – January 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Notification</td><td>26 Sep 2025 <span class="tag done">Completed</span></td><td>10 Sep 2026 <span class="tag done">Completed</span></td><td>August–October 2027 <span class="tag expected">Expected</span> (September in 2025 and 2026)</td></tr>
+<tr><td>Online application</td><td>26 Sep – 16 Oct 2025 <span class="tag done">Completed</span></td><td>10–30 Sep 2026 (23:00); fee until 1 Oct 2026 <span class="tag official">Official</span></td><td>September–October 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Correction window</td><td>24–26 Oct 2025 <span class="tag done">Completed</span></td><td>8–10 Oct 2026 <span class="tag official">Official</span></td><td>October 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Paper-I (CBE)</td><td>9–12 Dec 2025 <span class="tag done">Completed</span></td><td>"To be notified later" in the notice; December 2026 – January 2027 <span class="tag expected">Expected</span> (about 10 weeks after the notice, as in 2025; the calendar's Oct–Nov 2026 has already slipped)</td><td>December 2027 – January 2028 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Paper-I result</td><td>30 Mar 2026 (48,615 shortlisted for PET/PST) <span class="tag done">Completed</span></td><td>March–April 2027 <span class="tag expected">Expected</span></td><td>March–April 2028 <span class="tag expected">Expected</span></td></tr>
+<tr><td>PST / PET</td><td>21–28 Jul 2026 (SSC Northern Region notice) <span class="tag done">Completed</span>; PET result not yet published</td><td>June–August 2027 <span class="tag expected">Expected</span> (July in the 2025 cycle)</td><td>June–August 2028 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Paper-II (CBE)</td><td>Not announced yet; November 2026 – January 2027 <span class="tag expected">Expected</span> (about four months after PET in the 2024 cycle)</td><td>November 2027 – January 2028 <span class="tag expected">Expected</span></td><td>2028–29 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Medical exam (DME/RME) and document verification</td><td>First half of 2027 <span class="tag expected">Expected</span></td><td>First half of 2028 <span class="tag expected">Expected</span></td><td>2029 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Final result</td><td>Mid-2027 <span class="tag expected">Expected</span> (the 2024 cycle took about 19 months from notice to final result)</td><td>Mid-2028 <span class="tag expected">Expected</span></td><td>2029 <span class="tag expected">Expected</span></td></tr>
+</table></div>
+
+<h3>Selection process</h3>
+<ol class="stages">
+<li><b>Paper-I · CBE</b><span>100 questions, 100 marks, 1 hour · screening for PST/PET; cut-offs can be fixed for each part</span></li>
+<li><b>PST / PET</b><span>Height, chest and running/jumping events, run by the CAPFs · qualifying only; ex-servicemen take PST but not PET</span></li>
+<li><b>Paper-II · CBE</b><span>160 questions, 320 marks, 2 hours · final merit and force allocation are based on Paper-II (plus NCC bonus)</span></li>
+<li><b>Detailed medical examination</b><span>Vision, knock knee, flat foot, varicose veins, squint and colour vision are checked · qualifying; a review medical is held the next day if you are declared unfit</span></li>
+<li><b>Document verification and allocation</b><span>By merit and your preference of force/post; Delhi Police men must show a valid LMV licence</span></li>
+</ol>
+
+<h3>Exam pattern</h3>
+<p class="pattern-note"><b>What changed recently:</b> the 2026 notice halves Paper-I to 100 questions in 1 hour (it was 200 questions, 200 marks, 2 hours in 2025), turns Paper-II from an English-only paper (200 questions, 200 marks) into four parts including reasoning, GK and maths, raises the Paper-II penalty to 0.50, and adds the SI (Fire) post in CISF.</p>
+<h4>Paper-I</h4>
+<div class="table-wrap"><table>
+<tr><th>Part</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>General Intelligence and Reasoning</td><td>25</td><td>25</td><td>15 min</td></tr>
+<tr><td>General Knowledge and General Awareness</td><td>25</td><td>25</td><td>15 min</td></tr>
+<tr><td>Quantitative Aptitude</td><td>25</td><td>25</td><td>15 min</td></tr>
+<tr><td>English Comprehension</td><td>25</td><td>25</td><td>15 min</td></tr>
+<tr class="total"><td>Total</td><td>100</td><td>100</td><td>60 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 0.25 per wrong answer · <b>Minimum qualifying marks:</b> UR 30%, OBC/EWS 25%, others 20% (before NCC bonus) · <b>Language:</b> English and Hindi (except English) · <b>Scores:</b> normalised across shifts</p>
+
+<h4>Paper-II</h4>
+<div class="table-wrap"><table>
+<tr><th>Part</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>General Intelligence and Reasoning</td><td>20</td><td>40</td><td>20 min</td></tr>
+<tr><td>General Knowledge and General Awareness</td><td>20</td><td>40</td><td>20 min</td></tr>
+<tr><td>Quantitative Aptitude</td><td>20</td><td>40</td><td>20 min</td></tr>
+<tr><td>English Comprehension</td><td>100</td><td>200</td><td>60 min</td></tr>
+<tr class="total"><td>Total</td><td>160</td><td>320</td><td>2 h</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 0.50 per wrong answer · <b>Difficulty:</b> higher than Paper-I (as the notice says) · <b>Minimum qualifying marks:</b> as for Paper-I · <b>Merit:</b> Paper-II only</p>
+
+<h4>Physical Standard Test (PST)</h4>
+<div class="table-wrap"><table>
+<tr><th>Category</th><th>Height</th><th>Chest (unexpanded / expanded)</th></tr>
+<tr><td>Male, general</td><td>170 cm</td><td>80 / 85 cm (SI Fire: 81 / 86 cm)</td></tr>
+<tr><td>Male, hill areas (Garhwal, Kumaon, HP, Dogras, Marathas, Kashmir Valley, Leh &amp; Ladakh, NE states, Sikkim)</td><td>165 cm</td><td>80 / 85 cm (SI Fire: 81 / 86 cm)</td></tr>
+<tr><td>Male, Gorkha (CAPFs)</td><td>157 cm</td><td>80 / 85 cm</td></tr>
+<tr><td>Male, Scheduled Tribes</td><td>162.5 cm (NE-state ST in CAPFs: 157 cm)</td><td>77 / 82 cm</td></tr>
+<tr><td>Female, general</td><td>157 cm</td><td>No chest standard</td></tr>
+<tr><td>Female, hill areas</td><td>155 cm</td><td>No chest standard</td></tr>
+<tr><td>Female, Scheduled Tribes</td><td>154 cm</td><td>No chest standard</td></tr>
+</table></div>
+<p class="pattern-note"><b>Weight:</b> in proportion to height · <b>Relaxations:</b> only with a certificate in the notice's format from the district authority · <b>Appeal:</b> you can appeal a height/chest failure on the spot to the appellate authority</p>
+
+<h4>Physical Endurance Test (PET)</h4>
+<div class="table-wrap"><table>
+<tr><th>Event</th><th>Male</th><th>Female</th></tr>
+<tr><td>100 m race</td><td>16 seconds</td><td>18 seconds</td></tr>
+<tr><td>Long race</td><td>1.6 km in 6.5 minutes</td><td>800 m in 4 minutes</td></tr>
+<tr><td>Long jump (3 chances)</td><td>3.65 m</td><td>2.7 m</td></tr>
+<tr><td>High jump (3 chances)</td><td>1.2 m</td><td>0.9 m</td></tr>
+<tr><td>Shot put, 16 lb (3 chances)</td><td>4.5 m</td><td>–</td></tr>
+</table></div>
+<p class="pattern-note"><b>Nature:</b> qualifying, no marks · <b>Medical standard:</b> distant vision 6/6 and 6/9 without glasses or surgery, near vision N6/N9; no knock knee, flat foot, varicose veins or squint; high colour vision · <b>Training:</b> selected SIs must pass seven obstacle events (vertical board, rope, Tarzan swing and others) · <b>Tattoos:</b> only small religious symbols/names on the left forearm or back of the hand</p>
+
+<h3>Detailed syllabus</h3>
+<details class="syl"><summary>General Intelligence and Reasoning <span class="w">Paper-I 25 Q / 25 marks · Paper-II 20 Q / 40 marks</span></summary>
+<ul><li>Analogies, similarities and differences, classification (semantic, number, figural)</li>
+<li>Number, letter and figural series; coding-decoding; numerical and symbolic operations</li>
+<li>Venn diagrams, syllogism, statement–conclusion, drawing inferences, critical thinking</li>
+<li><b>Non-verbal:</b> space visualisation and orientation, paper folding and punched holes, figure completion, embedded figures</li>
+<li>Indexing, address matching, date and city matching, roll number classification; emotional and social intelligence</li>
+</ul></details>
+<details class="syl"><summary>General Knowledge and General Awareness <span class="w">Paper-I 25 Q / 25 marks · Paper-II 20 Q / 40 marks</span></summary>
+<ul><li>History, culture, geography and economy of India and its neighbours</li>
+<li>General polity and the Indian Constitution; scientific research and everyday science</li>
+<li>Current events, including defence, internal security and police-related news</li>
+</ul></details>
+<details class="syl"><summary>Quantitative Aptitude <span class="w">Paper-I 25 Q / 25 marks · Paper-II 20 Q / 40 marks</span></summary>
+<ul><li><b>Arithmetic:</b> number system, percentage, ratio and proportion, square roots, averages, interest, profit and loss, discount, partnership, mixture and alligation, time and distance, time and work</li>
+<li><b>Algebra and geometry:</b> identities, surds, linear graphs; triangles and centres, congruence and similarity, circles and tangents</li>
+<li><b>Mensuration:</b> 2D figures, prism, cone, cylinder, sphere, hemisphere, cuboid, pyramid</li>
+<li><b>Trigonometry:</b> ratios, identities, heights and distances; <b>data:</b> histogram, frequency polygon, bar and pie charts</li>
+</ul></details>
+<details class="syl"><summary>English Comprehension <span class="w">Paper-I 25 Q / 25 marks · Paper-II 100 Q / 200 marks</span></summary>
+<ul><li>Error spotting, fill in the blanks (verbs, prepositions, articles), sentence improvement and completion</li>
+<li>Vocabulary: synonyms, antonyms, spellings, idioms and phrases, one-word substitution</li>
+<li>Grammar and sentence structure; active/passive voice, narration</li>
+<li>Reading comprehension passages; para jumbles and cloze tests at Paper-II level</li>
+</ul></details>
+
+<h3>How to prepare</h3>
+<ul class="prep"><li>Paper-II English is 200 of the 320 merit marks, so English decides selection: use the Verbal Ability notes on this site and do a timed set of 25–30 grammar and vocabulary questions every day.</li>
+<li>Paper-I is now only 15 minutes per part: build speed with sectional mocks and daily drills on the Calculation Practice page and the Tables &amp; Speed Tricks notes.</li>
+<li>Cover SSC-style maths (geometry, trigonometry, mensuration) from the Quantitative Aptitude notes, and the reasoning topics from the Logical Reasoning notes.</li>
+<li>Start physical training now, not after the Paper-I result: the 1.6 km run in 6.5 minutes (men) and 800 m in 4 minutes (women) eliminate the most people. Train three to four days a week, and practise long jump and high jump technique.</li>
+<li>Check your height, chest and eyesight early; vision is tested without glasses, and flat foot or knock knee lead to rejection at the medical.</li>
+<li>Delhi Police aspirants (men): get the LMV licence for both motorcycle and car before the PE&amp;MT date.</li>
+<li>If you are in the 2025 cycle, keep revising English and the new Paper-II topics while waiting for the PET result and the Paper-II date.</li>
+</ul>
+
+<div class="sources"><b>Sources</b> (checked 28 Sep 2026): <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Notice_of_adv_capf_2026.pdf" target="_blank" rel="noopener">SSC: Notice of SI in Delhi Police and CAPFs Exam 2026 (10.09.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Notice_of_adv_capf_2025.pdf" target="_blank" rel="noopener">SSC: Notice of the 2025 exam</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Notice_10112025.pdf" target="_blank" rel="noopener">SSC: 2025 Paper-I schedule</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/write-up%20CPO%202025.pdf" target="_blank" rel="noopener">SSC: 2025 Paper-I result (30.03.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Tentative%20Vacancies-%20SI%20CPO,%202025.pdf" target="_blank" rel="noopener">SSC: 2025 tentative vacancies</a> · <a href="https://sscnr.nic.in/newlook/downloads/2026/ImportantNotice/Notice%20on%20website.pdf" target="_blank" rel="noopener">SSC Northern Region: 2025 PET/PST notice</a> · <a href="https://ssc.gov.in/ssc-calender" target="_blank" rel="noopener">SSC calendar 2026-27 (12.01.2026)</a> · <a href="https://testbook.com/news/ssc-cpo-notification-2026-out/" target="_blank" rel="noopener">Testbook: SSC CPO 2026 notification</a> · <a href="https://www.skillupbihar.in/guides/ssc-cpo-pet-pst-2025-ho-chuka-hai-result-nahi-aaya-hq-par-kabhi-chhapa-hi-nahi" target="_blank" rel="noopener">SkillUPBihar: 2025 PET/PST status</a>
+<br>Always confirm dates on the official website before applying.</div>
+</div>
+
+<div class="exam" role="tabpanel" aria-labelledby="t-ssc-je" id="ex-ssc-je" data-group="Graduate level" data-label="SSC JE">
+<div class="exam-head">
+<h2>SSC Junior Engineer Examination, 2026</h2>
+<p class="exam-sub">Junior Engineer (Civil, Electrical, Mechanical; also Telecom and IMD Scientific Assistant) · Staff Selection Commission (SSC) · Group B, Level 6 engineering posts in CPWD, MES, BRO, CWC and other central organisations.</p>
+<div class="exam-status"><span class="tag official">Correction window: 28–30 Sep 2026 (official)</span> <span class="tag official">Paper-I: Oct–Nov 2026 · Paper-II: Dec 2026 (tentative in the notice)</span> <span class="tag expected">Next cycle (JE 2027) notification: June–September 2027 (expected)</span></div>
+</div>
+
+<div class="facts">
+<div class="fact"><span class="k">Conducted by</span><span class="v">Staff Selection Commission, for central ministries and organisations</span></div>
+<div class="fact"><span class="k">Post / grade</span><span class="v">Junior Engineer (Civil / Electrical / Mechanical / Electrical &amp; Mechanical / Telecom) and Scientific Assistant (IMD), Group B, Level 6</span></div>
+<div class="fact"><span class="k">Latest vacancies</span><span class="v">1,748 tentative (2026 notice, 02.09.2026); the 2025 cycle ended with 1,731 candidates recommended (03.08.2026)</span></div>
+<div class="fact"><span class="k">Age limit</span><span class="v">As on 01.08.2026: up to 30 for most departments (born 02.08.1996 to 01.08.2008); up to 32 for CPWD and Lighthouses &amp; Lightships (born from 02.08.1994). Relaxation: SC/ST 5 yrs, OBC 3 yrs, PwBD 10 yrs (13 OBC, 15 SC/ST), ex-servicemen 3 yrs after service</span></div>
+<div class="fact"><span class="k">Education</span><span class="v">Engineering degree or diploma in the branch, by department (some departments want a degree, or a diploma plus 2 years' experience; see the table below), by 22.09.2026</span></div>
+<div class="fact"><span class="k">Attempts</span><span class="v">No limit on attempts in the notice; you can appear as long as you are within the age limit</span></div>
+<div class="fact"><span class="k">Pay (starting)</span><span class="v">Basic ₹35,400 (Level 6, ₹35,400–1,12,400) plus DA, HRA and transport allowance</span></div>
+<div class="fact"><span class="k">Mode</span><span class="v">Two computer-based papers, then option form, allocation and document verification by the department. Fee ₹100; women, SC, ST, PwBD and ex-servicemen do not pay. IS 456 table, steam table and a scientific calculator are given on screen</span></div>
+</div>
+
+<h3>Timeline</h3>
+<div class="table-wrap"><table class="timeline">
+<tr><th>Stage</th><th>Previous cycle (JE 2025)</th><th>Latest cycle (JE 2026)</th><th>Next cycle (JE 2027)</th></tr>
+<tr><td>SSC annual calendar</td><td>2025-26 calendar <span class="tag done">Completed</span></td><td>Calendar dated 12.01.2026 put the notice on 31.03.2026 and Paper-I in May–June 2026; the notice actually came on 02.09.2026 <span class="tag done">Completed</span></td><td>December 2026 – January 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Notification</td><td>30 Jun 2025 <span class="tag done">Completed</span></td><td>2 Sep 2026 (addendum on IMD eligibility 10.09.2026) <span class="tag done">Completed</span></td><td>June–September 2027 <span class="tag expected">Expected</span> (June in 2025, September in 2026)</td></tr>
+<tr><td>Online application</td><td>30 Jun – 21 Jul 2025 <span class="tag done">Completed</span></td><td>2–22 Sep 2026; fee until 23 Sep 2026 <span class="tag done">Completed</span></td><td>June–September 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Correction window</td><td>1–2 Aug 2025 <span class="tag done">Completed</span></td><td>28–30 Sep 2026 <span class="tag official">Official</span></td><td>2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Paper-I (CBE)</td><td>3–6 and 13 Dec 2025 <span class="tag done">Completed</span></td><td>October/November 2026 (tentative in the notice; exact dates not out yet) <span class="tag official">Official</span></td><td>October–December 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Paper-I result</td><td>6 Mar 2026 <span class="tag done">Completed</span></td><td>January–February 2027 <span class="tag expected">Expected</span></td><td>January–March 2028 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Paper-II (CBE)</td><td>7 Apr 2026 <span class="tag done">Completed</span></td><td>December 2026 (tentative in the notice) <span class="tag official">Official</span>; March–April 2027 is more likely if Paper-I runs late <span class="tag expected">Expected</span></td><td>March–April 2028 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Option form and FRTA</td><td>Option form Jun 2026; FRTA 9 Jul 2026; identity verification 20–21 Jul 2026 <span class="tag done">Completed</span></td><td>May–July 2027 <span class="tag expected">Expected</span></td><td>May–July 2028 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Final result</td><td>3 Aug 2026 (1,731 recommended) <span class="tag done">Completed</span></td><td>July–August 2027 <span class="tag expected">Expected</span></td><td>July–August 2028 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Document verification</td><td>By the user departments after the final result <span class="tag done">Completed</span></td><td>After the final result, second half of 2027 <span class="tag expected">Expected</span></td><td>Second half of 2028 <span class="tag expected">Expected</span></td></tr>
+</table></div>
+
+<h3>Selection process</h3>
+<ol class="stages">
+<li><b>Paper-I · CBE</b><span>200 questions, 200 marks, 2 hours · qualifying only; separate shortlists for JE (Civil), JE (Electrical &amp; Mechanical), IMD Scientific Assistant and JE (Telecom)</span></li>
+<li><b>Paper-II · CBE</b><span>100 questions, 300 marks, 2 hours on your branch · final merit is Paper-II only</span></li>
+<li><b>Option form, FRTA and sliding</b><span>Post/department allotted by Paper-II merit and your preferences; identity verification at the regional office</span></li>
+<li><b>Document verification</b><span>By the department after the final result: all semester mark sheets, degree/diploma and experience certificates where needed</span></li>
+</ol>
+
+<h3>Eligibility by department (2026 notice)</h3>
+<div class="table-wrap"><table>
+<tr><th>Department</th><th>Posts</th><th>Qualification</th><th>Age</th></tr>
+<tr><td>Border Roads Organisation</td><td>JE (C), JE (E&amp;M)</td><td>Degree in the branch, or 3-year diploma plus 2 years' experience</td><td>Up to 30</td></tr>
+<tr><td>Military Engineer Services (MES)</td><td>JE (C), JE (E&amp;M)</td><td>Degree in the branch, or 3-year diploma plus 2 years' experience</td><td>Up to 30</td></tr>
+<tr><td>DGQA-Naval, Ministry of Defence</td><td>JE (M), JE (E)</td><td>Degree, or 3-year diploma plus 2 years' experience</td><td>Up to 30</td></tr>
+<tr><td>Central Public Works Department (CPWD)</td><td>JE (C), JE (E)</td><td>Diploma in Civil / Electrical or Mechanical</td><td>Up to 32</td></tr>
+<tr><td>Central Water Commission</td><td>JE (C), JE (M)</td><td>Degree or diploma in the branch</td><td>Up to 30</td></tr>
+<tr><td>Central Water and Power Research Station</td><td>JE (C), JE (E)</td><td>Diploma in the branch</td><td>Up to 30</td></tr>
+<tr><td>Brahmaputra Board; Farakka Barrage Project (Jal Shakti)</td><td>JE (C); JE (C), JE (E)</td><td>Diploma in the branch</td><td>Up to 30</td></tr>
+<tr><td>NTRO</td><td>JE (C)</td><td>Diploma in Civil</td><td>Up to 30</td></tr>
+<tr><td>DG Lighthouses &amp; Lightships</td><td>JE (C), JE (E)</td><td>Degree, or diploma plus 3 years' experience</td><td>Up to 32</td></tr>
+<tr><td>Ministry of Fisheries, Animal Husbandry and Dairying</td><td>JE (C)</td><td>Degree or 3-year diploma in Civil</td><td>Up to 30</td></tr>
+<tr><td>Department of Telecommunications</td><td>JE (Telecom)</td><td>B.E./B.Tech in Electrical, Electronics, Telecom, CS, IT, Instrumentation and similar</td><td>Up to 30</td></tr>
+<tr><td>India Meteorological Department</td><td>Scientific Assistant</td><td>B.Sc. with Physics, or a degree in CS/IT/Electronics/Telecom and similar (with Class 12 Physics and Maths)</td><td>Up to 30</td></tr>
+</table></div>
+<p class="pattern-note"><b>Cross-eligibility:</b> JE (Mechanical) applicants are also considered for JE (E&amp;M); JE (Electrical) for JE (E&amp;M) and JE (Telecom) if qualified · <b>Experience</b> must be gained after the qualifying degree/diploma; internships do not count · Engineering degrees through distance/online mode are not accepted (except IGNOU B.Tech for students enrolled up to 2009-10)</p>
+
+<h3>Exam pattern</h3>
+<p class="pattern-note"><b>What changed recently:</b> from 2026, Paper-I is qualifying only and the final merit uses Paper-II alone (in 2025 both papers counted); the exam was renamed "Junior Engineer Examination" and now also recruits JE (Telecom) in DoT and Scientific Assistant in IMD (Parts D–G).</p>
+<h4>Paper-I</h4>
+<div class="table-wrap"><table>
+<tr><th>Section</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>General Intelligence and Reasoning</td><td>50</td><td>50</td><td rowspan="3">2 h together (2 h 40 min with scribe)</td></tr>
+<tr><td>General Awareness</td><td>50</td><td>50</td></tr>
+<tr><td>General Engineering: Part-A Civil &amp; Structural / Part-B Electrical / Part-C Mechanical (Parts D–F for IMD, Part-G for Telecom)</td><td>100</td><td>100</td></tr>
+<tr class="total"><td>Total</td><td>200</td><td>200</td><td>2 h</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 0.25 per wrong answer · <b>Minimum qualifying marks:</b> UR 30%, OBC/EWS 25%, others 20% · <b>Nature:</b> qualifying (shortlist for Paper-II) · <b>Level:</b> engineering questions at diploma level for Civil/Electrical/Mechanical · <b>Language:</b> English and Hindi</p>
+
+<h4>Paper-II</h4>
+<div class="table-wrap"><table>
+<tr><th>Section</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>Your branch: Part-A Civil &amp; Structural / Part-B Electrical / Part-C Mechanical (or Parts D–G)</td><td>100</td><td>300</td><td>2 h</td></tr>
+<tr class="total"><td>Total</td><td>100</td><td>300</td><td>2 h (2 h 40 min with scribe)</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 1 mark per wrong answer (each question is worth 3) · <b>Merit:</b> Paper-II normalised score only · <b>Normalisation:</b> across shifts, and between the Electrical and Mechanical papers · <b>On screen:</b> IS 456:2000 table, steam table and a scientific calculator; no physical calculator or tables allowed</p>
+
+<h3>Detailed syllabus</h3>
+<details class="syl"><summary>General Intelligence and Reasoning <span class="w">Paper-I 50 Q / 50 marks</span></summary>
+<ul><li>Analogies, similarities and differences, classification (verbal and figural)</li>
+<li>Number series, coding-decoding, arithmetical reasoning and computations</li>
+<li>Space visualisation, visual memory, observation, discrimination</li>
+<li>Problem solving, analysis, judgement and decision making; symbols and their relationships</li>
+</ul></details>
+<details class="syl"><summary>General Awareness <span class="w">Paper-I 50 Q / 50 marks</span></summary>
+<ul><li>History, culture, geography and economy of India and its neighbours</li>
+<li>General polity and scientific research; everyday science</li>
+<li>Current events (no special study of any discipline needed)</li>
+</ul></details>
+<details class="syl"><summary>Part-A · Civil and Structural Engineering <span class="w">Paper-I 100 marks · Paper-II 300 marks</span></summary>
+<ul><li><b>Mechanics and structures:</b> engineering mechanics, solid mechanics (SFD/BMD, bending, torsion, buckling), structural analysis (trusses, arches, slope deflection, moment distribution, influence lines)</li>
+<li><b>Design:</b> RCC by working stress and limit state (beams, slabs, columns, footings, retaining walls); steel structures (bolted and welded connections, tension and compression members, plastic analysis)</li>
+<li><b>Materials and management:</b> bricks, stone, timber, cement, concrete mix design and testing; PERT/CPM; estimating, costing and valuation</li>
+<li><b>Surveying:</b> chain, compass, plane table, levelling, theodolite, traversing, tacheometry, total station</li>
+<li><b>Geotechnical:</b> soil properties and classification, permeability and seepage, compaction, consolidation, shear strength</li>
+<li><b>Water:</b> fluid mechanics, open-channel hydraulics, hydrology, irrigation, dams and canals</li>
+<li><b>Environmental:</b> water and wastewater treatment, sewerage, air pollution, solid waste</li>
+<li><b>Transportation:</b> highway geometric design, pavements (IRC design), railway track, traffic engineering</li>
+</ul></details>
+<details class="syl"><summary>Part-B · Electrical Engineering <span class="w">Paper-I 100 marks · Paper-II 300 marks</span></summary>
+<ul><li>Circuit elements and network theorems (KCL, KVL, Thevenin, Norton, superposition, maximum power transfer)</li>
+<li>Magnetic circuits; AC fundamentals, resonance, three-phase circuits, power factor</li>
+<li>Measurement and instruments: meters, bridges, energy meter, megger, CT and PT</li>
+<li>Electrical machines: transformers, DC machines, induction motors, synchronous generators, special machines</li>
+<li>Generation, transmission and distribution; protection, circuit breakers, cables</li>
+<li>Estimation and costing, earthing and IE rules; utilisation (illumination, heating, welding, traction)</li>
+<li>Basic electronics (diodes, BJT, FET, amplifiers) and power electronics (thyristors, choppers, rectifiers)</li>
+</ul></details>
+<details class="syl"><summary>Part-C · Mechanical Engineering <span class="w">Paper-I 100 marks · Paper-II 300 marks</span></summary>
+<ul><li>Engineering mechanics and strength of materials (stress-strain, SFD/BMD, deflection, torsion, thin cylinders)</li>
+<li>Theory of machines (cams, drives, gear trains, flywheels, governors, balancing, vibration) and machine design (joints, keys, shafts, couplings, gears, springs, fasteners)</li>
+<li>Materials science: crystal structure, iron-carbon diagram, heat treatment, alloys, testing, corrosion</li>
+<li>Thermal engineering: thermodynamics, IC engines, steam and gas turbines, boilers, compressors, refrigeration and air conditioning, heat transfer</li>
+<li>Fluid mechanics and hydraulic machines (turbines, pumps)</li>
+<li>Industrial engineering, manufacturing (casting, forming, welding, machining), metrology, CNC and advanced manufacturing</li>
+</ul></details>
+<details class="syl"><summary>Parts D–G · IMD Scientific Assistant and JE (Telecom) <span class="w">Paper-I 100 marks · Paper-II 300 marks</span></summary>
+<ul><li><b>Part-D (CS and IT):</b> engineering maths, digital logic, computer organisation, C and data structures, algorithms, theory of computation, compilers, operating systems, databases, networks</li>
+<li><b>Part-E (Electronics and Telecom):</b> devices and circuits, network theorems, digital electronics; antennas, propagation, modulation, digital communication</li>
+<li><b>Part-F (Physics):</b> mathematical methods, mechanics, waves and optics, electricity and magnetism, thermodynamics, modern and solid state physics, electronics</li>
+<li><b>Part-G (Telecommunications):</b> network analysis, signals and systems, devices, analog and digital circuits, control systems, analog and digital communications, electromagnetics</li>
+</ul></details>
+
+<h3>How to prepare</h3>
+<ul class="prep"><li>Paper-II alone now decides your rank, so spend most of your time on your branch: finish the diploma-level theory for every Paper-II topic first, then solve previous SSC JE papers topic-wise.</li>
+<li>Paper-II deducts a full mark on 3-mark questions: attempt only what you are fairly sure of, and track accuracy in each mock.</li>
+<li>Paper-I only has to be cleared, but 100 marks are non-technical: use the Logical Reasoning notes on this site for reasoning and a short daily current-affairs habit for general awareness.</li>
+<li>Practise numericals with the on-screen scientific calculator and the IS 456 / steam tables, since you cannot bring your own.</li>
+<li>Civil: give extra time to RCC, steel, soil mechanics, surveying and estimating. Electrical: machines, measurement and power systems. Mechanical: thermal, SOM, TOM and manufacturing; these give the most questions.</li>
+<li>Check the department table before filling preferences: some posts need a degree or diploma plus experience, and the age limit is 32 only for CPWD and Lighthouses.</li>
+</ul>
+
+<div class="sources"><b>Sources</b> (checked 28 Sep 2026): <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Notice_of_adv_je_2026.pdf" target="_blank" rel="noopener">SSC: Notice of JE Examination 2026 (02.09.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Addendum_JE_10092026.pdf" target="_blank" rel="noopener">SSC: addendum (10.09.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/English_JE_17092026.pdf" target="_blank" rel="noopener">SSC: closing-date notice (17.09.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Notice_of_adv_je_2025.pdf" target="_blank" rel="noopener">SSC: Notice of JE 2025</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Writeup_06032026.pdf" target="_blank" rel="noopener">SSC: JE 2025 Paper-I result</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/notice_09032026.pdf" target="_blank" rel="noopener">SSC: JE 2025 Paper-II schedule</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/writeup_03082026.pdf" target="_blank" rel="noopener">SSC: JE 2025 final result</a> · <a href="https://ssc.gov.in/ssc-calender" target="_blank" rel="noopener">SSC calendar 2026-27 (12.01.2026)</a> · <a href="https://testbook.com/news/ssc-je-2026-notification-out/" target="_blank" rel="noopener">Testbook: SSC JE 2026 notification</a>
+<br>Always confirm dates on the official website before applying.</div>
+</div>
+
+<div class="exam" role="tabpanel" aria-labelledby="t-ssc-chsl" id="ex-ssc-chsl" data-group="12th level" data-label="SSC CHSL">
+<div class="exam-head">
+<h2>SSC Combined Higher Secondary (10+2) Level Examination (CHSLE), 2026</h2>
+<p class="exam-sub">LDC/JSA and Data Entry Operator (Group C) · Staff Selection Commission (SSC) · clerical, record-keeping and data-entry jobs in central government ministries, departments and offices across India.</p>
+<div class="exam-status"><span class="tag official">CHSLE 2026 applications open: 7 Sep – 7 Oct 2026 (official)</span> <span class="tag expected">Tier-I: Dec 2026 – Feb 2027 (expected; notice says "to be notified later")</span></div>
+</div>
+
+<div class="facts">
+<div class="fact"><span class="k">Conducted by</span><span class="v">Staff Selection Commission (SSC), New Delhi, through its regional offices, for central ministries, departments, constitutional and statutory bodies and tribunals</span></div>
+<div class="fact"><span class="k">Post / grade</span><span class="v">Group C, non-gazetted: Lower Division Clerk (LDC) / Junior Secretariat Assistant (JSA), Data Entry Operator (DEO), DEO Grade 'A'</span></div>
+<div class="fact wide"><span class="k">Posts you can get</span><span class="v">LDC / JSA (Pay Level 2) · DEO (Level 4 or 5) · DEO Grade 'A' (Level 4). Postal Assistant / Sorting Assistant (PA/SA) are no longer recruited through CHSL; they are not in the 2025 or 2026 notices</span></div>
+<div class="fact"><span class="k">Latest vacancies</span><span class="v">About 2,536 tentative (CHSLE 2026 notice, 07.09.2026); the post-wise list is still to come. The previous cycle (CHSLE 2025) ended with 3,522 final vacancies (as on 18.06.2026)</span></div>
+<div class="fact"><span class="k">Age limit</span><span class="v">18–27 years as on 01.08.2026 (born 02.08.1999 to 01.08.2008). Relaxation: SC/ST 5 yrs, OBC 3 yrs, PwBD 10 yrs (13 OBC, 15 SC/ST), ex-servicemen 3 yrs after deducting military service; others as per the notice</span></div>
+<div class="fact"><span class="k">Education</span><span class="v">12th pass from a recognised board by 07.10.2026. DEO / DEO Grade 'A' in the Ministry of Consumer Affairs, Food &amp; Public Distribution, SSC and the Ministry of Culture need 12th in Science with Mathematics</span></div>
+<div class="fact"><span class="k">Attempts</span><span class="v">No limit stated in the notice; you can appear as long as you are within the age limit</span></div>
+<div class="fact"><span class="k">Pay (starting)</span><span class="v">LDC/JSA: Level 2, basic ₹19,900 (₹19,900–63,200). DEO: Level 4, basic ₹25,500 (₹25,500–81,100) or Level 5, basic ₹29,200 (₹29,200–92,300). DEO Grade 'A': Level 4. Plus DA, HRA and TA; take-home pay depends on the city</span></div>
+<div class="fact"><span class="k">Mode</span><span class="v">Computer-based test in two tiers. Tier-II includes a computer knowledge test and a typing/skill test on the same day. Fee ₹100 (no fee for women, SC, ST, PwBD and eligible ex-servicemen)</span></div>
+</div>
+
+<h3>Timeline</h3>
+<div class="table-wrap"><table class="timeline">
+<tr><th>Stage</th><th>Previous cycle (CHSLE 2025)</th><th>Current cycle (CHSLE 2026)</th></tr>
+<tr><td>SSC tentative calendar</td><td>Calendar 2025-26 <span class="tag done">Completed</span></td><td>SSC's calendar for 2026-27 (on ssc.gov.in, dated 12.01.2026) listed applications 30 Apr – 31 May 2026 and Tier-I in July–September 2026. SSC missed those dates, and ssc.gov.in has no revised calendar. The actual dates are in the rows below</td></tr>
+<tr><td>Notification</td><td>23 Jun 2025 <span class="tag done">Completed</span></td><td>7 Sep 2026 <span class="tag done">Completed</span></td></tr>
+<tr><td>Online application</td><td>23 Jun – 18 Jul 2025 <span class="tag done">Completed</span></td><td>7 Sep – 7 Oct 2026 (fee by 8 Oct 2026, 23:00) <span class="tag official">Official</span></td></tr>
+<tr><td>Correction window</td><td>July 2025 <span class="tag done">Completed</span></td><td>14–16 Oct 2026 <span class="tag official">Official</span></td></tr>
+<tr><td>Tier-I (CBE)</td><td>12–30 Nov 2025 (notified as 8–18 Sep 2025, then rescheduled) <span class="tag done">Completed</span></td><td>December 2026 – February 2027 <span class="tag expected">Expected</span> (the notice says "to be notified later". The 2025 Tier-I came about 4 months after applications closed, and CGL 2026 Tier-I runs to 30 Oct 2026)</td></tr>
+<tr><td>Tier-I result</td><td>27 Feb 2026 <span class="tag done">Completed</span></td><td>March–April 2027 <span class="tag expected">Expected</span> (about 3 months after Tier-I in 2025)</td></tr>
+<tr><td>Tier-II (CBE + typing/skill test)</td><td>10 and 22 Apr 2026 <span class="tag done">Completed</span></td><td>April–June 2027 <span class="tag expected">Expected</span> (the notice says "to be notified later")</td></tr>
+<tr><td>Option-cum-preference form</td><td>19–25 Jun 2026 (extended) <span class="tag done">Completed</span></td><td>Mid 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>First Round of Tentative Allocation (FRTA)</td><td>17 Aug 2026 <span class="tag done">Completed</span></td><td>Mid–late 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Identity verification / sliding (fix or float)</td><td>1–3 Sep 2026 <span class="tag done">Completed</span></td><td>After FRTA, 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Final result</td><td>Not yet declared. October 2026 <span class="tag expected">Expected</span> (for Steno 2025, the final result came about 2 weeks after identity verification)</td><td>Late 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Next notification (CHSLE 2027)</td><td>–</td><td>Mid–late 2027 <span class="tag expected">Expected</span> (notices came out on 23 Jun 2025 and 7 Sep 2026; SSC's 2027-28 calendar should give the date)</td></tr>
+</table></div>
+
+<h3>Selection process</h3>
+<ol class="stages">
+<li><b>Tier-I · CBE</b><span>100 questions, 200 marks, 60 minutes · qualifying only: it shortlists candidates for Tier-II, with separate cut-offs for LDC/JSA and the two DEO groups</span></li>
+<li><b>Tier-II · Session I</b><span>Section I (Maths + Reasoning) and Section II (English + General Awareness) count for merit. Section III, the computer knowledge test, is qualifying</span></li>
+<li><b>Tier-II · Session II</b><span>Typing test (LDC/JSA) or data-entry skill test (DEO) on the same day · qualifying only</span></li>
+<li><b>Preferences and allocation</b><span>Post preferences are taken online. The FRTA follows, based only on Tier-II Section I + II marks. Candidates then attend identity verification in person and choose "fix" or "float"</span></li>
+<li><b>Final result and document verification</b><span>Document verification is done by the user department after the final result</span></li>
+</ol>
+
+<h3>Exam pattern</h3>
+<h4>Tier-I · CBE (qualifying)</h4>
+<div class="table-wrap"><table>
+<tr><th>Part</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>English Language (Basic Knowledge)</td><td>25</td><td>50</td><td>15 min</td></tr>
+<tr><td>General Intelligence</td><td>25</td><td>50</td><td>15 min</td></tr>
+<tr><td>Quantitative Aptitude (Basic Arithmetic Skill)</td><td>25</td><td>50</td><td>15 min</td></tr>
+<tr><td>General Awareness</td><td>25</td><td>50</td><td>15 min</td></tr>
+<tr class="total"><td>Total</td><td>100</td><td>200</td><td>60 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 0.50 mark per wrong answer · <b>Minimum qualifying marks:</b> UR 30%, OBC/EWS 25%, others 20% · <b>Scores:</b> normalised when the exam runs in several shifts · <b>Language:</b> English and Hindi, plus the regional language chosen in the application form (for all parts except English) · <b>Scribe candidates:</b> 80 min</p>
+<p class="pattern-note"><b>What changed recently:</b> the 2026 notice adds a sectional timer (15 minutes per part in Tier-I; 30 + 30 minutes in Tier-II Section I; 40 + 20 minutes in Section II). In 2025 you could move freely within each 60-minute block. From 2026, candidates typing in Hindi must use the Mangal font or they fail the test. PA/SA posts have been dropped from CHSL.</p>
+
+<h4>Tier-II · Session I (merit + qualifying)</h4>
+<div class="table-wrap"><table>
+<tr><th>Section / module</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>Section I-A: Mathematical Abilities</td><td>30</td><td>90</td><td>30 min</td></tr>
+<tr><td>Section I-B: Reasoning and General Intelligence</td><td>30</td><td>90</td><td>30 min</td></tr>
+<tr><td>Section II-A: English Language and Comprehension</td><td>40</td><td>120</td><td>40 min</td></tr>
+<tr><td>Section II-B: General Awareness</td><td>20</td><td>60</td><td>20 min</td></tr>
+<tr><td>Section III: Computer Knowledge Test (qualifying)</td><td>15</td><td>45</td><td>15 min</td></tr>
+<tr class="total"><td>Total (merit = Sections I + II, 360 marks)</td><td>135</td><td>405</td><td>2 h 15 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Marking:</b> 3 marks per question · <b>Negative marking:</b> 1 mark per wrong answer in Sections I, II and III · <b>Qualifying:</b> you must clear every section (30% UR, 25% OBC/EWS, 20% others). In CHSLE 2025 the computer test cut-off was 13.5/45 for UR and 9–11.25 for the other categories · <b>Language:</b> English and Hindi, plus a regional language, except the English module</p>
+
+<h4>Tier-II · Session II: skill test / typing test (qualifying, same day)</h4>
+<div class="table-wrap"><table>
+<tr><th>Part</th><th>Post</th><th>Standard</th><th>Time</th></tr>
+<tr><td>Part A: DEO skill test</td><td>DEO / DEO Gr 'A' in Consumer Affairs, Food &amp; PD, SSC and Culture</td><td>15,000 key depressions per hour (passage of about 3,700–4,000 key depressions, English)</td><td>15 min</td></tr>
+<tr><td>Part B: DEO skill test</td><td>DEO / DEO Gr 'A' in all other departments</td><td>8,000 key depressions per hour (passage of about 2,000–2,200 key depressions, English)</td><td>15 min</td></tr>
+<tr><td>Part C: typing test</td><td>LDC / JSA</td><td>English 35 wpm (about 10,500 key depressions per hour) or Hindi 30 wpm (about 9,000 key depressions per hour); medium chosen in the application form and fixed after that</td><td>10 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Evaluation:</b> accuracy on a set passage; errors are worked out to 2 decimal places. In CHSLE 2025 the typing test allowed 7% mistakes for UR and 10% for other categories · <b>Hindi:</b> Mangal font is mandatory · <b>Exemption:</b> PwBD candidates who are medically certified as unable to type (not VH/HH) are exempt from the typing test only; the DEO skill test is compulsory for everyone · <b>Scribe candidates:</b> +5 min</p>
+
+<h3>Detailed syllabus</h3>
+<details class="syl"><summary>English Language <span class="w">Tier-I 25 Q / 50 marks · Tier-II 40 Q / 120 marks</span></summary>
+<ul><li><b>Grammar:</b> spot the error, fill in the blanks, sentence improvement, active/passive voice, direct/indirect narration</li>
+<li><b>Vocabulary:</b> synonyms/homonyms, antonyms, spellings and misspelt words, idioms and phrases, one-word substitution</li>
+<li><b>Arrangement:</b> shuffling of sentence parts, shuffling of sentences in a passage</li>
+<li><b>Passages:</b> cloze passage and comprehension. In Tier-II, at least one passage is simple (from a book or story) and one is based on a current-affairs editorial or report</li>
+</ul></details>
+<details class="syl"><summary>General Intelligence / Reasoning <span class="w">Tier-I 25 Q / 50 marks · Tier-II 30 Q / 90 marks</span></summary>
+<ul><li><b>Verbal:</b> semantic analogy, semantic classification, semantic series, word building, coding-decoding, drawing inferences</li>
+<li><b>Number/symbol:</b> symbolic/number analogy and classification, number series, symbolic operations, numerical operations, trends</li>
+<li><b>Non-verbal:</b> figural analogy, classification and series, space orientation, embedded figures, punched hole and pattern folding/unfolding, figural pattern completion, Venn diagrams</li>
+<li>Critical thinking, problem solving, emotional intelligence and social intelligence</li>
+</ul></details>
+<details class="syl"><summary>Quantitative Aptitude / Mathematical Abilities <span class="w">Tier-I 25 Q / 50 marks · Tier-II 30 Q / 90 marks</span></summary>
+<ul><li><b>Number system:</b> whole numbers, decimals and fractions, relationship between numbers</li>
+<li><b>Arithmetic:</b> percentage, ratio and proportion, square roots, averages, simple and compound interest, profit and loss, discount, partnership, mixture and alligation, time and distance, time and work</li>
+<li><b>Algebra:</b> basic identities, elementary surds, graphs of linear equations</li>
+<li><b>Geometry:</b> triangles and their centres, congruence and similarity, circles, chords, tangents, angles subtended by chords, common tangents</li>
+<li><b>Mensuration:</b> triangle, quadrilaterals, regular polygons, circle, prism, cone, cylinder, sphere, hemisphere, cuboid, pyramid</li>
+<li><b>Trigonometry:</b> ratios, complementary angles, standard identities, heights and distances (simple)</li>
+<li><b>Data:</b> histogram, frequency polygon, bar diagram, pie chart. <b>Tier-II adds</b> mean, median, mode, standard deviation and simple probability</li>
+</ul></details>
+<details class="syl"><summary>General Awareness <span class="w">Tier-I 25 Q / 50 marks · Tier-II 20 Q / 60 marks</span></summary>
+<ul><li>Current events: national and international news, awards, sports, schemes, appointments</li>
+<li>History, culture, geography and the economy of India and its neighbouring countries</li>
+<li>General polity, including the Constitution; government policy</li>
+<li>Everyday science and scientific research</li>
+</ul></details>
+<details class="syl"><summary>Computer Knowledge Test <span class="w">Tier-II 15 Q / 45 marks · qualifying</span></summary>
+<ul><li><b>Computer basics:</b> organisation of a computer, CPU, input/output devices, memory and its organisation, backup devices, ports, Windows Explorer, keyboard shortcuts</li>
+<li><b>Software:</b> Windows OS; MS Word, Excel and PowerPoint basics</li>
+<li><b>Internet and email:</b> browsing and searching, downloading/uploading, managing an email account, e-banking</li>
+<li><b>Networking and security:</b> networking devices and protocols; threats (hacking, viruses, worms, Trojans) and how to prevent them</li>
+</ul></details>
+<details class="syl"><summary>Typing / DEO skill test <span class="w">Tier-II Session II · qualifying</span></summary>
+<ul><li>LDC/JSA: English 35 wpm or Hindi 30 wpm (Mangal font) on a 10-minute passage, judged on accuracy</li>
+<li>DEO: 8,000 or 15,000 key depressions per hour (depending on the department) on a 15-minute English passage</li>
+<li>Practise in a plain text editor with auto-correct and spell-check switched off, because the test is scored on accuracy</li>
+</ul></details>
+
+<h3>How to prepare</h3>
+<ul class="prep"><li>Tier-I only shortlists you, but from 2026 each part has its own 15-minute timer, so you can no longer carry spare time from GA into Maths. Practise each part as a separate 15-minute timed block.</li>
+<li>Tier-II alone decides your rank, and each wrong answer costs 1 of the 3 marks. Aim for accuracy: skip questions you are unsure of, especially in Maths and English.</li>
+<li>Build arithmetic, algebra, geometry and trigonometry from the Quantitative Aptitude notes. Drill squares, cubes, fractions and percentages on the Calculation Practice page and the Tables &amp; Speed Tricks notes so 30 Maths questions fit in 30 minutes.</li>
+<li>For reasoning, use the Logical Reasoning notes. SSC reasoning is mostly analogy, classification, series, coding, and figure-based questions (paper folding, embedded and mirror figures), so practise figure questions from previous papers.</li>
+<li>English has the biggest weight in Tier-II (120 marks). Work through grammar rules, idioms and one-word substitutions with the Verbal Ability notes, and read one editorial a day for the comprehension passage.</li>
+<li>General Awareness: revise static GK (history, polity, geography, science) and keep 6 months of current affairs. Previous SSC papers repeat facts often.</li>
+<li>Start typing practice early: 35 wpm in English (or 30 in Hindi, in Mangal font) with under 7% errors for UR. The typing test is on the same day as Tier-II, so do not leave it for later.</li>
+<li>Revise basic computer knowledge (MS Office, shortcuts, networking, security) once a week. The test is only 15 questions, but you must clear it.</li>
+</ul>
+
+<div class="sources"><b>Sources</b> (checked 27 Sep 2026): <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Notice_of_adv_chsle_2026.pdf" target="_blank" rel="noopener">SSC: Notice of CHSLE 2026 (07.09.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Notice_of_adv_chsl_2025.pdf" target="_blank" rel="noopener">SSC: Notice of CHSLE 2025 (23.06.2025)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/writeup_08122025.pdf" target="_blank" rel="noopener">SSC: CHSLE 2025 Tier-I answer key write-up (Tier-I 12–30 Nov 2025)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/writeup_27022026.pdf" target="_blank" rel="noopener">SSC: CHSLE 2025 Tier-I result (27.02.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/FRTA_CHSLE_2025_17082026.pdf" target="_blank" rel="noopener">SSC: CHSLE 2025 FRTA (17.08.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/notice_18082026.pdf" target="_blank" rel="noopener">SSC: CHSLE 2025 identity verification schedule</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/final_vacancies_18062026.pdf" target="_blank" rel="noopener">SSC: CHSLE 2025 final vacancies (18.06.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Important%20Notice%202026_cgle_2026_12092026.pdf" target="_blank" rel="noopener">SSC: CGLE 2026 Tier-I schedule (12.09.2026)</a> · <a href="https://ssc.gov.in/" target="_blank" rel="noopener">ssc.gov.in: examination calendar 2026-27</a> · <a href="https://www.careerpower.in/ssc-chsl.html" target="_blank" rel="noopener">Career Power: SSC CHSL 2026</a> · <a href="https://testbook.com/news/ssc-new-exam-calendar-2026-27-out/" target="_blank" rel="noopener">Testbook: SSC new calendar 2026-27</a>
+<br>Always confirm dates on the official website before applying.</div>
+</div>
+
+<div class="exam" role="tabpanel" aria-labelledby="t-ssc-steno" id="ex-ssc-steno" data-group="12th level" data-label="SSC Stenographer">
+<div class="exam-head">
+<h2>SSC Stenographer Grade 'C' &amp; 'D' Examination, 2026</h2>
+<p class="exam-sub">Stenographer Grade C (Group B) and Grade D (Group C) · Staff Selection Commission (SSC) · take dictation in shorthand and type it up for officers in central ministries, departments and offices.</p>
+<div class="exam-status"><span class="tag done">CBE held 9–12 and 15 Sep 2026</span> <span class="tag expected">CBE result: Nov–Dec 2026 · skill test: Jan–Feb 2027 (expected)</span> <span class="tag expected">Next notification (2027): Apr–Jun 2027 (expected)</span></div>
+</div>
+
+<div class="facts">
+<div class="fact"><span class="k">Conducted by</span><span class="v">Staff Selection Commission (SSC), New Delhi, for central ministries and departments and their attached and subordinate offices and statutory bodies</span></div>
+<div class="fact"><span class="k">Post / grade</span><span class="v">Stenographer Grade 'C' (Group B, non-gazetted) and Stenographer Grade 'D' (Group C). You can apply for either grade or both</span></div>
+<div class="fact wide"><span class="k">Posts you can get</span><span class="v">Grade C: Pay Level 6, in bodies such as BPRD, the Ministry of Corporate Affairs, NCLT and CBIC. Grade D: Pay Level 4, in bodies such as CBI, the Department of Telecommunications, CBIC, CBDT, DoPT and EPFO. Only men can apply for Grade D posts in BRO</span></div>
+<div class="fact"><span class="k">Latest vacancies</span><span class="v">1,275 revised tentative (Grade D 1,129 + Grade C 146, as on 10.08.2026). The notice said about 731, and the list of 04.06.2026 had 1,170</span></div>
+<div class="fact"><span class="k">Age limit</span><span class="v">As on 01.08.2026: Grade C 18–30 years (born 02.08.1996 to 01.08.2008); Grade D 18–27 years (born 02.08.1999 to 01.08.2008). Relaxation: SC/ST 5 yrs, OBC 3 yrs, PwBD 10 yrs (13 OBC, 15 SC/ST), ex-servicemen 3 yrs after deducting military service; for Grade D only, central government employees up to 40 (45 SC/ST) and widowed/divorced women up to 35 (40 SC/ST)</span></div>
+<div class="fact"><span class="k">Education</span><span class="v">12th pass (or equivalent) from a recognised board by 01.08.2026. You need to know stenography; there is no separate certificate requirement</span></div>
+<div class="fact"><span class="k">Attempts</span><span class="v">No limit stated in the notice; you can appear as long as you are within the age limit</span></div>
+<div class="fact"><span class="k">Pay (starting)</span><span class="v">Grade C: Level 6, basic ₹35,400 (₹35,400–1,12,400). Grade D: Level 4, basic ₹25,500 (₹25,500–81,100). Plus DA, HRA and TA; take-home pay depends on the city</span></div>
+<div class="fact"><span class="k">Mode</span><span class="v">Online CBT (200 marks), then a stenography skill test: you take 10 minutes of dictation and transcribe it on a computer. Fee ₹100 (no fee for women, SC, ST, PwBD and eligible ex-servicemen)</span></div>
+</div>
+
+<h3>Timeline</h3>
+<div class="table-wrap"><table class="timeline">
+<tr><th>Stage</th><th>Previous cycle (Steno 2025)</th><th>Current cycle (Steno 2026)</th></tr>
+<tr><td>SSC tentative calendar</td><td>Calendar 2025-26 <span class="tag done">Completed</span></td><td>SSC's calendar for 2026-27 (on ssc.gov.in, dated 12.01.2026) listed applications 30 Apr – 31 May 2026 and the CBE in August–September 2026. The CBE did fall in September; the rows below use SSC's later notices</td></tr>
+<tr><td>Notification</td><td>6 Jun 2025 <span class="tag done">Completed</span></td><td>24 Apr 2026 <span class="tag done">Completed</span></td></tr>
+<tr><td>Online application</td><td>6–26 Jun 2025 <span class="tag done">Completed</span></td><td>24 Apr – 15 May 2026 (fee by 16 May) <span class="tag done">Completed</span></td></tr>
+<tr><td>Correction window</td><td>After the application window, 2025 <span class="tag done">Completed</span></td><td>20–21 May 2026 <span class="tag done">Completed</span></td></tr>
+<tr><td>Tentative vacancies</td><td>24 Jun 2025 <span class="tag done">Completed</span></td><td>1,170 (04.06.2026), revised to 1,275 (10.08.2026) <span class="tag done">Completed</span></td></tr>
+<tr><td>Computer-based exam</td><td>6, 7, 8 and 11 Aug 2025 <span class="tag done">Completed</span></td><td>9–12 and 15 Sep 2026. It was first set for 9–12 Sep; a 31.08.2026 notice extended it to 15 Sep <span class="tag done">Completed</span></td></tr>
+<tr><td>Tentative answer key</td><td>22 Aug 2025 <span class="tag done">Completed</span></td><td>23 Sep 2026; challenges accepted until 26 Sep 2026, 23:00 <span class="tag done">Completed</span></td></tr>
+<tr><td>CBE result (shortlist for skill test)</td><td>28 Nov 2025 <span class="tag done">Completed</span></td><td>November–December 2026 <span class="tag expected">Expected</span> (the 2025 result came about 3.5 months after the CBE)</td></tr>
+<tr><td>Skill test in stenography</td><td>28–29 Jan 2026 <span class="tag done">Completed</span></td><td>January–February 2027 <span class="tag expected">Expected</span> (about 2 months after the CBE result in 2025)</td></tr>
+<tr><td>Preferences and FRTA</td><td>FRTA 18 Jun 2026, withheld, then revised FRTA 31 Jul 2026 <span class="tag done">Completed</span></td><td>Mid 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Identity verification / sliding</td><td>11–12 Aug 2026 <span class="tag done">Completed</span></td><td>Mid 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Final result</td><td>25 Aug 2026 (1,715 candidates shortlisted) <span class="tag done">Completed</span></td><td>July–September 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Next notification (Steno 2027)</td><td>–</td><td>April–June 2027 <span class="tag expected">Expected</span> (notices came out on 6 Jun 2025 and 24 Apr 2026; SSC's 2027-28 calendar should give the date)</td></tr>
+</table></div>
+
+<h3>Selection process</h3>
+<ol class="stages">
+<li><b>Computer-based exam</b><span>200 marks, 2 hours, with a timer for each part · decides merit. Minimum marks: UR 30%, OBC/EWS 25%, others 20%</span></li>
+<li><b>Skill test in stenography</b><span>10 minutes of dictation (Grade C 100 wpm, Grade D 80 wpm) in English or Hindi, transcribed on a computer · mandatory but qualifying; SSC sets category-wise standards</span></li>
+<li><b>Preferences, FRTA and sliding</b><span>Post preferences are taken online. The allocation (FRTA) uses CBE merit among those who pass the skill test. You then attend identity verification in person and choose "fix" or "float"</span></li>
+<li><b>Final result and document verification</b><span>Document and medical checks are done by the user department; BRO has extra physical standards</span></li>
+</ol>
+
+<h3>Exam pattern</h3>
+<h4>Computer-based exam</h4>
+<div class="table-wrap"><table>
+<tr><th>Part</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>I: General Intelligence &amp; Reasoning</td><td>50</td><td>50</td><td>30 min</td></tr>
+<tr><td>II: General Awareness</td><td>50</td><td>50</td><td>30 min</td></tr>
+<tr><td>III: English Language and Comprehension</td><td>100</td><td>100</td><td>60 min</td></tr>
+<tr class="total"><td>Total</td><td>200</td><td>200</td><td>2 hours</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 0.25 mark per wrong answer · <b>Minimum qualifying marks:</b> UR 30%, OBC/EWS 25%, others 20% · <b>Scores:</b> normalised across shifts · <b>Language:</b> English and Hindi (objective MCQ) · <b>Scribe candidates:</b> 2 h 40 min (40/40/80 min)</p>
+<p class="pattern-note"><b>What changed recently:</b> the 2026 notice adds a timer for each part (30 + 30 + 60 minutes). In 2025 the 2 hours were one block. An addendum dated 23.09.2026 makes the Mangal font mandatory for skill tests in Hindi; transcripts typed in any other font will not be evaluated.</p>
+
+<h4>Skill test in stenography (qualifying)</h4>
+<div class="table-wrap"><table>
+<tr><th>Post</th><th>Dictation</th><th>Transcription time (English)</th><th>Transcription time (Hindi)</th></tr>
+<tr><td>Stenographer Grade 'C'</td><td>10 min at 100 wpm</td><td>40 min (55 min for scribe-eligible candidates)</td><td>55 min (75 min for scribe-eligible candidates)</td></tr>
+<tr><td>Stenographer Grade 'D'</td><td>10 min at 80 wpm</td><td>50 min (70 min for scribe-eligible candidates)</td><td>65 min (90 min for scribe-eligible candidates)</td></tr>
+</table></div>
+<p class="pattern-note"><b>Medium:</b> English or Hindi, as chosen in the application form. If you take the test in Hindi you must learn English stenography after appointment, and vice versa, or your probation may not be cleared · <b>Transcription:</b> typed on a computer at SSC regional offices or chosen centres · <b>Evaluation:</b> SSC's standard skill-test instructions (under "For Candidates" on ssc.gov.in) with category-wise error limits · <b>Hindi:</b> Mangal font only</p>
+
+<h3>Detailed syllabus</h3>
+<details class="syl"><summary>General Intelligence &amp; Reasoning <span class="w">50 Q / 50 marks · 30 min</span></summary>
+<ul><li><b>Verbal:</b> analogies, similarities and differences, classification, coding-decoding, relationship concepts, judgement and decision making</li>
+<li><b>Numerical:</b> arithmetical reasoning, arithmetical number series, arithmetical computation</li>
+<li><b>Non-verbal:</b> space visualisation, figure classification, non-verbal series, visual memory, discriminating observation</li>
+<li>Problem solving and analysis; abstract ideas, symbols and their relationships</li>
+</ul></details>
+<details class="syl"><summary>General Awareness <span class="w">50 Q / 50 marks · 30 min</span></summary>
+<ul><li>Current events and everyday science</li>
+<li>India and its neighbouring countries: sports, history, culture, geography, the economy</li>
+<li>General polity, including the Indian Constitution; scientific research</li>
+<li>Pitched at general knowledge that needs no specialist study of any subject</li>
+</ul></details>
+<details class="syl"><summary>English Language and Comprehension <span class="w">100 Q / 100 marks · 60 min</span></summary>
+<ul><li><b>Grammar:</b> error spotting, fill in the blanks, sentence improvement, voice, narration, sentence structure</li>
+<li><b>Vocabulary:</b> synonyms, antonyms, spellings, idioms and phrases, one-word substitution, correct usage</li>
+<li><b>Passages:</b> reading comprehension, cloze test, jumbled sentences</li>
+<li>Half the paper's marks, and it is also the first tie-breaker, so it matters most</li>
+</ul></details>
+<details class="syl"><summary>Skill test in stenography <span class="w">qualifying</span></summary>
+<ul><li>Shorthand in English (Pitman or similar) or Hindi, reaching 80 wpm (Grade D) or 100 wpm (Grade C) over a full 10 minutes</li>
+<li>Transcription on a computer within 40–65 minutes, depending on grade and language, with few errors (omissions, substitutions, spelling)</li>
+<li>Hindi transcription must be typed in Mangal font, so practise with a Hindi keyboard layout that works with it</li>
+</ul></details>
+
+<h3>How to prepare</h3>
+<ul class="prep"><li>English is 100 of the 200 marks and the first tie-breaker, so give it about half your study time. Use the Verbal Ability notes for grammar and vocabulary and practise 100-question sets in 60 minutes.</li>
+<li>With separate timers from 2026, you cannot borrow time between parts. Practise reasoning and GA as 30-minute blocks of 50 questions (about 36 seconds per question).</li>
+<li>For reasoning, work through analogies, series, coding and figure questions from the Logical Reasoning notes. Number-series and arithmetical-reasoning questions get faster with the Calculation Practice page and the Tables &amp; Speed Tricks notes.</li>
+<li>GA is 50 marks with only 0.25 negative marking: revise static GK (history, polity, geography, science) and 6 months of current affairs, and attempt the questions you are fairly sure of.</li>
+<li>Start shorthand months before the CBE. Build dictation speed step by step (60, 80, then 100 wpm) with 10-minute passages, and transcribe every passage on a computer against the clock (40–50 minutes in English).</li>
+<li>If you take the test in Hindi, practise transcribing in Mangal font now. Transcripts in any other font will not be evaluated in the 2026 skill test.</li>
+<li>Apply for both grades if you are eligible: Grade D has far more posts (1,129 vs 146 in 2026) and a lower dictation speed.</li>
+</ul>
+
+<div class="sources"><b>Sources</b> (checked 27 Sep 2026): <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Notice_of_adv_steno_2026.pdf" target="_blank" rel="noopener">SSC: Notice of Steno C &amp; D 2026 (24.04.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/TentativeVacancy/Revised%20Tentative%20Vacancies%20Steno%202026.pdf" target="_blank" rel="noopener">SSC: revised tentative vacancies (10.08.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/tentative_vacancy_04062026.pdf" target="_blank" rel="noopener">SSC: tentative vacancies (04.06.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/notice_12082026.pdf" target="_blank" rel="noopener">SSC: CBE schedule (12.08.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Steno_2026_Dates_31082026.pdf" target="_blank" rel="noopener">SSC: revised CBE dates (31.08.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Approved_WriteUp_23092026.pdf" target="_blank" rel="noopener">SSC: tentative answer key (23.09.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/addendum_23092026.pdf" target="_blank" rel="noopener">SSC: Mangal font addendum (23.09.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Notice_of_adv_steno_2025.pdf" target="_blank" rel="noopener">SSC: Notice of Steno 2025</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/writeup_28112025.pdf" target="_blank" rel="noopener">SSC: Steno 2025 CBE result (28.11.2025)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Steno2025_Notice_29_12_2025.pdf" target="_blank" rel="noopener">SSC: Steno 2025 skill test dates</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Final_Result_Write_up_25082026.pdf" target="_blank" rel="noopener">SSC: Steno 2025 final result (25.08.2026)</a> · <a href="https://ssc.gov.in/" target="_blank" rel="noopener">ssc.gov.in: examination calendar 2026-27</a> · <a href="https://www.careerpower.in/ssc-stenographer.html" target="_blank" rel="noopener">Career Power: SSC Stenographer 2026</a> · <a href="https://testbook.com/ssc-stenographer" target="_blank" rel="noopener">Testbook: SSC Stenographer</a>
+<br>Always confirm dates on the official website before applying.</div>
+</div>
+
+<div class="exam" role="tabpanel" aria-labelledby="t-ssc-mts" id="ex-ssc-mts" data-group="10th level" data-label="SSC MTS &amp; Havaldar">
+<div class="exam-head">
+<h2>SSC Multi-Tasking (Non-Technical) Staff and Havaldar (CBIC &amp; CBN) Examination</h2>
+<p class="exam-sub">MTS and Havaldar · Staff Selection Commission (SSC) · Group C, Pay Level 1 jobs: MTS do office support work in central ministries and offices; Havaldars work in the customs, GST and narcotics offices of CBIC and CBN.</p>
+<div class="exam-status"><span class="tag done">2025 cycle: CBE and Havaldar PET/PST done</span> <span class="tag expected">Final result (2025 cycle): Oct–Dec 2026 (expected)</span> <span class="tag expected">MTS 2026 notification: Oct–Dec 2026 (expected; the calendar date of 30 Jun 2026 has passed)</span></div>
+</div>
+
+<div class="facts">
+<div class="fact"><span class="k">Conducted by</span><span class="v">Staff Selection Commission, for central ministries, departments and offices (MTS), and for the Central Board of Indirect Taxes &amp; Customs and the Central Bureau of Narcotics (Havaldar)</span></div>
+<div class="fact"><span class="k">Post / grade</span><span class="v">Multi-Tasking (Non-Technical) Staff and Havaldar: General Central Service, Group C, non-gazetted, non-ministerial, Pay Level 1</span></div>
+<div class="fact"><span class="k">Latest vacancies</span><span class="v">7,948 tentative, as on 27.11.2025 (2025 cycle): MTS aged 18–25 has 6,078, MTS aged 18–27 has 732, Havaldar has 1,138. No 2026-cycle count yet, because the 2026 notice has not been published.</span></div>
+<div class="fact"><span class="k">Age limit</span><span class="v">Two age groups, as on 01.08.2025: <b>18–25</b> for most MTS posts (born 02.08.2000 to 01.08.2007) and <b>18–27</b> for Havaldar and some MTS posts (born 02.08.1998 to 01.08.2007). Relaxation: SC/ST 5 yrs, OBC 3 yrs, PwBD 10 yrs (13 for OBC, 15 for SC/ST), ex-servicemen 3 yrs after deducting service.</span></div>
+<div class="fact"><span class="k">Education</span><span class="v">Matriculation (Class 10) pass from a recognised board on or before the cut-off date (01.08.2025 in the 2025 notice)</span></div>
+<div class="fact"><span class="k">Attempts</span><span class="v">No limit; you can apply while you are within the age limit</span></div>
+<div class="fact"><span class="k">Pay (starting)</span><span class="v">Pay Level 1: basic ₹18,000 (scale ₹18,000–56,900) plus DA, HRA and transport allowance, depending on the city</span></div>
+<div class="fact"><span class="k">Mode</span><span class="v">One computer-based exam (CBE) in two sessions on the same day. Havaldar also has a walk test and physical measurement test (PET/PST). Fee ₹100; women, SC, ST, PwBD and ex-servicemen pay nothing.</span></div>
+</div>
+
+<h3>Timeline</h3>
+<div class="table-wrap"><table class="timeline">
+<tr><th>Stage</th><th>Latest cycle (MTS &amp; Havaldar 2025)</th><th>Next cycle (MTS &amp; Havaldar 2026)</th></tr>
+<tr><td>SSC exam calendar</td><td>Calendar for 2026–27 posted on ssc.gov.in in January 2026 <span class="tag done">Completed</span></td><td>It lists MTS 2026 as: notice 30.06.2026, applications close 31.07.2026, CBE September–November 2026 <span class="tag official">Official</span>. These dates have already slipped. The official portal still shows the January calendar and no revised version.</td></tr>
+<tr><td>Notification</td><td>26 Jun 2025 <span class="tag done">Completed</span></td><td>Oct–Dec 2026 <span class="tag expected">Expected</span> (no notice as of 27 Sep 2026; SSC's 2026 notices have come 2–4 months after the calendar dates, e.g. CHSL 2026 came on 7 Sep instead of 30 Apr)</td></tr>
+<tr><td>Online application</td><td>26 Jun – 24 Jul 2025; correction window 4–6 Aug 2025 (moved from 29–31 Jul) <span class="tag done">Completed</span></td><td>About one month from the notification date <span class="tag expected">Expected</span></td></tr>
+<tr><td>Computer-based exam</td><td>4–20 Feb 2026. The notice had said 20 Sep – 24 Oct 2025. <span class="tag done">Completed</span></td><td>Feb–May 2027 <span class="tag expected">Expected</span> (the 2025 CBE was held about 7 months after its notice)</td></tr>
+<tr><td>Tentative answer key</td><td>3 Mar 2026 (challenges until 6 Mar) <span class="tag done">Completed</span></td><td>About 2–4 weeks after the CBE <span class="tag expected">Expected</span></td></tr>
+<tr><td>CBE result (Havaldar shortlist for PET/PST)</td><td>3 Aug 2026 <span class="tag done">Completed</span></td><td>Mid-2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Havaldar PET/PST (run by CBIC/CBN)</td><td>24–31 Aug 2026 (as reported by exam-prep sites) <span class="tag done">Completed</span></td><td>About one month after the CBE result <span class="tag expected">Expected</span></td></tr>
+<tr><td>Final result and allocation (MTS and Havaldar together)</td><td>Oct–Dec 2026 <span class="tag expected">Expected</span> (SSC said it will declare the allocation for both posts after PET/PST; the 2024 cycle's final result came on 12 Mar 2025)</td><td>Late 2027 <span class="tag expected">Expected</span></td></tr>
+</table></div>
+
+<h3>Selection process</h3>
+<ol class="stages">
+<li><b>CBE · Session I</b><span>Maths and reasoning, 45 min, no negative marking · qualifying only (UR 30%, OBC/EWS 25%, others 20%). Session II is marked only if you clear Session I.</span></li>
+<li><b>CBE · Session II</b><span>General awareness and English, 45 min, minus 1 for each wrong answer · the same minimum marks apply · <b>merit is based only on your normalised Session II score</b></span></li>
+<li><b>PET/PST (Havaldar only)</b><span>Walk test and measurements, conducted by CBIC/CBN · qualifying · shortlist is about 7 times the vacancies. If you fail it you are still considered for MTS on your CBE merit.</span></li>
+<li><b>Allocation and document verification</b><span>One select list for all posts, based on Session II merit, your age group, and your order of post-cum-State/UT preferences. Documents are checked by the department you are allotted to.</span></li>
+</ol>
+
+<h3>Exam pattern</h3>
+<h4>Computer-based exam (one sitting, two sessions)</h4>
+<div class="table-wrap"><table>
+<tr><th>Session · Section</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>Session I · Numerical and Mathematical Ability</td><td>20</td><td>60</td><td rowspan="2">45 min for Session I</td></tr>
+<tr><td>Session I · Reasoning Ability and Problem Solving</td><td>20</td><td>60</td></tr>
+<tr><td>Session II · General Awareness</td><td>25</td><td>75</td><td rowspan="2">45 min for Session II</td></tr>
+<tr><td>Session II · English Language and Comprehension</td><td>25</td><td>75</td></tr>
+<tr class="total"><td>Total</td><td>90</td><td>270</td><td>90 min (120 min with a scribe)</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> none in Session I; minus 1 mark per wrong answer in Session II · <b>Qualifying marks:</b> UR 30%, OBC/EWS 25%, others 20%, in each session · <b>Merit:</b> normalised Session II score only, with separate cut-offs by category, State/UT and age group · <b>Tie-break:</b> General Awareness marks, then Session I marks, then the older candidate · <b>Language:</b> Hindi, English and 13 regional languages (English paper in English)</p>
+<p class="pattern-note"><b>What changed recently:</b> the two-session pattern has been used since 2023 and the 2025 notice did not change it. The 2025 CBE ran about four months later than the date in its notice, and scribe registration now requires Aadhaar authentication.</p>
+
+<h4>Havaldar PET/PST (CBIC &amp; CBN)</h4>
+<div class="table-wrap"><table>
+<tr><th>Standard</th><th>Male</th><th>Female</th></tr>
+<tr><td>Walk (PET)</td><td>1,600 m in 15 min</td><td>1 km in 20 min</td></tr>
+<tr><td>Height</td><td>157.5 cm</td><td>152 cm</td></tr>
+<tr><td>Chest</td><td>81 cm fully expanded, with at least 5 cm expansion</td><td>Not measured</td></tr>
+<tr><td>Weight</td><td>No fixed minimum</td><td>48 kg</td></tr>
+</table></div>
+<p class="pattern-note"><b>Relaxation:</b> Garhwalis, Assamese, Gorkhas and ST candidates get 5 cm less height for men, and 2.5 cm less height and 2 kg less weight for women · candidates with some PwBD categories (OL, OAL, LC) may be exempted from the walk</p>
+
+<h3>Detailed syllabus</h3>
+<details class="syl"><summary>Numerical and Mathematical Ability <span class="w">Session I · 20 Q / 60 marks</span></summary>
+<ul><li><b>Number basics:</b> integers and whole numbers, LCM and HCF, decimals and fractions, relationships between numbers, BODMAS, squares and square roots</li>
+<li><b>Arithmetic:</b> percentage, ratio and proportion, direct and inverse proportion, averages, simple interest, profit and loss, discount, work and time, distance and time</li>
+<li><b>Geometry and data:</b> area and perimeter of basic figures, lines and angles, reading simple graphs and data</li>
+</ul></details>
+<details class="syl"><summary>Reasoning Ability and Problem Solving <span class="w">Session I · 20 Q / 60 marks</span></summary>
+<ul><li>Alpha-numeric series, coding-decoding, analogy, similarities and differences, odd one out</li>
+<li>Following directions, jumbling, age calculations, calendar and clock</li>
+<li>Non-verbal reasoning with diagrams (mirror images, figure series, embedded figures), problem solving and analysis</li>
+</ul></details>
+<details class="syl"><summary>General Awareness <span class="w">Session II · 25 Q / 75 marks</span></summary>
+<ul><li><b>Social studies up to Class 10:</b> history, geography, art and culture, civics, economics</li>
+<li><b>General science</b> and <b>environmental studies</b> up to Class 10</li>
+<li>Current affairs, sports, awards, government schemes (usually a few questions)</li>
+</ul></details>
+<details class="syl"><summary>English Language and Comprehension <span class="w">Session II · 25 Q / 75 marks</span></summary>
+<ul><li>Vocabulary: synonyms, antonyms, one-word substitution, spellings, idioms</li>
+<li>Grammar and sentence structure: error spotting, fill in the blanks, sentence improvement</li>
+<li>A simple reading comprehension passage with questions</li>
+</ul></details>
+
+<h3>How to prepare</h3>
+<ul class="prep"><li>Session II decides your rank and has negative marking, so give most of your time to General Awareness and English. Aim for accuracy rather than attempting every question.</li>
+<li>Build Class 6–10 NCERT-level history, geography, polity and science into short revision notes. GA carries 75 marks and is the main tie-breaker.</li>
+<li>Use the Verbal Ability notes for grammar rules, synonyms, antonyms and idioms, and do one short comprehension passage every day.</li>
+<li>Session I only needs to be cleared, but it is 120 marks of basic maths and reasoning. The Quantitative Aptitude notes and a daily set on the Calculation Practice page make it easy to clear.</li>
+<li>Learn squares, cubes, tables and fraction-to-percent values from the Tables &amp; Speed Tricks notes. Session I gives you only about 2 minutes per question.</li>
+<li>For Havaldar, start brisk-walk practice early (1.6 km in under 15 minutes for men, 1 km in under 20 for women) and check your height and chest against the table.</li>
+<li>Fill in post-cum-State preferences carefully and give many of them. Allocation depends only on the preferences you list, and cut-offs differ a lot between states.</li>
+</ul>
+
+<div class="sources"><b>Sources</b> (checked 27 Sep 2026): <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Notice_of_adv_mts_2025.pdf" target="_blank" rel="noopener">SSC notice: MTS &amp; Havaldar 2025 (26.06.2025)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Tentative_Vacancy_27112025.pdf" target="_blank" rel="noopener">SSC tentative vacancies as on 27.11.2025</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Notice_020126.pdf" target="_blank" rel="noopener">SSC exam schedule notice (02.01.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/writeupMTS2025_03032026.pdf" target="_blank" rel="noopener">SSC tentative answer key notice (03.03.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/writeup_mts_03082026.pdf" target="_blank" rel="noopener">SSC CBE result for Havaldar PET/PST (03.08.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Notice_29072025.pdf" target="_blank" rel="noopener">SSC correction-window notice (29.07.2025)</a> · <a href="https://ssc.gov.in/" target="_blank" rel="noopener">SSC calendar 2026–27 (ssc.gov.in, Exam Calendar)</a> · <a href="https://www.freejobalert.com/articles/ssc-mts-and-cbic-havaldar-result-2026-3063890" target="_blank" rel="noopener">FreeJobAlert: Havaldar PET/PST dates</a> · <a href="https://testbook.com/ssc-mts" target="_blank" rel="noopener">Testbook: SSC MTS</a>
+<br>Always confirm dates on the official website before applying.</div>
+</div>
+
+<div class="exam" role="tabpanel" aria-labelledby="t-ssc-gd" id="ex-ssc-gd" data-group="10th level" data-label="SSC GD Constable">
+<div class="exam-head">
+<h2>SSC Constable (GD) in CAPFs and SSF, and Rifleman (GD) in Assam Rifles Examination</h2>
+<p class="exam-sub">Constable (General Duty) / Rifleman · Staff Selection Commission, for the Ministry of Home Affairs · armed field duty in BSF, CISF, CRPF, SSB, ITBP, Assam Rifles and the Secretariat Security Force: border guarding, internal security and protecting installations.</p>
+<div class="exam-status"><span class="tag expected">GD 2026 CBE result: Oct 2026 (expected; not declared as of 27 Sep 2026)</span> <span class="tag official">GD 2027 notification: 30 Sep 2026 (official calendar, tentative)</span></div>
+</div>
+
+<div class="facts">
+<div class="fact"><span class="k">Conducted by</span><span class="v">SSC runs the exam; the CAPFs run PET/PST, the medical exam and document verification, with CRPF as the nodal force</span></div>
+<div class="fact"><span class="k">Post / grade</span><span class="v">Constable (GD) in BSF, CISF, CRPF, SSB, ITBP and SSF, and Rifleman (GD) in Assam Rifles, Pay Level 3</span></div>
+<div class="fact"><span class="k">Latest vacancies</span><span class="v">25,487 tentative (notice of 01.12.2025, 2026 exam): 23,467 for men and 2,020 for women. CISF 14,595, CRPF 5,490, SSB 1,764, AR 1,706, ITBP 1,293, BSF 616, SSF 23.</span></div>
+<div class="fact"><span class="k">Age limit</span><span class="v">18–23 years as on 01.01.2026 (born 02.01.2003 to 01.01.2008). Relaxation: SC/ST 5 yrs, OBC 3 yrs, ex-servicemen 3 yrs after deducting service, dependants of 1984 riot victims 5/8/10 yrs.</span></div>
+<div class="fact"><span class="k">Education</span><span class="v">Class 10 (Matriculation) pass by 01.01.2026. You need a domicile certificate for the State/UT you apply from, because vacancies are State/UT-wise.</span></div>
+<div class="fact"><span class="k">Attempts</span><span class="v">No limit; you can apply while you are within the age limit</span></div>
+<div class="fact"><span class="k">Pay (starting)</span><span class="v">Pay Level 3: basic ₹21,700 (scale ₹21,700–69,100) plus DA, HRA and CAPF allowances such as risk and hardship allowance, depending on posting</span></div>
+<div class="fact"><span class="k">Mode</span><span class="v">One online CBE of 80 questions in 60 minutes, then PET/PST, a detailed medical exam and document verification. NCC bonus marks are added. Fee ₹100; women, SC, ST and ex-servicemen pay nothing.</span></div>
+</div>
+
+<h3>Timeline</h3>
+<div class="table-wrap"><table class="timeline">
+<tr><th>Stage</th><th>Latest cycle (GD 2026)</th><th>Next cycle (GD 2027)</th></tr>
+<tr><td>Notification</td><td>1 Dec 2025 <span class="tag done">Completed</span></td><td>30 Sep 2026 <span class="tag official">Official</span> (SSC calendar 2026–27; SSC's 2026 notices have mostly come later than calendar dates, so check ssc.gov.in)</td></tr>
+<tr><td>Online application</td><td>1–31 Dec 2025 (fee until 1 Jan 2026); correction window 10–13 Jan 2026 <span class="tag done">Completed</span></td><td>Closes 31 Oct 2026 <span class="tag official">Official</span> (calendar)</td></tr>
+<tr><td>Computer-based exam</td><td>27 Apr – 31 May 2026, with candidates choosing preferred exam weeks. It was first set for 23 Feb 2026, then deferred on 17 Feb. <span class="tag done">Completed</span></td><td>January–March 2027 <span class="tag official">Official</span> (tentative months in the calendar)</td></tr>
+<tr><td>Tentative answer key</td><td>15 Jun 2026 (challenges until 20 Jun) <span class="tag done">Completed</span></td><td>About 2–4 weeks after the CBE <span class="tag expected">Expected</span></td></tr>
+<tr><td>CBE result (shortlist for PET/PST)</td><td>October 2026 <span class="tag expected">Expected</span> (not declared as of 27 Sep 2026)</td><td>May–June 2027 <span class="tag expected">Expected</span> (the 2025 result came about 4 months after the CBE)</td></tr>
+<tr><td>PET/PST (by CAPFs)</td><td>Nov–Dec 2026 <span class="tag expected">Expected</span> (in the 2025 cycle PET/PST began about 2 months after the CBE result)</td><td>Aug–Sep 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Detailed medical exam and document verification</td><td>Jan–Feb 2027 <span class="tag expected">Expected</span></td><td>Oct–Nov 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Final result and force allocation</td><td>Mar–Apr 2027 <span class="tag expected">Expected</span> (the 2025 final result came on 15 Jan 2026, 7 months after its CBE result)</td><td>Jan–Feb 2028 <span class="tag expected">Expected</span></td></tr>
+</table></div>
+<p class="pattern-note"><b>Previous cycle for reference (GD 2025):</b> CBE 4–25 Feb 2025 · CBE result 17 Jun 2025 · PET/PST 20 Aug – 15 Sep 2025 · PET/PST result 13 Oct 2025 · DV/DME from 12 Nov 2025 · final result 15 Jan 2026, with 53,690 vacancies allocated</p>
+
+<h3>Selection process</h3>
+<ol class="stages">
+<li><b>Computer-based exam</b><span>80 questions, 160 marks, 60 min · minimum marks UR 30%, OBC/EWS 25%, others 20% (NCC bonus not counted for this) · about 8 candidates per vacancy are shortlisted, State/UT-wise and category-wise</span></li>
+<li><b>PET and PST</b><span>Race, then height, chest and weight measurement, run by the CAPFs · qualifying only · ex-servicemen are exempt from the race</span></li>
+<li><b>Detailed medical exam and document verification</b><span>About 2 candidates per vacancy, from those who clear PET/PST · MHA uniform medical guidelines · you can ask for a review medical exam if declared unfit</span></li>
+<li><b>Final merit and force allocation</b><span>Normalised CBE marks plus NCC bonus, separately for men and women in each State/UT and for border and militancy/Naxal-affected districts · force is allotted by merit and your order of preference among all 7 forces</span></li>
+</ol>
+
+<h3>Exam pattern</h3>
+<h4>Computer-based exam</h4>
+<div class="table-wrap"><table>
+<tr><th>Part</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>A · General Intelligence and Reasoning</td><td>20</td><td>40</td><td rowspan="4">60 min, not timed by section</td></tr>
+<tr><td>B · General Knowledge and General Awareness</td><td>20</td><td>40</td></tr>
+<tr><td>C · Elementary Mathematics</td><td>20</td><td>40</td></tr>
+<tr><td>D · English or Hindi</td><td>20</td><td>40</td></tr>
+<tr class="total"><td>Total</td><td>80</td><td>160</td><td>60 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 0.25 marks per wrong answer · <b>Level:</b> Class 10 · <b>NCC bonus:</b> 5% of max marks for the C certificate, 3% for B, 2% for A · <b>Scores:</b> normalised across shifts · <b>Language:</b> English, Hindi and 13 regional languages · no calculators</p>
+<p class="pattern-note"><b>What changed recently:</b> the 2026 notice's vacancy table covers only BSF, CISF, CRPF, SSB, ITBP, Assam Rifles and SSF, with no NIA or NCB Sepoy posts. The 2026 CBE also let candidates rank their preferred exam weeks, and there is a separate, easier race standard for candidates from the Ladakh region.</p>
+
+<h4>Physical standards and race (PST/PET)</h4>
+<div class="table-wrap"><table>
+<tr><th>Standard</th><th>Male</th><th>Female</th></tr>
+<tr><td>Height</td><td>170 cm</td><td>157 cm</td></tr>
+<tr><td>Chest</td><td>80 cm unexpanded, with at least 5 cm expansion</td><td>Not measured (must be well developed)</td></tr>
+<tr><td>Weight</td><td>Proportionate to height and age (medical standards)</td><td>Proportionate to height and age</td></tr>
+<tr><td>Race (PET)</td><td>5 km in 24 min</td><td>1.6 km in 8½ min</td></tr>
+<tr><td>Race, Ladakh region candidates</td><td>1.6 km in 7 min</td><td>800 m in 5 min</td></tr>
+</table></div>
+
+<h4>Relaxed height and chest (with certificate)</h4>
+<div class="table-wrap"><table>
+<tr><th>Category</th><th>Height male / female</th><th>Chest male (unexpanded + expansion)</th></tr>
+<tr><td>All Scheduled Tribes</td><td>162.5 / 150 cm</td><td>76 + 5 cm</td></tr>
+<tr><td>ST of North-Eastern states</td><td>157 / 147.5 cm</td><td>76 + 5 cm</td></tr>
+<tr><td>ST of Left-Wing-Extremism affected districts</td><td>160 / 147.5 cm</td><td>76 + 5 cm</td></tr>
+<tr><td>Garhwalis, Kumaonis, Dogras, Marathas; Assam, Himachal Pradesh, J&amp;K, Ladakh</td><td>165 / 155 cm</td><td>78 + 5 cm</td></tr>
+<tr><td>Arunachal, Manipur, Meghalaya, Mizoram, Nagaland, Sikkim, Tripura</td><td>162.5 / 152.5 cm</td><td>77 + 5 cm</td></tr>
+<tr><td>Gorkha Territorial Administration (Darjeeling, Kalimpong, Kurseong)</td><td>157 / 152.5 cm</td><td>77 + 5 cm</td></tr>
+</table></div>
+<p class="pattern-note"><b>Appeals:</b> an appeal against a height or chest measurement can be made the same day; there is no appeal for the race · <b>Pregnancy:</b> a pregnant woman is declared temporarily unfit and re-tested six weeks after delivery</p>
+
+<h4>Medical exam (DME)</h4>
+<p class="pattern-note">Conducted by CAPF medical boards under the MHA Uniform Guidelines for recruitment medical exams (2015, amended 2021). Commonly quoted standards: distant vision 6/6 in the better eye and 6/9 in the worse eye, near vision N6/N9, all without glasses; no colour blindness. Knock-knee, flat foot, varicose veins, squint and similar conditions can make you unfit (mild, flexible cases may pass). You can ask for a review medical exam (RME) if found unfit.</p>
+
+<h3>Detailed syllabus</h3>
+<details class="syl"><summary>General Intelligence and Reasoning <span class="w">20 Q / 40 marks</span></summary>
+<ul><li>Mostly non-verbal: analogies, similarities and differences, figure classification, non-verbal series, mirror and water images, embedded figures, paper folding and cutting</li>
+<li>Spatial visualisation and orientation, visual memory, observation and discrimination</li>
+<li>Arithmetical reasoning, number series, coding-decoding, relationship concepts (blood relations, direction sense)</li>
+</ul></details>
+<details class="syl"><summary>General Knowledge and General Awareness <span class="w">20 Q / 40 marks</span></summary>
+<ul><li>Current events and sports</li>
+<li>History, culture and geography of India and its neighbours</li>
+<li>Economic scene, general polity and the Indian Constitution</li>
+<li>Everyday science and scientific research</li>
+</ul></details>
+<details class="syl"><summary>Elementary Mathematics <span class="w">20 Q / 40 marks</span></summary>
+<ul><li>Number system, whole numbers, decimals and fractions, fundamental operations</li>
+<li>Percentage, ratio and proportion, averages, interest, profit and loss, discount</li>
+<li>Mensuration, time and distance, time and work</li>
+</ul></details>
+<details class="syl"><summary>English or Hindi <span class="w">20 Q / 40 marks</span></summary>
+<ul><li>Basic comprehension (short passage, cloze test)</li>
+<li>Vocabulary: synonyms, antonyms, one-word substitution, idioms, spellings</li>
+<li>Grammar: error spotting, fill in the blanks, sentence improvement, active and passive voice</li>
+</ul></details>
+
+<h3>How to prepare</h3>
+<ul class="prep"><li>Start running now rather than after the result. PET/PST usually comes 2–3 months after the CBE result, and 5 km in 24 minutes needs steady weekly training.</li>
+<li>Measure your height and chest early and check whether your category or region gets a relaxation. Get the certificate (Annexure-IX format) ready before PET.</li>
+<li>The CBE is 80 questions in 60 minutes with no sectional timer. Do reasoning and GK quickly, then give the rest of the time to maths and English.</li>
+<li>Maths is Class 10 arithmetic: the Quantitative Aptitude notes, the Tables &amp; Speed Tricks notes and daily sets on the Calculation Practice page cover it.</li>
+<li>Reasoning is mostly non-verbal figure questions. Practise series, analogies and mirror images from the Logical Reasoning notes every day.</li>
+<li>Choose English or Hindi for Part D, whichever you are stronger in. For English, use the Verbal Ability notes for vocabulary and error spotting.</li>
+<li>Selection is State/UT-wise and category-wise. Look at your own state's past cut-offs, and keep your domicile, caste and NCC certificates in order for DME/DV.</li>
+</ul>
+
+<div class="sources"><b>Sources</b> (checked 27 Sep 2026): <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Notice_of_CTGD_2026.pdf" target="_blank" rel="noopener">SSC notice: Constable (GD) 2026 (01.12.2025)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Tentative_Vacancy_08122025.pdf" target="_blank" rel="noopener">SSC tentative vacancies (08.12.2025)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Notice_090126.pdf" target="_blank" rel="noopener">SSC correction window notice (09.01.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/notice_17022026.pdf" target="_blank" rel="noopener">SSC deferment notice (17.02.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/CTGD_2026_Notice_11042026.pdf" target="_blank" rel="noopener">SSC CBE schedule (11.04.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/tentative_answerkey_15062026.pdf" target="_blank" rel="noopener">SSC tentative answer key notice (15.06.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/Results/Final%20Result_CTGD2025_Write-up_15012026.pdf" target="_blank" rel="noopener">SSC GD 2025 final result (15.01.2026)</a> · <a href="https://ssc.gov.in/" target="_blank" rel="noopener">SSC calendar 2026–27 (ssc.gov.in, Exam Calendar)</a> · <a href="https://testbook.com/news/ssc-gd-constable-result-2026/" target="_blank" rel="noopener">Testbook: GD 2026 result status</a> · <a href="https://www.oliveboard.in/blog/ssc-gd-medical-test/" target="_blank" rel="noopener">Oliveboard: GD medical standards</a>
+<br>Always confirm dates on the official website before applying.</div>
+</div>
+
+<div class="exam" role="tabpanel" aria-labelledby="t-ssc-selection-post" id="ex-ssc-selection-post" data-group="10th level" data-label="SSC Selection Post">
+<div class="exam-head">
+<h2>SSC Selection Posts Examination, Phase-XIV/2026</h2>
+<p class="exam-sub">Group B (non-gazetted) and Group C posts · Staff Selection Commission · one combined notice for hundreds of small, post-specific vacancies in central ministries and offices, each with its own qualification and age rules.</p>
+<div class="exam-status"><span class="tag done">Phase XIV CBE: 16–26 Sep 2026</span> <span class="tag expected">Answer key: Oct 2026 (expected)</span> <span class="tag expected">Phase XV notification: Mar–Jun 2027 (expected)</span></div>
+</div>
+
+<div class="facts">
+<div class="fact"><span class="k">Conducted by</span><span class="v">Staff Selection Commission, through its Regional Offices. The departments that asked for the posts scrutinise documents and run skill tests and DV.</span></div>
+<div class="fact"><span class="k">Post / grade</span><span class="v">Over 380 post categories from Pay Level 1 to Level 8, grouped into three qualification levels: Matriculation, Higher Secondary (10+2), and Graduation &amp; above</span></div>
+<div class="fact wide"><span class="k">Posts you can get</span><span class="v">Examples from Phase XIV: Laboratory Attendant, Library Attendant, Canteen Attendant, Store Keeper, Lower Division Clerk, Stenographer Grade II, Accountant, Scientific Assistant, Junior Engineer, Nursing Officer, Pharmacist, Firefighter and Fire Engine Driver (DRDO), Field and Farm Assistant, Deputy Ranger, Tailor, Copy Holder, Vocational Instructor</span></div>
+<div class="fact"><span class="k">Latest vacancies</span><span class="v">About 2,919 (revised from about 3,003; figures quoted by exam-prep sites, 2026). The official notice of 13.04.2026 lists vacancies post by post in Annexure-III, and 4 DRDO posts were added on 20.04.2026. Phase XIII (2025) had about 2,423.</span></div>
+<div class="fact"><span class="k">Age limit</span><span class="v">Depends on the post, as on 01.01.2026: bands of 18–25, 18–27, 18–28, 18–30 and 18–35, plus 20–25, 20–30, 21–27, 21–28, 22–28 and 23–28 for some posts. Relaxation: SC/ST 5, OBC 3, PwBD 10/13/15, ex-servicemen 3 yrs after service.</span></div>
+<div class="fact"><span class="k">Education</span><span class="v">Depends on the post (Class 10, Class 12, or a degree, sometimes a specific subject or experience), held by the closing date of 04.05.2026. You apply separately for each post category.</span></div>
+<div class="fact"><span class="k">Attempts</span><span class="v">No limit; you are eligible if you meet each post's age and qualification rules</span></div>
+<div class="fact"><span class="k">Pay (starting)</span><span class="v">By post, from Pay Level 1 (basic ₹18,000) to Level 8 (basic ₹47,600). Most Phase XIV posts are at Level 2, 4 or 6 (basic ₹19,900, ₹25,500, ₹35,400).</span></div>
+<div class="fact"><span class="k">Mode</span><span class="v">One online CBE per qualification level (Hindi or English only), then document scrutiny, a skill test where the post requires one, and DV by the department. Fee ₹100 per post applied for; women, SC, ST, PwBD and ex-servicemen pay nothing.</span></div>
+</div>
+
+<h3>Timeline</h3>
+<div class="table-wrap"><table class="timeline">
+<tr><th>Stage</th><th>Latest cycle (Phase XIV, 2026)</th><th>Next cycle (Phase XV, 2027)</th></tr>
+<tr><td>SSC exam calendar</td><td>Calendar 2026–27 (January 2026) listed Phase XIV as: notice 31.03.2026, CBE May–July 2026 <span class="tag done">Completed</span></td><td>Phase XV is not in the 2026–27 calendar; the 2027–28 calendar is likely in early 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Notification</td><td>13 Apr 2026 <span class="tag done">Completed</span></td><td>Mar–Jun 2027 <span class="tag expected">Expected</span> (earlier phases: Feb 2024, Jun 2025, Apr 2026)</td></tr>
+<tr><td>Online application</td><td>13 Apr – 4 May 2026 (fee until 5 May); correction 11–13 May 2026 <span class="tag done">Completed</span></td><td>About 3 weeks after the notice <span class="tag expected">Expected</span></td></tr>
+<tr><td>Computer-based exam</td><td>16–26 Sep 2026 (SSC notice of 21.08.2026; the ad had said "June 2026, tentative"). City slip 8 Sep and admit card 14 Sep, per exam-prep sites. <span class="tag done">Completed</span></td><td>Jul–Sep 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Tentative answer key</td><td>October 2026 <span class="tag expected">Expected</span> (Phase XIII's key came about 4 weeks after its last exam day)</td><td>About 4 weeks after the CBE <span class="tag expected">Expected</span></td></tr>
+<tr><td>CBE result (one list per qualification level)</td><td>Jan–Feb 2027 <span class="tag expected">Expected</span> (Phase XIII: CBE Jul–Aug 2025, result 5 Feb 2026)</td><td>Early 2028 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Document upload, scrutiny, skill test and DV</td><td>Feb–Jun 2027, post by post <span class="tag expected">Expected</span></td><td>2028 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Final result</td><td>Mid-2027 onwards, separately for each post category <span class="tag expected">Expected</span></td><td>2028 <span class="tag expected">Expected</span></td></tr>
+</table></div>
+
+<h3>Selection process</h3>
+<ol class="stages">
+<li><b>Computer-based exam</b><span>One paper for each qualification level you applied at. If you applied for posts at two levels you sit two papers, but only once per level; that score is used for all your posts at that level in every region.</span></li>
+<li><b>Shortlist for scrutiny</b><span>Minimum UR 30%, OBC/EWS 25%, others 20% · per post: 30 candidates per vacancy if the post has up to 5 vacancies, otherwise 15 per vacancy (at least 150). All qualifying PwBD and ESM candidates are shortlisted for their reserved vacancies.</span></li>
+<li><b>Document upload and scrutiny</b><span>You upload self-attested documents on the SSC portal. The department checks them and publishes tentative, then final, acceptance and rejection lists through the Regional Office.</span></li>
+<li><b>Skill test (only if the post requires one)</b><span>Typing, data entry, computer proficiency or trade test · qualifying</span></li>
+<li><b>Document verification and final result</b><span>DV by the department · merit is based on normalised CBE marks, post by post</span></li>
+</ol>
+
+<h3>Exam pattern</h3>
+<h4>Computer-based exam (same structure at all three levels, with harder questions at higher levels)</h4>
+<div class="table-wrap"><table>
+<tr><th>Part</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>A · General Intelligence</td><td>25</td><td>50</td><td>15 min</td></tr>
+<tr><td>B · General Awareness</td><td>25</td><td>50</td><td>15 min</td></tr>
+<tr><td>C · Quantitative Aptitude (basic arithmetic)</td><td>25</td><td>50</td><td>15 min</td></tr>
+<tr><td>D · English Language (basic knowledge)</td><td>25</td><td>50</td><td>15 min</td></tr>
+<tr class="total"><td>Total</td><td>100</td><td>200</td><td>60 min (80 min with a scribe)</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 0.50 marks per wrong answer · <b>Sectional timer:</b> 15 minutes per part, and you cannot go back · <b>Three separate papers:</b> Matriculation level, Higher Secondary (10+2) level, and Graduation &amp; above level · <b>Graduate paper:</b> Parts A, B and D are at graduate level, but maths (Part C) stays at Class 10 level · <b>Scores:</b> normalised across shifts · <b>Language:</b> Hindi and English only, chosen when you apply</p>
+<p class="pattern-note"><b>How post-wise eligibility works:</b> every post has its own code, department, region, age band, qualification, pay level and skill-test rule (see ssc.gov.in, RHQ Selection Post, Post Details). You apply and pay once per post code. Qualifications and experience are judged as on the closing date, and age as on 01.01.2026. Experience counts only if gained after the qualification. Eligibility is checked only after the CBE, so if a department rejects you at scrutiny you lose that post even with a high score.</p>
+<p class="pattern-note"><b>What changed recently:</b> from Phase XIII onwards the departments scrutinise documents, hold skill tests and do DV, and publish acceptance and rejection lists (SSC notice of 03.03.2026). Phase XIII also introduced "deemed challenged" questions in the answer key. The CBE has kept the four 15-minute timed parts.</p>
+
+<h3>Detailed syllabus</h3>
+<details class="syl"><summary>General Intelligence <span class="w">25 Q / 50 marks</span></summary>
+<ul><li><b>Matriculation:</b> mainly non-verbal questions: similarities and differences, space visualisation, figure classification, number and non-verbal series, visual memory, relationship concepts</li>
+<li><b>10+2:</b> verbal and non-verbal questions: semantic, number and figural analogy and classification, Venn diagrams, paper folding and punched holes, embedded figures, coding-decoding, word building, critical thinking, emotional and social intelligence</li>
+<li><b>Graduation:</b> all of the above plus statement and conclusion, syllogism, indexing, address, date and city matching, and roll-number or code classification</li>
+</ul></details>
+<details class="syl"><summary>General Awareness <span class="w">25 Q / 50 marks</span></summary>
+<ul><li>Current affairs and everyday science</li>
+<li>History, culture and geography of India and its neighbours</li>
+<li>Economy, polity and the Indian Constitution, scientific research, sports</li>
+</ul></details>
+<details class="syl"><summary>Quantitative Aptitude <span class="w">25 Q / 50 marks</span></summary>
+<ul><li><b>Matriculation:</b> number system, fractions and decimals, percentage, ratio, averages, interest, profit and loss, discount, tables and graphs, mensuration, time and distance, time and work</li>
+<li><b>10+2 and Graduation:</b> the above plus compound interest, partnership, mixtures and alligation, square roots, basic algebra and surds, graphs of linear equations, triangles (centres, congruence, similarity), circles (chords, tangents), mensuration of 2D and 3D shapes, trigonometric ratios and identities, heights and distances, histograms, frequency polygons, bar and pie charts</li>
+</ul></details>
+<details class="syl"><summary>English Language <span class="w">25 Q / 50 marks</span></summary>
+<ul><li><b>Matriculation:</b> vocabulary, grammar, sentence structure, synonyms, antonyms, correct usage</li>
+<li><b>10+2:</b> error spotting, fill in the blanks, synonyms and homonyms, antonyms, misspelt words, idioms, one-word substitution, sentence improvement, active and passive voice, direct and indirect speech, jumbled sentences, cloze test, comprehension</li>
+<li><b>Graduation:</b> understanding of correct English and comprehension at graduate level</li>
+</ul></details>
+
+<h3>How to prepare</h3>
+<ul class="prep"><li>Before applying, read each post's details carefully: qualification subject, experience, age band and skill test. Most rejections happen at the department's scrutiny after the CBE, not in the exam.</li>
+<li>Apply for several posts at your highest qualification level, and also at lower levels if you are eligible. Each level is a separate paper and a separate chance.</li>
+<li>With 15-minute sectional timers and minus 0.50 per wrong answer, practise full four-part mocks with strict timing and skip questions you are unsure of.</li>
+<li>Maths is arithmetic-heavy at every level. Use the Quantitative Aptitude notes, the Tables &amp; Speed Tricks notes and the Calculation Practice page so that 25 questions fit into 15 minutes.</li>
+<li>For the 10+2 and graduate papers, also revise algebra, geometry and trigonometry basics, which appear as in CHSL and CGL.</li>
+<li>Reasoning at the graduate level includes clerical-style matching (address and date matching, indexing), which is fast and scoring. Practise it with the Logical Reasoning notes.</li>
+<li>Use the Verbal Ability notes for grammar and vocabulary. For posts with a typing or data-entry skill test, start typing practice early (it is qualifying but you must clear it).</li>
+</ul>
+
+<div class="sources"><b>Sources</b> (checked 27 Sep 2026): <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Notice_of_RHQ_2026_phase_xiv.pdf" target="_blank" rel="noopener">SSC notice: Phase-XIV/2026/Selection Posts (13.04.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Addendum%20to%20Notice%20of%20Phase-XIV_2026-20.04.2026-updated.pdf" target="_blank" rel="noopener">SSC addendum (20.04.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/important_notice_21082026.pdf" target="_blank" rel="noopener">SSC CBE schedule notice (21.08.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Notice%20of%20selection%20post%20modifications.pdf" target="_blank" rel="noopener">SSC notice on scrutiny and DV by departments (03.03.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/Results/Writeup_Matriculation_05022026.pdf" target="_blank" rel="noopener">SSC Phase XIII CBE result (05.02.2026)</a> · <a href="https://ssc.gov.in/api/attachment/uploads/masterData/NoticeBoards/Write_up_Tentative_Answer_Key_Phase-XIII_2025_Selection_Posts_26092025.pdf" target="_blank" rel="noopener">SSC Phase XIII answer key notice (26.09.2025)</a> · <a href="https://ssc.gov.in/rhq-selection-post/rhq-post-details" target="_blank" rel="noopener">SSC post details</a> · <a href="https://www.careerpower.in/ssc-selection-post.html" target="_blank" rel="noopener">Career Power: Selection Post Phase 14</a> · <a href="https://testbook.com/news/ssc-phase-14-exam-date-2026/" target="_blank" rel="noopener">Testbook: Phase 14 exam date</a>
+<br>Always confirm dates on the official website before applying.</div>
+</div>
+
+</div>
+
+<script src="../assets/notes.js"></script>
+<script>
+(function examTabs(){
+  const tabs = [...document.querySelectorAll(".xtab")];
+  const panels = tabs.map(t => document.getElementById(t.getAttribute("aria-controls")));
+  const slugOf = (t) => t.id.slice(2);
+  function show(slug, push) {
+    let i = tabs.findIndex(t => slugOf(t) === slug);
+    if (i < 0) i = 0;
+    tabs.forEach((t, j) => { t.setAttribute("aria-selected", String(i === j)); t.tabIndex = i === j ? 0 : -1; });
+    panels.forEach((p, j) => p.hidden = i !== j);
+    try { localStorage.setItem("ssc-tab", slugOf(tabs[i])); } catch (e) {}
+    if (push) history.replaceState(null, "", "#" + slugOf(tabs[i]));
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener("click", () => show(slugOf(t), true));
+    t.addEventListener("keydown", e => {
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+      const n = (i + (e.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+      show(slugOf(tabs[n]), true); tabs[n].focus();
+    });
+  });
+  document.querySelectorAll("[data-go]").forEach(a => a.addEventListener("click", e => {
+    e.preventDefault(); show(a.dataset.go, true);
+    document.querySelector(".tabbar").scrollIntoView({ behavior: "smooth" });
+  }));
+  let start = location.hash.slice(1);
+  if (!start) { try { start = localStorage.getItem("ssc-tab"); } catch (e) {} }
+  show(start, false);
+  window.addEventListener("hashchange", () => show(location.hash.slice(1), false));
+  window.addEventListener("beforeprint", () => panels.forEach(p => p.hidden = false));
+})();
+</script>
+</body>
+</html>

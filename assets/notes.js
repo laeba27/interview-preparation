@@ -116,6 +116,9 @@
   const show = (i) => {
     tabs.forEach((t, j) => { t.setAttribute("aria-selected", String(i === j)); t.tabIndex = i === j ? 0 : -1; });
     panels.forEach((p, j) => p && (p.hidden = i !== j));
+    const key = tabs[i].id.replace("tab-", "");                  // sidebar shows only this level's topics
+    document.querySelectorAll("aside [data-tab]").forEach(el =>
+      el.classList.toggle("tab-off", el.dataset.tab !== key));
     try { localStorage.setItem("cheat-tab", tabs[i].id); } catch (e) {}
   };
   tabs.forEach((t, i) => {

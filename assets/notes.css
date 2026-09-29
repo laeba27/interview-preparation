@@ -242,6 +242,7 @@ details.lc.done .lc-title{color:var(--muted);text-decoration:line-through;text-d
 .lc-label{display:block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;margin-bottom:4px;}
 .lc-problem{background:var(--sky);} .lc-problem .lc-label{color:var(--sky-ink);}
 .lc-idea{background:var(--shell);} .lc-idea .lc-label{color:var(--shell-ink);}
+.lc-spot{background:var(--sand);border-left:3px solid var(--sand-ink);} .lc-spot .lc-label{color:var(--sand-ink);}
 .key{background:var(--sun);border-left:3px solid var(--sun-ink);} .key .lc-label{color:var(--sun-ink);}
 .trap{background:var(--coral);border-left:3px solid var(--coral-ink);} .trap .lc-label{color:var(--coral-ink);}
 .lc-box code{background:rgba(255,255,255,.55);}
@@ -257,6 +258,11 @@ h5.step.optimal{color:var(--sea-ink);} h5.step.optimal .n{background:var(--sea);
 .cx .bad{background:var(--coral);color:var(--coral-ink);}
 .hl{background:var(--sun);color:var(--sun-ink);padding:0 4px;border-radius:4px;font-weight:600;}
 .lc-links{font-size:13px;color:var(--muted);margin-top:14px;}
+.lc-open{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;text-decoration:none;
+  color:var(--sky-ink);border:1px solid var(--line);border-radius:20px;padding:2px 9px;white-space:nowrap;}
+.lc-open:hover{background:var(--sky);border-color:var(--sky-ink);}
+.lc-open svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+aside .tab-off{display:none !important;}
 /* pastel diagram fills */
 svg .p-sea{fill:var(--sea);stroke:var(--sea-ink);stroke-width:1.4;}
 svg .p-sky{fill:var(--sky);stroke:var(--sky-ink);stroke-width:1.4;}
@@ -269,3 +275,14 @@ svg .t-sky{fill:var(--sky-ink);font:600 12px -apple-system,BlinkMacSystemFont,"S
 svg .t-coral{fill:var(--coral-ink);font:600 12px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;}
 svg .t-sun{fill:var(--sun-ink);font:600 12px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;}
 @media print{ details.lc .lc-body{display:block} .tabs,.progress,.solved{display:none !important} }
+
+/* ---------- breadcrumb ---------- */
+.crumbs{margin:0 0 14px;font-size:13px;}
+.crumbs ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;align-items:center;gap:2px 0;}
+.crumbs li{display:inline-flex;align-items:center;color:var(--muted);margin:0;}
+.crumbs li + li::before{content:"";width:6px;height:6px;margin:0 10px 0 8px;border-right:1.5px solid var(--muted);
+  border-top:1.5px solid var(--muted);transform:rotate(45deg);opacity:.7;}
+.crumbs a{color:var(--muted);text-decoration:none;}
+.crumbs a:hover{color:var(--accent);text-decoration:underline;}
+.crumbs [aria-current="page"]{color:var(--text);font-weight:600;}
+@media (max-width:880px){ .crumbs{margin-bottom:10px;} }

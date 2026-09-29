@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tables &amp; Speed Tricks</title>
+<link rel="stylesheet" href="../assets/notes.css">
+<script>
+  try { document.documentElement.setAttribute("data-theme",
+    localStorage.getItem("notes-theme") || "light"); } catch (e) {}
+</script>
+<style>
+.mt-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:14px 0 6px;}
+@media (max-width:1000px){.mt-grid{grid-template-columns:repeat(3,1fr);}}
+@media (max-width:560px){.mt-grid{grid-template-columns:repeat(2,1fr);}}
+.mt{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 10px 6px;
+  font:12.8px/1.62 ui-monospace,SFMono-Regular,Menlo,monospace;}
+.mt b{display:block;font-family:inherit;color:var(--sea-ink);background:var(--sea);border-radius:6px;
+  text-align:center;margin:0 0 5px;padding:1px 0;font-size:13px;}
+.mt div{display:flex;justify-content:space-between;}
+.num-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin:14px 0 6px;}
+@media (max-width:1100px){.num-grid{grid-template-columns:repeat(5,1fr);}}
+@media (max-width:480px){.num-grid{grid-template-columns:repeat(2,1fr);}}
+.nc{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:5px 7px;
+  font:12.3px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;display:flex;justify-content:space-between;gap:6px;}
+.nc span{color:var(--muted);}
+.nc.hot{background:var(--sun);border-color:var(--sun-ink);}
+.nc.hot span{color:var(--sun-ink);}
+.nc.cool{background:var(--sky);border-color:var(--sky-ink);}
+.mono td{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;}
+.prime-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:6px;margin:14px 0;}
+.prime-grid span{text-align:center;padding:4px 0;border-radius:6px;background:var(--panel);border:1px solid var(--line);
+  font:13px ui-monospace,SFMono-Regular,Menlo,monospace;}
+.pascal{font:13px/1.9 ui-monospace,SFMono-Regular,Menlo,monospace;text-align:center;overflow-x:auto;
+  background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px;white-space:pre;}
+.legend-row{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin:6px 0 0;}
+.legend-row i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px;}
+.legend-row .h{background:var(--sun);border:1px solid var(--sun-ink);}
+.legend-row .c{background:var(--sky);border:1px solid var(--sky-ink);}
+.practice-link{display:inline-block;margin-top:8px;font-weight:600;}
+</style>
+</head>
+<body>
+<div class="scrim"></div>
+<button class="icon-btn" id="reopen" title="Show sidebar ([)" aria-label="Show sidebar">☰</button>
+<div class="layout">
+
+<aside>
+  <div class="sidebar-head">
+    <a class="back-link" href="../index.html">← All topics</a>
+    <button class="icon-btn" id="collapseBtn" title="Hide sidebar ([)" aria-label="Hide sidebar">‹</button>
+  </div>
+  <input id="search" type="text" placeholder="Filter topics…" autocomplete="off">
+
+  <h2>Multiplication</h2>
+  <nav>
+    <a href="#tables">Tables 1 to 30</a>
+  </nav>
+
+  <h2>Powers</h2>
+  <nav>
+    <a href="#squares">Squares 1 to 100</a>
+    <a href="#cubes">Cubes 1 to 50</a>
+    <a href="#powers">Powers &amp; Unit Digits</a>
+  </nav>
+
+  <h2>Roots</h2>
+  <nav>
+    <a href="#sqroots">Square Roots</a>
+    <a href="#cuberoots">Cube Roots</a>
+  </nav>
+
+  <h2>Fractions</h2>
+  <nav>
+    <a href="#fractions">Fraction, % &amp; Decimal</a>
+    <a href="#fractions2">Multiples of Fractions</a>
+  </nav>
+
+  <h2>Counting</h2>
+  <nav>
+    <a href="#factorials">Factorials 0! to 20!</a>
+    <a href="#pascal">nCr &amp; Pascal's Triangle</a>
+    <a href="#primes">Primes up to 200</a>
+    <a href="#logs">Log Values</a>
+  </nav>
+
+  <h2>Tricks</h2>
+  <nav>
+    <a href="#tricks">Speed Tricks</a>
+  </nav>
+
+  <h2>Revision</h2>
+  <nav>
+    <a href="#plan">4-Week Memory Plan</a>
+  </nav>
+</aside>
+
+<main>
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="../index.html#aptitude">Aptitude</a></li><li><span aria-current="page">Tables &amp; Speed Tricks</span></li></ol></nav>
+<header class="top">
+  <h1>Tables &amp; Speed Tricks</h1>
+  <div class="top-actions">
+    <button class="ghost" id="menuBtn">☰ Topics</button>
+    <a class="ghost-link" href="../practice/calculation.html">Calculation Practice</a>
+    <button class="ghost" id="theme">Dark mode</button>
+  </div>
+</header>
+<p class="sub">Everything worth memorising for fast calculation: tables 1–30, squares 1–100, cubes 1–50, roots, fractions, factorials, powers, primes and logs, plus the speed tricks. Every number on this page is computed by a program, not typed. Print it for a pocket PDF.</p>
+
+<section id="tables">
+<h3>1. Multiplication Tables 1 to 30</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Tables are the base of every fast calculation: percentages, ratios, time and work and division all fall back on them. Know 1 to 20 cold, and 21 to 30 well enough to write them out in seconds.</p>
+<p class="analogy">Like knowing your friends' phone numbers by heart instead of opening the contacts every time: the lookup is what slows you down.</p></div>
+<div class="lc-box key"><span class="lc-label">How to learn 11 to 30 fast</span><p>Split the number: <mark>17 × 8 = 10 × 8 + 7 × 8 = 80 + 56 = 136</mark>. For 21 to 30, use (20 + a) × k = 20k + ak, so 27 × 6 = 120 + 42 = 162. Say each table aloud once a day for a week; then test yourself with random pairs in Calculation Practice.</p></div>
+<h4>Tables 1 to 10</h4>
+<div class="mt-grid"><div class="mt"><b>1</b><div><span>1 × 1</span><span>1</span></div><div><span>1 × 2</span><span>2</span></div><div><span>1 × 3</span><span>3</span></div><div><span>1 × 4</span><span>4</span></div><div><span>1 × 5</span><span>5</span></div><div><span>1 × 6</span><span>6</span></div><div><span>1 × 7</span><span>7</span></div><div><span>1 × 8</span><span>8</span></div><div><span>1 × 9</span><span>9</span></div><div><span>1 × 10</span><span>10</span></div></div><div class="mt"><b>2</b><div><span>2 × 1</span><span>2</span></div><div><span>2 × 2</span><span>4</span></div><div><span>2 × 3</span><span>6</span></div><div><span>2 × 4</span><span>8</span></div><div><span>2 × 5</span><span>10</span></div><div><span>2 × 6</span><span>12</span></div><div><span>2 × 7</span><span>14</span></div><div><span>2 × 8</span><span>16</span></div><div><span>2 × 9</span><span>18</span></div><div><span>2 × 10</span><span>20</span></div></div><div class="mt"><b>3</b><div><span>3 × 1</span><span>3</span></div><div><span>3 × 2</span><span>6</span></div><div><span>3 × 3</span><span>9</span></div><div><span>3 × 4</span><span>12</span></div><div><span>3 × 5</span><span>15</span></div><div><span>3 × 6</span><span>18</span></div><div><span>3 × 7</span><span>21</span></div><div><span>3 × 8</span><span>24</span></div><div><span>3 × 9</span><span>27</span></div><div><span>3 × 10</span><span>30</span></div></div><div class="mt"><b>4</b><div><span>4 × 1</span><span>4</span></div><div><span>4 × 2</span><span>8</span></div><div><span>4 × 3</span><span>12</span></div><div><span>4 × 4</span><span>16</span></div><div><span>4 × 5</span><span>20</span></div><div><span>4 × 6</span><span>24</span></div><div><span>4 × 7</span><span>28</span></div><div><span>4 × 8</span><span>32</span></div><div><span>4 × 9</span><span>36</span></div><div><span>4 × 10</span><span>40</span></div></div><div class="mt"><b>5</b><div><span>5 × 1</span><span>5</span></div><div><span>5 × 2</span><span>10</span></div><div><span>5 × 3</span><span>15</span></div><div><span>5 × 4</span><span>20</span></div><div><span>5 × 5</span><span>25</span></div><div><span>5 × 6</span><span>30</span></div><div><span>5 × 7</span><span>35</span></div><div><span>5 × 8</span><span>40</span></div><div><span>5 × 9</span><span>45</span></div><div><span>5 × 10</span><span>50</span></div></div><div class="mt"><b>6</b><div><span>6 × 1</span><span>6</span></div><div><span>6 × 2</span><span>12</span></div><div><span>6 × 3</span><span>18</span></div><div><span>6 × 4</span><span>24</span></div><div><span>6 × 5</span><span>30</span></div><div><span>6 × 6</span><span>36</span></div><div><span>6 × 7</span><span>42</span></div><div><span>6 × 8</span><span>48</span></div><div><span>6 × 9</span><span>54</span></div><div><span>6 × 10</span><span>60</span></div></div><div class="mt"><b>7</b><div><span>7 × 1</span><span>7</span></div><div><span>7 × 2</span><span>14</span></div><div><span>7 × 3</span><span>21</span></div><div><span>7 × 4</span><span>28</span></div><div><span>7 × 5</span><span>35</span></div><div><span>7 × 6</span><span>42</span></div><div><span>7 × 7</span><span>49</span></div><div><span>7 × 8</span><span>56</span></div><div><span>7 × 9</span><span>63</span></div><div><span>7 × 10</span><span>70</span></div></div><div class="mt"><b>8</b><div><span>8 × 1</span><span>8</span></div><div><span>8 × 2</span><span>16</span></div><div><span>8 × 3</span><span>24</span></div><div><span>8 × 4</span><span>32</span></div><div><span>8 × 5</span><span>40</span></div><div><span>8 × 6</span><span>48</span></div><div><span>8 × 7</span><span>56</span></div><div><span>8 × 8</span><span>64</span></div><div><span>8 × 9</span><span>72</span></div><div><span>8 × 10</span><span>80</span></div></div><div class="mt"><b>9</b><div><span>9 × 1</span><span>9</span></div><div><span>9 × 2</span><span>18</span></div><div><span>9 × 3</span><span>27</span></div><div><span>9 × 4</span><span>36</span></div><div><span>9 × 5</span><span>45</span></div><div><span>9 × 6</span><span>54</span></div><div><span>9 × 7</span><span>63</span></div><div><span>9 × 8</span><span>72</span></div><div><span>9 × 9</span><span>81</span></div><div><span>9 × 10</span><span>90</span></div></div><div class="mt"><b>10</b><div><span>10 × 1</span><span>10</span></div><div><span>10 × 2</span><span>20</span></div><div><span>10 × 3</span><span>30</span></div><div><span>10 × 4</span><span>40</span></div><div><span>10 × 5</span><span>50</span></div><div><span>10 × 6</span><span>60</span></div><div><span>10 × 7</span><span>70</span></div><div><span>10 × 8</span><span>80</span></div><div><span>10 × 9</span><span>90</span></div><div><span>10 × 10</span><span>100</span></div></div></div>
+<h4>Tables 11 to 20</h4>
+<div class="mt-grid"><div class="mt"><b>11</b><div><span>11 × 1</span><span>11</span></div><div><span>11 × 2</span><span>22</span></div><div><span>11 × 3</span><span>33</span></div><div><span>11 × 4</span><span>44</span></div><div><span>11 × 5</span><span>55</span></div><div><span>11 × 6</span><span>66</span></div><div><span>11 × 7</span><span>77</span></div><div><span>11 × 8</span><span>88</span></div><div><span>11 × 9</span><span>99</span></div><div><span>11 × 10</span><span>110</span></div></div><div class="mt"><b>12</b><div><span>12 × 1</span><span>12</span></div><div><span>12 × 2</span><span>24</span></div><div><span>12 × 3</span><span>36</span></div><div><span>12 × 4</span><span>48</span></div><div><span>12 × 5</span><span>60</span></div><div><span>12 × 6</span><span>72</span></div><div><span>12 × 7</span><span>84</span></div><div><span>12 × 8</span><span>96</span></div><div><span>12 × 9</span><span>108</span></div><div><span>12 × 10</span><span>120</span></div></div><div class="mt"><b>13</b><div><span>13 × 1</span><span>13</span></div><div><span>13 × 2</span><span>26</span></div><div><span>13 × 3</span><span>39</span></div><div><span>13 × 4</span><span>52</span></div><div><span>13 × 5</span><span>65</span></div><div><span>13 × 6</span><span>78</span></div><div><span>13 × 7</span><span>91</span></div><div><span>13 × 8</span><span>104</span></div><div><span>13 × 9</span><span>117</span></div><div><span>13 × 10</span><span>130</span></div></div><div class="mt"><b>14</b><div><span>14 × 1</span><span>14</span></div><div><span>14 × 2</span><span>28</span></div><div><span>14 × 3</span><span>42</span></div><div><span>14 × 4</span><span>56</span></div><div><span>14 × 5</span><span>70</span></div><div><span>14 × 6</span><span>84</span></div><div><span>14 × 7</span><span>98</span></div><div><span>14 × 8</span><span>112</span></div><div><span>14 × 9</span><span>126</span></div><div><span>14 × 10</span><span>140</span></div></div><div class="mt"><b>15</b><div><span>15 × 1</span><span>15</span></div><div><span>15 × 2</span><span>30</span></div><div><span>15 × 3</span><span>45</span></div><div><span>15 × 4</span><span>60</span></div><div><span>15 × 5</span><span>75</span></div><div><span>15 × 6</span><span>90</span></div><div><span>15 × 7</span><span>105</span></div><div><span>15 × 8</span><span>120</span></div><div><span>15 × 9</span><span>135</span></div><div><span>15 × 10</span><span>150</span></div></div><div class="mt"><b>16</b><div><span>16 × 1</span><span>16</span></div><div><span>16 × 2</span><span>32</span></div><div><span>16 × 3</span><span>48</span></div><div><span>16 × 4</span><span>64</span></div><div><span>16 × 5</span><span>80</span></div><div><span>16 × 6</span><span>96</span></div><div><span>16 × 7</span><span>112</span></div><div><span>16 × 8</span><span>128</span></div><div><span>16 × 9</span><span>144</span></div><div><span>16 × 10</span><span>160</span></div></div><div class="mt"><b>17</b><div><span>17 × 1</span><span>17</span></div><div><span>17 × 2</span><span>34</span></div><div><span>17 × 3</span><span>51</span></div><div><span>17 × 4</span><span>68</span></div><div><span>17 × 5</span><span>85</span></div><div><span>17 × 6</span><span>102</span></div><div><span>17 × 7</span><span>119</span></div><div><span>17 × 8</span><span>136</span></div><div><span>17 × 9</span><span>153</span></div><div><span>17 × 10</span><span>170</span></div></div><div class="mt"><b>18</b><div><span>18 × 1</span><span>18</span></div><div><span>18 × 2</span><span>36</span></div><div><span>18 × 3</span><span>54</span></div><div><span>18 × 4</span><span>72</span></div><div><span>18 × 5</span><span>90</span></div><div><span>18 × 6</span><span>108</span></div><div><span>18 × 7</span><span>126</span></div><div><span>18 × 8</span><span>144</span></div><div><span>18 × 9</span><span>162</span></div><div><span>18 × 10</span><span>180</span></div></div><div class="mt"><b>19</b><div><span>19 × 1</span><span>19</span></div><div><span>19 × 2</span><span>38</span></div><div><span>19 × 3</span><span>57</span></div><div><span>19 × 4</span><span>76</span></div><div><span>19 × 5</span><span>95</span></div><div><span>19 × 6</span><span>114</span></div><div><span>19 × 7</span><span>133</span></div><div><span>19 × 8</span><span>152</span></div><div><span>19 × 9</span><span>171</span></div><div><span>19 × 10</span><span>190</span></div></div><div class="mt"><b>20</b><div><span>20 × 1</span><span>20</span></div><div><span>20 × 2</span><span>40</span></div><div><span>20 × 3</span><span>60</span></div><div><span>20 × 4</span><span>80</span></div><div><span>20 × 5</span><span>100</span></div><div><span>20 × 6</span><span>120</span></div><div><span>20 × 7</span><span>140</span></div><div><span>20 × 8</span><span>160</span></div><div><span>20 × 9</span><span>180</span></div><div><span>20 × 10</span><span>200</span></div></div></div>
+<h4>Tables 21 to 30</h4>
+<div class="mt-grid"><div class="mt"><b>21</b><div><span>21 × 1</span><span>21</span></div><div><span>21 × 2</span><span>42</span></div><div><span>21 × 3</span><span>63</span></div><div><span>21 × 4</span><span>84</span></div><div><span>21 × 5</span><span>105</span></div><div><span>21 × 6</span><span>126</span></div><div><span>21 × 7</span><span>147</span></div><div><span>21 × 8</span><span>168</span></div><div><span>21 × 9</span><span>189</span></div><div><span>21 × 10</span><span>210</span></div></div><div class="mt"><b>22</b><div><span>22 × 1</span><span>22</span></div><div><span>22 × 2</span><span>44</span></div><div><span>22 × 3</span><span>66</span></div><div><span>22 × 4</span><span>88</span></div><div><span>22 × 5</span><span>110</span></div><div><span>22 × 6</span><span>132</span></div><div><span>22 × 7</span><span>154</span></div><div><span>22 × 8</span><span>176</span></div><div><span>22 × 9</span><span>198</span></div><div><span>22 × 10</span><span>220</span></div></div><div class="mt"><b>23</b><div><span>23 × 1</span><span>23</span></div><div><span>23 × 2</span><span>46</span></div><div><span>23 × 3</span><span>69</span></div><div><span>23 × 4</span><span>92</span></div><div><span>23 × 5</span><span>115</span></div><div><span>23 × 6</span><span>138</span></div><div><span>23 × 7</span><span>161</span></div><div><span>23 × 8</span><span>184</span></div><div><span>23 × 9</span><span>207</span></div><div><span>23 × 10</span><span>230</span></div></div><div class="mt"><b>24</b><div><span>24 × 1</span><span>24</span></div><div><span>24 × 2</span><span>48</span></div><div><span>24 × 3</span><span>72</span></div><div><span>24 × 4</span><span>96</span></div><div><span>24 × 5</span><span>120</span></div><div><span>24 × 6</span><span>144</span></div><div><span>24 × 7</span><span>168</span></div><div><span>24 × 8</span><span>192</span></div><div><span>24 × 9</span><span>216</span></div><div><span>24 × 10</span><span>240</span></div></div><div class="mt"><b>25</b><div><span>25 × 1</span><span>25</span></div><div><span>25 × 2</span><span>50</span></div><div><span>25 × 3</span><span>75</span></div><div><span>25 × 4</span><span>100</span></div><div><span>25 × 5</span><span>125</span></div><div><span>25 × 6</span><span>150</span></div><div><span>25 × 7</span><span>175</span></div><div><span>25 × 8</span><span>200</span></div><div><span>25 × 9</span><span>225</span></div><div><span>25 × 10</span><span>250</span></div></div><div class="mt"><b>26</b><div><span>26 × 1</span><span>26</span></div><div><span>26 × 2</span><span>52</span></div><div><span>26 × 3</span><span>78</span></div><div><span>26 × 4</span><span>104</span></div><div><span>26 × 5</span><span>130</span></div><div><span>26 × 6</span><span>156</span></div><div><span>26 × 7</span><span>182</span></div><div><span>26 × 8</span><span>208</span></div><div><span>26 × 9</span><span>234</span></div><div><span>26 × 10</span><span>260</span></div></div><div class="mt"><b>27</b><div><span>27 × 1</span><span>27</span></div><div><span>27 × 2</span><span>54</span></div><div><span>27 × 3</span><span>81</span></div><div><span>27 × 4</span><span>108</span></div><div><span>27 × 5</span><span>135</span></div><div><span>27 × 6</span><span>162</span></div><div><span>27 × 7</span><span>189</span></div><div><span>27 × 8</span><span>216</span></div><div><span>27 × 9</span><span>243</span></div><div><span>27 × 10</span><span>270</span></div></div><div class="mt"><b>28</b><div><span>28 × 1</span><span>28</span></div><div><span>28 × 2</span><span>56</span></div><div><span>28 × 3</span><span>84</span></div><div><span>28 × 4</span><span>112</span></div><div><span>28 × 5</span><span>140</span></div><div><span>28 × 6</span><span>168</span></div><div><span>28 × 7</span><span>196</span></div><div><span>28 × 8</span><span>224</span></div><div><span>28 × 9</span><span>252</span></div><div><span>28 × 10</span><span>280</span></div></div><div class="mt"><b>29</b><div><span>29 × 1</span><span>29</span></div><div><span>29 × 2</span><span>58</span></div><div><span>29 × 3</span><span>87</span></div><div><span>29 × 4</span><span>116</span></div><div><span>29 × 5</span><span>145</span></div><div><span>29 × 6</span><span>174</span></div><div><span>29 × 7</span><span>203</span></div><div><span>29 × 8</span><span>232</span></div><div><span>29 × 9</span><span>261</span></div><div><span>29 × 10</span><span>290</span></div></div><div class="mt"><b>30</b><div><span>30 × 1</span><span>30</span></div><div><span>30 × 2</span><span>60</span></div><div><span>30 × 3</span><span>90</span></div><div><span>30 × 4</span><span>120</span></div><div><span>30 × 5</span><span>150</span></div><div><span>30 × 6</span><span>180</span></div><div><span>30 × 7</span><span>210</span></div><div><span>30 × 8</span><span>240</span></div><div><span>30 × 9</span><span>270</span></div><div><span>30 × 10</span><span>300</span></div></div></div>
+<div class="lc-box trap"><span class="lc-label">Common trap</span><p>The usual slips are 7 × 8 = 56 (not 54), 12 × 12 = 144, 13 × 7 = 91 (people say 81), 17 × 7 = 119, 19 × 7 = 133 and 23 × 4 = 92. Circle the ones you hesitate on and drill only those.</p></div>
+<a class="practice-link" href="../practice/calculation.html">Drill tables in Calculation Practice →</a>
+</section>
+
+<section id="squares">
+<h3>2. Squares 1 to 100</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A square is a number times itself: 13² = 169. Squares 1 to 30 should be instant; 31 to 100 you can rebuild in a few seconds with the tricks below, but reading this table daily makes them instant too.</p>
+<p class="analogy">Squares are landmarks on the number line. When you see 729 or 841 you should immediately recognise 27² and 29², the same way you recognise a famous building.</p></div>
+<div class="lc-box key"><span class="lc-label">Rebuild any square fast</span><p>Near 50: <mark>(50 + a)² = 2500 + 100a + a²</mark>, so 53² = 2500 + 300 + 9 = 2809. Near 100: <mark>(100 − a)² = 10000 − 200a + a²</mark>, so 96² = 10000 − 800 + 16 = 9216. Ending in 5: n5² = n(n+1) then 25, so 75² = 7 × 8 = 56, then 25 = 5625.</p></div>
+<div class="num-grid"><div class="nc hot"><span>1</span>1</div><div class="nc hot"><span>2</span>4</div><div class="nc hot"><span>3</span>9</div><div class="nc hot"><span>4</span>16</div><div class="nc hot"><span>5</span>25</div><div class="nc hot"><span>6</span>36</div><div class="nc hot"><span>7</span>49</div><div class="nc hot"><span>8</span>64</div><div class="nc hot"><span>9</span>81</div><div class="nc hot"><span>10</span>100</div><div class="nc hot"><span>11</span>121</div><div class="nc hot"><span>12</span>144</div><div class="nc hot"><span>13</span>169</div><div class="nc hot"><span>14</span>196</div><div class="nc hot"><span>15</span>225</div><div class="nc hot"><span>16</span>256</div><div class="nc hot"><span>17</span>289</div><div class="nc hot"><span>18</span>324</div><div class="nc hot"><span>19</span>361</div><div class="nc hot"><span>20</span>400</div><div class="nc hot"><span>21</span>441</div><div class="nc hot"><span>22</span>484</div><div class="nc hot"><span>23</span>529</div><div class="nc hot"><span>24</span>576</div><div class="nc hot"><span>25</span>625</div><div class="nc hot"><span>26</span>676</div><div class="nc hot"><span>27</span>729</div><div class="nc hot"><span>28</span>784</div><div class="nc hot"><span>29</span>841</div><div class="nc hot"><span>30</span>900</div><div class="nc"><span>31</span>961</div><div class="nc"><span>32</span>1,024</div><div class="nc"><span>33</span>1,089</div><div class="nc"><span>34</span>1,156</div><div class="nc cool"><span>35</span>1,225</div><div class="nc"><span>36</span>1,296</div><div class="nc"><span>37</span>1,369</div><div class="nc"><span>38</span>1,444</div><div class="nc"><span>39</span>1,521</div><div class="nc"><span>40</span>1,600</div><div class="nc"><span>41</span>1,681</div><div class="nc"><span>42</span>1,764</div><div class="nc"><span>43</span>1,849</div><div class="nc"><span>44</span>1,936</div><div class="nc cool"><span>45</span>2,025</div><div class="nc"><span>46</span>2,116</div><div class="nc"><span>47</span>2,209</div><div class="nc"><span>48</span>2,304</div><div class="nc"><span>49</span>2,401</div><div class="nc"><span>50</span>2,500</div><div class="nc"><span>51</span>2,601</div><div class="nc"><span>52</span>2,704</div><div class="nc"><span>53</span>2,809</div><div class="nc"><span>54</span>2,916</div><div class="nc cool"><span>55</span>3,025</div><div class="nc"><span>56</span>3,136</div><div class="nc"><span>57</span>3,249</div><div class="nc"><span>58</span>3,364</div><div class="nc"><span>59</span>3,481</div><div class="nc"><span>60</span>3,600</div><div class="nc"><span>61</span>3,721</div><div class="nc"><span>62</span>3,844</div><div class="nc"><span>63</span>3,969</div><div class="nc"><span>64</span>4,096</div><div class="nc cool"><span>65</span>4,225</div><div class="nc"><span>66</span>4,356</div><div class="nc"><span>67</span>4,489</div><div class="nc"><span>68</span>4,624</div><div class="nc"><span>69</span>4,761</div><div class="nc"><span>70</span>4,900</div><div class="nc"><span>71</span>5,041</div><div class="nc"><span>72</span>5,184</div><div class="nc"><span>73</span>5,329</div><div class="nc"><span>74</span>5,476</div><div class="nc cool"><span>75</span>5,625</div><div class="nc"><span>76</span>5,776</div><div class="nc"><span>77</span>5,929</div><div class="nc"><span>78</span>6,084</div><div class="nc"><span>79</span>6,241</div><div class="nc"><span>80</span>6,400</div><div class="nc"><span>81</span>6,561</div><div class="nc"><span>82</span>6,724</div><div class="nc"><span>83</span>6,889</div><div class="nc"><span>84</span>7,056</div><div class="nc cool"><span>85</span>7,225</div><div class="nc"><span>86</span>7,396</div><div class="nc"><span>87</span>7,569</div><div class="nc"><span>88</span>7,744</div><div class="nc"><span>89</span>7,921</div><div class="nc"><span>90</span>8,100</div><div class="nc"><span>91</span>8,281</div><div class="nc"><span>92</span>8,464</div><div class="nc"><span>93</span>8,649</div><div class="nc"><span>94</span>8,836</div><div class="nc cool"><span>95</span>9,025</div><div class="nc"><span>96</span>9,216</div><div class="nc"><span>97</span>9,409</div><div class="nc"><span>98</span>9,604</div><div class="nc"><span>99</span>9,801</div><div class="nc"><span>100</span>10,000</div></div>
+<div class="legend-row"><span><i class="h"></i>1 to 30: memorise</span><span><i class="c"></i>ends in 5: use the n(n+1)25 rule</span></div>
+<h4>Patterns that help you check an answer</h4>
+<ul>
+<li>A perfect square can only end in <b>0, 1, 4, 5, 6 or 9</b>. If a number ends in 2, 3, 7 or 8 it is not a perfect square.</li>
+<li>Squares ending in 0 always end in an even number of zeros (100, 400, 2500).</li>
+<li>The last two digits of n² and (50 − n)² and (50 + n)² are the same: 21² = 441, 29² = 841, 71² = 5041, 79² = 6241 all end in 41.</li>
+<li>Difference of consecutive squares: <mark>(n + 1)² − n² = 2n + 1</mark>, so 41² = 40² + 81 = 1600 + 81 = 1681.</li>
+</ul>
+</section>
+
+<section id="cubes">
+<h3>3. Cubes 1 to 50</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A cube is a number multiplied by itself three times: 12³ = 12 × 12 × 12 = 1,728. Cubes 1 to 20 come up constantly in mensuration (volumes) and in cube-root questions.</p>
+<p class="analogy">If a square is a floor tile pattern, a cube is the whole box of tiles stacked up: side × side × side.</p></div>
+<div class="lc-box key"><span class="lc-label">Last digit of a cube</span><p>The last digit of n³ depends only on the last digit of n: 0→0, 1→1, 2→8, 3→7, 4→4, 5→5, 6→6, 7→3, 8→2, 9→9. So <mark>2↔8 and 3↔7 swap; 0, 1, 4, 5, 6, 9 stay the same</mark>. This is how you find cube roots in seconds (section 6).</p></div>
+<div class="num-grid"><div class="nc hot"><span>1</span>1</div><div class="nc hot"><span>2</span>8</div><div class="nc hot"><span>3</span>27</div><div class="nc hot"><span>4</span>64</div><div class="nc hot"><span>5</span>125</div><div class="nc hot"><span>6</span>216</div><div class="nc hot"><span>7</span>343</div><div class="nc hot"><span>8</span>512</div><div class="nc hot"><span>9</span>729</div><div class="nc hot"><span>10</span>1,000</div><div class="nc hot"><span>11</span>1,331</div><div class="nc hot"><span>12</span>1,728</div><div class="nc hot"><span>13</span>2,197</div><div class="nc hot"><span>14</span>2,744</div><div class="nc hot"><span>15</span>3,375</div><div class="nc hot"><span>16</span>4,096</div><div class="nc hot"><span>17</span>4,913</div><div class="nc hot"><span>18</span>5,832</div><div class="nc hot"><span>19</span>6,859</div><div class="nc hot"><span>20</span>8,000</div><div class="nc"><span>21</span>9,261</div><div class="nc"><span>22</span>10,648</div><div class="nc"><span>23</span>12,167</div><div class="nc"><span>24</span>13,824</div><div class="nc"><span>25</span>15,625</div><div class="nc"><span>26</span>17,576</div><div class="nc"><span>27</span>19,683</div><div class="nc"><span>28</span>21,952</div><div class="nc"><span>29</span>24,389</div><div class="nc"><span>30</span>27,000</div><div class="nc"><span>31</span>29,791</div><div class="nc"><span>32</span>32,768</div><div class="nc"><span>33</span>35,937</div><div class="nc"><span>34</span>39,304</div><div class="nc"><span>35</span>42,875</div><div class="nc"><span>36</span>46,656</div><div class="nc"><span>37</span>50,653</div><div class="nc"><span>38</span>54,872</div><div class="nc"><span>39</span>59,319</div><div class="nc"><span>40</span>64,000</div><div class="nc"><span>41</span>68,921</div><div class="nc"><span>42</span>74,088</div><div class="nc"><span>43</span>79,507</div><div class="nc"><span>44</span>85,184</div><div class="nc"><span>45</span>91,125</div><div class="nc"><span>46</span>97,336</div><div class="nc"><span>47</span>103,823</div><div class="nc"><span>48</span>110,592</div><div class="nc"><span>49</span>117,649</div><div class="nc"><span>50</span>125,000</div></div>
+<div class="legend-row"><span><i class="h"></i>1 to 20: memorise</span></div>
+<h4>Useful identities</h4>
+<ul>
+<li><mark>(a + b)³ = a³ + b³ + 3ab(a + b)</mark>, so 21³ = 8000 + 1 + 3 × 20 × 1 × 21 = 9261.</li>
+<li><mark>a³ + b³ = (a + b)(a² − ab + b²)</mark> and <mark>a³ − b³ = (a − b)(a² + ab + b²)</mark>.</li>
+<li>If a + b + c = 0, then a³ + b³ + c³ = 3abc.</li>
+</ul>
+</section>
+
+<section id="powers">
+<h3>4. Powers of Small Numbers &amp; Unit-Digit Cycles</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Powers show up in compound interest, growth, number system and remainder questions. You rarely need a huge power in full, but you must know the small ones and how the last digit repeats.</p>
+<p class="analogy">The last digit of a power goes round in a loop, like the hands of a clock. Once you know the loop length, you can jump straight to the 100th turn.</p></div>
+<div class="table-wrap"><table class="mono"><tr><th>Base</th><th>Powers</th></tr><tr><td><b>2</b></td><td>2<sup>1</sup> = 2 · 2<sup>2</sup> = 4 · 2<sup>3</sup> = 8 · 2<sup>4</sup> = 16 · 2<sup>5</sup> = 32 · 2<sup>6</sup> = 64 · 2<sup>7</sup> = 128 · 2<sup>8</sup> = 256 · 2<sup>9</sup> = 512 · 2<sup>10</sup> = 1,024 · 2<sup>11</sup> = 2,048 · 2<sup>12</sup> = 4,096 · 2<sup>13</sup> = 8,192 · 2<sup>14</sup> = 16,384 · 2<sup>15</sup> = 32,768 · 2<sup>16</sup> = 65,536 · 2<sup>17</sup> = 131,072 · 2<sup>18</sup> = 262,144 · 2<sup>19</sup> = 524,288 · 2<sup>20</sup> = 1,048,576</td></tr><tr><td><b>3</b></td><td>3<sup>1</sup> = 3 · 3<sup>2</sup> = 9 · 3<sup>3</sup> = 27 · 3<sup>4</sup> = 81 · 3<sup>5</sup> = 243 · 3<sup>6</sup> = 729 · 3<sup>7</sup> = 2,187 · 3<sup>8</sup> = 6,561 · 3<sup>9</sup> = 19,683 · 3<sup>10</sup> = 59,049 · 3<sup>11</sup> = 177,147 · 3<sup>12</sup> = 531,441</td></tr><tr><td><b>4</b></td><td>4<sup>1</sup> = 4 · 4<sup>2</sup> = 16 · 4<sup>3</sup> = 64 · 4<sup>4</sup> = 256 · 4<sup>5</sup> = 1,024 · 4<sup>6</sup> = 4,096 · 4<sup>7</sup> = 16,384 · 4<sup>8</sup> = 65,536 · 4<sup>9</sup> = 262,144 · 4<sup>10</sup> = 1,048,576</td></tr><tr><td><b>5</b></td><td>5<sup>1</sup> = 5 · 5<sup>2</sup> = 25 · 5<sup>3</sup> = 125 · 5<sup>4</sup> = 625 · 5<sup>5</sup> = 3,125 · 5<sup>6</sup> = 15,625 · 5<sup>7</sup> = 78,125 · 5<sup>8</sup> = 390,625 · 5<sup>9</sup> = 1,953,125 · 5<sup>10</sup> = 9,765,625</td></tr><tr><td><b>6</b></td><td>6<sup>1</sup> = 6 · 6<sup>2</sup> = 36 · 6<sup>3</sup> = 216 · 6<sup>4</sup> = 1,296 · 6<sup>5</sup> = 7,776 · 6<sup>6</sup> = 46,656 · 6<sup>7</sup> = 279,936 · 6<sup>8</sup> = 1,679,616</td></tr><tr><td><b>7</b></td><td>7<sup>1</sup> = 7 · 7<sup>2</sup> = 49 · 7<sup>3</sup> = 343 · 7<sup>4</sup> = 2,401 · 7<sup>5</sup> = 16,807 · 7<sup>6</sup> = 117,649 · 7<sup>7</sup> = 823,543 · 7<sup>8</sup> = 5,764,801</td></tr><tr><td><b>8</b></td><td>8<sup>1</sup> = 8 · 8<sup>2</sup> = 64 · 8<sup>3</sup> = 512 · 8<sup>4</sup> = 4,096 · 8<sup>5</sup> = 32,768 · 8<sup>6</sup> = 262,144 · 8<sup>7</sup> = 2,097,152</td></tr><tr><td><b>9</b></td><td>9<sup>1</sup> = 9 · 9<sup>2</sup> = 81 · 9<sup>3</sup> = 729 · 9<sup>4</sup> = 6,561 · 9<sup>5</sup> = 59,049 · 9<sup>6</sup> = 531,441 · 9<sup>7</sup> = 4,782,969</td></tr><tr><td><b>11</b></td><td>11<sup>1</sup> = 11 · 11<sup>2</sup> = 121 · 11<sup>3</sup> = 1,331 · 11<sup>4</sup> = 14,641 · 11<sup>5</sup> = 161,051 · 11<sup>6</sup> = 1,771,561</td></tr><tr><td><b>12</b></td><td>12<sup>1</sup> = 12 · 12<sup>2</sup> = 144 · 12<sup>3</sup> = 1,728 · 12<sup>4</sup> = 20,736 · 12<sup>5</sup> = 248,832</td></tr><tr><td><b>13</b></td><td>13<sup>1</sup> = 13 · 13<sup>2</sup> = 169 · 13<sup>3</sup> = 2,197 · 13<sup>4</sup> = 28,561 · 13<sup>5</sup> = 371,293</td></tr><tr><td><b>15</b></td><td>15<sup>1</sup> = 15 · 15<sup>2</sup> = 225 · 15<sup>3</sup> = 3,375 · 15<sup>4</sup> = 50,625</td></tr></table></div>
+<h4>Unit-digit cycles</h4>
+<div class="table-wrap"><table class="mono"><tr><th>Last digit</th><th>Cycle of last digits</th><th>Cycle length</th></tr><tr><td>0</td><td>0</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td></tr><tr><td>2</td><td>2 → 4 → 8 → 6</td><td>4</td></tr><tr><td>3</td><td>3 → 9 → 7 → 1</td><td>4</td></tr><tr><td>4</td><td>4 → 6</td><td>2</td></tr><tr><td>5</td><td>5</td><td>1</td></tr><tr><td>6</td><td>6</td><td>1</td></tr><tr><td>7</td><td>7 → 9 → 3 → 1</td><td>4</td></tr><tr><td>8</td><td>8 → 4 → 2 → 6</td><td>4</td></tr><tr><td>9</td><td>9 → 1</td><td>2</td></tr></table></div>
+<div class="lc-box key"><span class="lc-label">Unit digit of a big power</span><p>Divide the exponent by the cycle length and use the remainder (a remainder of 0 means the last item in the cycle). Example: <mark>7<sup>99</sup>: cycle 7, 9, 3, 1 (length 4); 99 ÷ 4 leaves 3, so the 3rd item: 3</mark>. Check: 3.</p></div>
+<div class="lc-box trap"><span class="lc-label">Common trap</span><p>For bases ending in 0, 1, 5 or 6 the last digit never changes. Do not divide by 4 for them.</p></div>
+</section>
+
+<section id="sqroots">
+<h3>5. Square Roots 1 to 50</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>The square root of a number is the value that, multiplied by itself, gives the number: √196 = 14. Perfect squares have whole-number roots; the others are decimals you should know to two or three places for estimation.</p>
+<p class="analogy">Finding a square root is walking the squares table backwards: you know the answer, you are looking for the question.</p></div>
+<div class="lc-box key"><span class="lc-label">Must-know roots</span><p><mark>√2 = 1.414, √3 = 1.732, √5 = 2.236, √6 = 2.449, √7 = 2.646, √10 = 3.162</mark>. Almost every other root can be built from these: √12 = 2√3 = 3.464, √50 = 5√2 = 7.071.</p></div>
+<div class="num-grid"><div class="nc hot"><span>1</span>1</div><div class="nc cool"><span>2</span>1.414</div><div class="nc cool"><span>3</span>1.732</div><div class="nc hot"><span>4</span>2</div><div class="nc cool"><span>5</span>2.236</div><div class="nc cool"><span>6</span>2.449</div><div class="nc cool"><span>7</span>2.646</div><div class="nc"><span>8</span>2.828</div><div class="nc hot"><span>9</span>3</div><div class="nc cool"><span>10</span>3.162</div><div class="nc"><span>11</span>3.317</div><div class="nc"><span>12</span>3.464</div><div class="nc"><span>13</span>3.606</div><div class="nc"><span>14</span>3.742</div><div class="nc"><span>15</span>3.873</div><div class="nc hot"><span>16</span>4</div><div class="nc"><span>17</span>4.123</div><div class="nc"><span>18</span>4.243</div><div class="nc"><span>19</span>4.359</div><div class="nc"><span>20</span>4.472</div><div class="nc"><span>21</span>4.583</div><div class="nc"><span>22</span>4.690</div><div class="nc"><span>23</span>4.796</div><div class="nc"><span>24</span>4.899</div><div class="nc hot"><span>25</span>5</div><div class="nc"><span>26</span>5.099</div><div class="nc"><span>27</span>5.196</div><div class="nc"><span>28</span>5.292</div><div class="nc"><span>29</span>5.385</div><div class="nc"><span>30</span>5.477</div><div class="nc"><span>31</span>5.568</div><div class="nc"><span>32</span>5.657</div><div class="nc"><span>33</span>5.745</div><div class="nc"><span>34</span>5.831</div><div class="nc"><span>35</span>5.916</div><div class="nc hot"><span>36</span>6</div><div class="nc"><span>37</span>6.083</div><div class="nc"><span>38</span>6.164</div><div class="nc"><span>39</span>6.245</div><div class="nc"><span>40</span>6.325</div><div class="nc"><span>41</span>6.403</div><div class="nc"><span>42</span>6.481</div><div class="nc"><span>43</span>6.557</div><div class="nc"><span>44</span>6.633</div><div class="nc"><span>45</span>6.708</div><div class="nc"><span>46</span>6.782</div><div class="nc"><span>47</span>6.856</div><div class="nc"><span>48</span>6.928</div><div class="nc hot"><span>49</span>7</div><div class="nc"><span>50</span>7.071</div></div>
+<div class="legend-row"><span><i class="h"></i>perfect squares</span><span><i class="c"></i>must-know irrational roots</span></div>
+<h4>Square root of a big perfect square in 10 seconds</h4>
+<ol>
+<li>Look at the last digit to get the possible last digits of the root: 1→1 or 9, 4→2 or 8, 9→3 or 7, 6→4 or 6, 5→5, 0→0.</li>
+<li>Drop the last two digits and find the largest square below what is left. That gives the tens digit.</li>
+<li>Pick between the two candidates by comparing with (tens digit)(5)²: if the number is bigger, take the larger candidate.</li>
+</ol>
+<p><b>Example: √5329.</b> Ends in 9 → root ends in 3 or 7. Drop "29": 53, and 7² = 49 &lt; 53 &lt; 64, so the tens digit is 7. 75² = 5625 &gt; 5329, so take the smaller: <b>73</b>. Check: 73² = 5329.</p>
+</section>
+
+<section id="cuberoots">
+<h3>6. Cube Roots</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>The cube root is the number that, cubed, gives the value: ∛2744 = 14. For perfect cubes up to six digits there is a two-step trick that needs only the cubes of 1 to 9.</p>
+<p class="analogy">Like reading a car number plate: the last digit tells you one thing, the front tells you the other, and together they identify it.</p></div>
+<div class="lc-box key"><span class="lc-label">Two-step cube root trick (perfect cubes)</span><p>1) The <b>last digit of the root</b> comes from the last digit of the cube: 1→1, 8→2, 7→3, 4→4, 5→5, 6→6, 3→7, 2→8, 9→9, 0→0. 2) Drop the last three digits; the <b>front of the root</b> is the largest number whose cube is at most what remains. <mark>Example: ∛103823: ends in 3 → root ends in 7. Drop 823: 103, and 4³ = 64 ≤ 103 &lt; 125 = 5³, so front = 4. Root = 47.</mark> Check: 47³ = {comma(47**3)}.</p></div>
+<div class="table-wrap"><table class="mono"><tr><th>Perfect cube</th><th>Cube root</th><th>Perfect cube</th><th>Cube root</th></tr><tr><td>1</td><td>1</td><td>17,576</td><td>26</td></tr><tr><td>8</td><td>2</td><td>19,683</td><td>27</td></tr><tr><td>27</td><td>3</td><td>21,952</td><td>28</td></tr><tr><td>64</td><td>4</td><td>24,389</td><td>29</td></tr><tr><td>125</td><td>5</td><td>27,000</td><td>30</td></tr><tr><td>216</td><td>6</td><td>29,791</td><td>31</td></tr><tr><td>343</td><td>7</td><td>32,768</td><td>32</td></tr><tr><td>512</td><td>8</td><td>35,937</td><td>33</td></tr><tr><td>729</td><td>9</td><td>39,304</td><td>34</td></tr><tr><td>1,000</td><td>10</td><td>42,875</td><td>35</td></tr><tr><td>1,331</td><td>11</td><td>46,656</td><td>36</td></tr><tr><td>1,728</td><td>12</td><td>50,653</td><td>37</td></tr><tr><td>2,197</td><td>13</td><td>54,872</td><td>38</td></tr><tr><td>2,744</td><td>14</td><td>59,319</td><td>39</td></tr><tr><td>3,375</td><td>15</td><td>64,000</td><td>40</td></tr><tr><td>4,096</td><td>16</td><td>68,921</td><td>41</td></tr><tr><td>4,913</td><td>17</td><td>74,088</td><td>42</td></tr><tr><td>5,832</td><td>18</td><td>79,507</td><td>43</td></tr><tr><td>6,859</td><td>19</td><td>85,184</td><td>44</td></tr><tr><td>8,000</td><td>20</td><td>91,125</td><td>45</td></tr><tr><td>9,261</td><td>21</td><td>97,336</td><td>46</td></tr><tr><td>10,648</td><td>22</td><td>103,823</td><td>47</td></tr><tr><td>12,167</td><td>23</td><td>110,592</td><td>48</td></tr><tr><td>13,824</td><td>24</td><td>117,649</td><td>49</td></tr><tr><td>15,625</td><td>25</td><td>125,000</td><td>50</td></tr></table></div>
+<h4>Handy decimal cube roots</h4>
+<div class="table-wrap"><table class="mono"><tr><th>Number</th><th>Cube root</th></tr><tr><td>2</td><td>1.260</td></tr><tr><td>3</td><td>1.442</td></tr><tr><td>4</td><td>1.587</td></tr><tr><td>5</td><td>1.710</td></tr><tr><td>6</td><td>1.817</td></tr><tr><td>7</td><td>1.913</td></tr><tr><td>9</td><td>2.080</td></tr><tr><td>10</td><td>2.154</td></tr></table></div>
+</section>
+
+<section id="fractions">
+<h3>7. Fraction ↔ Percentage ↔ Decimal (1/1 to 1/30)</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Most percentage, profit and ratio questions become one-line mental sums once you can switch between a fraction and its percentage without dividing. 12.5% is just 1/8; 16 2/3% is 1/6.</p>
+<p class="analogy">It's the same amount in three languages. A good translator doesn't look words up; they just know that 1/8 and 12.5% mean the same thing.</p></div>
+<div class="lc-box key"><span class="lc-label">The big idea</span><p><mark>x% of y = y% of x</mark>, so 16% of 25 = 25% of 16 = 4. And to take 37.5% of anything, take 3/8 of it: 37.5% of 640 = 3 × 80 = 240.</p></div>
+<div class="table-wrap"><table class="mono"><tr><th>Fraction</th><th>Percentage</th><th>Decimal</th><th>Fraction</th><th>Percentage</th><th>Decimal</th></tr><tr><td>1/1</td><td>100%</td><td>1</td><td>1/16</td><td>6 1/4%</td><td>0.0625</td></tr><tr><td>1/2</td><td>50%</td><td>0.5</td><td>1/17</td><td>5 15/17%</td><td>0.0588…</td></tr><tr><td>1/3</td><td>33 1/3%</td><td>0.3333…</td><td>1/18</td><td>5 5/9%</td><td>0.0556…</td></tr><tr><td>1/4</td><td>25%</td><td>0.25</td><td>1/19</td><td>5 5/19%</td><td>0.0526…</td></tr><tr><td>1/5</td><td>20%</td><td>0.2</td><td>1/20</td><td>5%</td><td>0.05</td></tr><tr><td>1/6</td><td>16 2/3%</td><td>0.1667…</td><td>1/21</td><td>4 16/21%</td><td>0.0476…</td></tr><tr><td>1/7</td><td>14 2/7%</td><td>0.1429…</td><td>1/22</td><td>4 6/11%</td><td>0.0455…</td></tr><tr><td>1/8</td><td>12 1/2%</td><td>0.125</td><td>1/23</td><td>4 8/23%</td><td>0.0435…</td></tr><tr><td>1/9</td><td>11 1/9%</td><td>0.1111…</td><td>1/24</td><td>4 1/6%</td><td>0.0417…</td></tr><tr><td>1/10</td><td>10%</td><td>0.1</td><td>1/25</td><td>4%</td><td>0.04</td></tr><tr><td>1/11</td><td>9 1/11%</td><td>0.0909…</td><td>1/26</td><td>3 11/13%</td><td>0.0385…</td></tr><tr><td>1/12</td><td>8 1/3%</td><td>0.0833…</td><td>1/27</td><td>3 19/27%</td><td>0.037…</td></tr><tr><td>1/13</td><td>7 9/13%</td><td>0.0769…</td><td>1/28</td><td>3 4/7%</td><td>0.0357…</td></tr><tr><td>1/14</td><td>7 1/7%</td><td>0.0714…</td><td>1/29</td><td>3 13/29%</td><td>0.0345…</td></tr><tr><td>1/15</td><td>6 2/3%</td><td>0.0667…</td><td>1/30</td><td>3 1/3%</td><td>0.0333…</td></tr></table></div>
+<p class="hint">"…" means the decimal keeps going (it is rounded to 4 places).</p>
+</section>
+
+<section id="fractions2">
+<h3>8. Multiples of Common Fractions</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Once 1/8 = 12.5% is automatic, 3/8, 5/8 and 7/8 are just multiples: 37.5%, 62.5%, 87.5%. The denominators below are the ones that appear most in tests.</p>
+<p class="analogy">If one slice of pizza is 12.5% of the pizza, three slices are 37.5%. You never have to cut a new pizza.</p></div>
+<div class="table-wrap"><table class="mono"><tr><th>Denominator</th><th>Fractions in lowest terms and their percentages</th></tr><tr><td><b>/3</b></td><td>1/3 = 33 1/3% · 2/3 = 66 2/3%</td></tr><tr><td><b>/6</b></td><td>1/6 = 16 2/3% · 5/6 = 83 1/3%</td></tr><tr><td><b>/7</b></td><td>1/7 = 14 2/7% · 2/7 = 28 4/7% · 3/7 = 42 6/7% · 4/7 = 57 1/7% · 5/7 = 71 3/7% · 6/7 = 85 5/7%</td></tr><tr><td><b>/8</b></td><td>1/8 = 12 1/2% · 3/8 = 37 1/2% · 5/8 = 62 1/2% · 7/8 = 87 1/2%</td></tr><tr><td><b>/9</b></td><td>1/9 = 11 1/9% · 2/9 = 22 2/9% · 4/9 = 44 4/9% · 5/9 = 55 5/9% · 7/9 = 77 7/9% · 8/9 = 88 8/9%</td></tr><tr><td><b>/11</b></td><td>1/11 = 9 1/11% · 2/11 = 18 2/11% · 3/11 = 27 3/11% · 4/11 = 36 4/11% · 5/11 = 45 5/11% · 6/11 = 54 6/11% · 7/11 = 63 7/11% · 8/11 = 72 8/11% · 9/11 = 81 9/11% · 10/11 = 90 10/11%</td></tr><tr><td><b>/12</b></td><td>1/12 = 8 1/3% · 5/12 = 41 2/3% · 7/12 = 58 1/3% · 11/12 = 91 2/3%</td></tr><tr><td><b>/16</b></td><td>1/16 = 6 1/4% · 3/16 = 18 3/4% · 5/16 = 31 1/4% · 7/16 = 43 3/4% · 9/16 = 56 1/4% · 11/16 = 68 3/4% · 13/16 = 81 1/4% · 15/16 = 93 3/4%</td></tr></table></div>
+<div class="lc-box key"><span class="lc-label">Successive percentages</span><p>Two changes of a% and b% give a net change of <mark>a + b + ab/100</mark>. +20% then −20% = 20 − 20 − 400/100 = <b>−4%</b>, not zero.</p></div>
+<div class="lc-box trap"><span class="lc-label">Common trap</span><p>The same fraction goes up and down differently. If A is 25% (1/4) more than B, then B is 1/5 = 20% less than A, because the base changed.</p></div>
+</section>
+
+<section id="factorials">
+<h3>9. Factorials 0! to 20!</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>n! (n factorial) is 1 × 2 × 3 × … × n. It counts the ways to arrange n different things in a row. 0! is defined as 1.</p>
+<p class="analogy">5 people can line up in 5! = 120 ways: 5 choices for the first spot, 4 for the next, and so on.</p></div>
+<div class="table-wrap"><table class="mono"><tr><th>n!</th><th>Value</th><th>n!</th><th>Value</th><th>n!</th><th>Value</th></tr><tr><td>0!</td><td>1</td><td>7!</td><td>5,040</td><td>14!</td><td>87,178,291,200</td></tr><tr><td>1!</td><td>1</td><td>8!</td><td>40,320</td><td>15!</td><td>1,307,674,368,000</td></tr><tr><td>2!</td><td>2</td><td>9!</td><td>362,880</td><td>16!</td><td>20,922,789,888,000</td></tr><tr><td>3!</td><td>6</td><td>10!</td><td>3,628,800</td><td>17!</td><td>355,687,428,096,000</td></tr><tr><td>4!</td><td>24</td><td>11!</td><td>39,916,800</td><td>18!</td><td>6,402,373,705,728,000</td></tr><tr><td>5!</td><td>120</td><td>12!</td><td>479,001,600</td><td>19!</td><td>121,645,100,408,832,000</td></tr><tr><td>6!</td><td>720</td><td>13!</td><td>6,227,020,800</td><td>20!</td><td>2,432,902,008,176,640,000</td></tr></table></div>
+<div class="lc-box key"><span class="lc-label">Shortcuts</span><p>Cancel before you multiply: <mark>10!/8! = 10 × 9 = 90</mark>. Number of trailing zeros in n! = ⌊n/5⌋ + ⌊n/25⌋ + ⌊n/125⌋ + …, so 100! ends in 20 + 4 = <b>24</b> zeros.</p></div>
+<div class="lc-box trap"><span class="lc-label">Common trap</span><p>Factorials grow very fast. 13! is already more than 6 billion, so in P&amp;C questions always cancel first.</p></div>
+</section>
+
+<section id="pascal">
+<h3>10. nCr and Pascal's Triangle (n up to 12)</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>nCr is the number of ways to choose r things from n when order does not matter. Row n of Pascal's triangle lists nC0, nC1, …, nCn; each number is the sum of the two above it.</p>
+<p class="analogy">Choosing 2 friends out of 5 for a trip: the order you invite them doesn't matter, so it's 5C2 = 10 ways.</p></div>
+<div class="pascal">                                 1                                 
+                               1   1                               
+                             1   2   1                             
+                           1   3   3   1                           
+                         1   4   6   4   1                         
+                      1   5   10   10   5   1                      
+                    1   6   15   20   15   6   1                   
+                 1   7   21   35   35   21   7   1                 
+               1   8   28   56   70   56   28   8   1              
+           1   9   36   84   126   126   84   36   9   1           
+      1   10   45   120   210   252   210   120   45   10   1      
+   1   11   55   165   330   462   462   330   165   55   11   1   
+1   12   66   220   495   792   924   792   495   220   66   12   1</div>
+<div class="lc-box key"><span class="lc-label">Rules to remember</span><p><mark>nCr = nC(n − r)</mark>, so 12C10 = 12C2 = 66. <mark>nC0 + nC1 + … + nCn = 2ⁿ</mark>: the rows add up to 1, 2, 4, 8, 16, …</p></div>
+</section>
+
+<section id="primes">
+<h3>11. Prime Numbers up to 200</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A prime has exactly two factors: 1 and itself. There are 25 primes below 100 and 46 below 200. 1 is not prime, and 2 is the only even prime.</p>
+<p class="analogy">Primes are the atoms of numbers: every whole number is built by multiplying primes together in exactly one way.</p></div>
+<div class="prime-grid"><span>2</span><span>3</span><span>5</span><span>7</span><span>11</span><span>13</span><span>17</span><span>19</span><span>23</span><span>29</span><span>31</span><span>37</span><span>41</span><span>43</span><span>47</span><span>53</span><span>59</span><span>61</span><span>67</span><span>71</span><span>73</span><span>79</span><span>83</span><span>89</span><span>97</span><span>101</span><span>103</span><span>107</span><span>109</span><span>113</span><span>127</span><span>131</span><span>137</span><span>139</span><span>149</span><span>151</span><span>157</span><span>163</span><span>167</span><span>173</span><span>179</span><span>181</span><span>191</span><span>193</span><span>197</span><span>199</span></div>
+<div class="lc-box key"><span class="lc-label">Is it prime? Quick test</span><p>Check divisibility only by primes up to its square root. <mark>For 191: √191 ≈ 13.8, so test 2, 3, 5, 7, 11, 13. None divide it, so 191 is prime.</mark></p></div>
+<div class="lc-box trap"><span class="lc-label">Common trap</span><p>91 = 7 × 13, 119 = 7 × 17, 133 = 7 × 19, 143 = 11 × 13, 161 = 7 × 23, 187 = 11 × 17 and 169 = 13² look prime but are not.</p></div>
+</section>
+
+<section id="logs">
+<h3>12. Log Values (base 10)</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>log x answers: 10 to what power gives x? Tests usually give you log 2 and log 3 and expect you to build the rest.</p>
+<p class="analogy">If log 2 and log 3 are two Lego bricks, log 6, log 8, log 12 and log 18 are all built by snapping them together.</p></div>
+<div class="table-wrap"><table class="mono"><tr><th>Value</th><th>log₁₀</th><th>Value</th><th>log₁₀</th><th>Value</th><th>log₁₀</th></tr><tr><td>log 2</td><td>0.3010</td><td>log 5</td><td>0.6990</td><td>log 8</td><td>0.9031</td></tr><tr><td>log 3</td><td>0.4771</td><td>log 6</td><td>0.7782</td><td>log 9</td><td>0.9542</td></tr><tr><td>log 4</td><td>0.6021</td><td>log 7</td><td>0.8451</td><td>log 10</td><td>1.0000</td></tr></table></div>
+<div class="lc-box key"><span class="lc-label">Build the rest</span><p>log 4 = 2 log 2, log 5 = 1 − log 2, log 6 = log 2 + log 3, log 8 = 3 log 2, log 9 = 2 log 3. <mark>Number of digits in 2<sup>50</sup> = ⌊50 × 0.3010⌋ + 1 = 16</mark>. Check: 2<sup>50</sup> = 1,125,899,906,842,624.</p></div>
+</section>
+
+<section id="tricks">
+<h3>13. Speed Tricks with Worked Examples</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>These tricks replace long multiplication with two or three small mental steps. Learn one a day and practise it on ten random numbers.</p>
+<p class="analogy">Taking a shortcut through the park instead of walking around the block: same place, half the time.</p></div>
+<h4>Multiply by 11</h4>
+<p><b>64 × 11</b></p><ol><li>Write the two digits apart: 6 _ 4.</li><li>Put their sum in the middle: 6 + 4 = 10.</li><li>It's two digits, so carry the 1 to the 6: 7 0 4.</li></ol><p>Answer: <b>704</b></p>
+<p><b>87 × 11</b></p><ol><li>8 _ 7, middle = 8 + 7 = 15.</li><li>Carry 1: 9 5 7.</li></ol><p>Answer: <b>957</b></p>
+<h4>Multiply by 5, 25 and 125</h4>
+<div class="lc-box key"><span class="lc-label">Rule</span><p><mark>× 5 = × 10 ÷ 2</mark>, <mark>× 25 = × 100 ÷ 4</mark>, <mark>× 125 = × 1000 ÷ 8</mark>.</p></div>
+<p><b>736 × 5</b></p><ol><li>736 × 10 = 7360.</li><li>÷ 2 = 3680.</li></ol><p>Answer: <b>3680</b></p>
+<p><b>48 × 25</b></p><ol><li>48 × 100 = 4800.</li><li>÷ 4 = 1200.</li></ol><p>Answer: <b>1200</b></p>
+<h4>Numbers near a base (100, 1000)</h4>
+<p><b>98 × 97</b></p><ol><li>Both are below 100: 98 is −2, 97 is −3.</li><li>Cross-subtract: 98 − 3 = 95 (or 97 − 2). That's the left part.</li><li>Multiply the differences: (−2) × (−3) = 06 (two digits for base 100).</li><li>Join: 95 | 06.</li></ol><p>Answer: <b>9506</b></p>
+<p><b>998 × 997</b></p><ol><li>Differences from 1000: −2 and −3.</li><li>998 − 3 = 995.</li><li>(−2)(−3) = 006 (three digits for base 1000).</li><li>Join: 995 | 006.</li></ol><p>Answer: <b>995,006</b></p>
+<p><b>104 × 107</b></p><ol><li>Differences from 100: +4 and +7.</li><li>104 + 7 = 111.</li><li>4 × 7 = 28.</li><li>Join: 111 | 28.</li></ol><p>Answer: <b>11,128</b></p>
+<h4>Numbers equally spaced around a round number</h4>
+<p><b>47 × 53</b></p><ol><li>Both are 3 away from 50.</li><li>Use (a − b)(a + b) = a² − b²: 50² − 3² = 2500 − 9.</li></ol><p>Answer: <b>2491</b></p>
+<h4>Squaring</h4>
+<p><b>85²</b></p><ol><li>Ends in 5: take 8 × 9 = 72.</li><li>Write 25 after it.</li></ol><p>Answer: <b>7225</b></p>
+<p><b>58²</b></p><ol><li>58 = 50 + 8: 2500 + 100 × 8 = 3300.</li><li>Add 8² = 64.</li></ol><p>Answer: <b>3364</b></p>
+<p><b>97²</b></p><ol><li>97 = 100 − 3: 10000 − 600 = 9400.</li><li>Add 3² = 9.</li></ol><p>Answer: <b>9409</b></p>
+<h4>Division and percentages</h4>
+<p><b>What is 12.5% of 848?</b></p><ol><li>12.5% = 1/8.</li><li>848 ÷ 8 = 106.</li></ol><p>Answer: <b>106</b></p>
+<p><b>What is 18% of 350?</b></p><ol><li>10% = 35, 1% = 3.5.</li><li>18% = 35 + 8 × 3.5 = 35 + 28.</li></ol><p>Answer: <b>63</b></p>
+<p><b>Is 7,392 divisible by 8?</b></p><ol><li>Only the last three digits matter for 8: 392.</li><li>392 ÷ 8 = 49, a whole number.</li></ol><p>Answer: <b>Yes</b></p>
+<div class="lc-box trap"><span class="lc-label">Common trap</span><p>Tricks are only faster once they're automatic. In the first week you'll be slower with them than without; that's normal. Use Calculation Practice with 2-digit × 1-digit and 2-digit × 2-digit to build speed.</p></div>
+<a class="practice-link" href="../practice/calculation.html">Practise these in Calculation Practice →</a>
+</section>
+
+<section id="plan">
+<h3>14. 4-Week Memorisation Plan</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Memorising works best in short daily sessions with self-testing, not long reading sessions. Fifteen minutes a day beats two hours on Sunday.</p>
+<p class="analogy">Like going to the gym: small, regular sessions build the muscle; one huge session just makes you sore.</p></div>
+<div class="table-wrap"><table class=""><tr><th>Week</th><th>Learn</th><th>Daily drill (15–20 min)</th><th>Target by the end of the week</th></tr><tr><td>1</td><td>Tables 1–20, squares 1–30</td><td>Say 2 tables aloud; write squares 1–30 from memory; 20 random 2-digit × 1-digit in Calculation Practice</td><td>Tables 1–20 without hesitation; 2-digit × 1-digit in under 4 s</td></tr><tr><td>2</td><td>Tables 21–30, cubes 1–20, fractions 1/2 to 1/20</td><td>Write out 2 tables; flash-card 10 fractions ↔ %; 20 mixed + − × questions</td><td>Every fraction ↔ % in under 2 s</td></tr><tr><td>3</td><td>Squares 31–100 with the tricks, square and cube roots, powers of 2 and 3</td><td>Square 10 random numbers using the near-50/near-100 rule; 5 cube roots with the two-step trick</td><td>Any square up to 100 in under 5 s</td></tr><tr><td>4</td><td>Factorials, primes, log values, all speed tricks</td><td>Mixed 30-question sessions with 20 s per question; review your slowest ones</td><td>80% of mixed questions inside the time limit</td></tr></table></div>
+<div class="lc-box key"><span class="lc-label">Keep it</span><p>After the four weeks, one 10-minute Calculation Practice session a day keeps everything sharp.</p></div>
+</section>
+
+</main>
+</div>
+
+<script src="../assets/notes.js"></script>
+</body>
+</html>

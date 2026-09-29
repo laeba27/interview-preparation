@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bank &amp; RBI Exams — Syllabus</title>
+<link rel="stylesheet" href="../assets/notes.css">
+<script>
+  try { document.documentElement.setAttribute("data-theme",
+    localStorage.getItem("notes-theme") || "light"); } catch (e) {}
+</script>
+<style>
+.wrap{max-width:1080px;margin:0 auto;padding:34px 22px 100px;}
+.wrap > header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;}
+.wrap h1{font-size:28px;margin:0;letter-spacing:-.02em;}
+.lead{color:var(--muted);font-size:14.5px;margin:8px 0 18px;max-width:760px;}
+/* status tags */
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.03em;padding:2px 9px;border-radius:20px;
+  white-space:nowrap;vertical-align:1px;border:1px solid transparent;}
+.tag.done{background:var(--code-bg);color:var(--muted);border-color:var(--line);}
+.tag.official{background:var(--sea);color:var(--sea-ink);border-color:var(--sea-ink);}
+.tag.expected{background:var(--sun);color:var(--sun-ink);border-color:var(--sun-ink);}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;font-size:13px;color:var(--muted);
+  background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 22px;}
+.legend b{color:var(--text);font-weight:600;}
+/* overview */
+.overview h2{font-size:17px;margin:0 0 8px;}
+.overview td:first-child a{font-weight:600;text-decoration:none;}
+.overview{margin-bottom:26px;}
+/* grouped tabs */
+.tabbar{display:flex;flex-wrap:wrap;gap:10px 22px;padding:12px 0 14px;border-bottom:1px solid var(--line);margin-bottom:24px;
+  position:sticky;top:0;background:var(--bg);z-index:5;}
+.tab-group{display:flex;align-items:center;gap:8px;}
+.tg-label{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--muted);}
+.tg-tabs{display:flex;gap:6px;flex-wrap:wrap;}
+.xtab{font:inherit;font-size:13.5px;font-weight:600;padding:6px 12px;border-radius:8px;cursor:pointer;
+  background:var(--panel);color:var(--text);border:1.5px solid var(--line);}
+.xtab:hover{border-color:var(--sea-ink);}
+.xtab[aria-selected="true"]{background:var(--sea);color:var(--sea-ink);border-color:var(--sea-ink);}
+/* exam panel */
+.exam[hidden]{display:none;}
+.exam-head h2{font-size:24px;margin:0;letter-spacing:-.015em;}
+.exam-sub{color:var(--muted);margin:6px 0 10px;font-size:14.5px;}
+.exam-status .tag{font-size:12.5px;padding:4px 12px;}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-flow:dense;gap:10px;margin:20px 0 6px;}
+.fact{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;}
+.fact.wide{grid-column:1/-1;}
+.fact .k{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:3px;}
+.fact .v{font-size:14px;line-height:1.5;}
+.exam h3{font-size:18px;margin:30px 0 10px;padding-top:6px;border-top:1px solid var(--line);}
+.exam h4{margin:18px 0 6px;}
+table.timeline td:first-child{font-weight:600;}
+tr.total td{font-weight:700;background:var(--code-bg);}
+.stages{list-style:none;padding:0;margin:10px 0;display:flex;flex-wrap:wrap;gap:10px;counter-reset:st;}
+.stages li{flex:1 1 180px;position:relative;background:var(--sky);border:1px solid var(--sky-ink);border-radius:10px;
+  padding:10px 12px 10px 42px;margin:0;counter-increment:st;}
+.stages li::before{content:counter(st);position:absolute;left:12px;top:11px;width:21px;height:21px;border-radius:50%;
+  background:var(--sky-ink);color:var(--panel);font-size:12px;font-weight:700;display:grid;place-items:center;}
+.stages b{display:block;color:var(--sky-ink);}
+.stages span{font-size:13.5px;color:var(--text);}
+.pattern-note{font-size:13.8px;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--sun-ink);
+  border-radius:0 8px 8px 0;padding:8px 12px;}
+details.syl{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin:8px 0;}
+details.syl summary{cursor:pointer;list-style:none;padding:11px 44px 11px 14px;font-weight:600;position:relative;}
+details.syl summary::-webkit-details-marker{display:none;}
+details.syl summary::after{content:"";position:absolute;right:18px;top:18px;width:7px;height:7px;border-right:1.8px solid var(--muted);
+  border-bottom:1.8px solid var(--muted);transform:rotate(45deg);transition:transform .18s;}
+details.syl[open] summary::after{transform:rotate(225deg);top:21px;}
+details.syl .w{font-weight:500;font-size:12.5px;color:var(--muted);margin-left:8px;}
+details.syl ul{margin:0;padding:4px 18px 14px 34px;border-top:1px solid var(--line);columns:2;column-gap:30px;}
+details.syl li{break-inside:avoid;font-size:14.2px;}
+.prep li{margin:6px 0;}
+.sources{margin-top:26px;font-size:13px;color:var(--muted);background:var(--panel);border:1px dashed var(--line);border-radius:10px;padding:10px 14px;line-height:1.7;}
+.expand-row{display:flex;justify-content:flex-end;margin:-4px 0 4px;}
+@media (max-width:860px){ .facts{grid-template-columns:repeat(2,1fr);} details.syl ul{columns:1;} }
+@media (max-width:520px){ .wrap{padding:24px 16px 80px;} .facts{grid-template-columns:1fr;} .tabbar{position:static;} }
+@media print{ .tabbar,.legend,.overview{display:none;} .exam[hidden]{display:block;} details.syl ul{display:block;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div>
+    <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="../index.html#syllabus">Syllabus</a></li><li><span aria-current="page">Bank &amp; RBI Exams</span></li></ol></nav>
+    <h1>Bank &amp; RBI Exams — Syllabus</h1>
+  </div>
+  <button class="ghost" id="theme">Dark mode</button>
+</header>
+<p class="lead">Every exam in one place: when the next cycle is, how the selection works, the exact pattern of each phase, eligibility and the full syllabus. Pick an exam from the tabs. Information was researched on 27 September 2026 from the official notifications; always confirm dates on the official website before you apply.</p>
+
+<div class="legend" role="note">
+  <b>Date labels:</b>
+  <span><span class="tag done">Completed</span> already held</span>
+  <span><span class="tag official">Official</span> announced by the exam body</span>
+  <span><span class="tag expected">Expected</span> not announced yet; estimated from the usual yearly pattern</span>
+</div>
+
+<section class="overview" aria-labelledby="ovh">
+<h2 id="ovh">Next cycle at a glance</h2>
+<div class="table-wrap"><table>
+<tr><th>Exam</th><th>Group</th><th>Status</th></tr>
+<tr><td><a href="#rbi-grade-b" data-go="rbi-grade-b">RBI Grade B</a></td><td>RBI</td><td><span class="tag done">2026 cycle: Phase II over, interviews pending</span> <span class="tag expected">Next cycle: Apr–Jul 2027 (expected)</span></td></tr><tr><td><a href="#rbi-grade-a" data-go="rbi-grade-a">RBI Grade A</a></td><td>RBI</td><td><span class="tag done">Latest notice: Feb 2026, exam held 14 Mar 2026</span> <span class="tag expected">Next notice: 2027 (expected, no fixed calendar)</span></td></tr><tr><td><a href="#rbi-assistant" data-go="rbi-assistant">RBI Assistant</a></td><td>RBI</td><td><span class="tag done">2026 cycle: mains result out 24 Sep 2026, LPT next</span> <span class="tag expected">Next notice: 2027 (expected, irregular)</span></td></tr><tr><td><a href="#sbi-po" data-go="sbi-po">SBI PO</a></td><td>SBI</td><td><span class="tag done">Prelims + Mains done (Aug–Sep 2026)</span> <span class="tag official">Phase III: Oct–Nov 2026 (tentative, per advt)</span> <span class="tag expected">Next cycle: mid-2027 (expected)</span></td></tr><tr><td><a href="#sbi-clerk" data-go="sbi-clerk">SBI Clerk</a></td><td>SBI</td><td><span class="tag official">Prelims: 26–27 Sep 2026 (in progress)</span> <span class="tag official">Mains: Nov 2026 (tentative month, per advt)</span> <span class="tag expected">Next cycle: second half of 2027 (expected)</span></td></tr><tr><td><a href="#sbi-so-it" data-go="sbi-so-it">SBI SO (IT)</a></td><td>SBI</td><td><span class="tag done">2024–25 cycle complete (final result 17 Mar 2025)</span> <span class="tag expected">Next AM (System) drive: not announced; timing unpredictable</span></td></tr><tr><td><a href="#ibps-po" data-go="ibps-po">IBPS PO</a></td><td>IBPS</td><td><span class="tag official">Mains: 4 Oct 2026 (official)</span> <span class="tag expected">Next cycle (XVII) notification: July 2027 (expected)</span></td></tr><tr><td><a href="#ibps-clerk" data-go="ibps-clerk">IBPS Clerk</a></td><td>IBPS</td><td><span class="tag official">Prelims: 10–11 Oct 2026 · Mains: 27 Dec 2026 (official)</span> <span class="tag expected">Next cycle (XVII) notification: August 2027 (expected)</span></td></tr><tr><td><a href="#ibps-so-it" data-go="ibps-so-it">IBPS SO (IT)</a></td><td>IBPS</td><td><span class="tag done">Prelims held 29 Aug 2026</span> <span class="tag official">Mains: 1 Nov 2026 (official)</span> <span class="tag expected">Next cycle (CRP SPL-XVII): notification Jul 2027 (expected)</span></td></tr><tr><td><a href="#ibps-rrb" data-go="ibps-rrb">IBPS RRB</a></td><td>IBPS</td><td><span class="tag official">Applications close 27 Sep 2026 (extended)</span> <span class="tag official">PO prelims: 21–22 Nov 2026 · Clerk prelims: 6, 12, 13 Dec 2026</span></td></tr><tr><td><a href="#sebi-grade-a" data-go="sebi-grade-a">SEBI Grade A</a></td><td>Others</td><td><span class="tag done">2025 cycle completed (final list 23 Jun 2026)</span> <span class="tag expected">Next notification: late 2026 – early 2027 (expected)</span></td></tr><tr><td><a href="#nabard-grade-a" data-go="nabard-grade-a">NABARD Grade A</a></td><td>Others</td><td><span class="tag done">2025 cycle completed (final result 6 May 2026)</span> <span class="tag expected">Next notification: Oct–Dec 2026 (expected)</span></td></tr>
+</table></div>
+</section>
+
+<div class="tabbar" role="tablist" aria-label="Exams">
+<div class="tab-group" role="presentation"><span class="tg-label">RBI</span><div class="tg-tabs"><button class="xtab" role="tab" id="t-rbi-grade-b" aria-controls="ex-rbi-grade-b" aria-selected="false">RBI Grade B</button><button class="xtab" role="tab" id="t-rbi-grade-a" aria-controls="ex-rbi-grade-a" aria-selected="false">RBI Grade A</button><button class="xtab" role="tab" id="t-rbi-assistant" aria-controls="ex-rbi-assistant" aria-selected="false">RBI Assistant</button></div></div>
+<div class="tab-group" role="presentation"><span class="tg-label">SBI</span><div class="tg-tabs"><button class="xtab" role="tab" id="t-sbi-po" aria-controls="ex-sbi-po" aria-selected="false">SBI PO</button><button class="xtab" role="tab" id="t-sbi-clerk" aria-controls="ex-sbi-clerk" aria-selected="false">SBI Clerk</button><button class="xtab" role="tab" id="t-sbi-so-it" aria-controls="ex-sbi-so-it" aria-selected="false">SBI SO (IT)</button></div></div>
+<div class="tab-group" role="presentation"><span class="tg-label">IBPS</span><div class="tg-tabs"><button class="xtab" role="tab" id="t-ibps-po" aria-controls="ex-ibps-po" aria-selected="false">IBPS PO</button><button class="xtab" role="tab" id="t-ibps-clerk" aria-controls="ex-ibps-clerk" aria-selected="false">IBPS Clerk</button><button class="xtab" role="tab" id="t-ibps-so-it" aria-controls="ex-ibps-so-it" aria-selected="false">IBPS SO (IT)</button><button class="xtab" role="tab" id="t-ibps-rrb" aria-controls="ex-ibps-rrb" aria-selected="false">IBPS RRB</button></div></div>
+<div class="tab-group" role="presentation"><span class="tg-label">Others</span><div class="tg-tabs"><button class="xtab" role="tab" id="t-sebi-grade-a" aria-controls="ex-sebi-grade-a" aria-selected="false">SEBI Grade A</button><button class="xtab" role="tab" id="t-nabard-grade-a" aria-controls="ex-nabard-grade-a" aria-selected="false">NABARD Grade A</button></div></div>
+</div>
+
+<div class="exam" role="tabpanel" aria-labelledby="t-rbi-grade-b" id="ex-rbi-grade-b" data-group="RBI" data-label="RBI Grade B">
+<div class="exam-head">
+<h2>RBI Officers in Grade B (DR) – General, DEPR &amp; DSIM</h2>
+<p class="exam-sub">Officer in Grade B · Reserve Bank of India · policy, regulation, supervision and research roles in the central bank.</p>
+<div class="exam-status"><span class="tag done">2026 cycle: Phase II over, interviews pending</span> <span class="tag expected">Next cycle: Apr–Jul 2027 (expected)</span></div>
+</div>
+
+<div class="facts">
+<div class="fact"><span class="k">Conducted by</span><span class="v">Reserve Bank of India, through RBI Services Board (RBISB)</span></div>
+<div class="fact"><span class="k">Post / grade</span><span class="v">Officer in Grade B (Direct Recruit) – General, DEPR (Economic &amp; Policy Research), DSIM (Statistics &amp; Information Management)</span></div>
+<div class="fact"><span class="k">Latest vacancies</span><span class="v">60 – General 40, DEPR 10, DSIM 10 (2026 cycle)</span></div>
+<div class="fact"><span class="k">Age limit</span><span class="v">21–30 years as on 1 Apr 2026; up to 32 for M.Phil, 34 for Ph.D.; SC/ST +5, OBC +3, PwBD +10 to +15</span></div>
+<div class="fact"><span class="k">Education</span><span class="v">General: graduation 60% or PG 55% (SC/ST/PwBD: pass/50%). DEPR: Master&#39;s in Economics/Finance 55%. DSIM: Master&#39;s in Statistics/Maths/Data Science etc. 55%</span></div>
+<div class="fact"><span class="k">Attempts</span><span class="v">General stream: 6 for UR/EWS; no limit for SC/ST/OBC/PwBD</span></div>
+<div class="fact"><span class="k">Pay (starting)</span><span class="v">Basic ₹78,450 (scale ₹78,450–1,41,600); gross approx. ₹1.50–1.55 lakh/month excl. HRA</span></div>
+<div class="fact"><span class="k">Mode</span><span class="v">Online CBT (Phase I, Phase II objective + typed descriptive) and interview</span></div>
+</div>
+
+<h3>Timeline</h3>
+<div class="table-wrap"><table class="timeline">
+<tr><th>Stage</th><th>Latest cycle (2026)</th><th>Next cycle (2027)</th></tr>
+<tr><td>Notification</td><td>29 Apr 2026 <span class="tag done">Completed</span></td><td>Apr–Jul 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Application window</td><td>29 Apr – 20 May 2026 <span class="tag done">Completed</span></td><td>About 3 weeks after notice <span class="tag expected">Expected</span></td></tr>
+<tr><td>Phase I</td><td>13 Jun 2026 (General), 14 Jun 2026 (DEPR/DSIM) <span class="tag done">Completed</span></td><td>Jun–Aug 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Phase I result</td><td>25 Jun 2026 <span class="tag done">Completed</span></td><td>2–4 weeks after Phase I <span class="tag expected">Expected</span></td></tr>
+<tr><td>Phase II</td><td>25 Jul 2026 (General), 26 Jul 2026 (DEPR/DSIM) <span class="tag done">Completed</span></td><td>Jul–Sep 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Phase II result</td><td>22 Aug 2026 <span class="tag done">Completed</span></td><td>About 4 weeks after Phase II <span class="tag expected">Expected</span></td></tr>
+<tr><td>Interview</td><td>Sep–Oct 2026 <span class="tag expected">Expected</span> (schedule not yet found)</td><td>Aug–Oct 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Final result</td><td>Oct–Nov 2026 <span class="tag expected">Expected</span></td><td>Sep–Nov 2027 <span class="tag expected">Expected</span></td></tr>
+</table></div>
+<p class="pattern-note">Estimates are based on recent cycles: the 2025 cycle (notice Jul 2025) ran Phase I 18 Oct 2025, Phase II 6 Dec 2025, Phase II result 19 Jan 2026, interviews 10 Feb – 18 Mar 2026 and final result 24 Mar 2026, so interviews usually start 3–4 weeks after the Phase II result.</p>
+
+<h3>Selection process</h3>
+<ol class="stages">
+<li><b>Phase I · Preliminary</b><span>Online objective, 200 marks · screening only, marks not counted in the final merit</span></li>
+<li><b>Phase II · Mains</b><span>3 papers, 300 marks (General) · counts for merit</span></li>
+<li><b>Interview</b><span>75 marks · final merit = Phase II + interview</span></li>
+</ol>
+
+<h3>Exam pattern · General stream</h3>
+<h4>Phase I · Preliminary (objective)</h4>
+<div class="table-wrap"><table>
+<tr><th>Section</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>General Awareness</td><td>80</td><td>80</td><td>25 min</td></tr>
+<tr><td>Reasoning</td><td>60</td><td>60</td><td>45 min</td></tr>
+<tr><td>Quantitative Aptitude</td><td>30</td><td>30</td><td>25 min</td></tr>
+<tr><td>English Language</td><td>30</td><td>30</td><td>25 min</td></tr>
+<tr class="total"><td>Total</td><td>200</td><td>200</td><td>120 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 1/4 of the marks for each wrong answer · <b>Sectional cut-off:</b> yes, plus an overall cut-off (2024 General overall: 67.25) · <b>Language:</b> English and Hindi (English section in English only)</p>
+
+<h4>Phase II · Mains (3 papers)</h4>
+<div class="table-wrap"><table>
+<tr><th>Paper</th><th>Type</th><th>Marks</th><th>Time</th></tr>
+<tr><td>Paper I · Economic &amp; Social Issues</td><td>30 objective questions (50 marks) + 6 descriptive, attempt 4 (50 marks)</td><td>100</td><td>30 min + 90 min</td></tr>
+<tr><td>Paper II · English (Writing Skills)</td><td>Descriptive, typed: essay, précis, reading comprehension</td><td>100</td><td>90 min</td></tr>
+<tr><td>Paper III · Finance &amp; Management</td><td>30 objective questions (50 marks) + 6 descriptive, attempt 4 (50 marks)</td><td>100</td><td>30 min + 90 min</td></tr>
+<tr class="total"><td>Total</td><td>–</td><td>300</td><td>330 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 1/4 on objective parts only · <b>Cut-off:</b> minimum in each paper and in aggregate (2024 General Phase II: 173.5; final 226.75 of 375) · <b>Language:</b> Papers I and III in English or Hindi; Paper II English only · <b>Interview:</b> 75 marks</p>
+
+<h4>DEPR and DSIM streams (compact)</h4>
+<div class="table-wrap"><table>
+<tr><th>Stream / phase</th><th>Paper</th><th>Marks</th><th>Time</th></tr>
+<tr><td>DEPR · Phase I</td><td>Paper I: Economics (objective)</td><td>100</td><td>120 min</td></tr>
+<tr><td>DEPR · Phase I</td><td>Paper II: English (descriptive, typed)</td><td>100</td><td>120 min</td></tr>
+<tr><td>DEPR · Phase II</td><td>Paper I: Economics descriptive (micro + macro)</td><td>100</td><td>120 min</td></tr>
+<tr><td>DEPR · Phase II</td><td>Paper II: Economics descriptive (quantitative methods + Indian economy)</td><td>100</td><td>120 min</td></tr>
+<tr><td>DSIM · Phase I</td><td>Paper I: Statistics (objective)</td><td>100</td><td>120 min</td></tr>
+<tr><td>DSIM · Phase II</td><td>Paper II: Statistics (descriptive, written on paper)</td><td>100</td><td>180 min</td></tr>
+<tr><td>DSIM · Phase II</td><td>Paper III: English (descriptive, typed)</td><td>100</td><td>90 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>DEPR eligibility:</b> Master&#39;s in Economics / Econometrics / Quantitative Economics / Mathematical Economics / Finance (55%, SC/ST/PwBD 50%) · <b>DSIM eligibility:</b> Master&#39;s in Statistics / Mathematical Statistics / Mathematical Economics / Econometrics / Statistics &amp; Informatics / Applied Statistics / Data Science / AI-ML (55%), or a 4-year bachelor&#39;s in these areas with 60% · Both streams: interview 75 marks, same age rules as General · <b>Negative marking:</b> 1/4 on objective papers. DEPR/DSIM paper timings are as quoted by prep sites from the 2026 notice; check the official notification.</p>
+
+<h3>Detailed syllabus</h3>
+<details class="syl"><summary>Phase I · General Awareness <span class="w">80 Q · 25 min</span></summary>
+<ul><li>Current affairs of the last 6 months, national and international</li><li>Banking and financial awareness: RBI functions, monetary policy tools (repo, CRR, SLR, OMO), financial regulators</li><li>Government schemes, Union Budget, Economic Survey highlights</li><li>Important reports, indices, committees, summits, appointments, awards</li><li>Static GK linked to economy: national institutions, international bodies (IMF, World Bank, BIS)</li></ul></details>
+<details class="syl"><summary>Phase I · Reasoning <span class="w">60 Q · 45 min</span></summary>
+<ul><li>Puzzles and seating arrangement (linear, circular, floor, box, scheduling)</li><li>Syllogism, inequalities, coding-decoding, blood relations, direction sense</li><li>Input-output, data sufficiency, order and ranking, alphanumeric series</li><li>Critical reasoning: statement-assumption, argument, course of action, inference</li></ul></details>
+<details class="syl"><summary>Phase I · Quantitative Aptitude <span class="w">30 Q · 25 min</span></summary>
+<ul><li>Data interpretation: tables, bar, line, pie, caselets, missing DI</li><li>Simplification and approximation, number series, quadratic equations</li><li>Arithmetic: percentage, ratio, averages, profit-loss, SI/CI, time-work, time-speed-distance, boats, mixtures, partnership, ages</li><li>Probability, permutation and combination, mensuration</li></ul></details>
+<details class="syl"><summary>Phase I · English Language <span class="w">30 Q · 25 min</span></summary>
+<ul><li>Reading comprehension (economy and banking themes are common)</li><li>Cloze test, fillers, error spotting, sentence improvement</li><li>Para jumbles, word usage, phrase replacement, vocabulary</li></ul></details>
+<details class="syl"><summary>Phase II · Paper I · Economic &amp; Social Issues <span class="w">100 marks</span></summary>
+<ul><li><b>Growth and development:</b> measurement of growth, national income and per capita income, poverty alleviation and employment generation, sustainable development and environment</li><li><b>Indian economy:</b> economic history, changes in industrial and labour policy, monetary and fiscal policy, priorities and recent reforms, inflation, public finance, Union Budget</li><li><b>Globalisation:</b> opening up of the Indian economy, balance of payments, export-import policy, international economic institutions (IMF, World Bank, WTO), regional economic cooperation</li><li><b>Social structure in India:</b> multiculturalism, demographic trends, urbanisation and migration, gender issues, social justice (positive discrimination for the underprivileged), social movements, Indian political system, human development, social sectors (health, education)</li></ul></details>
+<details class="syl"><summary>Phase II · Paper II · English (Writing Skills) <span class="w">100 marks</span></summary>
+<ul><li>Essay writing (often on economy, society, technology)</li><li>Précis writing</li><li>Reading comprehension with written answers</li><li>Assessment is on expression, clarity and understanding of the topic; answers are typed</li></ul></details>
+<details class="syl"><summary>Phase II · Paper III · Finance &amp; Management <span class="w">100 marks</span></summary>
+<ul><li><b>Financial system:</b> regulators (RBI, SEBI, IRDAI, PFRDA), RBI functions, money markets, capital markets, bond and forex markets, financial inclusion, alternate sources of finance</li><li><b>Banking:</b> Basel norms, NPAs and resolution (IBC), priority sector lending, payment systems and fintech, digital currency, cybersecurity</li><li><b>General topics:</b> risk management in banks, derivatives, changing landscape of the banking sector, corporate governance, Union Budget concepts, inflation and its measurement</li><li><b>Management:</b> nature and scope, role of a manager, leadership theories and styles, human resource development, motivation (Maslow, Herzberg, McGregor), morale, communication, conflict, change management, corporate governance and ethics, organisational behaviour</li></ul></details>
+<details class="syl"><summary>DEPR · Economics <span class="w">Phase I + Phase II</span></summary>
+<ul><li>Microeconomics: consumer theory, production, market structures, welfare economics</li><li>Macroeconomics: national income, money and banking, inflation, monetary and fiscal policy, growth models</li><li>International economics, public finance, environmental economics</li><li>Quantitative methods: calculus, linear algebra, statistics, econometrics</li><li>Indian economy: current developments, RBI and financial sector</li></ul></details>
+<details class="syl"><summary>DSIM · Statistics <span class="w">Phase I + Phase II</span></summary>
+<ul><li>Probability, random variables and distributions</li><li>Sampling theory, estimation, testing of hypotheses</li><li>Linear models, regression, multivariate analysis, time series</li><li>Econometrics, numerical analysis, basic computer and data-science concepts</li></ul></details>
+
+<h3>How to prepare</h3>
+<ul class="prep">
+<li>Phase I is only a filter, but the overall and sectional cut-offs are tight: aim to clear GA and Reasoning with a buffer, since they carry 140 of 200 marks.</li>
+<li>Reasoning gets 45 minutes for 60 questions; drill puzzles and seating daily using the Reasoning Aptitude notes on this site.</li>
+<li>Use the Calculation Practice page for speed in DI and simplification; Quant has only 25 minutes for 30 questions.</li>
+<li>For GA, follow RBI press releases, the Monetary Policy Statement, the Annual Report and the Financial Stability Report; keep a 6-month current-affairs log.</li>
+<li>Start Phase II (ESI and F&amp;M) in parallel with Phase I: the gap between Phase I and Phase II was only 6 weeks in 2026.</li>
+<li>For the descriptive parts, practise typing structured answers of 200–300 words to time; use the Verbal Ability notes to tighten grammar before Paper II essay and précis practice.</li>
+<li>Read the Economic Survey and Union Budget summaries for ESI, and RBI reports and circulars for Finance.</li>
+<li>For the interview, prepare your graduation subject, home state economy and current RBI policy debates.</li>
+</ul>
+
+<div class="sources"><b>Sources</b> (checked 27 Sep 2026): <a href="https://testbook.com/rbi-grade-b" target="_blank" rel="noopener">Testbook – RBI Grade B 2026</a> · <a href="https://www.adda247.com/jobs/rbi-grade-b-notification-2026-out/" target="_blank" rel="noopener">Adda247 – notification 2026</a> · <a href="https://www.careerpower.in/rbi-grade-b.html" target="_blank" rel="noopener">CareerPower – RBI Grade B</a> · <a href="https://anujjindal.in/rbi-grade-b-complete-info/" target="_blank" rel="noopener">Anuj Jindal – complete info</a> · <a href="https://edutap.in/rbi-grade-b/result/" target="_blank" rel="noopener">EduTap – results</a> · <a href="https://rbidocs.rbi.org.in/rdocs/content/pdfs/DISPLAYPRT22082026.pdf" target="_blank" rel="noopener">RBI – Phase II result PDF</a> · <a href="https://testbook.com/rbi-grade-b/syllabus-exam-pattern" target="_blank" rel="noopener">Testbook – syllabus</a> · <a href="https://www.oliveboard.in/rbi-depr-exam-pattern/" target="_blank" rel="noopener">Oliveboard – DEPR pattern</a> · <a href="https://testonomics.in/rbi-depr-exam/" target="_blank" rel="noopener">Testonomics – DEPR</a> · <a href="https://www.ixambee.com/exams/rbi-grade-b-dsim" target="_blank" rel="noopener">ixamBee – DSIM</a> · <a href="https://opportunities.rbi.org.in/" target="_blank" rel="noopener">Opportunities@RBI</a>
+<br>Always confirm dates on the official website before applying.</div>
+</div>
+
+<div class="exam" role="tabpanel" aria-labelledby="t-rbi-grade-a" id="ex-rbi-grade-a" data-group="RBI" data-label="RBI Grade A">
+<div class="exam-head">
+<h2>RBI Assistant Manager (Grade A) – Rajbhasha, Protocol &amp; Security</h2>
+<p class="exam-sub">Assistant Manager in Grade A · Reserve Bank of India · Hindi/official-language work or security and protocol management at RBI offices.</p>
+<div class="exam-status"><span class="tag done">Latest notice: Feb 2026, exam held 14 Mar 2026</span> <span class="tag expected">Next notice: 2027 (expected, no fixed calendar)</span></div>
+</div>
+
+<div class="facts">
+<div class="fact"><span class="k">Conducted by</span><span class="v">RBI Services Board (Advt. RBISB/DA/05/2025-26, a combined notice with Grade B Legal Officer and Manager (Technical) posts)</span></div>
+<div class="fact"><span class="k">Post / grade</span><span class="v">Assistant Manager (Rajbhasha) and Assistant Manager (Protocol &amp; Security), Grade A. Legal Officer is a Grade B post in the same notice (summarised below).</span></div>
+<div class="fact"><span class="k">Latest vacancies</span><span class="v">Rajbhasha 4, Protocol &amp; Security 8 (Feb 2026 notice; 21 posts in total including Grade B)</span></div>
+<div class="fact"><span class="k">Age limit</span><span class="v">Rajbhasha: 21–30 years as on 1 Feb 2026 (Ph.D. +2, SC/ST +5, OBC +3). Protocol &amp; Security: 25–40 years</span></div>
+<div class="fact"><span class="k">Education</span><span class="v">Rajbhasha: Master&#39;s in Hindi/Hindi translation with English at graduation (or Master&#39;s in English/Sanskrit/Economics/Commerce with Hindi and English plus a translation diploma). Protocol &amp; Security: officer with at least 10 years&#39; commissioned service in the Army, Navy or Air Force</span></div>
+<div class="fact"><span class="k">Attempts</span><span class="v">No attempt limit stated</span></div>
+<div class="fact"><span class="k">Pay (starting)</span><span class="v">Basic ₹62,500 (scale ₹62,500–1,26,100); gross approx. ₹1,26,540/month excl. HRA</span></div>
+<div class="fact"><span class="k">Mode</span><span class="v">Online test(s) and interview</span></div>
+</div>
+
+<h3>Timeline</h3>
+<div class="table-wrap"><table class="timeline">
+<tr><th>Stage</th><th>Latest cycle (Feb 2026 notice)</th><th>Next cycle (2027)</th></tr>
+<tr><td>Earlier notice</td><td>11 Jul 2025 (exam 16 Aug 2025): Rajbhasha 3, Protocol &amp; Security 10 posts <span class="tag done">Completed</span></td><td>–</td></tr>
+<tr><td>Notification</td><td>6 Feb 2026 <span class="tag done">Completed</span></td><td>Feb–Aug 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Application window</td><td>6 – 26 Feb 2026 <span class="tag done">Completed</span></td><td>About 3 weeks after notice <span class="tag expected">Expected</span></td></tr>
+<tr><td>Online exam</td><td>14 Mar 2026 <span class="tag done">Completed</span></td><td>About 5 weeks after notice <span class="tag expected">Expected</span></td></tr>
+<tr><td>Result and interview</td><td>Not found in the sources checked; see Opportunities@RBI</td><td>2–3 months after the exam <span class="tag expected">Expected</span></td></tr>
+</table></div>
+<p class="pattern-note">RBI does not recruit Grade A on a fixed yearly calendar. Before 2025, the last notice was in March 2022. The 2025 and 2026 notices came about 7 months apart, so the 2027 window above is a broad estimate.</p>
+
+<h3>Selection process</h3>
+<ol class="stages">
+<li><b>Rajbhasha · Paper I + Paper II</b><span>Online objective (150) + descriptive (50) = 200 marks</span></li>
+<li><b>Protocol &amp; Security · Online test</b><span>Objective, 200 marks</span></li>
+<li><b>Interview</b><span>35 marks for both posts · merit = written + interview (235)</span></li>
+</ol>
+
+<h3>Exam pattern</h3>
+<h4>Assistant Manager (Rajbhasha) · Paper I (objective)</h4>
+<div class="table-wrap"><table>
+<tr><th>Section</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>Reasoning</td><td>35</td><td>35</td><td>30 min</td></tr>
+<tr><td>English Language</td><td>35</td><td>35</td><td>30 min</td></tr>
+<tr><td>General Awareness (banking, economy, commerce)</td><td>35</td><td>35</td><td>20 min</td></tr>
+<tr><td>Professional Knowledge (Official Language)</td><td>45</td><td>45</td><td>40 min</td></tr>
+<tr class="total"><td>Total</td><td>150</td><td>150</td><td>120 min</td></tr>
+</table></div>
+<h4>Assistant Manager (Rajbhasha) · Paper II (descriptive)</h4>
+<div class="table-wrap"><table>
+<tr><th>Paper</th><th>Content</th><th>Marks</th><th>Time</th></tr>
+<tr><td>Official Language test</td><td>Translation Hindi to English and English to Hindi, official-language drafting</td><td>50</td><td>60 min</td></tr>
+</table></div>
+<h4>Assistant Manager (Protocol &amp; Security) · Online test</h4>
+<div class="table-wrap"><table>
+<tr><th>Section</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>Reasoning</td><td>50</td><td>50</td><td>35 min</td></tr>
+<tr><td>English Language</td><td>50</td><td>25</td><td>35 min</td></tr>
+<tr><td>General Awareness (banking focus)</td><td>50</td><td>50</td><td>20 min</td></tr>
+<tr><td>Professional Knowledge</td><td>50</td><td>75</td><td>30 min</td></tr>
+<tr class="total"><td>Total</td><td>200</td><td>200</td><td>120 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 1/4 of the marks for each wrong answer on objective tests · <b>Cut-off:</b> minimum marks set by RBI for interview shortlisting · <b>Language:</b> English and Hindi (English section in English only) · Section splits are as quoted by Adda247 from recent notices; one site gives Protocol &amp; Security as 50 marks per section, so check the official notice.</p>
+
+<h4>Legal Officer in Grade B (same notice)</h4>
+<div class="table-wrap"><table>
+<tr><th>Item</th><th>Details (Feb 2026 notice)</th></tr>
+<tr><td>Vacancies</td><td>6</td></tr>
+<tr><td>Eligibility</td><td>Bachelor&#39;s in Law, 50% (SC/ST/PwBD 45%), enrolled as an advocate; at least 2 years as advocate, law officer or law teacher; age 21–32</td></tr>
+<tr><td>Paper 1</td><td>General Knowledge of Law: objective + descriptive, 150 marks</td></tr>
+<tr><td>Paper 2</td><td>English (descriptive), 100 marks</td></tr>
+<tr><td>Interview</td><td>40 marks</td></tr>
+</table></div>
+
+<h3>Detailed syllabus</h3>
+<details class="syl"><summary>Reasoning <span class="w">Rajbhasha 35 · P&amp;S 50</span></summary>
+<ul><li>Puzzles, seating arrangement, syllogism, inequality</li><li>Coding-decoding, blood relations, direction sense, order and ranking</li><li>Input-output, data sufficiency, critical reasoning</li></ul></details>
+<details class="syl"><summary>English Language <span class="w">Rajbhasha 35 · P&amp;S 50 Q</span></summary>
+<ul><li>Reading comprehension, cloze test, error spotting</li><li>Sentence improvement, para jumbles, vocabulary</li></ul></details>
+<details class="syl"><summary>General Awareness <span class="w">Rajbhasha 35 · P&amp;S 50</span></summary>
+<ul><li>Current affairs of the last 6 months</li><li>Banking and RBI: monetary policy, regulators, payment systems</li><li>Economy, Budget, government schemes, static GK</li></ul></details>
+<details class="syl"><summary>Rajbhasha · Professional Knowledge and Paper II <span class="w">45 + 50 marks</span></summary>
+<ul><li><b>Official Language policy:</b> Articles 343–351, Official Languages Act 1963, Official Language Rules 1976, Presidential Orders, Kendriya Hindi Samiti and Parliamentary Committee on Official Language</li><li><b>Hindi:</b> grammar, vocabulary, synonyms, idioms, dialects and history of Hindi</li><li><b>Translation:</b> administrative and banking terminology, English to Hindi and Hindi to English passages</li><li>Implementation work: Hindi workshops, quarterly progress reports, annual programme of the Department of Official Language</li></ul></details>
+<details class="syl"><summary>Protocol &amp; Security · Professional Knowledge <span class="w">75 marks</span></summary>
+<ul><li>Security management, risk assessment, access control and perimeter security</li><li>CCTV and surveillance, security hardware and software, fire safety</li><li>Protocol and VIP visit planning, event security, crowd control</li><li>Manpower management, K9 operations, executive protection</li><li>Disaster management, information and IT security, coordination with police and intelligence agencies</li></ul></details>
+
+<h3>How to prepare</h3>
+<ul class="prep">
+<li>Notices are irregular and the window is short (3 weeks to apply, about 5 weeks to the exam), so prepare the common sections before a notice appears.</li>
+<li>Reasoning and English follow bank PO level; use the Reasoning Aptitude and Verbal Ability notes on this site.</li>
+<li>For Rajbhasha, memorise the Official Language Act, Rules and constitutional articles, and practise 2–3 translation passages daily with banking terminology.</li>
+<li>For Protocol &amp; Security, Professional Knowledge carries 75 of 200 marks; revise security SOPs, fire safety and IT security basics from your service experience.</li>
+<li>GA is weighted towards banking: read RBI press releases and the monetary policy statements.</li>
+<li>For the interview (35 marks), be ready to explain how your professional experience fits RBI&#39;s work.</li>
+</ul>
+
+<div class="sources"><b>Sources</b> (checked 27 Sep 2026): <a href="https://www.careerpower.in/blog/rbi-grade-a-and-b-recruitment-2026" target="_blank" rel="noopener">CareerPower – Grade A &amp; B 2026</a> · <a href="https://www.resultbharat.com/RBI-Non-CSG-Post-2026.html" target="_blank" rel="noopener">ResultBharat – Non-CSG 2026</a> · <a href="https://www.ixambee.com/exams/rbi-grade-a-rajbhasha" target="_blank" rel="noopener">ixamBee – Rajbhasha</a> · <a href="https://www.ixambee.com/blog/rbi-rajbhasha-and-legal-notification-2025-everything-to-know" target="_blank" rel="noopener">ixamBee – 2025 notice</a> · <a href="https://www.adda247.com/exams/bank/rbi-grade-a-syllabus/" target="_blank" rel="noopener">Adda247 – Grade A syllabus</a> · <a href="https://govtpoint.com/rbi-protocol-security-syllabus-2026-grade-a/" target="_blank" rel="noopener">GovtPoint – Protocol &amp; Security</a> · <a href="https://www.oliveboard.in/blog/rbi-grade-a-notification/" target="_blank" rel="noopener">Oliveboard – 2022 cycle</a> · <a href="https://opportunities.rbi.org.in/" target="_blank" rel="noopener">Opportunities@RBI</a>
+<br>Always confirm dates on the official website before applying.</div>
+</div>
+
+<div class="exam" role="tabpanel" aria-labelledby="t-rbi-assistant" id="ex-rbi-assistant" data-group="RBI" data-label="RBI Assistant">
+<div class="exam-head">
+<h2>RBI Assistant</h2>
+<p class="exam-sub">Assistant · Reserve Bank of India · clerical and front-office work at RBI regional offices, posted by state.</p>
+<div class="exam-status"><span class="tag done">2026 cycle: mains result out 24 Sep 2026, LPT next</span> <span class="tag expected">Next notice: 2027 (expected, irregular)</span></div>
+</div>
+
+<div class="facts">
+<div class="fact"><span class="k">Conducted by</span><span class="v">Reserve Bank of India (RBI Services Board)</span></div>
+<div class="fact"><span class="k">Post / grade</span><span class="v">Assistant, Panel Year 2025 (recruited through the 2026 notice)</span></div>
+<div class="fact"><span class="k">Latest vacancies</span><span class="v">650: UR 346, OBC 99, SC 110, ST 37, EWS 58; Mumbai office has the most (2026 cycle)</span></div>
+<div class="fact"><span class="k">Age limit</span><span class="v">20–28 years as on 1 Feb 2026; SC/ST +5, OBC +3, PwBD +10 to +15</span></div>
+<div class="fact"><span class="k">Education</span><span class="v">Bachelor&#39;s degree with 50% (pass class for SC/ST/PwBD), word-processing knowledge, and ability to read, write and speak the local language of the state applied for</span></div>
+<div class="fact"><span class="k">Attempts</span><span class="v">No attempt limit; age limit applies</span></div>
+<div class="fact"><span class="k">Pay (starting)</span><span class="v">Basic ₹29,000; gross approx. ₹58,514/month</span></div>
+<div class="fact"><span class="k">Mode</span><span class="v">Online CBT (prelims, mains) and Language Proficiency Test</span></div>
+</div>
+
+<h3>Timeline</h3>
+<div class="table-wrap"><table class="timeline">
+<tr><th>Stage</th><th>Latest cycle (2026)</th><th>Next cycle (2027)</th></tr>
+<tr><td>Notification</td><td>16 Feb 2026 <span class="tag done">Completed</span></td><td>2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Application window</td><td>16 Feb – early Mar 2026 (extended; sources quote 8–10 Mar) <span class="tag done">Completed</span></td><td>About 3 weeks after notice <span class="tag expected">Expected</span></td></tr>
+<tr><td>Prelims</td><td>11–13 Apr 2026 <span class="tag done">Completed</span></td><td>About 2 months after notice <span class="tag expected">Expected</span></td></tr>
+<tr><td>Prelims result</td><td>25 May 2026 <span class="tag done">Completed</span></td><td>–</td></tr>
+<tr><td>Mains</td><td>7 Jun 2026 <span class="tag done">Completed</span></td><td>2 months after prelims <span class="tag expected">Expected</span></td></tr>
+<tr><td>Mains result</td><td>24 Sep 2026 (1,489 shortlisted for LPT) <span class="tag done">Completed</span></td><td>–</td></tr>
+<tr><td>Language Proficiency Test</td><td>Oct–Nov 2026 <span class="tag expected">Expected</span></td><td>–</td></tr>
+<tr><td>Final result</td><td>Nov 2026 – Jan 2027 <span class="tag expected">Expected</span></td><td>–</td></tr>
+</table></div>
+<p class="pattern-note">RBI Assistant has no fixed yearly slot: the previous notice was Sep 2023 (prelims Nov 2023, mains Dec 2023), then Feb 2026. The 2027 estimate is based only on that irregular gap. LPT and final-result windows are estimates based on the time taken from mains results in earlier cycles.</p>
+
+<h3>Selection process</h3>
+<ol class="stages">
+<li><b>Prelims</b><span>Online objective, 100 marks · qualifying only</span></li>
+<li><b>Mains</b><span>Online objective, 200 marks · counts for merit (state-wise, category-wise)</span></li>
+<li><b>Language Proficiency Test</b><span>Official language of the state · qualifying only, no interview</span></li>
+</ol>
+
+<h3>Exam pattern</h3>
+<h4>Prelims</h4>
+<div class="table-wrap"><table>
+<tr><th>Section</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>English Language</td><td>30</td><td>30</td><td>20 min</td></tr>
+<tr><td>Numerical Ability</td><td>35</td><td>35</td><td>20 min</td></tr>
+<tr><td>Reasoning Ability</td><td>35</td><td>35</td><td>20 min</td></tr>
+<tr class="total"><td>Total</td><td>100</td><td>100</td><td>60 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 1/4 of the marks for each wrong answer · <b>Sectional cut-off:</b> yes, plus overall; shortlisting is state-wise · <b>Language:</b> English and Hindi (English section in English only)</p>
+<h4>Mains</h4>
+<div class="table-wrap"><table>
+<tr><th>Section</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>Test of Reasoning</td><td>40</td><td>40</td><td>30 min</td></tr>
+<tr><td>Test of English Language</td><td>40</td><td>40</td><td>30 min</td></tr>
+<tr><td>Test of Numerical Ability</td><td>40</td><td>40</td><td>30 min</td></tr>
+<tr><td>Test of General Awareness</td><td>40</td><td>40</td><td>25 min</td></tr>
+<tr><td>Test of Computer Knowledge</td><td>40</td><td>40</td><td>20 min</td></tr>
+<tr class="total"><td>Total</td><td>200</td><td>200</td><td>135 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 1/4 of the marks for each wrong answer · <b>Sectional cut-off:</b> yes · <b>Final merit:</b> mains marks only, subject to passing the LPT</p>
+
+<h3>Detailed syllabus</h3>
+<details class="syl"><summary>English Language <span class="w">Prelims 30 · Mains 40</span></summary>
+<ul><li>Reading comprehension, cloze test, fillers</li><li>Error spotting, sentence improvement, phrase replacement</li><li>Para jumbles, vocabulary (synonyms, antonyms, word usage)</li></ul></details>
+<details class="syl"><summary>Numerical Ability <span class="w">Prelims 35 · Mains 40</span></summary>
+<ul><li><b>Speed:</b> simplification, approximation, number series, quadratic equations</li><li><b>Arithmetic:</b> percentage, ratio, averages, profit-loss, SI/CI, time-work, time-speed-distance, ages, mixtures, HCF/LCM, mensuration, probability</li><li><b>Data interpretation:</b> tables, bar, line, pie, caselets</li></ul></details>
+<details class="syl"><summary>Reasoning Ability <span class="w">Prelims 35 · Mains 40</span></summary>
+<ul><li>Puzzles and seating arrangement</li><li>Syllogism, inequality, coding-decoding, blood relations, direction sense</li><li>Order and ranking, alphanumeric series, analogy, classification</li><li>Input-output and data sufficiency (mains level)</li></ul></details>
+<details class="syl"><summary>General Awareness <span class="w">Mains 40</span></summary>
+<ul><li>Current affairs of the last 6 months</li><li>Banking and RBI: functions, monetary policy, regulators, payment systems</li><li>Government schemes, Budget, economy basics, static GK (history, geography, polity)</li></ul></details>
+<details class="syl"><summary>Computer Knowledge <span class="w">Mains 40</span></summary>
+<ul><li>Hardware, software, input and output devices, memory</li><li>Operating systems, MS Office, internet, email, networking basics</li><li>Computer security, shortcuts, number systems, history and generations of computers</li></ul></details>
+<details class="syl"><summary>Language Proficiency Test <span class="w">Qualifying</span></summary>
+<ul><li>Reading, writing, speaking and understanding the official language of the state or UT applied for</li><li>Waived if the candidate studied that language up to Class 10/12, as per past notices</li></ul></details>
+
+<h3>How to prepare</h3>
+<ul class="prep">
+<li>Prelims gives 20 minutes per section: build speed with the Calculation Practice page and the Aptitude Tables notes.</li>
+<li>Use the Quant and Reasoning Aptitude notes for arithmetic and puzzle drills; mains puzzles are harder than prelims.</li>
+<li>The Verbal Ability notes cover grammar and vocabulary for both English sections.</li>
+<li>GA and Computer Knowledge are 80 of 200 mains marks and are scoring: keep a 6-month current-affairs file with an RBI focus and revise computer basics weekly.</li>
+<li>Merit is state-wise; check your chosen office&#39;s vacancies and past cut-offs, and be fluent in its local language for the LPT.</li>
+<li>Start mains preparation along with prelims: the gap was under 2 months in 2026.</li>
+</ul>
+
+<div class="sources"><b>Sources</b> (checked 27 Sep 2026): <a href="https://www.careerpower.in/rbi-assistant.html" target="_blank" rel="noopener">CareerPower – RBI Assistant 2026</a> · <a href="https://www.careerpower.in/rbi-assistant-result.html" target="_blank" rel="noopener">CareerPower – mains result</a> · <a href="https://www.adda247.com/exams/bank/rbi-assistant-notification-2026-out-at-rbi-org-in/" target="_blank" rel="noopener">Adda247 – notification 2026</a> · <a href="https://anujjindal.in/rbi-assistant-complete-info/" target="_blank" rel="noopener">Anuj Jindal – complete info</a> · <a href="https://testbook.com/rbi-assistant" target="_blank" rel="noopener">Testbook – RBI Assistant</a> · <a href="https://opportunities.rbi.org.in/" target="_blank" rel="noopener">Opportunities@RBI</a>
+<br>Always confirm dates on the official website before applying.</div>
+</div>
+
+<div class="exam" role="tabpanel" aria-labelledby="t-sbi-po" id="ex-sbi-po" data-group="SBI" data-label="SBI PO">
+<div class="exam-head">
+<h2>SBI Probationary Officer (PO) 2026</h2>
+<p class="exam-sub">Probationary Officer, JMGS-I · State Bank of India (CRPD) · entry-level officer who runs branch operations, credit, customer relationships and teams across India.</p>
+<div class="exam-status"><span class="tag done">Prelims + Mains done (Aug–Sep 2026)</span> <span class="tag official">Phase III: Oct–Nov 2026 (tentative, per advt)</span> <span class="tag expected">Next cycle: mid-2027 (expected)</span></div>
+</div>
+
+<div class="facts">
+<div class="fact"><span class="k">Conducted by</span><span class="v">State Bank of India, Central Recruitment &amp; Promotion Dept (exam run through IBPS portal)</span></div>
+<div class="fact"><span class="k">Post / grade</span><span class="v">Probationary Officer, Junior Management Grade Scale-I; 2-year probation</span></div>
+<div class="fact"><span class="k">Latest vacancies</span><span class="v">1,500 (1,446 regular + 54 backlog): UR 588, OBC 390, SC 234, ST 144, EWS 144 (Advt CRPD/PO/2026-27/09)</span></div>
+<div class="fact"><span class="k">Age limit</span><span class="v">21–30 years as on 01.04.2026 (born 02.04.1996–01.04.2005). Relaxation: OBC 3, SC/ST 5, PwBD 10/13/15, ex-servicemen 5</span></div>
+<div class="fact"><span class="k">Education</span><span class="v">Graduation in any discipline by 30.09.2026; final-year students may apply provisionally</span></div>
+<div class="fact"><span class="k">Attempts</span><span class="v">UR/EWS 6 · OBC and UR/EWS-PwBD 9 · SC/ST no limit. Only appearing in Mains counts as an attempt</span></div>
+<div class="fact"><span class="k">Pay (starting)</span><span class="v">Basic ₹48,480 + 4 advance increments (scale 48480–85920); approx. CTC ₹21.97 lakh/yr at Mumbai. ₹2 lakh bond for 3 years</span></div>
+<div class="fact"><span class="k">Mode</span><span class="v">Online CBT (Prelims, Mains objective + typed descriptive), then Psychometric Test, Group Exercise &amp; Interview. Fee ₹750 (SC/ST/PwBD nil)</span></div>
+</div>
+
+<h3>Timeline</h3>
+<div class="table-wrap"><table class="timeline">
+<tr><th>Stage</th><th>Latest cycle (2026)</th><th>Next cycle (2027)</th></tr>
+<tr><td>Notification</td><td>18 Jun 2026 <span class="tag done">Completed</span></td><td>Mid-2027 <span class="tag expected">Expected</span> (last two notifications came Dec 2024 and Jun 2026, so the month is uncertain)</td></tr>
+<tr><td>Online application</td><td>18 Jun – 8 Jul 2026 <span class="tag done">Completed</span></td><td>About 3 weeks after notification <span class="tag expected">Expected</span></td></tr>
+<tr><td>Phase I · Prelims</td><td>1 &amp; 2 Aug 2026 <span class="tag done">Completed</span></td><td>About 6 weeks after notification <span class="tag expected">Expected</span></td></tr>
+<tr><td>Prelims result</td><td>28 Aug 2026 (15,802 qualified for Mains, as reported) <span class="tag done">Completed</span></td><td>About 4 weeks after Prelims <span class="tag expected">Expected</span></td></tr>
+<tr><td>Phase II · Mains</td><td>12 Sep 2026 <span class="tag done">Completed</span></td><td>About 6 weeks after Prelims <span class="tag expected">Expected</span></td></tr>
+<tr><td>Mains result</td><td>Sep / Oct 2026 (tentative window in advt; not yet declared) <span class="tag official">Official</span></td><td>— <span class="tag expected">Expected</span></td></tr>
+<tr><td>Phase III · Psychometric, Group Exercise &amp; Interview</td><td>Oct / Nov 2026 (tentative window in advt) <span class="tag official">Official</span></td><td>— <span class="tag expected">Expected</span></td></tr>
+<tr><td>Final result</td><td>Nov / Dec 2026 (tentative window in advt) <span class="tag official">Official</span></td><td>— <span class="tag expected">Expected</span></td></tr>
+</table></div>
+
+<h3>Selection process</h3>
+<ol class="stages">
+<li><b>Phase I · Prelims</b><span>100 marks online objective · qualifying only; about 10× vacancies (category-wise) shortlisted on aggregate, no sectional cut-off</span></li>
+<li><b>Phase II · Mains</b><span>200 objective + 30 descriptive = 230 marks · sectional and aggregate cut-offs · about 3× vacancies shortlisted · counts for merit</span></li>
+<li><b>Phase III · Psychometric Test</b><span>Personality profiling; no marks, findings go to the interview panel</span></li>
+<li><b>Phase III · Group Exercise + Interview</b><span>20 + 30 = 50 marks · counts for merit</span></li>
+<li><b>Final merit</b><span>Mains (230) scaled to 75 + GE &amp; Interview (50) scaled to 25 = 100. Prelims marks are not added</span></li>
+</ol>
+
+<h3>Exam pattern</h3>
+<h4>Phase I · Prelims (1 hour)</h4>
+<div class="table-wrap"><table>
+<tr><th>Section</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>English Language</td><td>40</td><td>40</td><td>20 min</td></tr>
+<tr><td>Quantitative Aptitude</td><td>30</td><td>30</td><td>20 min</td></tr>
+<tr><td>Reasoning Ability</td><td>30</td><td>30</td><td>20 min</td></tr>
+<tr class="total"><td>Total</td><td>100</td><td>100</td><td>1 hour</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 1/4 of the question's marks per wrong answer · <b>Sectional cut-off:</b> none in Prelims (aggregate merit only) · <b>Sectional timing:</b> yes · <b>Language:</b> English and Hindi (English section in English)</p>
+
+<h4>Phase II · Mains, objective (3 hours) — 2026 pattern</h4>
+<div class="table-wrap"><table>
+<tr><th>Test</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>Reasoning &amp; Computer Aptitude</td><td>40</td><td>60</td><td>50 min</td></tr>
+<tr><td>Data Analysis &amp; Interpretation</td><td>30</td><td>60</td><td>45 min</td></tr>
+<tr><td>General Awareness / Economy / Banking Knowledge</td><td>60</td><td>60</td><td>45 min</td></tr>
+<tr><td>English Language</td><td>40</td><td>20</td><td>40 min</td></tr>
+<tr class="total"><td>Total</td><td>170</td><td>200</td><td>3 hours</td></tr>
+</table></div>
+
+<h4>Phase II · Mains, descriptive (typed on computer, right after the objective test)</h4>
+<div class="table-wrap"><table>
+<tr><th>Paper: Communication Skills</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>Email (attempt 1 of 2 options)<br>Situation Analysis (1 of 2)<br>Report Writing or Précis Writing (1 of 2)</td><td>3</td><td>30</td><td>30 min</td></tr>
+<tr class="total"><td>Mains grand total</td><td>173</td><td>230</td><td>3 h 30 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 1/4 per wrong answer in objective tests · <b>Sectional cut-off:</b> yes, in each of Tests I–IV and the descriptive paper, plus a minimum aggregate · <b>Changes in 2026 vs the Dec 2024 advt:</b> objective tests unchanged; descriptive cut from 50 to 30 marks and now set as 3 tasks with a choice in each (Mains total 230, was 250); attempt limits raised by 2 (UR/EWS 4 to 6, OBC/PwBD 7 to 9)</p>
+
+<h4>Phase III</h4>
+<div class="table-wrap"><table>
+<tr><th>Component</th><th>Marks</th><th>Notes</th></tr>
+<tr><td>Psychometric Test</td><td>—</td><td>Personality profiling; online proctored or at a centre; all questions mandatory</td></tr>
+<tr><td>Group Exercise</td><td>20</td><td>Qualifying marks decided by the Bank</td></tr>
+<tr><td>Interview</td><td>30</td><td>Qualifying marks decided by the Bank</td></tr>
+<tr class="total"><td>Total</td><td>50</td><td>Scaled to 25 in the final merit</td></tr>
+</table></div>
+
+<h3>Detailed syllabus</h3>
+<details class="syl"><summary>English Language <span class="w">Prelims 40 Q · Mains 40 Q</span></summary>
+<ul><li><b>Reading:</b> reading comprehension (banking, economy, editorial passages), vocabulary in context, inference and tone</li><li><b>Grammar:</b> error spotting, sentence improvement, phrase replacement, fillers (single/double)</li><li><b>Sentence skills:</b> para jumbles, odd sentence out, sentence connectors, word swap, word usage</li><li>Cloze test, column-based word pairing, paragraph completion</li></ul></details>
+<details class="syl"><summary>Quantitative Aptitude / Data Analysis &amp; Interpretation <span class="w">Prelims 30 Q · Mains 30 Q (60 marks)</span></summary>
+<ul><li><b>Calculation:</b> simplification and approximation, number series (missing / wrong term), quadratic equations and quantity comparison</li><li><b>Data interpretation:</b> tables, bar and line graphs, pie charts, caselets, missing-data DI, radar and mixed charts (the main Mains focus)</li><li><b>Arithmetic:</b> percentage, ratio and proportion, averages, ages, profit and loss, simple and compound interest, time and work, pipes and cisterns, time-speed-distance, boats and trains, mixtures and alligation, partnership</li><li><b>Advanced:</b> probability, permutation and combination, mensuration, data sufficiency</li></ul></details>
+<details class="syl"><summary>Reasoning Ability &amp; Computer Aptitude <span class="w">Prelims 30 Q · Mains 40 Q (60 marks)</span></summary>
+<ul><li><b>Puzzles and seating:</b> linear, circular, square, floor/flat, box, scheduling (month/day), comparison puzzles</li><li><b>Logic:</b> syllogism, coded and direct inequality, blood relations, direction sense, order and ranking, alphanumeric series, coding-decoding</li><li><b>Mains-level:</b> input-output (machine), data sufficiency, logical reasoning (statement–assumption, course of action, cause and effect, inference, strengthening/weakening argument)</li><li><b>Computer Aptitude:</b> hardware and software basics, OS, networking and internet, MS Office, DBMS basics, cyber security, shortcuts, number systems</li></ul></details>
+<details class="syl"><summary>General Awareness / Economy / Banking Knowledge <span class="w">Mains 60 Q · 60 marks</span></summary>
+<ul><li><b>Current affairs:</b> last 6 months of national and international news, government schemes, appointments, awards, sports, summits, indices and reports</li><li><b>Banking:</b> RBI functions and monetary policy (repo, CRR, SLR, LAF), banking regulation, NPAs and IBC, Basel norms, payment systems (UPI, NEFT, RTGS, CBDC), financial inclusion, SBI-specific news</li><li><b>Economy:</b> Union Budget, Economic Survey, GDP, inflation, fiscal deficit, GST, SEBI and capital markets, insurance and IRDAI</li><li><b>Static GK:</b> financial institutions and HQs, international bodies, national parks, important days</li></ul></details>
+<details class="syl"><summary>Descriptive: Communication Skills <span class="w">3 tasks · 30 marks · 30 min</span></summary>
+<ul><li>Formal email writing (to customers, managers, departments): structure, tone, clarity</li><li>Situation analysis: a workplace or branch scenario; state the problem, options and the action you would take</li><li>Report writing or précis writing (choose one of two)</li><li>Typed on screen: practise typing clean text at 25–30 words per minute</li></ul></details>
+
+<h3>How to prepare</h3>
+<ul class="prep">
+<li>Mains is the whole game: prelims marks are dropped and Mains carries 75% of final merit. Plan to reach Mains level by the prelims date, not after it.</li>
+<li>Build speed with the Calculation Practice page (squares, cubes, fractions to percentages, multiplication tricks) and the Aptitude notes (Quant) for arithmetic and DI.</li>
+<li>Do one high-level puzzle set every day; for Mains, add input-output and logical reasoning from the Aptitude notes (Reasoning).</li>
+<li>GA is now 60 questions: keep a 6-month banking and economy digest, revise RBI policy numbers every month, and read SBI press releases.</li>
+<li>English is 40 questions for only 20 marks in Mains, so give it the least time. Use the Verbal Ability notes for RC, error spotting and para jumbles.</li>
+<li>Descriptive: practise one email, one situation analysis and one précis every week, typed and timed to 30 minutes in total. Missing the sectional cut-off here eliminates you.</li>
+<li>Take full-length mocks in the new 170-question format with sectional timers; analyse each mock for section-wise accuracy.</li>
+<li>Phase III: prepare a banking-focused self-introduction, current banking topics for the group exercise, and keep your CIBIL clean (defaults bar appointment).</li>
+</ul>
+
+<div class="sources"><b>Sources</b> (checked 27 Sep 2026): <a href="https://sbi.bank.in/documents/77530/57941/18062026_1_Detailed_Adv.2026.pdf/1f1a9532-8a2f-6e59-08a0-616d62a497b1?t=1781759726353" target="_blank" rel="noopener">SBI PO 2026 detailed advertisement (official)</a> · <a href="https://sbi.bank.in/web/careers/current-openings" target="_blank" rel="noopener">SBI Careers – current openings (official)</a> · <a href="https://www.careerpower.in/sbi-po.html" target="_blank" rel="noopener">Career Power – SBI PO 2026</a> · <a href="https://www.adda247.com/sbi-po" target="_blank" rel="noopener">Adda247 – SBI PO</a> · <a href="https://www.careerpower.in/sbi-po-result.html" target="_blank" rel="noopener">Career Power – SBI PO prelims result</a> · <a href="https://www.pw.live/banking/exams/sbi-po-prelims-result-2026" target="_blank" rel="noopener">PW – SBI PO prelims result 2026</a>
+<br>Always confirm dates on the official website before applying.</div>
+</div>
+
+<div class="exam" role="tabpanel" aria-labelledby="t-sbi-clerk" id="ex-sbi-clerk" data-group="SBI" data-label="SBI Clerk">
+<div class="exam-head">
+<h2>SBI Clerk · Junior Associate (Customer Support &amp; Sales) 2026</h2>
+<p class="exam-sub">Junior Associate, clerical cadre · State Bank of India (CRPD) · front-desk branch role: cash, deposits, customer service and selling bank products in the state you apply for.</p>
+<div class="exam-status"><span class="tag official">Prelims: 26–27 Sep 2026 (in progress)</span> <span class="tag official">Mains: Nov 2026 (tentative month, per advt)</span> <span class="tag expected">Next cycle: second half of 2027 (expected)</span></div>
+</div>
+
+<div class="facts">
+<div class="fact"><span class="k">Conducted by</span><span class="v">State Bank of India, Central Recruitment &amp; Promotion Dept (exam run through IBPS portal)</span></div>
+<div class="fact"><span class="k">Post / grade</span><span class="v">Junior Associate (Customer Support &amp; Sales), clerical cadre; state-wise recruitment, no inter-state transfer for 5 years</span></div>
+<div class="fact"><span class="k">Latest vacancies</span><span class="v">9,766 in total: 7,680 regular + backlog (SC/ST/OBC, PwBD, ex-servicemen), across 24 states/UTs (Advt CRPD/CR/2026-27/17)</span></div>
+<div class="fact"><span class="k">Age limit</span><span class="v">20–28 years as on 01.04.2026 (born 02.04.1998–01.04.2006). Relaxation: OBC 3, SC/ST 5, PwBD 10/13/15, widows/divorced women 7 (caps apply), SBI trained apprentices extra</span></div>
+<div class="fact"><span class="k">Education</span><span class="v">Graduation in any discipline by 31.12.2026; final-year students may apply provisionally</span></div>
+<div class="fact"><span class="k">Attempts</span><span class="v">No attempt limit in the advertisement; you can apply for one state only and sit the test once per cycle</span></div>
+<div class="fact"><span class="k">Pay (starting)</span><span class="v">Basic ₹26,730 (₹24,050 + 2 increments for graduates); about ₹46,000/month gross in a metro like Mumbai</span></div>
+<div class="fact"><span class="k">Mode</span><span class="v">Online CBT Prelims + Mains, then a Local Language Proficiency Test where needed. Fee ₹750 (SC/ST/PwBD/XS nil)</span></div>
+</div>
+
+<h3>Timeline</h3>
+<div class="table-wrap"><table class="timeline">
+<tr><th>Stage</th><th>Latest cycle (2026)</th><th>Next cycle (2027)</th></tr>
+<tr><td>Notification</td><td>11 Aug 2026 <span class="tag done">Completed</span></td><td>Second half of 2027 <span class="tag expected">Expected</span> (previous notifications came Dec 2024 and Aug 2026)</td></tr>
+<tr><td>Online application</td><td>11 Aug – 31 Aug 2026 (about 13 lakh applied, as reported) <span class="tag done">Completed</span></td><td>About 3 weeks after notification <span class="tag expected">Expected</span></td></tr>
+<tr><td>Prelims call letter</td><td>Released Sep 2026 <span class="tag done">Completed</span></td><td>— <span class="tag expected">Expected</span></td></tr>
+<tr><td>Phase I · Prelims</td><td>26 &amp; 27 Sep 2026 (the second day is 27 Sep) <span class="tag official">Official</span></td><td>About 6 weeks after notification <span class="tag expected">Expected</span></td></tr>
+<tr><td>Prelims result</td><td>Oct–Nov 2026 <span class="tag expected">Expected</span> (usually 3–5 weeks after the exam)</td><td>— <span class="tag expected">Expected</span></td></tr>
+<tr><td>Phase II · Mains</td><td>November 2026 (tentative month in advt; no exact date announced) <span class="tag official">Official</span></td><td>About 2 months after Prelims <span class="tag expected">Expected</span></td></tr>
+<tr><td>Final result (provisional selection)</td><td>Early 2027 <span class="tag expected">Expected</span> (based on past cycles)</td><td>— <span class="tag expected">Expected</span></td></tr>
+<tr><td>Local Language Proficiency Test</td><td>After provisional selection, before joining (2027) <span class="tag expected">Expected</span></td><td>— <span class="tag expected">Expected</span></td></tr>
+</table></div>
+
+<h3>Selection process</h3>
+<ol class="stages">
+<li><b>Phase I · Prelims</b><span>100 marks online objective · qualifying only; about 10× vacancies shortlisted per state and category · no sectional cut-off</span></li>
+<li><b>Phase II · Mains</b><span>200 marks online objective · minimum aggregate (5% lower for SC/ST/OBC/PwBD/XS) · sole basis of the state-wise merit list</span></li>
+<li><b>Phase III · Local Language Proficiency Test</b><span>50 marks · qualifying only; waived if the language was studied in Class 10 or 12</span></li>
+<li><b>Bonus</b><span>SBI trained apprentices (engaged on or after 01.01.2022) get 5 of 200 marks (2.5%) added to their Mains score</span></li>
+</ol>
+
+<h3>Exam pattern</h3>
+<h4>Phase I · Prelims (1 hour)</h4>
+<div class="table-wrap"><table>
+<tr><th>Section</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>English Language</td><td>30</td><td>30</td><td>20 min</td></tr>
+<tr><td>Numerical Ability</td><td>35</td><td>35</td><td>20 min</td></tr>
+<tr><td>Reasoning Ability</td><td>35</td><td>35</td><td>20 min</td></tr>
+<tr class="total"><td>Total</td><td>100</td><td>100</td><td>1 hour</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 1/4 per wrong answer · <b>Sectional cut-off:</b> none (sectional marks not maintained) · <b>Language:</b> English, Hindi and the state's regional language(s) listed in the advt (English section in English)</p>
+
+<h4>Phase II · Mains (2 hours 40 minutes)</h4>
+<div class="table-wrap"><table>
+<tr><th>Section</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>General / Financial Awareness</td><td>50</td><td>50</td><td>35 min</td></tr>
+<tr><td>General English</td><td>40</td><td>40</td><td>35 min</td></tr>
+<tr><td>Quantitative Aptitude</td><td>50</td><td>50</td><td>45 min</td></tr>
+<tr><td>Reasoning Ability &amp; Computer Aptitude</td><td>50</td><td>60</td><td>45 min</td></tr>
+<tr class="total"><td>Total</td><td>190</td><td>200</td><td>2 h 40 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 1/4 per wrong answer · <b>Sectional cut-off:</b> none, only a minimum aggregate decided by the Bank · <b>Merit:</b> Mains aggregate only; Prelims not added</p>
+
+<h4>Phase III · Local Language Proficiency Test (qualifying)</h4>
+<div class="table-wrap"><table>
+<tr><th>Section</th><th>Passages</th><th>Questions</th><th>Marks</th></tr>
+<tr><td>Non-verbal test: objective</td><td>3</td><td>15</td><td>15</td></tr>
+<tr><td>Non-verbal test: subjective</td><td>3</td><td>15</td><td>15</td></tr>
+<tr><td>Verbal test</td><td>—</td><td>—</td><td>20</td></tr>
+<tr class="total"><td>Total</td><td>—</td><td>—</td><td>50</td></tr>
+</table></div>
+<p class="pattern-note">Minimum qualifying marks in each test are set by the Bank (5% relaxation for reserved categories). Failing it means no appointment.</p>
+
+<h3>Detailed syllabus</h3>
+<details class="syl"><summary>English Language <span class="w">Prelims 30 Q · Mains 40 Q</span></summary>
+<ul><li>Reading comprehension (2 passages is common), vocabulary from the passage</li><li>Error detection, sentence improvement, phrase replacement</li><li>Fillers, cloze test, word usage, word swap</li><li>Para jumbles, sentence rearrangement, sentence connectors</li></ul></details>
+<details class="syl"><summary>Numerical Ability / Quantitative Aptitude <span class="w">Prelims 35 Q · Mains 50 Q</span></summary>
+<ul><li><b>Calculation:</b> simplification, approximation, number series (missing and wrong term), quadratic equations</li><li><b>Data interpretation:</b> table, bar, line, pie and caselet DI (small sets in Prelims, larger in Mains)</li><li><b>Arithmetic:</b> percentage, ratio, averages, ages, profit and loss, simple and compound interest, time and work, pipes, speed-distance, boats and trains, mixtures, partnership, mensuration, probability, permutation and combination</li><li>Quantity comparison and data sufficiency (Mains)</li></ul></details>
+<details class="syl"><summary>Reasoning Ability &amp; Computer Aptitude <span class="w">Prelims 35 Q · Mains 50 Q (60 marks)</span></summary>
+<ul><li><b>Puzzles and seating:</b> linear, circular, floor, box, month/day-based</li><li>Syllogism, inequality, blood relations, direction sense, order and ranking, coding-decoding, alphanumeric series</li><li><b>Mains:</b> input-output, data sufficiency, logical reasoning (statement–assumption/conclusion, course of action)</li><li><b>Computer Aptitude (Mains):</b> hardware, software, OS, internet and networking, MS Office, shortcuts, DBMS basics, security</li></ul></details>
+<details class="syl"><summary>General / Financial Awareness <span class="w">Mains 50 Q</span></summary>
+<ul><li>Current affairs for the last 4–6 months: national, international, schemes, appointments, awards, sports</li><li>Banking and financial awareness: RBI, monetary policy rates, types of accounts and cheques, payment systems, financial inclusion schemes, NPAs</li><li>Economy basics: budget, GDP, inflation, GST</li><li>Static GK: bank HQs and taglines, capitals and currencies, national parks, important days</li></ul></details>
+<details class="syl"><summary>Local Language Proficiency Test <span class="w">50 marks · qualifying</span></summary>
+<ul><li>Reading passages in the chosen state language (objective + short written answers)</li><li>Verbal test: speaking and understanding the language</li><li>Exempt if you studied that language in Class 10 or 12 (marksheet needed)</li></ul></details>
+
+<h3>How to prepare</h3>
+<ul class="prep">
+<li>Prelims is a speed test (20 minutes per section). Drill daily with the Calculation Practice page until simplification and series take under 30 seconds each.</li>
+<li>Use the Aptitude notes (Quant) for arithmetic and DI; clerk-level DI is short, so accuracy matters more than advanced tricks.</li>
+<li>Reasoning: practise 3–4 easy-to-moderate puzzles a day and master syllogism and inequality from the Aptitude notes (Reasoning); these are near-sure marks.</li>
+<li>English: the Verbal Ability notes cover RC, error spotting, fillers and para jumbles; read one editorial a day for vocabulary.</li>
+<li>Mains GA/Financial Awareness is 50 marks with no sectional cut-off, so it can decide your rank. Revise monthly current-affairs capsules and banking terms.</li>
+<li>Merit is state-wise: check your state's vacancy and past cut-offs before applying, and confirm you can clear its local language test or have the Class 10/12 marksheet.</li>
+<li>Take at least 15–20 full mocks with sectional timers before Mains; track attempts vs accuracy because of the 1/4 negative marking.</li>
+</ul>
+
+<div class="sources"><b>Sources</b> (checked 27 Sep 2026): <a href="https://sbi.bank.in/webfiles/uploads/files_2627/08/JA_2026_Detailed_Advt_Eng.pdf" target="_blank" rel="noopener">SBI JA 2026 detailed advertisement (official)</a> · <a href="https://sbi.bank.in/web/careers/current-openings" target="_blank" rel="noopener">SBI Careers – current openings (official)</a> · <a href="https://www.careerpower.in/sbi-clerk.html" target="_blank" rel="noopener">Career Power – SBI Clerk 2026</a> · <a href="https://www.careerpower.in/news/sbi-clerk-recruitment-2026-notification-out/" target="_blank" rel="noopener">Career Power – notification news</a> · <a href="https://articles.findmycollege.com/news/sbi-junior-associate-exam-date-2026-notice-out-prelims-on-sep-26-27-at-sbi-bank-in/" target="_blank" rel="noopener">FindMyCollege – prelims date notice</a> · <a href="https://www.adda247.com/jobs/sbi-clerk/" target="_blank" rel="noopener">Adda247 – SBI Clerk exam date</a>
+<br>Always confirm dates on the official website before applying.</div>
+</div>
+
+<div class="exam" role="tabpanel" aria-labelledby="t-sbi-so-it" id="ex-sbi-so-it" data-group="SBI" data-label="SBI SO (IT)">
+<div class="exam-head">
+<h2>SBI Specialist Cadre Officer (IT) · Assistant Manager (System) / Deputy Manager (Systems)</h2>
+<p class="exam-sub">Specialist Cadre Officers in SBI's Global IT Centre · State Bank of India (CRPD) · software development, infrastructure, networking, cloud and security roles for the bank's technology stack. Details below are from the last large IT recruitment, Advt CRPD/SCO/2024-25/15 (14 Sep 2024).</p>
+<div class="exam-status"><span class="tag done">2024–25 cycle complete (final result 17 Mar 2025)</span> <span class="tag expected">Next AM (System) drive: not announced; timing unpredictable</span></div>
+</div>
+
+<div class="facts">
+<div class="fact"><span class="k">Conducted by</span><span class="v">State Bank of India, Central Recruitment &amp; Promotion Dept</span></div>
+<div class="fact"><span class="k">Post / grade</span><span class="v">Assistant Manager (System), JMGS-I · Deputy Manager (Systems), MMGS-II in 5 streams: Project Mgmt &amp; Delivery, Infra Support &amp; Cloud Ops, Networking Ops, IT Architect, Information Security</span></div>
+<div class="fact"><span class="k">Latest vacancies</span><span class="v">1,511 (2024–25 advt): AM (System) 784 + 14 backlog; DM (Systems) 713 (187 / 412 / 80 / 27 / 7)</span></div>
+<div class="fact"><span class="k">Age limit</span><span class="v">As on 30.06.2024: AM 21–30 years; DM 25–35 years. Relaxation for reserved categories as per Govt of India rules</span></div>
+<div class="fact"><span class="k">Education</span><span class="v">AM: B.E./B.Tech in CS/CSE/IT/Software Engg/Electronics/ECE (min 50%), or MCA, or M.Tech/M.Sc in these fields. DM: B.E./B.Tech in similar branches or MCA (Info Security: 60% minimum)</span></div>
+<div class="fact"><span class="k">Experience</span><span class="v">AM: none (freshers eligible). DM: minimum 4 years post-qualification IT experience, including 2 years in the stream's specific area</span></div>
+<div class="fact"><span class="k">Pay (starting)</span><span class="v">AM: basic ₹48,480 (scale 48480–85920). DM: basic ₹64,820 (scale 64820–93960). Plus DA, HRA, CCA, NPS etc. AM bond ₹2 lakh + GST for 5 years</span></div>
+<div class="fact"><span class="k">Mode</span><span class="v">AM: online written test + interview. DM: shortlisting + tiered interview (no written test). Fee ₹750 (SC/ST/PwBD nil)</span></div>
+</div>
+
+<h3>Timeline</h3>
+<div class="table-wrap"><table class="timeline">
+<tr><th>Stage</th><th>Latest cycle (2024–25, Advt CRPD/SCO/2024-25/15)</th><th>Next cycle</th></tr>
+<tr><td>Notification</td><td>14 Sep 2024 <span class="tag done">Completed</span></td><td>Not announced <span class="tag expected">Expected</span> (SBI runs large IT drives irregularly, usually 1–3 years apart; none announced as of Sep 2026)</td></tr>
+<tr><td>Online application</td><td>14 Sep – 4 Oct 2024 (later extended to 14 Oct 2024, as reported) <span class="tag done">Completed</span></td><td>— <span class="tag expected">Expected</span></td></tr>
+<tr><td>Online written test (AM only)</td><td>23 Nov 2024 <span class="tag done">Completed</span></td><td>About 2 months after notification <span class="tag expected">Expected</span></td></tr>
+<tr><td>Written test result</td><td>Dec 2024 (26 Dec 2024, as reported) <span class="tag done">Completed</span></td><td>— <span class="tag expected">Expected</span></td></tr>
+<tr><td>Interview</td><td>Between the written result (Dec 2024) and the final result (Mar 2025) <span class="tag done">Completed</span></td><td>— <span class="tag expected">Expected</span></td></tr>
+<tr><td>Final result (AM)</td><td>17 Mar 2025 <span class="tag done">Completed</span></td><td>— <span class="tag expected">Expected</span></td></tr>
+<tr><td>Recent 2026 IT posts (for reference)</td><td>Advts CRPD/SCO/2026-27/11 and /13 (7–27 Aug 2026): small batches of experienced Deputy Manager (AI Specialist, IT Security, Cyber Security) and senior tech posts, selected by shortlisting + interview only <span class="tag done">Completed</span></td><td>—</td></tr>
+</table></div>
+
+<h3>Selection process</h3>
+<ol class="stages">
+<li><b>AM (System) · Online written test</b><span>General Aptitude (qualifying) + Professional Knowledge (100 marks, counts for merit) · no negative marking</span></li>
+<li><b>AM (System) · Interview</b><span>25 marks · qualifying marks set by the Bank</span></li>
+<li><b>AM final merit</b><span>Written test 70% + interview 30%, after normalisation</span></li>
+<li><b>DM (Systems) · Shortlisting + tiered interview</b><span>No written test · interview 100 marks · merit on interview marks only</span></li>
+</ol>
+
+<h3>Exam pattern</h3>
+<h4>Assistant Manager (System) · online written test (2024–25 advt)</h4>
+<div class="table-wrap"><table>
+<tr><th>Section</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>General Aptitude: Reasoning (qualifying)</td><td>15</td><td>15</td><td>45 min for all three</td></tr>
+<tr><td>General Aptitude: Quantitative Aptitude (qualifying)</td><td>15</td><td>15</td><td>(shared)</td></tr>
+<tr><td>General Aptitude: English Language (qualifying)</td><td>20</td><td>20</td><td>(shared)</td></tr>
+<tr><td>Professional Knowledge: General IT Knowledge (merit)</td><td>60</td><td>100</td><td>75 min</td></tr>
+<tr class="total"><td>Total</td><td>110</td><td>150 (only 100 count for merit)</td><td>2 hours</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> none · <b>Cut-off:</b> minimum qualifying marks in the aptitude papers (can be waived) and a cut-off in Professional Knowledge to be called for interview · <b>Language:</b> English</p>
+
+<h4>Professional Knowledge paper (indicative split)</h4>
+<div class="table-wrap"><table>
+<tr><th>Subject</th><th>Questions</th><th>Marks</th></tr>
+<tr><td>Software Development</td><td>20</td><td>33</td></tr>
+<tr><td>Infra Support</td><td>20</td><td>33</td></tr>
+<tr><td>Networking</td><td>10</td><td>17</td></tr>
+<tr><td>Cloud Operations</td><td>10</td><td>17</td></tr>
+<tr class="total"><td>Total</td><td>60</td><td>100</td></tr>
+</table></div>
+
+<h3>Detailed syllabus</h3>
+<details class="syl"><summary>Software Development <span class="w">20 Q · 33 marks</span></summary>
+<ul><li><b>DSA:</b> arrays, linked lists, stacks, queues, binary trees, BST, heaps, hashing, recursion; BFS and DFS; searching and sorting with time and space complexity; code-snippet questions</li><li><b>OOP:</b> abstraction, encapsulation, inheritance, polymorphism, association, aggregation, composition, message passing</li><li><b>Web:</b> HTML5, CSS, JavaScript, HTTP/HTTPS, AJAX, REST (GET, POST, PUT, DELETE), cookies, Git</li><li><b>Software engineering:</b> SDLC phases, black-box and white-box testing, unit, integration, regression and UAT, design patterns, SOLID, monolith vs microservices</li><li><b>Databases:</b> RDBMS, ER diagrams, ACID transactions, keys, indexes, normalisation, joins, DDL/DML/TCL, SQL functions, views, triggers, cursors</li><li><b>Security:</b> XSS, CSRF, injection, DDoS, brute force, OWASP Top 10, symmetric and asymmetric keys, digital signatures</li></ul></details>
+<details class="syl"><summary>Infra Support <span class="w">20 Q · 33 marks</span></summary>
+<ul><li><b>Operating systems:</b> system calls, processes, threads, IPC, concurrency and synchronisation, deadlock, memory management, virtual memory</li><li>CPU scheduling (FCFS, SJF, SRTF, Round Robin), paging and page replacement (FIFO, Optimal, LRU), disk scheduling (FCFS, SSTF, SCAN, LOOK, C-SCAN, C-LOOK)</li><li>Memory types (cache, main, secondary), processors, clock cycle, HDD vs SSD</li><li>Virtual machines, storage, networking components; backup and recovery; security and compliance controls; Windows and Unix/Linux environments</li></ul></details>
+<details class="syl"><summary>Networking <span class="w">10 Q · 17 marks</span></summary>
+<ul><li>LAN, WAN, MAN; topologies; devices (hub, bridge, router, gateway)</li><li>OSI and TCP/IP models; TCP vs UDP, sockets and ports; IPv4 vs IPv6; subnetting, supernetting, CIDR</li><li>ARP, DHCP, ICMP, NAT; DNS, SMTP, HTTP, FTP, Telnet, SNMP, POP3</li><li>Firewalls and their types, access control, remote-access VPN</li></ul></details>
+<details class="syl"><summary>Cloud Operations <span class="w">10 Q · 17 marks</span></summary>
+<ul><li>Cloud characteristics; SaaS, PaaS, IaaS; public vs private cloud</li><li>Virtualisation: server vs hypervisor based, Type 1 vs Type 2, full vs para; VMs vs containers; containerisation</li><li>Distributed and parallel vs cloud computing; CI/CD</li></ul></details>
+<details class="syl"><summary>General Aptitude (qualifying) <span class="w">50 Q · 45 min</span></summary>
+<ul><li>Reasoning: puzzles, seating, syllogism, inequality, coding-decoding, blood relations</li><li>Quantitative Aptitude: simplification, series, arithmetic, basic DI</li><li>English: RC, error spotting, fillers, para jumbles</li></ul></details>
+
+<h3>How to prepare</h3>
+<ul class="prep">
+<li>Professional Knowledge is the whole merit list (100 marks, no negative marking), so attempt every question and cover all four areas; Software Development and Infra Support make up two-thirds of the paper.</li>
+<li>Use this site's DSA, Java, Databases, Backend and System Design notes for the Software Development part: complexity tables, SQL, ACID, REST, design patterns and SOLID come up directly.</li>
+<li>OS and networking are classic GATE-style theory: revise scheduling, paging, deadlock, OSI/TCP-IP, subnetting and CIDR with short numerical practice.</li>
+<li>Aptitude is only qualifying but still has a cut-off: a few weeks with the Aptitude notes (Quant, Reasoning) and Verbal Ability notes at bank-PO-prelims level is enough.</li>
+<li>For the interview (30% weight), be ready to explain your final-year project, basic banking technology (core banking, UPI, cybersecurity in banks) and why SBI.</li>
+<li>Deputy Manager posts have no written test: shortlisting depends on relevant experience and certifications (cloud, CCNA/CCNP, CISSP/CISA, Oracle etc.), so build those.</li>
+<li>No fixed calendar exists for IT drives. Check SBI Careers current openings every few weeks; the application window is only about 3 weeks.</li>
+</ul>
+
+<div class="sources"><b>Sources</b> (checked 27 Sep 2026): <a href="https://sbi.bank.in/documents/77530/43947057/130924-DETAIL+ADV_GITC+REGULAR_SCO_2024-25_15.pdf" target="_blank" rel="noopener">SBI SCO Advt CRPD/SCO/2024-25/15 (official)</a> · <a href="https://sbi.bank.in/documents/77530/43947057/111124-NOTICE+FOR+ONLINE+WRITTEN+TEST.pdf/2f87602f-cd33-8057-4509-7f9dd779b4bf?t=1731329752491" target="_blank" rel="noopener">Online written test notice, 11 Nov 2024 (official)</a> · <a href="https://sbi.bank.in/documents/77530/43947057/SCO_15_AM_FINAL_RESULT-15+FORMAT.pdf/c07e3d98-a582-e753-8ca3-c71175f321b3?t=1742211884164" target="_blank" rel="noopener">AM (System) final result (official)</a> · <a href="https://sbi.bank.in/web/careers/current-openings" target="_blank" rel="noopener">SBI Careers – current openings (official)</a> · <a href="https://www.adda247.com/exams/bank/sbi-so-recruitment-2024/" target="_blank" rel="noopener">Adda247 – SBI SO 2024</a> · <a href="https://news.careers360.com/sbi-so-final-result-2025-out-at-sbicoin-785-assistant-manager-vacancies-be-filled" target="_blank" rel="noopener">Careers360 – final result 2025</a> · <a href="https://www.freejobalert.com/articles/sbi-sco-specialist-cadre-officer-recruitment-2026-3061889" target="_blank" rel="noopener">FreeJobAlert – SBI SCO 2026 (38 posts)</a>
+<br>Always confirm dates on the official website before applying.</div>
+</div>
+
+<div class="exam" role="tabpanel" aria-labelledby="t-ibps-po" id="ex-ibps-po" data-group="IBPS" data-label="IBPS PO">
+<div class="exam-head">
+<h2>IBPS PO / MT (CRP PO/MT-XVI)</h2>
+<p class="exam-sub">Probationary Officer / Management Trainee · Institute of Banking Personnel Selection (IBPS) · entry-level JMGS-I officer in 11 public sector banks: branch banking, credit, operations and customer relationships.</p>
+<div class="exam-status"><span class="tag official">Mains: 4 Oct 2026 (official)</span> <span class="tag expected">Next cycle (XVII) notification: July 2027 (expected)</span></div>
+</div>
+
+<div class="facts">
+<div class="fact"><span class="k">Conducted by</span><span class="v">IBPS, Mumbai, for 11 participating public sector banks (Bank of Baroda, Bank of India, Bank of Maharashtra, Canara Bank, Central Bank of India, Indian Bank, Indian Overseas Bank, PNB, Punjab &amp; Sind Bank, UCO Bank, Union Bank of India)</span></div>
+<div class="fact"><span class="k">Post / grade</span><span class="v">Probationary Officer / Management Trainee, Junior Management Grade Scale I</span></div>
+<div class="fact"><span class="k">Latest vacancies</span><span class="v">7,565 indicative (updated 27.08.2026, vacancies of 2027-28; Union Bank not reported)</span></div>
+<div class="fact"><span class="k">Age limit</span><span class="v">20–30 years as on 01.07.2026 (born 02.07.1996 to 01.07.2006). Relaxation: SC/ST 5 yrs, OBC-NCL 3 yrs, PwBD 10 yrs, ex-servicemen 5 yrs</span></div>
+<div class="fact"><span class="k">Education</span><span class="v">Graduation in any discipline, result declared on or before the last registration date (21.07.2026 as per the 2026 notification)</span></div>
+<div class="fact"><span class="k">Attempts</span><span class="v">No limit stated in the notification; you can appear as long as you are within the age limit</span></div>
+<div class="fact"><span class="k">Pay (starting)</span><span class="v">Basic ₹48,480 (scale ₹48,480–85,920) plus DA, HRA/lease and other allowances; roughly ₹74,000–76,000 in hand per month at the start, depending on city (secondary estimate)</span></div>
+<div class="fact"><span class="k">Mode</span><span class="v">Online CBT (Prelims, Mains with an online descriptive paper), then a personality test and an interview. Application fee ₹850 (₹175 for SC/ST/PwBD)</span></div>
+</div>
+
+<h3>Timeline</h3>
+<div class="table-wrap"><table class="timeline">
+<tr><th>Stage</th><th>Latest cycle (2026, CRP PO/MT-XVI)</th><th>Next cycle (2027, CRP PO/MT-XVII)</th></tr>
+<tr><td>Annual IBPS calendar</td><td>16 Jan 2026 <span class="tag done">Completed</span></td><td>Jan 2027 <span class="tag expected">Expected</span> (the 2026–27 calendar was issued on 16.01.2026)</td></tr>
+<tr><td>Notification</td><td>1 Jul 2026 (short notice 30 Jun 2026) <span class="tag done">Completed</span></td><td>July 2027 <span class="tag expected">Expected</span> (PO notifications came out in July in both 2025 and 2026)</td></tr>
+<tr><td>Online application</td><td>1–26 Jul 2026 (notified as 1–21 Jul, then extended) <span class="tag done">Completed</span></td><td>July 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Prelims</td><td>22–23 Aug 2026 <span class="tag done">Completed</span></td><td>August 2027 <span class="tag expected">Expected</span> (held in August in 2025 and 2026)</td></tr>
+<tr><td>Prelims result</td><td>23 Sep 2026 <span class="tag done">Completed</span></td><td>September 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Mains (objective + descriptive)</td><td>4 Oct 2026 (call letters out 24 Sep 2026) <span class="tag official">Official</span></td><td>October 2027 <span class="tag expected">Expected</span> (Mains was in October in 2025 and 2026)</td></tr>
+<tr><td>Mains result</td><td>November 2026 (tentative month in the notification) <span class="tag official">Official</span></td><td>November 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Personality test</td><td>November 2026 (tentative month in the notification) <span class="tag official">Official</span></td><td>November 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Interview</td><td>November–December 2026 (tentative months in the notification) <span class="tag official">Official</span></td><td>November–December 2027 <span class="tag expected">Expected</span> (interviews for the 2025 cycle were held in December 2025)</td></tr>
+<tr><td>Provisional allotment (final result)</td><td>January 2027 (tentative month in the notification) <span class="tag official">Official</span></td><td>January–February 2028 <span class="tag expected">Expected</span></td></tr>
+</table></div>
+
+<h3>Selection process</h3>
+<ol class="stages">
+<li><b>Phase I · Prelims</b><span>Online objective test, 100 marks, 1 hour · qualifying only, with a cut-off for each section and a shortlist for Mains</span></li>
+<li><b>Phase II · Mains</b><span>Objective (200 marks) plus descriptive English (25 marks) · you must clear each test and the total cut-off · counts for merit</span></li>
+<li><b>Personality test</b><span>Self-report test · non-qualifying, but you must take it to be allowed into the interview</span></li>
+<li><b>Interview</b><span>100 marks, run by the participating banks · minimum 40% (35% for SC/ST/OBC/PwBD) · final merit is Mains and interview weighted 80:20</span></li>
+<li><b>Provisional allotment</b><span>Bank is allotted by merit and your bank preferences, against the vacancies the banks actually report</span></li>
+</ol>
+
+<h3>Exam pattern</h3>
+<h4>Phase I · Prelims</h4>
+<div class="table-wrap"><table>
+<tr><th>Section</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>English Language</td><td>30</td><td>30</td><td>20 min</td></tr>
+<tr><td>Quantitative Aptitude</td><td>35</td><td>30</td><td>20 min</td></tr>
+<tr><td>Reasoning Ability</td><td>35</td><td>40</td><td>20 min</td></tr>
+<tr class="total"><td>Total</td><td>100</td><td>100</td><td>60 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 0.25 of the question's marks for each wrong answer; no penalty for a blank · <b>Sectional cut-off:</b> yes, each of the three sections must be cleared (set by IBPS) · <b>Timing:</b> each section separately timed · <b>Language:</b> English section in English; others in English and Hindi</p>
+
+<h4>Phase II · Mains (objective)</h4>
+<div class="table-wrap"><table>
+<tr><th>Section</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>Reasoning</td><td>40</td><td>60</td><td>45 min</td></tr>
+<tr><td>General / Economy / Banking Awareness / Digital / Financial Awareness incl. RBI circulars</td><td>50</td><td>60</td><td>35 min</td></tr>
+<tr><td>English Language</td><td>40</td><td>20</td><td>35 min</td></tr>
+<tr><td>Data Analysis &amp; Interpretation</td><td>40</td><td>60</td><td>45 min</td></tr>
+<tr class="total"><td>Total</td><td>170</td><td>200</td><td>160 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 0.25 of the question's marks for each wrong answer · <b>Cut-off:</b> minimum score in each test and a minimum total · <b>Scores:</b> normalised by the equi-percentile method if there are several sessions · <b>Language:</b> English section in English; others in English and Hindi · <b>Total duration:</b> 3 h 10 min including the descriptive paper</p>
+
+<h4>Phase II · Mains (descriptive)</h4>
+<div class="table-wrap"><table>
+<tr><th>Paper</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>Descriptive English (essay and comprehension), typed online</td><td>2</td><td>25</td><td>30 min</td></tr>
+<tr class="total"><td>Mains total</td><td>172</td><td>225</td><td>190 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Topics:</b> broadly economic and social issues, new trends in banking and technology, current events and ethics · <b>Evaluation:</b> may be scored by an automated writing-proficiency mechanism (as per the 2026 notification)</p>
+
+<h4>Interview</h4>
+<div class="table-wrap"><table>
+<tr><th>Stage</th><th>Marks</th><th>Qualifying</th><th>Weight in final merit</th></tr>
+<tr><td>Interview</td><td>100</td><td>40% (35% SC/ST/OBC/PwBD)</td><td>20% (Mains 80%)</td></tr>
+</table></div>
+
+<h3>Detailed syllabus</h3>
+<details class="syl"><summary>Reasoning Ability <span class="w">Prelims 35 Q / 40 marks · Mains 40 Q / 60 marks</span></summary>
+<ul><li><b>Puzzles and seating arrangement:</b> linear, circular, square, floor/flat, box, scheduling (month/day), comparison, blood-relation puzzles</li>
+<li><b>Logical:</b> syllogism (incl. only-a-few/possibility cases), coded inequalities, direct inequalities</li>
+<li>Coding-decoding (new pattern), alphanumeric and symbol series, order and ranking, direction sense, blood relations</li>
+<li><b>Mains-level:</b> input-output (machine), data sufficiency, critical reasoning (statement–assumption, argument, course of action, cause and effect, inference, strengthen/weaken)</li>
+</ul></details>
+<details class="syl"><summary>Quantitative Aptitude / Data Analysis &amp; Interpretation <span class="w">Prelims 35 Q / 30 marks · Mains 40 Q / 60 marks</span></summary>
+<ul><li><b>Calculation:</b> simplification/approximation, number series (missing and wrong term), quadratic equations and quantity comparison</li>
+<li><b>Data interpretation:</b> tables, bar, line and pie charts, mixed graphs, caselets, missing-data DI, radar charts</li>
+<li><b>Arithmetic:</b> percentage, ratio and proportion, averages, ages, profit and loss, simple and compound interest, partnership, mixtures and alligation, time and work, pipes and cisterns, speed/time/distance, boats and streams, trains</li>
+<li>Mensuration, permutation and combination, probability</li>
+<li><b>Mains-level:</b> data sufficiency, arithmetic-based DI, statement-comparison questions</li>
+</ul></details>
+<details class="syl"><summary>English Language <span class="w">Prelims 30 Q / 30 marks · Mains 40 Q / 20 marks</span></summary>
+<ul><li>Reading comprehension (economy, banking and social themes; vocabulary-in-context questions)</li>
+<li>Cloze test, error spotting, sentence improvement/phrase replacement, fillers (single and double)</li>
+<li>Para jumbles, odd sentence out, sentence connectors, word swap and word usage</li>
+<li><b>Mains-level:</b> longer and inference-based RCs, paragraph completion, column-based sentence formation</li>
+</ul></details>
+<details class="syl"><summary>General / Economy / Banking / Financial Awareness <span class="w">Mains 50 Q / 60 marks</span></summary>
+<ul><li><b>Current affairs:</b> the last 4–6 months of national and international news, appointments, awards, summits, sports, schemes</li>
+<li><b>Banking:</b> RBI functions, monetary policy (repo, reverse repo/SDF, CRR, SLR, MSF), RBI circulars, NPAs and SARFAESI/IBC, Basel norms, payment systems (UPI, NEFT, RTGS, IMPS), financial inclusion schemes</li>
+<li><b>Economy:</b> Union Budget and Economic Survey, GDP, inflation, fiscal deficit, financial regulators (SEBI, IRDAI, PFRDA, NABARD, SIDBI)</li>
+<li><b>Digital/financial:</b> fintech, digital lending, CBDC (e-rupee), cyber security in banking</li>
+<li>Static GK: headquarters and heads of banks, and international organisations</li>
+</ul></details>
+<details class="syl"><summary>Descriptive English <span class="w">Mains 2 Q / 25 marks · 30 min</span></summary>
+<ul><li>Essay (about 250 words) on economic and social issues, banking trends, technology, current events or ethics</li>
+<li>Comprehension/precis or letter writing (formal) as set in the paper</li>
+<li>Typed on screen, so practise typing speed and structure (introduction, points, conclusion)</li>
+</ul></details>
+<details class="syl"><summary>Interview <span class="w">100 marks · 20% weight</span></summary>
+<ul><li>About yourself, your graduation subject and home state</li>
+<li>Why banking, the role of a PO, basic banking terms, current banking and economy news</li>
+<li>Situational questions on customers, ethics and teamwork</li>
+</ul></details>
+
+<h3>How to prepare</h3>
+<ul class="prep"><li>Start with Prelims speed: all three sections are separately timed at 20 minutes, so drill simplification, series and quadratics daily on the Calculation Practice page and the Tables &amp; Speed Tricks notes.</li>
+<li>Build arithmetic and DI from the Quantitative Aptitude notes; Mains DI (60 marks) decides most selections, so move to caselets and missing-data DI once the basics are solid.</li>
+<li>Do one puzzle or seating-arrangement set a day using the Logical Reasoning notes; Mains reasoning is 45 minutes for 60 marks and is mostly long puzzles.</li>
+<li>For English, use the Verbal Ability notes, read one editorial a day for RCs and vocabulary, and practise error spotting and cloze tests under time.</li>
+<li>General/Financial Awareness carries 60 marks with little calculation: keep a 6-month current affairs and RBI circular notebook and revise it weekly.</li>
+<li>Type one essay and one letter a week in 30 minutes; the descriptive paper is typed and may be machine-scored, so write clearly and stick to the word limit.</li>
+<li>Take full sectional mocks from July, and full Mains mocks once Prelims is over (the gap between Prelims and Mains is about six weeks).</li>
+</ul>
+
+<div class="sources"><b>Sources</b> (checked 27 Sep 2026): <a href="https://www.ibps.in/wp-content/uploads/IBPS_CALENDAR_2026-27_final.pdf" target="_blank" rel="noopener">IBPS tentative calendar 2026–27 (16.01.2026)</a> · <a href="https://www.ibps.in/wp-content/uploads/Detailed-Notification_CRP-PO-XVI_Final_V1_30.06.2026.pdf" target="_blank" rel="noopener">IBPS CRP PO/MT-XVI notification</a> · <a href="https://www.ibps.in/wp-content/uploads/ANNEXURE-I_updated_25.08.2026.pdf" target="_blank" rel="noopener">IBPS updated vacancies 27.08.2026</a> · <a href="https://www.ibps.in/index.php/management-trainees-xvi/" target="_blank" rel="noopener">IBPS PO/MT-XVI notices page</a> · <a href="https://www.careerpower.in/ibps-po.html" target="_blank" rel="noopener">Career Power: IBPS PO 2026</a> · <a href="https://testbook.com/ibps-po" target="_blank" rel="noopener">Testbook: IBPS PO</a> · <a href="https://www.bankersadda.com/ibps-po-interview-date-2025-26/" target="_blank" rel="noopener">Bankersadda: IBPS PO 2025 interview dates</a>
+<br>Always confirm dates on the official website before applying.</div>
+</div>
+
+<div class="exam" role="tabpanel" aria-labelledby="t-ibps-clerk" id="ex-ibps-clerk" data-group="IBPS" data-label="IBPS Clerk">
+<div class="exam-head">
+<h2>IBPS Clerk / Customer Service Associate (CRP CSA-XVI)</h2>
+<p class="exam-sub">Customer Service Associate (clerical cadre) · Institute of Banking Personnel Selection (IBPS) · front-desk and back-office banking staff in 11 public sector banks, recruited state by state.</p>
+<div class="exam-status"><span class="tag official">Prelims: 10–11 Oct 2026 · Mains: 27 Dec 2026 (official)</span> <span class="tag expected">Next cycle (XVII) notification: August 2027 (expected)</span></div>
+</div>
+
+<div class="facts">
+<div class="fact"><span class="k">Conducted by</span><span class="v">IBPS, Mumbai, for 11 participating public sector banks</span></div>
+<div class="fact"><span class="k">Post / grade</span><span class="v">Customer Service Associate (clerical cadre, formerly "IBPS Clerk")</span></div>
+<div class="fact"><span class="k">Latest vacancies</span><span class="v">11,403 indicative, state/UT-wise (vacancies of 2027-28, 2026 notification)</span></div>
+<div class="fact"><span class="k">Age limit</span><span class="v">20–28 years as on 01.08.2026 (born 02.08.1998 to 01.08.2006). Relaxation: SC/ST 5 yrs, OBC-NCL 3 yrs, PwBD 10 yrs; ex-servicemen, widows and divorced women as per the notification</span></div>
+<div class="fact"><span class="k">Education</span><span class="v">Graduation in any discipline (as on 21.08.2026), computer literacy, and the ability to read, write, speak and understand the local language of the state you apply for</span></div>
+<div class="fact"><span class="k">Attempts</span><span class="v">No limit stated in the notification; you can appear as long as you are within the age limit. You apply for one state/UT only</span></div>
+<div class="fact"><span class="k">Pay (starting)</span><span class="v">Basic ₹24,050 (scale ₹24,050–64,480) plus allowances; roughly ₹40,000–42,000 in hand per month at the start (secondary estimate)</span></div>
+<div class="fact"><span class="k">Mode</span><span class="v">Online CBT (Prelims and Mains), then a Local Language Proficiency Test; no interview. Application fee ₹850 (₹175 for SC/ST/PwBD/ESM/DESM)</span></div>
+</div>
+
+<h3>Timeline</h3>
+<div class="table-wrap"><table class="timeline">
+<tr><th>Stage</th><th>Latest cycle (2026, CRP CSA-XVI)</th><th>Next cycle (2027, CRP CSA-XVII)</th></tr>
+<tr><td>Annual IBPS calendar</td><td>16 Jan 2026 <span class="tag done">Completed</span></td><td>Jan 2027 <span class="tag expected">Expected</span> (the 2026–27 calendar was issued on 16.01.2026)</td></tr>
+<tr><td>Notification</td><td>1 Aug 2026 (short notice 31 Jul 2026) <span class="tag done">Completed</span></td><td>August 2027 <span class="tag expected">Expected</span> (Clerk notifications came out on 1 August in both 2025 and 2026)</td></tr>
+<tr><td>Online application</td><td>1–28 Aug 2026 (notified as 1–21 Aug, then extended) <span class="tag done">Completed</span></td><td>August 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Prelims</td><td>10–11 Oct 2026 <span class="tag official">Official</span></td><td>October 2027 <span class="tag expected">Expected</span> (held in October in 2025 and 2026)</td></tr>
+<tr><td>Prelims result</td><td>November 2026 (tentative month in the notification) <span class="tag official">Official</span></td><td>November 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Mains</td><td>27 Dec 2026 <span class="tag official">Official</span></td><td>November–December 2027 <span class="tag expected">Expected</span> (29 Nov in 2025, 27 Dec in 2026)</td></tr>
+<tr><td>Mains result</td><td>January 2027 (per exam-prep sites; not in the notification) <span class="tag expected">Expected</span></td><td>January 2028 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Provisional allotment (final result)</td><td>March 2027 (tentative month in the notification) <span class="tag official">Official</span></td><td>March 2028 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Local Language Proficiency Test</td><td>After Mains / allotment, before joining <span class="tag official">Official</span></td><td>2028, before joining <span class="tag expected">Expected</span></td></tr>
+</table></div>
+
+<h3>Selection process</h3>
+<ol class="stages">
+<li><b>Phase I · Prelims</b><span>Online objective test, 100 marks, 1 hour · qualifying only, with a cut-off for each section</span></li>
+<li><b>Phase II · Mains</b><span>Online objective test, 200 marks · merit is decided by Mains marks only (converted to a score out of 100)</span></li>
+<li><b>Local Language Proficiency Test</b><span>Qualifying · waived if your Class 10 (or higher) marksheet shows you studied that language</span></li>
+<li><b>Provisional allotment</b><span>State-wise merit plus your bank preferences · no interview</span></li>
+</ol>
+
+<h3>Exam pattern</h3>
+<h4>Phase I · Prelims</h4>
+<div class="table-wrap"><table>
+<tr><th>Section</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>English Language</td><td>30</td><td>30</td><td>20 min</td></tr>
+<tr><td>Numerical Ability</td><td>35</td><td>35</td><td>20 min</td></tr>
+<tr><td>Reasoning Ability</td><td>35</td><td>35</td><td>20 min</td></tr>
+<tr class="total"><td>Total</td><td>100</td><td>100</td><td>60 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 0.25 of the question's marks for each wrong answer; no penalty for a blank · <b>Sectional cut-off:</b> yes, each of the three sections must be cleared · <b>Timing:</b> each section separately timed · <b>Language:</b> English section in English; others in English, Hindi and the state's regional language(s) as listed in the notification</p>
+
+<h4>Phase II · Mains</h4>
+<div class="table-wrap"><table>
+<tr><th>Section</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>General / Financial Awareness</td><td>40</td><td>50</td><td>20 min</td></tr>
+<tr><td>General English</td><td>40</td><td>40</td><td>35 min</td></tr>
+<tr><td>Reasoning Ability</td><td>40</td><td>60</td><td>35 min</td></tr>
+<tr><td>Quantitative Aptitude</td><td>40</td><td>50</td><td>35 min</td></tr>
+<tr class="total"><td>Total</td><td>160</td><td>200</td><td>125 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 0.25 of the question's marks for each wrong answer · <b>Cut-off:</b> minimum score in each test and a minimum total, set state by state · <b>Timing:</b> each section separately timed · <b>Language:</b> English section in English; others in English, Hindi and the regional language(s) · <b>Descriptive paper:</b> none</p>
+
+<h3>Detailed syllabus</h3>
+<details class="syl"><summary>Reasoning Ability <span class="w">Prelims 35 Q / 35 marks · Mains 40 Q / 60 marks</span></summary>
+<ul><li><b>Puzzles and seating arrangement:</b> linear, circular, floor, box, month/day scheduling, comparison</li>
+<li>Syllogism, coded and direct inequalities, coding-decoding</li>
+<li>Alphanumeric and symbol series, order and ranking, direction sense, blood relations</li>
+<li><b>Mains-level:</b> input-output, data sufficiency, and statement–assumption, statement–conclusion and course-of-action questions</li>
+</ul></details>
+<details class="syl"><summary>Numerical Ability / Quantitative Aptitude <span class="w">Prelims 35 Q / 35 marks · Mains 40 Q / 50 marks</span></summary>
+<ul><li><b>Calculation:</b> simplification/approximation, number series, quadratic equations</li>
+<li><b>Data interpretation:</b> tables, bar, line and pie charts, caselets</li>
+<li><b>Arithmetic:</b> percentage, ratio and proportion, averages, ages, profit and loss, simple and compound interest, partnership, mixtures and alligation, time and work, pipes and cisterns, speed/time/distance, boats and streams</li>
+<li>Mensuration, permutation and combination, probability</li>
+<li><b>Mains-level:</b> quantity comparison, data sufficiency, arithmetic-based DI</li>
+</ul></details>
+<details class="syl"><summary>English Language / General English <span class="w">Prelims 30 Q / 30 marks · Mains 40 Q / 40 marks</span></summary>
+<ul><li>Reading comprehension</li>
+<li>Cloze test, error spotting, fillers, phrase replacement / sentence improvement</li>
+<li>Para jumbles, word swap and word usage, sentence connectors</li>
+<li>Vocabulary: synonyms and antonyms in context, idioms and phrases</li>
+</ul></details>
+<details class="syl"><summary>General / Financial Awareness <span class="w">Mains 40 Q / 50 marks · 20 min</span></summary>
+<ul><li><b>Current affairs:</b> the last 4–6 months of national and international news, schemes, appointments, awards, sports</li>
+<li><b>Banking:</b> RBI and its policy rates, types of accounts and cheques, KYC, payment systems (UPI, NEFT, RTGS, IMPS), financial inclusion schemes, NPAs</li>
+<li><b>Economy basics:</b> budget terms, inflation, GDP, regulators and their heads</li>
+<li>Static GK: bank headquarters and taglines, capitals and currencies, national parks, important days</li>
+</ul></details>
+<details class="syl"><summary>Local Language Proficiency Test <span class="w">qualifying</span></summary>
+<ul><li>Reading, writing, speaking and understanding the official/local language you chose for your state (list in Annexure III of the notification)</li>
+<li>Not required if your Class 10 (or higher) marksheet shows you studied that language</li>
+</ul></details>
+
+<h3>How to prepare</h3>
+<ul class="prep"><li>Clerk is a speed exam: Prelims gives 20 minutes for 35 questions in quant and reasoning, so do a timed set of simplification, series and quadratics every day on the Calculation Practice page and the Tables &amp; Speed Tricks notes.</li>
+<li>Use the Quantitative Aptitude notes for arithmetic and basic DI; Mains quant (50 marks, 35 minutes) is mostly arithmetic word problems and moderate DI.</li>
+<li>Reasoning carries the most Mains marks (60): practise easy-to-moderate puzzles from the Logical Reasoning notes until you can finish a set in 5–6 minutes.</li>
+<li>Work through the Verbal Ability notes for grammar and vocabulary; error spotting, fillers and cloze tests are the fastest scoring areas.</li>
+<li>General/Financial Awareness (50 marks in 20 minutes) is the best-scoring Mains section: revise current affairs and banking terms daily from Prelims onwards.</li>
+<li>Because vacancies and cut-offs are state-wise, check your state's vacancy count in Annexure I before choosing, and make sure you have the Class 10 local-language proof or are ready for the LLPT.</li>
+<li>If you are also taking IBPS PO, the Clerk Prelims (Oct) and Mains (Dec) come after PO Mains, so one plan covers both; add clerk-level speed mocks after PO Mains.</li>
+</ul>
+
+<div class="sources"><b>Sources</b> (checked 27 Sep 2026): <a href="https://www.ibps.in/wp-content/uploads/IBPS_CALENDAR_2026-27_final.pdf" target="_blank" rel="noopener">IBPS tentative calendar 2026–27 (16.01.2026)</a> · <a href="https://www.ibps.in/wp-content/uploads/Notification_CRP_CSA_XVI-Final.pdf" target="_blank" rel="noopener">IBPS CRP CSA-XVI notification</a> · <a href="https://www.ibps.in/index.php/clerical-cadre-xvi/" target="_blank" rel="noopener">IBPS CSA-XVI notices page</a> · <a href="https://www.careerpower.in/ibps-clerk.html" target="_blank" rel="noopener">Career Power: IBPS Clerk 2026</a> · <a href="https://www.adda247.com/exams/bank/ibps-clerk-notification-2026/" target="_blank" rel="noopener">Adda247: IBPS Clerk notification 2026</a> · <a href="https://testbook.com/news/ibps-clerk-last-date-to-apply-2026/" target="_blank" rel="noopener">Testbook: IBPS Clerk last date extended</a> · <a href="https://education.sakshi.com/en/bank-exams/education-news/ibps-clerk-prelims-result-2025-download-link-185592" target="_blank" rel="noopener">Sakshi Education: IBPS Clerk 2025 (CSA-XV) dates</a>
+<br>Always confirm dates on the official website before applying.</div>
+</div>
+
+<div class="exam" role="tabpanel" aria-labelledby="t-ibps-so-it" id="ex-ibps-so-it" data-group="IBPS" data-label="IBPS SO (IT)">
+<div class="exam-head">
+<h2>IBPS Specialist Officer — IT Officer (Scale I), CRP SPL-XVI</h2>
+<p class="exam-sub">IT Officer (JMGS-I) · Institute of Banking Personnel Selection for 11 public sector banks · runs and secures the bank's core banking, networks, databases and digital channels.</p>
+<div class="exam-status"><span class="tag done">Prelims held 29 Aug 2026</span> <span class="tag official">Mains: 1 Nov 2026 (official)</span> <span class="tag expected">Next cycle (CRP SPL-XVII): notification Jul 2027 (expected)</span></div>
+</div>
+
+<div class="facts">
+<div class="fact"><span class="k">Conducted by</span><span class="v">IBPS (interviews by participating banks via nodal bank)</span></div>
+<div class="fact"><span class="k">Post / grade</span><span class="v">IT Officer, Scale I (Junior Management Grade)</span></div>
+<div class="fact"><span class="k">Latest vacancies</span><span class="v">376 IT Officer posts, out of 1,043 SO posts (updated Annexure I, 25 Aug 2026; originally 301 of 745). Vacancies are for FY 2027-28</span></div>
+<div class="fact"><span class="k">Age limit</span><span class="v">20–30 years as on 01.07.2026 (born 02.07.1996 to 01.07.2006). SC/ST +5, OBC-NCL +3, PwBD +10 years</span></div>
+<div class="fact"><span class="k">Education</span><span class="v">4-year B.E./B.Tech in CS, CA, IT, Electronics, E&amp;TC, E&amp;C or E&amp;I; or PG in those subjects (incl. MCA); or graduate with DOEACC 'B' level. Result must be declared by 21.07.2026</span></div>
+<div class="fact"><span class="k">Attempts</span><span class="v">No limit specified in the notification (within the age limit)</span></div>
+<div class="fact"><span class="k">Pay (starting)</span><span class="v">Basic ₹48,480 (scale 48480-2000/7-62480-2340/2-67160-2680/7-85920) plus DA, HRA/lease, special allowance as per bank rules</span></div>
+<div class="fact"><span class="k">Mode</span><span class="v">Online CBT: Prelims 80 min, Mains 155 min; then interview (100 marks)</span></div>
+</div>
+
+<h3>Timeline</h3>
+<div class="table-wrap"><table class="timeline">
+<tr><th>Stage</th><th>Latest cycle (CRP SPL-XVI, 2026)</th><th>Next cycle (CRP SPL-XVII, 2027)</th></tr>
+<tr><td>IBPS tentative calendar</td><td>16 Jan 2026 <span class="tag done">Completed</span></td><td>Jan 2027 <span class="tag expected">Expected</span> (calendar has come out each January)</td></tr>
+<tr><td>Notification</td><td>1 Jul 2026 <span class="tag done">Completed</span></td><td>Jul 2027 <span class="tag expected">Expected</span> (2025 and 2026 cycles opened in July)</td></tr>
+<tr><td>Online application</td><td>1–21 Jul 2026, extended to 26 Jul 2026 <span class="tag done">Completed</span></td><td>Jul–Aug 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Vacancy updates</td><td>20 Jul 2026 and 25/27 Aug 2026 (745 → 1,043 posts) <span class="tag done">Completed</span></td><td>—</td></tr>
+<tr><td>Prelims</td><td>29 Aug 2026 <span class="tag done">Completed</span></td><td>Aug 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Prelims result</td><td>Sep/Oct 2026 <span class="tag official">Official</span> (month window per notification; not declared as of 27 Sep 2026)</td><td>Sep–Oct 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Mains</td><td>1 Nov 2026 <span class="tag official">Official</span></td><td>Oct–Nov 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Mains result</td><td>Nov 2026 <span class="tag official">Official</span> (month window)</td><td>Nov–Dec 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Interview</td><td>Nov/Dec 2026 <span class="tag official">Official</span> (month window)</td><td>Dec 2027–Jan 2028 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Provisional allotment</td><td>Jan 2027 <span class="tag official">Official</span> (month window)</td><td>Jan–Apr 2028 <span class="tag expected">Expected</span></td></tr>
+</table></div>
+
+<h3>Selection process</h3>
+<ol class="stages">
+<li><b>Phase I · Prelims</b><span>Online objective, 125 marks · qualify in each of the four tests · qualifying only</span></li>
+<li><b>Phase II · Mains</b><span>Online objective 200 marks + descriptive English 25 marks · only Professional Knowledge counts for merit; other tests are qualifying</span></li>
+<li><b>Interview</b><span>100 marks · minimum 40% (35% SC/ST/OBC/PwBD) · final merit = Mains 80 : Interview 20</span></li>
+</ol>
+
+<h3>Exam pattern</h3>
+<p class="pattern-note"><b>New for CRP SPL-XVI:</b> Professional Knowledge now appears in Prelims too, and Mains adds English, Reasoning and Quant (qualifying) plus a descriptive English paper. Earlier cycles had a Mains of only Professional Knowledge (60 Q / 60 marks / 45 min).</p>
+<h4>Phase I · Prelims</h4>
+<div class="table-wrap"><table>
+<tr><th>Section</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>English Language</td><td>25</td><td>25</td><td>20 min</td></tr>
+<tr><td>Reasoning</td><td>25</td><td>25</td><td>20 min</td></tr>
+<tr><td>Quantitative Aptitude</td><td>25</td><td>25</td><td>20 min</td></tr>
+<tr><td>Professional Knowledge (IT)</td><td>25</td><td>50</td><td>20 min</td></tr>
+<tr class="total"><td>Total</td><td>100</td><td>125</td><td>80 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 1/4 of the marks for that question · <b>Sectional cut-off:</b> must clear minimum in all four tests (set by IBPS) · <b>Language:</b> English test in English; others English and Hindi</p>
+<h4>Phase II · Mains</h4>
+<div class="table-wrap"><table>
+<tr><th>Section</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>English Language</td><td>30</td><td>30</td><td>25 min</td></tr>
+<tr><td>Reasoning</td><td>40</td><td>40</td><td>35 min</td></tr>
+<tr><td>Quantitative Aptitude</td><td>30</td><td>30</td><td>25 min</td></tr>
+<tr><td>Professional Knowledge (objective)</td><td>50</td><td>100</td><td>40 min</td></tr>
+<tr class="total"><td>Objective total</td><td>150</td><td>200</td><td>125 min</td></tr>
+<tr><td>Descriptive Paper (English)</td><td>2</td><td>25</td><td>30 min</td></tr>
+<tr class="total"><td>Total</td><td>152</td><td>225</td><td>155 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 1/4 per wrong answer (objective tests) · <b>Sectional cut-off:</b> minimum in every test; merit list on Professional Knowledge score only · <b>Language:</b> English and descriptive in English; others English and Hindi · Scores normalised (equi-percentile) if multiple sessions</p>
+
+<h3>Detailed syllabus</h3>
+<p class="pattern-note">IBPS does not publish a topic list for Professional Knowledge; the IT list below is the standard syllabus published by prep providers and matches past papers.</p>
+<details class="syl"><summary>Professional Knowledge — IT <span class="w">Prelims 25 Q / 50 marks · Mains 50 Q / 100 marks (merit)</span></summary>
+<ul>
+<li><b>DBMS:</b> data models, ER diagrams, relational model, keys (primary, candidate, foreign, super), relational algebra</li>
+<li>SQL: DDL/DML/DCL/TCL, joins, subqueries, GROUP BY/HAVING, views, triggers, stored procedures, indexes</li>
+<li>Normalisation (1NF–BCNF, 4NF), functional dependencies, transactions and ACID, concurrency control (locking, 2PL, timestamps), deadlock, recovery, serialisability</li>
+<li>Data warehousing and mining basics: OLAP vs OLTP, star/snowflake schema, ETL, data marts; NoSQL basics</li>
+<li><b>Data communication &amp; networking:</b> OSI and TCP/IP models, transmission media, switching, multiplexing, error detection/correction (CRC, Hamming)</li>
+<li>LAN/WAN/MAN, topologies, Ethernet, Wi-Fi (802.11), network devices (hub, switch, router, bridge, gateway), VLAN</li>
+<li>IPv4/IPv6 addressing, subnetting and CIDR, ARP, ICMP, routing (distance vector, link state, RIP, OSPF, BGP)</li>
+<li>TCP vs UDP, flow and congestion control, ports; application protocols: HTTP/HTTPS, DNS, DHCP, FTP, SMTP, POP3, IMAP, SNMP, Telnet/SSH</li>
+<li><b>Operating systems:</b> OS types, processes and threads, PCB, context switching, CPU scheduling (FCFS, SJF, SRTF, Round Robin, priority)</li>
+<li>Process synchronisation (critical section, semaphores, mutex, monitors), classic problems, deadlock (conditions, Banker's algorithm)</li>
+<li>Memory management: paging, segmentation, virtual memory, page replacement (FIFO, LRU, optimal), thrashing; file systems, disk scheduling; Linux/Unix basics and commands</li>
+<li><b>Data structures &amp; algorithms:</b> arrays, stacks, queues, linked lists, trees (binary, BST, AVL, B/B+ trees, heaps), graphs (BFS, DFS, shortest paths, spanning trees), hashing</li>
+<li>Searching and sorting with time/space complexity, recursion, Big-O analysis</li>
+<li><b>Software engineering:</b> SDLC models (waterfall, spiral, prototype, incremental, agile/Scrum, DevOps), requirements, SRS</li>
+<li>Design (cohesion, coupling, UML diagrams), testing (unit, integration, system, acceptance; black-box/white-box, regression), cyclomatic complexity, COCOMO, CMM, software maintenance and quality</li>
+<li><b>Programming &amp; OOP:</b> C/C++/Java basics, output questions, OOP concepts (class, object, inheritance, polymorphism, encapsulation, abstraction), constructors, exceptions</li>
+<li><b>Web technologies:</b> HTML, CSS, JavaScript, XML, DOM, client-server model, web servers, cookies/sessions, basic PHP/ASP/JSP, web services (SOAP, REST)</li>
+<li><b>Computer organisation &amp; microprocessors:</b> number systems, Boolean algebra, logic gates, K-maps, flip-flops, CPU, instruction formats, addressing modes, pipelining, cache and memory hierarchy, I/O, 8085/8086 basics</li>
+<li><b>Information &amp; cyber security:</b> CIA triad, malware types, phishing, DoS/DDoS, SQL injection, XSS, firewalls, IDS/IPS, VPN, symmetric/asymmetric cryptography (DES, AES, RSA), hashing, digital signatures, PKI and certificates, SSL/TLS, authentication/MFA</li>
+<li><b>Emerging &amp; banking tech:</b> cloud computing (IaaS/PaaS/SaaS, virtualisation), big data, AI/ML basics, IoT, blockchain; core banking, UPI/NEFT/RTGS/IMPS as systems; IT Act 2000 basics</li>
+<li><b>Compiler / TOC basics (occasional):</b> phases of a compiler, lexical analysis, parsing, finite automata, regular expressions</li>
+</ul></details>
+<details class="syl"><summary>English Language <span class="w">Prelims 25 Q · Mains 30 Q + descriptive</span></summary>
+<ul>
+<li>Reading comprehension (banking, economy, technology passages)</li>
+<li>Cloze test, error spotting, sentence improvement, fillers</li>
+<li>Para jumbles, word usage, synonyms/antonyms, phrase replacement</li>
+<li><b>Descriptive (Mains, 25 marks):</b> 2 questions, typically an essay and a letter/précis on current banking or tech topics</li>
+</ul></details>
+<details class="syl"><summary>Reasoning <span class="w">Prelims 25 Q · Mains 40 Q</span></summary>
+<ul>
+<li>Puzzles and seating arrangement (linear, circular, floor, box)</li>
+<li>Syllogism, inequalities, blood relations, direction sense, order and ranking</li>
+<li>Coding-decoding, alphanumeric series, input-output</li>
+<li>Data sufficiency, statement–assumption/conclusion/course of action (Mains)</li>
+</ul></details>
+<details class="syl"><summary>Quantitative Aptitude <span class="w">Prelims 25 Q · Mains 30 Q</span></summary>
+<ul>
+<li>Simplification/approximation, number series, quadratic equations</li>
+<li>Data interpretation (table, bar, line, pie, caselet)</li>
+<li>Arithmetic: percentage, ratio, average, profit and loss, SI/CI, time and work, time-speed-distance, mixtures, partnership, mensuration, probability</li>
+<li>Data sufficiency and quantity comparison (Mains)</li>
+</ul></details>
+
+<h3>How to prepare</h3>
+<ul class="prep">
+<li>Professional Knowledge now decides both the Prelims cut (50 of 125 marks) and the entire Mains merit — spend at least half your study time on it.</li>
+<li>Go by weight: DBMS/SQL, networking, operating systems and data structures carry most of the questions. Use this site's Databases, DSA, System Design and Backend notes for revision.</li>
+<li>Build short notes of definitions, port numbers, OSI layer mappings, normal forms and scheduling formulas; many questions are one-line factual.</li>
+<li>For Reasoning and Quant, use the Aptitude notes (Quant, Reasoning, Tables) and the Calculation Practice page daily. At 20 minutes for 25 questions, speed matters.</li>
+<li>For English and the descriptive paper, use the Verbal Ability notes. Practise one essay and one letter a week, timed at 15 minutes each.</li>
+<li>Take sectional mocks with the new 4-section Prelims (80 min). Older SO mocks will not match this pattern.</li>
+<li>Prepare for the interview: your final-year project, basic banking-tech topics (CBS, UPI, cyber-fraud controls, RBI IT guidelines) and why you want to work in a public sector bank.</li>
+</ul>
+
+<div class="sources"><b>Sources</b> (checked 27 Sep 2026): <a href="https://www.ibps.in/wp-content/uploads/Detailed-Notification-CRP-SPL-XVI_Final_V1_30.06.2026.pdf" target="_blank" rel="noopener">IBPS CRP SPL-XVI notification (official)</a> · <a href="https://www.ibps.in/wp-content/uploads/SPL_Annexure-I_Updated_As-on-25.08.2026.pdf" target="_blank" rel="noopener">Updated vacancies 25.08.2026 (official)</a> · <a href="https://www.ibps.in/wp-content/uploads/Corrigendum-CRP-SPL-XVI_Vacancy_Update2.pdf" target="_blank" rel="noopener">Vacancy corrigendum 27.08.2026 (official)</a> · <a href="https://www.ibps.in/wp-content/uploads/IBPS_CALENDAR_2026-27_final.pdf" target="_blank" rel="noopener">IBPS tentative calendar 2026-27 (official)</a> · <a href="https://www.ibps.in/wp-content/uploads/PO_SPL_Combined_Window_CRP-XVI.pdf" target="_blank" rel="noopener">PO/SPL schedule notice (official)</a> · <a href="https://www.adda247.com/jobs/ibps-so-2026/" target="_blank" rel="noopener">Adda247</a> · <a href="https://www.pw.live/banking/exams/ibps-so" target="_blank" rel="noopener">PW (deadline extension)</a> · <a href="https://www.practicemock.com/blog/ibps-so-prelims-result-2026/" target="_blank" rel="noopener">Practicemock (result status)</a> · <a href="https://www.adda247.com/jobs/ibps-so-it-officer-syllabus/" target="_blank" rel="noopener">Adda247 IT syllabus</a> · <a href="https://www.oliveboard.in/blog/ibps-so-it-officer-syllabus-and-exam-pattern/" target="_blank" rel="noopener">Oliveboard IT syllabus</a>
+<br>Always confirm dates on the official website before applying.</div>
+</div>
+
+<div class="exam" role="tabpanel" aria-labelledby="t-ibps-rrb" id="ex-ibps-rrb" data-group="IBPS" data-label="IBPS RRB">
+<div class="exam-head">
+<h2>IBPS RRB — Officer Scale I (PO) and Office Assistant (Clerk), CRP RRBs-XV</h2>
+<p class="exam-sub">Officer Scale I (Assistant Manager) and Office Assistant (Multipurpose) · IBPS for 28 Regional Rural Banks · branch banking, farm and rural credit in a specific state, using the local language.</p>
+<div class="exam-status"><span class="tag official">Applications close 27 Sep 2026 (extended)</span> <span class="tag official">PO prelims: 21–22 Nov 2026 · Clerk prelims: 6, 12, 13 Dec 2026</span></div>
+</div>
+
+<div class="facts">
+<div class="fact"><span class="k">Conducted by</span><span class="v">IBPS; interviews coordinated by nodal RRBs with NABARD and IBPS</span></div>
+<div class="fact"><span class="k">Post / grade</span><span class="v">Officer Scale I (Group A), Office Assistant (Group B); also Scale II (Generalist and Specialist) and Scale III</span></div>
+<div class="fact"><span class="k">Latest vacancies</span><span class="v">13,757 in total (updated 25.09.2026): Office Assistant 8,222 · Officer Scale I 4,256 · Scale II 1,059 (GBO 666, IT 182, CA 82, Law 56, Treasury 19, Marketing 16, Agriculture 38) · Scale III 220 (2026 cycle)</span></div>
+<div class="fact"><span class="k">Age limit</span><span class="v">As on 01.09.2026: Office Assistant 18–28 (born 02.09.1998 to 01.09.2008); Scale I 18–30 (born 02.09.1996 to 01.09.2008); Scale II 21–32; Scale III 21–40. SC/ST +5, OBC-NCL +3, PwBD +10 years</span></div>
+<div class="fact"><span class="k">Education</span><span class="v">Office Assistant and Scale I: a bachelor's degree in any subject, plus proficiency in the state's local language (studied to Class VIII or above, or 6 months after joining to acquire it); working knowledge of computers is desirable. Scale II/III: 50% graduation plus 1–5 years' experience</span></div>
+<div class="fact"><span class="k">Attempts</span><span class="v">No limit specified in the notification (within the age limit)</span></div>
+<div class="fact"><span class="k">Pay (starting)</span><span class="v">Not stated in the notification. Prep sites quote basic ₹48,480 for Scale I and ₹24,050 for Office Assistant; in-hand about ₹35,000–37,000 for Office Assistant (varies by posting)</span></div>
+<div class="fact"><span class="k">Mode</span><span class="v">Online CBT in English, Hindi and the state's language (e.g. Telugu, Marathi, Bengali); Scale II/III in English/Hindi</span></div>
+</div>
+
+<h3>Timeline</h3>
+<div class="table-wrap"><table class="timeline">
+<tr><th>Stage</th><th>Latest cycle (CRP RRBs-XV, 2026)</th><th>Next cycle (CRP RRBs-XVI, 2027)</th></tr>
+<tr><td>IBPS tentative calendar</td><td>16 Jan 2026 <span class="tag done">Completed</span></td><td>Jan 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Notification</td><td>1 Sep 2026 <span class="tag done">Completed</span></td><td>Jun–Sep 2027 <span class="tag expected">Expected</span> (June in 2024; September in 2025 and 2026)</td></tr>
+<tr><td>Online application</td><td>1–21 Sep 2026, extended to 27 Sep 2026 <span class="tag official">Official</span> (closes today)</td><td>Jun–Sep 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Vacancy update</td><td>25 Sep 2026 (13,757 posts) <span class="tag done">Completed</span></td><td>—</td></tr>
+<tr><td>Pre-Exam Training (reserved categories)</td><td>Nov 2026 <span class="tag official">Official</span> (month window)</td><td>Oct–Nov 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Prelims — Officer Scale I</td><td>21–22 Nov 2026 <span class="tag official">Official</span></td><td>Nov–Dec 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Prelims — Office Assistant</td><td>6, 12 &amp; 13 Dec 2026 <span class="tag official">Official</span></td><td>Nov–Dec 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Prelims result</td><td>Dec 2026 / Jan 2027 <span class="tag official">Official</span> (month window)</td><td>Dec 2027–Jan 2028 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Mains — Officer Scale I</td><td>20 Dec 2026 <span class="tag official">Official</span></td><td>Dec 2027–Jan 2028 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Single exam — Scale II &amp; III</td><td>20 Dec 2026 <span class="tag official">Official</span></td><td>Dec 2027–Jan 2028 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Mains — Office Assistant</td><td>30 Jan 2027 <span class="tag official">Official</span></td><td>Jan–Feb 2028 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Mains result and interview (officers)</td><td>Result Jan 2027; interviews Jan/Feb 2027 <span class="tag official">Official</span> (month window)</td><td>Jan–Feb 2028 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Provisional allotment</td><td>Feb/Mar 2027 <span class="tag official">Official</span> (month window)</td><td>Feb–Apr 2028 <span class="tag expected">Expected</span></td></tr>
+</table></div>
+
+<h3>Selection process</h3>
+<ol class="stages">
+<li><b>Phase I · Prelims</b><span>Scale I and Office Assistant · 80 marks · must qualify in both tests · qualifying only</span></li>
+<li><b>Phase II · Mains</b><span>200 marks · minimum score in every test · Office Assistant merit is Mains only (no interview)</span></li>
+<li><b>Interview (officers only)</b><span>100 marks · minimum 40% (35% SC/ST/OBC/PwBD) · Scale I final merit = Mains 80 : Interview 20 · up to 3× vacancies called per state</span></li>
+<li><b>Scale II / III</b><span>A single online exam (no prelims), then an interview · weighted 80:20</span></li>
+</ol>
+
+<h3>Exam pattern</h3>
+<h4>Phase I · Prelims (Officer Scale I and Office Assistant)</h4>
+<div class="table-wrap"><table>
+<tr><th>Section</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>Reasoning</td><td>40</td><td>40</td><td>25 min</td></tr>
+<tr><td>Quantitative Aptitude (Scale I) / Numerical Ability (OA)</td><td>40</td><td>40</td><td>20 min</td></tr>
+<tr class="total"><td>Total</td><td>80</td><td>80</td><td>45 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 1/4 of the marks for that question · <b>Sectional cut-off:</b> must qualify in both tests · <b>Language:</b> English, Hindi and the state's language (per the notification's state list). There is no English section in Prelims.</p>
+<h4>Phase II · Mains (Officer Scale I and Office Assistant)</h4>
+<div class="table-wrap"><table>
+<tr><th>Section</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>Reasoning</td><td>40</td><td>50</td><td>30 min</td></tr>
+<tr><td>Computer Knowledge</td><td>40</td><td>20</td><td>15 min</td></tr>
+<tr><td>General Awareness</td><td>40</td><td>40</td><td>15 min</td></tr>
+<tr><td>English Language <i>or</i> Hindi Language (choose one)</td><td>40</td><td>40</td><td>30 min</td></tr>
+<tr><td>Quantitative Aptitude (Scale I) / Numerical Ability (OA)</td><td>40</td><td>50</td><td>30 min</td></tr>
+<tr class="total"><td>Total</td><td>200</td><td>200</td><td>120 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 1/4 per wrong answer · <b>Sectional cut-off:</b> minimum in each test, plus a high enough total · <b>Language:</b> English test in English only, Hindi test in Hindi only; other tests in English/Hindi/state language · Computer Knowledge is 40 questions for 20 marks (half a mark each)</p>
+<h4>Single exam · Officer Scale II (General Banking) and Scale III</h4>
+<div class="table-wrap"><table>
+<tr><th>Section</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>Reasoning</td><td>40</td><td>50</td><td>30 min</td></tr>
+<tr><td>Computer Knowledge</td><td>40</td><td>20</td><td>15 min</td></tr>
+<tr><td>Financial Awareness</td><td>40</td><td>40</td><td>15 min</td></tr>
+<tr><td>English <i>or</i> Hindi Language</td><td>40</td><td>40</td><td>30 min</td></tr>
+<tr><td>Quantitative Aptitude &amp; DI</td><td>40</td><td>50</td><td>30 min</td></tr>
+<tr class="total"><td>Total</td><td>200</td><td>200</td><td>120 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Scale II Specialist</b> (IT, CA, Law, Treasury, Marketing, Agriculture): 240 Q / 200 marks / 150 min. Adds Professional Knowledge (40 Q, 40 marks, 30 min); Reasoning is 40 marks, Quant/DI 40, Financial Awareness 40, English/Hindi 20 and Computer 20. Negative marking 1/4.</p>
+
+<h3>Detailed syllabus</h3>
+<details class="syl"><summary>Reasoning <span class="w">Prelims 40 Q · Mains 40 Q / 50 marks</span></summary>
+<ul>
+<li><b>Prelims level:</b> seating arrangement (linear, circular), floor/box/day-month puzzles, syllogism, inequalities, blood relations, direction sense, order and ranking, coding-decoding, alphanumeric series</li>
+<li><b>Mains level:</b> harder and multi-variable puzzles, data sufficiency, input-output, logical reasoning (statement–assumption, conclusion, course of action, cause and effect)</li>
+</ul></details>
+<details class="syl"><summary>Quantitative Aptitude / Numerical Ability <span class="w">Prelims 40 Q · Mains 40 Q / 50 marks</span></summary>
+<ul>
+<li>Simplification and approximation, number series (missing and wrong term), quadratic equations</li>
+<li>Data interpretation: table, bar, line, pie, caselet, missing-data DI (heavier in Mains and for Scale I)</li>
+<li>Arithmetic: percentage, ratio and proportion, average, ages, profit and loss, SI/CI, time and work, pipes and cisterns, speed-time-distance, boats and trains, mixtures, partnership, mensuration, permutation-combination, probability</li>
+<li>Data sufficiency, quantity comparison (Mains)</li>
+</ul></details>
+<details class="syl"><summary>General Awareness <span class="w">Mains 40 Q / 40 marks</span></summary>
+<ul>
+<li><b>Current affairs:</b> the last 6–8 months (national, international, appointments, awards, sports, summits, government schemes)</li>
+<li><b>Banking and financial awareness:</b> RBI functions and monetary policy (repo, CRR, SLR), types of banks, RRB structure (sponsor bank, NABARD, 50:35:15 shareholding), priority sector lending, financial inclusion schemes (PMJDY, MUDRA, KCC), NPAs, payment systems (NEFT, RTGS, IMPS, UPI)</li>
+<li><b>Rural and agricultural economy:</b> NABARD, SHGs, microfinance, cooperatives, crop insurance</li>
+<li><b>Static GK:</b> banks' headquarters and taglines, capitals and currencies, national parks and dams, important days</li>
+</ul></details>
+<details class="syl"><summary>Computer Knowledge <span class="w">Mains 40 Q / 20 marks</span></summary>
+<ul>
+<li>Computer fundamentals, generations, hardware (input, output, storage devices), memory (RAM, ROM, cache), number systems</li>
+<li>Software types, operating systems (Windows basics), MS Office (Word, Excel, PowerPoint) features and shortcuts</li>
+<li>Internet, networking basics (LAN/WAN, IP, protocols), e-mail, web browsers</li>
+<li>DBMS basics, programming language basics, file extensions</li>
+<li>Security: viruses and malware, firewalls, phishing, encryption; digital banking terms</li>
+</ul></details>
+<details class="syl"><summary>English Language (option A) <span class="w">Mains 40 Q / 40 marks</span></summary>
+<ul>
+<li>Reading comprehension, cloze test, error detection, fillers (single and double)</li>
+<li>Sentence rearrangement and para jumbles, sentence improvement, word swap, phrase replacement</li>
+<li>Vocabulary: synonyms, antonyms, idioms and phrases</li>
+</ul></details>
+<details class="syl"><summary>Hindi Language (option B) <span class="w">Mains 40 Q / 40 marks</span></summary>
+<ul>
+<li>अपठित गद्यांश (reading comprehension), रिक्त स्थान (fillers), त्रुटि पहचान (error detection)</li>
+<li>वाक्य पुनर्व्यवस्था (rearrangement), पर्यायवाची/विलोम (synonyms/antonyms), मुहावरे और लोकोक्तियाँ (idioms)</li>
+<li>Cloze test, sentence correction and grammar (संधि, समास, लिंग, वचन)</li>
+</ul></details>
+<details class="syl"><summary>Professional Knowledge (Scale II Specialist only) <span class="w">40 Q / 40 marks</span></summary>
+<ul>
+<li>Stream-specific: IT (DBMS, networking, OS, security), CA (accounting, audit, taxation), Law (banking and commercial law), Treasury (forex, money markets, risk), Marketing, Agriculture</li>
+</ul></details>
+
+<h3>How to prepare</h3>
+<ul class="prep">
+<li>Prelims has only Reasoning and Quant in 45 minutes, so speed is everything. Drill the Calculation Practice page and the Aptitude notes (Quant, Tables) every day.</li>
+<li>Use the Aptitude Reasoning notes for puzzles and seating. Aim to solve 3–4 puzzle sets a day, since puzzles make up most of the 40 Reasoning questions.</li>
+<li>In Mains, General Awareness is 40 marks in 15 minutes. Revise current affairs monthly and learn the RRB/NABARD and rural-banking topics that appear only in this exam.</li>
+<li>Computer Knowledge has 40 questions worth only 20 marks. Answer it fast and accurately, and don't over-invest time in it.</li>
+<li>Choose English or Hindi for Mains based on your stronger language. If you pick English, use the Verbal Ability notes for RC, cloze and error spotting.</li>
+<li>Apply for the state whose language you know: allotment is state-wise, and cut-offs vary a lot between states.</li>
+<li>Scale I aspirants should also prepare for the interview (rural banking, priority sector, your state's economy) — it counts for 20% of final merit.</li>
+</ul>
+
+<div class="sources"><b>Sources</b> (checked 27 Sep 2026): <a href="https://www.ibps.in/wp-content/uploads/CRP-RRBs-XV-notification.pdf" target="_blank" rel="noopener">IBPS CRP RRBs-XV notification (official)</a> · <a href="https://www.ibps.in/wp-content/uploads/Annexure-I_updated_25.09.2026.pdf" target="_blank" rel="noopener">Updated vacancies 25.09.2026 (official)</a> · <a href="https://www.ibps.in/wp-content/uploads/Corrigendum-CRP-RRBs-XV_25.09.2026.pdf" target="_blank" rel="noopener">Corrigendum 25.09.2026 (official)</a> · <a href="https://www.ibps.in/wp-content/uploads/IBPS_CALENDAR_2026-27_final.pdf" target="_blank" rel="noopener">IBPS tentative calendar 2026-27 (official)</a> · <a href="https://www.careerpower.in/ibps-rrb.html" target="_blank" rel="noopener">Career Power</a> · <a href="https://www.bankersadda.com/ibps-rrb-apply-online-last-date-extended-till-27-september-2026/" target="_blank" rel="noopener">Bankersadda (date extension)</a> · <a href="https://www.adda247.com/jobs/ibps-rrb-salary/" target="_blank" rel="noopener">Adda247 salary</a> · <a href="https://news.careers360.com/ibps-rrb-2025-registration-deadline-extended-till-september-28-apply-for-13217-vacancies-ibps-in" target="_blank" rel="noopener">Careers360 (2025 cycle timing)</a>
+<br>Always confirm dates on the official website before applying.</div>
+</div>
+
+<div class="exam" role="tabpanel" aria-labelledby="t-sebi-grade-a" id="ex-sebi-grade-a" data-group="Others" data-label="SEBI Grade A">
+<div class="exam-head">
+<h2>SEBI Officer Grade A (Assistant Manager)</h2>
+<p class="exam-sub">Assistant Manager · Securities and Exchange Board of India · regulatory officer who supervises the securities market (intermediaries, listed companies, enforcement, policy, IT systems).</p>
+<div class="exam-status"><span class="tag done">2025 cycle completed (final list 23 Jun 2026)</span> <span class="tag expected">Next notification: late 2026 – early 2027 (expected)</span></div>
+</div>
+
+<div class="facts">
+<div class="fact"><span class="k">Conducted by</span><span class="v">SEBI (online exams run for SEBI through the IBPS portal)</span></div>
+<div class="fact"><span class="k">Post / grade</span><span class="v">Officer Grade A (Assistant Manager); 2-year probation; can be posted to any department and any SEBI office in India, whatever the stream</span></div>
+<div class="fact"><span class="k">Latest vacancies</span><span class="v">131 (2025 cycle, after the 14 Nov 2025 addendum): General 77, IT 22, Legal 20, Research 8, Official Language 3, Engineering (Civil) 3, Engineering (Electrical) 2</span></div>
+<div class="fact"><span class="k">Age limit</span><span class="v">Up to 30 years as on 30 Sep 2025 (born on or after 1 Oct 1995). Relaxation: SC/ST 5 yrs, OBC-NCL 3 yrs, PwBD 10 yrs (13 for OBC, 15 for SC/ST), ex-servicemen 5 yrs</span></div>
+<div class="fact"><span class="k">Education</span><span class="v">General: 2-year Master's/PG Diploma in any discipline, or LLB, or B.E./B.Tech, or CA/CFA/CS/CMA. IT: B.E./B.Tech in any branch, or any graduate with a 2-year PG in CS/Computer Applications/IT. Final-year candidates may apply</span></div>
+<div class="fact"><span class="k">Attempts</span><span class="v">No limit stated; you can apply to at most 2 streams per cycle (separate application and fee for each)</span></div>
+<div class="fact"><span class="k">Pay (starting)</span><span class="v">Basic ₹62,500 (scale ₹62,500–1,26,100). Gross approx. ₹1,84,000/month without SEBI housing, ₹1,43,000/month with housing (Mumbai)</span></div>
+<div class="fact"><span class="k">Mode</span><span class="v">Online CBT (Phase I, Phase II; descriptive answers are typed) + interview. Fee ₹1,000 + GST (SC/ST/PwBD ₹100 + GST)</span></div>
+</div>
+
+<h3>Timeline</h3>
+<div class="table-wrap"><table class="timeline">
+<tr><th>Stage</th><th>Latest cycle (2025)</th><th>Next cycle (2026–27)</th></tr>
+<tr><td>Advance intimation</td><td>8 Oct 2025 <span class="tag done">Completed</span></td><td>Not announced <span class="tag expected">Expected</span> (SEBI usually posts a short notice 2–4 weeks before the full notification)</td></tr>
+<tr><td>Notification</td><td>30 Oct 2025 <span class="tag done">Completed</span></td><td>Late 2026 – early 2027 <span class="tag expected">Expected</span> (earlier cycles: Jan 2022, Jun 2024, Oct 2025)</td></tr>
+<tr><td>Application window</td><td>30 Oct – 28 Nov 2025 <span class="tag done">Completed</span></td><td>About 4 weeks from notification <span class="tag expected">Expected</span></td></tr>
+<tr><td>Phase I exam</td><td>10 Jan 2026 <span class="tag done">Completed</span></td><td>About 10 weeks after notification <span class="tag expected">Expected</span></td></tr>
+<tr><td>Phase I result</td><td>30 Jan 2026 <span class="tag done">Completed</span></td><td>About 3 weeks after Phase I <span class="tag expected">Expected</span></td></tr>
+<tr><td>Phase II exam</td><td>21 Feb 2026 <span class="tag done">Completed</span></td><td>About 6 weeks after Phase I <span class="tag expected">Expected</span></td></tr>
+<tr><td>Phase II result</td><td>27 Mar 2026 <span class="tag done">Completed</span></td><td>About 5 weeks after Phase II <span class="tag expected">Expected</span></td></tr>
+<tr><td>Interview (Phase III)</td><td>Call letters 17 Apr 2026; interviews May – early Jun 2026 <span class="tag done">Completed</span></td><td>2–3 months after Phase II <span class="tag expected">Expected</span></td></tr>
+<tr><td>Final result</td><td>23 Jun 2026 (marks and merit rank 13 Jul 2026) <span class="tag done">Completed</span></td><td>About 7–8 months after notification <span class="tag expected">Expected</span></td></tr>
+</table></div>
+
+<h3>Selection process</h3>
+<ol class="stages">
+<li><b>Phase I · Screening</b><span>Two online objective papers of 100 marks each · qualifying only (30% in Paper 1, 40% in Paper 2, 40% aggregate)</span></li>
+<li><b>Phase II · Main exam</b><span>Paper 1 English descriptive (1/3 weight) + Paper 2 stream paper (2/3 weight) · 30% / 40% per paper and 50% weighted aggregate · counts for merit</span></li>
+<li><b>Phase III · Interview</b><span>About 3 candidates per vacancy called · final merit = 85% Phase II + 15% interview</span></li>
+</ol>
+
+<h3>Exam pattern</h3>
+<h4>Phase I · Paper 1 (all streams)</h4>
+<div class="table-wrap"><table>
+<tr><th>Section</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>General Awareness (incl. financial sector)</td><td>20</td><td>25</td><td>within 60 min</td></tr>
+<tr><td>English Language</td><td>20</td><td>25</td><td>within 60 min</td></tr>
+<tr><td>Quantitative Aptitude</td><td>20</td><td>25</td><td>within 60 min</td></tr>
+<tr><td>Test of Reasoning</td><td>20</td><td>25</td><td>within 60 min</td></tr>
+<tr class="total"><td>Total</td><td>80</td><td>100</td><td>60 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 1/4 of the question's marks · <b>Cut-off:</b> 30% on the paper, no sectional cut-off · <b>Language:</b> Hindi and English, except the English test</p>
+
+<h4>Phase I · Paper 2 (stream paper)</h4>
+<div class="table-wrap"><table>
+<tr><th>Stream</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>General: Commerce, Accountancy, Management, Finance, Costing, Companies Act, Economics</td><td>50</td><td>100</td><td>40 min</td></tr>
+<tr><td>IT (and Legal, Research, Official Language, Engineering): stream subject MCQs</td><td>50</td><td>100</td><td>40 min</td></tr>
+<tr class="total"><td>Phase I aggregate cut-off (Paper 1 + Paper 2)</td><td>–</td><td>40%</td><td>100 min total</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 1/4 · <b>Cut-off:</b> 40% on Paper 2 and 40% aggregate · Phase I marks are used only for shortlisting and do not count in the final merit</p>
+
+<h4>Phase II · Paper 1 · English descriptive (all streams)</h4>
+<div class="table-wrap"><table>
+<tr><th>Task</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>Essay</td><td>1</td><td>30</td><td>within 60 min</td></tr>
+<tr><td>Précis</td><td>1</td><td>30</td><td>within 60 min</td></tr>
+<tr><td>Reading comprehension</td><td>1</td><td>40</td><td>within 60 min</td></tr>
+<tr class="total"><td>Total</td><td>3</td><td>100</td><td>60 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Typed</b> on the keyboard, English only · <b>Cut-off:</b> 30% · <b>Weight:</b> 1/3 of the Phase II score</p>
+
+<h4>Phase II · Paper 2 (stream paper)</h4>
+<div class="table-wrap"><table>
+<tr><th>Stream</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>General: MCQs on the Phase I Paper 2 syllabus</td><td>100</td><td>100</td><td>90 min</td></tr>
+<tr><td>IT: MCQs on logic-flow completion, debugging, syntax, program dry-run output, data analysis</td><td>100</td><td>100</td><td>180 min</td></tr>
+<tr><td>Legal: 70 MCQs (1 mark) + 3 descriptive questions (10 marks, typed)</td><td>70 + 3</td><td>100</td><td>60 + 60 min</td></tr>
+<tr><td>Research: descriptive, 5 answers (Financial Markets 2 of 4 × 25; Economics 2 of 4 × 12.5; Statistics 1 of 3 × 25)</td><td>5</td><td>100</td><td>120 min</td></tr>
+<tr><td>Official Language: 8 Hindi–English translation tasks</td><td>8</td><td>100</td><td>90 min</td></tr>
+<tr><td>Engineering (Electrical / Civil): MCQs</td><td>50</td><td>100</td><td>40 min</td></tr>
+<tr class="total"><td>Phase II weighted aggregate cut-off</td><td>–</td><td>50%</td><td>–</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 1/4 on MCQs only · <b>Cut-off:</b> 40% on Paper 2 and 50% overall (Paper 1 × 1/3 + Paper 2 × 2/3) · <b>Language:</b> bilingual except the English paper</p>
+
+<h4>Interview</h4>
+<div class="table-wrap"><table>
+<tr><th>Component</th><th>Weight</th><th>Marks (of 100 final)</th><th>Notes</th></tr>
+<tr><td>Phase II score</td><td>85%</td><td>85</td><td>Weighted Paper 1 + Paper 2</td></tr>
+<tr><td>Interview</td><td>15%</td><td>15</td><td>For Legal and Engineering streams: 11.25 interview + up to 3.75 for relevant post-qualification experience</td></tr>
+<tr class="total"><td>Final merit</td><td>100%</td><td>100</td><td>Interview in Hindi or English</td></tr>
+</table></div>
+
+<h3>Detailed syllabus</h3>
+<details class="syl"><summary>Phase I Paper 1 · General Awareness <span class="w">20 Q · 25 marks</span></summary>
+<ul><li>Current affairs of the last 6–8 months: national, international, economy, appointments, awards, sports, defence, schemes</li>
+<li><b>Financial sector (easy to moderate):</b> SEBI, RBI, IRDAI, PFRDA roles; stock exchanges, depositories, mutual funds; recent SEBI circulars and market reforms</li>
+<li>Union Budget and Economic Survey highlights, government schemes, banking and payments news</li></ul></details>
+<details class="syl"><summary>Phase I Paper 1 · English Language <span class="w">20 Q · 25 marks</span></summary>
+<ul><li>Reading comprehension</li><li>Error spotting, sentence improvement, fillers</li><li>Para jumbles, paragraph completion, cloze test</li><li>Vocabulary: synonyms, antonyms, idioms and phrases</li></ul></details>
+<details class="syl"><summary>Phase I Paper 1 · Quantitative Aptitude <span class="w">20 Q · 25 marks</span></summary>
+<ul><li>Simplification, approximation, number series, quadratic equations</li>
+<li><b>Arithmetic:</b> percentage, ratio, average, profit and loss, SI/CI, time and work, time–speed–distance, mixtures, ages</li>
+<li>Data interpretation (tables, bar, line, pie, caselet), data sufficiency</li>
+<li>Permutation, combination, probability, mensuration</li></ul></details>
+<details class="syl"><summary>Phase I Paper 1 · Test of Reasoning <span class="w">20 Q · 25 marks</span></summary>
+<ul><li>Puzzles and seating arrangement</li><li>Syllogism, inequalities, coding–decoding, blood relations, direction sense</li><li>Input–output, order and ranking</li><li>Critical reasoning: statement–assumption, course of action, cause and effect</li></ul></details>
+
+<details class="syl"><summary>General stream · Paper 2 (Phase I and Phase II, same syllabus) <span class="w">50 Q / 100 Q · 100 marks</span></summary>
+<ul><li><b>Commerce and Accountancy:</b> accounting as a financial information system; Accounting Standards (depreciation, inventories, revenue recognition, fixed assets, foreign exchange transactions, investments); cash flow and fund flow statements, financial statement and ratio analysis; share capital (bonus and rights issues); ESOPs and buy-back of securities; company final accounts</li>
+<li><b>Management:</b> nature and scope; planning, organising, staffing, directing, controlling; role of a manager; leadership tasks, styles and theories; HRD concept and goals; motivation theories, morale and incentives; communication process, channels, barriers, role of IT</li>
+<li><b>Finance:</b> role of financial-sector regulators; primary and secondary markets (forex, money, bond, equity) and instruments; derivatives basics (forwards, futures, swaps); recent developments; financial inclusion using technology; alternate sources of finance, cost-benefit, PPP; direct and indirect taxes, GST, Finance Commission, fiscal policy, FRBM Act; inflation, WPI and CPI</li>
+<li><b>Costing:</b> cost and management accounting basics; unit, job, batch, contract, process and service costing; standard costing, marginal costing, budgets and budgetary control; lean systems: JIT, Kaizen, 5S, TPM, cellular manufacturing, Six Sigma, BPR</li>
+<li><b>Companies Act, 2013:</b> Chapters III (prospectus and allotment), IV (share capital and debentures), VIII (dividends), X (audit and auditors), XI (directors), XII (board meetings and powers), XXVII (NCLT and NCLAT)</li>
+<li><b>Economics:</b> demand and supply, market structures, national income, classical and Keynesian output determination, consumption and investment functions, multiplier and accelerator, money demand and supply, IS–LM, inflation and Phillips curve, business cycles, balance of payments, forex markets, monetary and fiscal policy, NBFCs</li></ul></details>
+
+<details class="syl"><summary>IT stream · Phase I Paper 2 <span class="w">50 Q · 100 marks · indicative weights</span></summary>
+<ul><li><b>Programming concepts (Java / C / C++) · 30%:</b> iteration, recursion, functions, scope and binding, parameter passing, functional and logic programming, OOP (classes, objects, inheritance, constructors), exception handling</li>
+<li><b>Database concepts · 10%:</b> ER model, relational model, relational algebra, tuple calculus, integrity constraints, normal forms, file organisation, indexing (B and B+ trees), transactions and concurrency control</li>
+<li><b>SQL queries · 10%:</b> SELECT, views, TRUNCATE, DELETE, UPDATE, ALTER, inner and outer joins, aggregate functions, UNION / INTERSECT / EXCEPT, IN and EXISTS, nested queries</li>
+<li><b>Data analytics languages (Python / R) · 10%:</b> regex, slicing, reshaping, dataframes, dictionaries and sets, file handling, classes and functions, data mining, lists, import and export, charts</li>
+<li><b>Algorithms · 10%:</b> tree and graph traversals, connected components, spanning trees, shortest paths, hashing, sorting, searching, greedy, dynamic programming, divide and conquer</li>
+<li><b>Networking · 10%:</b> OSI stack, LAN technologies (Ethernet, token ring), TCP/UDP, IP, switches, gateways, routers, DNS, SMTP, POP, FTP, HTTP, firewalls</li>
+<li><b>Information and cyber security · 10%:</b> cyber attacks, secure software development, network security, authentication, CIA triad, network and systems audit</li>
+<li><b>Data warehousing · 5%:</b> extraction, cleaning, transformation, loading, metadata, data cube, data mart, data models</li>
+<li><b>Shell programming · 5%:</b> shell scripting basics, variables, arguments, if, loops, return, basic UNIX commands</li></ul></details>
+
+<details class="syl"><summary>IT stream · Phase II Paper 2 <span class="w">100 Q · 100 marks · 180 min</span></summary>
+<ul><li><b>Data structures · 40%:</b> arrays, linked lists, stacks, queues, binary trees, indexing, binary search trees, heaps, hashing, matrices, JSON objects</li>
+<li><b>Algorithms · 30%:</b> sorting, searching, greedy, dynamic programming, backtracking, divide and conquer, pattern searching</li>
+<li><b>Object-oriented programming · 20%:</b> abstraction, encapsulation, polymorphism, inheritance</li>
+<li><b>String manipulation · 10%:</b> length, substring, regex, search</li>
+<li>Questions are code-reading MCQs: complete the logic, find the bug, predict the output of a dry run, interpret a data snippet</li></ul></details>
+
+<details class="syl"><summary>Phase II Paper 1 · English writing (all streams) <span class="w">3 Q · 100 marks</span></summary>
+<ul><li>Essay (30): usually on economy, markets, regulation, technology or social themes</li>
+<li>Précis (30): reduce a passage to about one-third of its length with a title</li>
+<li>Comprehension (40): answer questions on a passage in your own words</li></ul></details>
+
+<details class="syl"><summary>Other streams (brief) <span class="w">Paper 2 only differs</span></summary>
+<ul><li><b>Legal (LLB; 2 years' Bar practice desirable):</b> Phase I: Constitution, contract law (Contract, Sale of Goods, Partnership, Specific Relief Acts), CPC, Transfer of Property, Arbitration, Limitation, administrative law, jurisprudence, torts and Consumer Protection Act. Phase II: BNS, BNSS, Bharatiya Sakshya Adhiniyam (30%), Companies Act, LLP Act, IBC (30%), securities laws: SCRA, SEBI Act, Depositories Act, PFUTP, SAST and PIT Regulations (40%)</li>
+<li><b>Research (2-year PG in Economics, Commerce, Finance, Statistics, Data Science, etc.):</b> economics, public economics, statistics and econometrics, international economics, financial markets; Phase II is a typed descriptive paper (Financial Markets 50%, Economics 25%, Statistics 25%)</li>
+<li><b>Official Language (Master's in Hindi / English with the other language at graduation):</b> Official Language policy, Hindi–English translation, legal, administrative, banking and capital-market terms; Phase II is 8 translation tasks</li>
+<li><b>Engineering (Electrical / Civil) (B.E. in the branch):</b> core branch subjects (circuits, machines, power systems, electronics / building materials, structures, RCC and steel design, geotechnical, hydraulics, construction management); same syllabus in both phases</li></ul></details>
+
+<h3>How to prepare</h3>
+<ul class="prep"><li>Phase I Paper 1 has 80 questions in 60 minutes with a low 30% cut-off, so the real filter is Paper 2 and the 40% aggregate: spend most of your time on the stream paper.</li>
+<li>General stream: the Paper 2 syllabus is the same in both phases, so study it once in depth. Start with Accountancy, Costing and Companies Act (these are numerical and static), then Finance and Economics, and keep monthly notes on SEBI and RBI circulars.</li>
+<li>IT stream: Phase II gives 180 minutes for 100 code-reading MCQs. Practise predicting output and spotting bugs in Java/C++/Python by hand. The DSA, Java, Databases and Backend notes on this site cover most of the syllabus, and you can pick up networking and shell basics alongside them.</li>
+<li>For Paper 1, use the Quantitative Aptitude, Logical Reasoning and Verbal Ability notes and the Calculation Practice page. Twenty questions per section in 60 minutes rewards accuracy more than speed.</li>
+<li>Practise typing: the English paper (essay, précis, comprehension) is typed in 60 minutes. Write one full set a week and time it.</li>
+<li>Phase II is about 6 weeks after Phase I, so finish the Phase II descriptive and stream preparation before Phase I and use the gap only for mocks and revision.</li>
+<li>For the interview (15% of final marks), prepare SEBI's structure and functions, recent market reforms (T+1 settlement, F&amp;O curbs, SME IPOs, investor protection) and the subjects you studied, and link them to the stream you applied for.</li></ul>
+
+<div class="sources"><b>Sources</b> (checked 27 Sep 2026): <a href="https://www.sebi.gov.in/sebiweb/other/careerdetail.jsp?careerId=392" target="_blank" rel="noopener">SEBI Grade A 2025 notification page</a> · <a href="https://www.sebi.gov.in/sebi_data/careerfiles/oct-2025/1761782417659.pdf" target="_blank" rel="noopener">SEBI Grade A 2025 notification PDF</a> · <a href="https://www.sebi.gov.in/sebi_data/careerfiles/nov-2025/1763119870437.pdf" target="_blank" rel="noopener">SEBI addendum 14 Nov 2025 (posts increased)</a> · <a href="https://www.sebi.gov.in/sebi_data/careerfiles/jan-2026/1767434070033.pdf" target="_blank" rel="noopener">SEBI Phase I information handout</a> · <a href="https://www.sebi.gov.in/sebi_data/careerfiles/feb-2026/1770879184074.pdf" target="_blank" rel="noopener">SEBI Phase II information handout</a> · <a href="https://www.sebi.gov.in/sebiweb/about/AboutAction.do?doVacancies=yes" target="_blank" rel="noopener">SEBI vacancies list</a> · <a href="https://www.sebi.gov.in/sebiweb/about/AboutAction.do?doResults=yes" target="_blank" rel="noopener">SEBI results list</a> · <a href="https://www.sebi.gov.in/sebi_data/careerfiles/jun-2026/1782191309227.pdf" target="_blank" rel="noopener">SEBI selected candidates 2025</a> · <a href="https://edutap.in/news/sebi-grade-a-2025-interview-call-letters-out/" target="_blank" rel="noopener">EduTap: interview call letters and schedule</a> · <a href="https://anujjindal.in/sebi-grade-a-notification-dates-vacancies/" target="_blank" rel="noopener">Anuj Jindal: SEBI Grade A dates</a>
+<br>Always confirm dates on the official website before applying.</div>
+</div>
+
+<div class="exam" role="tabpanel" aria-labelledby="t-nabard-grade-a" id="ex-nabard-grade-a" data-group="Others" data-label="NABARD Grade A">
+<div class="exam-head">
+<h2>NABARD Grade A (Assistant Manager)</h2>
+<p class="exam-sub">Assistant Manager · National Bank for Agriculture and Rural Development · development-banking officer who handles refinance, rural credit planning, project appraisal and supervision of cooperative and regional rural banks.</p>
+<div class="exam-status"><span class="tag done">2025 cycle completed (final result 6 May 2026)</span> <span class="tag expected">Next notification: Oct–Dec 2026 (expected)</span></div>
+</div>
+
+<div class="facts">
+<div class="fact"><span class="k">Conducted by</span><span class="v">NABARD (online exams run for NABARD through the IBPS portal)</span></div>
+<div class="fact"><span class="k">Post / grade</span><span class="v">Assistant Manager in Grade A: RDBS (General and 13 specialist disciplines), Legal Service, Protocol &amp; Security Service; 2-year probation</span></div>
+<div class="fact"><span class="k">Latest vacancies</span><span class="v">91 (2025 cycle): RDBS 85 (General 48, Computer/IT 10, Finance 5, CA 4, others 18), Legal 2, Protocol &amp; Security 4</span></div>
+<div class="fact"><span class="k">Age limit</span><span class="v">21–30 years as on 1 Nov 2025 (born 2 Nov 1995 – 1 Nov 2004). Relaxation: OBC 3 yrs, SC/ST 5 yrs, ex-servicemen 5 yrs, PwBD 10 yrs (13 OBC, 15 SC/ST). Protocol &amp; Security: 25–40, no relaxation</span></div>
+<div class="fact"><span class="k">Education</span><span class="v">RDBS General: Bachelor's degree with 60% (SC/ST/PwBD 55%), or PG/MBA/PGDM with 55% (50%), or CA/CS/CMA, or PhD. Must have the result by 1 Nov 2025</span></div>
+<div class="fact"><span class="k">Attempts</span><span class="v">No limit stated in the notification; you can apply to only one post/discipline per cycle</span></div>
+<div class="fact"><span class="k">Pay (starting)</span><span class="v">Basic ₹44,500 (scale ₹44,500–89,150); initial gross approx. ₹1,00,000/month, plus accommodation or lease, medical and concessional loans</span></div>
+<div class="fact"><span class="k">Mode</span><span class="v">Online CBT (Prelims objective; Mains typed descriptive + objective) + psychometric test + interview. Fee ₹850 incl. intimation charges (SC/ST/PwBD ₹150), plus GST</span></div>
+</div>
+
+<h3>Timeline</h3>
+<div class="table-wrap"><table class="timeline">
+<tr><th>Stage</th><th>Latest cycle (2025)</th><th>Next cycle (2026–27)</th></tr>
+<tr><td>Notification</td><td>8 Nov 2025 (newspaper advert about 4 Nov) <span class="tag done">Completed</span></td><td>Oct–Dec 2026 <span class="tag expected">Expected</span> (not out as of 27 Sep 2026; recent notifications came between July and November)</td></tr>
+<tr><td>Application window</td><td>8 – 30 Nov 2025 <span class="tag done">Completed</span></td><td>About 3 weeks from notification <span class="tag expected">Expected</span></td></tr>
+<tr><td>Phase I · Prelims</td><td>20 Dec 2025 <span class="tag done">Completed</span></td><td>About 6 weeks after notification, around Dec 2026 – Feb 2027 <span class="tag expected">Expected</span></td></tr>
+<tr><td>Prelims result</td><td>Mid-Jan 2026 (14–15 Jan) <span class="tag done">Completed</span></td><td>About 3–4 weeks after Prelims <span class="tag expected">Expected</span></td></tr>
+<tr><td>Phase II · Mains</td><td>25 Jan 2026 <span class="tag done">Completed</span></td><td>About 5 weeks after Prelims <span class="tag expected">Expected</span></td></tr>
+<tr><td>Mains result</td><td>27 Feb 2026 <span class="tag done">Completed</span></td><td>About 1 month after Mains <span class="tag expected">Expected</span></td></tr>
+<tr><td>Phase III · Psychometric test</td><td>7 Mar 2026 <span class="tag done">Completed</span></td><td>Shortly after the Mains result <span class="tag expected">Expected</span></td></tr>
+<tr><td>Phase IV · Interview</td><td>From 10 Apr 2026 <span class="tag done">Completed</span></td><td>About 2–3 months after Mains <span class="tag expected">Expected</span></td></tr>
+<tr><td>Final result</td><td>6 May 2026 <span class="tag done">Completed</span></td><td>About 6 months after notification <span class="tag expected">Expected</span></td></tr>
+</table></div>
+
+<h3>Selection process</h3>
+<ol class="stages">
+<li><b>Phase I · Prelims</b><span>200 objective questions in 120 min · screening only; Mains shortlist (up to 25 per vacancy) is ranked on the 100-mark merit section</span></li>
+<li><b>Phase II · Mains</b><span>English descriptive (100) + ESI &amp; ARD objective and descriptive (100) · 200 marks, counts for merit</span></li>
+<li><b>Phase III · Psychometric test</b><span>Online MCQ, 90 min · must be taken to be called for interview; no marks added</span></li>
+<li><b>Phase IV · Interview</b><span>50 marks · up to 3 per vacancy called · final merit = Mains (200) + Interview (50) = 250</span></li>
+</ol>
+
+<h3>Exam pattern</h3>
+<h4>Phase I · Prelims (RDBS / Legal)</h4>
+<div class="table-wrap"><table>
+<tr><th>Section</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>Test of Reasoning (qualifying)</td><td>20</td><td>20</td><td>within 120 min (no sectional timing)</td></tr>
+<tr><td>English Language (qualifying)</td><td>30</td><td>30</td><td>within 120 min</td></tr>
+<tr><td>Computer Knowledge (qualifying)</td><td>20</td><td>20</td><td>within 120 min</td></tr>
+<tr><td>Quantitative Aptitude (qualifying)</td><td>20</td><td>20</td><td>within 120 min</td></tr>
+<tr><td>Decision Making (qualifying)</td><td>10</td><td>10</td><td>within 120 min</td></tr>
+<tr><td>General Awareness (merit)</td><td>20</td><td>20</td><td>within 120 min</td></tr>
+<tr><td>Economic &amp; Social Issues, focus on rural India (merit)</td><td>40</td><td>40</td><td>within 120 min</td></tr>
+<tr><td>Agriculture &amp; Rural Development, emphasis on rural India (merit)</td><td>40</td><td>40</td><td>within 120 min</td></tr>
+<tr class="total"><td>Total</td><td>200</td><td>200</td><td>120 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 1/4 of the question's marks · <b>Sectional cut-off:</b> yes, on every test; the 2025 UR cut-offs were low on the qualifying tests (1–6 marks) · <b>Merit:</b> Mains shortlist is based only on GA + ESI + ARD (100); 2025 cut-off for General discipline, UR: 54.50/100 · <b>Language:</b> Hindi and English, except the English test</p>
+
+<h4>Phase II · Mains (RDBS General)</h4>
+<div class="table-wrap"><table>
+<tr><th>Paper</th><th>Questions</th><th>Marks</th><th>Time</th></tr>
+<tr><td>Paper I · General English (descriptive, typed): essay, précis, comprehension, business/office correspondence</td><td>3</td><td>100</td><td>90 min</td></tr>
+<tr><td>Paper II · ESI &amp; ARD, objective (1- and 2-mark questions)</td><td>30</td><td>50</td><td>30 min</td></tr>
+<tr><td>Paper II · ESI &amp; ARD, descriptive: attempt 4 of 6 (2 × 15 marks + 2 × 10 marks), typed in English or Hindi</td><td>4 of 6</td><td>50</td><td>90 min</td></tr>
+<tr class="total"><td>Total</td><td>–</td><td>200</td><td>210 min</td></tr>
+</table></div>
+<p class="pattern-note"><b>Negative marking:</b> 1/4 on objective questions · <b>Cut-offs:</b> on each paper and on the total; 2025 General UR: Paper I 60/100, Paper II objective 21.75/50, descriptive 29.25/50, total 135.25/200 · <b>Final:</b> 2025 General UR select-list cut-off 173.25/250 (Mains + Interview)</p>
+
+<h4>Other streams (brief)</h4>
+<div class="table-wrap"><table>
+<tr><th>Stream</th><th>Prelims</th><th>Mains Paper II</th><th>Interview</th></tr>
+<tr><td>RDBS specialist disciplines (CA, CS, Finance, Computer/IT, Agri Engg, Horticulture, Fisheries, Food Processing, Soil Science, Civil, Electrical, Media, Economics)</td><td>Same as General</td><td>Discipline paper: 30 objective (50 marks, 30 min, paragraph/numerical/application-based) + 4 of 6 descriptive (50 marks, 90 min)</td><td>50</td></tr>
+<tr><td>Legal (LLB with 60%)</td><td>Same as General</td><td>Law paper, same structure as above</td><td>50</td></tr>
+<tr><td>Protocol &amp; Security (ex-officers with 10 years of commissioned service)</td><td>Single exam: Reasoning 50, English 25, GA (banking) 50, Professional Knowledge 75 = 200 marks, 120 min</td><td>No Mains</td><td>50</td></tr>
+</table></div>
+
+<h3>Detailed syllabus</h3>
+<details class="syl"><summary>Prelims · Reasoning, Quant, English, Computer, Decision Making <span class="w">100 Q · qualifying</span></summary>
+<ul><li><b>Reasoning (20):</b> puzzles, seating arrangement, syllogism, inequalities, coding–decoding, blood relations, direction, input–output</li>
+<li><b>Quantitative Aptitude (20):</b> simplification, number series, quadratic equations, arithmetic word problems, data interpretation</li>
+<li><b>English (30):</b> reading comprehension, cloze test, error spotting, fillers, para jumbles, vocabulary</li>
+<li><b>Computer Knowledge (20):</b> hardware and software basics, operating systems, MS Office, internet and networking, shortcuts, security and viruses, abbreviations</li>
+<li><b>Decision Making (10):</b> situation-based questions on ethics, workplace conduct, customer handling and prioritisation</li></ul></details>
+
+<details class="syl"><summary>Prelims · General Awareness <span class="w">20 Q · merit</span></summary>
+<ul><li>Current affairs of the last 6 months, banking and financial awareness, RBI and NABARD news, schemes, appointments, reports and indices, static GK</li></ul></details>
+
+<details class="syl"><summary>Economic &amp; Social Issues (Prelims 40 Q; Mains Paper II) <span class="w">merit</span></summary>
+<ul><li><b>Indian economy:</b> structure and institutions, underdevelopment, opening up and globalisation, economic reforms, privatisation</li>
+<li><b>Inflation:</b> trends and impact on the economy and incomes</li>
+<li><b>Poverty and employment:</b> measurement, rural and urban poverty, poverty-alleviation and employment programmes</li>
+<li><b>Population:</b> trends, growth and development, population policy</li>
+<li><b>Agriculture and industry:</b> technical and institutional change, food security, institutional and non-institutional rural credit, industrial and labour policy, regional imbalance, PSEs</li>
+<li><b>Banking:</b> rural banking and financial institutions, banking and financial-sector reforms</li>
+<li><b>Global economy:</b> IMF, World Bank, WTO, regional economic cooperation</li>
+<li><b>Society:</b> social structure, multiculturalism, demographic trends, urbanisation and migration, gender issues, joint family, social infrastructure (education, health, environment), education policy and illiteracy</li>
+<li><b>Social justice:</b> SC/ST problems and programmes, positive discrimination, social movements, Indian political system, human development, current economic and social issues</li></ul></details>
+
+<details class="syl"><summary>Agriculture &amp; Rural Development (Prelims 40 Q; Mains Paper II) <span class="w">merit</span></summary>
+<ul><li><b>Agronomy:</b> branches of agriculture, classification of field crops, factors of crop production, agro-climatic zones, cropping systems, dryland farming, seed production and seed villages, weather and crop advisories, precision farming, SCI, organic farming</li>
+<li><b>Soil and water:</b> soil types and fertility, fertilisers, erosion and conservation, watershed management; irrigation types and sources, crop-water requirement, command area development, micro-irrigation, major/medium/minor irrigation</li>
+<li><b>Farm engineering:</b> farm machinery and power sources, biofuels, water harvesting, farm ponds, agro-processing, storage (controlled atmosphere, godowns, silos)</li>
+<li><b>Allied sectors:</b> plantation and horticulture (production, post-harvest, value chains); animal husbandry (breeds, feeds and fodder, poultry, mixed farming); fisheries (inland and marine, aquaculture, post-harvest); forestry (silviculture, social and agroforestry, JFM, forest policy, India State of Forest Report)</li>
+<li><b>Extension:</b> role and evaluation of extension programmes, Krishi Vigyan Kendras</li>
+<li><b>Ecology and climate change:</b> natural resource management, GHGs, adaptation and mitigation, carbon credits, IPCC, UNFCCC, COPs, climate finance, NAPCC, SAPCC, NDCs</li>
+<li><b>Present scenario:</b> trends and challenges in agriculture, factors of production, agricultural finance and marketing, globalisation and food security, farm management</li>
+<li><b>Rural development:</b> rural economy structure and backwardness, rural population and workforce, rural labour, handlooms; Panchayati Raj; MGNREGA, NRLM–Aajeevika, rural drinking water, Swachh Bharat, rural housing, PURA and other programmes</li></ul></details>
+
+<details class="syl"><summary>Mains Paper I · General English <span class="w">3 Q · 100 marks</span></summary>
+<ul><li>Essay (usually on rural economy, agriculture, finance or social themes)</li>
+<li>Précis writing</li>
+<li>Comprehension</li>
+<li>Business / office correspondence (letter, email, report)</li></ul></details>
+
+<h3>How to prepare</h3>
+<ul class="prep"><li>ESI and ARD make up 80 of the 100 Prelims merit marks and the whole of Mains Paper II, so study them once for both stages, in depth, with descriptive answers in mind.</li>
+<li>For ARD, build short notes around the official syllabus headings (agronomy, soil and water, allied sectors, climate change, rural development schemes) and add current data from the Economic Survey, the Union Budget and NABARD's annual report.</li>
+<li>For ESI, cover poverty, inflation, employment, social justice and the IMF/World Bank/WTO, using the Economic Survey chapters and government scheme pages for current figures.</li>
+<li>The qualifying sections need only modest scores (2025 UR cut-offs were 1–6 marks), so revise with the Quantitative Aptitude, Logical Reasoning and Verbal Ability notes and the Calculation Practice page without over-investing. Try to finish the qualifying sections in about 45 minutes so that most of the 120 minutes goes to the 100 merit-section questions.</li>
+<li>Type one set of 15-mark and 10-mark ESI/ARD answers every week (introduction, data, schemes, way forward) and one full English paper (essay, précis, letter) in 90 minutes.</li>
+<li>Mains comes about 5 weeks after Prelims, so start descriptive practice before Prelims.</li>
+<li>For the interview, prepare NABARD's role (refinance, RIDF, supervision of RRBs and cooperatives, FPOs, SHG-bank linkage), your home state's agriculture profile and your graduation subject.</li></ul>
+
+<div class="sources"><b>Sources</b> (checked 27 Sep 2026): <a href="https://www.nabard.org/careers-notices1.aspx?cid=693&amp;id=26" target="_blank" rel="noopener">NABARD career notices</a> · <a href="https://www.nabard.org/auth/writereaddata/CareerNotices/0512255230Final%20Advertisement%20Grade%20A%20(RDBS,%20Legal,%20P&amp;SS)%202025%20(1).pdf" target="_blank" rel="noopener">NABARD Grade A 2025 advertisement</a> · <a href="https://www.nabard.org/auth/writereaddata/CareerNotices/21112503071-Economic%20&amp;%20Social%20Issues%20and%20Agriculture%20and%20Rural%20Development.pdf" target="_blank" rel="noopener">NABARD ESI and ARD syllabus</a> · <a href="https://www.nabard.org/auth/writereaddata/CareerNotices/1512253122NABARD%20(Asstt%20Manager%20Grade%20A)%20PRE%20IH%20EN%202025.pdf" target="_blank" rel="noopener">NABARD Prelims information handout 2025</a> · <a href="https://www.nabard.org/auth/writereaddata/CareerNotices/365669640Preliminary%20Exam%20Cut-Offs%20(RDBS,%20Legal,%20P%20&amp;%20SS)%20-%202025.pdf" target="_blank" rel="noopener">NABARD Prelims cut-offs 2025</a> · <a href="https://www.nabard.org/auth/writereaddata/CareerNotices/2072454075Mains%20Exam%20Cut-Offs%20(RDBS,%20Legal)%20-%202025.pdf" target="_blank" rel="noopener">NABARD Mains cut-offs 2025</a> · <a href="https://www.nabard.org/auth/writereaddata/CareerNotices/690916357Final%20Select%20&amp;%20Wait%20List%20-%20Cutoffs%20(RDBS,%20Legal,%20P%20&amp;%20SS)%20-%202025.pdf" target="_blank" rel="noopener">NABARD final cut-offs 2025</a> · <a href="https://www.nabard.org/auth/writereaddata/CareerNotices/2140737489Notification%20%20English.pdf" target="_blank" rel="noopener">NABARD psychometric test notice</a> · <a href="https://anujjindal.in/nabard-grade-a-notification-admit-card-and-eligibility-criteria/" target="_blank" rel="noopener">Anuj Jindal: NABARD Grade A dates</a> · <a href="https://edutap.in/news/nabard-grade-a-2025-final-result-out-on-6-may-2026/" target="_blank" rel="noopener">EduTap: final result 6 May 2026</a>
+<br>Always confirm dates on the official website before applying.</div>
+</div>
+
+</div>
+
+<script src="../assets/notes.js"></script>
+<script>
+(function examTabs(){
+  const tabs = [...document.querySelectorAll(".xtab")];
+  const panels = tabs.map(t => document.getElementById(t.getAttribute("aria-controls")));
+  const slugOf = (t) => t.id.slice(2);
+  function show(slug, push) {
+    let i = tabs.findIndex(t => slugOf(t) === slug);
+    if (i < 0) i = 0;
+    tabs.forEach((t, j) => { t.setAttribute("aria-selected", String(i === j)); t.tabIndex = i === j ? 0 : -1; });
+    panels.forEach((p, j) => p.hidden = i !== j);
+    try { localStorage.setItem("exam-tab", slugOf(tabs[i])); } catch (e) {}
+    if (push) history.replaceState(null, "", "#" + slugOf(tabs[i]));
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener("click", () => show(slugOf(t), true));
+    t.addEventListener("keydown", e => {
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+      const n = (i + (e.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+      show(slugOf(tabs[n]), true); tabs[n].focus();
+    });
+  });
+  document.querySelectorAll("[data-go]").forEach(a => a.addEventListener("click", e => {
+    e.preventDefault(); show(a.dataset.go, true);
+    document.querySelector(".tabbar").scrollIntoView({ behavior: "smooth" });
+  }));
+  let start = location.hash.slice(1);
+  if (!start) { try { start = localStorage.getItem("exam-tab"); } catch (e) {} }
+  show(start, false);
+  window.addEventListener("hashchange", () => show(location.hash.slice(1), false));
+  window.addEventListener("beforeprint", () => panels.forEach(p => p.hidden = false));
+})();
+</script>
+</body>
+</html>
