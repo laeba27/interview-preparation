@@ -1,0 +1,1884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Operating Systems — Concept Notes</title>
+<link rel="stylesheet" href="../assets/notes.css">
+<script>
+  try { document.documentElement.setAttribute("data-theme",
+    localStorage.getItem("notes-theme") || "light"); } catch (e) {}
+</script>
+</head>
+<body>
+<div class="scrim"></div>
+<button class="icon-btn" id="reopen" title="Show sidebar ([)" aria-label="Show sidebar">☰</button>
+<div class="layout">
+
+<aside>
+  <div class="sidebar-head">
+    <a class="back-link" href="../index.html">← All topics</a>
+    <button class="icon-btn" id="collapseBtn" title="Hide sidebar ([)" aria-label="Hide sidebar">‹</button>
+  </div>
+  <input id="search" type="text" placeholder="Filter topics…" autocomplete="off">
+
+  <h2>Foundations</h2>
+  <nav>
+    <a href="#s1">1 · What an OS Is</a>
+    <a href="#s2">2 · User Mode, Kernel Mode &amp; System Calls</a>
+    <a href="#s3">3 · Kernel Designs</a>
+    <a href="#s4">4 · Booting Up</a>
+  </nav>
+
+  <h2>Processes &amp; Threads</h2>
+  <nav>
+    <a href="#s5">5 · Programs, Processes &amp; the PCB</a>
+    <a href="#s6">6 · Process States</a>
+    <a href="#s7">7 · Threads</a>
+    <a href="#s8">8 · Context Switching</a>
+    <a href="#s9">9 · fork, exec, wait</a>
+  </nav>
+
+  <h2>CPU Scheduling</h2>
+  <nav>
+    <a href="#s10">10 · Scheduling Basics</a>
+    <a href="#s11">11 · FCFS, SJF &amp; SRTF</a>
+    <a href="#s12">12 · Priority, Round Robin &amp; Queues</a>
+    <a href="#s13">13 · Worked Example</a>
+  </nav>
+
+  <h2>Concurrency</h2>
+  <nav>
+    <a href="#s14">14 · Inter-Process Communication</a>
+    <a href="#s15">15 · Race Conditions &amp; Critical Sections</a>
+    <a href="#s16">16 · Mutexes &amp; Semaphores</a>
+    <a href="#s17">17 · Monitors &amp; Condition Variables</a>
+    <a href="#s18">18 · Classic Sync Problems</a>
+  </nav>
+
+  <h2>Deadlock</h2>
+  <nav>
+    <a href="#s19">19 · Deadlock &amp; Its Four Conditions</a>
+    <a href="#s20">20 · Prevention &amp; Banker's Algorithm</a>
+    <a href="#s21">21 · Detection, Recovery &amp; Starvation</a>
+  </nav>
+
+  <h2>Memory</h2>
+  <nav>
+    <a href="#s22">22 · Memory Basics &amp; Fragmentation</a>
+    <a href="#s23">23 · Paging &amp; the TLB</a>
+    <a href="#s24">24 · Multi-level Tables &amp; Segmentation</a>
+    <a href="#s25">25 · Virtual Memory &amp; Page Faults</a>
+    <a href="#s26">26 · Page Replacement</a>
+    <a href="#s27">27 · Thrashing &amp; Working Set</a>
+  </nav>
+
+  <h2>Storage &amp; I/O</h2>
+  <nav>
+    <a href="#s28">28 · File Systems</a>
+    <a href="#s29">29 · Disk Scheduling</a>
+    <a href="#s30">30 · I/O: Interrupts &amp; DMA</a>
+  </nav>
+
+  <h2>In Practice</h2>
+  <nav>
+    <a href="#s31">31 · Linux Essentials</a>
+    <a href="#s32">32 · VMs vs Containers</a>
+  </nav>
+
+  <h2>Revision</h2>
+  <nav>
+    <a href="#rev">Interview Q&amp;A</a>
+    <a href="#road">Learning Path</a>
+  </nav>
+</aside>
+
+<main>
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="../index.html#technical">Technical</a></li><li><span>Operating Systems</span></li><li><span aria-current="page">Notes</span></li></ol></nav>
+<header class="top">
+  <h1>Operating Systems</h1>
+  <div class="top-actions">
+    <button class="ghost" id="menuBtn">☰ Topics</button>
+    <button class="ghost" id="theme">Dark mode</button>
+  </div>
+</header>
+<p class="sub">Processes, scheduling, sync, deadlock, memory, files and disks — in simple words, with worked numbers for GATE-style questions. Print this page for a PDF.</p>
+
+<!-- ================= FOUNDATIONS ================= -->
+<div class="part">Part 1 — Foundations</div>
+
+<section id="s1">
+<h3>1. What an Operating System Really Is</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>An <b>operating system</b> (OS) is the program that runs the computer for everyone else. It sits between your apps and the hardware.</p>
+<p>Your app never talks to the disk, the screen or the network card directly. It asks the OS, and the OS does it safely.</p>
+<p class="analogy">Think of a hotel manager. Guests (apps) don't walk into the kitchen or the boiler room. They ask the front desk. The manager shares rooms, staff and hot water fairly, and stops one guest from barging into another's room.</p></div>
+<h4>The OS has two big jobs</h4>
+<ul>
+<li><b>Resource manager</b> — it shares the CPU, memory, disk and devices between many programs, fairly and safely.</li>
+<li><b>Extended machine</b> — it hides messy hardware behind simple ideas. You say "open file notes.txt"; you never say "read sector 88123 from platter 2".</li>
+</ul>
+<h4>What it manages, one line each</h4>
+<div class="table-wrap"><table>
+<tr><th>Area</th><th>What the OS does</th></tr>
+<tr><td>Processes</td><td>Starts, pauses, switches and stops running programs</td></tr>
+<tr><td>CPU</td><td>Decides which program runs next, and for how long (scheduling)</td></tr>
+<tr><td>Memory</td><td>Gives each program its own space and stops them reading each other's</td></tr>
+<tr><td>Files</td><td>Turns raw disk blocks into named files and folders</td></tr>
+<tr><td>Devices (I/O)</td><td>Talks to keyboards, disks and network cards through drivers</td></tr>
+<tr><td>Security</td><td>Users, passwords, permissions — who may do what</td></tr>
+</table></div>
+<h4>Kinds of OS you may be asked to name</h4>
+<ul>
+<li><b>Batch</b> — jobs are collected and run one after another, no user interaction. Old mainframes.</li>
+<li><b>Multiprogramming</b> — several programs sit in memory. When one waits for disk, the CPU runs another. Goal: keep the CPU busy.</li>
+<li><b>Time-sharing (multitasking)</b> — switch between programs so fast that every user feels the computer is theirs. Goal: quick response.</li>
+<li><b>Real-time (RTOS)</b> — must respond within a fixed deadline. Car airbags, pacemakers. <i>Hard</i> real-time: missing a deadline is a failure. <i>Soft</i>: missing it is just bad (video drops a frame).</li>
+<li><b>Distributed</b> — many machines work together and look like one system.</li>
+</ul>
+<div class="note"><b>Multiprogramming vs multitasking</b> is a favourite trick question. Multiprogramming switches when a program <i>waits</i> (aim: CPU never idle). Multitasking also switches on a <i>timer</i>, even if nobody is waiting (aim: everyone gets a quick turn). Multitasking is multiprogramming plus time slices.</div>
+</section>
+
+<section id="s2">
+<h3>2. User Mode, Kernel Mode &amp; System Calls</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>The <b>kernel</b> is the core of the OS — the part that is always in memory and has full control of the hardware.</p>
+<p>The CPU itself has (at least) two modes. In <b>kernel mode</b> any instruction is allowed. In <b>user mode</b> the dangerous ones (talking to devices, changing memory maps) are blocked.</p>
+<p>Your apps run in user mode. When they need something only the kernel can do, they make a <b>system call</b> — a formal request to the kernel.</p>
+<p class="analogy">A bank. Customers (user mode) can't walk into the vault. They fill in a slip at the counter (system call). The cashier (kernel) checks it, goes into the vault, and hands back the result.</p></div>
+<figure class="diagram">
+<svg viewBox="0 0 640 300" role="img" aria-label="Apps run in user mode. A system call traps into kernel mode, where the kernel uses the hardware and then returns the result to the app in user mode.">
+  <text class="d-sub" x="24" y="22">USER MODE — restricted</text>
+  <rect class="d-box" x="20" y="30" width="600" height="70" rx="7"/>
+  <rect class="d-box" x="44" y="46" width="130" height="38" rx="6"/>
+  <text class="d-mono" x="109" y="70" text-anchor="middle">Browser</text>
+  <rect class="d-fill-accent" x="254" y="46" width="130" height="38" rx="6"/>
+  <rect class="d-box-accent" x="254" y="46" width="130" height="38" rx="6"/>
+  <text class="d-mono" x="319" y="70" text-anchor="middle">Your app</text>
+  <rect class="d-box" x="464" y="46" width="130" height="38" rx="6"/>
+  <text class="d-mono" x="529" y="70" text-anchor="middle">Editor</text>
+
+  <path class="d-dash" d="M20 122 H620"/>
+  <text class="d-sub" x="616" y="116" text-anchor="end">mode boundary</text>
+
+  <path class="d-line-accent" d="M300 84 V164"/><path class="d-arrow-accent" d="M300 170 l-4.5 -9 h9 z"/>
+  <text class="d-accent-text" x="292" y="140" text-anchor="end">read(fd, buf, n)</text>
+  <text class="d-sub" x="292" y="156" text-anchor="end">trap → switch to kernel</text>
+  <path class="d-line" d="M338 170 V90"/><path class="d-arrow" d="M338 84 l-4.5 9 h9 z"/>
+  <text class="d-sub" x="348" y="140">return result,</text>
+  <text class="d-sub" x="348" y="156">back to user mode</text>
+
+  <text class="d-sub" x="24" y="186">KERNEL MODE — full access</text>
+  <rect class="d-box-accent" x="20" y="170" width="600" height="58" rx="7"/>
+  <text class="d-mono" x="320" y="204" text-anchor="middle">scheduler · memory manager · file system · drivers</text>
+
+  <rect class="d-box" x="20" y="244" width="600" height="40" rx="7"/>
+  <text class="d-label" x="320" y="269" text-anchor="middle">Hardware — CPU, RAM, disk, network card</text>
+</svg>
+<figcaption>A system call is the only door from user mode into the kernel. The CPU switches mode on the way in and switches back on the way out.</figcaption>
+</figure>
+<h4>What happens during a system call</h4>
+<ol>
+<li>Your code calls a library function, e.g. <code>printf</code>, which calls <code>write()</code>.</li>
+<li>The library puts the system call number and arguments in registers.</li>
+<li>It runs a special <b>trap</b> instruction (<code>syscall</code> on x86-64). The CPU jumps into the kernel and switches to kernel mode.</li>
+<li>The kernel checks the request (is this file yours?), does the work, and puts the result in a register.</li>
+<li>The CPU switches back to user mode and your code carries on.</li>
+</ol>
+<h4>Common system calls by group</h4>
+<div class="table-wrap"><table>
+<tr><th>Group</th><th>Linux examples</th></tr>
+<tr><td>Process control</td><td><code>fork</code>, <code>exec</code>, <code>exit</code>, <code>wait</code>, <code>kill</code></td></tr>
+<tr><td>File handling</td><td><code>open</code>, <code>read</code>, <code>write</code>, <code>close</code>, <code>lseek</code></td></tr>
+<tr><td>Device handling</td><td><code>ioctl</code>, <code>read</code>, <code>write</code></td></tr>
+<tr><td>Information</td><td><code>getpid</code>, <code>time</code>, <code>uname</code></td></tr>
+<tr><td>Communication</td><td><code>pipe</code>, <code>socket</code>, <code>shmget</code>, <code>mmap</code></td></tr>
+</table></div>
+<div class="note"><b>Why two modes at all?</b> Protection. If any app could run any instruction, one buggy program could wipe the disk or read another app's passwords from memory. The mode bit means a crash in your app kills only your app, not the whole machine.</div>
+<p><b>System calls are slow-ish</b> compared to a normal function call, because of the mode switch and checks. That's why libraries buffer: <code>printf</code> collects text and makes one <code>write()</code> instead of one per character.</p>
+</section>
+
+<section id="s3">
+<h3>3. Kernel Designs</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>The question is: <b>how much of the OS lives inside the kernel?</b></p>
+<p>A <b>monolithic</b> kernel puts almost everything inside — fast, but one bad driver can crash it all. A <b>microkernel</b> keeps only the bare minimum inside and runs the rest as normal programs — safer, but slower because parts must keep sending messages to each other.</p>
+<p class="analogy">Monolithic is one big open-plan office: quick to shout across, but one fire spreads everywhere. Microkernel is separate small offices that pass notes: slower, but a fire stays in one room.</p></div>
+<figure class="diagram">
+<svg viewBox="0 0 640 290" role="img" aria-label="Monolithic kernel holds file system, drivers, networking, memory and scheduling all in kernel space. Microkernel keeps only IPC, scheduling and basic memory in the kernel and runs file system, drivers and networking as user-space servers. Hybrid sits between.">
+  <text class="d-accent-text" x="110" y="18" text-anchor="middle">MONOLITHIC</text>
+  <text class="d-accent-text" x="320" y="18" text-anchor="middle">MICROKERNEL</text>
+  <text class="d-accent-text" x="530" y="18" text-anchor="middle">HYBRID</text>
+
+  <text class="d-sub" x="8" y="48">user</text>
+  <text class="d-sub" x="8" y="182">kernel</text>
+  <path class="d-dash" d="M20 120 H630"/>
+
+  <rect class="d-box" x="30" y="32" width="160" height="70" rx="6"/>
+  <text class="d-mono" x="110" y="72" text-anchor="middle">apps</text>
+  <rect class="d-fill-accent" x="30" y="132" width="160" height="140" rx="6"/>
+  <rect class="d-box-accent" x="30" y="132" width="160" height="140" rx="6"/>
+  <text class="d-mono" x="110" y="158" text-anchor="middle">file system</text>
+  <text class="d-mono" x="110" y="180" text-anchor="middle">device drivers</text>
+  <text class="d-mono" x="110" y="202" text-anchor="middle">networking</text>
+  <text class="d-mono" x="110" y="224" text-anchor="middle">memory mgmt</text>
+  <text class="d-mono" x="110" y="246" text-anchor="middle">scheduler · IPC</text>
+
+  <rect class="d-box" x="240" y="32" width="160" height="80" rx="6"/>
+  <text class="d-mono" x="320" y="52" text-anchor="middle">apps</text>
+  <text class="d-mono" x="320" y="74" text-anchor="middle">FS server</text>
+  <text class="d-mono" x="320" y="96" text-anchor="middle">driver · net servers</text>
+  <rect class="d-fill-accent" x="240" y="132" width="160" height="56" rx="6"/>
+  <rect class="d-box-accent" x="240" y="132" width="160" height="56" rx="6"/>
+  <text class="d-mono" x="320" y="156" text-anchor="middle">IPC · scheduler</text>
+  <text class="d-mono" x="320" y="176" text-anchor="middle">basic memory</text>
+  <text class="d-sub" x="320" y="214" text-anchor="middle">small kernel,</text>
+  <text class="d-sub" x="320" y="230" text-anchor="middle">services talk by messages</text>
+
+  <rect class="d-box" x="450" y="32" width="160" height="70" rx="6"/>
+  <text class="d-mono" x="530" y="62" text-anchor="middle">apps</text>
+  <text class="d-mono" x="530" y="84" text-anchor="middle">some services</text>
+  <rect class="d-fill-accent" x="450" y="132" width="160" height="100" rx="6"/>
+  <rect class="d-box-accent" x="450" y="132" width="160" height="100" rx="6"/>
+  <text class="d-mono" x="530" y="160" text-anchor="middle">microkernel core</text>
+  <text class="d-mono" x="530" y="184" text-anchor="middle">+ FS, drivers kept</text>
+  <text class="d-mono" x="530" y="206" text-anchor="middle">in for speed</text>
+
+  <text class="d-sub" x="110" y="288" text-anchor="middle">Linux, older Unix</text>
+  <text class="d-sub" x="320" y="288" text-anchor="middle">MINIX 3, QNX, seL4</text>
+  <text class="d-sub" x="530" y="288" text-anchor="middle">Windows NT, macOS (XNU)</text>
+</svg>
+<figcaption>The shaded part runs in kernel mode. More inside means faster calls but a bigger blast radius when something breaks.</figcaption>
+</figure>
+<div class="table-wrap"><table>
+<tr><th></th><th>Monolithic</th><th>Microkernel</th><th>Hybrid</th></tr>
+<tr><td>Inside the kernel</td><td>Nearly everything</td><td>Only IPC, scheduling, basic memory</td><td>Core plus speed-critical services</td></tr>
+<tr><td>Speed</td><td>Fastest — plain function calls</td><td>Slower — message passing between parts</td><td>Close to monolithic</td></tr>
+<tr><td>Reliability</td><td>A driver bug can crash the OS</td><td>A crashed driver can be restarted</td><td>In between</td></tr>
+<tr><td>Size of trusted code</td><td>Millions of lines</td><td>Tiny — easier to verify</td><td>Large</td></tr>
+</table></div>
+<p><b>Linux is monolithic but modular.</b> You can load and unload <b>kernel modules</b> (drivers) at runtime with <code>modprobe</code>, so you don't rebuild the kernel for a new device. They still run in kernel mode, though — a bad module can still crash it.</p>
+</section>
+
+<section id="s4">
+<h3>4. Booting Up</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Booting</b> is how a machine goes from "power on" to "login screen". Each stage is a small program whose only job is to load the next, bigger one.</p>
+<p class="analogy">Like a relay race: firmware hands the baton to the bootloader, the bootloader to the kernel, the kernel to the first user program.</p></div>
+<ol>
+<li><b>Power on → firmware.</b> The CPU starts running code stored on a chip on the motherboard: <b>BIOS</b> (old) or <b>UEFI</b> (modern).</li>
+<li><b>POST</b> (Power-On Self-Test). Firmware checks RAM, CPU and devices are present and working.</li>
+<li><b>Find the boot device.</b> Firmware looks at disks in a set order. BIOS reads the first sector (the <b>MBR</b>, 512 bytes); UEFI reads a bootloader file from a special <b>EFI partition</b>.</li>
+<li><b>Bootloader</b> (e.g. GRUB) runs. It lets you pick an OS, then loads the <b>kernel</b> and a small temporary file system (<code>initramfs</code>) into memory.</li>
+<li><b>Kernel starts.</b> It sets up memory management, detects hardware, loads drivers and mounts the real root file system.</li>
+<li><b>First process.</b> The kernel starts <code>init</code> — today usually <b>systemd</b> — as process ID 1. It starts every other service: networking, logging, the login screen.</li>
+</ol>
+<div class="note"><b>BIOS vs UEFI in one line:</b> UEFI is the modern replacement — it supports disks over 2 TB (via GPT partitions), boots faster, and supports <b>Secure Boot</b>, which refuses to run a bootloader that isn't signed. Good to know, rarely asked in depth.</div>
+</section>
+
+<!-- ================= PROCESSES ================= -->
+<div class="part">Part 2 — Processes &amp; Threads</div>
+
+<section id="s5">
+<h3>5. Programs, Processes &amp; the PCB</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>program</b> is a file on disk — just instructions sitting there, doing nothing.</p>
+<p>A <b>process</b> is a program that is <b>running</b>. It has memory, open files, a current position in the code, and a state.</p>
+<p>Open Chrome twice and you get <b>one program, two processes</b>.</p>
+<p class="analogy">A recipe in a book is a program. You actually cooking it — with your own pans, ingredients and "I'm on step 4" — is a process. Two people can cook the same recipe at once.</p></div>
+<h4>What a process looks like in memory</h4>
+<figure class="diagram">
+<svg viewBox="0 0 640 300" role="img" aria-label="A process's memory from high to low addresses: stack growing down, free space, heap growing up, data segment for globals, and text segment for code.">
+  <text class="d-sub" x="196" y="22" text-anchor="end">high address</text>
+  <text class="d-sub" x="196" y="290" text-anchor="end">low address 0</text>
+
+  <rect class="d-fill-accent" x="210" y="12" width="220" height="48" rx="5"/>
+  <rect class="d-box-accent" x="210" y="12" width="220" height="48" rx="5"/>
+  <text class="d-label" x="320" y="34" text-anchor="middle">Stack</text>
+  <text class="d-sub" x="320" y="51" text-anchor="middle">grows down ↓</text>
+
+  <rect class="d-box" x="210" y="60" width="220" height="80" rx="0"/>
+  <text class="d-sub" x="320" y="104" text-anchor="middle">free space</text>
+
+  <rect class="d-fill-accent" x="210" y="140" width="220" height="48" rx="5"/>
+  <rect class="d-box-accent" x="210" y="140" width="220" height="48" rx="5"/>
+  <text class="d-label" x="320" y="162" text-anchor="middle">Heap</text>
+  <text class="d-sub" x="320" y="179" text-anchor="middle">grows up ↑</text>
+
+  <rect class="d-box" x="210" y="188" width="220" height="48" rx="0"/>
+  <text class="d-label" x="320" y="210" text-anchor="middle">Data</text>
+  <text class="d-sub" x="320" y="227" text-anchor="middle">globals &amp; statics</text>
+
+  <rect class="d-box" x="210" y="236" width="220" height="48" rx="0"/>
+  <text class="d-label" x="320" y="258" text-anchor="middle">Text (code)</text>
+  <text class="d-sub" x="320" y="275" text-anchor="middle">read-only instructions</text>
+
+  <text class="d-sub" x="446" y="34">local variables,</text>
+  <text class="d-sub" x="446" y="50">function calls</text>
+  <text class="d-sub" x="446" y="162">malloc / new —</text>
+  <text class="d-sub" x="446" y="178">memory you ask for</text>
+  <text class="d-sub" x="446" y="216">int count = 0;</text>
+  <text class="d-sub" x="446" y="262">the compiled program</text>
+</svg>
+<figcaption>Stack and heap grow towards each other into the free gap. Deep recursion overflows the stack; forgetting to free memory slowly fills the heap.</figcaption>
+</figure>
+<h4>The PCB — the process's ID card</h4>
+<p>The OS keeps one <b>Process Control Block</b> (PCB) for every process. It's a record of everything needed to pause the process and later resume it exactly where it left off.</p>
+<div class="table-wrap"><table>
+<tr><th>Field</th><th>What it holds</th></tr>
+<tr><td>PID</td><td>Process ID — a unique number</td></tr>
+<tr><td>State</td><td>New, ready, running, waiting, terminated</td></tr>
+<tr><td>Program counter</td><td>Address of the next instruction to run</td></tr>
+<tr><td>CPU registers</td><td>Saved values of the registers when it was paused</td></tr>
+<tr><td>Scheduling info</td><td>Priority, time used, which queue it is in</td></tr>
+<tr><td>Memory info</td><td>Pointer to its page table, memory limits</td></tr>
+<tr><td>Open files</td><td>List of files and sockets it has open</td></tr>
+<tr><td>Parent / children</td><td>Who created it, whom it created</td></tr>
+</table></div>
+<p>In Linux the PCB is a C struct called <code>task_struct</code>. All of them are linked into the kernel's <b>process table</b>.</p>
+</section>
+
+<section id="s6">
+<h3>6. Process States</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A process doesn't run non-stop. It moves between a few <b>states</b>: waiting for its turn on the CPU, actually running, or stuck waiting for something slow like the disk.</p>
+<p class="analogy">A queue at a single ATM. You join (new), wait in line (ready), use the machine (running). If the machine asks for your card PIN and you go hunting for it, you step aside (waiting) and rejoin the line when ready.</p></div>
+<figure class="diagram">
+<svg viewBox="0 0 640 264" role="img" aria-label="Process state diagram. New goes to Ready when admitted. Ready goes to Running when dispatched. Running goes back to Ready on an interrupt or when its time slice ends, to Waiting when it needs I/O, or to Terminated on exit. Waiting goes back to Ready when the I/O completes.">
+  <rect class="d-box" x="20" y="40" width="110" height="36" rx="18"/>
+  <text class="d-label" x="75" y="63" text-anchor="middle">New</text>
+  <rect class="d-box" x="180" y="40" width="110" height="36" rx="18"/>
+  <text class="d-label" x="235" y="63" text-anchor="middle">Ready</text>
+  <rect class="d-fill-accent" x="400" y="40" width="110" height="36" rx="18"/>
+  <rect class="d-box-accent" x="400" y="40" width="110" height="36" rx="18"/>
+  <text class="d-accent-text" x="455" y="63" text-anchor="middle">Running</text>
+  <rect class="d-box" x="530" y="196" width="96" height="36" rx="18"/>
+  <text class="d-label" x="578" y="219" text-anchor="middle">Terminated</text>
+  <rect class="d-box" x="290" y="180" width="110" height="36" rx="18"/>
+  <text class="d-label" x="345" y="203" text-anchor="middle">Waiting</text>
+
+  <path class="d-line" d="M130 58 H174"/><path class="d-arrow" d="M180 58 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="155" y="34" text-anchor="middle">admitted</text>
+
+  <path class="d-line-accent" d="M290 52 H394"/><path class="d-arrow-accent" d="M400 52 l-9 -4.5 v9 z"/>
+  <text class="d-accent-text" x="345" y="34" text-anchor="middle">dispatch</text>
+  <path class="d-line" d="M400 66 H296"/><path class="d-arrow" d="M290 66 l9 -4.5 v9 z"/>
+  <text class="d-sub" x="345" y="92" text-anchor="middle">interrupt / time slice over</text>
+
+  <path class="d-line" d="M510 58 H578 V190"/><path class="d-arrow" d="M578 196 l-4.5 -9 h9 z"/>
+  <text class="d-sub" x="544" y="50" text-anchor="middle">exit</text>
+
+  <path class="d-line" d="M470 76 V198 H406"/><path class="d-arrow" d="M400 198 l9 -4.5 v9 z"/>
+  <text class="d-sub" x="480" y="130">needs I/O or</text>
+  <text class="d-sub" x="480" y="146">waits for event</text>
+
+  <path class="d-line" d="M290 198 H235 V82"/><path class="d-arrow" d="M235 76 l-4.5 9 h9 z"/>
+  <text class="d-sub" x="225" y="130" text-anchor="end">I/O done /</text>
+  <text class="d-sub" x="225" y="146" text-anchor="end">event happened</text>
+
+  <text class="d-sub" x="320" y="248" text-anchor="middle">One CPU core runs only ONE process at a time. Many can be Ready or Waiting.</text>
+</svg>
+<figcaption>Note there is no arrow from Waiting straight to Running. A process that finishes waiting must queue up in Ready again.</figcaption>
+</figure>
+<div class="table-wrap"><table>
+<tr><th>State</th><th>Meaning</th></tr>
+<tr><td>New</td><td>Being created — PCB set up, memory being given</td></tr>
+<tr><td>Ready</td><td>Has everything it needs except the CPU. Sitting in the ready queue</td></tr>
+<tr><td>Running</td><td>Its instructions are executing on a CPU right now</td></tr>
+<tr><td>Waiting (Blocked)</td><td>Can't continue until something happens — disk read, key press, a lock</td></tr>
+<tr><td>Terminated</td><td>Finished. The OS cleans up once the parent collects its exit status</td></tr>
+</table></div>
+<h4>Suspended states (the 7-state model)</h4>
+<p>If RAM gets full, the OS can move a whole process out to disk — this is called <b>swapping out</b>. That adds two more states: <b>Ready-Suspended</b> and <b>Blocked-Suspended</b>. Same meaning as before, but the process is on disk instead of in RAM.</p>
+<h4>The three schedulers</h4>
+<ul>
+<li><b>Long-term scheduler</b> (job scheduler) — decides which new jobs are let into memory. Controls the <i>degree of multiprogramming</i> (how many processes are in memory).</li>
+<li><b>Short-term scheduler</b> (CPU scheduler) — picks the next ready process to run. Runs very often, every few milliseconds, so it must be fast.</li>
+<li><b>Medium-term scheduler</b> — swaps processes out to disk and back in, to free memory.</li>
+</ul>
+<div class="note"><b>CPU-bound vs I/O-bound:</b> a CPU-bound process mostly computes (video encoding). An I/O-bound one mostly waits (a web server reading files). A good long-term scheduler lets in a <i>mix</i> of both, so neither the CPU nor the disks sit idle.</div>
+</section>
+
+<section id="s7">
+<h3>7. Threads</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>thread</b> is one path of execution inside a process. A process can have several threads running at once.</p>
+<p>Threads of the same process <b>share</b> the code, global data, heap and open files. Each thread has its <b>own</b> stack, registers and program counter.</p>
+<p class="analogy">A process is a kitchen. Threads are cooks in that kitchen. They share the fridge, the stove and the recipe book, but each cook has their own hands and knows which step they're on.</p></div>
+<figure class="diagram">
+<svg viewBox="0 0 640 250" role="img" aria-label="A single-threaded process has one stack and one set of registers. A multithreaded process shares code, data, heap and files between three threads, each with its own stack and registers.">
+  <text class="d-accent-text" x="140" y="18" text-anchor="middle">SINGLE-THREADED PROCESS</text>
+  <rect class="d-box" x="30" y="28" width="220" height="200" rx="8"/>
+  <rect class="d-box" x="46" y="44" width="188" height="56" rx="5"/>
+  <text class="d-mono" x="140" y="68" text-anchor="middle">code · data · heap</text>
+  <text class="d-mono" x="140" y="88" text-anchor="middle">open files</text>
+  <rect class="d-fill-accent" x="90" y="116" width="100" height="96" rx="5"/>
+  <rect class="d-box-accent" x="90" y="116" width="100" height="96" rx="5"/>
+  <text class="d-mono" x="140" y="144" text-anchor="middle">registers</text>
+  <text class="d-mono" x="140" y="166" text-anchor="middle">PC</text>
+  <text class="d-mono" x="140" y="188" text-anchor="middle">stack</text>
+
+  <text class="d-accent-text" x="460" y="18" text-anchor="middle">MULTITHREADED PROCESS</text>
+  <rect class="d-box" x="290" y="28" width="340" height="200" rx="8"/>
+  <rect class="d-box" x="306" y="44" width="308" height="56" rx="5"/>
+  <text class="d-mono" x="460" y="68" text-anchor="middle">code · data · heap · open files</text>
+  <text class="d-sub" x="460" y="88" text-anchor="middle">SHARED by all threads</text>
+  <rect class="d-fill-accent" x="306" y="116" width="96" height="96" rx="5"/>
+  <rect class="d-box-accent" x="306" y="116" width="96" height="96" rx="5"/>
+  <text class="d-mono" x="354" y="144" text-anchor="middle">registers</text>
+  <text class="d-mono" x="354" y="166" text-anchor="middle">PC</text>
+  <text class="d-mono" x="354" y="188" text-anchor="middle">stack</text>
+  <rect class="d-fill-accent" x="412" y="116" width="96" height="96" rx="5"/>
+  <rect class="d-box-accent" x="412" y="116" width="96" height="96" rx="5"/>
+  <text class="d-mono" x="460" y="144" text-anchor="middle">registers</text>
+  <text class="d-mono" x="460" y="166" text-anchor="middle">PC</text>
+  <text class="d-mono" x="460" y="188" text-anchor="middle">stack</text>
+  <rect class="d-fill-accent" x="518" y="116" width="96" height="96" rx="5"/>
+  <rect class="d-box-accent" x="518" y="116" width="96" height="96" rx="5"/>
+  <text class="d-mono" x="566" y="144" text-anchor="middle">registers</text>
+  <text class="d-mono" x="566" y="166" text-anchor="middle">PC</text>
+  <text class="d-mono" x="566" y="188" text-anchor="middle">stack</text>
+  <text class="d-sub" x="460" y="244" text-anchor="middle">each thread: its OWN stack, registers, program counter</text>
+</svg>
+<figcaption>Sharing memory is what makes threads cheap and fast to talk to each other — and also what makes them dangerous (see race conditions, section 15).</figcaption>
+</figure>
+<h4>Process vs thread</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>Process</th><th>Thread</th></tr>
+<tr><td>Memory</td><td>Own separate address space</td><td>Shares the process's memory</td></tr>
+<tr><td>Creation cost</td><td>Heavy — new memory map, PCB</td><td>Light — just a stack and registers</td></tr>
+<tr><td>Context switch</td><td>Slower — memory map changes, TLB flushed</td><td>Faster — same memory map</td></tr>
+<tr><td>Talking to others</td><td>Needs IPC (pipes, sockets…)</td><td>Just read/write shared variables</td></tr>
+<tr><td>If one crashes</td><td>Others are unaffected</td><td>Usually the whole process dies</td></tr>
+<tr><td>Example</td><td>Each Chrome tab is a process</td><td>A game's render thread and audio thread</td></tr>
+</table></div>
+<h4>User-level vs kernel-level threads</h4>
+<ul>
+<li><b>User-level threads</b> are managed by a library inside your program. The kernel doesn't know they exist — it sees one process. Switching is very fast (no system call). But if one thread makes a blocking system call, the <i>whole process</i> blocks, and they can't run on two cores at once.</li>
+<li><b>Kernel-level threads</b> are known to and scheduled by the OS. One can block while others run, and they can use many cores. Creating and switching them costs a bit more.</li>
+</ul>
+<h4>Multithreading models (how user threads map to kernel threads)</h4>
+<div class="table-wrap"><table>
+<tr><th>Model</th><th>How</th><th>Catch</th></tr>
+<tr><td>Many-to-one</td><td>Many user threads on one kernel thread</td><td>One blocking call blocks all; no true parallelism</td></tr>
+<tr><td>One-to-one</td><td>Each user thread gets its own kernel thread</td><td>Too many threads strains the kernel. Used by Linux and Windows</td></tr>
+<tr><td>Many-to-many</td><td>M user threads spread over N kernel threads</td><td>Flexible but complex. Go's goroutines work like this</td></tr>
+</table></div>
+<div class="note"><b>Concurrency vs parallelism:</b> concurrency means <i>dealing</i> with many tasks at once (switching between them, even on one core). Parallelism means <i>doing</i> many at the same instant, which needs several cores. One cook juggling three dishes is concurrent; three cooks are parallel.</div>
+</section>
+
+<section id="s8">
+<h3>8. Context Switching</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>context switch</b> is the CPU putting one process down and picking another up.</p>
+<p>The OS saves the current process's registers and program counter into its PCB, then loads the next process's saved values from its PCB.</p>
+<p class="analogy">Like putting a bookmark in one book before picking up another. The bookmark (PCB) lets you continue from the exact line later.</p></div>
+<pre><code>Process A running
+   │  timer interrupt / system call / I/O wait
+   ▼
+Kernel: save A's registers + PC  → PCB(A)
+        A.state = ready (or waiting)
+        scheduler picks B
+        load B's registers + PC  ← PCB(B)
+        switch memory map to B's
+   ▼
+Process B running</code></pre>
+<h4>Why it matters</h4>
+<ul>
+<li><b>It's pure overhead.</b> While switching, no useful work is done. Typically a few microseconds.</li>
+<li>The hidden cost is bigger: the new process finds the CPU caches and the TLB (section 23) full of the old process's data, so it runs slowly for a while.</li>
+<li>Switching between <b>threads of the same process</b> is cheaper — the memory map stays the same.</li>
+</ul>
+<h4>What triggers a switch</h4>
+<ul>
+<li>A <b>timer interrupt</b> — the process used up its time slice.</li>
+<li>The process makes a <b>blocking system call</b> (reads a file, waits on a lock).</li>
+<li>A <b>higher-priority process</b> becomes ready (in preemptive scheduling).</li>
+<li>The process <b>exits</b>.</li>
+</ul>
+<div class="note"><b>Mode switch ≠ context switch.</b> A system call switches user → kernel mode, but the <i>same process</i> is still running. A context switch changes <i>which process</i> runs. Every context switch involves the kernel, but not every trip into the kernel causes a context switch.</div>
+</section>
+
+<section id="s9">
+<h3>9. fork, exec, wait — Zombies &amp; Orphans</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>In Unix, new processes are made in two steps. <b><code>fork()</code></b> makes a near-exact copy of the current process. <b><code>exec()</code></b> then replaces that copy's program with a new one.</p>
+<p>The parent can call <b><code>wait()</code></b> to pause until a child finishes and collect its exit code.</p>
+<p class="analogy">fork is photocopying yourself. exec is the copy then changing clothes and walking off to a different job. wait is the original waiting at the door for the copy to come home and report.</p></div>
+<pre><code>#include &lt;unistd.h&gt;
+#include &lt;sys/wait.h&gt;
+
+int main() {
+    pid_t pid = fork();              // ONE call, returns TWICE
+
+    if (pid &lt; 0) {
+        perror("fork failed");
+    } else if (pid == 0) {           // child sees 0
+        execlp("ls", "ls", "-l", NULL);   // child becomes "ls"
+        perror("exec failed");       // only reached if exec fails
+    } else {                         // parent sees the child's PID
+        int status;
+        wait(&amp;status);               // block until child exits
+        printf("child done\n");
+    }
+}</code></pre>
+<h4>Key facts about fork</h4>
+<ul>
+<li>It returns <b>0 in the child</b>, the <b>child's PID in the parent</b>, and <b>-1</b> on failure.</li>
+<li>The child gets a copy of the parent's memory, open files and registers. After fork, changes in one don't affect the other.</li>
+<li>Copying all memory would be slow, so Linux uses <b>copy-on-write</b>: both share the same pages until one of them writes, and only then is that page copied.</li>
+</ul>
+<h4>The classic counting question</h4>
+<pre><code>fork();
+fork();
+fork();
+printf("hi\n");</code></pre>
+<p>Each <code>fork</code> doubles the number of processes. After 3 forks: 2³ = <b>8 processes</b>, so "hi" prints 8 times. <b>Child processes created = 2ⁿ − 1 = 7.</b> This exact question appears in GATE and campus tests.</p>
+<h4>Zombie and orphan</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>Zombie</th><th>Orphan</th></tr>
+<tr><td>What</td><td>Child has <b>finished</b>, but the parent hasn't called <code>wait()</code> yet</td><td>Parent has <b>finished</b>, but the child is still running</td></tr>
+<tr><td>Why it exists</td><td>The OS keeps its PCB entry so the parent can read the exit code</td><td>Parent crashed or exited early</td></tr>
+<tr><td>What happens</td><td>Sits in the process table as <code>&lt;defunct&gt;</code> (state Z)</td><td>Adopted by <code>init</code>/systemd (PID 1), which waits for it</td></tr>
+<tr><td>Harmful?</td><td>One is harmless. Thousands fill the process table and new processes can't start</td><td>Usually harmless</td></tr>
+<tr><td>Fix</td><td>Parent must call <code>wait()</code> or handle <code>SIGCHLD</code></td><td>Nothing needed</td></tr>
+</table></div>
+<div class="note"><b>You can't kill a zombie</b> — it's already dead. <code>kill -9</code> does nothing. You fix it by making the parent call <code>wait()</code>, or by killing the parent so init adopts and reaps the zombie.</div>
+</section>
+
+<!-- ================= SCHEDULING ================= -->
+<div class="part">Part 3 — CPU Scheduling</div>
+
+<section id="s10">
+<h3>10. Scheduling Basics</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Many processes are ready to run, but a core can run only one at a time. <b>CPU scheduling</b> is the rule the OS uses to pick who goes next.</p>
+<p>The part that actually hands the CPU over is the <b>dispatcher</b>. The time it takes is the <b>dispatch latency</b>.</p>
+<p class="analogy">A doctor's clinic with one doctor. Do you see patients in arrival order? Quickest cases first? Emergencies first? Ten minutes each, then back of the line? Each rule is a scheduling algorithm, and each is unfair to someone.</p></div>
+<h4>Preemptive vs non-preemptive</h4>
+<ul>
+<li><b>Non-preemptive</b> — once a process gets the CPU, it keeps it until it finishes or waits for I/O. Simple, but one long job blocks everyone.</li>
+<li><b>Preemptive</b> — the OS can take the CPU away mid-run (timer, or a more important process arrives). All modern desktop and server OSes do this.</li>
+</ul>
+<h4>The words every numerical uses</h4>
+<div class="table-wrap"><table>
+<tr><th>Term</th><th>Meaning</th><th>Formula</th></tr>
+<tr><td>Arrival time (AT)</td><td>When the process enters the ready queue</td><td>given</td></tr>
+<tr><td>Burst time (BT)</td><td>CPU time it needs</td><td>given</td></tr>
+<tr><td>Completion time (CT)</td><td>When it finishes</td><td>read from the Gantt chart</td></tr>
+<tr><td>Turnaround time (TAT)</td><td>Total time from arriving to finishing</td><td><code>TAT = CT − AT</code></td></tr>
+<tr><td>Waiting time (WT)</td><td>Time spent sitting in the ready queue</td><td><code>WT = TAT − BT</code></td></tr>
+<tr><td>Response time (RT)</td><td>Time until it first gets the CPU</td><td><code>RT = first run − AT</code></td></tr>
+</table></div>
+<h4>What a good scheduler aims for</h4>
+<ul>
+<li><b>Maximise:</b> CPU utilisation (keep it busy) and throughput (jobs finished per second).</li>
+<li><b>Minimise:</b> turnaround time, waiting time and response time.</li>
+<li><b>Be fair:</b> nobody waits forever (no starvation).</li>
+</ul>
+<div class="note"><b>These goals fight each other.</b> Short time slices give quick response but more context switches, which lowers throughput. Interactive systems (your laptop) favour response time; batch systems (overnight payroll) favour throughput.</div>
+</section>
+
+<section id="s11">
+<h3>11. FCFS, SJF &amp; SRTF</h3>
+<h4>FCFS — First Come, First Served</h4>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Run processes in the order they arrive, each to the end. A plain queue. <b>Non-preemptive.</b></p>
+<p class="analogy">A railway ticket counter. Fair in a sense — but if the person ahead is booking tickets for 40 relatives, everyone waits.</p></div>
+<ul>
+<li>Easy to write, no starvation.</li>
+<li>Suffers from the <b>convoy effect</b>: one long CPU-bound job makes many short jobs wait behind it, so the average waiting time is high.</li>
+</ul>
+<h4>SJF — Shortest Job First</h4>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>When the CPU is free, pick the ready process with the <b>smallest burst time</b>. Non-preemptive version.</p>
+<p>SJF gives the <b>lowest possible average waiting time</b> of any algorithm. That's provable and a common one-line answer.</p></div>
+<ul>
+<li><b>Catch 1:</b> the OS can't know the future burst time. Real systems <i>guess</i> it from past bursts using an average that weights recent bursts more (exponential averaging: <code>τ(n+1) = α·t(n) + (1−α)·τ(n)</code>).</li>
+<li><b>Catch 2:</b> long jobs can <b>starve</b> if short ones keep arriving.</li>
+</ul>
+<h4>SRTF — Shortest Remaining Time First</h4>
+<p>The <b>preemptive</b> version of SJF. When a new process arrives, compare its burst with the <i>remaining</i> time of the running one. If the newcomer is shorter, switch to it. Even better average waiting time than SJF, at the cost of more switches.</p>
+<div class="note"><b>Tie-breaking rule for numericals:</b> when two processes have equal burst time, pick the one that arrived first (FCFS). State your assumption in the exam — examiners accept it.</div>
+</section>
+
+<section id="s12">
+<h3>12. Priority, Round Robin &amp; Multilevel Queues</h3>
+<h4>Priority scheduling</h4>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Each process gets a <b>priority number</b>. The highest priority runs first. Can be preemptive or not.</p>
+<p>SJF is actually a special case: priority = shortest burst.</p></div>
+<ul>
+<li><b>Problem — starvation:</b> a low-priority process may wait forever if high-priority ones keep coming. (Legend says when MIT shut down an old IBM 7094 in 1973, they found a low-priority job submitted in 1967 still waiting.)</li>
+<li><b>Fix — aging:</b> slowly raise the priority of a process the longer it waits. Eventually it becomes important enough to run.</li>
+<li>Watch the convention: in many textbooks and in Linux <code>nice</code> values, a <b>smaller number means higher priority</b>. The question will say — read it.</li>
+</ul>
+<h4>Round Robin (RR)</h4>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Each process gets a fixed slice of time called the <b>time quantum</b> (say 4 ms). If it isn't finished when the slice ends, it goes to the back of the ready queue. <b>Preemptive</b> FCFS.</p>
+<p class="analogy">Kids sharing one swing: everyone gets 2 minutes, then back of the line. Nobody waits too long, but a lot of time goes on getting on and off.</p></div>
+<ul>
+<li>Designed for <b>time-sharing</b>. Gives good <b>response time</b>; no starvation.</li>
+<li><b>Quantum too large</b> → it behaves like FCFS.</li>
+<li><b>Quantum too small</b> → most time is wasted on context switches.</li>
+<li>Rule of thumb: about 80% of CPU bursts should finish within one quantum. Typical values: 10–100 ms.</li>
+<li>With <code>n</code> processes and quantum <code>q</code>, no process waits more than <code>(n − 1) × q</code> before its next turn.</li>
+</ul>
+<h4>Multilevel queue</h4>
+<p>Split the ready queue into several queues by type — e.g. <b>system</b>, <b>interactive</b>, <b>batch</b>. Each queue has its own algorithm (RR for interactive, FCFS for batch). The queues themselves have fixed priority: batch runs only when the higher queues are empty. A process stays in its queue forever, so low queues can starve.</p>
+<h4>Multilevel feedback queue (MLFQ)</h4>
+<p>Like multilevel queue, but processes <b>move between queues</b> based on how they behave:</p>
+<pre><code>Queue 0  (highest)  RR, quantum 8 ms   ← every new process starts here
+Queue 1             RR, quantum 16 ms  ← used its full 8 ms? move down
+Queue 2  (lowest)   FCFS               ← still CPU-hungry? move down again
+
+Gives up the CPU early (I/O)  → stays high (it's interactive)
+Waits too long in a low queue → moved up (aging, prevents starvation)</code></pre>
+<p>MLFQ learns which processes are interactive without being told. It's the most general scheduler and the basis of real ones. Linux today uses <b>CFS / EEVDF</b>, which tracks how much CPU time each process has had and always runs the one that has had the least, weighted by priority.</p>
+<h4>All algorithms at a glance</h4>
+<div class="table-wrap"><table>
+<tr><th>Algorithm</th><th>Preemptive?</th><th>Starvation?</th><th>Good at</th><th>Weakness</th></tr>
+<tr><td>FCFS</td><td>No</td><td>No</td><td>Simplicity</td><td>Convoy effect</td></tr>
+<tr><td>SJF</td><td>No</td><td>Yes</td><td>Lowest avg waiting (non-preemptive)</td><td>Needs burst time in advance</td></tr>
+<tr><td>SRTF</td><td>Yes</td><td>Yes</td><td>Lowest avg waiting overall</td><td>Many switches; needs burst time</td></tr>
+<tr><td>Priority</td><td>Either</td><td>Yes (fix: aging)</td><td>Important work first</td><td>Starvation</td></tr>
+<tr><td>Round Robin</td><td>Yes</td><td>No</td><td>Response time, fairness</td><td>Higher avg waiting; quantum tuning</td></tr>
+<tr><td>MLFQ</td><td>Yes</td><td>No (with aging)</td><td>Adapts to behaviour</td><td>Many settings to tune</td></tr>
+</table></div>
+</section>
+
+<section id="s13">
+<h3>13. Worked Example — Gantt Charts</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>Gantt chart</b> is a timeline showing which process ran when. Draw it first, read off completion times, then use the formulas. That's the whole method for every scheduling numerical.</p></div>
+<p>Four processes. Times in milliseconds.</p>
+<div class="table-wrap"><table>
+<tr><th>Process</th><th>Arrival (AT)</th><th>Burst (BT)</th></tr>
+<tr><td>P1</td><td>0</td><td>8</td></tr>
+<tr><td>P2</td><td>1</td><td>4</td></tr>
+<tr><td>P3</td><td>2</td><td>9</td></tr>
+<tr><td>P4</td><td>3</td><td>5</td></tr>
+</table></div>
+<h4>FCFS</h4>
+<pre><code>| P1      | P2   | P3        | P4    |
+0         8      12          21      26
+
+        CT    TAT = CT−AT    WT = TAT−BT
+P1       8     8 − 0 =  8     8 − 8 =  0
+P2      12    12 − 1 = 11    11 − 4 =  7
+P3      21    21 − 2 = 19    19 − 9 = 10
+P4      26    26 − 3 = 23    23 − 5 = 18
+                  total 61         total 35
+Average TAT = 61 / 4 = 15.25     Average WT = 35 / 4 = 8.75</code></pre>
+<h4>SJF (non-preemptive)</h4>
+<p>At time 0 only P1 is here, so it runs to 8. At 8, P2 (4), P3 (9) and P4 (5) are all waiting. Shortest first: P2, then P4, then P3.</p>
+<pre><code>| P1      | P2   | P4    | P3        |
+0         8      12      17          26
+
+        CT    TAT    WT
+P1       8     8     0
+P2      12    11     7
+P3      26    24    15
+P4      17    14     9
+Average TAT = 57 / 4 = 14.25     Average WT = 31 / 4 = 7.75</code></pre>
+<h4>SRTF (preemptive SJF) and Round Robin (quantum = 4)</h4>
+<figure class="diagram">
+<svg viewBox="0 0 640 270" role="img" aria-label="Gantt charts. SRTF: P1 from 0 to 1, P2 from 1 to 5, P4 from 5 to 10, P1 from 10 to 17, P3 from 17 to 26. Round Robin with quantum 4: P1 0 to 4, P2 4 to 8, P3 8 to 12, P4 12 to 16, P1 16 to 20, P3 20 to 24, P4 24 to 25, P3 25 to 26.">
+  <text class="d-accent-text" x="60" y="20">SRTF — average waiting 6.5</text>
+  <rect class="d-fill-accent" x="60" y="30" width="20" height="34"/><rect class="d-box-accent" x="60" y="30" width="20" height="34"/>
+  <text class="d-mono" x="70" y="52" text-anchor="middle">P1</text>
+  <rect class="d-box" x="80" y="30" width="80" height="34"/><text class="d-mono" x="120" y="52" text-anchor="middle">P2</text>
+  <rect class="d-box" x="160" y="30" width="100" height="34"/><text class="d-mono" x="210" y="52" text-anchor="middle">P4</text>
+  <rect class="d-fill-accent" x="260" y="30" width="140" height="34"/><rect class="d-box-accent" x="260" y="30" width="140" height="34"/>
+  <text class="d-mono" x="330" y="52" text-anchor="middle">P1</text>
+  <rect class="d-box" x="400" y="30" width="180" height="34"/><text class="d-mono" x="490" y="52" text-anchor="middle">P3</text>
+  <text class="d-sub" x="60" y="80" text-anchor="middle">0</text>
+  <text class="d-sub" x="80" y="80" text-anchor="middle">1</text>
+  <text class="d-sub" x="160" y="80" text-anchor="middle">5</text>
+  <text class="d-sub" x="260" y="80" text-anchor="middle">10</text>
+  <text class="d-sub" x="400" y="80" text-anchor="middle">17</text>
+  <text class="d-sub" x="580" y="80" text-anchor="middle">26</text>
+
+  <text class="d-accent-text" x="60" y="118">ROUND ROBIN, q = 4 — average waiting 11.75</text>
+  <rect class="d-fill-accent" x="60" y="128" width="80" height="34"/><rect class="d-box-accent" x="60" y="128" width="80" height="34"/>
+  <text class="d-mono" x="100" y="150" text-anchor="middle">P1</text>
+  <rect class="d-box" x="140" y="128" width="80" height="34"/><text class="d-mono" x="180" y="150" text-anchor="middle">P2</text>
+  <rect class="d-box" x="220" y="128" width="80" height="34"/><text class="d-mono" x="260" y="150" text-anchor="middle">P3</text>
+  <rect class="d-box" x="300" y="128" width="80" height="34"/><text class="d-mono" x="340" y="150" text-anchor="middle">P4</text>
+  <rect class="d-fill-accent" x="380" y="128" width="80" height="34"/><rect class="d-box-accent" x="380" y="128" width="80" height="34"/>
+  <text class="d-mono" x="420" y="150" text-anchor="middle">P1</text>
+  <rect class="d-box" x="460" y="128" width="80" height="34"/><text class="d-mono" x="500" y="150" text-anchor="middle">P3</text>
+  <rect class="d-box" x="540" y="128" width="20" height="34"/><text class="d-mono" x="550" y="150" text-anchor="middle">P4</text>
+  <rect class="d-box" x="560" y="128" width="20" height="34"/><text class="d-mono" x="570" y="150" text-anchor="middle">P3</text>
+  <text class="d-sub" x="60" y="178" text-anchor="middle">0</text>
+  <text class="d-sub" x="140" y="178" text-anchor="middle">4</text>
+  <text class="d-sub" x="220" y="178" text-anchor="middle">8</text>
+  <text class="d-sub" x="300" y="178" text-anchor="middle">12</text>
+  <text class="d-sub" x="380" y="178" text-anchor="middle">16</text>
+  <text class="d-sub" x="460" y="178" text-anchor="middle">20</text>
+  <text class="d-sub" x="540" y="178" text-anchor="middle">24</text>
+  <text class="d-sub" x="560" y="192" text-anchor="middle">25</text>
+  <text class="d-sub" x="580" y="178" text-anchor="middle">26</text>
+
+  <rect class="d-box" x="60" y="206" width="520" height="54" rx="7"/>
+  <text class="d-label" x="76" y="228">P1 is shaded in both charts — notice it gets split.</text>
+  <text class="d-sub" x="76" y="248">SRTF wins on waiting time. RR wins on response time: every process starts within 9 ms.</text>
+</svg>
+<figcaption>Read completion times straight off the chart: in SRTF, P2 ends at 5, P4 at 10, P1 at 17, P3 at 26.</figcaption>
+</figure>
+<p><b>SRTF step by step.</b> At 0, P1 starts (needs 8). At 1, P2 arrives needing 4 — less than P1's remaining 7, so P2 takes over. At 2 and 3, P3 (9) and P4 (5) arrive, but P2's remaining time is smaller, so it keeps running to 5. At 5 the remaining times are P1 = 7, P3 = 9, P4 = 5 → P4 runs to 10. Then P1 (7) to 17, then P3 (9) to 26.</p>
+<pre><code>SRTF    CT    TAT    WT
+P1      17    17     9
+P2       5     4     0
+P3      26    24    15
+P4      10     7     2
+Average TAT = 52 / 4 = 13.00     Average WT = 26 / 4 = 6.50</code></pre>
+<p><b>Round Robin step by step.</b> P1 runs 0–4 (4 left). By then P2, P3, P4 have arrived and joined the queue in order; P1 goes behind them. Queue: P2, P3, P4, P1. P2 runs 4–8 and finishes. P3 runs 8–12 (5 left). P4 runs 12–16 (1 left). P1 runs 16–20 and finishes. P3 runs 20–24 (1 left). P4 runs 24–25 and finishes. P3 runs 25–26 and finishes.</p>
+<pre><code>RR q=4  CT    TAT    WT    Response (first run − AT)
+P1      20    20    12     0 − 0 = 0
+P2       8     7     3     4 − 1 = 3
+P3      26    24    15     8 − 2 = 6
+P4      25    22    17    12 − 3 = 9
+Average TAT = 73 / 4 = 18.25     Average WT = 47 / 4 = 11.75
+Average response = 18 / 4 = 4.5</code></pre>
+<div class="table-wrap"><table>
+<tr><th>Algorithm</th><th>Avg turnaround</th><th>Avg waiting</th></tr>
+<tr><td>FCFS</td><td>15.25</td><td>8.75</td></tr>
+<tr><td>SJF</td><td>14.25</td><td>7.75</td></tr>
+<tr><td>SRTF</td><td>13.00</td><td><b>6.50</b> (best)</td></tr>
+<tr><td>RR (q = 4)</td><td>18.25</td><td>11.75</td></tr>
+</table></div>
+<div class="note"><b>Exam convention for RR:</b> when a new process arrives at the same moment the running one's quantum ends, put the <b>new arrival in the queue first</b>, then the preempted process. Different orders give different answers — state which you used. Also check whether the question counts context-switch time; here it's zero.</div>
+</section>
+
+<!-- ================= CONCURRENCY ================= -->
+<div class="part">Part 4 — Concurrency &amp; Synchronisation</div>
+
+<section id="s14">
+<h3>14. Inter-Process Communication (IPC)</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Processes have separate memory on purpose, so they can't just read each other's variables. <b>IPC</b> is the set of tools the OS gives them to share data anyway.</p>
+<p>There are two basic styles: <b>shared memory</b> (both look at the same piece of RAM) and <b>message passing</b> (send copies of data through the kernel).</p>
+<p class="analogy">Shared memory is a whiteboard in a shared room — fast, but people must take turns writing. Message passing is sending letters through the post office — slower, but tidy, and nobody scribbles over anyone else.</p></div>
+<div class="table-wrap"><table>
+<tr><th>Method</th><th>How it works</th><th>Use it for</th></tr>
+<tr><td><b>Pipe</b></td><td>One-way byte stream between related processes (parent → child). <code>ls | grep txt</code> is a pipe</td><td>Chaining commands</td></tr>
+<tr><td><b>Named pipe (FIFO)</b></td><td>A pipe with a file name, so unrelated processes can use it</td><td>Simple local hand-off</td></tr>
+<tr><td><b>Message queue</b></td><td>The kernel keeps a list of messages; processes add and remove them</td><td>Structured messages, ordering</td></tr>
+<tr><td><b>Shared memory</b></td><td>The same RAM pages are mapped into both processes</td><td>Fastest — big data, no copying</td></tr>
+<tr><td><b>Signal</b></td><td>A tiny notification with just a number, e.g. <code>SIGINT</code> (Ctrl+C)</td><td>"Stop", "reload", "child exited"</td></tr>
+<tr><td><b>Socket</b></td><td>Two-way endpoint. Works on the same machine or across the network</td><td>Client–server, anything networked</td></tr>
+</table></div>
+<pre><code>int fd[2];
+pipe(fd);                 // fd[0] = read end, fd[1] = write end
+if (fork() == 0) {        // child
+    close(fd[1]);
+    read(fd[0], buf, sizeof buf);
+} else {                  // parent
+    close(fd[0]);
+    write(fd[1], "hello", 5);
+}</code></pre>
+<h4>Shared memory vs message passing</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>Shared memory</th><th>Message passing</th></tr>
+<tr><td>Speed</td><td>Fastest — after setup, no kernel involved</td><td>Slower — every message goes through the kernel</td></tr>
+<tr><td>Synchronisation</td><td>Your problem — you need locks or semaphores</td><td>Built in — the kernel orders messages</td></tr>
+<tr><td>Across machines?</td><td>No</td><td>Yes (sockets)</td></tr>
+</table></div>
+</section>
+
+<section id="s15">
+<h3>15. Race Conditions &amp; the Critical Section</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>race condition</b> happens when two threads use the same data at the same time, and the result depends on who happens to go first. Sometimes it works, sometimes it doesn't.</p>
+<p>The <b>critical section</b> is the piece of code that touches the shared data. The fix is to make sure only <b>one thread at a time</b> can be inside it.</p>
+<p class="analogy">Two people edit the same Google Sheet cell offline. Both read 100, both add 50, both save 150. The right answer was 200. One update was simply lost.</p></div>
+<h4>Why <code>count++</code> isn't safe</h4>
+<p>It looks like one step, but the CPU does three:</p>
+<pre><code>count++   is really:   1. load  count into register
+                       2. add   1 to register
+                       3. store register into count
+
+count = 5. Two threads, interleaved badly:
+  T1: load  → reg1 = 5
+  T2: load  → reg2 = 5        ← reads before T1 has stored
+  T1: add   → reg1 = 6
+  T2: add   → reg2 = 6
+  T1: store → count = 6
+  T2: store → count = 6       ← should be 7. One increment lost.</code></pre>
+<h4>Three rules every solution must satisfy</h4>
+<ol>
+<li><b>Mutual exclusion</b> — if one thread is inside the critical section, no other can be.</li>
+<li><b>Progress</b> — if nobody is inside and some want to enter, one of them must be allowed in soon. Threads not interested can't block the decision.</li>
+<li><b>Bounded waiting</b> — after a thread asks to enter, there's a limit on how many times others can go ahead of it. No one waits forever.</li>
+</ol>
+<p>Every critical-section answer is checked against these three. In GATE, a lot of "which of these is correct" questions are really "which rule does this code break".</p>
+<pre><code>do {
+    entry section      // ask permission
+    critical section   // touch shared data
+    exit section       // give up permission
+    remainder section  // everything else
+} while (true);</code></pre>
+<h4>Peterson's solution (two threads, pure software)</h4>
+<pre><code>bool flag[2] = {false, false};   // flag[i]: "I want to enter"
+int  turn;                       // whose turn it is to go first
+
+// Code for thread i  (the other thread is j = 1 - i)
+flag[i] = true;          // I want in
+turn = j;                // but you can go first
+while (flag[j] &amp;&amp; turn == j)
+    ;                    // wait while you want in AND it's your turn
+/* critical section */
+flag[i] = false;         // I'm done</code></pre>
+<p>It's polite: each thread says "I want in, but after you". If both want in at once, <code>turn</code> can hold only one value, so exactly one gets through. It satisfies <b>all three rules</b>.</p>
+<div class="note"><b>Peterson's is a teaching tool.</b> On modern CPUs it can fail, because the CPU and compiler may reorder the writes to <code>flag</code> and <code>turn</code>. Real systems use hardware atomic instructions instead.</div>
+<h4>Hardware help: atomic instructions</h4>
+<p>An <b>atomic</b> operation happens in one unbreakable step — no other thread can see it half-done.</p>
+<pre><code>// test_and_set: return the old value and set it to true, in ONE step
+bool lock = false;
+
+while (test_and_set(&amp;lock))
+    ;                    // spin until the old value was false
+/* critical section */
+lock = false;</code></pre>
+<p>Others: <b>compare-and-swap</b> (CAS) — "if the value is still X, change it to Y" — and atomic increment. All locks are built on these.</p>
+<p>A lock that waits in a loop like this is a <b>spinlock</b>. Spinning wastes CPU, so it's only good when the wait will be very short and you have several cores. This kind of waiting is called <b>busy waiting</b>.</p>
+</section>
+
+<section id="s16">
+<h3>16. Mutexes &amp; Semaphores</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>mutex</b> (mutual exclusion lock) is a simple lock with one key. Lock it before the critical section, unlock it after. Only the thread that locked it should unlock it.</p>
+<p>A <b>semaphore</b> is a counter with two safe operations: <b>wait</b> (take one, or sleep if none are left) and <b>signal</b> (give one back, waking a sleeper).</p>
+<p class="analogy">A mutex is the single key to a shop's restroom. A counting semaphore is a parking lot with a "spaces free: 3" sign — cars enter while the number is above zero and wait at the gate when it hits zero.</p></div>
+<pre><code>pthread_mutex_t m = PTHREAD_MUTEX_INITIALIZER;
+
+pthread_mutex_lock(&amp;m);
+count++;                       // safe now
+pthread_mutex_unlock(&amp;m);</code></pre>
+<h4>Semaphore operations</h4>
+<pre><code>wait(S)   also called P(S), down(S)       signal(S)  also called V(S), up(S)
+{                                          {
+    S = S - 1;                                 S = S + 1;
+    if (S &lt; 0)                                 if (S &lt;= 0)
+        put this thread to sleep                   wake one sleeping thread
+        on S's queue;                      }
+}
+
+Both run atomically. A negative S tells you how many threads are asleep on it.</code></pre>
+<p>The old textbook version is simpler but busy-waits: <code>wait(S) { while (S &lt;= 0); S--; }</code>. The version above sleeps instead of spinning, so it doesn't waste CPU.</p>
+<h4>Two kinds</h4>
+<ul>
+<li><b>Binary semaphore</b> — value only 0 or 1. Works like a lock.</li>
+<li><b>Counting semaphore</b> — any value. Starts at the number of identical resources (e.g. 5 database connections). Each user does <code>wait</code> to take one and <code>signal</code> to return it.</li>
+</ul>
+<h4>A classic GATE-type question</h4>
+<p>A counting semaphore starts at <b>7</b>. Then 20 <code>P</code> operations and 15 <code>V</code> operations are done. Final value? <code>7 − 20 + 15 = 2</code>. (Each P subtracts 1, each V adds 1.)</p>
+<h4>Mutex vs semaphore</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>Mutex</th><th>Semaphore</th></tr>
+<tr><td>Is a…</td><td>Lock</td><td>Counter (signalling tool)</td></tr>
+<tr><td>Ownership</td><td>Yes — only the locker unlocks</td><td>No — any thread can signal</td></tr>
+<tr><td>Values</td><td>Locked / unlocked</td><td>0 … N</td></tr>
+<tr><td>Typical use</td><td>Protect a critical section</td><td>Limit access to N resources, or signal "data is ready"</td></tr>
+</table></div>
+<div class="note"><b>Order matters.</b> If T1 does <code>wait(A); wait(B);</code> and T2 does <code>wait(B); wait(A);</code>, they can each grab one and wait forever for the other — a deadlock (section 19). Always take multiple locks in the same order everywhere.</div>
+</section>
+
+<section id="s17">
+<h3>17. Monitors &amp; Condition Variables</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Semaphores are easy to misuse — swap one <code>wait</code> and <code>signal</code> and you get a deadlock or a race that's hard to find.</p>
+<p>A <b>monitor</b> is a safer, higher-level tool: an object whose methods <b>automatically run one at a time</b>. The language handles the locking for you.</p>
+<p>A <b>condition variable</b> lets a thread inside the monitor <b>sleep until something becomes true</b> ("buffer not empty") and be woken when another thread changes it.</p>
+<p class="analogy">A monitor is a room with one door and a guard who lets in one person at a time. A condition variable is a bench inside where you can sit and nap until someone taps you saying "your item is ready" — and while you nap, you let others in.</p></div>
+<h4>Condition variable operations</h4>
+<ul>
+<li><code>wait(cond)</code> — release the monitor lock and sleep. When woken, take the lock back before continuing.</li>
+<li><code>signal(cond)</code> — wake <b>one</b> sleeping thread (if none sleep, nothing happens — the signal is lost).</li>
+<li><code>broadcast(cond)</code> — wake <b>all</b> sleeping threads.</li>
+</ul>
+<pre><code>// Java: every object is a monitor
+class Counter {
+    private int value = 0;
+    public synchronized void increment() { value++; }   // one thread at a time
+}
+
+// Waiting for a condition — always in a loop
+synchronized (queue) {
+    while (queue.isEmpty())    // NOT "if" — re-check after waking
+        queue.wait();
+    item = queue.remove();
+}</code></pre>
+<div class="note"><b>Always <code>wait</code> inside a <code>while</code>, never an <code>if</code>.</b> When you wake up, another thread may already have taken the item, and threads can also wake for no reason at all (a "spurious wakeup"). Re-check the condition every time.</div>
+<p><b>Semaphore signal vs condition signal:</b> a semaphore remembers — <code>signal</code> adds 1 even if nobody is waiting. A condition variable forgets — <code>signal</code> with no waiters does nothing. A favourite interview distinction.</p>
+</section>
+
+<section id="s18">
+<h3>18. Classic Synchronisation Problems</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Three famous puzzles. Each one stands for a pattern you meet in real code. Know the setup and the semaphore solution for each.</p></div>
+<h4>1. Producer–consumer (bounded buffer)</h4>
+<p>Producers put items into a buffer of size N; consumers take them out. Producers must wait when it's full, consumers when it's empty. This is every job queue, print queue and message queue.</p>
+<pre><code>semaphore mutex = 1;   // protects the buffer itself
+semaphore empty = N;   // free slots
+semaphore full  = 0;   // filled slots
+
+Producer:                       Consumer:
+  while (true) {                  while (true) {
+    item = produce();               wait(full);    // any item?
+    wait(empty);   // any space?    wait(mutex);
+    wait(mutex);                    item = remove();
+    insert(item);                   signal(mutex);
+    signal(mutex);                  signal(empty); // one more free slot
+    signal(full);  // one more item consume(item);
+  }                               }</code></pre>
+<div class="note"><b>The trap:</b> swap the producer's <code>wait(empty)</code> and <code>wait(mutex)</code>. If the buffer is full, the producer grabs the mutex and then sleeps waiting for space. The consumer can't get the mutex to make space. Deadlock. <i>Wait on the counting semaphore first, then the mutex.</i></div>
+<h4>2. Readers–writers</h4>
+<p>Many threads may <b>read</b> shared data at once, but a <b>writer</b> needs it all to itself. Think of a database row or a config file.</p>
+<pre><code>semaphore rw_mutex = 1;   // writers (and the first reader) take this
+semaphore mutex    = 1;   // protects read_count
+int read_count = 0;
+
+Writer:                       Reader:
+  wait(rw_mutex);               wait(mutex);
+  /* write */                   read_count++;
+  signal(rw_mutex);             if (read_count == 1) wait(rw_mutex);  // first reader locks writers out
+                                signal(mutex);
+                                /* read */
+                                wait(mutex);
+                                read_count--;
+                                if (read_count == 0) signal(rw_mutex); // last reader lets writers in
+                                signal(mutex);</code></pre>
+<p>This is the "readers-preference" version: as long as readers keep arriving, a writer can <b>starve</b>. A writers-preference version fixes that but can starve readers. Real code uses a <b>read-write lock</b> (<code>pthread_rwlock_t</code>, Java's <code>ReentrantReadWriteLock</code>).</p>
+<h4>3. Dining philosophers</h4>
+<p>Five philosophers sit round a table with one chopstick between each pair. To eat, a philosopher needs <b>both</b> neighbouring chopsticks. It models processes needing several shared resources at once.</p>
+<pre><code>semaphore chopstick[5] = {1,1,1,1,1};
+
+philosopher(i):
+  wait(chopstick[i]);             // left
+  wait(chopstick[(i + 1) % 5]);   // right
+  eat();
+  signal(chopstick[i]);
+  signal(chopstick[(i + 1) % 5]);
+  think();</code></pre>
+<p><b>Problem:</b> if all five pick up their left chopstick at the same moment, everyone waits forever for the right one — deadlock.</p>
+<p><b>Fixes:</b></p>
+<ul>
+<li>Allow only <b>4</b> philosophers at the table at once (a counting semaphore set to 4).</li>
+<li><b>Asymmetric:</b> odd-numbered philosophers pick left first, even-numbered pick right first. This breaks the circle.</li>
+<li>Pick up <b>both or neither</b> — check both inside a critical section.</li>
+<li>Number the chopsticks and always pick the <b>lower number first</b> (resource ordering).</li>
+</ul>
+</section>
+
+<!-- ================= DEADLOCK ================= -->
+<div class="part">Part 5 — Deadlock</div>
+
+<section id="s19">
+<h3>19. Deadlock &amp; Its Four Conditions</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>deadlock</b> is when a group of processes are all stuck, each waiting for something another one in the group is holding. Nobody can move, ever.</p>
+<p class="analogy">Two cars meet on a narrow one-lane bridge from opposite ends. Each needs the other to reverse. Neither will. They sit there forever.</p></div>
+<h4>The four Coffman conditions — all four must hold</h4>
+<ol>
+<li><b>Mutual exclusion</b> — a resource can be used by only one process at a time (a printer, a lock).</li>
+<li><b>Hold and wait</b> — a process holds at least one resource while waiting for another.</li>
+<li><b>No preemption</b> — you can't forcibly take a resource away; the holder must give it up.</li>
+<li><b>Circular wait</b> — P1 waits for P2, P2 waits for P3, … and the last waits for P1. A closed loop.</li>
+</ol>
+<p>These are <b>necessary</b> conditions: if even one is missing, deadlock is impossible. That's the key to preventing it — break any one.</p>
+<h4>Resource allocation graph (RAG)</h4>
+<p>A picture of who holds what and who wants what. <b>Circles</b> are processes, <b>squares</b> are resource types, and <b>dots</b> inside a square are instances (e.g. 2 printers = 2 dots).</p>
+<figure class="diagram">
+<svg viewBox="0 0 640 290" role="img" aria-label="Resource allocation graph with a cycle. R1 is assigned to P1. P1 requests R2. R2 is assigned to P2. P2 requests R1. The four edges form a loop, so with one instance each the processes are deadlocked.">
+  <circle class="d-fill-accent" cx="160" cy="70" r="26"/><circle class="d-box-accent" cx="160" cy="70" r="26"/>
+  <text class="d-label" x="160" y="75" text-anchor="middle">P1</text>
+  <circle class="d-fill-accent" cx="456" cy="210" r="26"/><circle class="d-box-accent" cx="456" cy="210" r="26"/>
+  <text class="d-label" x="456" y="215" text-anchor="middle">P2</text>
+
+  <rect class="d-box" x="430" y="44" width="52" height="52" rx="4"/>
+  <circle class="d-arrow" cx="456" cy="70" r="4"/>
+  <text class="d-label" x="456" y="36" text-anchor="middle">R2</text>
+  <rect class="d-box" x="134" y="184" width="52" height="52" rx="4"/>
+  <circle class="d-arrow" cx="160" cy="210" r="4"/>
+  <text class="d-label" x="160" y="254" text-anchor="middle">R1</text>
+
+  <path class="d-line-accent" d="M186 70 H424"/><path class="d-arrow-accent" d="M430 70 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="308" y="62" text-anchor="middle">request: P1 wants R2</text>
+
+  <path class="d-line-accent" d="M456 96 V178"/><path class="d-arrow-accent" d="M456 184 l-4.5 -9 h9 z"/>
+  <text class="d-sub" x="468" y="140">assigned:</text>
+  <text class="d-sub" x="468" y="156">P2 holds R2</text>
+
+  <path class="d-line-accent" d="M430 210 H192"/><path class="d-arrow-accent" d="M186 210 l9 -4.5 v9 z"/>
+  <text class="d-sub" x="308" y="228" text-anchor="middle">request: P2 wants R1</text>
+
+  <path class="d-line-accent" d="M160 184 V102"/><path class="d-arrow-accent" d="M160 96 l-4.5 9 h9 z"/>
+  <text class="d-sub" x="148" y="140" text-anchor="end">assigned:</text>
+  <text class="d-sub" x="148" y="156" text-anchor="end">P1 holds R1</text>
+
+  <text class="d-accent-text" x="308" y="145" text-anchor="middle">cycle → deadlock</text>
+
+  <text class="d-sub" x="320" y="282" text-anchor="middle">Arrow from process to resource = request.  Arrow from resource to process = assignment.</text>
+</svg>
+<figcaption>Each process holds one resource and waits for the other's. With one instance per resource, this cycle is a guaranteed deadlock.</figcaption>
+</figure>
+<h4>Reading a RAG</h4>
+<ul>
+<li><b>No cycle</b> → no deadlock. Always.</li>
+<li><b>Cycle, and every resource has one instance</b> → deadlock. Certain.</li>
+<li><b>Cycle, but some resources have several instances</b> → <i>maybe</i> deadlock. Another process outside the cycle might release an instance and break it.</li>
+</ul>
+<h4>Four ways to handle deadlock</h4>
+<div class="table-wrap"><table>
+<tr><th>Strategy</th><th>Idea</th></tr>
+<tr><td>Prevention</td><td>Design the system so one of the four conditions can never hold</td></tr>
+<tr><td>Avoidance</td><td>Check each request in advance; only grant it if the system stays safe (Banker's)</td></tr>
+<tr><td>Detection &amp; recovery</td><td>Let it happen, notice it, then fix it</td></tr>
+<tr><td>Ignore it</td><td>"Ostrich algorithm" — assume it's rare and reboot if it happens. What Windows and Linux do for most resources</td></tr>
+</table></div>
+</section>
+
+<section id="s20">
+<h3>20. Prevention, Avoidance &amp; Banker's Algorithm</h3>
+<h4>Prevention — break one condition</h4>
+<div class="table-wrap"><table>
+<tr><th>Condition</th><th>How to break it</th><th>Downside</th></tr>
+<tr><td>Mutual exclusion</td><td>Make resources shareable (read-only files)</td><td>Impossible for printers, locks</td></tr>
+<tr><td>Hold and wait</td><td>Ask for everything at the start, or release all before asking again</td><td>Poor resource use; starvation</td></tr>
+<tr><td>No preemption</td><td>If you can't get what you want, release what you hold</td><td>Only works for things you can save and restore (CPU, memory)</td></tr>
+<tr><td>Circular wait</td><td>Number every resource; always request in increasing order</td><td>Need to know the order — but this is the <b>most practical</b> one</td></tr>
+</table></div>
+<p>Lock ordering in code is exactly the circular-wait fix: if every thread takes <code>lockA</code> before <code>lockB</code>, a loop can't form.</p>
+<h4>Avoidance — the safe-state idea</h4>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Each process declares up front the <b>maximum</b> it might ever need. Before granting any request, the OS asks: "If I say yes, is there still <b>some order</b> in which every process can get its maximum and finish?"</p>
+<p>If yes, the state is <b>safe</b> and the request is granted. If no, the process waits — even though the resource is free right now.</p>
+<p class="analogy">A bank manager with limited cash. Every customer has a credit limit. She only lends money if, afterwards, she could still satisfy every customer's full limit in some order as they repay. That's literally why it's called the Banker's algorithm.</p></div>
+<ul>
+<li><b>Safe state</b> → no deadlock is possible.</li>
+<li><b>Unsafe state</b> → deadlock <i>may</i> happen (not must). Unsafe ≠ deadlocked.</li>
+</ul>
+<h4>Banker's algorithm — the data</h4>
+<pre><code>Available[j]     = free instances of resource j right now
+Max[i][j]        = most of resource j process i will ever need
+Allocation[i][j] = what process i holds now
+Need[i][j]       = Max[i][j] − Allocation[i][j]     ← compute this first</code></pre>
+<h4>Worked example</h4>
+<p>5 processes, 3 resource types. Total instances: A = 10, B = 5, C = 7.</p>
+<div class="table-wrap"><table>
+<tr><th>Process</th><th>Allocation (A B C)</th><th>Max (A B C)</th><th>Need = Max − Alloc</th></tr>
+<tr><td>P0</td><td>0 1 0</td><td>7 5 3</td><td>7 4 3</td></tr>
+<tr><td>P1</td><td>2 0 0</td><td>3 2 2</td><td>1 2 2</td></tr>
+<tr><td>P2</td><td>3 0 2</td><td>9 0 2</td><td>6 0 0</td></tr>
+<tr><td>P3</td><td>2 1 1</td><td>2 2 2</td><td>0 1 1</td></tr>
+<tr><td>P4</td><td>0 0 2</td><td>4 3 3</td><td>4 3 1</td></tr>
+</table></div>
+<p>Total allocated = (7, 2, 5). So <b>Available = (10, 5, 7) − (7, 2, 5) = (3, 3, 2)</b>.</p>
+<p><b>Safety check:</b> start with Work = Available. Repeatedly find a process whose Need ≤ Work. Let it "finish" and return its Allocation to Work.</p>
+<pre><code>Work = (3,3,2)
+P0  need (7,4,3) ≤ (3,3,2)?  no — skip for now
+P1  need (1,2,2) ≤ (3,3,2)?  YES → Work = (3,3,2) + (2,0,0) = (5,3,2)
+P2  need (6,0,0) ≤ (5,3,2)?  no
+P3  need (0,1,1) ≤ (5,3,2)?  YES → Work = (5,3,2) + (2,1,1) = (7,4,3)
+P4  need (4,3,1) ≤ (7,4,3)?  YES → Work = (7,4,3) + (0,0,2) = (7,4,5)
+P0  need (7,4,3) ≤ (7,4,5)?  YES → Work = (7,4,5) + (0,1,0) = (7,5,5)
+P2  need (6,0,0) ≤ (7,5,5)?  YES → Work = (7,5,5) + (3,0,2) = (10,5,7)
+
+All finished → SAFE.  Safe sequence: &lt;P1, P3, P4, P0, P2&gt;</code></pre>
+<p>Sanity check: the final Work (10, 5, 7) equals the total — every instance came back. If your final Work doesn't match the total, you've made an arithmetic slip.</p>
+<h4>Should a new request be granted?</h4>
+<p>P1 asks for <b>(1, 0, 2)</b>.</p>
+<ol>
+<li>Is it ≤ P1's Need (1, 2, 2)? Yes.</li>
+<li>Is it ≤ Available (3, 3, 2)? Yes.</li>
+<li><b>Pretend</b> to grant it: Available = (2, 3, 0), P1 Allocation = (3, 0, 2), P1 Need = (0, 2, 0).</li>
+<li>Run the safety check on that pretend state: P1 (0,2,0) ≤ (2,3,0) → Work (5,3,2); P3 → (7,4,3); P4 → (7,4,5); P0 → (7,5,5); P2 → (10,5,7). Safe.</li>
+<li>So the request is <b>granted</b>. If it had been unsafe, P1 would wait and the pretend state would be thrown away.</li>
+</ol>
+<div class="note"><b>A safe sequence is not unique.</b> &lt;P1, P3, P0, P2, P4&gt; also works here. In exams, any valid order earns the marks — but options in MCQs may list one that fails, so check each step.</div>
+<p><b>Why it isn't used much in real OSes:</b> processes rarely know their maximum needs, the number of processes changes all the time, and running the check on every request is slow (about <code>m × n²</code> steps for m resource types and n processes).</p>
+</section>
+
+<section id="s21">
+<h3>21. Detection, Recovery, Livelock &amp; Starvation</h3>
+<h4>Detection</h4>
+<ul>
+<li><b>One instance per resource:</b> simplify the RAG into a <b>wait-for graph</b> (just processes; an edge P1 → P2 means "P1 waits for P2"). Any cycle = deadlock.</li>
+<li><b>Several instances:</b> run a Banker's-style check using current <i>requests</i> instead of maximum needs. Processes that can't finish are deadlocked.</li>
+<li>How often to check? Every request is expensive. Common choice: every so often, or when CPU use suddenly drops.</li>
+</ul>
+<h4>Recovery</h4>
+<ul>
+<li><b>Kill processes</b> — kill all deadlocked ones (simple, wasteful), or kill one at a time until the cycle breaks (pick the cheapest victim: lowest priority, least work done).</li>
+<li><b>Preempt resources</b> — take a resource from one process and give it to another. The victim must be <b>rolled back</b> to a safe earlier point, often restarted.</li>
+<li>Make sure the same process isn't picked as victim every time, or it starves.</li>
+</ul>
+<p>Databases do this all the time: they detect a deadlock between two transactions and abort one, which your app sees as an error to retry.</p>
+<h4>Deadlock vs livelock vs starvation</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>What's happening</th><th>Everyday picture</th></tr>
+<tr><td><b>Deadlock</b></td><td>Processes are blocked, doing nothing, waiting on each other</td><td>Two cars stuck nose to nose on a bridge</td></tr>
+<tr><td><b>Livelock</b></td><td>Processes keep running and changing state, but make no progress</td><td>Two people in a corridor both step left, then both step right, forever</td></tr>
+<tr><td><b>Starvation</b></td><td>One process never gets a resource because others are always chosen first</td><td>A low-priority patient who keeps getting bumped by emergencies</td></tr>
+</table></div>
+<p>Deadlock always involves a cycle of waiting. Starvation doesn't — the system as a whole is making progress, just not for one unlucky process. <b>Aging</b> fixes starvation; <b>random back-off</b> (wait a random time before retrying) fixes livelock.</p>
+</section>
+
+<!-- ================= MEMORY ================= -->
+<div class="part">Part 6 — Memory Management</div>
+
+<section id="s22">
+<h3>22. Memory Basics &amp; Fragmentation</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Every program thinks it has memory starting at address 0. That's its <b>logical</b> (or <b>virtual</b>) address. The real location in RAM chip is the <b>physical</b> address.</p>
+<p>A piece of hardware in the CPU, the <b>MMU</b> (Memory Management Unit), translates logical addresses to physical ones on every single memory access.</p>
+<p class="analogy">Room numbers in a hotel. Your key card says "room 12" (logical). The hotel knows room 12 is on floor 3, east wing (physical). You never need to know the building's layout.</p></div>
+<h4>Address binding — when is the real address decided?</h4>
+<div class="table-wrap"><table>
+<tr><th>When</th><th>How</th><th>Can the program move in RAM?</th></tr>
+<tr><td>Compile time</td><td>Compiler writes real addresses into the code</td><td>No — must load at that exact spot</td></tr>
+<tr><td>Load time</td><td>Addresses fixed when the program is loaded</td><td>Only by reloading it</td></tr>
+<tr><td>Execution time</td><td>MMU translates on every access</td><td>Yes — used by all modern OSes</td></tr>
+</table></div>
+<h4>The simplest MMU: base and limit registers</h4>
+<pre><code>physical = base + logical          if logical &lt; limit
+                                   else → trap: "segmentation fault"
+
+base = 14000, limit = 3000
+logical 346   → 14000 + 346 = 14346   ✓
+logical 3500  → 3500 ≥ 3000 → trap    ✗ (outside its memory)</code></pre>
+<p>The <b>limit</b> check is what stops one process reading another's memory. Only the kernel can change base and limit.</p>
+<h4>Contiguous allocation</h4>
+<p>The oldest approach: each process gets <b>one continuous block</b> of RAM. As processes come and go, free memory becomes scattered gaps called <b>holes</b>. Where do you put a new process?</p>
+<ul>
+<li><b>First fit</b> — the first hole big enough. Fast.</li>
+<li><b>Best fit</b> — the smallest hole big enough. Leaves tiny useless leftovers.</li>
+<li><b>Worst fit</b> — the biggest hole. Leaves a big, still-useful leftover — in theory.</li>
+</ul>
+<p><b>Classic example.</b> Holes (in order): 100, 500, 200, 300, 600 KB. Processes arrive: 212, 417, 112, 426 KB.</p>
+<div class="table-wrap"><table>
+<tr><th>Process</th><th>First fit</th><th>Best fit</th><th>Worst fit</th></tr>
+<tr><td>212</td><td>500 → 288 left</td><td>300 → 88 left</td><td>600 → 388 left</td></tr>
+<tr><td>417</td><td>600 → 183 left</td><td>500 → 83 left</td><td>500 → 83 left</td></tr>
+<tr><td>112</td><td>288 → 176 left</td><td>200 → 88 left</td><td>388 → 276 left</td></tr>
+<tr><td>426</td><td><b>must wait</b> — no hole ≥ 426</td><td>600 → 174 left</td><td><b>must wait</b></td></tr>
+</table></div>
+<p>Here best fit placed all four. In practice, first fit and best fit do about equally well, and both beat worst fit. First fit is usually preferred because it's faster.</p>
+<h4>Fragmentation — wasted memory</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>Internal fragmentation</th><th>External fragmentation</th></tr>
+<tr><td>What</td><td>Wasted space <b>inside</b> a block you were given</td><td>Enough free memory in total, but split into gaps too small to use</td></tr>
+<tr><td>Example</td><td>Need 18 KB, get a fixed 20 KB block → 2 KB wasted</td><td>Three free gaps of 50 KB; a 120 KB process can't fit</td></tr>
+<tr><td>Caused by</td><td>Fixed-size blocks (fixed partitions, paging)</td><td>Variable-size blocks (contiguous allocation, segmentation)</td></tr>
+<tr><td>Fix</td><td>Smaller blocks</td><td><b>Compaction</b> (slide everything together — slow), or <b>paging</b></td></tr>
+</table></div>
+<p><i>Picture it:</i> internal is a 5-seater car carrying 3 people — 2 seats wasted inside. External: a car park with five single empty spaces scattered about, but you're towing a trailer and need two together.</p>
+</section>
+
+<section id="s23">
+<h3>23. Paging &amp; the TLB</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Paging</b> cuts a process's logical memory into equal-size pieces called <b>pages</b>, and physical RAM into same-size slots called <b>frames</b>. Any page can go in any free frame.</p>
+<p>Because pages don't have to sit next to each other, <b>external fragmentation disappears</b>. Each process has a <b>page table</b> that records which frame holds each page.</p>
+<p class="analogy">A book whose pages are stored in whatever pigeonholes are free, plus an index card saying "page 1 → hole 7, page 2 → hole 3…". You can still read it in order by following the card.</p></div>
+<h4>Splitting an address</h4>
+<p>A logical address is split into a <b>page number (p)</b> and an <b>offset (d)</b> — how far into the page. With page size 2ⁿ, the lowest n bits are the offset.</p>
+<pre><code>page number p = logical address ÷ page size   (integer division)
+offset      d = logical address mod page size
+physical      = frame number × page size + d</code></pre>
+<figure class="diagram">
+<svg viewBox="0 0 640 320" role="img" aria-label="Address translation. The CPU produces logical address with page number 2 and offset 452. The TLB is checked first. On a miss the page table in RAM is read: page 2 maps to frame 5. The physical address is frame 5 with the same offset 452, which is 5 times 1024 plus 452 equals 5572.">
+  <path class="d-dash" d="M200 60 C 200 10, 580 10, 580 60"/>
+  <text class="d-sub" x="390" y="42" text-anchor="middle">offset d is copied unchanged</text>
+
+  <rect class="d-box" x="20" y="60" width="70" height="40" rx="6"/>
+  <text class="d-label" x="55" y="85" text-anchor="middle">CPU</text>
+  <path class="d-line" d="M90 80 H104"/><path class="d-arrow" d="M110 80 l-9 -4.5 v9 z"/>
+
+  <rect class="d-fill-accent" x="110" y="60" width="60" height="40"/>
+  <rect class="d-box-accent" x="110" y="60" width="60" height="40"/>
+  <text class="d-mono" x="140" y="85" text-anchor="middle">p = 2</text>
+  <rect class="d-box" x="170" y="60" width="60" height="40"/>
+  <text class="d-mono" x="200" y="85" text-anchor="middle">d = 452</text>
+  <text class="d-sub" x="170" y="118" text-anchor="middle">logical address 2500</text>
+
+  <path class="d-line-accent" d="M230 72 H284"/><path class="d-arrow-accent" d="M290 72 l-9 -4.5 v9 z"/>
+
+  <rect class="d-box" x="290" y="50" width="150" height="70" rx="6"/>
+  <text class="d-label" x="365" y="70" text-anchor="middle">TLB (fast cache)</text>
+  <text class="d-mono" x="365" y="92" text-anchor="middle">page 2 → ?</text>
+  <text class="d-sub" x="365" y="110" text-anchor="middle">checked first</text>
+
+  <path class="d-line" d="M440 72 H484"/><path class="d-arrow" d="M490 72 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="462" y="66" text-anchor="middle">hit</text>
+
+  <path class="d-line-accent" d="M365 120 V154"/><path class="d-arrow-accent" d="M365 160 l-4.5 -9 h9 z"/>
+  <text class="d-accent-text" x="374" y="144">miss</text>
+
+  <rect class="d-box" x="290" y="160" width="150" height="120" rx="6"/>
+  <text class="d-label" x="365" y="180" text-anchor="middle">Page table (in RAM)</text>
+  <text class="d-mono" x="365" y="202" text-anchor="middle">0 → 1</text>
+  <text class="d-mono" x="365" y="222" text-anchor="middle">1 → 4</text>
+  <rect class="d-fill-accent" x="300" y="228" width="130" height="18" rx="3"/>
+  <text class="d-accent-text" x="365" y="242" text-anchor="middle">2 → 5</text>
+  <text class="d-mono" x="365" y="266" text-anchor="middle">3 → 7</text>
+
+  <path class="d-line-accent" d="M440 237 H470 V86 H484"/><path class="d-arrow-accent" d="M490 86 l-9 -4.5 v9 z"/>
+
+  <rect class="d-fill-accent" x="490" y="60" width="60" height="40"/>
+  <rect class="d-box-accent" x="490" y="60" width="60" height="40"/>
+  <text class="d-mono" x="520" y="85" text-anchor="middle">f = 5</text>
+  <rect class="d-box" x="550" y="60" width="60" height="40"/>
+  <text class="d-mono" x="580" y="85" text-anchor="middle">d = 452</text>
+  <text class="d-sub" x="630" y="118" text-anchor="end">physical address</text>
+
+  <path class="d-line" d="M520 100 V154"/><path class="d-arrow" d="M520 160 l-4.5 -9 h9 z"/>
+  <rect class="d-box" x="490" y="160" width="130" height="120" rx="6"/>
+  <text class="d-label" x="555" y="180" text-anchor="middle">RAM</text>
+  <text class="d-mono" x="555" y="206" text-anchor="middle">frame 4</text>
+  <rect class="d-fill-accent" x="500" y="216" width="110" height="22" rx="3"/>
+  <text class="d-accent-text" x="555" y="232" text-anchor="middle">frame 5 ← here</text>
+  <text class="d-mono" x="555" y="258" text-anchor="middle">frame 6</text>
+
+  <text class="d-sub" x="320" y="308" text-anchor="middle">Page size 1024 B.  Physical = 5 × 1024 + 452 = 5572.  Only the page number changes; the offset never does.</text>
+</svg>
+<figcaption>The TLB is checked first. Only on a miss does the CPU read the page table from RAM — which costs an extra memory access.</figcaption>
+</figure>
+<p><b>The numbers in the diagram.</b> Page size 1 KB = 1024 bytes. Logical address 2500 → p = 2500 ÷ 1024 = 2, d = 2500 − 2048 = 452. Page table says page 2 is in frame 5. Physical = 5 × 1024 + 452 = <b>5572</b>.</p>
+<h4>Counting bits (very common in GATE)</h4>
+<pre><code>32-bit logical address, 4 KB pages (4 KB = 2^12 bytes)
+  offset bits      = 12
+  page-number bits = 32 − 12 = 20      → 2^20 ≈ 1 million pages
+  page table size  = 2^20 entries × 4 bytes each = 4 MB  — per process!
+
+Physical memory 1 GB = 2^30, frame size 4 KB = 2^12
+  number of frames = 2^30 / 2^12 = 2^18   → frame number needs 18 bits</code></pre>
+<p>Paging still has <b>internal fragmentation</b>: a process needing 4097 bytes with 4 KB pages uses 2 pages and wastes 4095 bytes in the last one. On average, half a page per process.</p>
+<h4>The TLB — making paging fast</h4>
+<p>With a page table in RAM, every memory access would need <b>two</b> accesses: one for the page table, one for the data. That halves speed.</p>
+<p>The <b>TLB</b> (Translation Lookaside Buffer) is a tiny, very fast cache inside the CPU holding recent page → frame translations. Thanks to <b>locality</b> (programs keep using the same few pages), hit rates are usually above 99%.</p>
+<pre><code>Effective Access Time (EAT)
+  TLB lookup = 20 ns, memory access = 100 ns, TLB hit ratio = 80%
+
+  hit:  20 + 100       = 120 ns   (TLB, then data)
+  miss: 20 + 100 + 100 = 220 ns   (TLB, page table, then data)
+
+  EAT = 0.80 × 120 + 0.20 × 220 = 96 + 44 = 140 ns
+  Without a TLB it would be 200 ns; perfect hits would give 120 ns.</code></pre>
+<div class="note"><b>Context switches and the TLB:</b> the TLB holds one process's translations. On a switch it must be flushed, or each entry tagged with an <b>ASID</b> (address-space ID) so entries from different processes can live side by side. This is part of why switching processes costs more than switching threads.</div>
+</section>
+
+<section id="s24">
+<h3>24. Multi-level Page Tables &amp; Segmentation</h3>
+<h4>Why one big page table doesn't work</h4>
+<p>We just saw a 32-bit system needs a 4 MB page table <i>per process</i>, and it must be contiguous. 100 processes = 400 MB of page tables, mostly describing memory nobody uses. On 64-bit systems a flat table would be impossibly huge.</p>
+<h4>Two-level (hierarchical) paging</h4>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Page the page table.</b> Split the page number into two parts. The first indexes an <b>outer table</b>, which points to a smaller <b>inner table</b>, which gives the frame.</p>
+<p>Inner tables for unused regions are simply never created. That's the saving.</p>
+<p class="analogy">A phone book split by first letter. You don't print the "X" section at all if nobody's name starts with X.</p></div>
+<pre><code>32-bit address, 4 KB pages, 4-byte entries:
+
+| p1 (10 bits) | p2 (10 bits) | offset (12 bits) |
+   outer index    inner index    within the page
+
+outer table: 2^10 entries × 4 B = 4 KB  (fits exactly in one page)
+each inner table: also 4 KB, created only if needed</code></pre>
+<p>64-bit x86 uses <b>4 levels</b> (9 + 9 + 9 + 9 + 12 bits = 48-bit addresses), newer chips 5. The cost: a TLB miss now needs several memory reads — which is why the TLB matters so much.</p>
+<p><b>Other options worth naming:</b> <b>inverted page table</b> — one entry per <i>physical frame</i> instead of per page, so its size depends on RAM, not on how many processes there are (slower lookup, needs hashing). <b>Hashed page table</b> — hash the page number into a table; common for large address spaces.</p>
+<h4>Segmentation</h4>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Segmentation</b> divides memory the way a programmer thinks about it: a <b>code</b> segment, a <b>data</b> segment, a <b>stack</b> segment — each a different size.</p>
+<p>A logical address is <b>(segment number, offset)</b>. A <b>segment table</b> stores each segment's base and limit.</p></div>
+<pre><code>Segment table:   seg   base    limit
+                  0    1400    1000
+                  1    6300     400
+                  2    4300     400
+
+(2, 53)   → 53 &lt; 400  → physical = 4300 + 53 = 4353   ✓
+(2, 500)  → 500 ≥ 400 → trap (segmentation fault)     ✗
+(0, 999)  → 999 &lt; 1000 → 1400 + 999 = 2399           ✓</code></pre>
+<div class="table-wrap"><table>
+<tr><th></th><th>Paging</th><th>Segmentation</th></tr>
+<tr><td>Block size</td><td>Fixed (pages)</td><td>Variable (segments)</td></tr>
+<tr><td>Split by</td><td>Hardware, blindly</td><td>Program's logical parts</td></tr>
+<tr><td>Fragmentation</td><td>Internal only</td><td>External only</td></tr>
+<tr><td>Programmer sees it?</td><td>No</td><td>Yes</td></tr>
+<tr><td>Protection</td><td>Per page</td><td>Per segment — natural (code read-only, data writable)</td></tr>
+</table></div>
+<p><b>Segmented paging</b> combines them: split into segments, then page each segment. Gets segmentation's logical view without external fragmentation. x86 historically did this; modern 64-bit OSes mostly use plain paging and keep segments flat.</p>
+<div class="note"><b>"Segmentation fault"</b> is the name for accessing memory you're not allowed to — it comes from this limit check. On today's paged systems it usually means touching a page that isn't mapped (e.g. dereferencing a NULL pointer).</div>
+</section>
+
+<section id="s25">
+<h3>25. Virtual Memory &amp; Page Faults</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Virtual memory</b> lets a program use more memory than the RAM actually has. Only the pages being used right now sit in RAM; the rest wait on disk.</p>
+<p>With <b>demand paging</b>, a page is loaded only when the program first touches it — not before.</p>
+<p class="analogy">A small study desk and a big bookshelf. You keep only the books you're reading on the desk. When you need another, you fetch it from the shelf, putting one back if the desk is full.</p></div>
+<h4>What you get from it</h4>
+<ul>
+<li>Programs can be <b>bigger than RAM</b>.</li>
+<li><b>More programs</b> fit in memory at once, since each only keeps its active pages.</li>
+<li><b>Faster start-up</b> — you don't load the whole program first.</li>
+<li>Easy <b>sharing</b> (shared libraries mapped into many processes) and <b>copy-on-write</b> after fork.</li>
+</ul>
+<h4>The valid bit</h4>
+<p>Each page-table entry has a <b>valid/invalid bit</b>. Valid = the page is in RAM. Invalid = it's on disk (or not part of the process at all). Other bits worth knowing: <b>dirty</b> (modified since loading — must be written back before eviction), <b>referenced</b> (used recently — helps replacement), and <b>protection</b> (read/write/execute).</p>
+<h4>What happens on a page fault</h4>
+<p>A <b>page fault</b> is the trap the MMU raises when a process touches a page marked invalid.</p>
+<ol>
+<li>The CPU traps into the kernel.</li>
+<li>The kernel checks: is this address legal for the process? If not → kill it (segfault).</li>
+<li>If legal, find a <b>free frame</b>. If none is free, pick a victim page to evict (section 26). If the victim is dirty, write it to disk first.</li>
+<li>Schedule a disk read to bring the page into the frame. The process <b>waits</b> meanwhile; others run.</li>
+<li>Update the page table: set the frame number and mark it valid.</li>
+<li><b>Restart the instruction</b> that faulted. This time it works.</li>
+</ol>
+<h4>How much a page fault costs</h4>
+<pre><code>Memory access = 200 ns,  page fault service = 8 ms = 8,000,000 ns
+Page fault rate p
+
+EAT = (1 − p) × 200 + p × 8,000,000
+
+If p = 1/1000:
+EAT = 0.999 × 200 + 8,000
+    = 199.8 + 8,000 ≈ 8,200 ns   → about 40× slower than normal!
+
+To stay within 10% of 200 ns (EAT ≤ 220):
+  200 + p × 7,999,800 ≤ 220  →  p ≤ 0.0000025   (fewer than 1 in 400,000)</code></pre>
+<p>That's the whole point of the next two sections: a disk is around 100,000× slower than RAM, so page faults must be very rare.</p>
+<div class="note"><b>Minor vs major faults:</b> a <b>minor</b> (soft) fault is when the page is already in RAM somewhere (e.g. a shared library another process loaded) and just needs mapping — cheap. A <b>major</b> (hard) fault needs a disk read — expensive. <code>/usr/bin/time -v</code> on Linux shows both counts.</div>
+</section>
+
+<section id="s26">
+<h3>26. Page Replacement</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>When RAM is full and a new page is needed, the OS must throw one page out. The <b>page replacement algorithm</b> decides which.</p>
+<p>The goal is to evict the page you <b>won't need for the longest time</b>, so you cause the fewest future faults.</p></div>
+<h4>The algorithms</h4>
+<ul>
+<li><b>FIFO</b> — evict the page that has been in memory the longest. Simple queue. But the oldest page might be the most used one.</li>
+<li><b>Optimal (OPT / Belady's MIN)</b> — evict the page that will next be used <b>furthest in the future</b>. Gives the fewest faults possible. Impossible in practice (needs the future) — used as a yardstick to measure others.</li>
+<li><b>LRU (Least Recently Used)</b> — evict the page not used for the longest time. Uses the past to guess the future. Very good, but tracking exact order on every access is costly.</li>
+<li><b>Clock (Second Chance)</b> — a cheap LRU approximation. Pages sit in a circle with a reference bit. The "hand" moves round: bit = 1 → clear it and skip (second chance); bit = 0 → evict. Real OSes use variants of this.</li>
+<li><b>LFU / MFU</b> — least / most frequently used. Rarely used; mentioned for completeness.</li>
+</ul>
+<h4>Worked example — 3 frames</h4>
+<p>Reference string (the order pages are used): <code>7 0 1 2 0 3 0 4 2 3 0 3 2 1 2 0 1 7 0 1</code></p>
+<p>Each cell shows the frames after that reference. <b>F</b> = page fault, blank = hit.</p>
+<div class="table-wrap"><table>
+<tr><th>#</th><th>Ref</th><th>FIFO</th><th>LRU</th><th>Optimal</th></tr>
+<tr><td>1</td><td><b>7</b></td><td><code>7 – –</code> <b>F</b></td><td><code>7 – –</code> <b>F</b></td><td><code>7 – –</code> <b>F</b></td></tr>
+<tr><td>2</td><td><b>0</b></td><td><code>7 0 –</code> <b>F</b></td><td><code>7 0 –</code> <b>F</b></td><td><code>7 0 –</code> <b>F</b></td></tr>
+<tr><td>3</td><td><b>1</b></td><td><code>7 0 1</code> <b>F</b></td><td><code>7 0 1</code> <b>F</b></td><td><code>7 0 1</code> <b>F</b></td></tr>
+<tr><td>4</td><td><b>2</b></td><td><code>2 0 1</code> <b>F</b></td><td><code>2 0 1</code> <b>F</b></td><td><code>2 0 1</code> <b>F</b></td></tr>
+<tr><td>5</td><td><b>0</b></td><td><code>2 0 1</code></td><td><code>2 0 1</code></td><td><code>2 0 1</code></td></tr>
+<tr><td>6</td><td><b>3</b></td><td><code>2 3 1</code> <b>F</b></td><td><code>2 0 3</code> <b>F</b></td><td><code>2 0 3</code> <b>F</b></td></tr>
+<tr><td>7</td><td><b>0</b></td><td><code>2 3 0</code> <b>F</b></td><td><code>2 0 3</code></td><td><code>2 0 3</code></td></tr>
+<tr><td>8</td><td><b>4</b></td><td><code>4 3 0</code> <b>F</b></td><td><code>4 0 3</code> <b>F</b></td><td><code>2 4 3</code> <b>F</b></td></tr>
+<tr><td>9</td><td><b>2</b></td><td><code>4 2 0</code> <b>F</b></td><td><code>4 0 2</code> <b>F</b></td><td><code>2 4 3</code></td></tr>
+<tr><td>10</td><td><b>3</b></td><td><code>4 2 3</code> <b>F</b></td><td><code>4 3 2</code> <b>F</b></td><td><code>2 4 3</code></td></tr>
+<tr><td>11</td><td><b>0</b></td><td><code>0 2 3</code> <b>F</b></td><td><code>0 3 2</code> <b>F</b></td><td><code>2 0 3</code> <b>F</b></td></tr>
+<tr><td>12</td><td><b>3</b></td><td><code>0 2 3</code></td><td><code>0 3 2</code></td><td><code>2 0 3</code></td></tr>
+<tr><td>13</td><td><b>2</b></td><td><code>0 2 3</code></td><td><code>0 3 2</code></td><td><code>2 0 3</code></td></tr>
+<tr><td>14</td><td><b>1</b></td><td><code>0 1 3</code> <b>F</b></td><td><code>1 3 2</code> <b>F</b></td><td><code>2 0 1</code> <b>F</b></td></tr>
+<tr><td>15</td><td><b>2</b></td><td><code>0 1 2</code> <b>F</b></td><td><code>1 3 2</code></td><td><code>2 0 1</code></td></tr>
+<tr><td>16</td><td><b>0</b></td><td><code>0 1 2</code></td><td><code>1 0 2</code> <b>F</b></td><td><code>2 0 1</code></td></tr>
+<tr><td>17</td><td><b>1</b></td><td><code>0 1 2</code></td><td><code>1 0 2</code></td><td><code>2 0 1</code></td></tr>
+<tr><td>18</td><td><b>7</b></td><td><code>7 1 2</code> <b>F</b></td><td><code>1 0 7</code> <b>F</b></td><td><code>7 0 1</code> <b>F</b></td></tr>
+<tr><td>19</td><td><b>0</b></td><td><code>7 0 2</code> <b>F</b></td><td><code>1 0 7</code></td><td><code>7 0 1</code></td></tr>
+<tr><td>20</td><td><b>1</b></td><td><code>7 0 1</code> <b>F</b></td><td><code>1 0 7</code></td><td><code>7 0 1</code></td></tr>
+<tr><td></td><td><b>Faults</b></td><td><b>15</b></td><td><b>12</b></td><td><b>9</b></td></tr>
+</table></div>
+<pre><code>FIFO    = 15 faults
+LRU     = 12 faults
+Optimal =  9 faults     (no algorithm can do better on this string)
+
+Hit ratio for LRU = (20 − 12) / 20 = 40%</code></pre>
+<p><b>How to do it fast in an exam.</b> FIFO: keep a queue, evict the front. LRU: look <i>backwards</i> from the current position; the page whose last use is furthest back goes. Optimal: look <i>forwards</i>; the page whose next use is furthest away (or never) goes.</p>
+<h4>Belady's anomaly</h4>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>You'd expect more frames to always mean fewer faults. With <b>FIFO</b>, that's not guaranteed — adding a frame can <b>increase</b> faults. That surprise is <b>Belady's anomaly</b>.</p></div>
+<pre><code>Reference string: 1 2 3 4 1 2 5 1 2 3 4 5   (FIFO)
+
+3 frames:  1F 2F 3F 4F 1F 2F 5F 1  2  3F 4F 5     → 9 faults
+4 frames:  1F 2F 3F 4F 1  2  5F 1F 2F 3F 4F 5F    → 10 faults  (more!)</code></pre>
+<p><b>LRU and Optimal never suffer from it.</b> They are <b>stack algorithms</b>: the set of pages kept with n frames is always a subset of the set kept with n + 1 frames. FIFO doesn't have that property.</p>
+</section>
+
+<section id="s27">
+<h3>27. Thrashing &amp; the Working Set</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Thrashing</b> is when the system spends more time swapping pages in and out than actually running programs. The disk light is solid on, and nothing gets done.</p>
+<p>It happens when processes don't have enough frames for the pages they're actively using. Every page brought in pushes out a page that's needed a moment later.</p>
+<p class="analogy">A tiny desk with ten books you need at once. You keep putting one book back to fetch another, then immediately need the first again. You spend the whole evening walking to the shelf and read nothing.</p></div>
+<h4>The vicious circle</h4>
+<pre><code>too many processes → each has too few frames → lots of page faults
+→ processes wait on disk → CPU use drops
+→ OS thinks "CPU is idle, let's admit more processes"
+→ even fewer frames each → even more faults …   (collapse)</code></pre>
+<p>On a graph of CPU use vs number of processes, use rises, peaks, then falls off a cliff. That cliff is thrashing.</p>
+<h4>Locality and the working set</h4>
+<p><b>Locality of reference:</b> at any moment, a program uses a small group of pages heavily (the current function, its data). That group is its <b>locality</b>, and it shifts over time.</p>
+<p>The <b>working set</b> is the set of pages a process used in its last Δ references (Δ is a window, e.g. the last 10,000 accesses).</p>
+<pre><code>Δ = 5, recent references: … 2 6 1 5 7 7 7 7 5 1 | now
+working set over the last 5 refs (7 7 7 5 1) = {1, 5, 7}  → size 3
+
+D = sum of all processes' working-set sizes
+If D &gt; total frames → thrashing is coming → suspend a process
+If D is well below   → room to admit another process</code></pre>
+<h4>Other fixes</h4>
+<ul>
+<li><b>Page-fault frequency (PFF)</b> — set an upper and lower fault rate. Above the upper → give the process more frames. Below the lower → take some away.</li>
+<li><b>Reduce multiprogramming</b> — swap out or suspend some processes.</li>
+<li><b>Local replacement</b> — a process can only evict its <i>own</i> pages, so one thrashing process can't drag others down.</li>
+<li>And the honest real-world one: <b>add more RAM</b>.</li>
+</ul>
+</section>
+
+<!-- ================= STORAGE & I/O ================= -->
+<div class="part">Part 7 — Files, Disks &amp; I/O</div>
+
+<section id="s28">
+<h3>28. File Systems</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A disk only knows numbered <b>blocks</b> (say 4 KB each). A <b>file system</b> turns those blocks into named <b>files</b> inside <b>folders</b>, and remembers which blocks belong to which file.</p>
+<p class="analogy">A library. The shelves are blocks. The catalogue — title, author, which shelf — is the file system. Without the catalogue the books are still there, but you'd never find one.</p></div>
+<h4>What a file has</h4>
+<ul>
+<li><b>Data</b> — the content.</li>
+<li><b>Metadata</b> — size, owner, permissions, timestamps (created, modified, accessed), and where its blocks are.</li>
+<li>Operations: create, open, read, write, seek (jump to a position), close, delete.</li>
+</ul>
+<p>When you <code>open</code> a file, the OS returns a small number called a <b>file descriptor</b> (fd). Every later <code>read</code>/<code>write</code> uses that number. 0, 1 and 2 are always stdin, stdout and stderr.</p>
+<h4>Directory structures</h4>
+<ul>
+<li><b>Single-level</b> — all files in one folder. Names clash quickly.</li>
+<li><b>Two-level</b> — one folder per user.</li>
+<li><b>Tree</b> — folders within folders. What you use every day. Paths are <b>absolute</b> (<code>/home/ada/notes.txt</code>) or <b>relative</b> (<code>../notes.txt</code>).</li>
+<li><b>Acyclic graph</b> — a tree plus links, so one file can appear in two folders.</li>
+</ul>
+<h4>How a file's blocks are stored — allocation methods</h4>
+<div class="table-wrap"><table>
+<tr><th>Method</th><th>How</th><th>Good</th><th>Bad</th></tr>
+<tr><td><b>Contiguous</b></td><td>File takes blocks next to each other; store start + length</td><td>Fastest reads; easy random access</td><td>External fragmentation; hard to grow a file</td></tr>
+<tr><td><b>Linked</b></td><td>Each block holds a pointer to the next</td><td>No fragmentation; files grow easily</td><td>Random access is slow (follow the chain); one broken pointer loses the rest</td></tr>
+<tr><td><b>Linked with FAT</b></td><td>The pointers are kept together in a table (File Allocation Table)</td><td>Table can be cached in RAM</td><td>Table gets big on large disks</td></tr>
+<tr><td><b>Indexed</b></td><td>Each file has an index block listing all its block numbers</td><td>Fast random access; no external fragmentation</td><td>Index block overhead, even for tiny files</td></tr>
+</table></div>
+<h4>Inodes (Unix's indexed scheme)</h4>
+<p>In Unix/Linux every file has an <b>inode</b> — a record with all the metadata <b>except the name</b>, plus pointers to the data blocks. The name lives in the directory, which is just a list of <code>name → inode number</code> pairs.</p>
+<pre><code>inode
+├── owner, permissions, size, timestamps, link count
+├── 12 direct pointers        → data blocks
+├── 1 single indirect pointer → a block full of pointers → data blocks
+├── 1 double indirect pointer → pointers → pointers → data
+└── 1 triple indirect pointer → three levels deep
+
+Block 4 KB, pointer 4 B → one block holds 1024 pointers
+  direct:          12 × 4 KB          = 48 KB
+  single indirect: 1024 × 4 KB        = 4 MB
+  double indirect: 1024² × 4 KB       = 4 GB
+  triple indirect: 1024³ × 4 KB       = 4 TB</code></pre>
+<p>Small files (most files) are reached in one step through direct pointers. Huge files are still possible through the indirect ones. GATE often asks for the max file size — add up all four lines.</p>
+<h4>Hard links vs soft links</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>Hard link</th><th>Soft (symbolic) link</th></tr>
+<tr><td>What it is</td><td>Another name pointing to the <b>same inode</b></td><td>A tiny file that contains a <b>path</b> to another file</td></tr>
+<tr><td>Create</td><td><code>ln a.txt b.txt</code></td><td><code>ln -s a.txt b.txt</code></td></tr>
+<tr><td>Delete the original</td><td>Data survives — the inode lives until its link count hits 0</td><td>Link breaks ("dangling")</td></tr>
+<tr><td>Across file systems?</td><td>No — inode numbers are per file system</td><td>Yes</td></tr>
+<tr><td>To directories?</td><td>Not allowed (could create loops)</td><td>Allowed</td></tr>
+</table></div>
+<p><b>Picture it:</b> a hard link is a second front door into the same house. A soft link is a note on a door saying "the house is at 12 Baker Street" — if the house is demolished, the note still exists but leads nowhere.</p>
+<h4>Journaling — surviving a crash</h4>
+<p>Creating a file touches several places: the inode, the directory, the free-block list. If power fails halfway, the file system is left inconsistent. Old systems ran a slow full check (<code>fsck</code>) on reboot.</p>
+<p>A <b>journaling</b> file system first writes a note of what it's <i>about</i> to do into a log (the journal), then does it, then marks the note done. After a crash it just replays or discards unfinished notes — seconds, not hours. Same idea as a database's write-ahead log. Examples: <b>ext4</b>, <b>NTFS</b>, <b>XFS</b>. (Newer ones like <b>Btrfs</b>, <b>ZFS</b> and Apple's <b>APFS</b> use copy-on-write instead: never overwrite, write new and switch the pointer.)</p>
+</section>
+
+<section id="s29">
+<h3>29. Disk Scheduling</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>On a spinning hard disk, a read/write <b>head</b> must physically move to the right <b>track</b> (cylinder). This movement — the <b>seek</b> — is the slowest part of a disk access.</p>
+<p>When many requests are waiting, the order you serve them in changes how far the head travels. <b>Disk scheduling</b> picks a good order.</p>
+<p class="analogy">A lift in a tall building. If it went to floors strictly in the order buttons were pressed, it would zigzag wildly. Instead it goes up collecting everyone, then comes down. That's literally the SCAN algorithm — also called the <b>elevator algorithm</b>.</p></div>
+<h4>Disk access time</h4>
+<pre><code>access time = seek time + rotational latency + transfer time
+              (move arm)   (wait for sector     (read the data)
+                            to spin under head)
+
+Average rotational latency = half a rotation.
+7200 RPM → 7200/60 = 120 rotations per second → 1 rotation = 8.33 ms
+         → average latency = 4.17 ms</code></pre>
+<h4>The algorithms</h4>
+<ul>
+<li><b>FCFS</b> — in order of arrival. Fair, but lots of back-and-forth.</li>
+<li><b>SSTF</b> (Shortest Seek Time First) — always go to the nearest request. Much less movement, but far-away requests can <b>starve</b>.</li>
+<li><b>SCAN</b> (elevator) — move in one direction to the <b>end of the disk</b>, serving requests on the way, then reverse.</li>
+<li><b>C-SCAN</b> (circular SCAN) — move in one direction to the end, then <b>jump back to the start</b> without serving, and sweep again. More even waiting times.</li>
+<li><b>LOOK / C-LOOK</b> — like SCAN / C-SCAN, but only go as far as the <b>last request</b>, not the physical end.</li>
+</ul>
+<h4>Worked example</h4>
+<p>Cylinders 0–199. Head at <b>53</b>, moving towards higher numbers. Queue: <code>98, 183, 37, 122, 14, 124, 65, 67</code>.</p>
+<pre><code>FCFS:   53 → 98 → 183 → 37 → 122 → 14 → 124 → 65 → 67
+        45 + 85 + 146 + 85 + 108 + 110 + 59 + 2           = 640
+
+SSTF:   53 → 65 → 67 → 37 → 14 → 98 → 122 → 124 → 183
+        12 + 2 + 30 + 23 + 84 + 24 + 2 + 59               = 236
+
+SCAN:   53 → 65 → 67 → 98 → 122 → 124 → 183 → 199 → 37 → 14
+        (199 − 53) + (199 − 14) = 146 + 185               = 331
+
+C-SCAN: 53 → … → 183 → 199 → jump to 0 → 14 → 37
+        146 + 199 (jump) + 37                             = 382
+        (183 if the question says not to count the jump)
+
+LOOK:   53 → 65 → 67 → 98 → 122 → 124 → 183 → 37 → 14
+        (183 − 53) + (183 − 14) = 130 + 169               = 299
+
+C-LOOK: 53 → … → 183 → jump to 14 → 37
+        130 + 169 (jump) + 23                             = 322
+        (153 if the jump isn't counted)</code></pre>
+<figure class="diagram">
+<svg viewBox="0 0 640 300" role="img" aria-label="SSTF head movement starting at cylinder 53: to 65, 67, back down to 37 and 14, then up to 98, 122, 124 and 183. Total movement 236 cylinders.">
+  <path class="d-line" d="M60 30 H577"/>
+  <text class="d-sub" x="60" y="22" text-anchor="middle">0</text>
+  <text class="d-sub" x="96" y="22" text-anchor="middle">14</text>
+  <text class="d-sub" x="156" y="22" text-anchor="middle">37</text>
+  <text class="d-accent-text" x="198" y="22" text-anchor="middle">53</text>
+  <text class="d-sub" x="232" y="22" text-anchor="middle">65,67</text>
+  <text class="d-sub" x="315" y="22" text-anchor="middle">98</text>
+  <text class="d-sub" x="380" y="22" text-anchor="middle">122,124</text>
+  <text class="d-sub" x="536" y="22" text-anchor="middle">183</text>
+  <text class="d-sub" x="577" y="22" text-anchor="middle">199</text>
+  <path class="d-dash" d="M96 30 V250 M156 30 V250 M198 30 V250 M232 30 V250 M315 30 V250 M380 30 V250 M536 30 V250"/>
+
+  <path class="d-line-accent" d="M197.8 60 L229 82 L234.2 104 L156.2 126 L96.4 148 L314.8 170 L377.2 192 L382.4 214 L535.8 236"/>
+  <circle class="d-arrow-accent" cx="197.8" cy="60" r="4"/>
+  <circle class="d-arrow-accent" cx="229" cy="82" r="3.5"/>
+  <circle class="d-arrow-accent" cx="234.2" cy="104" r="3.5"/>
+  <circle class="d-arrow-accent" cx="156.2" cy="126" r="3.5"/>
+  <circle class="d-arrow-accent" cx="96.4" cy="148" r="3.5"/>
+  <circle class="d-arrow-accent" cx="314.8" cy="170" r="3.5"/>
+  <circle class="d-arrow-accent" cx="377.2" cy="192" r="3.5"/>
+  <circle class="d-arrow-accent" cx="382.4" cy="214" r="3.5"/>
+  <circle class="d-arrow-accent" cx="535.8" cy="236" r="4"/>
+
+  <text class="d-mono" x="206" y="64">start</text>
+  <text class="d-sub" x="242" y="86">+12</text>
+  <text class="d-sub" x="246" y="108">+2</text>
+  <text class="d-sub" x="146" y="130" text-anchor="end">30</text>
+  <text class="d-sub" x="86" y="152" text-anchor="end">23</text>
+  <text class="d-sub" x="326" y="174">84 — long trip back</text>
+  <text class="d-sub" x="389" y="196">24</text>
+  <text class="d-sub" x="394" y="218">2</text>
+  <text class="d-sub" x="548" y="240">59</text>
+
+  <text class="d-label" x="320" y="282" text-anchor="middle">SSTF total = 12 + 2 + 30 + 23 + 84 + 24 + 2 + 59 = 236 cylinders</text>
+</svg>
+<figcaption>Time runs downwards. SSTF chases whatever is nearest, which is efficient here — but a steady stream of requests near the head could leave 183 waiting indefinitely.</figcaption>
+</figure>
+<div class="table-wrap"><table>
+<tr><th>Algorithm</th><th>Total head movement</th><th>Starvation?</th></tr>
+<tr><td>FCFS</td><td>640</td><td>No</td></tr>
+<tr><td>SSTF</td><td>236</td><td>Yes</td></tr>
+<tr><td>SCAN</td><td>331</td><td>No</td></tr>
+<tr><td>C-SCAN</td><td>382 (183 without the jump)</td><td>No — most uniform wait</td></tr>
+<tr><td>LOOK</td><td>299</td><td>No</td></tr>
+<tr><td>C-LOOK</td><td>322 (153 without the jump)</td><td>No</td></tr>
+</table></div>
+<div class="note"><b>Read the direction carefully.</b> If the head were moving towards 0 instead, SCAN would be 53 → 37 → 14 → 0 → 65 → … → 183, total 53 + 183 = <b>236</b>. Direction changes every SCAN/LOOK answer. Also: <b>SSDs have no moving head</b>, so seek order barely matters — Linux uses simple schedulers (<code>none</code> or <code>mq-deadline</code>) for them.</div>
+</section>
+
+<section id="s30">
+<h3>30. I/O: Interrupts, Polling, DMA &amp; Buffering</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Devices (keyboard, disk, network card) are far slower than the CPU. The question is how the CPU finds out a device is ready, and how data gets moved without wasting the CPU's time.</p></div>
+<h4>Polling vs interrupts</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>Polling</th><th>Interrupts</th></tr>
+<tr><td>How</td><td>CPU keeps asking the device "done yet?" in a loop</td><td>Device signals the CPU when it's done</td></tr>
+<tr><td>Picture</td><td>A child asking "are we there yet?" every minute</td><td>The driver tells you when you've arrived</td></tr>
+<tr><td>Good when</td><td>Device is very fast or almost always ready</td><td>Events are rare or slow (keyboard, disk)</td></tr>
+<tr><td>Cost</td><td>Wastes CPU if the device is slow</td><td>Each interrupt has overhead; a flood can swamp the CPU</td></tr>
+</table></div>
+<h4>What happens on an interrupt</h4>
+<ol>
+<li>The device raises a signal on an interrupt line.</li>
+<li>The CPU finishes its current instruction, saves where it was, and jumps into kernel mode.</li>
+<li>It looks up the <b>interrupt vector table</b> to find the right handler (<b>ISR</b>, interrupt service routine) for that device.</li>
+<li>The handler does the minimum quickly (e.g. copy the key pressed) and schedules the rest for later.</li>
+<li>The CPU restores what it saved and carries on.</li>
+</ol>
+<p><b>Hardware interrupts</b> come from devices. <b>Software interrupts / traps</b> come from programs — system calls, or errors like divide-by-zero. Fast network cards switch between interrupts and polling depending on load (Linux's NAPI does this).</p>
+<h4>DMA — Direct Memory Access</h4>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Copying a 1 MB file from disk byte by byte through the CPU would waste millions of CPU cycles. A <b>DMA controller</b> copies data between the device and RAM <b>by itself</b>.</p>
+<p>The CPU just says "move this block from the disk to this RAM address", goes off to do other work, and gets <b>one interrupt</b> when the whole transfer is done.</p>
+<p class="analogy">Instead of carrying every box from the lorry yourself, you hire a mover, tell them where it goes, and they ring you when it's finished.</p></div>
+<h4>Buffering, caching and spooling</h4>
+<ul>
+<li><b>Buffer</b> — a temporary holding area for data in transit, to smooth out speed differences. Video players buffer a few seconds ahead. <b>Double buffering</b>: fill one buffer while the other is being used.</li>
+<li><b>Cache</b> — a fast copy of data kept for <i>reuse</i>. The OS <b>page cache</b> keeps recently read file blocks in RAM, which is why opening a file the second time is instant.</li>
+<li><b>Spooling</b> — a queue on disk for a device that can serve only one job at a time. The printer spooler lets ten people "print" at once; jobs are written to disk and fed to the printer one by one. (SPOOL = Simultaneous Peripheral Operations On-Line.)</li>
+</ul>
+<h4>Blocking vs non-blocking I/O</h4>
+<p><b>Blocking</b>: <code>read()</code> waits until data arrives — the thread sleeps. <b>Non-blocking</b>: <code>read()</code> returns straight away, with data or "nothing yet". <b>Asynchronous</b>: you ask, carry on, and get notified when done. Node.js is built on non-blocking I/O plus an event loop (using <code>epoll</code> on Linux), which is how one thread handles thousands of connections.</p>
+</section>
+
+<!-- ================= IN PRACTICE ================= -->
+<div class="part">Part 8 — In Practice</div>
+
+<section id="s31">
+<h3>31. Linux Essentials for Developers</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Everything above shows up the moment you run a server. These are the commands and ideas you'll actually use — and that interviewers ask about to see if you've touched a real machine.</p></div>
+<h4>Looking at processes</h4>
+<pre><code>ps aux                 # every process: user, PID, CPU%, MEM%, state, command
+ps -ef --forest        # with parent–child tree
+top / htop             # live view, sorted by CPU
+pgrep node             # PIDs of processes named node
+pstree -p              # tree of processes
+lsof -i :3000          # which process is using port 3000
+free -h                # RAM and swap usage
+vmstat 1               # memory, swapping, CPU every second
+strace -p 1234         # watch the system calls a process makes</code></pre>
+<p>The <b>STAT</b> column in <code>ps</code>: <code>R</code> running/ready, <code>S</code> sleeping (waiting, can be woken), <code>D</code> uninterruptible sleep (usually stuck on disk I/O), <code>Z</code> zombie, <code>T</code> stopped. These map straight onto the process states in section 6.</p>
+<h4>Background jobs</h4>
+<pre><code>node server.js &amp;       # run in background
+jobs                   # list background jobs
+fg %1                  # bring job 1 to foreground
+Ctrl+Z, then bg        # pause, then resume in background
+nohup node server.js &amp; # keep running after you log out
+nice -n 10 ./backup.sh # start with lower priority (higher nice = nicer to others)
+renice -n 5 -p 1234    # change priority of a running process</code></pre>
+<h4>Signals</h4>
+<p>A <b>signal</b> is a small message the OS delivers to a process. The process can catch most of them and run its own handler.</p>
+<div class="table-wrap"><table>
+<tr><th>Signal</th><th>No.</th><th>Sent by</th><th>Can be caught?</th><th>Meaning</th></tr>
+<tr><td><code>SIGINT</code></td><td>2</td><td>Ctrl+C</td><td>Yes</td><td>Interrupt from keyboard</td></tr>
+<tr><td><code>SIGTERM</code></td><td>15</td><td><code>kill PID</code> (default)</td><td>Yes</td><td>"Please shut down" — clean up and exit</td></tr>
+<tr><td><code>SIGKILL</code></td><td>9</td><td><code>kill -9 PID</code></td><td><b>No</b></td><td>Killed immediately by the kernel</td></tr>
+<tr><td><code>SIGHUP</code></td><td>1</td><td>Terminal closed</td><td>Yes</td><td>Often used to mean "reload config"</td></tr>
+<tr><td><code>SIGTSTP</code></td><td>20</td><td>Ctrl+Z</td><td>Yes</td><td>Polite pause from the terminal</td></tr>
+<tr><td><code>SIGSTOP</code> / <code>SIGCONT</code></td><td>19 / 18</td><td><code>kill -STOP</code> / <code>fg</code>, <code>kill -CONT</code></td><td>STOP: No</td><td>Forced pause / resume</td></tr>
+<tr><td><code>SIGCHLD</code></td><td>17</td><td>Kernel</td><td>Yes</td><td>A child process ended — time to <code>wait()</code></td></tr>
+<tr><td><code>SIGSEGV</code></td><td>11</td><td>Kernel</td><td>Yes (rarely wise)</td><td>Invalid memory access</td></tr>
+</table></div>
+<p>(Signal numbers shown are for Linux on x86/ARM.)</p>
+<div class="note"><b>SIGTERM vs SIGKILL — always try SIGTERM first.</b> SIGTERM lets the app finish current requests, close database connections and flush logs. SIGKILL can't be caught, so the app gets no chance to clean up — half-written files, lost data. Docker and Kubernetes do exactly this: send SIGTERM, wait (10 s in Docker, 30 s in Kubernetes by default), then SIGKILL. Your Node app should handle <code>process.on("SIGTERM", …)</code> for a graceful shutdown.</div>
+<h4>File permissions</h4>
+<pre><code>$ ls -l deploy.sh
+-rwxr-x---  1 ada  devs  512 Oct 6 10:00 deploy.sh
+│└┬┘└┬┘└┬┘
+│ │  │  └── others: --- (nothing)
+│ │  └───── group:  r-x (read, execute)
+│ └──────── owner:  rwx (read, write, execute)
+└────────── type: - file, d directory, l symlink
+
+r = 4, w = 2, x = 1  → add them up per group
+rwx = 7, r-x = 5, --- = 0   →  chmod 750 deploy.sh
+
+chmod 644 file    # rw-r--r--  normal file
+chmod 755 dir     # rwxr-xr-x  normal directory / script
+chmod +x run.sh   # add execute for everyone
+chown ada:devs f  # change owner and group</code></pre>
+<p>On a <b>directory</b>, <code>r</code> means list its contents, <code>w</code> means create/delete files in it, and <code>x</code> means enter it (<code>cd</code>). That's why folders need <code>x</code>.</p>
+<p><b>Root</b> (user ID 0) bypasses permission checks. Run services as a normal user, and use <code>sudo</code> only for the one command that needs it.</p>
+<div class="note"><b>Everything is a file</b> in Unix: devices (<code>/dev/sda</code>), process info (<code>/proc/1234/status</code>), even sockets and pipes use file descriptors. That's why the same <code>read</code>/<code>write</code> calls work on all of them — and why "too many open files" is an error you'll hit on busy servers (raise it with <code>ulimit -n</code>).</div>
+</section>
+
+<section id="s32">
+<h3>32. Virtual Machines vs Containers</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>virtual machine</b> (VM) pretends to be a whole computer. It runs its <b>own full operating system</b> on fake hardware provided by a <b>hypervisor</b>.</p>
+<p>A <b>container</b> is just a normal process (or group) on the host that the kernel <b>walls off</b>, so it sees its own files, network and process list. All containers <b>share the host's kernel</b>.</p>
+<p class="analogy">VMs are separate houses on one plot — each with its own plumbing and wiring. Containers are flats in one building — private front doors, but shared foundations, water mains and electrics.</p></div>
+<figure class="diagram">
+<svg viewBox="0 0 640 290" role="img" aria-label="Virtual machines: hardware, then a hypervisor, then three VMs each with its own guest OS, libraries and app. Containers: hardware, then one host OS kernel, then a container runtime, then three containers each with only libraries and app, sharing the host kernel.">
+  <text class="d-accent-text" x="155" y="18" text-anchor="middle">VIRTUAL MACHINES</text>
+  <text class="d-sub" x="155" y="36" text-anchor="middle">each boots a full OS — GBs, slower start</text>
+
+  <rect class="d-box" x="24" y="80" width="80" height="30" rx="5"/><text class="d-mono" x="64" y="100" text-anchor="middle">App A</text>
+  <rect class="d-box" x="114" y="80" width="80" height="30" rx="5"/><text class="d-mono" x="154" y="100" text-anchor="middle">App B</text>
+  <rect class="d-box" x="204" y="80" width="80" height="30" rx="5"/><text class="d-mono" x="244" y="100" text-anchor="middle">App C</text>
+  <rect class="d-box" x="24" y="115" width="80" height="30" rx="5"/><text class="d-mono" x="64" y="135" text-anchor="middle">libs</text>
+  <rect class="d-box" x="114" y="115" width="80" height="30" rx="5"/><text class="d-mono" x="154" y="135" text-anchor="middle">libs</text>
+  <rect class="d-box" x="204" y="115" width="80" height="30" rx="5"/><text class="d-mono" x="244" y="135" text-anchor="middle">libs</text>
+  <rect class="d-fill-accent" x="24" y="150" width="80" height="44" rx="5"/><rect class="d-box-accent" x="24" y="150" width="80" height="44" rx="5"/>
+  <text class="d-accent-text" x="64" y="177" text-anchor="middle">Guest OS</text>
+  <rect class="d-fill-accent" x="114" y="150" width="80" height="44" rx="5"/><rect class="d-box-accent" x="114" y="150" width="80" height="44" rx="5"/>
+  <text class="d-accent-text" x="154" y="177" text-anchor="middle">Guest OS</text>
+  <rect class="d-fill-accent" x="204" y="150" width="80" height="44" rx="5"/><rect class="d-box-accent" x="204" y="150" width="80" height="44" rx="5"/>
+  <text class="d-accent-text" x="244" y="177" text-anchor="middle">Guest OS</text>
+  <rect class="d-box" x="24" y="202" width="260" height="32" rx="5"/>
+  <text class="d-label" x="154" y="223" text-anchor="middle">Hypervisor</text>
+  <rect class="d-box" x="24" y="242" width="260" height="32" rx="5"/>
+  <text class="d-label" x="154" y="263" text-anchor="middle">Hardware</text>
+
+  <text class="d-accent-text" x="485" y="18" text-anchor="middle">CONTAINERS</text>
+  <text class="d-sub" x="485" y="36" text-anchor="middle">share the host kernel — MBs, start in seconds</text>
+
+  <rect class="d-box" x="354" y="115" width="80" height="30" rx="5"/><text class="d-mono" x="394" y="135" text-anchor="middle">App A</text>
+  <rect class="d-box" x="444" y="115" width="80" height="30" rx="5"/><text class="d-mono" x="484" y="135" text-anchor="middle">App B</text>
+  <rect class="d-box" x="534" y="115" width="80" height="30" rx="5"/><text class="d-mono" x="574" y="135" text-anchor="middle">App C</text>
+  <rect class="d-box" x="354" y="150" width="80" height="30" rx="5"/><text class="d-mono" x="394" y="170" text-anchor="middle">libs</text>
+  <rect class="d-box" x="444" y="150" width="80" height="30" rx="5"/><text class="d-mono" x="484" y="170" text-anchor="middle">libs</text>
+  <rect class="d-box" x="534" y="150" width="80" height="30" rx="5"/><text class="d-mono" x="574" y="170" text-anchor="middle">libs</text>
+  <rect class="d-box" x="354" y="186" width="260" height="24" rx="5"/>
+  <text class="d-sub" x="484" y="202" text-anchor="middle">container runtime (Docker / containerd)</text>
+  <rect class="d-fill-accent" x="354" y="214" width="260" height="24" rx="5"/><rect class="d-box-accent" x="354" y="214" width="260" height="24" rx="5"/>
+  <text class="d-accent-text" x="484" y="231" text-anchor="middle">Host OS kernel — ONE, shared by all</text>
+  <rect class="d-box" x="354" y="242" width="260" height="32" rx="5"/>
+  <text class="d-label" x="484" y="263" text-anchor="middle">Hardware</text>
+</svg>
+<figcaption>The shaded layer is the kernel. VMs have one per app; containers share one. That single difference explains every row of the table below.</figcaption>
+</figure>
+<div class="table-wrap"><table>
+<tr><th></th><th>Virtual machine</th><th>Container</th></tr>
+<tr><td>Isolates at</td><td>Hardware level</td><td>OS (process) level</td></tr>
+<tr><td>Own kernel?</td><td>Yes — full guest OS</td><td>No — shares the host's</td></tr>
+<tr><td>Size</td><td>GBs</td><td>MBs</td></tr>
+<tr><td>Start time</td><td>Tens of seconds to minutes</td><td>Under a second to a few seconds</td></tr>
+<tr><td>Run a different OS?</td><td>Yes — Windows VM on a Linux host</td><td>No — Linux containers need a Linux kernel</td></tr>
+<tr><td>Security isolation</td><td>Stronger</td><td>Weaker — a kernel bug can affect all containers</td></tr>
+<tr><td>Typical use</td><td>Cloud servers (EC2), running other OSes</td><td>Packaging and deploying apps, microservices</td></tr>
+</table></div>
+<h4>Hypervisor types</h4>
+<ul>
+<li><b>Type 1 (bare-metal)</b> — runs directly on the hardware. VMware ESXi, Xen, Microsoft Hyper-V, KVM (part of Linux). Used in data centres and clouds.</li>
+<li><b>Type 2 (hosted)</b> — runs as an app on a normal OS. VirtualBox, VMware Workstation. Used on laptops.</li>
+</ul>
+<h4>What makes a container possible (Linux kernel features)</h4>
+<ul>
+<li><b>Namespaces</b> — give a process its own view of things: its own process IDs (it thinks it's PID 1), network interfaces, mount points, hostname, users.</li>
+<li><b>cgroups</b> (control groups) — limit how much CPU, memory and I/O a group of processes may use. <code>docker run --memory=512m</code> sets a cgroup limit.</li>
+<li><b>Union / overlay file systems</b> — image layers stacked on top of each other, shared between containers, with a thin writable layer on top.</li>
+</ul>
+<div class="note"><b>Docker on a Mac or Windows</b> actually runs a small Linux VM behind the scenes, because containers need a Linux kernel. And in the cloud, your containers usually run <i>inside</i> VMs — the two are used together, not instead of each other.</div>
+</section>
+
+<!-- ================= REVISION ================= -->
+<div class="part">Revision</div>
+
+<section id="rev">
+<h3>Interview Q&amp;A — quick answers</h3>
+
+<h4>Basics</h4>
+<ul>
+<li><b>What is an OS?</b> The software that manages hardware and shares it safely between programs, and gives programs simple abstractions like files and processes.</li>
+<li><b>What is the kernel?</b> The core of the OS that always stays in memory and runs in kernel mode with full hardware access.</li>
+<li><b>User mode vs kernel mode?</b> User mode blocks privileged instructions; kernel mode allows everything. Apps run in user mode and enter the kernel only through system calls, interrupts or faults.</li>
+<li><b>What is a system call?</b> A controlled request from a program to the kernel (open, read, fork). It uses a trap instruction to switch to kernel mode and back.</li>
+<li><b>Monolithic vs microkernel?</b> Monolithic keeps all services in the kernel (fast, less isolated — Linux). Microkernel keeps only the bare minimum and runs the rest as user-space servers (safer, slower — QNX, MINIX).</li>
+<li><b>Multiprogramming vs multitasking?</b> Multiprogramming switches when a process waits, to keep the CPU busy. Multitasking also switches on a timer, to keep response times low.</li>
+</ul>
+
+<h4>Processes &amp; threads</h4>
+<ul>
+<li><b>Program vs process?</b> A program is a passive file on disk; a process is a running instance with its own memory, registers and state.</li>
+<li><b>What is a PCB?</b> The kernel's record of a process — PID, state, program counter, registers, memory info, open files — used to pause and resume it.</li>
+<li><b>Process states?</b> New, Ready, Running, Waiting, Terminated. Waiting goes back to Ready, never straight to Running.</li>
+<li><b>Process vs thread?</b> Processes have separate memory; threads in a process share code, data, heap and files, but each has its own stack, registers and PC. Threads are cheaper to create and switch.</li>
+<li><b>What is a context switch?</b> Saving one process's CPU state to its PCB and loading another's. Pure overhead, plus cache and TLB warm-up cost.</li>
+<li><b>What does fork return?</b> 0 in the child, the child's PID in the parent, −1 on failure. n forks in a row give 2ⁿ processes.</li>
+<li><b>Zombie vs orphan?</b> Zombie: child finished but parent hasn't called wait(). Orphan: parent finished first; init adopts the child.</li>
+<li><b>User vs kernel threads?</b> User threads are managed by a library and invisible to the kernel (fast, but one block blocks all). Kernel threads are scheduled by the OS and can use multiple cores.</li>
+</ul>
+
+<h4>Scheduling</h4>
+<ul>
+<li><b>Preemptive vs non-preemptive?</b> Preemptive can take the CPU away mid-run; non-preemptive waits for the process to finish or block.</li>
+<li><b>Which algorithm gives minimum average waiting time?</b> SJF (non-preemptive) / SRTF (preemptive) — provably optimal, but needs burst times.</li>
+<li><b>What is the convoy effect?</b> In FCFS, short processes stuck behind one long process.</li>
+<li><b>How do you prevent starvation in priority scheduling?</b> Aging — gradually raise the priority of waiting processes.</li>
+<li><b>Effect of time quantum in RR?</b> Too large → becomes FCFS. Too small → time wasted on context switches.</li>
+<li><b>TAT and WT formulas?</b> TAT = CT − AT. WT = TAT − BT. RT = first run − AT.</li>
+<li><b>What is MLFQ?</b> Multiple queues with different priorities and quanta; processes move down if CPU-hungry and up if they wait long. Learns process behaviour.</li>
+</ul>
+
+<h4>Synchronisation</h4>
+<ul>
+<li><b>What is a race condition?</b> When the result depends on the timing of threads accessing shared data, e.g. two threads doing <code>count++</code>.</li>
+<li><b>Critical section requirements?</b> Mutual exclusion, progress, bounded waiting.</li>
+<li><b>Mutex vs semaphore?</b> A mutex is a lock with an owner (only the locker unlocks). A semaphore is a counter any thread can signal; counting semaphores manage N resources.</li>
+<li><b>Binary semaphore vs mutex?</b> Similar values (0/1), but a mutex has ownership and a binary semaphore doesn't — so a semaphore can be used for signalling between threads.</li>
+<li><b>What is busy waiting / a spinlock?</b> Looping until a lock frees up. Wastes CPU; only worth it for very short waits on multi-core machines.</li>
+<li><b>What is a monitor?</b> A language-level construct whose methods run one at a time automatically, with condition variables for waiting. Java's <code>synchronized</code>.</li>
+<li><b>Why wait in a while loop?</b> Spurious wakeups and other threads acting first — the condition must be re-checked after waking.</li>
+<li><b>Producer–consumer semaphores?</b> mutex = 1, empty = N, full = 0. Wait on empty/full <i>before</i> mutex, or it deadlocks.</li>
+<li><b>How to avoid deadlock in dining philosophers?</b> Allow at most 4 at the table, make one philosopher pick up in reverse order, or pick up both chopsticks atomically.</li>
+</ul>
+
+<h4>Deadlock</h4>
+<ul>
+<li><b>Four necessary conditions?</b> Mutual exclusion, hold and wait, no preemption, circular wait. Break any one to prevent deadlock.</li>
+<li><b>Most practical prevention?</b> Break circular wait by always acquiring resources (locks) in a fixed global order.</li>
+<li><b>Safe vs unsafe state?</b> Safe: some order exists in which every process can finish. Unsafe means deadlock is possible, not certain.</li>
+<li><b>What does Banker's algorithm do?</b> Grants a request only if the resulting state is still safe. Need = Max − Allocation.</li>
+<li><b>Cycle in a RAG always means deadlock?</b> Only if each resource has a single instance. With multiple instances, a cycle means possible deadlock.</li>
+<li><b>Deadlock vs starvation vs livelock?</b> Deadlock: all stuck waiting on each other. Starvation: one process keeps being passed over. Livelock: processes keep reacting to each other but make no progress.</li>
+</ul>
+
+<h4>Memory</h4>
+<ul>
+<li><b>Logical vs physical address?</b> Logical is what the program uses; physical is the real RAM location. The MMU translates at run time.</li>
+<li><b>Internal vs external fragmentation?</b> Internal: unused space inside an allocated block. External: free memory split into gaps too small to use. Paging removes external; segmentation removes internal.</li>
+<li><b>What is paging?</b> Splitting logical memory into fixed-size pages and RAM into frames, mapped by a per-process page table.</li>
+<li><b>What is the TLB?</b> A small fast cache of recent page-to-frame translations, avoiding an extra memory access per lookup.</li>
+<li><b>Why multi-level page tables?</b> A flat table is huge (4 MB per process on 32-bit); multi-level tables only create the parts actually used.</li>
+<li><b>What is virtual memory?</b> Letting processes use more memory than physical RAM by keeping only active pages in RAM and the rest on disk.</li>
+<li><b>What is a page fault?</b> A trap when a process touches a page not in RAM; the OS loads it from disk and restarts the instruction.</li>
+<li><b>Best page replacement algorithm?</b> Optimal in theory (needs the future). LRU in practice, usually approximated by the Clock algorithm.</li>
+<li><b>What is Belady's anomaly?</b> With FIFO, more frames can cause more page faults. LRU and Optimal are immune.</li>
+<li><b>What is thrashing?</b> The system spends most of its time paging rather than working, because processes don't have enough frames for their working sets.</li>
+</ul>
+
+<h4>Files, disks &amp; I/O</h4>
+<ul>
+<li><b>What is an inode?</b> A Unix record of a file's metadata and block pointers — everything except its name.</li>
+<li><b>Hard link vs soft link?</b> Hard link: another name for the same inode (survives deleting the original). Soft link: a file holding a path (breaks if the target goes).</li>
+<li><b>What is journaling?</b> Logging intended changes before making them, so the file system can recover quickly after a crash.</li>
+<li><b>Which disk algorithm minimises seek but can starve?</b> SSTF. SCAN/C-SCAN avoid starvation; C-SCAN gives the most uniform wait.</li>
+<li><b>What is DMA?</b> A controller that moves data between a device and RAM without the CPU, interrupting once when the transfer is complete.</li>
+<li><b>Polling vs interrupts?</b> Polling: CPU repeatedly checks the device. Interrupts: device notifies the CPU when ready.</li>
+<li><b>What is spooling?</b> Queueing jobs on disk for a device that handles one at a time, like a printer.</li>
+</ul>
+
+<h4>Practical</h4>
+<ul>
+<li><b>SIGTERM vs SIGKILL?</b> SIGTERM (15) asks politely and can be handled for a clean shutdown. SIGKILL (9) can't be caught — the kernel kills the process immediately.</li>
+<li><b>What does chmod 755 mean?</b> Owner rwx, group r-x, others r-x.</li>
+<li><b>VM vs container?</b> A VM virtualises hardware and runs its own OS kernel. A container is an isolated process sharing the host kernel, using namespaces and cgroups — lighter and faster, less isolated.</li>
+<li><b>What are namespaces and cgroups?</b> Namespaces control what a process can <i>see</i>; cgroups control how much it can <i>use</i>.</li>
+</ul>
+</section>
+
+<section id="road">
+<h3>Learning Path</h3>
+<ol>
+<li><b>The big picture</b> — what the kernel does, user vs kernel mode, system calls. Run <code>strace ls</code> and look at the calls it makes.</li>
+<li><b>Processes</b> — states, PCB, fork/exec/wait. Write a small C program that forks, and solve a few "how many times does this print" puzzles.</li>
+<li><b>Threads</b> — write a program where two threads increment a shared counter a million times. See the wrong answer. Fix it with a mutex.</li>
+<li><b>Scheduling numericals</b> — practise FCFS, SJF, SRTF, Priority and RR until drawing the Gantt chart is automatic. Always double-check by summing.</li>
+<li><b>Synchronisation</b> — semaphores, then producer–consumer, readers–writers and dining philosophers from memory.</li>
+<li><b>Deadlock</b> — the four conditions, RAGs, and at least three Banker's problems end to end.</li>
+<li><b>Memory</b> — address splitting and bit-counting, TLB effective access time, then paging vs segmentation.</li>
+<li><b>Virtual memory</b> — page faults and the three replacement algorithms on paper. Reproduce Belady's anomaly yourself.</li>
+<li><b>Files and disks</b> — inodes and max file size, links, and disk scheduling numericals in both directions.</li>
+<li><b>Hands-on Linux</b> — <code>ps</code>, <code>top</code>, <code>kill</code>, <code>chmod</code>, signals. Write a Node server that shuts down gracefully on SIGTERM.</li>
+<li><b>Containers</b> — run a Docker container, then look at its processes from the host with <code>ps</code>. Seeing it as "just a process" makes namespaces click.</li>
+<li><b>Then</b> — previous-year GATE OS questions, topic by topic. They repeat patterns heavily.</li>
+</ol>
+<div class="note"><b>The habit that matters most:</b> for every concept, ask "what problem was this invented to solve?" Paging exists because of fragmentation. TLBs exist because paging doubled memory accesses. Multi-level tables exist because flat tables got too big. OS ideas form a chain of fixes — learn the chain and you can rebuild any answer from scratch in an interview.</div>
+</section>
+
+</main>
+</div>
+
+<script src="../assets/notes.js"></script>
+</body>
+</html>

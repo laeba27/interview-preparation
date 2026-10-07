@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Analysis — Notes</title>
+<link rel="stylesheet" href="../assets/notes.css">
+<script>
+  try { document.documentElement.setAttribute("data-theme",
+    localStorage.getItem("notes-theme") || "light"); } catch (e) {}
+</script>
+</head>
+<body>
+<div class="scrim"></div>
+<button class="icon-btn" id="reopen" title="Show sidebar ([)" aria-label="Show sidebar">☰</button>
+<div class="layout">
+
+<aside>
+  <div class="sidebar-head">
+    <a class="back-link" href="../index.html">← All topics</a>
+    <button class="icon-btn" id="collapseBtn" title="Hide sidebar ([)" aria-label="Hide sidebar">‹</button>
+  </div>
+  <input id="search" type="text" placeholder="Filter topics…" autocomplete="off">
+  <h2>Foundations</h2>
+  <nav>
+    <a href="#s1">1 · What Data Analysis Is</a>
+    <a href="#s2">2 · The Data Analyst Role</a>
+    <a href="#s3">3 · Types of Analytics</a>
+    <a href="#s4">4 · The Analysis Process</a>
+  </nav>
+  <h2>Understanding Data</h2>
+  <nav>
+    <a href="#s5">5 · Data Types</a>
+    <a href="#s6">6 · Levels of Measurement</a>
+    <a href="#s7">7 · Data Sources &amp; Collection</a>
+  </nav>
+  <h2>Preparing Data</h2>
+  <nav>
+    <a href="#s8">8 · Missing Values</a>
+    <a href="#s9">9 · Duplicates, Outliers, Formats</a>
+    <a href="#s10">10 · Data Wrangling</a>
+  </nav>
+  <h2>Statistics</h2>
+  <nav>
+    <a href="#s11">11 · Mean, Median, Mode</a>
+    <a href="#s12">12 · Spread: Range, Variance, SD</a>
+    <a href="#s13">13 · Percentiles &amp; IQR</a>
+    <a href="#s14">14 · Distributions &amp; Skew</a>
+    <a href="#s15">15 · Correlation vs Causation</a>
+    <a href="#s16">16 · Probability Basics</a>
+    <a href="#s17">17 · Sampling</a>
+    <a href="#s18">18 · Hypothesis Testing</a>
+    <a href="#s19">19 · Common Tests &amp; Errors</a>
+    <a href="#s20">20 · A/B Testing</a>
+    <a href="#s21">21 · Regression Basics</a>
+  </nav>
+  <h2>Business Analysis</h2>
+  <nav>
+    <a href="#s22">22 · Exploratory Data Analysis</a>
+    <a href="#s23">23 · KPIs &amp; Metrics</a>
+    <a href="#s24">24 · Cohort Analysis</a>
+    <a href="#s25">25 · Funnel Analysis</a>
+  </nav>
+  <h2>Tools</h2>
+  <nav>
+    <a href="#s26">26 · Excel for Analysts</a>
+    <a href="#s27">27 · SQL Basics</a>
+    <a href="#s28">28 · SQL Joins &amp; Window Functions</a>
+    <a href="#s29">29 · Python &amp; pandas</a>
+    <a href="#s30">30 · Tools Overview</a>
+  </nav>
+  <h2>Sharing Results</h2>
+  <nav>
+    <a href="#s31">31 · Charts &amp; Storytelling</a>
+    <a href="#s32">32 · Case Study</a>
+  </nav>
+  <h2>Revision</h2>
+  <nav>
+    <a href="#rev">Quick Revision</a>
+    <a href="#road">Learning Path</a>
+  </nav>
+</aside>
+
+<main>
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="../index.html#analytics">Data Analytics</a></li><li><span>Data Analysis</span></li><li><span aria-current="page">Notes</span></li></ol></nav>
+<header class="top">
+  <h1>Data Analysis</h1>
+  <div class="top-actions">
+    <button class="ghost" id="menuBtn">☰ Topics</button>
+    <button class="ghost" id="theme">Dark mode</button>
+  </div>
+</header>
+<p class="sub">Simple notes for data analyst and business analyst interviews. Every term is explained the first time it appears. Each topic has an everyday example and small made-up data you can follow by hand.</p>
+
+<!-- ================= FOUNDATIONS ================= -->
+<div class="part">Part 1 — Foundations</div>
+
+<section id="s1">
+<h3>1. What Data Analysis Is</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Data analysis</b> means looking at data to answer a question and help someone make a better decision. <b>Data</b> is simply recorded facts: sales, clicks, marks, prices, ratings.</p>
+<p class="analogy">Think of a doctor. Your temperature, BP and blood test are the data. The doctor reads them, finds the problem and suggests a medicine. An analyst does the same thing for a business.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>The goal is a <b>decision</b>, not a chart. A chart is only a tool to explain the answer.</li>
+<li>Raw data → <b>information</b> (organised data) → <b>insight</b> (what it means) → <b>action</b> (what to do).</li>
+<li>Good analysis starts with a clear <b>business question</b>. Example: "Why did orders drop last month?"</li>
+<li>Companies use it everywhere: pricing, marketing, stock planning, fraud checks, hiring.</li>
+<li><b>Data analysis</b> explains what happened and why. <b>Data science</b> goes further and builds models to predict the future.</li>
+</ul>
+<h4>Small example</h4>
+<div class="table-wrap"><table>
+<tr><th>Stage</th><th>Example</th></tr>
+<tr><td>Data</td><td>A kirana shop sold 40 packets of Maggi on Monday and 95 on Saturday.</td></tr>
+<tr><td>Information</td><td>Weekend sales are more than double weekday sales.</td></tr>
+<tr><td>Insight</td><td>Families shop on weekends, so demand jumps then.</td></tr>
+<tr><td>Action</td><td>Order extra stock every Friday.</td></tr>
+</table></div>
+<div class="note"><b>Remember:</b> data analysis = question → data → insight → decision. If no decision changes, the analysis did not help.</div>
+</section>
+
+<section id="s2">
+<h3>2. The Data Analyst Role</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>data analyst</b> collects, cleans and studies data, then explains the findings to people who are not technical, like managers. A <b>business analyst</b> focuses more on business needs and processes, and uses data to support them.</p>
+<p class="analogy">An analyst is like a translator. The data speaks in numbers. The manager speaks in business. The analyst turns one into the other.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Daily work: write SQL queries, clean data in Excel or Python, build dashboards, answer questions from teams.</li>
+<li><b>Dashboard</b> = a screen of charts and numbers that updates by itself. Built in tools like Power BI or Tableau.</li>
+<li><b>Stakeholder</b> = the person who asked the question or will use your answer. Example: the marketing head.</li>
+<li>Hard skills: Excel, SQL, basic statistics, one BI tool, some Python.</li>
+<li>Soft skills: asking good questions, clear writing, simple explanations, business sense.</li>
+<li>Common fresher job titles in India: Data Analyst, Business Analyst, MIS Executive, Product Analyst, Analyst Trainee.</li>
+</ul>
+<div class="table-wrap"><table>
+<tr><th>Role</th><th>Main question</th><th>Main tools</th></tr>
+<tr><td>Data Analyst</td><td>What happened and why?</td><td>SQL, Excel, Power BI, Python</td></tr>
+<tr><td>Business Analyst</td><td>What does the business need?</td><td>Excel, documents, process diagrams, some SQL</td></tr>
+<tr><td>Data Scientist</td><td>What will happen next?</td><td>Python, statistics, machine learning</td></tr>
+<tr><td>Data Engineer</td><td>How does data reach everyone safely?</td><td>SQL, pipelines, cloud tools</td></tr>
+</table></div>
+<div class="note"><b>Remember:</b> in interviews, say the analyst's job is "turning data into decisions". Then mention SQL, Excel and communication.</div>
+</section>
+
+<section id="s3">
+<h3>3. Types of Analytics</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>There are four types of analytics. Each one answers a different question. They go from easy to hard.</p>
+<p class="analogy">Think about a cricket team that lost a match. "We lost by 20 runs" is descriptive. "Our middle order collapsed" is diagnostic. "We may lose to spin again" is predictive. "Pick one extra batter next match" is prescriptive.</p>
+</div>
+<div class="table-wrap"><table>
+<tr><th>Type</th><th>Question it answers</th><th>Business example</th></tr>
+<tr><td><b>Descriptive</b></td><td>What happened?</td><td>Sales were ₹12 lakh in June.</td></tr>
+<tr><td><b>Diagnostic</b></td><td>Why did it happen?</td><td>Sales fell because a big offer ended.</td></tr>
+<tr><td><b>Predictive</b></td><td>What will happen?</td><td>July sales will be about ₹11 lakh.</td></tr>
+<tr><td><b>Prescriptive</b></td><td>What should we do?</td><td>Run a 10% offer on weekends to reach ₹13 lakh.</td></tr>
+</table></div>
+<h4>Key points</h4>
+<ul>
+<li>Descriptive uses totals, averages and charts. Most fresher work is here.</li>
+<li>Diagnostic uses drill-downs (breaking a number into parts) and comparisons.</li>
+<li>Predictive uses past patterns and models, like regression.</li>
+<li>Prescriptive suggests an action, often by testing options.</li>
+<li>Value and difficulty both go up as you move down the table.</li>
+</ul>
+<div class="note"><b>Remember:</b> What happened? Why? What next? What to do? That order is the easiest way to recall all four.</div>
+</section>
+
+<section id="s4">
+<h3>4. The Analysis Process</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Analysts follow a fixed set of steps. Google's popular version has six: <b>Ask, Prepare, Process, Analyse, Share, Act</b>.</p>
+<p class="analogy">It is like cooking a meal. Decide what to cook (ask), buy the vegetables (prepare), wash and chop them (process), cook (analyse), serve the plate (share), and see if people enjoy it (act).</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 230" role="img" aria-label="The six step analysis cycle: Ask, Prepare, Process along the top, then Analyse, Share, Act along the bottom, with an arrow from Act back to Ask.">
+  <rect class="d-fill-accent" x="30" y="30" width="160" height="56" rx="8"/>
+  <rect class="d-box-accent" x="30" y="30" width="160" height="56" rx="8"/>
+  <text class="d-accent-text" x="110" y="54" text-anchor="middle">1. Ask</text>
+  <text class="d-sub" x="110" y="72" text-anchor="middle">define the question</text>
+
+  <rect class="d-box" x="240" y="30" width="160" height="56" rx="8"/>
+  <text class="d-label" x="320" y="54" text-anchor="middle">2. Prepare</text>
+  <text class="d-sub" x="320" y="72" text-anchor="middle">collect the data</text>
+
+  <rect class="d-box" x="450" y="30" width="160" height="56" rx="8"/>
+  <text class="d-label" x="530" y="54" text-anchor="middle">3. Process</text>
+  <text class="d-sub" x="530" y="72" text-anchor="middle">clean the data</text>
+
+  <rect class="d-box" x="450" y="140" width="160" height="56" rx="8"/>
+  <text class="d-label" x="530" y="164" text-anchor="middle">4. Analyse</text>
+  <text class="d-sub" x="530" y="182" text-anchor="middle">find patterns</text>
+
+  <rect class="d-box" x="240" y="140" width="160" height="56" rx="8"/>
+  <text class="d-label" x="320" y="164" text-anchor="middle">5. Share</text>
+  <text class="d-sub" x="320" y="182" text-anchor="middle">charts and story</text>
+
+  <rect class="d-fill-accent" x="30" y="140" width="160" height="56" rx="8"/>
+  <rect class="d-box-accent" x="30" y="140" width="160" height="56" rx="8"/>
+  <text class="d-accent-text" x="110" y="164" text-anchor="middle">6. Act</text>
+  <text class="d-sub" x="110" y="182" text-anchor="middle">make the decision</text>
+
+  <path class="d-line" d="M190 58 H234"/><path class="d-arrow" d="M240 58 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M400 58 H444"/><path class="d-arrow" d="M450 58 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M530 86 V134"/><path class="d-arrow" d="M530 140 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M450 168 H406"/><path class="d-arrow" d="M400 168 l9 -4.5 v9 z"/>
+  <path class="d-line" d="M240 168 H196"/><path class="d-arrow" d="M190 168 l9 -4.5 v9 z"/>
+  <path class="d-dash" d="M110 140 V92"/><path class="d-arrow-accent" d="M110 86 l-4.5 9 h9 z"/>
+  <text class="d-sub" x="120" y="118">new questions</text>
+  <text class="d-sub" x="320" y="222" text-anchor="middle">Analysis is a loop. Each answer usually raises the next question.</text>
+</svg>
+<figcaption>The six-step analysis cycle. Most time (often 60–80%) goes into Prepare and Process, not the fun "Analyse" step.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li><b>Ask</b>: understand the problem. Use <b>SMART</b> questions: Specific, Measurable, Action-oriented, Relevant, Time-bound.</li>
+<li><b>Prepare</b>: find and collect the right data. Check it is reliable.</li>
+<li><b>Process</b>: clean it. Fix blanks, duplicates and wrong formats.</li>
+<li><b>Analyse</b>: calculate, group, compare, find trends.</li>
+<li><b>Share</b>: present findings with clear charts and a short story.</li>
+<li><b>Act</b>: the business makes a decision based on your work.</li>
+<li><b>CRISP-DM</b> is another famous process with six steps: Business Understanding, Data Understanding, Data Preparation, Modelling, Evaluation, Deployment. It is the same idea, used more in data science.</li>
+</ul>
+<div class="note"><b>Remember:</b> Ask, Prepare, Process, Analyse, Share, Act. If asked "how do you approach a problem?", walk through these six steps with one example.</div>
+</section>
+
+<!-- ================= UNDERSTANDING DATA ================= -->
+<div class="part">Part 2 — Understanding Data</div>
+
+<section id="s5">
+<h3>5. Data Types</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Data comes in different shapes. <b>Structured</b> data fits neatly in rows and columns. <b>Unstructured</b> data does not, like photos, videos and free text.</p>
+<p class="analogy">Structured data is like a train timetable: every train has the same columns. Unstructured data is like a WhatsApp group chat: useful, but messy and hard to put in a table.</p>
+</div>
+<h4>Structure</h4>
+<ul>
+<li><b>Structured</b>: tables in Excel or a database. Example: an orders table. Easy to query with SQL.</li>
+<li><b>Semi-structured</b>: has some labels but no fixed table. Example: JSON files, emails (sender, subject, then free text).</li>
+<li><b>Unstructured</b>: no fixed format. Example: product reviews, images, call recordings. About 80% of company data is like this.</li>
+</ul>
+<h4>Qualitative vs quantitative</h4>
+<ul>
+<li><b>Quantitative</b> = numbers you can do maths on. Example: price, age, number of orders.</li>
+<li><b>Qualitative</b> (also called <b>categorical</b>) = labels or groups. Example: city, gender, payment mode.</li>
+<li>Quantitative data is either <b>discrete</b> (counted, whole numbers: 3 children) or <b>continuous</b> (measured, can have decimals: 64.5 kg).</li>
+</ul>
+<div class="table-wrap"><table>
+<tr><th>Column</th><th>Value</th><th>Type</th></tr>
+<tr><td>customer_city</td><td>Jaipur</td><td>Qualitative</td></tr>
+<tr><td>items_in_cart</td><td>3</td><td>Quantitative, discrete</td></tr>
+<tr><td>order_amount</td><td>459.50</td><td>Quantitative, continuous</td></tr>
+<tr><td>pin_code</td><td>302001</td><td>Qualitative (it is a label, adding pin codes means nothing)</td></tr>
+</table></div>
+<div class="note"><b>Remember:</b> a number is not always quantitative. Pin codes, phone numbers and roll numbers are labels. Ask: "Does averaging this make sense?"</div>
+</section>
+
+<section id="s6">
+<h3>6. Levels of Measurement</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>The <b>level of measurement</b> tells you what maths you are allowed to do with a column. There are four levels: <b>Nominal, Ordinal, Interval, Ratio</b> (remember "NOIR").</p>
+<p class="analogy">Think of a race. Runner names are nominal. Finishing positions (1st, 2nd, 3rd) are ordinal. The start time on a clock is interval. Time taken to finish is ratio.</p>
+</div>
+<div class="table-wrap"><table>
+<tr><th>Level</th><th>What it means</th><th>Example</th><th>Allowed maths</th></tr>
+<tr><td><b>Nominal</b></td><td>Names or groups, no order</td><td>City, blood group, payment mode</td><td>Count, mode</td></tr>
+<tr><td><b>Ordinal</b></td><td>Groups with an order, but gaps are not equal</td><td>Rating: Poor / OK / Good, T-shirt size S/M/L</td><td>+ median, ranking</td></tr>
+<tr><td><b>Interval</b></td><td>Equal gaps, but no true zero</td><td>Temperature in °C, calendar year</td><td>+ add, subtract, mean</td></tr>
+<tr><td><b>Ratio</b></td><td>Equal gaps and a true zero</td><td>Salary, weight, age, sales</td><td>+ multiply, divide, "twice as much"</td></tr>
+</table></div>
+<h4>Key points</h4>
+<ul>
+<li><b>True zero</b> means zero = "none at all". ₹0 salary means no money. But 0 °C does not mean "no temperature".</li>
+<li>That is why 40 °C is not "twice as hot" as 20 °C. But ₹40,000 is twice ₹20,000.</li>
+<li>Ordinal gaps are unequal: the jump from "Poor" to "OK" may not equal "OK" to "Good".</li>
+<li>Nominal and ordinal are qualitative. Interval and ratio are quantitative.</li>
+</ul>
+<div class="note"><b>Remember:</b> NOIR. Each level can do everything the level above it can, plus one more thing.</div>
+</section>
+
+<section id="s7">
+<h3>7. Data Sources &amp; Collection</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>data source</b> is where data comes from. <b>Primary data</b> is collected by you for your question. <b>Secondary data</b> was collected by someone else, for some other reason.</p>
+<p class="analogy">Primary data is cooking at home: you choose every ingredient. Secondary data is ordering from a restaurant: quick, but you don't know exactly how it was made.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><b>Internal sources</b>: the company's own databases, CRM (customer records), sales systems, website logs.</li>
+<li><b>External sources</b>: government data (data.gov.in, Census), industry reports, Kaggle datasets, public APIs.</li>
+<li><b>Collection methods</b>: surveys, forms, app tracking, sensors, interviews, web scraping (reading data from websites).</li>
+<li><b>API</b> (Application Programming Interface) = a doorway that lets one program ask another program for data.</li>
+<li>Check data quality with <b>ROCCC</b>: Reliable, Original, Comprehensive, Current, Cited.</li>
+<li>Be careful with personal data. Collect only what you need and keep it safe. India's DPDP Act 2023 sets rules for this.</li>
+</ul>
+<div class="table-wrap"><table>
+<tr><th></th><th>Primary data</th><th>Secondary data</th></tr>
+<tr><td>Who collects</td><td>You</td><td>Someone else</td></tr>
+<tr><td>Example</td><td>Survey of 200 college students on food habits</td><td>Government report on food prices</td></tr>
+<tr><td>Cost and time</td><td>High</td><td>Low</td></tr>
+<tr><td>Fits your question?</td><td>Exactly</td><td>Maybe not fully</td></tr>
+</table></div>
+<div class="note"><b>Remember:</b> before using any data, ask: Who made it? When? How? Is anything missing? Bad data gives bad answers ("garbage in, garbage out").</div>
+</section>
+
+<!-- ================= PREPARING DATA ================= -->
+<div class="part">Part 3 — Preparing Data</div>
+
+<section id="s8">
+<h3>8. Data Cleaning: Missing Values</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Data cleaning</b> means fixing or removing wrong, missing or messy data before analysis. A <b>missing value</b> is an empty cell, often shown as blank, <code>NULL</code> or <code>NaN</code> ("Not a Number").</p>
+<p class="analogy">Cleaning data is like picking stones out of rice before cooking. Skip it, and the whole meal is spoiled.</p>
+</div>
+<h4>Ways to handle missing values</h4>
+<ul>
+<li><b>Delete the row</b>: fine if only a few rows are missing and they are random.</li>
+<li><b>Delete the column</b>: if most of the column is empty (say 70% blank), it may be useless.</li>
+<li><b>Fill with mean</b> (average): for numbers without extreme values.</li>
+<li><b>Fill with median</b> (middle value): for numbers with extreme values, like salary.</li>
+<li><b>Fill with mode</b> (most common value): for categories, like city.</li>
+<li><b>Fill with a label</b>: write "Unknown" so the gap stays visible.</li>
+<li><b>Forward fill</b>: copy the previous value. Good for time data, like daily stock prices.</li>
+</ul>
+<h4>Worked example</h4>
+<div class="table-wrap"><table>
+<tr><th>Customer</th><th>Age (before)</th><th>City (before)</th><th>Age (after)</th><th>City (after)</th></tr>
+<tr><td>C1</td><td>22</td><td>Pune</td><td>22</td><td>Pune</td></tr>
+<tr><td>C2</td><td><i>blank</i></td><td>Pune</td><td><b>30</b></td><td>Pune</td></tr>
+<tr><td>C3</td><td>30</td><td><i>blank</i></td><td>30</td><td><b>Pune</b></td></tr>
+<tr><td>C4</td><td>41</td><td>Nagpur</td><td>41</td><td>Nagpur</td></tr>
+<tr><td>C5</td><td><i>blank</i></td><td>Pune</td><td><b>30</b></td><td>Pune</td></tr>
+</table></div>
+<ul>
+<li>Known ages: 22, 30, 41. Median = 30 (the middle one). Mean = (22 + 30 + 41) ÷ 3 = 93 ÷ 3 = 31.</li>
+<li>We filled age with the <b>median, 30</b>. Mean (31) would also be fine here.</li>
+<li>Known cities: Pune, Pune, Pune, Nagpur. Mode = Pune. So the blank city becomes Pune.</li>
+</ul>
+<div class="note"><b>Remember:</b> first ask <b>why</b> data is missing. If rich customers skip the "income" question, filling it with the average hides a real pattern.</div>
+</section>
+
+<section id="s9">
+<h3>9. Duplicates, Outliers and Formats</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>duplicate</b> is the same record entered twice. An <b>outlier</b> is a value very far from the others. <b>Inconsistent formats</b> means the same thing is written in different ways.</p>
+<p class="analogy">In a class attendance sheet, one student written twice is a duplicate. A student aged 95 is an outlier. "Mumbai", "mumbai" and "Bombay" are inconsistent formats for one city.</p>
+</div>
+<h4>Before cleaning</h4>
+<div class="table-wrap"><table>
+<tr><th>order_id</th><th>city</th><th>order_date</th><th>amount (₹)</th></tr>
+<tr><td>101</td><td>Mumbai</td><td>05-01-2025</td><td>450</td></tr>
+<tr><td>102</td><td>mumbai </td><td>2025/01/05</td><td>520</td></tr>
+<tr><td>102</td><td>mumbai </td><td>2025/01/05</td><td>520</td></tr>
+<tr><td>103</td><td>Bombay</td><td>Jan 6, 2025</td><td>48000</td></tr>
+<tr><td>104</td><td>Delhi</td><td>06-01-2025</td><td>-300</td></tr>
+</table></div>
+<h4>What we fix</h4>
+<ul>
+<li><b>Duplicate</b>: order 102 appears twice. Keep one. Otherwise sales are counted twice.</li>
+<li><b>Text format</b>: trim extra spaces, use one case, and map "Bombay" to "Mumbai".</li>
+<li><b>Date format</b>: convert all dates to one standard, like <code>2025-01-05</code> (YYYY-MM-DD).</li>
+<li><b>Outlier</b>: ₹48,000 is far above the rest. Check it. A bulk order is real. A typo (₹480) should be fixed.</li>
+<li><b>Invalid value</b>: a negative amount is impossible for a sale. Maybe it is a refund. Ask the data owner.</li>
+</ul>
+<h4>How to find outliers</h4>
+<ul>
+<li><b>IQR rule</b>: anything below Q1 − 1.5×IQR or above Q3 + 1.5×IQR (see topic 13).</li>
+<li><b>Z-score rule</b>: anything more than 3 standard deviations from the mean (see topic 12).</li>
+<li><b>Box plot</b> or scatter plot: outliers stand out visually.</li>
+</ul>
+<div class="note"><b>Remember:</b> never delete an outlier just because it is big. First find out if it is an error or a real, important event.</div>
+</section>
+
+<section id="s10">
+<h3>10. Data Wrangling</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Data wrangling</b> (also called data transformation or data munging) means reshaping clean data so it is ready for analysis. You add columns, combine tables, change types and summarise.</p>
+<p class="analogy">Cleaning is washing the vegetables. Wrangling is chopping them into the right size and shape for the recipe.</p>
+</div>
+<h4>Common steps</h4>
+<ul>
+<li><b>Filter</b>: keep only rows you need. Example: only 2025 orders.</li>
+<li><b>Derive a column</b>: make a new column from others. Example: <code>revenue = price × quantity</code>.</li>
+<li><b>Change data type</b>: text "500" → number 500, text "2025-01-05" → a real date.</li>
+<li><b>Split / combine</b>: "Asha Verma" → first name and last name. Or join them back.</li>
+<li><b>Merge (join)</b>: combine orders with customer details using a shared ID.</li>
+<li><b>Aggregate</b>: summarise many rows into a few. Example: total sales per city.</li>
+<li><b>Bin</b>: put numbers into ranges. Example: age 18–25, 26–35, 36+.</li>
+<li><b>Pivot</b>: turn row values into columns, like a pivot table.</li>
+<li><b>Normalise / scale</b>: bring numbers to one range, like 0 to 1, so they are easy to compare.</li>
+</ul>
+<h4>Small example</h4>
+<div class="table-wrap"><table>
+<tr><th>product</th><th>price</th><th>qty</th><th>revenue (new)</th><th>price band (new)</th></tr>
+<tr><td>Pen</td><td>20</td><td>10</td><td>200</td><td>Low</td></tr>
+<tr><td>Bag</td><td>900</td><td>2</td><td>1800</td><td>High</td></tr>
+<tr><td>Notebook</td><td>60</td><td>5</td><td>300</td><td>Low</td></tr>
+</table></div>
+<p>Rule used for the band: price under ₹500 = Low, ₹500 or more = High.</p>
+<div class="note"><b>Remember:</b> cleaning fixes what is wrong. Wrangling reshapes what is right. Both happen before analysis.</div>
+</section>
+
+<!-- ================= STATISTICS ================= -->
+<div class="part">Part 4 — Statistics</div>
+
+<section id="s11">
+<h3>11. Mean, Median, Mode</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>These three numbers describe the <b>centre</b> of your data, the "typical" value. <b>Mean</b> = average. <b>Median</b> = the middle value after sorting. <b>Mode</b> = the most common value.</p>
+<p class="analogy">If 10 friends share a pizza bill, the mean is what each pays if you split it equally. The median is what the "middle" friend ate. The mode is the topping most people chose.</p>
+</div>
+<h4>Worked example</h4>
+<p>Ravi's tea stall sold this many cups in 8 hours: <code>2, 4, 4, 4, 5, 5, 7, 9</code> (already sorted).</p>
+<div class="table-wrap"><table>
+<tr><th>Measure</th><th>How to calculate</th><th>Answer</th></tr>
+<tr><td>Mean</td><td>Sum ÷ count = (2+4+4+4+5+5+7+9) ÷ 8 = 40 ÷ 8</td><td><b>5</b></td></tr>
+<tr><td>Median</td><td>8 values, so average the 4th and 5th: (4 + 5) ÷ 2</td><td><b>4.5</b></td></tr>
+<tr><td>Mode</td><td>4 appears three times, more than any other</td><td><b>4</b></td></tr>
+</table></div>
+<h4>Key points</h4>
+<ul>
+<li>Odd count: the median is the single middle value. Even count: average the two middle values.</li>
+<li>The mean is pulled by <b>extreme values</b>. The median is not. This is why we say the median is <b>robust</b>.</li>
+<li>Example: salaries ₹20k, ₹25k, ₹30k and the boss's ₹5 lakh. Mean = ₹1,43,750. Median = ₹27,500. The median is the honest "typical" salary.</li>
+<li>Data can have no mode, one mode, or two modes (<b>bimodal</b>).</li>
+<li>Use the mode for categories: "Which payment mode is most popular? UPI."</li>
+</ul>
+<div class="note"><b>Remember:</b> skewed data or outliers → use the median. Symmetric data → the mean is fine. Categories → use the mode.</div>
+</section>
+
+<section id="s12">
+<h3>12. Spread: Range, Variance, Standard Deviation</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Spread</b> (or dispersion) tells you how far values are from each other. The centre alone is not enough. <b>Standard deviation</b> (SD) is the average distance of values from the mean.</p>
+<p class="analogy">Two batters both average 40 runs. One scores 38, 40, 42 every match. The other scores 0, 0, 120. Same mean, very different spread. You would trust the first one more.</p>
+</div>
+<h4>Worked example (same tea data)</h4>
+<p>Data: <code>2, 4, 4, 4, 5, 5, 7, 9</code>. Mean = 5.</p>
+<div class="table-wrap"><table>
+<tr><th>Value (x)</th><th>x − mean</th><th>(x − mean)²</th></tr>
+<tr><td>2</td><td>−3</td><td>9</td></tr>
+<tr><td>4</td><td>−1</td><td>1</td></tr>
+<tr><td>4</td><td>−1</td><td>1</td></tr>
+<tr><td>4</td><td>−1</td><td>1</td></tr>
+<tr><td>5</td><td>0</td><td>0</td></tr>
+<tr><td>5</td><td>0</td><td>0</td></tr>
+<tr><td>7</td><td>2</td><td>4</td></tr>
+<tr><td>9</td><td>4</td><td>16</td></tr>
+<tr><td><b>Total</b></td><td>0</td><td><b>32</b></td></tr>
+</table></div>
+<ul>
+<li><b>Range</b> = max − min = 9 − 2 = <b>7</b>.</li>
+<li><b>Population variance</b> = 32 ÷ 8 = <b>4</b>. Use this when you have <b>all</b> the data.</li>
+<li><b>Population SD</b> = √4 = <b>2</b>. So values are typically about 2 cups away from the mean.</li>
+<li><b>Sample variance</b> = 32 ÷ (8 − 1) = 32 ÷ 7 ≈ <b>4.57</b>. Use n − 1 when your data is only a <b>sample</b> of a bigger group.</li>
+<li><b>Sample SD</b> = √4.57 ≈ <b>2.14</b>.</li>
+</ul>
+<h4>Key points</h4>
+<ul>
+<li>We square the differences so negatives don't cancel positives. (Notice the "x − mean" column adds up to 0.)</li>
+<li>Variance is in squared units ("cups²"), which is hard to read. SD brings it back to normal units ("cups").</li>
+<li>Small SD = values are close together (consistent). Large SD = values are spread out.</li>
+<li><b>Z-score</b> = (x − mean) ÷ SD. It says how many SDs a value is from the mean. For 9 cups: (9 − 5) ÷ 2 = 2.</li>
+<li>Range is easy but uses only two values, so one outlier can change it a lot.</li>
+<li>In Excel: <code>=VAR.S()</code>, <code>=STDEV.S()</code> for samples; <code>=VAR.P()</code>, <code>=STDEV.P()</code> for populations.</li>
+</ul>
+<div class="note"><b>Remember:</b> variance = average of squared distances from the mean. SD = square root of variance. Sample → divide by n − 1.</div>
+</section>
+
+<section id="s13">
+<h3>13. Percentiles, Quartiles and IQR</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>percentile</b> tells you what percent of values are below a point. <b>Quartiles</b> cut sorted data into four equal parts. The <b>IQR</b> (interquartile range) is the spread of the middle 50%.</p>
+<p class="analogy">If you are at the 90th percentile in CAT, you scored more than 90% of test-takers. It is about your position, not your marks.</p>
+</div>
+<h4>Worked example</h4>
+<p>11 order values in ₹ hundreds, sorted: <code>10, 12, 14, 15, 16, 18, 20, 22, 25, 28, 90</code></p>
+<div class="table-wrap"><table>
+<tr><th>Measure</th><th>How</th><th>Answer</th></tr>
+<tr><td>Q2 (median, 50th percentile)</td><td>Middle (6th) value</td><td>18</td></tr>
+<tr><td>Q1 (25th percentile)</td><td>Median of lower half: 10, 12, <b>14</b>, 15, 16</td><td>14</td></tr>
+<tr><td>Q3 (75th percentile)</td><td>Median of upper half: 20, 22, <b>25</b>, 28, 90</td><td>25</td></tr>
+<tr><td>IQR</td><td>Q3 − Q1 = 25 − 14</td><td>11</td></tr>
+<tr><td>Lower fence</td><td>Q1 − 1.5 × IQR = 14 − 16.5</td><td>−2.5</td></tr>
+<tr><td>Upper fence</td><td>Q3 + 1.5 × IQR = 25 + 16.5</td><td>41.5</td></tr>
+</table></div>
+<p>90 is above the upper fence of 41.5, so <b>90 is an outlier</b>. Also notice: mean = 270 ÷ 11 ≈ 24.5, but median = 18. The outlier pulls the mean up.</p>
+<figure class="diagram">
+<svg viewBox="0 0 640 170" role="img" aria-label="Box plot of the order values. Whisker from 10 to 28, box from Q1 14 to Q3 25 with a median line at 18, upper fence at 41.5, and one outlier dot at 90.">
+  <path class="d-line" d="M40 130 H590"/>
+  <path class="d-line" d="M40 125 V135 M150 125 V135 M260 125 V135 M370 125 V135 M480 125 V135 M590 125 V135"/>
+  <text class="d-sub" x="40" y="152" text-anchor="middle">0</text>
+  <text class="d-sub" x="150" y="152" text-anchor="middle">20</text>
+  <text class="d-sub" x="260" y="152" text-anchor="middle">40</text>
+  <text class="d-sub" x="370" y="152" text-anchor="middle">60</text>
+  <text class="d-sub" x="480" y="152" text-anchor="middle">80</text>
+  <text class="d-sub" x="590" y="152" text-anchor="middle">100</text>
+
+  <path class="d-line" d="M95 70 H117 M177.5 70 H194 M95 58 V82 M194 58 V82"/>
+  <rect class="d-fill-accent" x="117" y="48" width="60.5" height="44"/>
+  <rect class="d-box-accent" x="117" y="48" width="60.5" height="44"/>
+  <path class="d-line-accent" d="M139 48 V92"/>
+  <text class="d-sub" x="95" y="40" text-anchor="middle">min 10</text>
+  <text class="d-sub" x="117" y="108" text-anchor="middle">Q1 14</text>
+  <text class="d-accent-text" x="139" y="40" text-anchor="middle">median 18</text>
+  <text class="d-sub" x="182" y="108" text-anchor="middle">Q3 25</text>
+  <text class="d-sub" x="208" y="40" text-anchor="middle">28</text>
+
+  <path class="d-dash" d="M268 40 V100"/>
+  <text class="d-sub" x="268" y="30" text-anchor="middle">upper fence 41.5</text>
+  <circle class="d-arrow-accent" cx="535" cy="70" r="6"/>
+  <text class="d-accent-text" x="535" y="52" text-anchor="middle">outlier 90</text>
+</svg>
+<figcaption>A box plot draws the five-number summary: min, Q1, median, Q3, max. The box is the IQR. Dots beyond the fences are outliers.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li>25th percentile = Q1, 50th = median = Q2, 75th = Q3.</li>
+<li>IQR ignores the top 25% and bottom 25%, so outliers don't affect it. Use it for skewed data.</li>
+<li>Different tools use slightly different methods. Excel's <code>QUARTILE.INC</code> gives Q1 = 14.5 and Q3 = 23.5 for this data. Both are acceptable; just say which you used.</li>
+<li>Business use: "90th percentile delivery time is 40 minutes" means 90% of orders arrive within 40 minutes.</li>
+</ul>
+<div class="note"><b>Remember:</b> IQR = Q3 − Q1. Outlier if below Q1 − 1.5×IQR or above Q3 + 1.5×IQR.</div>
+</section>
+
+<section id="s14">
+<h3>14. Distributions and Skew</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>distribution</b> shows how often each value appears. You see it with a <b>histogram</b>, a bar chart of value ranges. Its shape tells a story.</p>
+<p class="analogy">Heights of students in a class form a hill: most are medium, a few are very short or very tall. That hill shape is the <b>normal distribution</b>.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 210" role="img" aria-label="Three curves. Left skewed: long tail on the left, mean less than median. Normal: symmetric bell, mean equals median equals mode. Right skewed: long tail on the right, mean greater than median.">
+  <path class="d-line" d="M20 150 H200 M230 150 H410 M440 150 H620"/>
+  <path class="d-line-accent" d="M20 148 C 90 146, 120 140, 140 60 C 150 30, 170 30, 200 148"/>
+  <path class="d-dash" d="M152 40 V150 M128 90 V150"/>
+  <text class="d-sub" x="160" y="168" text-anchor="middle">mode</text>
+  <text class="d-sub" x="118" y="168" text-anchor="middle">mean</text>
+  <text class="d-label" x="110" y="196" text-anchor="middle">Left (negative) skew</text>
+
+  <path class="d-line-accent" d="M230 150 C 280 150, 290 40, 320 40 C 350 40, 360 150, 410 150"/>
+  <path class="d-dash" d="M320 40 V150"/>
+  <text class="d-sub" x="320" y="168" text-anchor="middle">mean = median = mode</text>
+  <text class="d-label" x="320" y="196" text-anchor="middle">Normal (symmetric)</text>
+
+  <path class="d-line-accent" d="M440 148 C 470 30, 490 30, 500 60 C 520 140, 550 146, 620 148"/>
+  <path class="d-dash" d="M488 40 V150 M512 90 V150"/>
+  <text class="d-sub" x="480" y="168" text-anchor="middle">mode</text>
+  <text class="d-sub" x="522" y="168" text-anchor="middle">mean</text>
+  <text class="d-label" x="530" y="196" text-anchor="middle">Right (positive) skew</text>
+  <text class="d-sub" x="320" y="18" text-anchor="middle">The mean is pulled toward the long tail. The median sits between mode and mean.</text>
+</svg>
+<figcaption>The tail decides the name. Long tail on the right = right skew. Long tail on the left = left skew.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li><b>Normal distribution</b>: bell-shaped and symmetric. Mean = median = mode.</li>
+<li><b>68–95–99.7 rule</b>: in a normal distribution, about 68% of values are within 1 SD of the mean, 95% within 2 SD, and 99.7% within 3 SD.</li>
+<li>Example: exam marks with mean 60 and SD 10. About 68% of students score 50–70, and 95% score 40–80.</li>
+<li><b>Right skew</b> (positive): long tail of big values. Mean &gt; median. Examples: income, house prices, order values.</li>
+<li><b>Left skew</b> (negative): long tail of small values. Mean &lt; median. Example: marks in a very easy exam.</li>
+<li><b>Uniform</b> distribution: all values equally likely, like rolling a fair dice.</li>
+<li><b>Bimodal</b>: two peaks. Often means two groups are mixed, like weekday and weekend orders.</li>
+</ul>
+<div class="note"><b>Remember:</b> the mean follows the tail. Right skew → mean bigger than median. For skewed data, report the median.</div>
+</section>
+
+<section id="s15">
+<h3>15. Correlation vs Causation</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Correlation</b> means two things move together. <b>Causation</b> means one thing actually makes the other happen. Correlation does <b>not</b> prove causation.</p>
+<p class="analogy">Ice cream sales and drowning cases both rise in summer. Ice cream does not cause drowning. Hot weather causes both. Hot weather is the hidden third factor.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 200" role="img" aria-label="Three scatter plots. Positive correlation: dots rise left to right. No correlation: dots scattered randomly. Negative correlation: dots fall left to right.">
+  <rect class="d-box" x="20" y="20" width="180" height="130" rx="6"/>
+  <circle class="d-arrow-accent" cx="40" cy="135" r="4"/><circle class="d-arrow-accent" cx="60" cy="120" r="4"/>
+  <circle class="d-arrow-accent" cx="80" cy="118" r="4"/><circle class="d-arrow-accent" cx="100" cy="95" r="4"/>
+  <circle class="d-arrow-accent" cx="120" cy="85" r="4"/><circle class="d-arrow-accent" cx="140" cy="70" r="4"/>
+  <circle class="d-arrow-accent" cx="160" cy="60" r="4"/><circle class="d-arrow-accent" cx="180" cy="38" r="4"/>
+  <text class="d-label" x="110" y="172" text-anchor="middle">Positive (r near +1)</text>
+  <text class="d-sub" x="110" y="190" text-anchor="middle">study hours vs marks</text>
+
+  <rect class="d-box" x="230" y="20" width="180" height="130" rx="6"/>
+  <circle class="d-arrow" cx="250" cy="60" r="4"/><circle class="d-arrow" cx="270" cy="125" r="4"/>
+  <circle class="d-arrow" cx="295" cy="45" r="4"/><circle class="d-arrow" cx="315" cy="100" r="4"/>
+  <circle class="d-arrow" cx="335" cy="75" r="4"/><circle class="d-arrow" cx="355" cy="130" r="4"/>
+  <circle class="d-arrow" cx="375" cy="50" r="4"/><circle class="d-arrow" cx="395" cy="95" r="4"/>
+  <text class="d-label" x="320" y="172" text-anchor="middle">None (r near 0)</text>
+  <text class="d-sub" x="320" y="190" text-anchor="middle">shoe size vs marks</text>
+
+  <rect class="d-box" x="440" y="20" width="180" height="130" rx="6"/>
+  <circle class="d-arrow-accent" cx="460" cy="38" r="4"/><circle class="d-arrow-accent" cx="480" cy="52" r="4"/>
+  <circle class="d-arrow-accent" cx="500" cy="62" r="4"/><circle class="d-arrow-accent" cx="520" cy="80" r="4"/>
+  <circle class="d-arrow-accent" cx="540" cy="90" r="4"/><circle class="d-arrow-accent" cx="560" cy="110" r="4"/>
+  <circle class="d-arrow-accent" cx="580" cy="118" r="4"/><circle class="d-arrow-accent" cx="600" cy="135" r="4"/>
+  <text class="d-label" x="530" y="172" text-anchor="middle">Negative (r near −1)</text>
+  <text class="d-sub" x="530" y="190" text-anchor="middle">price vs units sold</text>
+</svg>
+<figcaption>Scatter plots show correlation. Each dot is one record. The tighter the dots hug a line, the stronger the correlation.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li>The <b>correlation coefficient</b> (<b>r</b>, Pearson's r) goes from −1 to +1.</li>
+<li>+1 = perfect positive (both go up together). −1 = perfect negative (one up, other down). 0 = no straight-line link.</li>
+<li>Rough guide: |r| above 0.7 = strong, 0.3 to 0.7 = moderate, below 0.3 = weak.</li>
+<li>r only measures <b>straight-line</b> links. A curved pattern can have r near 0.</li>
+<li>A <b>confounding variable</b> is a hidden third factor that affects both things (like hot weather above).</li>
+<li>To prove causation, run a controlled experiment, like an A/B test (topic 20).</li>
+<li>In Excel: <code>=CORREL(A2:A6, B2:B6)</code>.</li>
+</ul>
+<h4>Small example</h4>
+<div class="table-wrap"><table>
+<tr><th>Study hours</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr>
+<tr><td>Marks</td><td>40</td><td>50</td><td>55</td><td>65</td><td>70</td></tr>
+</table></div>
+<p>Here r ≈ 0.99, a very strong positive correlation. But the link is still only proven to be a pattern, not a cause.</p>
+<div class="note"><b>Remember:</b> "Correlation is not causation." Always ask: could a third factor explain both?</div>
+</section>
+
+<section id="s16">
+<h3>16. Probability Basics</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Probability</b> is how likely something is to happen. It goes from 0 (impossible) to 1 (certain). 0.5 means a 50% chance.</p>
+<p class="analogy">A weather app saying "70% chance of rain" is probability. It doesn't promise rain. It says: on 10 days like this, it rains on about 7.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><b>Basic formula</b>: P(event) = favourable outcomes ÷ total outcomes.</li>
+<li>Rolling a 4 on a dice: 1 ÷ 6 ≈ 0.167.</li>
+<li><b>NOT rule</b>: P(not A) = 1 − P(A). Not rolling a 4 = 5 ÷ 6.</li>
+<li><b>AND rule</b> (independent events, one does not affect the other): multiply. Two heads in two coin tosses = 0.5 × 0.5 = 0.25.</li>
+<li><b>OR rule</b> (events that can't both happen): add. Rolling a 1 or a 2 = 1/6 + 1/6 = 1/3.</li>
+<li><b>Conditional probability</b> P(A | B) = chance of A, given B already happened. Read "|" as "given".</li>
+<li><b>Expected value</b> = the long-run average result. Sum of (value × probability).</li>
+</ul>
+<h4>Business example</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>Bought</th><th>Did not buy</th><th>Total</th></tr>
+<tr><td>Used a coupon</td><td>60</td><td>140</td><td>200</td></tr>
+<tr><td>No coupon</td><td>40</td><td>760</td><td>800</td></tr>
+<tr><td>Total</td><td>100</td><td>900</td><td>1000</td></tr>
+</table></div>
+<ul>
+<li>P(buy) = 100 ÷ 1000 = 0.10 (10%).</li>
+<li>P(buy | coupon) = 60 ÷ 200 = 0.30 (30%).</li>
+<li>P(buy | no coupon) = 40 ÷ 800 = 0.05 (5%).</li>
+<li>Expected value of a lucky draw: 10% chance to win ₹500, else ₹0. EV = 0.1 × 500 + 0.9 × 0 = ₹50.</li>
+</ul>
+<div class="note"><b>Remember:</b> AND → multiply, OR → add, NOT → 1 minus. Conditional probability is just "look only at the rows where B is true".</div>
+</section>
+
+<section id="s17">
+<h3>17. Sampling</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>The <b>population</b> is the whole group you care about. A <b>sample</b> is a smaller part you actually study. We use samples because checking everyone is too slow or costly.</p>
+<p class="analogy">To check if dal is salty, you taste one spoon, not the whole pot. But you must stir first. Stirring is what makes the sample fair.</p>
+</div>
+<h4>Sampling methods</h4>
+<div class="table-wrap"><table>
+<tr><th>Method</th><th>How it works</th><th>Example</th></tr>
+<tr><td><b>Simple random</b></td><td>Everyone has an equal chance</td><td>Pick 100 roll numbers by lottery</td></tr>
+<tr><td><b>Stratified</b></td><td>Split into groups, then sample randomly from each</td><td>Pick 50 students from each year</td></tr>
+<tr><td><b>Systematic</b></td><td>Pick every k-th item</td><td>Every 10th customer in the bill list</td></tr>
+<tr><td><b>Cluster</b></td><td>Pick whole groups at random</td><td>Pick 5 colleges and survey everyone there</td></tr>
+<tr><td><b>Convenience</b></td><td>Whoever is easy to reach (not random)</td><td>Asking only your friends</td></tr>
+</table></div>
+<h4>Key points</h4>
+<ul>
+<li><b>Sampling bias</b> = the sample does not represent the population. Example: an online survey misses people without internet.</li>
+<li>Bigger samples give more reliable answers, but only if they are not biased.</li>
+<li><b>Margin of error</b> = how far the sample answer may be from the true answer. "40% ± 3%" means the truth is probably 37–43%.</li>
+<li><b>Central Limit Theorem</b> (simple version): if you take many large samples and calculate each sample's mean, those means form a normal curve. This is why many tests work even when the data is not normal.</li>
+<li><b>Survivorship bias</b> = studying only the winners. Example: only studying apps that succeeded, ignoring the ones that failed.</li>
+</ul>
+<div class="note"><b>Remember:</b> a small, random sample beats a huge, biased one. Stir the pot before tasting.</div>
+</section>
+
+<section id="s18">
+<h3>18. Hypothesis Testing</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Hypothesis testing</b> checks whether a difference you see is real, or just luck. A <b>hypothesis</b> is a claim you want to test.</p>
+<p class="analogy">It works like a court. The accused is "innocent until proven guilty". Here, we assume "nothing changed" until the evidence is strong enough to say otherwise.</p>
+</div>
+<h4>Key terms</h4>
+<ul>
+<li><b>Null hypothesis (H0)</b>: "no effect, no difference". Example: the new button does not change sales.</li>
+<li><b>Alternative hypothesis (H1)</b>: "there is an effect". Example: the new button changes sales.</li>
+<li><b>Significance level (α, alpha)</b>: how much risk of a false alarm you accept. Usually <b>0.05</b> (5%).</li>
+<li><b>p-value</b>: if H0 were true, how likely is a result at least this extreme? Small p = the result is surprising under H0.</li>
+<li>If <b>p &lt; 0.05</b> → reject H0. The result is "<b>statistically significant</b>".</li>
+<li>If <b>p ≥ 0.05</b> → fail to reject H0. Not enough evidence. (We never say "H0 is proven true".)</li>
+</ul>
+<h4>Steps</h4>
+<ol>
+<li>Write H0 and H1.</li>
+<li>Choose α (usually 0.05).</li>
+<li>Pick the right test (see topic 19).</li>
+<li>Calculate the test statistic and p-value (Excel or Python does this).</li>
+<li>Compare p with α and decide.</li>
+<li>Explain the result in plain business words.</li>
+</ol>
+<h4>Example</h4>
+<p>A coaching centre says its new method raises average marks. Old average = 60. A sample of new students averages 64. Test gives p = 0.03.</p>
+<ul>
+<li>H0: new method average = 60. H1: new method average ≠ 60.</li>
+<li>p = 0.03 is less than 0.05 → reject H0. The improvement is unlikely to be just luck.</li>
+</ul>
+<div class="note"><b>Remember:</b> "If p is low, the null must go." p-value is NOT the chance that H0 is true. It is how surprising your data is if H0 were true.</div>
+</section>
+
+<section id="s19">
+<h3>19. Common Tests and Errors</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Different questions need different tests. A <b>t-test</b> compares averages. A <b>chi-square test</b> compares counts in categories.</p>
+<p class="analogy">Choosing a test is like choosing a tool. You use a ruler for length and a weighing scale for weight. Averages and category counts need different tools too.</p>
+</div>
+<div class="table-wrap"><table>
+<tr><th>Test</th><th>Use it when…</th><th>Example question</th></tr>
+<tr><td><b>One-sample t-test</b></td><td>Compare one group's mean to a fixed number</td><td>Is average delivery time different from 30 min?</td></tr>
+<tr><td><b>Two-sample t-test</b></td><td>Compare means of two separate groups</td><td>Do Section A and B have different average marks?</td></tr>
+<tr><td><b>Paired t-test</b></td><td>Same people, before vs after</td><td>Did marks improve after training?</td></tr>
+<tr><td><b>Z-test</b></td><td>Like a t-test, for large samples (often 30+) or proportions</td><td>Is the conversion rate different?</td></tr>
+<tr><td><b>ANOVA</b></td><td>Compare means of 3 or more groups</td><td>Do 3 cities have different average order values?</td></tr>
+<tr><td><b>Chi-square test</b></td><td>Check if two category columns are related</td><td>Is payment mode related to city?</td></tr>
+</table></div>
+<h4>Chi-square worked example</h4>
+<div class="table-wrap"><table>
+<tr><th>Observed</th><th>UPI</th><th>Cash</th><th>Total</th></tr>
+<tr><td>Mumbai</td><td>60</td><td>40</td><td>100</td></tr>
+<tr><td>Patna</td><td>40</td><td>60</td><td>100</td></tr>
+<tr><td>Total</td><td>100</td><td>100</td><td>200</td></tr>
+</table></div>
+<ul>
+<li><b>Expected</b> count if there is no link = (row total × column total) ÷ grand total = 100 × 100 ÷ 200 = 50 for every cell.</li>
+<li>For each cell: (observed − expected)² ÷ expected = (10)² ÷ 50 = 2. Four cells → chi-square = 2 + 2 + 2 + 2 = <b>8</b>.</li>
+<li>For a 2×2 table at α = 0.05, the cut-off value is 3.84. 8 &gt; 3.84, so p is small (about 0.005). Payment mode <b>is</b> related to city.</li>
+</ul>
+<h4>Type I and Type II errors</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>H0 is actually true</th><th>H0 is actually false</th></tr>
+<tr><td><b>We reject H0</b></td><td><b>Type I error</b> (false positive, false alarm). Chance = α.</td><td>Correct</td></tr>
+<tr><td><b>We don't reject H0</b></td><td>Correct</td><td><b>Type II error</b> (false negative, missed it). Chance = β.</td></tr>
+</table></div>
+<ul>
+<li>Type I example: a COVID test says "positive" for a healthy person.</li>
+<li>Type II example: a COVID test says "negative" for a sick person.</li>
+<li><b>Power</b> = 1 − β = the chance of catching a real effect. Bigger samples give more power.</li>
+<li><b>Confidence interval</b>: a range that likely holds the true value. "Average spend is ₹450, 95% CI ₹420–₹480."</li>
+</ul>
+<div class="note"><b>Remember:</b> Type I = crying wolf when there is no wolf. Type II = missing a real wolf.</div>
+</section>
+
+<section id="s20">
+<h3>20. A/B Testing</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>An <b>A/B test</b> is an experiment. You show version A to one random group and version B to another, then compare results. It is hypothesis testing used in real products.</p>
+<p class="analogy">A chai seller makes two recipes and gives each to random customers for a week. Whichever recipe gets more repeat buyers wins. Random groups make it fair.</p>
+</div>
+<h4>Steps</h4>
+<ol>
+<li>Pick one goal metric. Example: <b>conversion rate</b> = buyers ÷ visitors.</li>
+<li>Write H0 ("no difference") and H1.</li>
+<li>Change only <b>one thing</b>. Example: button colour, or price shown.</li>
+<li>Split users <b>randomly</b>: A = <b>control</b> (old), B = <b>variant</b> (new).</li>
+<li>Decide sample size and run time in advance. Run at least one full week to cover weekdays and weekends.</li>
+<li>Check significance, then decide.</li>
+</ol>
+<h4>Worked example</h4>
+<div class="table-wrap"><table>
+<tr><th>Version</th><th>Visitors</th><th>Orders</th><th>Conversion</th></tr>
+<tr><td>A (old "Buy" button)</td><td>5,000</td><td>200</td><td>4.0%</td></tr>
+<tr><td>B (new "Buy Now" button)</td><td>5,000</td><td>250</td><td>5.0%</td></tr>
+</table></div>
+<ul>
+<li><b>Absolute lift</b> = 5.0% − 4.0% = 1 percentage point.</li>
+<li><b>Relative lift</b> = 1 ÷ 4 = 25% better.</li>
+<li>A two-proportion z-test gives p ≈ 0.016, which is less than 0.05. So B is a real winner, not luck.</li>
+</ul>
+<h4>Common mistakes</h4>
+<ul>
+<li><b>Peeking</b>: stopping the test as soon as it looks good. This creates false winners.</li>
+<li>Changing many things at once, so you don't know what worked.</li>
+<li>Too small a sample, or too short a run.</li>
+<li>Ignoring <b>guardrail metrics</b>: metrics that must not get worse, like refunds or app crashes.</li>
+</ul>
+<div class="note"><b>Remember:</b> random split, one change, fixed sample size, then check p-value. Statistical significance is not the same as business importance; also check if the lift is big enough to matter.</div>
+</section>
+
+<section id="s21">
+<h3>21. Regression Basics</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Regression</b> finds a line (formula) that best links an input to an output, so you can predict. The input is the <b>independent variable</b> (x). The output is the <b>dependent variable</b> (y).</p>
+<p class="analogy">An auto-rickshaw fare is a base charge plus a fixed amount per km. Regression finds that "base + rate × distance" formula from past rides.</p>
+</div>
+<h4>Simple linear regression</h4>
+<p>Formula: <code>y = a + b × x</code></p>
+<ul>
+<li><b>a</b> = <b>intercept</b>: the value of y when x is 0 (the base charge).</li>
+<li><b>b</b> = <b>slope</b>: how much y changes when x goes up by 1 (the per-km rate).</li>
+</ul>
+<h4>Worked example (study hours data from topic 15)</h4>
+<div class="table-wrap"><table>
+<tr><th>Hours (x)</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr>
+<tr><td>Marks (y)</td><td>40</td><td>50</td><td>55</td><td>65</td><td>70</td></tr>
+</table></div>
+<ul>
+<li>Mean of x = 3. Mean of y = 280 ÷ 5 = 56.</li>
+<li>Slope b = Σ(x − x̄)(y − ȳ) ÷ Σ(x − x̄)² = 75 ÷ 10 = <b>7.5</b>.</li>
+<li>Intercept a = ȳ − b × x̄ = 56 − 7.5 × 3 = <b>33.5</b>.</li>
+<li>Line: <b>marks = 33.5 + 7.5 × hours</b>. Each extra hour adds about 7.5 marks.</li>
+<li>Prediction for 6 hours: 33.5 + 7.5 × 6 = 33.5 + 45 = <b>78.5</b>.</li>
+</ul>
+<h4>Key points</h4>
+<ul>
+<li><b>Residual</b> = actual − predicted. For 3 hours: predicted 56, actual 55, residual = −1.</li>
+<li>The best line makes the sum of squared residuals as small as possible. This is called <b>least squares</b>.</li>
+<li><b>R²</b> (R-squared) goes from 0 to 1. It is the share of the change in y that the model explains. Here R² ≈ 0.99, which is a great fit.</li>
+<li><b>Multiple regression</b> uses many inputs: sales = a + b1 × ad spend + b2 × discount.</li>
+<li><b>Logistic regression</b> predicts a yes/no outcome, like "will this customer leave?"</li>
+<li>Don't predict far outside your data. 20 hours of study won't give 183.5 marks!</li>
+<li>In Excel: <code>=SLOPE()</code>, <code>=INTERCEPT()</code>, <code>=RSQ()</code>, or add a trendline to a scatter chart.</li>
+</ul>
+<div class="note"><b>Remember:</b> y = a + b·x. Slope = change in y per 1 unit of x. R² = how well the line fits. Regression shows links, not proof of cause.</div>
+</section>
+
+<!-- ================= BUSINESS ANALYSIS ================= -->
+<div class="part">Part 5 — Business Analysis</div>
+
+<section id="s22">
+<h3>22. Exploratory Data Analysis (EDA)</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>EDA</b> means exploring a new dataset to understand it before doing any serious analysis. You look at its size, columns, gaps, ranges and patterns.</p>
+<p class="analogy">EDA is like walking around a new city on day one. You learn the main roads and landmarks before planning any trip.</p>
+</div>
+<h4>A simple EDA checklist</h4>
+<ol>
+<li><b>Shape</b>: how many rows and columns?</li>
+<li><b>Columns and types</b>: which are numbers, text, dates?</li>
+<li><b>Missing values</b>: how many blanks in each column?</li>
+<li><b>Duplicates</b>: any repeated rows?</li>
+<li><b>Summary stats</b>: min, max, mean, median, SD for number columns.</li>
+<li><b>Counts</b> for category columns: how many orders per city?</li>
+<li><b>Univariate</b> (one column at a time): histograms, box plots.</li>
+<li><b>Bivariate</b> (two columns together): scatter plots, correlation, grouped averages.</li>
+<li><b>Time trends</b>: line chart by day, week, month.</li>
+<li><b>Write down questions</b> that come up. They guide the next step.</li>
+</ol>
+<h4>Example findings from an EDA</h4>
+<div class="table-wrap"><table>
+<tr><th>Check</th><th>Finding</th><th>Next step</th></tr>
+<tr><td>Missing values</td><td>8% of <code>delivery_time</code> is blank</td><td>Ask if cancelled orders cause it</td></tr>
+<tr><td>Summary stats</td><td>Max order = ₹1,20,000, median = ₹380</td><td>Check the big order: error or bulk buy?</td></tr>
+<tr><td>Category counts</td><td>70% of orders come from 2 cities</td><td>Analyse those cities separately</td></tr>
+<tr><td>Time trend</td><td>Orders spike every Sunday</td><td>Plan staff and offers for Sundays</td></tr>
+</table></div>
+<div class="note"><b>Remember:</b> EDA = get to know your data first. In pandas, <code>df.shape</code>, <code>df.info()</code>, <code>df.describe()</code> and <code>df.isnull().sum()</code> cover most of it in four lines.</div>
+</section>
+
+<section id="s23">
+<h3>23. KPIs and Metrics</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>metric</b> is any number you track. A <b>KPI</b> (Key Performance Indicator) is one of the few most important metrics that show if the business is meeting its goals.</p>
+<p class="analogy">In a car, many dials exist, but the speedometer and fuel gauge are the ones you watch while driving. Those are the KPIs.</p>
+</div>
+<h4>Common business metrics</h4>
+<div class="table-wrap"><table>
+<tr><th>Metric</th><th>Formula</th><th>Example</th></tr>
+<tr><td><b>Revenue</b></td><td>Price × units sold</td><td>₹500 × 2,000 = ₹10,00,000</td></tr>
+<tr><td><b>AOV</b> (Average Order Value)</td><td>Revenue ÷ number of orders</td><td>₹10,00,000 ÷ 2,500 = ₹400</td></tr>
+<tr><td><b>Conversion rate</b></td><td>Buyers ÷ visitors × 100</td><td>300 ÷ 10,000 = 3%</td></tr>
+<tr><td><b>Churn rate</b></td><td>Customers lost ÷ customers at start × 100</td><td>50 ÷ 1,000 = 5% per month</td></tr>
+<tr><td><b>Retention rate</b></td><td>(Customers at end − new customers) ÷ customers at start × 100</td><td>(1,050 − 100) ÷ 1,000 = 95%</td></tr>
+<tr><td><b>CAC</b> (Customer Acquisition Cost)</td><td>Marketing spend ÷ new customers</td><td>₹5,00,000 ÷ 1,000 = ₹500</td></tr>
+<tr><td><b>LTV / CLV</b> (Lifetime Value)</td><td>AOV × orders per year × years as a customer</td><td>₹400 × 3 × 2 = ₹2,400</td></tr>
+<tr><td><b>LTV : CAC</b></td><td>LTV ÷ CAC</td><td>₹2,400 ÷ ₹500 = 4.8 (healthy if above 3)</td></tr>
+<tr><td><b>DAU / MAU</b></td><td>Daily active users ÷ monthly active users</td><td>20,000 ÷ 1,00,000 = 20% ("stickiness")</td></tr>
+<tr><td><b>Gross margin</b></td><td>(Revenue − cost of goods) ÷ revenue × 100</td><td>(₹10 L − ₹6 L) ÷ ₹10 L = 40%</td></tr>
+</table></div>
+<h4>Key points</h4>
+<ul>
+<li>Churn and retention are opposites: 5% churn = 95% retention (when you ignore new customers).</li>
+<li>A good KPI is <b>clear, measurable, linked to a goal, and actionable</b>.</li>
+<li><b>Vanity metric</b> = looks good but doesn't help decisions. Example: total app downloads (many people never open the app).</li>
+<li><b>North Star metric</b> = the one metric that best shows customer value. Example: for a food app, "orders delivered per week".</li>
+<li><b>Leading indicator</b> predicts the future (website visits). <b>Lagging indicator</b> shows the past result (monthly revenue).</li>
+<li>Simple LTV above uses revenue. A stricter version multiplies by profit margin.</li>
+</ul>
+<div class="note"><b>Remember:</b> learn the formulas for conversion, churn, retention, AOV, CAC and LTV. Interviewers love asking "how would you calculate…?"</div>
+</section>
+
+<section id="s24">
+<h3>24. Cohort Analysis</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>cohort</b> is a group of users who share a starting point, like "everyone who signed up in January". <b>Cohort analysis</b> tracks each group over time to see how they behave.</p>
+<p class="analogy">A school tracks each batch separately: the 2022 batch, the 2023 batch. Comparing batches shows if teaching got better, which a single school-wide average would hide.</p>
+</div>
+<h4>Worked example: monthly retention</h4>
+<div class="table-wrap"><table>
+<tr><th>Signup month</th><th>Users</th><th>Month 0</th><th>Month 1</th><th>Month 2</th><th>Month 3</th></tr>
+<tr><td>Jan</td><td>200</td><td>100%</td><td>60% (120)</td><td>45% (90)</td><td>40% (80)</td></tr>
+<tr><td>Feb</td><td>250</td><td>100%</td><td>56% (140)</td><td>40% (100)</td><td>—</td></tr>
+<tr><td>Mar</td><td>300</td><td>100%</td><td>65% (195)</td><td>—</td><td>—</td></tr>
+</table></div>
+<h4>How to read it</h4>
+<ul>
+<li>Each <b>row</b> is one cohort. Each <b>column</b> is "months since signup".</li>
+<li>Read <b>across a row</b>: how one group drops off. Jan users fall from 100% to 40% in 3 months.</li>
+<li>Read <b>down a column</b>: compare groups at the same age. Month 1: Jan 60%, Feb 56%, Mar 65%.</li>
+<li>March's Month-1 retention is the best. Ask: what changed in March? Maybe a new onboarding flow.</li>
+<li>Blank cells (—) are months that have not happened yet. This makes a <b>triangle</b> shape.</li>
+<li>Cohorts can also be by first purchase month, acquisition channel or city.</li>
+</ul>
+<div class="note"><b>Remember:</b> cohort analysis compares groups fairly by "age". Overall averages mix new and old users and can hide problems.</div>
+</section>
+
+<section id="s25">
+<h3>25. Funnel Analysis</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>funnel</b> is the series of steps a user takes toward a goal, like buying. <b>Funnel analysis</b> counts how many users reach each step and where they drop off.</p>
+<p class="analogy">Think of a kitchen funnel: wide at the top, narrow at the bottom. Many people visit a shop window, fewer walk in, fewer try clothes, and only some pay at the counter.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 260" role="img" aria-label="E-commerce funnel: 10,000 visits, 6,000 product views, 1,800 add to cart, 900 checkout, 600 purchases. Biggest drop is from product view to add to cart.">
+  <rect class="d-fill-accent" x="120" y="14" width="400" height="38" rx="5"/>
+  <rect class="d-box-accent" x="120" y="14" width="400" height="38" rx="5"/>
+  <text class="d-accent-text" x="320" y="38" text-anchor="middle">Visit site — 10,000</text>
+
+  <rect class="d-box" x="200" y="62" width="240" height="38" rx="5"/>
+  <text class="d-label" x="320" y="86" text-anchor="middle">View product — 6,000</text>
+  <text class="d-sub" x="540" y="86">60% of previous</text>
+
+  <rect class="d-box" x="248" y="110" width="144" height="38" rx="5"/>
+  <text class="d-label" x="320" y="134" text-anchor="middle">Add to cart — 1,800</text>
+  <text class="d-accent-text" x="540" y="134">30% ← biggest drop</text>
+
+  <rect class="d-box" x="270" y="158" width="100" height="38" rx="5"/>
+  <text class="d-label" x="320" y="182" text-anchor="middle">Checkout — 900</text>
+  <text class="d-sub" x="540" y="182">50% of previous</text>
+
+  <rect class="d-fill-accent" x="280" y="206" width="80" height="38" rx="5"/>
+  <rect class="d-box-accent" x="280" y="206" width="80" height="38" rx="5"/>
+  <text class="d-accent-text" x="320" y="230" text-anchor="middle">Buy — 600</text>
+  <text class="d-sub" x="540" y="230">66.7% of previous</text>
+  <text class="d-sub" x="20" y="230">Overall: 600 ÷ 10,000 = 6%</text>
+</svg>
+<figcaption>Bar width = number of users at that step. The step with the lowest step-to-step rate is where to look first.</figcaption>
+</figure>
+<h4>Worked numbers</h4>
+<div class="table-wrap"><table>
+<tr><th>Step</th><th>Users</th><th>Step conversion</th><th>Drop-off</th><th>From top</th></tr>
+<tr><td>Visit</td><td>10,000</td><td>—</td><td>—</td><td>100%</td></tr>
+<tr><td>View product</td><td>6,000</td><td>60%</td><td>4,000</td><td>60%</td></tr>
+<tr><td>Add to cart</td><td>1,800</td><td>30%</td><td>4,200</td><td>18%</td></tr>
+<tr><td>Checkout</td><td>900</td><td>50%</td><td>900</td><td>9%</td></tr>
+<tr><td>Purchase</td><td>600</td><td>66.7%</td><td>300</td><td>6%</td></tr>
+</table></div>
+<h4>Key points</h4>
+<ul>
+<li><b>Step conversion</b> = users at this step ÷ users at the previous step.</li>
+<li><b>Overall conversion</b> = users at the last step ÷ users at the first step = 6%.</li>
+<li>Here, "view → add to cart" is the weakest step (30%). Ideas: better photos, clearer prices, reviews.</li>
+<li>Split the funnel by device, city or traffic source. Often one segment (like Android) causes the drop.</li>
+<li>Funnels show <b>where</b> users leave. Surveys, session recordings or A/B tests show <b>why</b>.</li>
+</ul>
+<div class="note"><b>Remember:</b> fix the biggest leak first. Improving a 30% step usually gives more than polishing a 67% step.</div>
+</section>
+
+<!-- ================= TOOLS ================= -->
+<div class="part">Part 6 — Tools</div>
+
+<section id="s26">
+<h3>26. Excel for Analysts</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Excel</b> (or Google Sheets) is the most common analyst tool. You must know lookups, conditional formulas and pivot tables. A <b>formula</b> always starts with <code>=</code>.</p>
+<p class="analogy">Excel is like a calculator that remembers. You set up the maths once, and it updates itself when the numbers change.</p>
+</div>
+<h4>Sample sheet (cells A1:C6)</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>A (Name)</th><th>B (City)</th><th>C (Sales ₹)</th></tr>
+<tr><td>2</td><td>Asha</td><td>Pune</td><td>500</td></tr>
+<tr><td>3</td><td>Ravi</td><td>Delhi</td><td>300</td></tr>
+<tr><td>4</td><td>Neha</td><td>Pune</td><td>700</td></tr>
+<tr><td>5</td><td>Arjun</td><td>Mumbai</td><td>400</td></tr>
+<tr><td>6</td><td>Kiran</td><td>Delhi</td><td>600</td></tr>
+</table></div>
+<h4>Must-know formulas</h4>
+<div class="table-wrap"><table>
+<tr><th>Formula</th><th>What it does</th><th>Result</th></tr>
+<tr><td><code>=VLOOKUP("Neha", A2:C6, 3, FALSE)</code></td><td>Find "Neha" in the first column, return the 3rd column. FALSE = exact match.</td><td>700</td></tr>
+<tr><td><code>=XLOOKUP("Kiran", A2:A6, C2:C6, "Not found")</code></td><td>Newer, simpler lookup. Can look left, has a built-in "not found" value.</td><td>600</td></tr>
+<tr><td><code>=INDEX(C2:C6, MATCH("Arjun", A2:A6, 0))</code></td><td>MATCH finds the row number (4); INDEX returns that row's value.</td><td>400</td></tr>
+<tr><td><code>=IF(C2&gt;=500, "Target met", "Below")</code></td><td>Checks a condition and returns one of two values.</td><td>Target met</td></tr>
+<tr><td><code>=SUMIFS(C2:C6, B2:B6, "Pune")</code></td><td>Adds sales where city is Pune.</td><td>1200</td></tr>
+<tr><td><code>=COUNTIFS(B2:B6, "Delhi")</code></td><td>Counts rows where city is Delhi.</td><td>2</td></tr>
+<tr><td><code>=SUMIFS(C2:C6, B2:B6, "Delhi", C2:C6, "&gt;400")</code></td><td>Adds sales for Delhi AND above 400 (many conditions).</td><td>600</td></tr>
+<tr><td><code>=AVERAGEIFS(C2:C6, B2:B6, "Delhi")</code></td><td>Average sales for Delhi.</td><td>450</td></tr>
+</table></div>
+<h4>Pivot table</h4>
+<p>A <b>pivot table</b> summarises a big table by dragging fields. Put City in <b>Rows</b> and Sales in <b>Values</b> (Sum):</p>
+<div class="table-wrap"><table>
+<tr><th>City</th><th>Sum of Sales</th></tr>
+<tr><td>Delhi</td><td>900</td></tr>
+<tr><td>Mumbai</td><td>400</td></tr>
+<tr><td>Pune</td><td>1200</td></tr>
+<tr><td><b>Grand Total</b></td><td><b>2500</b></td></tr>
+</table></div>
+<h4>Other key points</h4>
+<ul>
+<li>VLOOKUP only looks to the <b>right</b> and breaks if you insert a column. INDEX-MATCH and XLOOKUP fix both problems.</li>
+<li><b>Conditional formatting</b> colours cells by rules. Example: red if sales &lt; 400, or a colour scale (heat map).</li>
+<li><code>$A$1</code> is an <b>absolute reference</b>: it does not shift when you copy the formula. <code>A1</code> shifts.</li>
+<li>Also useful: <code>TRIM</code> (remove extra spaces), <code>CONCAT</code>, <code>LEFT</code>/<code>RIGHT</code>, <code>TEXT</code>, <code>IFERROR</code>, Remove Duplicates, Data Validation, charts.</li>
+<li><b>Power Query</b> (in Excel) cleans and combines data with clicks, and repeats the steps on new data.</li>
+</ul>
+<div class="note"><b>Remember:</b> lookups (XLOOKUP / INDEX-MATCH), conditional sums (SUMIFS / COUNTIFS), IF, and pivot tables are the core Excel interview topics.</div>
+</section>
+
+<section id="s27">
+<h3>27. SQL Basics for Analysts</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>SQL</b> (Structured Query Language) is how you ask a database for data. A <b>query</b> is one question written in SQL. Analysts mostly read data with <code>SELECT</code>.</p>
+<p class="analogy">SQL is like giving a librarian a clear note: "Get me all books by this author, after 2015, sorted by title." You say what you want; the database finds it.</p>
+</div>
+<h4>Table: orders</h4>
+<div class="table-wrap"><table>
+<tr><th>order_id</th><th>customer</th><th>city</th><th>amount</th><th>order_date</th></tr>
+<tr><td>1</td><td>Asha</td><td>Pune</td><td>500</td><td>2025-01-01</td></tr>
+<tr><td>2</td><td>Ravi</td><td>Delhi</td><td>300</td><td>2025-01-02</td></tr>
+<tr><td>3</td><td>Neha</td><td>Pune</td><td>700</td><td>2025-01-03</td></tr>
+<tr><td>4</td><td>Arjun</td><td>Mumbai</td><td>400</td><td>2025-01-04</td></tr>
+<tr><td>5</td><td>Kiran</td><td>Delhi</td><td>600</td><td>2025-01-05</td></tr>
+</table></div>
+<h4>Key clauses</h4>
+<ul>
+<li><code>SELECT</code> = which columns. <code>FROM</code> = which table.</li>
+<li><code>WHERE</code> = filter <b>rows</b>, before grouping.</li>
+<li><code>GROUP BY</code> = make groups, then use <b>aggregate functions</b> (functions that summarise many rows): <code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MIN</code>, <code>MAX</code>.</li>
+<li><code>HAVING</code> = filter <b>groups</b>, after grouping.</li>
+<li><code>ORDER BY</code> = sort (<code>DESC</code> for biggest first). <code>LIMIT</code> = keep only the first few rows.</li>
+<li><code>DISTINCT</code> = remove repeated values. <code>CASE WHEN</code> = an IF statement inside SQL.</li>
+</ul>
+<pre><code>-- Orders above ₹400, biggest first
+SELECT customer, amount
+FROM orders
+WHERE amount &gt; 400
+ORDER BY amount DESC;
+-- Result: Neha 700, Kiran 600, Asha 500
+
+-- Total sales per city, only cities above ₹500
+SELECT city, SUM(amount) AS total_sales, COUNT(*) AS orders
+FROM orders
+GROUP BY city
+HAVING SUM(amount) &gt; 500
+ORDER BY total_sales DESC;
+-- Result: Pune 1200 (2 orders), Delhi 900 (2 orders). Mumbai (400) is filtered out.
+
+-- Label each order with CASE WHEN
+SELECT customer,
+       CASE WHEN amount &gt;= 500 THEN 'High' ELSE 'Low' END AS order_size
+FROM orders;</code></pre>
+<h4>Order in which SQL runs</h4>
+<div class="flow">FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT</div>
+<ul>
+<li>This is why you cannot use a SELECT alias (like <code>total_sales</code>) inside WHERE in most databases: WHERE runs before SELECT.</li>
+<li><code>COUNT(*)</code> counts all rows. <code>COUNT(column)</code> skips NULLs.</li>
+<li><code>NULL</code> means "unknown". Check it with <code>IS NULL</code>, never <code>= NULL</code>.</li>
+</ul>
+<div class="note"><b>Remember:</b> WHERE filters rows before grouping; HAVING filters groups after grouping. This is the most-asked SQL question for analysts.</div>
+</section>
+
+<section id="s28">
+<h3>28. SQL Joins and Window Functions</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>JOIN</b> combines rows from two tables using a shared column, like a customer ID. A <b>window function</b> does a calculation across related rows but still keeps every row.</p>
+<p class="analogy">A join is like matching students' names on the attendance sheet with their marks sheet. A window function is like writing each student's class rank next to their marks, without merging the class into one row.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 200" role="img" aria-label="Three Venn diagrams. INNER JOIN highlights only the overlap of tables A and B. LEFT JOIN highlights all of A including the overlap. FULL OUTER JOIN highlights both circles completely.">
+  <defs>
+    <clipPath id="vennA1"><circle cx="85" cy="85" r="50"/></clipPath>
+  </defs>
+  <circle class="d-fill-accent" cx="135" cy="85" r="50" clip-path="url(#vennA1)"/>
+  <circle class="d-line" cx="85" cy="85" r="50"/>
+  <circle class="d-line" cx="135" cy="85" r="50"/>
+  <text class="d-label" x="65" y="90" text-anchor="middle">A</text>
+  <text class="d-label" x="155" y="90" text-anchor="middle">B</text>
+  <text class="d-accent-text" x="110" y="165" text-anchor="middle">INNER JOIN</text>
+  <text class="d-sub" x="110" y="183" text-anchor="middle">only matching rows</text>
+
+  <circle class="d-fill-accent" cx="295" cy="85" r="50"/>
+  <circle class="d-line-accent" cx="295" cy="85" r="50"/>
+  <circle class="d-line" cx="345" cy="85" r="50"/>
+  <text class="d-label" x="275" y="90" text-anchor="middle">A</text>
+  <text class="d-label" x="365" y="90" text-anchor="middle">B</text>
+  <text class="d-accent-text" x="320" y="165" text-anchor="middle">LEFT JOIN</text>
+  <text class="d-sub" x="320" y="183" text-anchor="middle">all of A + matches from B</text>
+
+  <circle class="d-fill-accent" cx="505" cy="85" r="50"/>
+  <circle class="d-fill-accent" cx="555" cy="85" r="50"/>
+  <circle class="d-line-accent" cx="505" cy="85" r="50"/>
+  <circle class="d-line-accent" cx="555" cy="85" r="50"/>
+  <text class="d-label" x="485" y="90" text-anchor="middle">A</text>
+  <text class="d-label" x="575" y="90" text-anchor="middle">B</text>
+  <text class="d-accent-text" x="530" y="165" text-anchor="middle">FULL OUTER JOIN</text>
+  <text class="d-sub" x="530" y="183" text-anchor="middle">everything from both</text>
+</svg>
+<figcaption>The shaded part is what the join returns. A RIGHT JOIN is the mirror of a LEFT JOIN (all of B).</figcaption>
+</figure>
+<h4>Join example</h4>
+<div class="table-wrap"><table>
+<tr><th colspan="2">customers</th><th></th><th colspan="2">orders</th></tr>
+<tr><th>id</th><th>name</th><th></th><th>customer_id</th><th>amount</th></tr>
+<tr><td>1</td><td>Asha</td><td></td><td>1</td><td>500</td></tr>
+<tr><td>2</td><td>Ravi</td><td></td><td>1</td><td>200</td></tr>
+<tr><td>3</td><td>Neha</td><td></td><td>3</td><td>700</td></tr>
+<tr><td></td><td></td><td></td><td>4</td><td>300</td></tr>
+</table></div>
+<pre><code>SELECT c.name, o.amount
+FROM customers c
+LEFT JOIN orders o ON o.customer_id = c.id;</code></pre>
+<div class="table-wrap"><table>
+<tr><th>Join</th><th>Rows returned</th></tr>
+<tr><td>INNER JOIN</td><td>Asha 500, Asha 200, Neha 700 (3 rows)</td></tr>
+<tr><td>LEFT JOIN</td><td>Asha 500, Asha 200, <b>Ravi NULL</b>, Neha 700 (4 rows)</td></tr>
+<tr><td>FULL OUTER JOIN</td><td>The 4 LEFT JOIN rows + <b>NULL 300</b> (order for customer 4, who is missing)</td></tr>
+</table></div>
+<ul>
+<li>Find customers who <b>never ordered</b>: LEFT JOIN, then <code>WHERE o.customer_id IS NULL</code> → Ravi.</li>
+<li>One customer with many orders appears many times after a join. Watch out for double counting.</li>
+<li><b>Self join</b> = a table joined to itself. Example: employees and their managers in one table.</li>
+</ul>
+<h4>Window functions</h4>
+<p>Uses the <code>orders</code> table from topic 27. Format: <code>FUNCTION() OVER (PARTITION BY ... ORDER BY ...)</code>. <b>PARTITION BY</b> = split into groups. <b>ORDER BY</b> = order inside each group.</p>
+<pre><code>-- Rank orders inside each city
+SELECT customer, city, amount,
+       RANK() OVER (PARTITION BY city ORDER BY amount DESC) AS city_rank
+FROM orders;
+
+-- Running total of sales by date
+SELECT order_date, amount,
+       SUM(amount) OVER (ORDER BY order_date) AS running_total
+FROM orders;
+
+-- Previous order's amount (for day-over-day change)
+SELECT order_date, amount,
+       LAG(amount) OVER (ORDER BY order_date) AS prev_amount
+FROM orders;</code></pre>
+<div class="table-wrap"><table>
+<tr><th>order_date</th><th>amount</th><th>running_total</th><th>prev_amount</th></tr>
+<tr><td>2025-01-01</td><td>500</td><td>500</td><td>NULL</td></tr>
+<tr><td>2025-01-02</td><td>300</td><td>800</td><td>500</td></tr>
+<tr><td>2025-01-03</td><td>700</td><td>1500</td><td>300</td></tr>
+<tr><td>2025-01-04</td><td>400</td><td>1900</td><td>700</td></tr>
+<tr><td>2025-01-05</td><td>600</td><td>2500</td><td>400</td></tr>
+</table></div>
+<ul>
+<li>City ranks: Pune → Neha 1, Asha 2. Delhi → Kiran 1, Ravi 2. Mumbai → Arjun 1.</li>
+<li><code>ROW_NUMBER</code> = 1, 2, 3, 4 (always unique). <code>RANK</code> = 1, 2, 2, 4 (ties share, then skip). <code>DENSE_RANK</code> = 1, 2, 2, 3 (ties share, no skip).</li>
+<li><code>LAG</code> = previous row's value. <code>LEAD</code> = next row's value.</li>
+<li>GROUP BY squeezes rows into one per group. Window functions keep all rows.</li>
+<li>Classic question: "2nd highest salary per department" → <code>DENSE_RANK() ... = 2</code> in a subquery or <b>CTE</b> (a named temporary result made with <code>WITH</code>).</li>
+</ul>
+<div class="note"><b>Remember:</b> INNER = matches only, LEFT = all left rows. Window functions = "GROUP BY that keeps every row".</div>
+</section>
+
+<section id="s29">
+<h3>29. Python and pandas for Analysts</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Python</b> is a programming language. <b>pandas</b> is a Python library (ready-made code) for working with tables. A pandas table is called a <b>DataFrame</b>. <b>matplotlib</b> is a library for charts.</p>
+<p class="analogy">pandas is like Excel with a remote control. Instead of clicking, you write steps once, and you can re-run them on new data any day.</p>
+</div>
+<h4>Core commands</h4>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("orders.csv")      # load a CSV file into a DataFrame
+
+df.head()                # first 5 rows
+df.shape                 # (rows, columns), e.g. (5, 5)
+df.info()                # column names, types, non-null counts
+df.describe()            # count, mean, std, min, quartiles, max
+df.isnull().sum()        # missing values per column
+
+# Select and filter
+df["amount"]                          # one column
+df[df["amount"] &gt; 400]                # rows where amount is above 400
+df[(df["city"] == "Pune") &amp; (df["amount"] &gt; 400)]   # two conditions
+
+# Clean
+df = df.drop_duplicates()                               # remove repeated rows
+df["amount"] = df["amount"].fillna(df["amount"].median())  # fill blanks with median
+df["city"] = df["city"].str.strip().str.title()         # " pune" -&gt; "Pune"
+df["order_date"] = pd.to_datetime(df["order_date"])     # text -&gt; real date
+
+# New column
+df["high_value"] = df["amount"] &gt;= 500
+
+# Group and summarise (like GROUP BY / pivot table)
+city_sales = df.groupby("city")["amount"].sum().sort_values(ascending=False)
+# city
+# Pune      1200
+# Delhi      900
+# Mumbai     400
+
+# Join two tables (like SQL JOIN)
+customers = pd.read_csv("customers.csv")
+merged = df.merge(customers, left_on="customer_id", right_on="id", how="left")
+
+# Simple bar chart
+city_sales.plot(kind="bar", title="Sales by city")
+plt.ylabel("Sales (₹)")
+plt.show()</code></pre>
+<h4>Key points</h4>
+<ul>
+<li><code>how="left"</code> in merge = LEFT JOIN. Options: <code>"inner"</code>, <code>"left"</code>, <code>"right"</code>, <code>"outer"</code>.</li>
+<li><code>df.pivot_table(index="city", values="amount", aggfunc="sum")</code> = an Excel pivot table.</li>
+<li><code>value_counts()</code> counts each category: <code>df["city"].value_counts()</code>.</li>
+<li>Use <code>&amp;</code> (and), <code>|</code> (or) with brackets around each condition. Plain <code>and</code> gives an error.</li>
+<li><b>NumPy</b> = fast maths on arrays; pandas is built on it. <b>seaborn</b> = nicer statistical charts.</li>
+<li>Most analysts write Python in <b>Jupyter Notebook</b> or Google Colab: code, output and notes in one page.</li>
+</ul>
+<div class="note"><b>Remember:</b> read_csv → head/info/describe → clean (drop_duplicates, fillna) → groupby / merge → plot. That is 90% of analyst pandas.</div>
+</section>
+
+<section id="s30">
+<h3>30. Common Tools Overview</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Each tool has a job. You don't need all of them. Most fresher roles want <b>Excel + SQL + one BI tool</b>, and Python is a big plus. A <b>BI tool</b> (Business Intelligence) builds interactive dashboards.</p>
+<p class="analogy">Tools are like vehicles. A cycle (Excel) is fine for short trips. A car (SQL, Python) handles long trips. A bus (BI tool) carries the results to many people.</p>
+</div>
+<div class="table-wrap"><table>
+<tr><th>Tool</th><th>Best for</th><th>Note</th></tr>
+<tr><td><b>Excel / Google Sheets</b></td><td>Small data, quick analysis, pivots</td><td>Slows down beyond about a million rows</td></tr>
+<tr><td><b>SQL</b> (MySQL, PostgreSQL, SQL Server, BigQuery)</td><td>Pulling and summarising data from databases</td><td>The most important analyst skill</td></tr>
+<tr><td><b>Python</b> (pandas, matplotlib, seaborn)</td><td>Big or messy data, automation, statistics</td><td>Use in Jupyter or Colab</td></tr>
+<tr><td><b>R</b></td><td>Statistics and research</td><td>Less common than Python in Indian jobs</td></tr>
+<tr><td><b>Power BI</b></td><td>Dashboards, works well with Excel</td><td>Very common in Indian companies; uses DAX formulas</td></tr>
+<tr><td><b>Tableau</b></td><td>Dashboards and visual exploration</td><td>Drag and drop; Tableau Public is free</td></tr>
+<tr><td><b>Looker Studio</b></td><td>Free Google dashboards</td><td>Easy with Google Sheets and Analytics</td></tr>
+<tr><td><b>Google Analytics</b></td><td>Website and app traffic</td><td>Source for funnel and traffic data</td></tr>
+</table></div>
+<ul>
+<li><b>ETL</b> (Extract, Transform, Load) = moving data from sources, cleaning it, and loading it into a <b>data warehouse</b> (a big central database for analysis).</li>
+<li><b>Data lake</b> = a store for raw data of any type, cleaned later.</li>
+</ul>
+<div class="note"><b>Remember:</b> pick tools by data size and audience. Excel for quick checks, SQL to fetch, Python for heavy work, Power BI or Tableau to share.</div>
+</section>
+
+<!-- ================= SHARING ================= -->
+<div class="part">Part 7 — Sharing Results</div>
+
+<section id="s31">
+<h3>31. Charts and Storytelling with Data</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Data storytelling</b> means explaining your findings as a short, clear story: what happened, why it matters, and what to do. The right chart makes the point obvious in seconds.</p>
+<p class="analogy">A good analyst is like a news reporter. The headline comes first ("Sales fell 15% in March"). Details and proof come after. Nobody reads a news story that starts with a table of numbers.</p>
+</div>
+<h4>Choosing a chart</h4>
+<div class="table-wrap"><table>
+<tr><th>Goal</th><th>Best chart</th><th>Example</th></tr>
+<tr><td>Compare categories</td><td>Bar chart</td><td>Sales by city</td></tr>
+<tr><td>Show change over time</td><td>Line chart</td><td>Daily orders this month</td></tr>
+<tr><td>Show parts of a whole</td><td>Stacked bar, or pie with 2–4 slices</td><td>Share of UPI vs card vs cash</td></tr>
+<tr><td>Show a distribution</td><td>Histogram, box plot</td><td>Spread of order values</td></tr>
+<tr><td>Show a relationship</td><td>Scatter plot</td><td>Ad spend vs sales</td></tr>
+<tr><td>Show one key number</td><td>KPI card (big number)</td><td>This month's revenue: ₹12.4 L</td></tr>
+<tr><td>Show steps and drop-off</td><td>Funnel chart</td><td>Visit → cart → buy</td></tr>
+</table></div>
+<h4>A simple story structure</h4>
+<ol>
+<li><b>Context</b>: what question were we answering?</li>
+<li><b>Finding</b>: the one main insight, in one sentence.</li>
+<li><b>Evidence</b>: one or two charts that prove it.</li>
+<li><b>Recommendation</b>: what the business should do next.</li>
+<li><b>Impact</b>: what we expect to gain (money, users, time).</li>
+</ol>
+<h4>Good chart habits</h4>
+<ul>
+<li>Give charts a title that states the finding: "Android orders fell 23% after the app update", not "Orders by platform".</li>
+<li>Bar charts must start at zero. Otherwise small differences look huge.</li>
+<li>Remove clutter: 3D effects, heavy grid lines, too many colours.</li>
+<li>Use one highlight colour for the thing that matters, and grey for the rest.</li>
+<li>Avoid pie charts with many slices. People can't compare angles well.</li>
+<li>Know your audience. A CEO wants the answer and the action. A fellow analyst wants the method.</li>
+</ul>
+<div class="note"><b>Remember:</b> answer first, then proof. One chart, one message. Always end with a clear recommendation.</div>
+</section>
+
+<section id="s32">
+<h3>32. Case Study: Why Did Orders Drop?</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Here is a full, small example that uses the six steps. Interviewers often give a case like this and ask, "How would you approach it?"</p>
+<p class="analogy">It is like detective work. You start with a crime (the drop), collect clues (data), rule out suspects (segments) and name the culprit with proof.</p>
+</div>
+<h4>1. Ask</h4>
+<p>A food delivery app in Pune saw orders fall from 40,000 in February to 34,000 in March. That is a drop of 6,000, or 6,000 ÷ 40,000 = <b>15%</b>. Question: <i>"Why did March orders fall 15%, and how do we recover?"</i></p>
+<h4>2. Prepare</h4>
+<ul>
+<li>Pull orders, app sessions and funnel events for Feb and March using SQL.</li>
+<li>Collect context: app release dates, offers, competitor news, weather, holidays.</li>
+</ul>
+<h4>3. Process</h4>
+<ul>
+<li>Remove 300 duplicate test orders. Standardise area names. Convert timestamps to dates.</li>
+</ul>
+<h4>4. Analyse</h4>
+<p>Break the drop into segments (a <b>drill-down</b>):</p>
+<div class="table-wrap"><table>
+<tr><th>Platform</th><th>Feb orders</th><th>March orders</th><th>Change</th></tr>
+<tr><td>iOS</td><td>14,000</td><td>14,000</td><td>0%</td></tr>
+<tr><td>Android</td><td>26,000</td><td>20,000</td><td><b>−23%</b></td></tr>
+<tr><td><b>Total</b></td><td>40,000</td><td>34,000</td><td>−15%</td></tr>
+</table></div>
+<ul>
+<li>The whole drop (6,000) is on Android. iOS is flat. So it is not weather, prices or a competitor, which would affect both.</li>
+<li>Funnel check on Android: "cart → payment success" fell from 80% to 62% starting 5 March.</li>
+<li>An Android app update was released on 5 March. Error logs show a UPI payment bug in that version.</li>
+</ul>
+<h4>5. Share</h4>
+<p>Headline: <i>"The March drop is caused by a UPI payment bug in the 5 March Android update. Fixing it should recover about 6,000 orders a month."</i> Support it with one line chart of Android vs iOS daily orders and one funnel chart.</p>
+<h4>6. Act</h4>
+<ul>
+<li>Engineering fixes the bug and releases a patch.</li>
+<li>Send affected users a small coupon to win them back.</li>
+<li>Set up an alert: if payment success falls below 75% on any platform, notify the team.</li>
+<li>Check the recovery in April with the same dashboard.</li>
+</ul>
+<div class="note"><b>Remember:</b> for any "metric dropped" question: confirm the number is right, check for seasonality, split by segment (platform, city, channel, new vs old users), check the funnel, then look for what changed on that date.</div>
+</section>
+
+<!-- ================= REVISION ================= -->
+<div class="part">Revision</div>
+
+<section id="rev">
+<h3>Quick Revision</h3>
+<p>The most-asked questions, with short and simple answers. Say these in your own words.</p>
+<h4>Basics &amp; Process</h4>
+<ul>
+<li><b>What is data analysis?</b> Studying data to answer a question and support a decision.</li>
+<li><b>What does a data analyst do?</b> Collects, cleans and analyses data, then explains findings with charts and dashboards.</li>
+<li><b>Four types of analytics?</b> Descriptive (what), diagnostic (why), predictive (what next), prescriptive (what to do).</li>
+<li><b>Steps of analysis?</b> Ask, Prepare, Process, Analyse, Share, Act.</li>
+<li><b>Structured vs unstructured?</b> Rows and columns vs free form like text, images and audio.</li>
+<li><b>Levels of measurement?</b> Nominal, Ordinal, Interval, Ratio (NOIR).</li>
+<li><b>Primary vs secondary data?</b> Collected by you vs collected by someone else.</li>
+</ul>
+<h4>Cleaning</h4>
+<ul>
+<li><b>How do you handle missing values?</b> Find out why, then delete, or fill with mean, median, mode or "Unknown".</li>
+<li><b>Mean or median to fill blanks?</b> Median if there are outliers or skew; mean if data is symmetric.</li>
+<li><b>How do you find outliers?</b> IQR rule, z-score above 3, or a box plot.</li>
+<li><b>Should you delete outliers?</b> Only if they are errors. Real extremes can be important.</li>
+<li><b>Cleaning vs wrangling?</b> Cleaning fixes errors. Wrangling reshapes data for analysis.</li>
+</ul>
+<h4>Statistics</h4>
+<ul>
+<li><b>Mean vs median?</b> Mean is the average and is pulled by outliers. Median is the middle and is robust.</li>
+<li><b>What is standard deviation?</b> The typical distance of values from the mean.</li>
+<li><b>Why n − 1 for sample variance?</b> A sample slightly underestimates spread; n − 1 corrects it.</li>
+<li><b>What is IQR?</b> Q3 − Q1, the spread of the middle 50%.</li>
+<li><b>Right skew?</b> Long tail to the right; mean &gt; median. Example: income.</li>
+<li><b>68–95–99.7 rule?</b> In a normal curve, 68% within 1 SD, 95% within 2, 99.7% within 3.</li>
+<li><b>Correlation vs causation?</b> Moving together vs one causing the other. Prove cause with experiments.</li>
+<li><b>What is a p-value?</b> How surprising the data is if the null hypothesis were true. Below 0.05 → significant.</li>
+<li><b>Type I vs Type II error?</b> False alarm vs missed real effect.</li>
+<li><b>t-test vs chi-square?</b> t-test compares means; chi-square checks if categories are related.</li>
+<li><b>What is an A/B test?</b> Random split into control and variant, change one thing, compare a metric.</li>
+<li><b>What is R²?</b> How much of the change in y the model explains, from 0 to 1.</li>
+</ul>
+<h4>Business Metrics</h4>
+<ul>
+<li><b>Conversion rate?</b> Buyers ÷ visitors.</li>
+<li><b>Churn rate?</b> Customers lost ÷ customers at the start of the period.</li>
+<li><b>CAC and LTV?</b> Cost to win one customer vs total value a customer brings. LTV:CAC above 3 is healthy.</li>
+<li><b>What is cohort analysis?</b> Tracking groups that started at the same time to compare behaviour fairly.</li>
+<li><b>What is funnel analysis?</b> Counting users at each step to find where they drop off.</li>
+<li><b>KPI vs metric?</b> Every KPI is a metric, but only the few most important metrics are KPIs.</li>
+</ul>
+<h4>Tools</h4>
+<ul>
+<li><b>VLOOKUP vs XLOOKUP?</b> XLOOKUP can look left, defaults to exact match and has a "not found" value.</li>
+<li><b>Why INDEX-MATCH?</b> Works in any direction and does not break when columns are inserted.</li>
+<li><b>SUMIF vs SUMIFS?</b> SUMIF takes one condition; SUMIFS takes many.</li>
+<li><b>WHERE vs HAVING?</b> WHERE filters rows before grouping; HAVING filters groups after.</li>
+<li><b>INNER vs LEFT JOIN?</b> INNER keeps only matches; LEFT keeps all left rows, with NULLs where no match.</li>
+<li><b>RANK vs DENSE_RANK vs ROW_NUMBER?</b> 1,2,2,4 vs 1,2,2,3 vs 1,2,3,4.</li>
+<li><b>pandas groupby?</b> Splits rows into groups and summarises each, like SQL GROUP BY.</li>
+<li><b>Which chart for a trend?</b> A line chart.</li>
+</ul>
+<div class="note"><b>Remember:</b> give the simple answer first, then one small example with numbers. That beats a long textbook definition.</div>
+</section>
+
+<section id="road">
+<h3>Learning Path</h3>
+<p>Go step by step. Practise each step on a real dataset (Kaggle or data.gov.in) before moving on.</p>
+<ol>
+<li><b>Excel</b> — formulas, XLOOKUP, SUMIFS, pivot tables, basic charts.</li>
+<li><b>Basic statistics</b> — mean, median, SD, percentiles, distributions, correlation.</li>
+<li><b>SQL</b> — SELECT, WHERE, GROUP BY, HAVING, JOINs. Then window functions and CTEs. Practise daily on LeetCode or HackerRank.</li>
+<li><b>One BI tool</b> — Power BI or Tableau. Build one dashboard with KPIs and filters.</li>
+<li><b>Business metrics</b> — conversion, churn, retention, CAC, LTV, funnels, cohorts.</li>
+<li><b>Python</b> — pandas for cleaning and grouping, matplotlib or seaborn for charts.</li>
+<li><b>Hypothesis testing and A/B tests</b> — p-values, t-test, chi-square, sample size basics.</li>
+<li><b>Projects</b> — 2 or 3 end-to-end projects (e.g. sales dashboard, customer churn analysis, A/B test report) on GitHub with a short write-up.</li>
+<li><b>Communication</b> — practise explaining one project in 2 minutes: problem, approach, finding, impact.</li>
+<li><b>Case practice</b> — "Why did metric X drop?" and guesstimates. Talk through your steps out loud.</li>
+</ol>
+<div class="note"><b>Remember:</b> for every analysis, ask three questions. Is the data right? What does it mean for the business? What should we do now?</div>
+</section>
+
+</main>
+</div>
+
+<script src="../assets/notes.js"></script>
+</body>
+</html>

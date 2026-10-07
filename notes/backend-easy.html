@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Backend — Easy Notes</title>
+<link rel="stylesheet" href="../assets/notes.css">
+<script>
+  try { document.documentElement.setAttribute("data-theme",
+    localStorage.getItem("notes-theme") || "light"); } catch (e) {}
+</script>
+</head>
+<body>
+<div class="scrim"></div>
+<button class="icon-btn" id="reopen" title="Show sidebar ([)" aria-label="Show sidebar">☰</button>
+<div class="layout">
+
+<aside>
+  <div class="sidebar-head">
+    <a class="back-link" href="../index.html">← All topics</a>
+    <button class="icon-btn" id="collapseBtn" title="Hide sidebar ([)" aria-label="Hide sidebar">‹</button>
+  </div>
+  <input id="search" type="text" placeholder="Filter topics…" autocomplete="off">
+  <h2>Foundations</h2>
+  <nav>
+    <a href="#s1">1 · What Backend Is</a>
+    <a href="#s2">2 · How the Internet Works</a>
+    <a href="#s3">3 · HTTP Basics</a>
+    <a href="#s4">4 · Cookies, Cache, CORS</a>
+  </nav>
+  <h2>Node.js</h2>
+  <nav>
+    <a href="#s5">5 · What Node.js Is</a>
+    <a href="#s6">6 · The Event Loop</a>
+    <a href="#s7">7 · Async Code</a>
+    <a href="#s8">8 · Streams &amp; Buffers</a>
+    <a href="#s9">9 · Modules, Memory, Processes</a>
+  </nav>
+  <h2>Building APIs</h2>
+  <nav>
+    <a href="#s10">10 · Express Basics</a>
+    <a href="#s11">11 · Project Structure</a>
+    <a href="#s12">12 · Errors &amp; Validation</a>
+    <a href="#s13">13 · REST API Design</a>
+    <a href="#s14">14 · Files, Email, Real-time</a>
+  </nav>
+  <h2>Data</h2>
+  <nav>
+    <a href="#s15">15 · Database Basics</a>
+    <a href="#s16">16 · SQL Basics</a>
+    <a href="#s17">17 · Indexes</a>
+    <a href="#s18">18 · Transactions</a>
+    <a href="#s19">19 · MongoDB / NoSQL</a>
+    <a href="#s20">20 · ORMs &amp; Migrations</a>
+    <a href="#s21">21 · Caching &amp; Redis</a>
+  </nav>
+  <h2>Security</h2>
+  <nav>
+    <a href="#s22">22 · Login Basics</a>
+    <a href="#s23">23 · Sessions, JWT, OAuth</a>
+    <a href="#s24">24 · Attacks &amp; Defences</a>
+  </nav>
+  <h2>Scale &amp; Ops</h2>
+  <nav>
+    <a href="#s25">25 · Architecture Patterns</a>
+    <a href="#s26">26 · Scaling</a>
+    <a href="#s27">27 · Queues &amp; Background Jobs</a>
+    <a href="#s28">28 · Testing</a>
+    <a href="#s29">29 · Deployment</a>
+    <a href="#s30">30 · Observability</a>
+  </nav>
+  <h2>Revision</h2>
+  <nav>
+    <a href="#rev">Quick Revision</a>
+    <a href="#road">Learning Path</a>
+  </nav>
+</aside>
+
+<main>
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="../index.html#technical">Technical</a></li><li><a href="backend.html">Backend Development</a></li><li><span aria-current="page">Easy Notes</span></li></ol></nav>
+<header class="top">
+  <h1>Backend — Easy Notes</h1>
+  <div class="top-actions">
+    <button class="ghost" id="menuBtn">☰ Topics</button>
+    <a class="ghost-link" href="backend.html">Full Notes</a>
+    <a class="ghost-link" href="../interview-questions/backend.html">Interview Q&amp;A</a>
+    <button class="ghost" id="theme">Dark mode</button>
+  </div>
+</header>
+<p class="sub">The same backend topics, explained simply. Read this first, then move on to the full notes. Each topic number matches the full notes.</p>
+
+<!-- ================= FOUNDATIONS ================= -->
+<div class="part">Part 1 — Foundations</div>
+
+<section id="s1">
+<h3>1. What Backend Is</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>The <b>backend</b> is the part of an app that runs on a <b>server</b>. A server is a computer you control, not the user's phone or laptop.</p>
+<p class="analogy">Think of a restaurant. The dining room is the frontend. The kitchen is the backend. Customers never see the kitchen, but all the real cooking happens there.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>The <b>client</b> (browser or mobile app) sends a <b>request</b>. The server sends back a <b>response</b>.</li>
+<li>The backend <b>stores data</b> in a database, so it is still there tomorrow.</li>
+<li>It holds the <b>business rules</b>. Example: "Can this user cancel this order?"</li>
+<li>It checks <b>who you are</b> (login) and <b>what you may do</b> (permissions).</li>
+<li>It talks to other services: payments, email, SMS, AI.</li>
+<li>Never trust the browser. Anyone can change frontend code. So the backend must check everything again.</li>
+</ul>
+<figure class="diagram">
+<svg viewBox="0 0 640 190" role="img" aria-label="A request goes from the client to the server, the server queries the database, the database returns data, and the server sends a response back to the client.">
+  <rect class="d-box-accent" x="20" y="44" width="150" height="62" rx="8"/>
+  <text class="d-accent-text" x="95" y="70" text-anchor="middle">Client</text>
+  <text class="d-sub" x="95" y="90" text-anchor="middle">browser / mobile app</text>
+
+  <rect class="d-fill-accent" x="245" y="44" width="150" height="62" rx="8"/>
+  <rect class="d-box-accent" x="245" y="44" width="150" height="62" rx="8"/>
+  <text class="d-accent-text" x="320" y="70" text-anchor="middle">Server</text>
+  <text class="d-sub" x="320" y="90" text-anchor="middle">your Node.js code</text>
+
+  <rect class="d-box" x="470" y="44" width="150" height="62" rx="8"/>
+  <text class="d-label" x="545" y="70" text-anchor="middle">Database</text>
+  <text class="d-sub" x="545" y="90" text-anchor="middle">stores the data</text>
+
+  <path class="d-line-accent" d="M170 64 H239"/><path class="d-arrow-accent" d="M245 64 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="207" y="56" text-anchor="middle">1. request</text>
+  <path class="d-line" d="M395 64 H464"/><path class="d-arrow" d="M470 64 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="432" y="56" text-anchor="middle">2. query</text>
+  <path class="d-line" d="M470 88 H401"/><path class="d-arrow" d="M395 88 l9 -4.5 v9 z"/>
+  <text class="d-sub" x="432" y="122" text-anchor="middle">3. data</text>
+  <path class="d-line-accent" d="M245 88 H176"/><path class="d-arrow-accent" d="M170 88 l9 -4.5 v9 z"/>
+  <text class="d-sub" x="207" y="122" text-anchor="middle">4. response</text>
+
+  <text class="d-label" x="320" y="158" text-anchor="middle">The client asks. The server thinks. The database remembers.</text>
+  <text class="d-sub" x="320" y="178" text-anchor="middle">Almost every backend feature is this same round trip.</text>
+</svg>
+<figcaption>The basic request flow. Learn this picture well. Every other topic adds one piece to it.</figcaption>
+</figure>
+<div class="note"><b>Remember:</b> frontend checks are for a nice user experience. Backend checks are for safety and correct data.</div>
+</section>
+
+<section id="s2">
+<h3>2. How the Internet Works</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Computers find each other with <b>IP addresses</b>, like <code>142.250.1.1</code>. People use names like <code>google.com</code>. <b>DNS</b> turns the name into the IP address.</p>
+<p class="analogy">DNS is like your phone's contact list. You tap "Mom". The phone finds the real number for you.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><b>DNS</b> = the internet's phone book. Name in, IP address out.</li>
+<li><b>TCP</b> = a safe delivery method. Data arrives complete and in order. Used by websites and databases.</li>
+<li><b>UDP</b> = a fast delivery method. No checks, some data may be lost. Used for video calls and games.</li>
+<li><b>HTTPS</b> = HTTP plus encryption (TLS). Nobody in the middle can read or change your data.</li>
+<li>A <b>port</b> is a door number on a computer. 443 = HTTPS, 5432 = Postgres, 3000 = Node in development.</li>
+<li>A <b>load balancer</b> shares traffic between many servers. A <b>CDN</b> keeps copies of files close to users.</li>
+</ul>
+<div class="note"><b>Remember:</b> DNS finds the server, TCP connects to it, TLS makes it private, and HTTP carries the actual request.</div>
+</section>
+
+<section id="s3">
+<h3>3. HTTP Basics</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>HTTP</b> is the language a client and a server use to talk. The client sends a request. The server sends a response.</p>
+<p class="analogy">It is like ordering at a counter. You say what you want (the method and path). You get your food and a receipt (the body and the status code).</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>A request has a <b>method</b>, a <b>path</b>, <b>headers</b> (extra info) and sometimes a <b>body</b> (the data).</li>
+<li>Methods: <b>GET</b> = read, <b>POST</b> = create, <b>PUT</b> = replace, <b>PATCH</b> = change a part, <b>DELETE</b> = remove.</li>
+<li><b>Stateless</b> means the server forgets you after each request. That is why we need cookies and tokens.</li>
+<li><b>Idempotent</b> means "doing it twice gives the same result as once". GET, PUT and DELETE are idempotent. POST is not.</li>
+<li>Status codes: <b>2xx</b> = success, <b>4xx</b> = client's mistake, <b>5xx</b> = server's mistake.</li>
+<li>Know these: 200 OK, 201 Created, 400 Bad Request, 401 Not logged in, 403 Not allowed, 404 Not found, 500 Server error.</li>
+</ul>
+<pre><code>GET /api/users/7 HTTP/1.1          // method + path
+Authorization: Bearer abc123       // header: who I am
+
+HTTP/1.1 200 OK                    // status: it worked
+{ "id": 7, "name": "Ada" }         // body: the data</code></pre>
+<div class="note"><b>Remember:</b> 401 means "I don't know who you are". 403 means "I know you, but you can't do this".</div>
+</section>
+
+<section id="s4">
+<h3>4. Cookies, Caching and CORS</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>cookie</b> is a small note the server gives the browser. The browser sends it back on every request.</p>
+<p class="analogy">A cookie is like a wristband at a concert. You show it at every door, so staff know you already paid.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>The server sets a cookie with the <code>Set-Cookie</code> header. The browser sends it back automatically.</li>
+<li><code>HttpOnly</code> = JavaScript cannot read it. <code>Secure</code> = only sent over HTTPS. <code>SameSite</code> = blocks some attacks from other sites.</li>
+<li><b>HTTP caching</b> means the browser keeps a copy. <code>Cache-Control: max-age=3600</code> says "keep it for one hour".</li>
+<li><b>CORS</b> is a browser rule. A page on <code>a.com</code> cannot read data from <code>b.com</code> unless <code>b.com</code> says yes.</li>
+<li>The server says yes with the <code>Access-Control-Allow-Origin</code> header.</li>
+<li>CORS only exists in browsers. Tools like Postman ignore it. So CORS is <b>not</b> security for your API.</li>
+</ul>
+<div class="note"><b>Remember:</b> a CORS error is the browser protecting the user. You fix it on the server, by allowing the right origin.</div>
+</section>
+
+<!-- ================= NODE ================= -->
+<div class="part">Part 2 — Node.js</div>
+
+<section id="s5">
+<h3>5. What Node.js Is</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Node.js</b> lets you run JavaScript on a server, outside the browser. It uses one main thread. A <b>thread</b> is one worker that runs code.</p>
+<p class="analogy">Node is like one fast waiter. He takes your order and gives it to the kitchen. He does not stand and wait. He serves other tables until your food is ready.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Node = <b>V8</b> (the engine that runs JS) + <b>libuv</b> (a helper library for slow work like files and network).</li>
+<li><b>Blocking</b> = the code waits and nothing else can run. <b>Non-blocking</b> = the code hands off the slow job and keeps going.</li>
+<li>Most backend work is <b>waiting</b>: for the database, for a file, for another API. Node is great at waiting.</li>
+<li>Good for: APIs, chat apps, real-time apps, streaming.</li>
+<li>Bad for: heavy math or video processing. This keeps the one thread busy and everyone waits.</li>
+<li>"Single-threaded" means <b>your JavaScript</b> runs on one thread. Behind the scenes, helpers work in parallel.</li>
+</ul>
+<pre><code>// Blocking: everyone waits while the file loads
+const data = fs.readFileSync("big.txt");
+
+// Non-blocking: Node keeps serving others, then runs the callback
+fs.readFile("big.txt", (err, data) =&gt; { /* use data */ });</code></pre>
+<div class="note"><b>Remember:</b> Node is fast because it never sits idle while waiting for I/O (input/output like disk and network).</div>
+</section>
+
+<section id="s6">
+<h3>6. The Event Loop</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>The <b>event loop</b> is a loop that never stops. It checks: "Is the main thread free? Is any slow job finished?" If yes, it runs the next finished job's code.</p>
+<p class="analogy">Think of a doctor's waiting room. Patients wait in a line. When the doctor is free, the next patient goes in. The doctor sees one patient at a time.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 240" role="img" aria-label="Simple event loop: the call stack hands slow jobs to helpers, finished jobs wait in the callback queue, and the event loop moves the next callback into the call stack when it is empty.">
+  <rect class="d-fill-accent" x="30" y="40" width="150" height="72" rx="8"/>
+  <rect class="d-box-accent" x="30" y="40" width="150" height="72" rx="8"/>
+  <text class="d-accent-text" x="105" y="64" text-anchor="middle">Call stack</text>
+  <text class="d-sub" x="105" y="83" text-anchor="middle">runs your JS,</text>
+  <text class="d-sub" x="105" y="99" text-anchor="middle">one line at a time</text>
+
+  <rect class="d-box" x="245" y="40" width="150" height="72" rx="8"/>
+  <text class="d-label" x="320" y="64" text-anchor="middle">Helpers (OS)</text>
+  <text class="d-sub" x="320" y="83" text-anchor="middle">timers, files,</text>
+  <text class="d-sub" x="320" y="99" text-anchor="middle">network, database</text>
+
+  <rect class="d-box" x="460" y="40" width="150" height="72" rx="8"/>
+  <text class="d-label" x="535" y="64" text-anchor="middle">Callback queue</text>
+  <text class="d-sub" x="535" y="83" text-anchor="middle">finished jobs</text>
+  <text class="d-sub" x="535" y="99" text-anchor="middle">wait in line</text>
+
+  <path class="d-line" d="M180 76 H239"/><path class="d-arrow" d="M245 76 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="212" y="68" text-anchor="middle">hand off</text>
+  <path class="d-line" d="M395 76 H454"/><path class="d-arrow" d="M460 76 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="427" y="68" text-anchor="middle">done</text>
+
+  <path class="d-line-accent" d="M535 112 V160 H105 V118"/><path class="d-arrow-accent" d="M105 112 l-4.5 9 h9 z"/>
+  <text class="d-accent-text" x="320" y="182" text-anchor="middle">Event loop: when the call stack is empty, bring in the next callback</text>
+  <text class="d-sub" x="320" y="208" text-anchor="middle">Waiting happens in the helpers, so the one JS thread is never stuck doing nothing.</text>
+</svg>
+<figcaption>A simple model of the event loop. The full notes show the real phases, but this picture is enough for most interviews.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li>Your normal code (sync code) always runs first, top to bottom.</li>
+<li>A <b>callback</b> is a function you give to Node to run later, when a job is done.</li>
+<li><b>Microtasks</b> (promise <code>.then</code>, <code>process.nextTick</code>) run before <b>macrotasks</b> (<code>setTimeout</code>, I/O).</li>
+<li>If your code runs a very long loop, the event loop is <b>blocked</b>. No other request gets served.</li>
+<li>Fix for heavy work: move it to a <b>worker thread</b> or a background job.</li>
+</ul>
+<pre><code>console.log("1");                                  // sync: runs first
+setTimeout(() =&gt; console.log("4"), 0);             // macrotask: runs last
+Promise.resolve().then(() =&gt; console.log("3"));    // microtask: before timers
+console.log("2");                                  // sync
+// Output: 1, 2, 3, 4</code></pre>
+<div class="note"><b>Remember:</b> sync code first, then microtasks (promises), then macrotasks (timers). And never block the loop.</div>
+</section>
+
+<section id="s7">
+<h3>7. Async Code</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Async</b> code starts a job now and gets the result later. A <b>promise</b> is an object that says "I will give you a value later, or an error".</p>
+<p class="analogy">A promise is like the buzzer a café gives you. You sit down. It buzzes when your coffee is ready, or the staff tell you they ran out.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Three styles, old to new: <b>callbacks</b> → <b>promises</b> → <b>async/await</b>.</li>
+<li>Too many nested callbacks is called <b>callback hell</b>. It is hard to read.</li>
+<li>A promise has 3 states: <b>pending</b> (waiting), <b>fulfilled</b> (success), <b>rejected</b> (error).</li>
+<li><code>async/await</code> makes async code look like normal code. Use <code>try/catch</code> for errors.</li>
+<li><code>Promise.all</code> runs jobs at the same time. It fails if any one job fails.</li>
+<li>Common mistake: forgetting <code>await</code>. You get a promise, not the data.</li>
+</ul>
+<pre><code>async function loadPage(id) {
+  try {
+    // Both run at the same time, so it is faster
+    const [user, orders] = await Promise.all([getUser(id), getOrders(id)]);
+    return { user, orders };
+  } catch (err) {
+    console.error("Something failed", err);   // catch any error here
+  }
+}</code></pre>
+<div class="note"><b>Remember:</b> async/await is just a nicer way to write promises. Use Promise.all when jobs don't depend on each other.</div>
+</section>
+
+<section id="s8">
+<h3>8. Streams &amp; Buffers</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>buffer</b> is a box of raw bytes (computer data). A <b>stream</b> moves data in small pieces, called <b>chunks</b>, instead of all at once.</p>
+<p class="analogy">A stream is like drinking with a straw, sip by sip. You don't need to pour the whole bottle into your mouth at once.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Reading a 2 GB file at once needs 2 GB of memory. Streaming it needs only a small amount.</li>
+<li>Four types: <b>Readable</b> (source), <b>Writable</b> (destination), <b>Duplex</b> (both), <b>Transform</b> (changes data on the way).</li>
+<li>Used for big files, video, uploads, downloads.</li>
+<li><b>Backpressure</b> = "slow down" signal when the receiver is slower than the sender. <code>pipe()</code> handles it for you.</li>
+</ul>
+<pre><code>// Send a big file to the user, piece by piece
+fs.createReadStream("big-video.mp4").pipe(res);</code></pre>
+<div class="note"><b>Remember:</b> streams keep memory use small and steady, no matter how big the file is.</div>
+</section>
+
+<section id="s9">
+<h3>9. Modules, Memory and Processes</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>module</b> is one file of code that you can share with other files. Node has two ways to do it: <code>require</code> (old) and <code>import</code> (new).</p>
+<p class="analogy">Modules are like LEGO pieces. Each piece does one job. You snap them together to build the app.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><b>CommonJS</b>: <code>require()</code> and <code>module.exports</code>. <b>ES Modules</b>: <code>import</code> and <code>export</code>.</li>
+<li>A module is loaded once and then <b>cached</b> (saved). Every file gets the same copy.</li>
+<li><b>Garbage collection</b> = Node cleans up memory you no longer use, automatically.</li>
+<li>A <b>memory leak</b> = memory that keeps growing and is never freed. Common cause: a global array that only grows.</li>
+<li>To use all CPU cores, run many copies of the app (<b>cluster</b> or <b>PM2</b>).</li>
+<li><code>package.json</code> lists your packages. <code>package-lock.json</code> locks exact versions. Commit both.</li>
+</ul>
+<pre><code>// math.js
+export function add(a, b) { return a + b; }
+
+// app.js
+import { add } from "./math.js";
+console.log(add(2, 3));   // 5</code></pre>
+<div class="note"><b>Remember:</b> one Node process uses one CPU core for your JS. Use cluster or PM2 to use them all.</div>
+</section>
+
+<!-- ================= APIs ================= -->
+<div class="part">Part 3 — Building APIs</div>
+
+<section id="s10">
+<h3>10. Express Basics</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Express</b> is a small library that makes building a Node server easy. It gives you <b>routes</b> (which URL runs which code) and <b>middleware</b>.</p>
+<p class="analogy">Middleware is like airport security. You pass through checks one by one: ticket, ID, bag scan. Any check can stop you. If all pass, you reach the gate.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 180" role="img" aria-label="A request passes through logger, express.json and auth middleware, each calling next, then reaches the route handler. If auth fails it stops and sends 401.">
+  <rect class="d-box-accent" x="10" y="48" width="80" height="44" rx="7"/>
+  <text class="d-accent-text" x="50" y="75" text-anchor="middle">Request</text>
+
+  <rect class="d-box" x="110" y="48" width="100" height="44" rx="7"/>
+  <text class="d-label" x="160" y="67" text-anchor="middle">logger</text>
+  <text class="d-sub" x="160" y="84" text-anchor="middle">next()</text>
+
+  <rect class="d-box" x="230" y="48" width="100" height="44" rx="7"/>
+  <text class="d-label" x="280" y="67" text-anchor="middle">express.json</text>
+  <text class="d-sub" x="280" y="84" text-anchor="middle">next()</text>
+
+  <rect class="d-box" x="350" y="48" width="100" height="44" rx="7"/>
+  <text class="d-label" x="400" y="67" text-anchor="middle">auth</text>
+  <text class="d-sub" x="400" y="84" text-anchor="middle">next()</text>
+
+  <rect class="d-fill-accent" x="470" y="48" width="150" height="44" rx="7"/>
+  <rect class="d-box-accent" x="470" y="48" width="150" height="44" rx="7"/>
+  <text class="d-accent-text" x="545" y="67" text-anchor="middle">Route handler</text>
+  <text class="d-sub" x="545" y="84" text-anchor="middle">res.json(data)</text>
+
+  <path class="d-line-accent" d="M90 70 H104"/><path class="d-arrow-accent" d="M110 70 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M210 70 H224"/><path class="d-arrow" d="M230 70 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M330 70 H344"/><path class="d-arrow" d="M350 70 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M450 70 H464"/><path class="d-arrow" d="M470 70 l-9 -4.5 v9 z"/>
+
+  <path class="d-dash" d="M400 92 V122"/><path class="d-arrow" d="M400 128 l-4.5 -9 h9 z"/>
+  <rect class="d-box" x="320" y="128" width="160" height="34" rx="7"/>
+  <text class="d-sub" x="400" y="149" text-anchor="middle">no token? send 401, stop</text>
+  <text class="d-sub" x="160" y="140" text-anchor="middle">order matters: top to bottom</text>
+</svg>
+<figcaption>Each middleware either calls <code>next()</code> to pass the request on, or sends a response and stops the chain.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li>A <b>route</b> = a method + a path + a function. Example: <code>app.get("/users", fn)</code>.</li>
+<li>A <b>middleware</b> is a function with <code>(req, res, next)</code>. It runs before your route.</li>
+<li><code>next()</code> = "go to the next step". If you forget it and send nothing, the request hangs.</li>
+<li><code>req.params</code> = parts of the URL. <code>req.query</code> = after the <code>?</code>. <code>req.body</code> = the sent data.</li>
+<li><code>express.json()</code> reads JSON bodies. Without it, <code>req.body</code> is undefined.</li>
+<li>The error handler has 4 arguments <code>(err, req, res, next)</code> and goes last.</li>
+</ul>
+<pre><code>import express from "express";
+const app = express();
+
+app.use(express.json());                 // middleware: read JSON body
+
+app.get("/users/:id", (req, res) =&gt; {    // route
+  res.json({ id: req.params.id });       // send a response
+});
+
+app.listen(3000);                        // start the server</code></pre>
+<div class="note"><b>Remember:</b> Express is just routes plus a chain of middleware. Order matters: first registered, first run.</div>
+</section>
+
+<section id="s11">
+<h3>11. Project Structure</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Split your code into <b>layers</b>. Each layer has one job. This is called <b>separation of concerns</b>.</p>
+<p class="analogy">In a restaurant, the waiter takes orders, the chef cooks, and the store-room keeper handles stock. Nobody does everyone's job.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><b>Routes</b> → match the URL to a controller.</li>
+<li><b>Controller</b> → reads the request and sends the response. Only HTTP work.</li>
+<li><b>Service</b> → the business rules. Example: "A shipped order can't be cancelled."</li>
+<li><b>Repository / model</b> → talks to the database. Only data work.</li>
+<li>Why? Code is easier to test, reuse and change. You can swap the database and touch only one layer.</li>
+<li>Keep secrets and settings in <b>environment variables</b> (<code>.env</code>), not in code.</li>
+</ul>
+<div class="flow">src/
+├─ routes/        URL → controller
+├─ controllers/   read req, send res
+├─ services/      business rules
+├─ models/        database work
+├─ middleware/    auth, validation, errors
+└─ server.js      starts the app</div>
+<div class="note"><b>Remember:</b> controller = HTTP, service = rules, repository = database. Each layer only talks to the one below it.</div>
+</section>
+
+<section id="s12">
+<h3>12. Errors &amp; Validation</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Validation</b> means checking that incoming data is correct before you use it. <b>Error handling</b> means catching problems and sending a clear reply.</p>
+<p class="analogy">Validation is like a bouncer at a club door. He checks your ID before you enter. Bad data never gets inside.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Check all input: body, URL params, query string. Never trust the client.</li>
+<li>Use a library like <b>Zod</b> or <b>Joi</b> to describe the correct shape of the data.</li>
+<li>Send <b>400</b> or <b>422</b> for bad input. Send <b>500</b> for unexpected server bugs.</li>
+<li>Use <b>one central error handler</b>. Don't write error replies in 20 places.</li>
+<li>In production, never show the stack trace (internal error details) to users.</li>
+<li><b>Mass assignment</b> bug: saving the whole <code>req.body</code>. A user could send <code>"role": "admin"</code>. Only pick the fields you allow.</li>
+</ul>
+<pre><code>// Central error handler: 4 arguments, registered last
+app.use((err, req, res, next) =&gt; {
+  console.error(err);                              // log full details for you
+  res.status(err.status || 500)
+     .json({ message: err.message || "Something went wrong" });
+});</code></pre>
+<div class="note"><b>Remember:</b> validate at the door, throw errors anywhere, and handle them in one place.</div>
+</section>
+
+<section id="s13">
+<h3>13. REST API Design</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>REST</b> is a simple style for designing APIs. URLs name <b>things</b> (resources). HTTP methods say <b>what to do</b> with them.</p>
+<p class="analogy">A library has shelves for books. "GET book 42" means show it. "DELETE book 42" means remove it. The shelf name stays the same; only the action changes.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Use nouns, not verbs: <code>POST /orders</code>, not <code>POST /createOrder</code>.</li>
+<li>Use plural names: <code>/users</code>, <code>/products</code>.</li>
+<li>Use the correct status code: 201 after create, 404 if not found.</li>
+<li><b>Pagination</b> = return data in pages, like <code>?page=2&amp;limit=20</code>. Never return a huge list at once.</li>
+<li><b>Versioning</b> = put a version in the URL, like <code>/api/v1/</code>. Then old apps keep working.</li>
+<li>Keep the same JSON shape for every success and every error.</li>
+</ul>
+<pre><code>GET    /api/v1/products        // list products
+GET    /api/v1/products/42     // get one product
+POST   /api/v1/products        // create a product
+PATCH  /api/v1/products/42     // update part of it
+DELETE /api/v1/products/42     // delete it</code></pre>
+<div class="note"><b>Remember:</b> nouns in the URL, actions in the HTTP method, and always paginate lists. GraphQL is the main alternative: the client picks the fields it wants.</div>
+</section>
+
+<section id="s14">
+<h3>14. Files, Email and Real-time</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Apps often need to save uploaded files, send emails, and push live updates. Each has a standard, simple solution.</p>
+<p class="analogy">You don't keep your car in your living room. You use a garage. In the same way, you don't keep big files on your app server. You use file storage like S3.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><b>Uploads</b>: use <b>multer</b> to read files. Save them in <b>S3</b> or Cloudinary, not on the server disk.</li>
+<li>Always check file size and file type. Give files random names.</li>
+<li><b>Email</b>: use a provider like SendGrid or Resend. Send it in the background, so the API stays fast.</li>
+<li><b>Polling</b> = the client asks again and again: "Anything new?" Simple, but wasteful.</li>
+<li><b>WebSocket</b> = a connection that stays open both ways. Best for chat and live games.</li>
+<li><b>SSE</b> (Server-Sent Events) = the server pushes updates one way. Good for notifications.</li>
+</ul>
+<div class="note"><b>Remember:</b> files go to object storage, emails go to a background job, and live updates use WebSockets.</div>
+</section>
+
+<!-- ================= DATA ================= -->
+<div class="part">Part 4 — Data</div>
+
+<section id="s15">
+<h3>15. Database Basics</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>database</b> stores data safely, so it survives restarts. There are two main types: <b>SQL</b> (tables) and <b>NoSQL</b> (documents and other shapes).</p>
+<p class="analogy">SQL is like a spreadsheet with strict columns. NoSQL (MongoDB) is like a folder of forms, where each form can have slightly different fields.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><b>SQL</b> (Postgres, MySQL): tables, rows, fixed columns, strong rules. Great for money and orders.</li>
+<li><b>NoSQL</b> (MongoDB): flexible JSON-like documents. Great for data whose shape changes.</li>
+<li><b>Redis</b> is a key-value store in memory. Very fast. Used for cache and sessions.</li>
+<li><b>Connection pool</b> = a set of open database connections that requests share. Opening a new one each time is slow.</li>
+<li><b>CAP theorem</b> in one line: when the network breaks, a distributed database must pick between correct data and staying online.</li>
+</ul>
+<div class="note"><b>Remember:</b> PostgreSQL is a safe default. Choose MongoDB when your data is naturally document-shaped.</div>
+</section>
+
+<section id="s16">
+<h3>16. SQL Basics</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>SQL</b> is the language you use to ask a relational database for data. You describe <b>what</b> you want. The database works out <b>how</b> to get it.</p>
+<p class="analogy">It is like asking a librarian: "Give me all books by this author, newest first." You don't search the shelves yourself.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><code>SELECT</code> reads, <code>INSERT</code> adds, <code>UPDATE</code> changes, <code>DELETE</code> removes.</li>
+<li><code>WHERE</code> filters rows. <code>ORDER BY</code> sorts. <code>LIMIT</code> takes only a few.</li>
+<li><b>JOIN</b> combines two tables. <b>INNER JOIN</b> = only matches. <b>LEFT JOIN</b> = all left rows, even with no match.</li>
+<li><code>GROUP BY</code> makes groups. <code>HAVING</code> filters those groups.</li>
+<li><b>Primary key</b> = unique ID of a row. <b>Foreign key</b> = a link to a row in another table.</li>
+<li><b>Normalization</b> = don't store the same data in many places.</li>
+</ul>
+<pre><code>-- Each user's name and how many orders they made
+SELECT u.name, COUNT(o.id) AS total_orders
+FROM users u
+LEFT JOIN orders o ON o.user_id = u.id
+GROUP BY u.name;</code></pre>
+<div class="note"><b>Remember:</b> WHERE filters rows before grouping. HAVING filters groups after grouping.</div>
+</section>
+
+<section id="s17">
+<h3>17. Indexes</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>An <b>index</b> is a sorted list that helps the database find rows fast. Without it, the database reads every row.</p>
+<p class="analogy">An index is like the index at the back of a book. You look up a word and jump straight to the page. No need to read the whole book.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Without an index, the database does a <b>full scan</b> (checks every row). Very slow on big tables.</li>
+<li>Add indexes on columns you search, join or sort by. Example: <code>email</code>, <code>user_id</code>.</li>
+<li>Indexes make <b>reads faster</b> but <b>writes slower</b>, and they use extra space.</li>
+<li>Don't index every column. Only the ones you really query.</li>
+<li>Use <code>EXPLAIN</code> to see if your query uses an index.</li>
+</ul>
+<pre><code>-- Make "find orders by user" fast
+CREATE INDEX idx_orders_user ON orders (user_id);</code></pre>
+<div class="note"><b>Remember:</b> an index trades slower writes for much faster reads. It is the first fix for a slow query.</div>
+</section>
+
+<section id="s18">
+<h3>18. Transactions</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>transaction</b> groups many database steps into one. Either <b>all</b> steps succeed, or <b>none</b> of them happen.</p>
+<p class="analogy">Sending money to a friend: your account goes down and theirs goes up. If only one step happened, money would vanish. A transaction prevents that.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><b>ACID</b> = the 4 promises of a transaction. <b>Atomic</b> = all or nothing. <b>Consistent</b> = rules stay true. <b>Isolated</b> = transactions don't mix. <b>Durable</b> = saved even after a crash.</li>
+<li><code>COMMIT</code> saves the changes. <code>ROLLBACK</code> undoes them.</li>
+<li><b>Race condition</b> = two requests change the same data at the same time. Example: two people buy the last item.</li>
+<li>Fix it with a single safe update, or a <b>lock</b>. Isolation levels control how strict this is; the full notes cover them.</li>
+</ul>
+<pre><code>BEGIN;
+  UPDATE accounts SET balance = balance - 500 WHERE id = 1;  -- take money
+  UPDATE accounts SET balance = balance + 500 WHERE id = 2;  -- give money
+COMMIT;   -- both happen together (or ROLLBACK if anything fails)</code></pre>
+<div class="note"><b>Remember:</b> a transaction is "all or nothing". Explain ACID with the bank transfer example.</div>
+</section>
+
+<section id="s19">
+<h3>19. MongoDB / NoSQL</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>MongoDB</b> stores data as <b>documents</b>. A document looks like a JSON object. Documents live in <b>collections</b> (like tables).</p>
+<p class="analogy">A document is like a full patient file. Name, address and past visits are all inside one folder, not spread across many cabinets.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>No fixed columns. Each document can have different fields.</li>
+<li><b>Embed</b> = put related data inside the document. Good when you always read them together.</li>
+<li><b>Reference</b> = store only the other document's ID. Good when data is shared or grows forever.</li>
+<li>One document can be at most 16 MB. So never embed a list that grows forever, like comments.</li>
+<li><b>Mongoose</b> is a Node library that adds schemas (shape rules) to MongoDB.</li>
+</ul>
+<pre><code>// One order document, with its items embedded inside
+{
+  "_id": "o1",
+  "user": "u7",                                   // reference to a user
+  "items": [ { "product": "Pen", "qty": 2 } ],    // embedded list
+  "total": 40
+}</code></pre>
+<div class="note"><b>Remember:</b> embed what you read together; reference what is shared or keeps growing.</div>
+</section>
+
+<section id="s20">
+<h3>20. ORMs &amp; Migrations</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>An <b>ORM</b> (Object-Relational Mapper) lets you use the database with normal JavaScript code instead of raw SQL. A <b>migration</b> is a saved file that changes the database structure.</p>
+<p class="analogy">An ORM is a translator. You speak JavaScript, the database speaks SQL, and the ORM translates between you.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Popular ORMs: <b>Prisma</b>, Sequelize, TypeORM. <b>Mongoose</b> for MongoDB.</li>
+<li>ORMs save time, but can hide slow queries.</li>
+<li><b>N+1 problem</b>: 1 query to get a list, then 1 more query for each item. 100 items = 101 queries.</li>
+<li>Fix N+1 by loading related data together (<code>include</code>, <code>populate</code>, or a JOIN).</li>
+<li><b>Migrations</b> are like Git for your database structure. Never change production tables by hand.</li>
+</ul>
+<pre><code>// BAD: one extra query per post (N+1)
+for (const post of posts) post.author = await User.findById(post.userId);
+
+// GOOD: load posts and authors together
+const posts = await prisma.post.findMany({ include: { author: true } });</code></pre>
+<div class="note"><b>Remember:</b> N+1 is the most common ORM performance bug. Fix it by fetching related data in one go.</div>
+</section>
+
+<section id="s21">
+<h3>21. Caching &amp; Redis</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>cache</b> keeps a copy of data in a fast place, so you don't fetch it again and again. <b>Redis</b> is a popular cache that keeps data in memory (RAM).</p>
+<p class="analogy">Keeping water on your desk is a cache. You don't walk to the kitchen for every sip. You only go when the bottle is empty.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 200" role="img" aria-label="The app checks the Redis cache first. On a hit it replies fast. On a miss it asks the database, then saves a copy in the cache for next time.">
+  <rect class="d-box-accent" x="20" y="40" width="130" height="50" rx="8"/>
+  <text class="d-accent-text" x="85" y="70" text-anchor="middle">App</text>
+
+  <rect class="d-fill-accent" x="250" y="40" width="140" height="50" rx="8"/>
+  <rect class="d-box-accent" x="250" y="40" width="140" height="50" rx="8"/>
+  <text class="d-accent-text" x="320" y="60" text-anchor="middle">Redis cache</text>
+  <text class="d-sub" x="320" y="78" text-anchor="middle">fast (memory)</text>
+
+  <rect class="d-box" x="490" y="40" width="130" height="50" rx="8"/>
+  <text class="d-label" x="555" y="60" text-anchor="middle">Database</text>
+  <text class="d-sub" x="555" y="78" text-anchor="middle">slower (disk)</text>
+
+  <path class="d-line-accent" d="M150 56 H244"/><path class="d-arrow-accent" d="M250 56 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="200" y="48" text-anchor="middle">1. check</text>
+  <path class="d-line-accent" d="M250 76 H156"/><path class="d-arrow-accent" d="M150 76 l9 -4.5 v9 z"/>
+  <text class="d-accent-text" x="200" y="108" text-anchor="middle">HIT: fast reply</text>
+
+  <path class="d-line" d="M85 90 V148 H555 V96"/><path class="d-arrow" d="M555 90 l-4.5 9 h9 z"/>
+  <text class="d-sub" x="320" y="168" text-anchor="middle">2. MISS: ask the database</text>
+
+  <path class="d-dash" d="M490 65 H396"/><path class="d-arrow" d="M390 65 l9 -4.5 v9 z"/>
+  <text class="d-sub" x="440" y="57" text-anchor="middle">3. save a copy</text>
+  <text class="d-sub" x="320" y="190" text-anchor="middle">Next time, the same request is a HIT.</text>
+</svg>
+<figcaption>Cache-aside: check the cache first. On a miss, read the database and the app saves a copy in the cache with an expiry time.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li><b>Cache hit</b> = data found in cache (fast). <b>Cache miss</b> = not found, go to the database.</li>
+<li><b>TTL</b> (time to live) = how long the copy stays before it expires. Example: 5 minutes.</li>
+<li><b>Invalidation</b> = deleting the old copy when the real data changes. This is the hard part.</li>
+<li>Cache data that is read often and changes rarely. Example: a product page.</li>
+<li>Redis is also used for sessions, rate limiting, queues and leaderboards.</li>
+</ul>
+<pre><code>async function getProduct(id) {
+  const cached = await redis.get(`product:${id}`);           // 1. check cache
+  if (cached) return JSON.parse(cached);                     // hit: done
+
+  const product = await db.product.findUnique({ where: { id } });  // 2. miss: ask DB
+  await redis.set(`product:${id}`, JSON.stringify(product), "EX", 300); // 3. save 5 min
+  return product;
+}</code></pre>
+<div class="note"><b>Remember:</b> caching trades fresh data for speed. Always decide how and when the cached copy gets updated.</div>
+</section>
+
+<!-- ================= SECURITY ================= -->
+<div class="part">Part 5 — Security</div>
+
+<section id="s22">
+<h3>22. Login Basics</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Authentication</b> = proving who you are (login). <b>Authorization</b> = checking what you are allowed to do.</p>
+<p class="analogy">At a hotel, showing your ID at the front desk is authentication. Your room key opening only your room, not every room, is authorization.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Never store passwords as plain text. Store a <b>hash</b> instead.</li>
+<li>A <b>hash</b> is a one-way scramble. You can't turn it back into the password.</li>
+<li>Use <b>bcrypt</b> or <b>argon2</b>. They are slow on purpose, so guessing passwords takes too long.</li>
+<li>A <b>salt</b> is random text added to each password before hashing. Same passwords then get different hashes.</li>
+<li><b>Roles</b> (admin, user) control what people can do. This is called RBAC (role-based access control).</li>
+<li>Always check <b>ownership</b>: user 5 must not read user 6's invoice just by changing the ID.</li>
+</ul>
+<pre><code>const hash = await bcrypt.hash(password, 12);               // on sign-up: save this
+const ok = await bcrypt.compare(input, user.passwordHash);  // on login: true or false</code></pre>
+<div class="note"><b>Remember:</b> hash passwords with bcrypt, and check permission plus ownership on every request.</div>
+</section>
+
+<section id="s23">
+<h3>23. Sessions, JWT and OAuth</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>After login, the server must remember you. Two common ways: a <b>session</b> (the server keeps a record) or a <b>JWT</b> (you carry a signed token).</p>
+<p class="analogy">A session is like a coat check: you get a number and the staff keep your coat. A JWT is like a stamped passport: you carry it, and anyone can check the stamp is real.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 620 300" role="img" aria-label="JWT login flow: the client posts email and password, the server returns a signed token, the client sends the token with later requests, and the server checks the signature before replying.">
+  <text class="d-accent-text" x="90" y="22" text-anchor="middle">CLIENT</text>
+  <text class="d-accent-text" x="530" y="22" text-anchor="middle">SERVER</text>
+  <path class="d-dash" d="M90 32 V250"/>
+  <path class="d-dash" d="M530 32 V250"/>
+
+  <path class="d-line-accent" d="M96 66 H518"/><path class="d-arrow-accent" d="M524 66 l-9 -4.5 v9 z"/>
+  <text class="d-mono" x="310" y="58" text-anchor="middle">POST /login</text>
+  <text class="d-sub" x="310" y="82" text-anchor="middle">email + password</text>
+
+  <path class="d-line" d="M524 122 H102"/><path class="d-arrow" d="M96 122 l9 -4.5 v9 z"/>
+  <text class="d-label" x="310" y="114" text-anchor="middle">token (a signed JWT)</text>
+  <text class="d-sub" x="310" y="138" text-anchor="middle">server checked the password, then signed the token</text>
+
+  <path class="d-line-accent" d="M96 178 H518"/><path class="d-arrow-accent" d="M524 178 l-9 -4.5 v9 z"/>
+  <text class="d-mono" x="310" y="170" text-anchor="middle">GET /orders</text>
+  <text class="d-sub" x="310" y="194" text-anchor="middle">header: Authorization: Bearer &lt;token&gt;</text>
+
+  <path class="d-line" d="M524 234 H102"/><path class="d-arrow" d="M96 234 l9 -4.5 v9 z"/>
+  <text class="d-label" x="310" y="226" text-anchor="middle">200 OK + your orders</text>
+  <text class="d-sub" x="310" y="250" text-anchor="middle">server checked the signature first</text>
+
+  <rect class="d-fill-accent" x="80" y="264" width="460" height="30" rx="6"/>
+  <rect class="d-box-accent" x="80" y="264" width="460" height="30" rx="6"/>
+  <text class="d-accent-text" x="310" y="284" text-anchor="middle">The token proves who you are. The server stores no session.</text>
+</svg>
+<figcaption>Login with a JWT. The client sends the token on every request. The server only checks the signature.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li><b>Session</b>: the server stores your login (in Redis or the database). The browser only holds an ID in a cookie. Easy to log out instantly.</li>
+<li><b>JWT</b> (JSON Web Token) has 3 parts: <code>header.payload.signature</code>. The signature proves nobody changed it.</li>
+<li>A JWT is <b>not encrypted</b>. Anyone can read the payload. Never put passwords or secrets in it.</li>
+<li>A JWT can't easily be cancelled before it expires. So use a <b>short access token</b> (15 min) plus a <b>refresh token</b> to get new ones.</li>
+<li>Store tokens in an <b>HttpOnly cookie</b> if you can. <code>localStorage</code> can be read by attacker scripts.</li>
+<li><b>OAuth</b> = "Login with Google". Google proves who you are, and your app gets a token. Use a library for it.</li>
+</ul>
+<pre><code>// Create a token at login
+const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "15m" });
+
+// Check it in middleware on later requests
+const data = jwt.verify(token, process.env.JWT_SECRET);   // throws if fake or expired</code></pre>
+<div class="note"><b>Remember:</b> sessions are easy to cancel; JWTs scale easily but are hard to cancel. Short access token + refresh token is the usual answer.</div>
+</section>
+
+<section id="s24">
+<h3>24. Attacks &amp; Defences</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Attackers try to trick your server with bad input. Most defences follow one idea: <b>keep user data separate from your code</b>.</p>
+<p class="analogy">A bank teller reads your note as a request, not as an order to obey. "Give me everyone's money" on a form is just text, not a command.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><b>SQL injection</b>: user input becomes part of the SQL. Fix: <b>parameterized queries</b> (placeholders like <code>$1</code>).</li>
+<li><b>XSS</b> (Cross-Site Scripting): attacker's JavaScript runs in another user's browser. Fix: escape output, use HttpOnly cookies.</li>
+<li><b>CSRF</b> (Cross-Site Request Forgery): another site makes your browser send a request with your cookies. Fix: <code>SameSite</code> cookies, CSRF tokens.</li>
+<li><b>Broken access control</b>: changing an ID in the URL shows someone else's data. Fix: check ownership every time.</li>
+<li><b>Brute force</b>: guessing passwords many times. Fix: <b>rate limiting</b> (limit requests per minute).</li>
+<li>Also: use HTTPS, <code>helmet()</code> for safe headers, keep secrets out of Git and logs, update packages.</li>
+</ul>
+<pre><code>// UNSAFE: input is glued into the SQL text
+db.query("SELECT * FROM users WHERE email = '" + email + "'");
+
+// SAFE: input is sent separately, never run as code
+db.query("SELECT * FROM users WHERE email = $1", [email]);</code></pre>
+<div class="note"><b>Remember:</b> never build SQL with string joining. Use parameterized queries, and check permissions on every request.</div>
+</section>
+
+<!-- ================= SCALE ================= -->
+<div class="part">Part 6 — Scale &amp; Ops</div>
+
+<section id="s25">
+<h3>25. Architecture Patterns</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>monolith</b> is one app that does everything. <b>Microservices</b> are many small apps, each doing one job, talking over the network.</p>
+<p class="analogy">A monolith is one big shop that sells everything. Microservices are a market with many small stalls. Each stall runs on its own, but they must coordinate.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><b>Monolith</b>: simple to build, test and deploy. Can get big and messy over time.</li>
+<li><b>Microservices</b>: each part scales and deploys alone. But much more complex: network errors, many deploys, harder debugging.</li>
+<li>Start with a <b>modular monolith</b>: one app, with clean separate modules inside.</li>
+<li><b>API gateway</b> = one front door for many services. It handles login checks and routing.</li>
+<li><b>Event-driven</b> = services send messages like "OrderPlaced", and others react to them.</li>
+</ul>
+<div class="note"><b>Remember:</b> start with a monolith. Split into microservices only when a part really needs to scale or be owned separately.</div>
+</section>
+
+<section id="s26">
+<h3>26. Scaling</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Scaling</b> means handling more users. <b>Vertical</b> = a bigger machine. <b>Horizontal</b> = more machines.</p>
+<p class="analogy">A busy shop can hire one super-fast cashier (vertical), or open more cash counters (horizontal). More counters has no real limit.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 270" role="img" aria-label="Users send traffic to a load balancer, which shares it across three identical servers. All servers use one shared database and Redis.">
+  <rect class="d-box" x="250" y="12" width="140" height="36" rx="7"/>
+  <text class="d-label" x="320" y="35" text-anchor="middle">Users</text>
+
+  <rect class="d-fill-accent" x="225" y="72" width="190" height="46" rx="8"/>
+  <rect class="d-box-accent" x="225" y="72" width="190" height="46" rx="8"/>
+  <text class="d-accent-text" x="320" y="92" text-anchor="middle">Load balancer</text>
+  <text class="d-sub" x="320" y="109" text-anchor="middle">shares the traffic</text>
+
+  <rect class="d-box" x="40" y="150" width="150" height="46" rx="8"/>
+  <text class="d-label" x="115" y="170" text-anchor="middle">Server 1</text>
+  <text class="d-sub" x="115" y="187" text-anchor="middle">same code</text>
+  <rect class="d-box" x="245" y="150" width="150" height="46" rx="8"/>
+  <text class="d-label" x="320" y="170" text-anchor="middle">Server 2</text>
+  <text class="d-sub" x="320" y="187" text-anchor="middle">same code</text>
+  <rect class="d-box" x="450" y="150" width="150" height="46" rx="8"/>
+  <text class="d-label" x="525" y="170" text-anchor="middle">Server 3</text>
+  <text class="d-sub" x="525" y="187" text-anchor="middle">same code</text>
+
+  <rect class="d-box-accent" x="220" y="222" width="200" height="40" rx="8"/>
+  <text class="d-accent-text" x="320" y="247" text-anchor="middle">Shared database + Redis</text>
+
+  <path class="d-line" d="M320 48 V66"/><path class="d-arrow" d="M320 72 l-4.5 -9 h9 z"/>
+  <path class="d-line-accent" d="M265 118 L127 146"/><path class="d-arrow-accent" d="M121 148 l8 -6 l2 9 z"/>
+  <path class="d-line-accent" d="M320 118 V144"/><path class="d-arrow-accent" d="M320 150 l-4.5 -9 h9 z"/>
+  <path class="d-line-accent" d="M375 118 L513 146"/><path class="d-arrow-accent" d="M519 148 l-10 2.6 l2 -8.8 z"/>
+
+  <path class="d-line" d="M115 196 V242 H220"/>
+  <path class="d-line" d="M320 196 V222"/>
+  <path class="d-line" d="M525 196 V242 H420"/>
+</svg>
+<figcaption>Horizontal scaling. Servers keep no user data in memory, so any server can answer any request.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li>A <b>load balancer</b> sends each request to a healthy server.</li>
+<li>For horizontal scaling, servers must be <b>stateless</b>: no sessions or files kept inside one server.</li>
+<li>Keep shared state in Redis, the database or S3. Then you can add or remove servers freely.</li>
+<li>The database is usually the bottleneck (the slowest part). Fix it with indexes, caching and <b>read replicas</b> (copies used only for reading).</li>
+<li>Other easy wins: pagination, compression, a CDN, and moving slow work to background jobs.</li>
+<li>Always <b>measure first</b>. Don't guess where the slow part is.</li>
+</ul>
+<div class="note"><b>Remember:</b> stateless servers behind a load balancer, plus caching and a well-indexed database. That answers most "how would you scale?" questions.</div>
+</section>
+
+<section id="s27">
+<h3>27. Queues &amp; Background Jobs</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>queue</b> is a waiting line for jobs. The API puts a job in the line and replies quickly. A separate <b>worker</b> does the job later.</p>
+<p class="analogy">At a dry cleaner, you drop off clothes and get a ticket right away. You don't wait in the shop while they wash. The work happens in the back.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Use a queue for slow work: emails, image resizing, PDF reports, imports.</li>
+<li>The user gets a fast reply. The work still happens, just a bit later.</li>
+<li>If a job fails, the queue <b>retries</b> it, waiting a bit longer each time.</li>
+<li>A job may run twice. So make it <b>idempotent</b>: running it twice must not cause harm.</li>
+<li>Tools: <b>BullMQ</b> (uses Redis, great for Node), RabbitMQ, Kafka, AWS SQS.</li>
+</ul>
+<pre><code>// In the API: add the job and reply fast
+await emailQueue.add("welcome", { email: user.email });
+res.status(202).json({ message: "Accepted" });
+
+// In a separate worker process: do the slow work
+new Worker("email", async (job) =&gt; sendEmail(job.data.email));</code></pre>
+<div class="note"><b>Remember:</b> if the user doesn't need to wait for it, put it in a queue.</div>
+</section>
+
+<section id="s28">
+<h3>28. Testing</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Tests</b> are small programs that check your code works. They run automatically, so you catch bugs before users do.</p>
+<p class="analogy">Testing is like a car check before a long trip. You test the brakes, lights and tyres before you drive, not after a crash.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><b>Unit test</b> = test one small function alone.</li>
+<li><b>Integration test</b> = test parts together, like a route plus a real test database.</li>
+<li><b>E2E</b> (end-to-end) test = test the whole app like a real user.</li>
+<li><b>Test pyramid</b>: many unit tests, fewer integration tests, very few E2E tests.</li>
+<li><b>Mock</b> = a fake version of an outside service (like payments), so tests stay fast and safe.</li>
+<li>Tools: <b>Jest</b> or Vitest, plus <b>Supertest</b> to call your API in tests.</li>
+</ul>
+<pre><code>it("returns 404 for a missing user", async () =&gt; {
+  const res = await request(app).get("/users/999");   // call the API
+  expect(res.status).toBe(404);                       // check the result
+});</code></pre>
+<div class="note"><b>Remember:</b> test behaviour and edge cases (empty, wrong user, duplicate), not just the happy path.</div>
+</section>
+
+<section id="s29">
+<h3>29. Deployment</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Deployment</b> means putting your app on a real server so users can reach it. <b>Docker</b> packs your app and everything it needs into one box, called a <b>container</b>.</p>
+<p class="analogy">A container is like a lunch box. Everything you need is packed inside, so it works the same at home, at school or at work.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Docker fixes "it works on my machine". The app runs the same everywhere.</li>
+<li><b>Environment variables</b> hold settings and secrets. Each environment (dev, staging, production) has its own.</li>
+<li><b>CI/CD</b> = on every push, tests run automatically (CI), then the app deploys automatically (CD).</li>
+<li>Add a <b>health check</b> route like <code>/health</code>, so the load balancer knows the app is alive.</li>
+<li><b>Graceful shutdown</b> = finish current requests before stopping the app.</li>
+<li>Take database <b>backups</b>, and test that you can restore them.</li>
+</ul>
+<pre><code># A tiny Dockerfile
+FROM node:22-alpine          # start from Node
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --omit=dev        # install only production packages
+COPY . .
+CMD ["node", "server.js"]    # start the app</code></pre>
+<div class="note"><b>Remember:</b> Docker for the same environment everywhere, env variables for config, CI/CD for safe automatic releases.</div>
+</section>
+
+<section id="s30">
+<h3>30. Observability</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Observability</b> means being able to see what your app is doing in production. It has three tools: <b>logs</b>, <b>metrics</b> and <b>traces</b>.</p>
+<p class="analogy">It is like a car dashboard. Speed and fuel are metrics. The warning light is an alert. The mechanic's notes are logs.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><b>Logs</b> = text records of what happened. Example: "Payment failed for order 42".</li>
+<li><b>Metrics</b> = numbers over time. Example: requests per second, error rate, response time.</li>
+<li><b>Traces</b> = the path of one request through many services, with time spent at each step.</li>
+<li>Write logs as JSON (<b>structured logs</b>), so you can search them. Use a library like pino.</li>
+<li>Add a <b>request ID</b> to every log line, so you can follow one request.</li>
+<li>Never log passwords, tokens or card numbers. Set <b>alerts</b> for what users feel, like high error rates.</li>
+</ul>
+<pre><code>// Hard to search
+console.log("User " + id + " failed to pay");
+
+// Easy to search and filter
+logger.error({ userId: id, requestId: req.id }, "payment failed");</code></pre>
+<div class="note"><b>Remember:</b> metrics tell you something is wrong, traces tell you where, and logs tell you why.</div>
+</section>
+
+<!-- ================= REVISION ================= -->
+<div class="part">Revision</div>
+
+<section id="rev">
+<h3>Quick Revision</h3>
+<p>The most-asked questions, with short and simple answers. Say these in your own words.</p>
+<h4>Basics &amp; HTTP</h4>
+<ul>
+<li><b>What does the backend do?</b> It stores data, runs business rules, and checks who you are and what you may do.</li>
+<li><b>What happens when you type a URL?</b> DNS finds the IP, the browser connects (TCP + TLS), sends an HTTP request, and shows the response.</li>
+<li><b>What does stateless mean?</b> The server forgets you after each request. Cookies or tokens remind it who you are.</li>
+<li><b>GET vs POST?</b> GET reads data. POST sends data to create something.</li>
+<li><b>PUT vs PATCH?</b> PUT replaces the whole thing. PATCH changes only some fields.</li>
+<li><b>What is idempotent?</b> Doing it twice gives the same result as once. GET, PUT, DELETE are; POST is not.</li>
+<li><b>401 vs 403?</b> 401 = not logged in. 403 = logged in, but not allowed.</li>
+<li><b>What is CORS?</b> A browser rule. The server must allow other websites to read its responses.</li>
+</ul>
+<h4>Node.js</h4>
+<ul>
+<li><b>What is Node.js?</b> A runtime that runs JavaScript on the server, using V8 and libuv.</li>
+<li><b>Why is Node fast with one thread?</b> It never waits. Slow jobs go to helpers, and the thread serves others.</li>
+<li><b>What is the event loop?</b> A loop that runs finished callbacks when the main thread is free.</li>
+<li><b>Promise vs setTimeout, which runs first?</b> The promise. Microtasks run before timers.</li>
+<li><b>What is a promise?</b> An object holding a future value: pending, fulfilled or rejected.</li>
+<li><b>Promise.all?</b> Runs jobs at the same time and waits for all. Fails if any one fails.</li>
+<li><b>What blocks the event loop?</b> Long sync code, like a huge loop or <code>readFileSync</code>.</li>
+<li><b>What is a stream?</b> Data moved in small chunks, so memory use stays low.</li>
+</ul>
+<h4>APIs &amp; Express</h4>
+<ul>
+<li><b>What is middleware?</b> A function <code>(req, res, next)</code> that runs before the route handler.</li>
+<li><b>What does next() do?</b> Passes the request to the next middleware.</li>
+<li><b>How do you handle errors in Express?</b> One error middleware with 4 arguments, registered last.</li>
+<li><b>What is REST?</b> Nouns in URLs, HTTP methods for actions, correct status codes.</li>
+<li><b>Why paginate?</b> So you never send a huge list. It keeps responses fast and small.</li>
+<li><b>Why separate controller, service and repository?</b> Each has one job, so code is easier to test and change.</li>
+<li><b>WebSocket vs polling?</b> WebSocket keeps one open two-way connection. Polling asks again and again.</li>
+</ul>
+<h4>Databases</h4>
+<ul>
+<li><b>SQL vs NoSQL?</b> SQL = tables with strict rules. NoSQL = flexible documents. Pick by your data's shape.</li>
+<li><b>What is an index?</b> A sorted lookup that makes reads fast but writes a bit slower.</li>
+<li><b>What is a transaction?</b> Many steps that all succeed or all fail together.</li>
+<li><b>What is ACID?</b> Atomic, Consistent, Isolated, Durable.</li>
+<li><b>INNER vs LEFT JOIN?</b> INNER = only matching rows. LEFT = all left rows, even without a match.</li>
+<li><b>What is the N+1 problem?</b> One query per item in a list. Fix: load related data together.</li>
+<li><b>Embed or reference in MongoDB?</b> Embed what you read together. Reference what is shared or grows forever.</li>
+<li><b>What is caching?</b> Keeping a fast copy of data, often in Redis, with an expiry time (TTL).</li>
+</ul>
+<h4>Security &amp; Scale</h4>
+<ul>
+<li><b>Authentication vs authorization?</b> Who you are vs what you may do.</li>
+<li><b>How do you store passwords?</b> Hash them with bcrypt. Never plain text.</li>
+<li><b>Session vs JWT?</b> Session = server stores login, easy to cancel. JWT = signed token, no lookup, hard to cancel.</li>
+<li><b>Is a JWT encrypted?</b> No. Anyone can read it. The signature only proves it wasn't changed.</li>
+<li><b>How do you stop SQL injection?</b> Parameterized queries. Never join input into SQL text.</li>
+<li><b>Vertical vs horizontal scaling?</b> Bigger machine vs more machines behind a load balancer.</li>
+<li><b>Why stateless servers?</b> So any server can handle any request, and you can add servers freely.</li>
+<li><b>Monolith vs microservices?</b> Start with a monolith. Split only when one part really needs it.</li>
+<li><b>Why use a queue?</b> To do slow work in the background, so the API replies fast.</li>
+</ul>
+<div class="note"><b>Remember:</b> in an interview, give the simple answer first, then one example. That is better than a long, perfect definition.</div>
+</section>
+
+<section id="road">
+<h3>Learning Path</h3>
+<p>Go step by step. Build something small at each step.</p>
+<ol>
+<li><b>HTTP basics</b> — methods, status codes, JSON, headers.</li>
+<li><b>JavaScript async</b> — promises and async/await. Everything else depends on this.</li>
+<li><b>Node.js</b> — modules, the event loop, reading files.</li>
+<li><b>Express</b> — routes, middleware, error handling.</li>
+<li><b>One database</b> — PostgreSQL with basic SQL, or MongoDB with Mongoose. Learn indexes early.</li>
+<li><b>Auth</b> — bcrypt, JWT or sessions, checking permissions.</li>
+<li><b>Project</b> — build a full CRUD API (create, read, update, delete) with login, validation and pagination.</li>
+<li><b>Next level</b> — Redis caching, a background queue, file uploads, a few tests.</li>
+<li><b>Deploy it</b> — Docker, environment variables, put it online.</li>
+<li><b>Then</b> — read the <a href="backend.html">full notes</a> and practise the <a href="../interview-questions/backend.html">interview Q&amp;A</a>.</li>
+</ol>
+<div class="note"><b>Remember:</b> for every feature, ask three questions. What if it is called twice? What if the wrong user calls it? What if it is called 10,000 times a minute?</div>
+</section>
+
+</main>
+</div>
+
+<script src="../assets/notes.js"></script>
+</body>
+</html>

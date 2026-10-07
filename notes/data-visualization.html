@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Visualization — Notes</title>
+<link rel="stylesheet" href="../assets/notes.css">
+<script>
+  try { document.documentElement.setAttribute("data-theme",
+    localStorage.getItem("notes-theme") || "light"); } catch (e) {}
+</script>
+</head>
+<body>
+<div class="scrim"></div>
+<button class="icon-btn" id="reopen" title="Show sidebar ([)" aria-label="Show sidebar">☰</button>
+<div class="layout">
+
+<aside>
+  <div class="sidebar-head">
+    <a class="back-link" href="../index.html">← All topics</a>
+    <button class="icon-btn" id="collapseBtn" title="Hide sidebar ([)" aria-label="Hide sidebar">‹</button>
+  </div>
+  <input id="search" type="text" placeholder="Filter topics…" autocomplete="off">
+  <h2>Foundations</h2>
+  <nav>
+    <a href="#s1">1 · Why Visualize Data</a>
+    <a href="#s2">2 · How the Eye Reads Charts</a>
+    <a href="#s3">3 · Kinds of Data</a>
+  </nav>
+  <h2>Choosing a Chart</h2>
+  <nav>
+    <a href="#s4">4 · Picking the Right Chart</a>
+    <a href="#s5">5 · Tables vs Charts</a>
+  </nav>
+  <h2>Chart Types</h2>
+  <nav>
+    <a href="#s6">6 · Bar Chart</a>
+    <a href="#s7">7 · Grouped &amp; Stacked Bars</a>
+    <a href="#s8">8 · Line Chart</a>
+    <a href="#s9">9 · Area Chart</a>
+    <a href="#s10">10 · Pie &amp; Donut</a>
+    <a href="#s11">11 · Scatter Plot</a>
+    <a href="#s12">12 · Histogram</a>
+    <a href="#s13">13 · Box Plot</a>
+    <a href="#s14">14 · Heatmap</a>
+    <a href="#s15">15 · Maps</a>
+    <a href="#s16">16 · KPI Cards &amp; Other Charts</a>
+  </nav>
+  <h2>Design Rules</h2>
+  <nav>
+    <a href="#s17">17 · Using Colour</a>
+    <a href="#s18">18 · Declutter &amp; Data-Ink</a>
+    <a href="#s19">19 · Axes &amp; Scales</a>
+    <a href="#s20">20 · Titles &amp; Labels</a>
+    <a href="#s21">21 · Misleading Charts</a>
+    <a href="#s22">22 · Accessibility</a>
+  </nav>
+  <h2>Dashboards &amp; Stories</h2>
+  <nav>
+    <a href="#s23">23 · Dashboard Design</a>
+    <a href="#s24">24 · Filters &amp; Drill-down</a>
+    <a href="#s25">25 · Storytelling with Data</a>
+  </nav>
+  <h2>Tools</h2>
+  <nav>
+    <a href="#s26">26 · Tools Landscape</a>
+    <a href="#s27">27 · Python Charts</a>
+  </nav>
+  <h2>Revision</h2>
+  <nav>
+    <a href="#rev">Quick Revision</a>
+    <a href="#road">Learning Path</a>
+  </nav>
+</aside>
+
+<main>
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="../index.html#analytics">Data Analytics</a></li><li><span>Data Visualization</span></li><li><span aria-current="page">Notes</span></li></ol></nav>
+<header class="top">
+  <h1>Data Visualization</h1>
+  <div class="top-actions">
+    <button class="ghost" id="menuBtn">☰ Topics</button>
+    <button class="ghost" id="theme">Dark mode</button>
+  </div>
+</header>
+<p class="sub">Simple notes on charts and dashboards for data and business analyst interviews. Each topic has a plain-words box, a small picture, key points, and one thing to remember.</p>
+
+<!-- ================= FOUNDATIONS ================= -->
+<div class="part">Part 1 — Foundations</div>
+
+<section id="s1">
+<h3>1. Why Visualize Data</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Data visualization</b> means showing numbers as pictures: bars, lines, dots and colours. People understand a picture much faster than a table of numbers.</p>
+<p class="analogy">A map of your city is easier than a list of every street with its GPS numbers. Same information, but the map shows the shape at once.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Charts help you <b>see patterns</b>: trends going up or down, groups, gaps and odd values.</li>
+<li>Charts help you <b>explain</b> a finding to people who don't have time to read tables (managers, clients).</li>
+<li><b>Summary numbers can hide things.</b> The average and the correlation can be the same for very different data.</li>
+<li><b>Anscombe's quartet</b> is the famous example. It is four small data sets. They have the same average, same spread and same correlation. But when you draw them, they look completely different.</li>
+<li>Two jobs of a chart: <b>exploratory</b> (you look at data to find something) and <b>explanatory</b> (you show others what you found).</li>
+</ul>
+<figure class="diagram">
+<svg viewBox="0 0 640 210" role="img" aria-label="Anscombe's quartet: four scatter plots. Set 1 is a rough straight line, set 2 is a curve, set 3 is a perfect line with one outlier, set 4 is a vertical stack with one far point. All four have the same summary statistics.">
+  <g>
+    <rect class="d-box" x="8" y="28" width="144" height="130" rx="6"/>
+    <text class="d-label" x="80" y="20" text-anchor="middle">Set 1: rough line</text>
+    <path class="d-line" d="M24 146 H144 M24 146 V40"/>
+    <circle class="d-arrow-accent" cx="32" cy="128" r="3.2"/><circle class="d-arrow-accent" cx="44" cy="112" r="3.2"/>
+    <circle class="d-arrow-accent" cx="56" cy="118" r="3.2"/><circle class="d-arrow-accent" cx="68" cy="100" r="3.2"/>
+    <circle class="d-arrow-accent" cx="80" cy="106" r="3.2"/><circle class="d-arrow-accent" cx="92" cy="88" r="3.2"/>
+    <circle class="d-arrow-accent" cx="104" cy="94" r="3.2"/><circle class="d-arrow-accent" cx="116" cy="76" r="3.2"/>
+    <circle class="d-arrow-accent" cx="128" cy="82" r="3.2"/><circle class="d-arrow-accent" cx="52" cy="124" r="3.2"/>
+    <circle class="d-arrow-accent" cx="86" cy="92" r="3.2"/>
+  </g>
+  <g transform="translate(160 0)">
+    <rect class="d-box" x="8" y="28" width="144" height="130" rx="6"/>
+    <text class="d-label" x="80" y="20" text-anchor="middle">Set 2: a curve</text>
+    <path class="d-line" d="M24 146 H144 M24 146 V40"/>
+    <circle class="d-arrow-accent" cx="30" cy="132" r="3.2"/><circle class="d-arrow-accent" cx="43" cy="108" r="3.2"/>
+    <circle class="d-arrow-accent" cx="56" cy="90" r="3.2"/><circle class="d-arrow-accent" cx="69" cy="76" r="3.2"/>
+    <circle class="d-arrow-accent" cx="82" cy="68" r="3.2"/><circle class="d-arrow-accent" cx="95" cy="66" r="3.2"/>
+    <circle class="d-arrow-accent" cx="108" cy="70" r="3.2"/><circle class="d-arrow-accent" cx="121" cy="82" r="3.2"/>
+    <circle class="d-arrow-accent" cx="134" cy="100" r="3.2"/>
+  </g>
+  <g transform="translate(320 0)">
+    <rect class="d-box" x="8" y="28" width="144" height="130" rx="6"/>
+    <text class="d-label" x="80" y="20" text-anchor="middle">Set 3: line + outlier</text>
+    <path class="d-line" d="M24 146 H144 M24 146 V40"/>
+    <circle class="d-arrow-accent" cx="30" cy="128" r="3.2"/><circle class="d-arrow-accent" cx="43" cy="122" r="3.2"/>
+    <circle class="d-arrow-accent" cx="56" cy="116" r="3.2"/><circle class="d-arrow-accent" cx="69" cy="110" r="3.2"/>
+    <circle class="d-arrow-accent" cx="82" cy="104" r="3.2"/><circle class="d-arrow-accent" cx="95" cy="98" r="3.2"/>
+    <circle class="d-arrow-accent" cx="108" cy="92" r="3.2"/><circle class="d-arrow-accent" cx="121" cy="86" r="3.2"/>
+    <circle class="d-arrow-accent" cx="134" cy="80" r="3.2"/><circle class="d-arrow-accent" cx="95" cy="52" r="3.2"/>
+  </g>
+  <g transform="translate(480 0)">
+    <rect class="d-box" x="8" y="28" width="144" height="130" rx="6"/>
+    <text class="d-label" x="80" y="20" text-anchor="middle">Set 4: one far point</text>
+    <path class="d-line" d="M24 146 H144 M24 146 V40"/>
+    <circle class="d-arrow-accent" cx="48" cy="130" r="3.2"/><circle class="d-arrow-accent" cx="48" cy="124" r="3.2"/>
+    <circle class="d-arrow-accent" cx="48" cy="118" r="3.2"/><circle class="d-arrow-accent" cx="48" cy="112" r="3.2"/>
+    <circle class="d-arrow-accent" cx="48" cy="106" r="3.2"/><circle class="d-arrow-accent" cx="48" cy="100" r="3.2"/>
+    <circle class="d-arrow-accent" cx="48" cy="94" r="3.2"/><circle class="d-arrow-accent" cx="132" cy="54" r="3.2"/>
+  </g>
+  <text class="d-label" x="320" y="184" text-anchor="middle">All four sets have the same average, spread and correlation.</text>
+  <text class="d-sub" x="320" y="202" text-anchor="middle">Only the picture shows that they are completely different.</text>
+</svg>
+<figcaption>The idea behind Anscombe's quartet. Always plot your data before you trust a summary number.</figcaption>
+</figure>
+<div class="note"><b>Remember:</b> "Numbers can look the same and still tell different stories. A chart shows the story." Quote Anscombe's quartet in the interview.</div>
+</section>
+
+<section id="s2">
+<h3>2. How the Eye Reads Charts</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Some things the eye notices <b>instantly</b>, before you even think. These are called <b>pre-attentive attributes</b>. Examples: a different colour, a bigger size, a longer bar, a different position.</p>
+<p class="analogy">In a crowd of people in white shirts, one person in a red shirt jumps out. You don't search for them. Your eye finds them by itself.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 220" role="img" aria-label="Three panels show pre-attentive attributes. In the colour panel one dot is green among grey dots. In the size panel one dot is bigger. In the length panel one bar is longer. A ranking below says position and length are the most accurate ways to compare numbers.">
+  <g>
+    <rect class="d-box" x="8" y="26" width="196" height="130" rx="6"/>
+    <text class="d-label" x="106" y="18" text-anchor="middle">Colour</text>
+    <circle class="d-arrow" cx="46" cy="60" r="9"/><circle class="d-arrow" cx="86" cy="60" r="9"/><circle class="d-arrow" cx="126" cy="60" r="9"/><circle class="d-arrow" cx="166" cy="60" r="9"/>
+    <circle class="d-arrow" cx="46" cy="92" r="9"/><circle class="d-arrow" cx="86" cy="92" r="9"/><circle class="d-arrow-accent" cx="126" cy="92" r="9"/><circle class="d-arrow" cx="166" cy="92" r="9"/>
+    <circle class="d-arrow" cx="46" cy="124" r="9"/><circle class="d-arrow" cx="86" cy="124" r="9"/><circle class="d-arrow" cx="126" cy="124" r="9"/><circle class="d-arrow" cx="166" cy="124" r="9"/>
+  </g>
+  <g transform="translate(215 0)">
+    <rect class="d-box" x="8" y="26" width="196" height="130" rx="6"/>
+    <text class="d-label" x="106" y="18" text-anchor="middle">Size</text>
+    <circle class="d-arrow" cx="46" cy="60" r="7"/><circle class="d-arrow" cx="86" cy="60" r="7"/><circle class="d-arrow" cx="126" cy="60" r="7"/><circle class="d-arrow" cx="166" cy="60" r="7"/>
+    <circle class="d-arrow" cx="46" cy="92" r="7"/><circle class="d-arrow" cx="86" cy="92" r="7"/><circle class="d-arrow" cx="126" cy="92" r="7"/><circle class="d-arrow" cx="166" cy="92" r="7"/>
+    <circle class="d-arrow" cx="46" cy="124" r="7"/><circle class="d-arrow" cx="86" cy="124" r="14"/><circle class="d-arrow" cx="126" cy="124" r="7"/><circle class="d-arrow" cx="166" cy="124" r="7"/>
+  </g>
+  <g transform="translate(430 0)">
+    <rect class="d-box" x="8" y="26" width="196" height="130" rx="6"/>
+    <text class="d-label" x="106" y="18" text-anchor="middle">Length</text>
+    <rect class="d-arrow" x="30" y="48" width="90" height="14" rx="2"/>
+    <rect class="d-arrow" x="30" y="74" width="96" height="14" rx="2"/>
+    <rect class="d-arrow" x="30" y="100" width="156" height="14" rx="2"/>
+    <rect class="d-arrow" x="30" y="126" width="92" height="14" rx="2"/>
+  </g>
+  <text class="d-label" x="320" y="184" text-anchor="middle">You spot the odd one out in under half a second, without searching.</text>
+  <text class="d-sub" x="320" y="206" text-anchor="middle">Most accurate for comparing values: position &gt; length &gt; angle &gt; area &gt; colour shade</text>
+</svg>
+<figcaption>Pre-attentive attributes. Use them on purpose to point the eye at the one thing that matters.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li>Main pre-attentive attributes: <b>position</b>, <b>length</b>, <b>colour</b>, <b>size</b>, <b>shape</b>, <b>angle</b>, <b>bold or outline</b>.</li>
+<li>For <b>exact comparison</b>, position and length are best. That is why bar and dot charts are easy to read.</li>
+<li><b>Angles</b> (pie slices) and <b>areas</b> (bubbles) are hard to compare exactly.</li>
+<li>Colour is best for <b>highlighting</b> one thing, not for reading exact values.</li>
+<li>If everything is highlighted, nothing stands out. Use <b>one</b> highlight per chart.</li>
+<li><b>Gestalt rules</b> = how the brain groups things. Things that are <b>close</b> or the <b>same colour</b> look like one group. Use this for legends and layout.</li>
+</ul>
+<div class="note"><b>Remember:</b> the eye compares lengths and positions best. That one fact explains why bar charts beat pie charts.</div>
+</section>
+
+<section id="s3">
+<h3>3. Kinds of Data</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Before you pick a chart, ask: <b>what kind of data is this?</b> A city name, a sales number and a date need different charts.</p>
+<p class="analogy">A tailor first asks "shirt or trousers?" before taking measurements. You first ask "category, number or date?" before drawing.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><b>Categorical</b> (nominal) = names or groups with no order. Example: city, product, payment method.</li>
+<li><b>Ordinal</b> = groups that have an order. Example: small / medium / large, or a 1–5 star rating.</li>
+<li><b>Numeric</b> (quantitative) = numbers you can add or average. Example: sales, age, price.</li>
+<li><b>Time</b> = dates and times. Usually shown left to right on the x-axis.</li>
+<li><b>Geographic</b> = places: country, state, pin code, latitude and longitude.</li>
+<li>In Power BI and Tableau you will hear <b>dimension</b> (a category you group by, like Region) and <b>measure</b> (a number you add up, like Sales).</li>
+</ul>
+<div class="table-wrap">
+<table>
+<tr><th>Data type</th><th>Example</th><th>Usual place in a chart</th></tr>
+<tr><td>Categorical</td><td>Region, product</td><td>Bars, colour of groups</td></tr>
+<tr><td>Ordinal</td><td>Rating 1–5, size S/M/L</td><td>Bars in their natural order</td></tr>
+<tr><td>Numeric</td><td>Revenue, quantity</td><td>Bar length, y-axis, dot position</td></tr>
+<tr><td>Time</td><td>Month, date</td><td>x-axis of a line chart</td></tr>
+<tr><td>Geographic</td><td>State, city</td><td>Map</td></tr>
+</table>
+</div>
+<div class="note"><b>Remember:</b> dimension = "by what?" (by region). Measure = "how much?" (sales). Most charts are one measure split by one or two dimensions.</div>
+</section>
+
+<!-- ================= CHOOSING ================= -->
+<div class="part">Part 2 — Choosing a Chart</div>
+
+<section id="s4">
+<h3>4. Picking the Right Chart</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Don't start with "Which chart looks cool?". Start with <b>"What question am I answering?"</b>. The question decides the chart.</p>
+<p class="analogy">You pick a tool by the job. A hammer for nails, a screwdriver for screws. A line chart for trends, a bar chart for comparing.</p>
+</div>
+<h4>The six common questions</h4>
+<ul>
+<li><b>Comparison</b> — which is bigger? Example: sales by city.</li>
+<li><b>Trend</b> — how does it change over time? Example: monthly users.</li>
+<li><b>Part-to-whole</b> — what share does each part have? Example: market share.</li>
+<li><b>Distribution</b> — how are values spread? Example: ages of customers.</li>
+<li><b>Relationship</b> — does one thing move with another? Example: ad spend vs sales.</li>
+<li><b>Geography</b> — where does it happen? Example: sales by state.</li>
+</ul>
+<div class="table-wrap">
+<table>
+<tr><th>Question</th><th>Best chart</th><th>Also OK</th><th>Avoid</th></tr>
+<tr><td>Comparison</td><td>Bar chart (sorted)</td><td>Dot plot, grouped bar</td><td>Pie, 3D bars</td></tr>
+<tr><td>Trend over time</td><td>Line chart</td><td>Area chart, column chart (few periods)</td><td>Pie, unsorted bars</td></tr>
+<tr><td>Part-to-whole</td><td>Stacked bar, 100% bar</td><td>Pie/donut (2–4 parts), treemap</td><td>Pie with 8+ slices</td></tr>
+<tr><td>Distribution</td><td>Histogram</td><td>Box plot, violin plot</td><td>Pie, line chart</td></tr>
+<tr><td>Relationship</td><td>Scatter plot</td><td>Bubble chart, heatmap</td><td>Two separate bar charts</td></tr>
+<tr><td>Geography</td><td>Filled map (choropleth)</td><td>Bubble map</td><td>A map when location doesn't matter</td></tr>
+<tr><td>One key number</td><td>KPI card</td><td>Bullet chart</td><td>Gauge with lots of decoration</td></tr>
+<tr><td>Exact values to look up</td><td>Table</td><td>Table with colour (heat table)</td><td>Chart with 50 labels</td></tr>
+</table>
+</div>
+<div class="note"><b>Remember:</b> question first, chart second. If you can't say the question in one sentence, you are not ready to pick a chart.</div>
+</section>
+
+<section id="s5">
+<h3>5. Tables vs Charts</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>table</b> is best when people need to <b>look up exact numbers</b>. A <b>chart</b> is best when people need to <b>see a pattern or shape</b>.</p>
+<p class="analogy">A train timetable is a table: you want your exact time. A weather forecast graph is a chart: you want to see "it gets colder this week".</p>
+</div>
+<div class="table-wrap">
+<table>
+<tr><th>Use a table when…</th><th>Use a chart when…</th></tr>
+<tr><td>People need exact values (₹4,21,350)</td><td>People need the shape or trend</td></tr>
+<tr><td>You compare many different measures per row</td><td>You compare one or two measures</td></tr>
+<tr><td>The audience will search for their own row</td><td>You want to show one message quickly</td></tr>
+<tr><td>Finance, audit, detail reports</td><td>Presentations, dashboards, summaries</td></tr>
+</table>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Make tables easy to read: align numbers to the <b>right</b>, text to the <b>left</b>, use the same decimal places.</li>
+<li>Remove heavy borders. Light row lines or light zebra stripes are enough.</li>
+<li>A <b>heat table</b> (table with background colour by value) mixes both: exact values plus a quick pattern.</li>
+<li>Dashboards often show charts on top and a detail table at the bottom.</li>
+</ul>
+<div class="note"><b>Remember:</b> "lookup → table, pattern → chart". Saying this in an interview shows you think about the user.</div>
+</section>
+
+<!-- ================= CHART TYPES ================= -->
+<div class="part">Part 3 — Chart Types</div>
+
+<section id="s6">
+<h3>6. Bar Chart</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>bar chart</b> shows one bar per category. The longer the bar, the bigger the value. It is the most useful chart you will ever make.</p>
+<p class="analogy">Like children standing in a line by height. You instantly see who is tallest and who is shortest.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 220" role="img" aria-label="Horizontal bar chart of January sales by city in rupees lakh, sorted from largest to smallest: Mumbai 92, Delhi 78, Bengaluru 65, Pune 41, Jaipur 28.">
+  <text class="d-label" x="20" y="22">Sales by city, January (₹ lakh)</text>
+  <path class="d-line" d="M110 34 V206"/>
+  <text class="d-label" x="100" y="55" text-anchor="end">Mumbai</text>
+  <rect class="p-sea" x="110" y="40" width="423" height="22" rx="2"/>
+  <text class="d-sub" x="541" y="55">92</text>
+  <text class="d-label" x="100" y="89" text-anchor="end">Delhi</text>
+  <rect class="p-sea" x="110" y="74" width="359" height="22" rx="2"/>
+  <text class="d-sub" x="477" y="89">78</text>
+  <text class="d-label" x="100" y="123" text-anchor="end">Bengaluru</text>
+  <rect class="p-sea" x="110" y="108" width="299" height="22" rx="2"/>
+  <text class="d-sub" x="417" y="123">65</text>
+  <text class="d-label" x="100" y="157" text-anchor="end">Pune</text>
+  <rect class="p-sea" x="110" y="142" width="189" height="22" rx="2"/>
+  <text class="d-sub" x="307" y="157">41</text>
+  <text class="d-label" x="100" y="191" text-anchor="end">Jaipur</text>
+  <rect class="p-sea" x="110" y="176" width="129" height="22" rx="2"/>
+  <text class="d-sub" x="247" y="191">28</text>
+</svg>
+<figcaption>A sorted horizontal bar chart. Long names fit on the left, and the value is written at the end of each bar.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li><b>Use it for:</b> comparing values across categories (cities, products, teams).</li>
+<li><b>Column chart</b> = vertical bars. <b>Bar chart</b> = horizontal bars. Use horizontal when names are long or there are many categories.</li>
+<li><b>Sort</b> bars from biggest to smallest (unless the order means something, like months or age groups).</li>
+<li>The axis <b>must start at zero</b>. The bar length is the value, so a cut axis lies.</li>
+<li>Label values directly on the bars, then you can often remove the axis and gridlines.</li>
+<li><b>Don't use it for:</b> long time series with many points (use a line), or showing a distribution (use a histogram).</li>
+</ul>
+<div class="note"><b>Remember:</b> when in doubt, use a sorted bar chart that starts at zero. It is almost never the wrong answer.</div>
+</section>
+
+<section id="s7">
+<h3>7. Grouped &amp; Stacked Bars</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>grouped bar</b> puts bars side by side inside each group. A <b>stacked bar</b> puts the parts on top of each other, so the full bar is the total.</p>
+<p class="analogy">Grouped is like two kids standing next to each other to compare height. Stacked is like stacking boxes to see how tall the whole pile is.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 250" role="img" aria-label="Left: grouped bars for Q1 to Q3 with Product A and Product B side by side. Right: the same data stacked, showing totals of 70, 85 and 100.">
+  <text class="d-label" x="160" y="20" text-anchor="middle">Grouped: compare products</text>
+  <path class="d-line" d="M30 200 H290"/>
+  <rect class="p-sea" x="50" y="136" width="30" height="64"/>
+  <rect class="p-sun" x="82" y="152" width="30" height="48"/>
+  <rect class="p-sea" x="130" y="120" width="30" height="80"/>
+  <rect class="p-sun" x="162" y="144" width="30" height="56"/>
+  <rect class="p-sea" x="210" y="128" width="30" height="72"/>
+  <rect class="p-sun" x="242" y="112" width="30" height="88"/>
+  <text class="d-sub" x="81" y="216" text-anchor="middle">Q1</text>
+  <text class="d-sub" x="161" y="216" text-anchor="middle">Q2</text>
+  <text class="d-sub" x="241" y="216" text-anchor="middle">Q3</text>
+
+  <text class="d-label" x="480" y="20" text-anchor="middle">Stacked: compare totals</text>
+  <path class="d-line" d="M350 200 H610"/>
+  <rect class="p-sea" x="375" y="136" width="50" height="64"/>
+  <rect class="p-sun" x="375" y="88" width="50" height="48"/>
+  <rect class="p-sea" x="465" y="120" width="50" height="80"/>
+  <rect class="p-sun" x="465" y="64" width="50" height="56"/>
+  <rect class="p-sea" x="555" y="128" width="50" height="72"/>
+  <rect class="p-sun" x="555" y="40" width="50" height="88"/>
+  <text class="d-label" x="400" y="82" text-anchor="middle">70</text>
+  <text class="d-label" x="490" y="58" text-anchor="middle">85</text>
+  <text class="d-label" x="580" y="34" text-anchor="middle">100</text>
+  <text class="d-sub" x="400" y="216" text-anchor="middle">Q1</text>
+  <text class="d-sub" x="490" y="216" text-anchor="middle">Q2</text>
+  <text class="d-sub" x="580" y="216" text-anchor="middle">Q3</text>
+
+  <rect class="p-sea" x="230" y="228" width="12" height="12"/>
+  <text class="d-sub" x="248" y="238">Product A</text>
+  <rect class="p-sun" x="340" y="228" width="12" height="12"/>
+  <text class="d-sub" x="358" y="238">Product B</text>
+</svg>
+<figcaption>Same numbers, two charts. Grouped makes A vs B easy. Stacked makes the total easy, but the top part (B) is hard to compare because it has no common baseline.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li><b>Grouped bar:</b> use when comparing sub-groups is the main point. Keep it to 2–3 bars per group.</li>
+<li><b>Stacked bar:</b> use when the <b>total</b> matters most, and you also want a rough idea of the parts.</li>
+<li>Only the <b>bottom</b> segment of a stacked bar is easy to compare. The others "float".</li>
+<li><b>100% stacked bar:</b> every bar is the same height (100%). Good for comparing <b>shares</b>, like "% of sales online vs in-store" by year.</li>
+<li>Don't stack more than 3–4 segments. It becomes a colourful puzzle.</li>
+</ul>
+<div class="note"><b>Remember:</b> grouped = compare the parts; stacked = compare the totals; 100% stacked = compare the shares.</div>
+</section>
+
+<section id="s8">
+<h3>8. Line Chart</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>line chart</b> joins points with a line to show how a number <b>changes over time</b>. Time goes left to right.</p>
+<p class="analogy">Like a heart-rate monitor in a hospital. You don't care about one beat. You care whether the line is steady, going up or dropping.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 240" role="img" aria-label="Line chart of monthly orders in thousands from January to December. Orders rise slowly from 20 to 34 by September, jump to a peak of 48 in October during the Diwali sale, then fall to 32 by December.">
+  <text class="d-sub" x="50" y="20">Orders (thousands)</text>
+  <path class="d-dash" d="M50 160 H610 M50 130 H610 M50 100 H610 M50 70 H610 M50 40 H610"/>
+  <path class="d-line" d="M50 190 H610"/>
+  <text class="d-sub" x="42" y="194" text-anchor="end">0</text>
+  <text class="d-sub" x="42" y="164" text-anchor="end">10</text>
+  <text class="d-sub" x="42" y="134" text-anchor="end">20</text>
+  <text class="d-sub" x="42" y="104" text-anchor="end">30</text>
+  <text class="d-sub" x="42" y="74" text-anchor="end">40</text>
+  <text class="d-sub" x="42" y="44" text-anchor="end">50</text>
+  <path class="d-line-accent" d="M60 130 L108 124 L156 127 L204 115 L252 118 L300 106 L348 100 L396 103 L444 88 L492 46 L540 82 L588 94"/>
+  <circle class="d-arrow-accent" cx="60" cy="130" r="3.5"/><circle class="d-arrow-accent" cx="108" cy="124" r="3.5"/>
+  <circle class="d-arrow-accent" cx="156" cy="127" r="3.5"/><circle class="d-arrow-accent" cx="204" cy="115" r="3.5"/>
+  <circle class="d-arrow-accent" cx="252" cy="118" r="3.5"/><circle class="d-arrow-accent" cx="300" cy="106" r="3.5"/>
+  <circle class="d-arrow-accent" cx="348" cy="100" r="3.5"/><circle class="d-arrow-accent" cx="396" cy="103" r="3.5"/>
+  <circle class="d-arrow-accent" cx="444" cy="88" r="3.5"/><circle class="d-arrow-accent" cx="492" cy="46" r="5"/>
+  <circle class="d-arrow-accent" cx="540" cy="82" r="3.5"/><circle class="d-arrow-accent" cx="588" cy="94" r="3.5"/>
+  <text class="d-accent-text" x="482" y="36" text-anchor="end">Diwali sale peak</text>
+  <text class="d-sub" x="60" y="208" text-anchor="middle">J</text><text class="d-sub" x="108" y="208" text-anchor="middle">F</text>
+  <text class="d-sub" x="156" y="208" text-anchor="middle">M</text><text class="d-sub" x="204" y="208" text-anchor="middle">A</text>
+  <text class="d-sub" x="252" y="208" text-anchor="middle">M</text><text class="d-sub" x="300" y="208" text-anchor="middle">J</text>
+  <text class="d-sub" x="348" y="208" text-anchor="middle">J</text><text class="d-sub" x="396" y="208" text-anchor="middle">A</text>
+  <text class="d-sub" x="444" y="208" text-anchor="middle">S</text><text class="d-sub" x="492" y="208" text-anchor="middle">O</text>
+  <text class="d-sub" x="540" y="208" text-anchor="middle">N</text><text class="d-sub" x="588" y="208" text-anchor="middle">D</text>
+  <text class="d-sub" x="330" y="230" text-anchor="middle">Month (2025)</text>
+</svg>
+<figcaption>A line chart with one annotation. The note explains the spike, so the reader doesn't have to guess.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li><b>Use it for:</b> trends over time — daily users, monthly revenue, stock price.</li>
+<li>A line chart does <b>not</b> have to start at zero. It shows change, not size. But don't zoom in so much that tiny noise looks dramatic.</li>
+<li>Keep it to about <b>3–5 lines</b>. More lines become "spaghetti". Highlight one, make the rest grey.</li>
+<li>Label lines at their end instead of using a far-away legend.</li>
+<li>Time steps must be <b>equal</b>. Don't mix days and months on one axis.</li>
+<li><b>Don't use it for:</b> categories with no order (cities, products). A line between "Delhi" and "Pune" means nothing.</li>
+</ul>
+<div class="note"><b>Remember:</b> line = time. If the x-axis is not time (or some other ordered thing), you probably want bars.</div>
+</section>
+
+<section id="s9">
+<h3>9. Area Chart</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>An <b>area chart</b> is a line chart with the space below the line filled in. The filling shows <b>volume</b> or a running total.</p>
+<p class="analogy">Like water filling a tank over time. You see the level, and you also feel how much water there is.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 200" role="img" aria-label="Area chart of total app users in lakh across twelve months, rising from 2 to 27, with the area under the line shaded.">
+  <text class="d-sub" x="60" y="20">Total app users (lakh), month by month</text>
+  <path class="d-fill-accent" d="M60 160 L60 151 L108 146.5 L156 142 L204 137.5 L252 128.5 L300 119.5 L348 110.5 L396 101.5 L444 88 L492 74.5 L540 56.5 L588 38.5 L588 160 Z"/>
+  <path class="d-line-accent" d="M60 151 L108 146.5 L156 142 L204 137.5 L252 128.5 L300 119.5 L348 110.5 L396 101.5 L444 88 L492 74.5 L540 56.5 L588 38.5"/>
+  <path class="d-line" d="M50 160 H610"/>
+  <text class="d-accent-text" x="580" y="32" text-anchor="end">27 lakh</text>
+  <text class="d-sub" x="60" y="178" text-anchor="middle">Jan</text>
+  <text class="d-sub" x="204" y="178" text-anchor="middle">Apr</text>
+  <text class="d-sub" x="348" y="178" text-anchor="middle">Jul</text>
+  <text class="d-sub" x="492" y="178" text-anchor="middle">Oct</text>
+  <text class="d-sub" x="588" y="178" text-anchor="middle">Dec</text>
+</svg>
+<figcaption>An area chart. The shaded area makes growth feel bigger, so the y-axis must start at zero here.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li><b>Use it for:</b> totals over time, like total users or cumulative sales.</li>
+<li><b>Stacked area</b> shows how parts add up to a total over time (e.g. users from Android, iOS, web).</li>
+<li>Because the area is filled, the axis <b>should start at zero</b> (unlike a plain line chart).</li>
+<li>In stacked areas, only the bottom layer is easy to read. Keep to 2–4 layers.</li>
+<li><b>Don't use it</b> when lines cross a lot. Overlapping areas hide each other.</li>
+</ul>
+<div class="note"><b>Remember:</b> area chart = line chart + "how much in total". Start the axis at zero.</div>
+</section>
+
+<section id="s10">
+<h3>10. Pie &amp; Donut Charts</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>pie chart</b> is a circle cut into slices. Each slice is a share of the whole (all slices add up to 100%). A <b>donut</b> is a pie with a hole in the middle.</p>
+<p class="analogy">Like cutting a pizza. Easy to see "half" or "a quarter". Very hard to see whether a slice is 24% or 26%.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 230" role="img" aria-label="Left: a pie chart with four nearly equal slices A 28%, B 26%, C 24%, D 22%; hard to rank. Right: the same values as a sorted bar chart, where the order is obvious.">
+  <text class="d-label" x="130" y="18" text-anchor="middle">Pie: which slice is biggest?</text>
+  <path class="p-sea" d="M130 110 L130 30 A80 80 0 0 1 208.6 125 Z"/>
+  <path class="p-sky" d="M130 110 L208.6 125 A80 80 0 0 1 110.1 187.5 Z"/>
+  <path class="p-sun" d="M130 110 L110.1 187.5 A80 80 0 0 1 51.4 95 Z"/>
+  <path class="p-coral" d="M130 110 L51.4 95 A80 80 0 0 1 130 30 Z"/>
+  <text class="d-label" x="168" y="82" text-anchor="middle">A</text>
+  <text class="d-label" x="157" y="156" text-anchor="middle">B</text>
+  <text class="d-label" x="88" y="141" text-anchor="middle">C</text>
+  <text class="d-label" x="98" y="75" text-anchor="middle">D</text>
+
+  <text class="d-label" x="470" y="18" text-anchor="middle">Bar: the order is obvious</text>
+  <path class="d-line" d="M360 32 V196"/>
+  <text class="d-label" x="350" y="58" text-anchor="end">A</text>
+  <rect class="p-sea" x="360" y="40" width="224" height="26"/>
+  <text class="d-sub" x="590" y="58">28%</text>
+  <text class="d-label" x="350" y="98" text-anchor="end">B</text>
+  <rect class="p-sky" x="360" y="80" width="208" height="26"/>
+  <text class="d-sub" x="574" y="98">26%</text>
+  <text class="d-label" x="350" y="138" text-anchor="end">C</text>
+  <rect class="p-sun" x="360" y="120" width="192" height="26"/>
+  <text class="d-sub" x="558" y="138">24%</text>
+  <text class="d-label" x="350" y="178" text-anchor="end">D</text>
+  <rect class="p-coral" x="360" y="160" width="176" height="26"/>
+  <text class="d-sub" x="542" y="178">22%</text>
+  <text class="d-sub" x="320" y="220" text-anchor="middle">Same data. Angles are hard to compare; lengths on one baseline are easy.</text>
+</svg>
+<figcaption>Pie vs bar. With close values, the pie hides the ranking. The bar chart shows it at once.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li><b>Use a pie only when:</b> you show parts of one whole, there are <b>2–4 slices</b>, and one share is the message (e.g. "70% of orders are on mobile").</li>
+<li>Slices must add up to <b>100%</b>. Never use a pie for values that overlap (e.g. "% who like tea" and "% who like coffee").</li>
+<li>Start the biggest slice at 12 o'clock and go clockwise, largest to smallest.</li>
+<li><b>Never use 3D pies.</b> The tilt makes front slices look bigger than they are.</li>
+<li><b>Don't use</b> a pie to compare across time or groups (two pies side by side are very hard to compare). Use a 100% stacked bar.</li>
+<li>Donut = same rules. The hole is a good place for the total.</li>
+</ul>
+<div class="note"><b>Remember:</b> a pie answers "what share?" only for a few slices. For anything else, a bar chart is clearer.</div>
+</section>
+
+<section id="s11">
+<h3>11. Scatter Plot</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>scatter plot</b> puts one dot per item. The x position is one number, the y position is another. It shows whether two numbers <b>move together</b>.</p>
+<p class="analogy">Plot every student: hours studied (across) and exam marks (up). If the dots climb from left to right, more study tends to mean more marks.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 240" role="img" aria-label="Scatter plot of ad spend against sales. Dots rise from bottom left to top right with a dashed trend line, showing a positive relationship. One dot at high spend but low sales is marked as an outlier.">
+  <text class="d-sub" x="60" y="22">Sales</text>
+  <path class="d-line" d="M60 30 V190 H600"/>
+  <path class="d-dash" d="M80 176 L580 40"/>
+  <circle class="d-arrow-accent" cx="90" cy="170" r="4"/><circle class="d-arrow-accent" cx="115" cy="165" r="4"/>
+  <circle class="d-arrow-accent" cx="140" cy="150" r="4"/><circle class="d-arrow-accent" cx="160" cy="155" r="4"/>
+  <circle class="d-arrow-accent" cx="190" cy="138" r="4"/><circle class="d-arrow-accent" cx="210" cy="140" r="4"/>
+  <circle class="d-arrow-accent" cx="240" cy="120" r="4"/><circle class="d-arrow-accent" cx="265" cy="125" r="4"/>
+  <circle class="d-arrow-accent" cx="290" cy="108" r="4"/><circle class="d-arrow-accent" cx="320" cy="104" r="4"/>
+  <circle class="d-arrow-accent" cx="345" cy="96" r="4"/><circle class="d-arrow-accent" cx="370" cy="88" r="4"/>
+  <circle class="d-arrow-accent" cx="400" cy="82" r="4"/><circle class="d-arrow-accent" cx="425" cy="74" r="4"/>
+  <circle class="d-arrow-accent" cx="455" cy="66" r="4"/><circle class="d-arrow-accent" cx="480" cy="70" r="4"/>
+  <circle class="d-arrow-accent" cx="510" cy="56" r="4"/><circle class="d-arrow-accent" cx="540" cy="50" r="4"/>
+  <circle class="d-arrow-accent" cx="565" cy="44" r="4"/>
+  <circle class="d-arrow" cx="500" cy="166" r="5.5"/>
+  <text class="d-sub" x="488" y="170" text-anchor="end">outlier: high spend, low sales</text>
+  <text class="d-accent-text" x="110" y="60">Positive relationship:</text>
+  <text class="d-accent-text" x="110" y="76">more ad spend, more sales</text>
+  <text class="d-sub" x="330" y="216" text-anchor="middle">Ad spend (₹ thousand)</text>
+</svg>
+<figcaption>A scatter plot with a trend line. The single odd dot is often the most interesting thing to investigate.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li><b>Use it for:</b> relationships between two numbers — price vs demand, age vs spend, ad spend vs sales.</li>
+<li>Patterns: dots going up = <b>positive</b>, going down = <b>negative</b>, a cloud = <b>no relationship</b>.</li>
+<li>A <b>trend line</b> (regression line) shows the general direction.</li>
+<li><b>Correlation is not causation.</b> Ice-cream sales and drowning both rise in summer. Ice cream doesn't cause drowning; hot weather drives both.</li>
+<li>Too many dots overlap (<b>overplotting</b>). Fix: make dots see-through, smaller, or use a heatmap.</li>
+<li><b>Bubble chart</b> = scatter where dot size is a third number. Use with care: area is hard to read.</li>
+</ul>
+<div class="note"><b>Remember:</b> scatter = "do these two numbers move together?". And always add: "correlation is not causation".</div>
+</section>
+
+<section id="s12">
+<h3>12. Histogram</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>histogram</b> shows how values are <b>spread out</b>. It cuts the number range into equal buckets (called <b>bins</b>) and counts how many values fall in each bucket.</p>
+<p class="analogy">Sort exam papers into piles: 0–10 marks, 10–20, 20–30 and so on. The height of each pile is the histogram bar.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 240" role="img" aria-label="Histogram of order values from 0 to 5000 rupees in bins of 500. Most orders fall between 500 and 2000 rupees and there is a long tail to the right, so the data is right-skewed.">
+  <text class="d-sub" x="60" y="22">Number of orders</text>
+  <rect class="p-sky" x="60" y="148" width="52" height="42"/>
+  <rect class="p-sky" x="112" y="85" width="52" height="105"/>
+  <rect class="p-sky" x="164" y="43" width="52" height="147"/>
+  <rect class="p-sky" x="216" y="64" width="52" height="126"/>
+  <rect class="p-sky" x="268" y="106" width="52" height="84"/>
+  <rect class="p-sky" x="320" y="137.5" width="52" height="52.5"/>
+  <rect class="p-sky" x="372" y="158.5" width="52" height="31.5"/>
+  <rect class="p-sky" x="424" y="169" width="52" height="21"/>
+  <rect class="p-sky" x="476" y="179.5" width="52" height="10.5"/>
+  <rect class="p-sky" x="528" y="183" width="52" height="7"/>
+  <path class="d-line" d="M56 190 H590"/>
+  <text class="d-sub" x="60" y="206" text-anchor="middle">₹0</text>
+  <text class="d-sub" x="164" y="206" text-anchor="middle">1k</text>
+  <text class="d-sub" x="268" y="206" text-anchor="middle">2k</text>
+  <text class="d-sub" x="372" y="206" text-anchor="middle">3k</text>
+  <text class="d-sub" x="476" y="206" text-anchor="middle">4k</text>
+  <text class="d-sub" x="580" y="206" text-anchor="middle">5k</text>
+  <text class="d-accent-text" x="470" y="120" text-anchor="middle">long tail to the right</text>
+  <text class="d-accent-text" x="470" y="136" text-anchor="middle">= right-skewed</text>
+  <text class="d-sub" x="320" y="228" text-anchor="middle">Order value (₹). Bars touch because the ranges are continuous.</text>
+</svg>
+<figcaption>A histogram of order values. Most orders are small; a few big orders make a long right tail.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li><b>Use it for:</b> distribution of one number — ages, salaries, delivery times, order values.</li>
+<li>It shows the <b>shape</b>: normal (bell), skewed (long tail on one side), or two peaks (<b>bimodal</b>, often two groups mixed).</li>
+<li><b>Histogram vs bar chart:</b> a histogram's x-axis is a number range, and bars <b>touch</b>. A bar chart's x-axis is categories, and bars have gaps.</li>
+<li><b>Bin size</b> changes the picture. Too few bins hide detail; too many look noisy. Try a few sizes.</li>
+<li>In a right-skewed shape, the <b>mean is bigger than the median</b>. That is why we often report median salary or median house price.</li>
+</ul>
+<div class="note"><b>Remember:</b> histogram = "how are the values spread?". Bars touch, and the x-axis is a number range, not categories.</div>
+</section>
+
+<section id="s13">
+<h3>13. Box Plot</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>box plot</b> (box-and-whisker plot) squeezes a whole distribution into five numbers: <b>minimum, Q1, median, Q3, maximum</b>. It also shows <b>outliers</b> as single dots.</p>
+<p class="analogy">Like a quick summary of a class's marks: lowest, a quarter-way mark, middle mark, three-quarter mark, highest — and the one student who scored oddly.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 210" role="img" aria-label="Box plot on a 0 to 100 scale: minimum 10, Q1 30, median 42, Q3 55, maximum 75, and one outlier at 95. The box from Q1 to Q3 is labelled IQR, the middle 50 percent.">
+  <text class="d-accent-text" x="289" y="40" text-anchor="middle">IQR = Q3 − Q1 (the middle 50%)</text>
+  <path class="d-line-accent" d="M222 54 V48 H357 V54"/>
+  <text class="d-label" x="114" y="70" text-anchor="middle">Min</text>
+  <text class="d-label" x="222" y="70" text-anchor="middle">Q1</text>
+  <text class="d-label" x="287" y="70" text-anchor="middle">Median</text>
+  <text class="d-label" x="357" y="70" text-anchor="middle">Q3</text>
+  <text class="d-label" x="465" y="70" text-anchor="middle">Max</text>
+  <text class="d-label" x="573" y="70" text-anchor="middle">Outlier</text>
+  <path class="d-line" d="M114 100 H222 M357 100 H465 M114 86 V114 M465 86 V114"/>
+  <rect class="d-fill-accent" x="222" y="80" width="135" height="40"/>
+  <rect class="d-box-accent" x="222" y="80" width="135" height="40"/>
+  <path class="d-line-accent" d="M287 80 V120"/>
+  <circle class="d-box-accent" cx="573" cy="100" r="5"/>
+  <path class="d-line" d="M60 150 H600 M60 146 V154 M168 146 V154 M276 146 V154 M384 146 V154 M492 146 V154 M600 146 V154"/>
+  <text class="d-sub" x="60" y="168" text-anchor="middle">0</text>
+  <text class="d-sub" x="168" y="168" text-anchor="middle">20</text>
+  <text class="d-sub" x="276" y="168" text-anchor="middle">40</text>
+  <text class="d-sub" x="384" y="168" text-anchor="middle">60</text>
+  <text class="d-sub" x="492" y="168" text-anchor="middle">80</text>
+  <text class="d-sub" x="600" y="168" text-anchor="middle">100</text>
+  <text class="d-sub" x="330" y="196" text-anchor="middle">Whiskers reach the furthest points within 1.5 × IQR. Anything beyond is a dot (outlier).</text>
+</svg>
+<figcaption>Read a box plot left to right: min, Q1, median, Q3, max. The box holds the middle half of the data.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li><b>Median</b> = the middle value. <b>Q1</b> = 25% of values are below it. <b>Q3</b> = 75% are below it.</li>
+<li><b>IQR</b> (interquartile range) = Q3 − Q1. It is the width of the box: the middle 50% of the data.</li>
+<li>Common outlier rule: a value below <b>Q1 − 1.5×IQR</b> or above <b>Q3 + 1.5×IQR</b>.</li>
+<li><b>Use it for:</b> comparing distributions across groups — e.g. delivery time by city, salary by department, side by side.</li>
+<li>A long box or long whisker = values are very spread out. A median not in the middle of the box = skewed data.</li>
+<li><b>Weakness:</b> it hides shape (e.g. two peaks). A <b>violin plot</b> or histogram shows the shape.</li>
+</ul>
+<div class="note"><b>Remember:</b> five numbers (min, Q1, median, Q3, max) + dots for outliers. Box plots are best for comparing many groups at once.</div>
+</section>
+
+<section id="s14">
+<h3>14. Heatmap</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>heatmap</b> is a grid where each cell's <b>colour shows a value</b>. Darker usually means more. It shows patterns across two categories at once.</p>
+<p class="analogy">Like a school timetable where busy periods are coloured dark. One glance shows which day and which hour is the busiest.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 260" role="img" aria-label="Heatmap of orders by day of week and time of day. Evenings from 6 to 9 pm are dark every day, and Saturday and Sunday are darker overall, meaning weekend evenings have the most orders.">
+  <text class="d-sub" x="129" y="32" text-anchor="middle">6–9am</text>
+  <text class="d-sub" x="209" y="32" text-anchor="middle">9–12</text>
+  <text class="d-sub" x="289" y="32" text-anchor="middle">12–3pm</text>
+  <text class="d-sub" x="369" y="32" text-anchor="middle">3–6pm</text>
+  <text class="d-sub" x="449" y="32" text-anchor="middle">6–9pm</text>
+  <text class="d-sub" x="529" y="32" text-anchor="middle">9pm–12</text>
+
+  <text class="d-label" x="80" y="56" text-anchor="end">Mon</text>
+  <rect class="d-arrow-accent" fill-opacity=".12" x="90" y="40" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".3" x="170" y="40" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".5" x="250" y="40" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".3" x="330" y="40" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".7" x="410" y="40" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".3" x="490" y="40" width="78" height="24"/>
+
+  <text class="d-label" x="80" y="82" text-anchor="end">Tue</text>
+  <rect class="d-arrow-accent" fill-opacity=".12" x="90" y="66" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".3" x="170" y="66" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".5" x="250" y="66" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".3" x="330" y="66" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".7" x="410" y="66" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".3" x="490" y="66" width="78" height="24"/>
+
+  <text class="d-label" x="80" y="108" text-anchor="end">Wed</text>
+  <rect class="d-arrow-accent" fill-opacity=".12" x="90" y="92" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".3" x="170" y="92" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".5" x="250" y="92" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".3" x="330" y="92" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".7" x="410" y="92" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".5" x="490" y="92" width="78" height="24"/>
+
+  <text class="d-label" x="80" y="134" text-anchor="end">Thu</text>
+  <rect class="d-arrow-accent" fill-opacity=".12" x="90" y="118" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".3" x="170" y="118" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".5" x="250" y="118" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".5" x="330" y="118" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".7" x="410" y="118" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".5" x="490" y="118" width="78" height="24"/>
+
+  <text class="d-label" x="80" y="160" text-anchor="end">Fri</text>
+  <rect class="d-arrow-accent" fill-opacity=".12" x="90" y="144" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".3" x="170" y="144" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".5" x="250" y="144" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".5" x="330" y="144" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".92" x="410" y="144" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".7" x="490" y="144" width="78" height="24"/>
+
+  <text class="d-label" x="80" y="186" text-anchor="end">Sat</text>
+  <rect class="d-arrow-accent" fill-opacity=".3" x="90" y="170" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".5" x="170" y="170" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".7" x="250" y="170" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".7" x="330" y="170" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".92" x="410" y="170" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".92" x="490" y="170" width="78" height="24"/>
+
+  <text class="d-label" x="80" y="212" text-anchor="end">Sun</text>
+  <rect class="d-arrow-accent" fill-opacity=".3" x="90" y="196" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".7" x="170" y="196" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".7" x="250" y="196" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".7" x="330" y="196" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".92" x="410" y="196" width="78" height="24"/>
+  <rect class="d-arrow-accent" fill-opacity=".7" x="490" y="196" width="78" height="24"/>
+
+  <text class="d-sub" x="252" y="246" text-anchor="end">Fewer orders</text>
+  <rect class="d-arrow-accent" fill-opacity=".12" x="260" y="234" width="20" height="14"/>
+  <rect class="d-arrow-accent" fill-opacity=".3" x="282" y="234" width="20" height="14"/>
+  <rect class="d-arrow-accent" fill-opacity=".5" x="304" y="234" width="20" height="14"/>
+  <rect class="d-arrow-accent" fill-opacity=".7" x="326" y="234" width="20" height="14"/>
+  <rect class="d-arrow-accent" fill-opacity=".92" x="348" y="234" width="20" height="14"/>
+  <text class="d-sub" x="376" y="246">More orders</text>
+</svg>
+<figcaption>Orders by day and time. The dark column (6–9pm) and dark bottom rows (weekend) jump out without reading any number.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li><b>Use it for:</b> two categories plus one number — day × hour, product × region, or a <b>correlation matrix</b> (how strongly each pair of columns is related).</li>
+<li>Use <b>one colour from light to dark</b> (sequential) for "low to high". Use <b>two colours</b> (diverging) when there is a middle point, like correlation from −1 to +1.</li>
+<li>Always show a <b>colour legend</b>. Add numbers in cells if exact values matter.</li>
+<li>Colour is less exact than length. A heatmap shows <b>patterns</b>, not precise comparisons.</li>
+<li>Sort rows and columns in a sensible order (time order, or by total) so patterns appear.</li>
+</ul>
+<div class="note"><b>Remember:</b> heatmap = a table where colour does the talking. Great for "when" and "where" patterns.</div>
+</section>
+
+<section id="s15">
+<h3>15. Maps</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>choropleth map</b> (say "KOR-oh-pleth") colours each region, like a state, by a value. A <b>bubble map</b> puts a circle on each place; bigger circle = bigger value.</p>
+<p class="analogy">Like a weather map on the news. Darker areas get more rain. You see the "where" at once.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 240" role="img" aria-label="A simple sketch of a country split into six regions, shaded by percentage of online shoppers. North 62 percent and South 55 percent are darkest; East 18 percent is lightest. A legend shows four shades from under 20 to over 50 percent.">
+  <polygon class="d-arrow-accent" fill-opacity=".6" points="120,30 260,20 300,70 230,100 140,90"/>
+  <polygon class="d-arrow-accent" fill-opacity=".2" points="140,90 230,100 220,170 120,180 90,130"/>
+  <polygon class="d-arrow-accent" fill-opacity=".42" points="230,100 300,70 360,110 330,160 220,170"/>
+  <polygon class="d-arrow-accent" fill-opacity=".12" points="300,70 400,40 440,100 360,110"/>
+  <polygon class="d-arrow-accent" fill-opacity=".33" points="360,110 440,100 420,190 330,160"/>
+  <polygon class="d-arrow-accent" fill-opacity=".52" points="220,170 330,160 420,190 300,225 230,210"/>
+  <path class="d-line" d="M120 30 L260 20 L300 70 L230 100 L140 90 Z M140 90 L90 130 L120 180 L220 170 L230 100 M300 70 L400 40 L440 100 L360 110 Z M360 110 L330 160 L220 170 M440 100 L420 190 L330 160 M220 170 L230 210 L300 225 L420 190"/>
+  <text class="d-label" x="205" y="64" text-anchor="middle">North 62%</text>
+  <text class="d-label" x="160" y="140" text-anchor="middle">West 28%</text>
+  <text class="d-label" x="285" y="128" text-anchor="middle">Central 45%</text>
+  <text class="d-label" x="372" y="84" text-anchor="middle">East 18%</text>
+  <text class="d-label" x="392" y="150" text-anchor="middle">SE 36%</text>
+  <text class="d-label" x="310" y="196" text-anchor="middle">South 55%</text>
+
+  <text class="d-label" x="480" y="56">Online shoppers (%)</text>
+  <rect class="d-arrow-accent" fill-opacity=".12" x="480" y="68" width="22" height="16"/>
+  <text class="d-sub" x="510" y="80">under 20</text>
+  <rect class="d-arrow-accent" fill-opacity=".27" x="480" y="90" width="22" height="16"/>
+  <text class="d-sub" x="510" y="102">20 – 35</text>
+  <rect class="d-arrow-accent" fill-opacity=".42" x="480" y="112" width="22" height="16"/>
+  <text class="d-sub" x="510" y="124">35 – 50</text>
+  <rect class="d-arrow-accent" fill-opacity=".6" x="480" y="134" width="22" height="16"/>
+  <text class="d-sub" x="510" y="146">over 50</text>
+  <text class="d-sub" x="480" y="182">Darker = higher %.</text>
+  <text class="d-sub" x="480" y="198">Show rates, not raw totals.</text>
+</svg>
+<figcaption>A choropleth sketch. Each region is shaded by a rate (percent), so big and small regions are fair to compare.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li><b>Use a map only when location matters</b> to the question. If not, a sorted bar chart of regions is easier to read.</li>
+<li>For choropleths, use <b>rates or per-person values</b> (% or per 1,000 people), not raw totals. Raw totals just show "where many people live".</li>
+<li><b>Big regions look important</b> even if few people live there. Small but important areas (cities) can disappear.</li>
+<li>Use a <b>sequential</b> colour scale (light to dark) and show the legend.</li>
+<li><b>Bubble maps</b> are better for totals (e.g. sales per city) because circle size shows amount.</li>
+<li>Power BI and Tableau can draw maps from state or city names. Check the names match (e.g. "Orissa" vs "Odisha").</li>
+</ul>
+<div class="note"><b>Remember:</b> filled map = rates; bubble map = totals. And ask "does location really matter here?" before you draw a map.</div>
+</section>
+
+<section id="s16">
+<h3>16. KPI Cards &amp; Other Charts</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>KPI</b> (Key Performance Indicator) is one important number the business watches, like revenue or churn rate. A <b>KPI card</b> shows that number big, with a comparison so people know if it is good or bad.</p>
+<p class="analogy">Like a car's dashboard: speed, fuel, temperature. Big, simple numbers you check in one second while driving.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 170" role="img" aria-label="Three KPI cards. Revenue 4.2 crore rupees, up 12 percent versus last month, with a rising sparkline. Orders 18,240, down 3 percent versus target, shown in red. Return rate 3.1 percent, down 0.4 points, which is good.">
+  <rect class="d-box" x="10" y="14" width="194" height="142" rx="8"/>
+  <text class="d-sub" x="26" y="40">Revenue (this month)</text>
+  <text class="d-label" transform="translate(26 82) scale(2)">₹4.2 Cr</text>
+  <text class="d-accent-text" x="26" y="108">▲ 12% vs last month</text>
+  <path class="d-line-accent" d="M26 146 L50 142 L74 144 L98 136 L122 134 L146 128 L170 124 L188 120"/>
+
+  <rect class="d-box" x="223" y="14" width="194" height="142" rx="8"/>
+  <text class="d-sub" x="239" y="40">Orders (this month)</text>
+  <text class="d-label" transform="translate(239 82) scale(2)">18,240</text>
+  <text class="t-coral" x="239" y="108">▼ 3% vs target</text>
+  <path class="d-line" d="M239 128 L263 126 L287 130 L311 132 L335 130 L359 136 L383 138 L401 140"/>
+
+  <rect class="d-box" x="436" y="14" width="194" height="142" rx="8"/>
+  <text class="d-sub" x="452" y="40">Return rate</text>
+  <text class="d-label" transform="translate(452 82) scale(2)">3.1%</text>
+  <text class="d-accent-text" x="452" y="108">▼ 0.4 pts (good: lower)</text>
+  <path class="d-line-accent" d="M452 122 L476 126 L500 124 L524 132 L548 134 L572 138 L596 140 L614 142"/>
+</svg>
+<figcaption>KPI cards: label, big number, comparison, and a tiny trend line (sparkline). Colour shows good or bad, not up or down.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li>A good KPI card has: a <b>clear label</b>, the <b>number</b>, a <b>comparison</b> (vs last month, vs target) and maybe a <b>sparkline</b> (a tiny line chart with no axes).</li>
+<li>A number alone means little. "₹4.2 Cr" — is that good? The comparison answers that.</li>
+<li>Green/red should mean <b>good/bad</b>, not up/down. A falling return rate is good news.</li>
+<li><b>Waterfall chart</b> = shows how a starting value becomes an end value, step by step (e.g. last year's profit + sales − costs = this year's profit).</li>
+<li><b>Funnel chart</b> = shows drop-off between steps, e.g. visit → add to cart → checkout → paid.</li>
+<li><b>Treemap</b> = nested rectangles sized by value. Good for many parts of a whole (e.g. sales by category and sub-category).</li>
+<li><b>Bullet chart</b> = a bar with a target marker. Better than a <b>gauge</b> (speedometer), which wastes space.</li>
+</ul>
+<div class="note"><b>Remember:</b> a KPI without a comparison is just a number. Always say "compared to what?".</div>
+</section>
+
+<!-- ================= DESIGN ================= -->
+<div class="part">Part 4 — Design Rules</div>
+
+<section id="s17">
+<h3>17. Using Colour</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Colour is powerful, so use it <b>on purpose</b>. There are three kinds of colour scales: <b>sequential</b>, <b>diverging</b> and <b>categorical</b>.</p>
+<p class="analogy">Colour is like a highlighter pen. One highlighted line on a page stands out. If you highlight the whole page, nothing stands out.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 220" role="img" aria-label="Three colour scales. Sequential: one green colour from light to dark. Diverging: red shades for below target, a neutral middle, green shades for above target. Categorical: five different soft colours for North, South, East, West and Online.">
+  <text class="d-label" x="20" y="22">Sequential — low to high (one colour, light to dark)</text>
+  <rect class="d-arrow-accent" fill-opacity=".1" x="20" y="30" width="56" height="26"/>
+  <rect class="d-arrow-accent" fill-opacity=".25" x="80" y="30" width="56" height="26"/>
+  <rect class="d-arrow-accent" fill-opacity=".4" x="140" y="30" width="56" height="26"/>
+  <rect class="d-arrow-accent" fill-opacity=".55" x="200" y="30" width="56" height="26"/>
+  <rect class="d-arrow-accent" fill-opacity=".7" x="260" y="30" width="56" height="26"/>
+  <rect class="d-arrow-accent" fill-opacity=".9" x="320" y="30" width="56" height="26"/>
+
+  <text class="d-label" x="20" y="84">Diverging — below / above a middle point</text>
+  <rect class="t-coral" fill-opacity=".85" x="20" y="92" width="56" height="26"/>
+  <rect class="t-coral" fill-opacity=".55" x="80" y="92" width="56" height="26"/>
+  <rect class="t-coral" fill-opacity=".25" x="140" y="92" width="56" height="26"/>
+  <rect class="d-box" x="200" y="92" width="56" height="26"/>
+  <rect class="d-arrow-accent" fill-opacity=".25" x="260" y="92" width="56" height="26"/>
+  <rect class="d-arrow-accent" fill-opacity=".55" x="320" y="92" width="56" height="26"/>
+  <rect class="d-arrow-accent" fill-opacity=".85" x="380" y="92" width="56" height="26"/>
+  <text class="d-sub" x="20" y="134">below target</text>
+  <text class="d-sub" x="228" y="134" text-anchor="middle">on target</text>
+  <text class="d-sub" x="436" y="134" text-anchor="end">above target</text>
+
+  <text class="d-label" x="20" y="162">Categorical — different groups, different colours</text>
+  <rect class="p-sea" x="20" y="170" width="74" height="26" rx="3"/>
+  <text class="d-label" x="57" y="187" text-anchor="middle">North</text>
+  <rect class="p-sky" x="100" y="170" width="74" height="26" rx="3"/>
+  <text class="d-label" x="137" y="187" text-anchor="middle">South</text>
+  <rect class="p-sun" x="180" y="170" width="74" height="26" rx="3"/>
+  <text class="d-label" x="217" y="187" text-anchor="middle">East</text>
+  <rect class="p-coral" x="260" y="170" width="74" height="26" rx="3"/>
+  <text class="d-label" x="297" y="187" text-anchor="middle">West</text>
+  <rect class="p-shell" x="340" y="170" width="74" height="26" rx="3"/>
+  <text class="d-label" x="377" y="187" text-anchor="middle">Online</text>
+  <text class="d-sub" x="20" y="214">Keep categories to about 5–7 colours. More than that, nobody can match colours to the legend.</text>
+</svg>
+<figcaption>The three colour scales. Pick the scale by the data: amounts → sequential, above/below a middle → diverging, separate groups → categorical.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li><b>Sequential:</b> one colour, light to dark. For amounts (sales, population).</li>
+<li><b>Diverging:</b> two colours with a neutral middle. For values above/below something (profit vs loss, vs target, correlation −1 to +1).</li>
+<li><b>Categorical:</b> clearly different colours for groups with no order. Don't use a light-to-dark scale for unordered groups.</li>
+<li><b>Use colour sparingly.</b> Make most things grey and colour only what matters. That is the strongest highlight there is.</li>
+<li><b>Colour-blind safety:</b> about 1 in 12 men have trouble telling red from green. Avoid red-vs-green as the only difference. Blue vs orange is a safe pair.</li>
+<li>Never rely on colour alone. Also use labels, position or patterns.</li>
+<li>Keep colours <b>consistent</b>: if "North" is blue on one chart, it is blue on every chart in the dashboard.</li>
+<li>Avoid the <b>rainbow</b> scale. Its bright bands create fake boundaries in the data.</li>
+</ul>
+<div class="note"><b>Remember:</b> grey for context, one colour for the point. And never let red vs green be the only way to read the chart.</div>
+</section>
+
+<section id="s18">
+<h3>18. Declutter &amp; Data-Ink Ratio</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Clutter</b> is anything on the chart that doesn't help the reader: heavy borders, dark gridlines, 3D effects, shadows, extra decimals. <b>Data-ink ratio</b> (an idea from Edward Tufte) means: most of the "ink" should show data, not decoration.</p>
+<p class="analogy">Like a messy desk. You can't find the important paper because it is buried under junk. Clear the desk and the paper is obvious.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 260" role="img" aria-label="Before and after. Before: a 3D bar chart with rainbow colours, heavy gridlines, a legend and the vague title Sales Chart. After: a sorted horizontal bar chart, grey bars with East highlighted, values written on the bars and the title East sells three times more than West.">
+  <rect class="d-box" x="8" y="8" width="304" height="244" rx="8"/>
+  <text class="t-coral" x="160" y="30" text-anchor="middle">Before: cluttered</text>
+  <text class="d-sub" x="30" y="50">Sales Chart</text>
+  <text class="d-sub" x="296" y="50" text-anchor="end">Legend: N S E W</text>
+  <path class="d-line" d="M40 70 H290 M40 100 H290 M40 130 H290 M40 160 H290 M40 200 H290 M40 60 V200"/>
+  <rect class="p-coral" x="50" y="109" width="36" height="91"/>
+  <polygon class="p-coral" points="50,109 58,101 94,101 86,109"/>
+  <polygon class="p-coral" points="86,109 94,101 94,192 86,200"/>
+  <rect class="p-sun" x="110" y="141.5" width="36" height="58.5"/>
+  <polygon class="p-sun" points="110,141.5 118,133.5 154,133.5 146,141.5"/>
+  <polygon class="p-sun" points="146,141.5 154,133.5 154,192 146,200"/>
+  <rect class="p-sky" x="170" y="83" width="36" height="117"/>
+  <polygon class="p-sky" points="170,83 178,75 214,75 206,83"/>
+  <polygon class="p-sky" points="206,83 214,75 214,192 206,200"/>
+  <rect class="p-shell" x="230" y="161" width="36" height="39"/>
+  <polygon class="p-shell" points="230,161 238,153 274,153 266,161"/>
+  <polygon class="p-shell" points="266,161 274,153 274,192 266,200"/>
+  <text class="d-sub" x="68" y="216" text-anchor="middle">N</text>
+  <text class="d-sub" x="128" y="216" text-anchor="middle">S</text>
+  <text class="d-sub" x="188" y="216" text-anchor="middle">E</text>
+  <text class="d-sub" x="248" y="216" text-anchor="middle">W</text>
+  <text class="d-sub" x="160" y="240" text-anchor="middle">3D, rainbow, heavy grid, vague title</text>
+
+  <rect class="d-box" x="328" y="8" width="304" height="244" rx="8"/>
+  <text class="d-accent-text" x="480" y="30" text-anchor="middle">After: clean</text>
+  <text class="d-label" x="344" y="56">East sells 3× more than West</text>
+  <text class="d-label" x="392" y="90" text-anchor="end">East</text>
+  <rect class="d-arrow-accent" x="400" y="74" width="198" height="22" rx="2"/>
+  <text class="d-sub" x="604" y="90">90</text>
+  <text class="d-label" x="392" y="122" text-anchor="end">North</text>
+  <rect class="d-arrow" fill-opacity=".55" x="400" y="106" width="154" height="22" rx="2"/>
+  <text class="d-sub" x="560" y="122">70</text>
+  <text class="d-label" x="392" y="154" text-anchor="end">South</text>
+  <rect class="d-arrow" fill-opacity=".55" x="400" y="138" width="99" height="22" rx="2"/>
+  <text class="d-sub" x="505" y="154">45</text>
+  <text class="d-label" x="392" y="186" text-anchor="end">West</text>
+  <rect class="d-arrow" fill-opacity=".55" x="400" y="170" width="66" height="22" rx="2"/>
+  <text class="d-sub" x="472" y="186">30</text>
+  <text class="d-sub" x="480" y="240" text-anchor="middle">Sorted, grey + one highlight, direct labels</text>
+</svg>
+<figcaption>Same four numbers. The clean version removes 3D, legend and gridlines, sorts the bars, and puts the message in the title.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li>Remove: 3D effects, shadows, background images, heavy borders, dark gridlines, unneeded legends.</li>
+<li>Make gridlines <b>light grey</b> or remove them if values are labelled.</li>
+<li><b>Label directly</b> (next to the bar or line) instead of a separate legend. The eye doesn't have to jump back and forth.</li>
+<li>Round numbers: "₹4.2 Cr", not "₹4,21,53,876.37".</li>
+<li>Use <b>white space</b>. Empty space is not wasted; it helps the eye rest and group things.</li>
+<li>Ask for every element: "If I delete this, does the reader lose anything?" If not, delete it.</li>
+</ul>
+<div class="note"><b>Remember:</b> decluttering is not about making charts pretty. It is about making the important part impossible to miss.</div>
+</section>
+
+<section id="s19">
+<h3>19. Axes &amp; Scales</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>The <b>axis</b> is the ruler of a chart. If the ruler is stretched, cut or doubled, the picture can lie even when the numbers are true.</p>
+<p class="analogy">A shop that says "huge sale!" in giant letters, while the discount is 2%. The size of the message doesn't match the size of the truth.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><b>Bar and area charts must start at zero.</b> The length or area <i>is</i> the value. Cutting the axis makes small gaps look huge.</li>
+<li><b>Line charts can start above zero</b>, because they show change. But label the axis clearly, and don't exaggerate tiny wiggles.</li>
+<li><b>Dual-axis charts</b> (two y-axes, one left, one right) are risky. You can stretch either axis to make two lines "cross" or "move together" at will. Readers also mix up which line uses which axis.</li>
+<li>Better than a dual axis: two small charts stacked one above the other with the same x-axis, or index both series to 100 at the start.</li>
+<li><b>Log scale</b> = each step is ×10 (1, 10, 100, 1000). Useful when values range from very small to very big, or for growth rates. Always label it "log scale".</li>
+<li>Use the <b>same scale</b> when you put small charts side by side (called <b>small multiples</b>). Otherwise readers compare wrongly.</li>
+<li>Label units: ₹, %, thousands, lakh, crore. "Sales: 4.2" means nothing.</li>
+</ul>
+<div class="note"><b>Remember:</b> bars start at zero, always. Be suspicious of any chart with two y-axes.</div>
+</section>
+
+<section id="s20">
+<h3>20. Titles &amp; Labels</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A good chart title tells the reader <b>what to see</b>, not just what the data is. This is called an <b>action title</b> or <b>insight title</b>.</p>
+<p class="analogy">A newspaper headline says "Prices rise 8% in a month", not "Prices table". It tells you the news in one line.</p>
+</div>
+<div class="table-wrap">
+<table>
+<tr><th>Weak title (just a label)</th><th>Strong title (states the insight)</th></tr>
+<tr><td>Sales by Region</td><td>South grew fastest in Q3, up 24%</td></tr>
+<tr><td>Monthly Churn</td><td>Churn doubled after the price change in June</td></tr>
+<tr><td>Delivery Time by City</td><td>Pune deliveries take 2 days longer than any other city</td></tr>
+</table>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Title = <b>the message</b>. Subtitle = the details (what is measured, units, time period, source).</li>
+<li>Label axes with name and unit: "Revenue (₹ lakh)". Remove an axis title if it is obvious (e.g. months).</li>
+<li>Use <b>annotations</b>: a small note on the chart like "Price change here" or "Diwali sale".</li>
+<li>Write numbers in the format your audience uses (lakh/crore for Indian business, K/M for global).</li>
+<li>Avoid tilted or vertical text. If labels don't fit, turn the chart into horizontal bars.</li>
+<li>Mention the <b>data source</b> and date at the bottom. It builds trust.</li>
+</ul>
+<div class="note"><b>Remember:</b> if your manager reads only the title, they should still get the main point.</div>
+</section>
+
+<section id="s21">
+<h3>21. Misleading Charts</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A chart can use <b>true numbers</b> and still give a <b>false impression</b>. Interviewers love asking you to spot these tricks.</p>
+<p class="analogy">Like a photo taken from a low angle to make a small house look like a mansion. Nothing is fake, but the angle lies.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 240" role="img" aria-label="Left: bar chart with the y-axis starting at 49 makes Brand B (51.5) look about 2.5 times bigger than Brand A (50). Right: the same data with the axis starting at zero shows the bars are almost equal, a gap of only 3 percent.">
+  <text class="d-label" x="180" y="20" text-anchor="middle">Misleading: axis starts at 49</text>
+  <path class="d-line" d="M76 40 V200 H290"/>
+  <text class="d-sub" x="70" y="204" text-anchor="end">49</text>
+  <text class="d-sub" x="70" y="151" text-anchor="end">50</text>
+  <text class="d-sub" x="70" y="97" text-anchor="end">51</text>
+  <text class="d-sub" x="70" y="44" text-anchor="end">52</text>
+  <rect class="p-coral" x="110" y="147" width="60" height="53"/>
+  <rect class="p-coral" x="200" y="67" width="60" height="133"/>
+  <text class="d-sub" x="140" y="141" text-anchor="middle">50</text>
+  <text class="d-sub" x="230" y="61" text-anchor="middle">51.5</text>
+  <text class="d-sub" x="140" y="216" text-anchor="middle">Brand A</text>
+  <text class="d-sub" x="230" y="216" text-anchor="middle">Brand B</text>
+  <text class="t-coral" x="180" y="234" text-anchor="middle">B looks 2.5× bigger</text>
+
+  <text class="d-label" x="500" y="20" text-anchor="middle">Honest: axis starts at 0</text>
+  <path class="d-line" d="M396 40 V200 H610"/>
+  <text class="d-sub" x="390" y="204" text-anchor="end">0</text>
+  <text class="d-sub" x="390" y="151" text-anchor="end">20</text>
+  <text class="d-sub" x="390" y="97" text-anchor="end">40</text>
+  <text class="d-sub" x="390" y="44" text-anchor="end">60</text>
+  <rect class="p-sea" x="430" y="67" width="60" height="133"/>
+  <rect class="p-sea" x="520" y="63" width="60" height="137"/>
+  <text class="d-sub" x="460" y="61" text-anchor="middle">50</text>
+  <text class="d-sub" x="550" y="57" text-anchor="middle">51.5</text>
+  <text class="d-sub" x="460" y="216" text-anchor="middle">Brand A</text>
+  <text class="d-sub" x="550" y="216" text-anchor="middle">Brand B</text>
+  <text class="d-accent-text" x="500" y="234" text-anchor="middle">Real gap: only 3%</text>
+</svg>
+<figcaption>The truncated axis trick. Same two numbers; only the starting point of the axis changed.</figcaption>
+</figure>
+<h4>Common tricks to spot</h4>
+<ul>
+<li><b>Truncated axis:</b> bar chart starts at 49, not 0. Small differences look massive.</li>
+<li><b>3D pie or 3D bars:</b> the tilt makes front slices look bigger than back slices.</li>
+<li><b>Cherry-picked range:</b> showing only the 3 good months and hiding the bad year around them.</li>
+<li><b>Dual axis abuse:</b> stretching one axis so two unrelated lines seem to move together.</li>
+<li><b>Uneven time steps:</b> 2010, 2015, 2020, 2021, 2022 spaced equally — growth looks faster than it was.</li>
+<li><b>Area/size tricks:</b> doubling both height and width of an icon makes it look 4× bigger, not 2×.</li>
+<li><b>Totals instead of rates:</b> "most crime happens in big cities" — because most people live there.</li>
+<li><b>Missing context:</b> "sales up 50%" — from 2 orders to 3.</li>
+</ul>
+<div class="note"><b>Remember:</b> for any chart, ask: Where does the axis start? What time range? Totals or rates? What is missing? These four questions catch most tricks.</div>
+</section>
+
+<section id="s22">
+<h3>22. Accessibility</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Accessibility</b> means everyone can understand your chart, including people with colour-blindness, low vision, or who use a <b>screen reader</b> (software that reads the screen aloud).</p>
+<p class="analogy">Like a building with a ramp and stairs. The ramp doesn't hurt anyone, and it lets many more people in.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><b>Don't rely on colour alone.</b> Add labels, shapes, line styles (solid/dashed) or patterns.</li>
+<li>Use <b>colour-blind safe</b> palettes (blue/orange). Test with a simulator (Tableau and many online tools have one).</li>
+<li><b>Contrast:</b> text and lines must be dark enough against the background. Light grey text on white is hard to read.</li>
+<li>Use readable font sizes (at least 12px on screen). Avoid tiny axis labels.</li>
+<li>Add <b>alt text</b> (a short text description of the chart): what it shows and the main finding.</li>
+<li>Provide the <b>data table</b> as an option. Power BI has "Show as table"; screen readers can read tables.</li>
+<li>Keyboard support: filters and buttons should work without a mouse.</li>
+</ul>
+<div class="note"><b>Remember:</b> a chart that is easy for people with colour-blindness is usually easier for everyone.</div>
+</section>
+
+<!-- ================= DASHBOARDS ================= -->
+<div class="part">Part 5 — Dashboards &amp; Storytelling</div>
+
+<section id="s23">
+<h3>23. Dashboard Design</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>dashboard</b> is one screen with several charts and numbers, used to <b>monitor</b> how the business is doing. Usually it updates automatically.</p>
+<p class="analogy">Like the cockpit of a plane. The most important dials sit right in front of the pilot. Less urgent ones are placed around them.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 330" role="img" aria-label="Dashboard wireframe: a title and filter buttons for region, month and product at the top; a row of four KPI cards; a large trend line chart and a bar chart by region in the middle; and a detail table at the bottom.">
+  <rect class="d-box" x="8" y="8" width="624" height="314" rx="10"/>
+  <text class="d-label" x="24" y="35">Sales Dashboard — Oct 2025</text>
+  <rect class="d-box" x="400" y="20" width="70" height="22" rx="5"/>
+  <text class="d-sub" x="435" y="35" text-anchor="middle">Region ▾</text>
+  <rect class="d-box" x="478" y="20" width="70" height="22" rx="5"/>
+  <text class="d-sub" x="513" y="35" text-anchor="middle">Month ▾</text>
+  <rect class="d-box" x="556" y="20" width="64" height="22" rx="5"/>
+  <text class="d-sub" x="588" y="35" text-anchor="middle">Product ▾</text>
+
+  <rect class="d-fill-accent" x="24" y="54" width="136" height="60" rx="6"/>
+  <rect class="d-box-accent" x="24" y="54" width="136" height="60" rx="6"/>
+  <text class="d-sub" x="36" y="74">Revenue</text>
+  <text class="d-label" x="36" y="96">₹4.2 Cr ▲12%</text>
+  <rect class="d-fill-accent" x="176" y="54" width="136" height="60" rx="6"/>
+  <rect class="d-box-accent" x="176" y="54" width="136" height="60" rx="6"/>
+  <text class="d-sub" x="188" y="74">Orders</text>
+  <text class="d-label" x="188" y="96">18,240 ▼3%</text>
+  <rect class="d-fill-accent" x="328" y="54" width="136" height="60" rx="6"/>
+  <rect class="d-box-accent" x="328" y="54" width="136" height="60" rx="6"/>
+  <text class="d-sub" x="340" y="74">Avg order value</text>
+  <text class="d-label" x="340" y="96">₹2,303 ▲4%</text>
+  <rect class="d-fill-accent" x="480" y="54" width="136" height="60" rx="6"/>
+  <rect class="d-box-accent" x="480" y="54" width="136" height="60" rx="6"/>
+  <text class="d-sub" x="492" y="74">Return rate</text>
+  <text class="d-label" x="492" y="96">3.1% ▼0.4</text>
+
+  <rect class="d-box" x="24" y="128" width="344" height="110" rx="6"/>
+  <text class="d-sub" x="36" y="146">Trend over time (line)</text>
+  <path class="d-line-accent" d="M40 220 L80 210 L120 214 L160 196 L200 200 L240 184 L280 176 L320 160 L352 166"/>
+  <rect class="d-box" x="384" y="128" width="232" height="110" rx="6"/>
+  <text class="d-sub" x="396" y="146">By region (bar)</text>
+  <rect class="d-arrow-accent" x="396" y="158" width="170" height="12" rx="2"/>
+  <rect class="d-arrow" fill-opacity=".55" x="396" y="176" width="130" height="12" rx="2"/>
+  <rect class="d-arrow" fill-opacity=".55" x="396" y="194" width="90" height="12" rx="2"/>
+  <rect class="d-arrow" fill-opacity=".55" x="396" y="212" width="60" height="12" rx="2"/>
+
+  <rect class="d-box" x="24" y="250" width="592" height="60" rx="6"/>
+  <text class="d-sub" x="36" y="268">Detail table (rows you can drill into)</text>
+  <path class="d-dash" d="M36 280 H604 M36 294 H604"/>
+</svg>
+<figcaption>A typical layout. Filters at top right, KPIs across the top, main charts in the middle, details at the bottom: from summary to detail.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li><b>Know the audience first.</b> A CEO wants 4–5 big numbers. A sales manager wants detail by rep and region.</li>
+<li><b>Know the purpose:</b> <b>strategic</b> (long-term, monthly), <b>operational</b> (live, daily: "what's happening now?"), or <b>analytical</b> (explore and find causes).</li>
+<li>People read screens in an <b>F-pattern</b> or <b>Z-pattern</b>: top-left first, then across, then down. Put the most important thing <b>top-left</b>.</li>
+<li><b>KPIs at the top</b>, trends and breakdowns in the middle, detail tables at the bottom.</li>
+<li>Keep to about <b>5–9 visuals</b> on one page. If it needs scrolling, it may need a second page.</li>
+<li>Use a <b>grid</b>: align charts, equal spacing, same fonts. It looks professional and is easier to scan.</li>
+<li>Keep colours and number formats <b>consistent</b> across all charts.</li>
+<li>Show the <b>last refresh time</b>, so people know how fresh the data is.</li>
+</ul>
+<div class="note"><b>Remember:</b> a dashboard should answer its main question in about 5 seconds. Most important top-left, details bottom.</div>
+</section>
+
+<section id="s24">
+<h3>24. Filters, Interactivity &amp; Drill-down</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Interactivity</b> lets users explore the dashboard themselves: choose a region, hover to see a value, click to go deeper.</p>
+<p class="analogy">Like Google Maps. You start with the whole country, then zoom into your state, your city, your street.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><b>Filter / slicer</b> = a control (dropdown, list, date range) that limits the data shown, e.g. "Region = South". "Slicer" is the Power BI word.</li>
+<li><b>Cross-filtering</b> = clicking a bar in one chart filters all other charts on the page.</li>
+<li><b>Drill-down</b> = going from summary to detail in a <b>hierarchy</b>: Year → Quarter → Month → Day, or Country → State → City.</li>
+<li><b>Drill-through</b> = clicking jumps to a separate detail page for that item (e.g. one customer's full history).</li>
+<li><b>Tooltip</b> = the small box that appears on hover with exact values and extra info.</li>
+<li>Show the <b>active filters</b> clearly. Wrong numbers often come from a hidden filter someone forgot.</li>
+<li>Don't add interactivity just because you can. Every filter is one more thing to understand.</li>
+<li><b>Static report vs dashboard:</b> a report (PDF, slides) tells one story; a dashboard is for ongoing monitoring and exploring.</li>
+</ul>
+<div class="note"><b>Remember:</b> overview first, zoom and filter, then details on demand. This is Shneiderman's mantra, a nice line for interviews.</div>
+</section>
+
+<section id="s25">
+<h3>25. Storytelling with Data</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Data storytelling</b> means using data, charts and a short story to lead people to <b>a decision</b>. Charts show what happened; the story explains why it matters and what to do.</p>
+<p class="analogy">A doctor doesn't just hand you test results. They say: "Your sugar is high (data). That's why you feel tired (meaning). Walk 30 minutes daily (action)."</p>
+</div>
+<h4>The four building blocks</h4>
+<ul>
+<li><b>Context:</b> who is the audience, what do they already know, what decision do they need to make?</li>
+<li><b>Audience:</b> executives want the answer first; analysts want the method. Change the depth, not the truth.</li>
+<li><b>Big idea:</b> your whole message in <b>one sentence</b>. Example: "Late deliveries in Pune are causing 40% of our refunds, so we should switch courier."</li>
+<li><b>Narrative arc:</b> beginning, middle, end — setup, problem, solution.</li>
+</ul>
+<div class="flow">1. Setup      →  "Refunds were steady at 2% for a year."
+2. Problem    →  "Since July they jumped to 5%. Most come from Pune."
+3. Insight    →  "Pune orders are 3 days late since we changed courier."
+4. Action     →  "Switch back courier for Pune. Expected saving: ₹12 lakh/month."</div>
+<h4>Key points</h4>
+<ul>
+<li>One chart = one message. Each slide's title is that message.</li>
+<li>Use the <b>highlight</b> (one colour, an annotation) to point at the exact part of the chart you are talking about.</li>
+<li>Answer "<b>So what?</b>" for every number. If you can't, drop the chart.</li>
+<li>End with a clear <b>recommendation</b> or next step.</li>
+<li>Explore with 50 charts; present 3. The audience does not need to see your whole journey.</li>
+</ul>
+<div class="note"><b>Remember:</b> data + visuals + narrative = a story that drives action. Always end with "so what we should do is…".</div>
+</section>
+
+<!-- ================= TOOLS ================= -->
+<div class="part">Part 6 — Tools</div>
+
+<section id="s26">
+<h3>26. Tools Landscape</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Many tools can make charts. The ideas are the same in all of them. Companies pick based on cost, data size and what they already use.</p>
+<p class="analogy">Like cars: a hatchback, a sedan and an SUV all drive the same way. Learn to drive well in one, and switching is easy.</p>
+</div>
+<div class="table-wrap">
+<table>
+<tr><th>Tool</th><th>Best for</th><th>Strengths</th><th>Limits</th></tr>
+<tr><td><b>Excel</b></td><td>Quick charts, small data, ad-hoc analysis</td><td>Everyone has it; pivot tables + pivot charts</td><td>Slow with big data; limited interactivity</td></tr>
+<tr><td><b>Power BI</b></td><td>Company dashboards (Microsoft shops)</td><td>Cheap, Power Query for cleaning, DAX for measures, links with Excel/Teams</td><td>DAX takes time to learn; desktop app is Windows-only</td></tr>
+<tr><td><b>Tableau</b></td><td>Rich, interactive visual analysis</td><td>Drag-and-drop, beautiful charts, strong community (Tableau Public)</td><td>Costly licences</td></tr>
+<tr><td><b>Looker Studio</b></td><td>Free web dashboards, Google data</td><td>Free, easy sharing, connects to Google Sheets/Analytics/BigQuery</td><td>Fewer features, slower on big data</td></tr>
+<tr><td><b>Python: matplotlib</b></td><td>Full control, static charts</td><td>Can draw anything; base of other libraries</td><td>Lots of code for a nice chart</td></tr>
+<tr><td><b>Python: seaborn</b></td><td>Statistical charts fast</td><td>One line for histograms, box plots, heatmaps; nice defaults</td><td>Static; less control than matplotlib</td></tr>
+<tr><td><b>Python: plotly</b></td><td>Interactive charts in notebooks and web apps</td><td>Hover, zoom out of the box; Dash for web apps</td><td>Bigger files; extra learning</td></tr>
+</table>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>For fresher analyst roles, know <b>Excel</b> well and <b>one BI tool</b> (Power BI or Tableau) to a project level.</li>
+<li><b>BI</b> = Business Intelligence: tools that connect to data, clean it, and build shareable dashboards.</li>
+<li>Power BI words: <b>Power Query</b> (clean/transform data), <b>data model</b> (tables + relationships), <b>DAX</b> (formulas for measures), <b>slicer</b> (filter).</li>
+<li>Tableau words: <b>dimensions/measures</b>, <b>sheets</b> (one chart), <b>dashboards</b> (many sheets), <b>calculated fields</b>, <b>LOD expressions</b>.</li>
+<li>Python is for analysts who also clean data and do statistics in code (Jupyter notebooks).</li>
+</ul>
+<div class="note"><b>Remember:</b> the tool is not the skill. If asked "Power BI or Tableau?", say you know one well and the chart design principles carry over to any tool.</div>
+</section>
+
+<section id="s27">
+<h3>27. Python Charts (matplotlib &amp; seaborn)</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>matplotlib</b> is the basic Python charting library. <b>seaborn</b> sits on top of it and makes statistical charts with less code. <b>pandas</b> holds the data as a table (a <b>DataFrame</b>).</p>
+<p class="analogy">matplotlib is like cooking from scratch. seaborn is like a ready meal kit: faster, still tasty, a bit less control.</p>
+</div>
+<h4>A clean bar chart with matplotlib</h4>
+<pre><code>import matplotlib.pyplot as plt
+import pandas as pd
+
+df = pd.DataFrame({"city": ["Mumbai", "Delhi", "Bengaluru", "Pune", "Jaipur"],
+                   "sales": [92, 78, 65, 41, 28]})
+df = df.sort_values("sales")                     # sort so the biggest is on top
+
+fig, ax = plt.subplots(figsize=(7, 4))
+colors = ["#bbbbbb"] * len(df)                   # grey for all bars...
+colors[-1] = "#2f6f4e"                           # ...one highlight for the top city
+ax.barh(df["city"], df["sales"], color=colors)   # horizontal bars
+
+ax.set_title("Mumbai leads January sales (₹ lakh)", loc="left")   # insight title
+for side in ["top", "right"]:
+    ax.spines[side].set_visible(False)           # remove chart junk (extra borders)
+for i, v in enumerate(df["sales"]):
+    ax.text(v + 1, i, str(v), va="center")       # label each bar directly
+
+plt.tight_layout()
+plt.savefig("sales.png", dpi=150)                # save for slides/reports</code></pre>
+<h4>Distribution and relationship with seaborn</h4>
+<pre><code>import seaborn as sns
+import matplotlib.pyplot as plt
+
+tips = sns.load_dataset("tips")                  # sample restaurant data
+
+sns.histplot(data=tips, x="total_bill", bins=20)               # histogram
+plt.show()
+
+sns.boxplot(data=tips, x="day", y="total_bill")                # box plot per day
+plt.show()
+
+sns.scatterplot(data=tips, x="total_bill", y="tip", hue="time") # scatter, colour by group
+plt.show()
+
+corr = tips[["total_bill", "tip", "size"]].corr()              # correlation table
+sns.heatmap(corr, annot=True, cmap="RdBu", vmin=-1, vmax=1)    # diverging colours, -1 to +1
+plt.show()</code></pre>
+<h4>Key points</h4>
+<ul>
+<li><code>fig, ax = plt.subplots()</code> gives you a figure (the canvas) and axes (the chart area). Set titles and labels on <code>ax</code>.</li>
+<li><code>plt.subplots(1, 3)</code> makes <b>small multiples</b>: three charts side by side.</li>
+<li>seaborn's <code>hue=</code> colours points by a category. <code>sns.pairplot(df)</code> draws a scatter for every pair of columns — great for exploring.</li>
+<li>For the correlation heatmap, use a <b>diverging</b> colour map with <code>vmin=-1, vmax=1</code> so 0 is the neutral middle.</li>
+<li>For interactive charts, <code>plotly.express</code> works almost the same: <code>px.bar(df, x="city", y="sales")</code>.</li>
+</ul>
+<div class="note"><b>Remember:</b> the same design rules apply in code: sort, remove junk, one highlight, label directly, insight title.</div>
+</section>
+
+<!-- ================= REVISION ================= -->
+<div class="part">Revision</div>
+
+<section id="rev">
+<h3>Quick Revision</h3>
+<p>The most-asked questions, with short and simple answers. Say these in your own words.</p>
+<h4>Basics</h4>
+<ul>
+<li><b>Why visualize data?</b> People see patterns, trends and outliers much faster in a picture than in a table.</li>
+<li><b>What is Anscombe's quartet?</b> Four data sets with the same summary stats that look completely different when plotted. Lesson: always plot your data.</li>
+<li><b>What are pre-attentive attributes?</b> Things the eye notices instantly: colour, size, length, position, shape.</li>
+<li><b>Which is most accurate for comparison?</b> Position and length. Angle and area are the weakest.</li>
+<li><b>Dimension vs measure?</b> Dimension = category you group by (Region). Measure = number you add up (Sales).</li>
+<li><b>Exploratory vs explanatory?</b> Exploratory = you search the data. Explanatory = you show one finding to others.</li>
+</ul>
+<h4>Choosing charts</h4>
+<ul>
+<li><b>Compare categories?</b> Sorted bar chart.</li>
+<li><b>Trend over time?</b> Line chart.</li>
+<li><b>Part of a whole?</b> Stacked or 100% bar; pie only with 2–4 slices.</li>
+<li><b>Distribution?</b> Histogram or box plot.</li>
+<li><b>Relationship between two numbers?</b> Scatter plot.</li>
+<li><b>By location?</b> Choropleth (rates) or bubble map (totals).</li>
+<li><b>Why are pie charts often criticised?</b> People can't compare angles well, especially with many or similar slices.</li>
+<li><b>Histogram vs bar chart?</b> Histogram: number ranges, bars touch, shows spread. Bar chart: categories, gaps, compares values.</li>
+<li><b>What does a box plot show?</b> Min, Q1, median, Q3, max, and outliers beyond 1.5 × IQR.</li>
+<li><b>Grouped vs stacked bar?</b> Grouped compares parts; stacked compares totals.</li>
+<li><b>Table or chart?</b> Table to look up exact values; chart to see a pattern.</li>
+</ul>
+<h4>Design</h4>
+<ul>
+<li><b>Three types of colour scale?</b> Sequential (low→high), diverging (around a middle), categorical (separate groups).</li>
+<li><b>How do you make charts colour-blind friendly?</b> Avoid red-vs-green only, use blue/orange, add labels and patterns.</li>
+<li><b>What is the data-ink ratio?</b> Most of the ink should show data. Remove decoration that adds nothing.</li>
+<li><b>Must a bar chart start at zero?</b> Yes. The bar length is the value. Line charts may start higher.</li>
+<li><b>Why avoid dual axes?</b> Either axis can be stretched to fake a relationship, and readers mix up the scales.</li>
+<li><b>What is a good chart title?</b> One that states the insight: "Churn doubled after June's price change".</li>
+<li><b>Name ways charts mislead.</b> Truncated axis, 3D effects, cherry-picked dates, dual axes, totals instead of rates.</li>
+</ul>
+<h4>Dashboards &amp; stories</h4>
+<ul>
+<li><b>How do you design a dashboard?</b> Know the audience and question, KPIs top-left, trends in the middle, detail at the bottom, few colours, 5–9 visuals.</li>
+<li><b>What is an F/Z pattern?</b> The order people scan a screen: top-left first, then across, then down.</li>
+<li><b>Drill-down vs drill-through?</b> Drill-down = go deeper in a hierarchy in the same chart. Drill-through = jump to a detail page.</li>
+<li><b>What is a KPI card?</b> One key number with a label and a comparison (vs target or last period).</li>
+<li><b>What is data storytelling?</b> Context + chart + narrative leading to an action.</li>
+<li><b>What is the "big idea"?</b> Your whole message and recommendation in one sentence.</li>
+<li><b>Power BI vs Tableau?</b> Power BI: cheaper, Microsoft-friendly, DAX. Tableau: very flexible visuals, costlier. Principles are the same.</li>
+</ul>
+<div class="note"><b>Remember:</b> in an interview, when asked to critique a chart, check in this order: right chart type? honest axis? clutter? colour? title states the insight?</div>
+</section>
+
+<section id="road">
+<h3>Learning Path</h3>
+<p>Go step by step. Make real charts at each step.</p>
+<ol>
+<li><b>Chart basics</b> — bar, line, pie, scatter, histogram. Know when to use each one.</li>
+<li><b>Excel charts</b> — make charts from a pivot table. Practise sorting, labelling and removing clutter.</li>
+<li><b>Design rules</b> — colour, zero baseline, insight titles. Redo a bad chart from the news in a clean way.</li>
+<li><b>Statistics for charts</b> — mean vs median, quartiles, outliers, correlation. Then box plots make sense.</li>
+<li><b>One BI tool</b> — Power BI or Tableau. Learn to connect data, clean it, build measures, add slicers.</li>
+<li><b>Project</b> — build a one-page sales or HR dashboard from a public data set (Kaggle). KPIs on top, filters, drill-down.</li>
+<li><b>Storytelling</b> — turn your dashboard into 3–5 slides with action titles and a recommendation.</li>
+<li><b>Python (optional but useful)</b> — pandas + matplotlib/seaborn in a Jupyter notebook.</li>
+<li><b>Portfolio</b> — publish to Tableau Public, Power BI (screenshots + a short write-up) or GitHub. Link it on your CV.</li>
+</ol>
+<div class="note"><b>Remember:</b> for every chart, ask three questions. Who is it for? What one thing should they notice? What should they do next?</div>
+</section>
+
+</main>
+</div>
+
+<script src="../assets/notes.js"></script>
+</body>
+</html>

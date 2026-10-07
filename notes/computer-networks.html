@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Computer Networks &amp; the Internet — Concept Notes</title>
+<link rel="stylesheet" href="../assets/notes.css">
+<script>
+  try { document.documentElement.setAttribute("data-theme",
+    localStorage.getItem("notes-theme") || "light"); } catch (e) {}
+</script>
+</head>
+<body>
+<div class="scrim"></div>
+<button class="icon-btn" id="reopen" title="Show sidebar ([)" aria-label="Show sidebar">☰</button>
+<div class="layout">
+
+<aside>
+  <div class="sidebar-head">
+    <a class="back-link" href="../index.html">← All topics</a>
+    <button class="icon-btn" id="collapseBtn" title="Hide sidebar ([)" aria-label="Hide sidebar">‹</button>
+  </div>
+  <input id="search" type="text" placeholder="Filter topics…" autocomplete="off">
+
+  <h2>Foundations</h2>
+  <nav>
+    <a href="#s1">1 · What a Network Is</a>
+    <a href="#s2">2 · How the Internet Is Built</a>
+    <a href="#s3">3 · Network Types &amp; Topologies</a>
+    <a href="#s4">4 · Network Devices</a>
+    <a href="#s5">5 · Latency, Bandwidth, Throughput</a>
+  </nav>
+
+  <h2>The Layer Models</h2>
+  <nav>
+    <a href="#s6">6 · Why Layers? The OSI Model</a>
+    <a href="#s7">7 · OSI vs TCP/IP</a>
+    <a href="#s8">8 · Encapsulation</a>
+  </nav>
+
+  <h2>Link &amp; Network Layers</h2>
+  <nav>
+    <a href="#s9">9 · MAC, Ethernet &amp; ARP</a>
+    <a href="#s10">10 · IPv4 Addresses &amp; Classes</a>
+    <a href="#s11">11 · CIDR &amp; Subnetting</a>
+    <a href="#s12">12 · Private IPs &amp; NAT</a>
+    <a href="#s13">13 · IPv6</a>
+    <a href="#s14">14 · Routing</a>
+    <a href="#s15">15 · ICMP, Ping &amp; Traceroute</a>
+  </nav>
+
+  <h2>Transport Layer</h2>
+  <nav>
+    <a href="#s16">16 · Ports &amp; Sockets</a>
+    <a href="#s17">17 · TCP vs UDP</a>
+    <a href="#s18">18 · Handshake &amp; Teardown</a>
+    <a href="#s19">19 · Reliability, Flow &amp; Congestion</a>
+  </nav>
+
+  <h2>Application Layer</h2>
+  <nav>
+    <a href="#s20">20 · DNS</a>
+    <a href="#s21">21 · DHCP</a>
+    <a href="#s22">22 · HTTP Requests &amp; Methods</a>
+    <a href="#s23">23 · Status Codes, Headers, Cookies</a>
+    <a href="#s24">24 · HTTP/1.1 vs 2 vs 3</a>
+    <a href="#s25">25 · HTTPS &amp; TLS</a>
+    <a href="#s26">26 · Email, FTP &amp; SSH</a>
+    <a href="#s27">27 · Polling, SSE &amp; WebSockets</a>
+  </nav>
+
+  <h2>The Web in Practice</h2>
+  <nav>
+    <a href="#s28">28 · Typing a URL, End to End</a>
+    <a href="#s29">29 · CDNs, Proxies, Load Balancers</a>
+    <a href="#s30">30 · CORS</a>
+    <a href="#s31">31 · Network Security</a>
+    <a href="#s32">32 · Useful Commands</a>
+  </nav>
+
+  <h2>Revision</h2>
+  <nav>
+    <a href="#rev">Interview Q&amp;A</a>
+    <a href="#road">Learning Path</a>
+  </nav>
+</aside>
+
+<main>
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="../index.html#technical">Technical</a></li><li><span>Computer Networks</span></li><li><span aria-current="page">Notes</span></li></ol></nav>
+<header class="top">
+  <h1>Computer Networks &amp; the Internet</h1>
+  <div class="top-actions">
+    <button class="ghost" id="menuBtn">☰ Topics</button>
+    <button class="ghost" id="theme">Dark mode</button>
+  </div>
+</header>
+<p class="sub">How data actually gets from one computer to another — from cables to HTTPS. Simple words, real depth, tied to the web apps you build. Print this page for a PDF.</p>
+
+<!-- ================= FOUNDATIONS ================= -->
+<div class="part">Part 1 — Foundations</div>
+
+<section id="s1">
+<h3>1. What a Network Really Is</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>network</b> is two or more devices joined together so they can send each other data. That's it. Two laptops on the same Wi-Fi are a network.</p>
+<p>The <b>Internet</b> is a network of networks. Your home network, your college network, Google's network — millions of them, all agreeing to pass data to each other.</p>
+<p class="analogy">Think of the postal system. Every house has an address, letters go through sorting offices, and nobody needs to know the whole route — each office just knows where to send the letter next.</p></div>
+<h4>The handful of ideas everything else builds on</h4>
+<ul>
+<li><b>Address</b> — every device needs one so data can find it. On the Internet that's an <b>IP address</b>, like <code>142.250.183.14</code>.</li>
+<li><b>Packet</b> — data isn't sent in one big lump. It's cut into small pieces called packets, each with the address written on it.</li>
+<li><b>Protocol</b> — a set of rules both sides agree on, like "say hello before you talk" or "number your pages". HTTP, TCP and IP are all protocols.</li>
+<li><b>Client and server</b> — the <b>client</b> asks (your browser), the <b>server</b> answers (the computer hosting the website). A server is just a computer whose job is to wait for requests.</li>
+</ul>
+<div class="note"><b>Why this matters to a web developer:</b> every <code>fetch()</code> you write, every API call, every slow page load, every CORS error is a networking event. Knowing what happens underneath turns "it doesn't work" into "the DNS lookup is failing" — and that's the difference interviewers look for.</div>
+</section>
+
+<section id="s2">
+<h3>2. How the Internet Is Built</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Your device connects to an <b>ISP</b> (Internet Service Provider) — Jio, Airtel, BT, Comcast. Your ISP connects to bigger ISPs, and the biggest ones own the <b>backbone</b>: huge fibre-optic cables running across countries and under oceans.</p>
+<p>Nobody owns "the Internet". It works because all these companies agree to carry each other's traffic.</p>
+<p class="analogy">Your street joins a main road, the main road joins a motorway, and motorways connect cities. Your ISP is the local road; the backbone is the motorway.</p></div>
+<figure class="diagram">
+<svg viewBox="0 0 640 330" role="img" aria-label="A message is cut into packets that leave a laptop through a home router. Packet 1 travels via one ISP router and backbone router, packet 2 via a different pair, and both reach the server where they are put back in order.">
+  <text class="d-sub" x="320" y="20" text-anchor="middle">Your message is cut into numbered packets. Each one may take a different road.</text>
+
+  <rect class="d-box" x="20" y="118" width="96" height="40" rx="6"/>
+  <text class="d-label" x="68" y="143" text-anchor="middle">Your laptop</text>
+  <rect class="d-box" x="150" y="118" width="84" height="40" rx="6"/>
+  <text class="d-label" x="192" y="143" text-anchor="middle">Home router</text>
+
+  <rect class="d-box" x="280" y="48" width="84" height="36" rx="6"/>
+  <text class="d-label" x="322" y="71" text-anchor="middle">ISP router</text>
+  <rect class="d-box" x="280" y="192" width="84" height="36" rx="6"/>
+  <text class="d-label" x="322" y="215" text-anchor="middle">ISP router</text>
+  <rect class="d-box" x="420" y="48" width="84" height="36" rx="6"/>
+  <text class="d-label" x="462" y="71" text-anchor="middle">Backbone</text>
+  <rect class="d-box" x="420" y="192" width="84" height="36" rx="6"/>
+  <text class="d-label" x="462" y="215" text-anchor="middle">Backbone</text>
+
+  <rect class="d-fill-accent" x="540" y="118" width="84" height="40" rx="6"/>
+  <rect class="d-box-accent" x="540" y="118" width="84" height="40" rx="6"/>
+  <text class="d-label" x="582" y="143" text-anchor="middle">Server</text>
+
+  <path class="d-line" d="M116 138 H144"/><path class="d-arrow" d="M150 138 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M364 80 L420 196"/>
+
+  <path class="d-line-accent" d="M234 128 L276 86"/>
+  <path class="d-line-accent" d="M364 66 H414"/><path class="d-arrow-accent" d="M420 66 l-9 -4.5 v9 z"/>
+  <path class="d-line-accent" d="M504 76 L536 120"/><path class="d-arrow-accent" d="M540 125 l-2.5 -9.7 l-7.3 5.3 z"/>
+  <text class="d-accent-text" x="322" y="40" text-anchor="middle">packet 1</text>
+
+  <path class="d-dash" d="M234 148 L276 190"/>
+  <path class="d-dash" d="M364 210 H414"/><path class="d-arrow" d="M420 210 l-9 -4.5 v9 z"/>
+  <path class="d-dash" d="M504 200 L536 156"/><path class="d-arrow" d="M540 151 l-9.5 5.4 l7.3 5.3 z"/>
+  <text class="d-sub" x="322" y="246" text-anchor="middle">packet 2</text>
+
+  <rect class="d-box" x="40" y="264" width="560" height="54" rx="7"/>
+  <text class="d-label" x="56" y="284">Packet switching (the Internet):</text>
+  <text class="d-sub" x="290" y="284">links are shared; each packet goes its own way.</text>
+  <text class="d-label" x="56" y="306">Circuit switching (old phones):</text>
+  <text class="d-sub" x="290" y="306">one whole path is reserved for the entire call.</text>
+</svg>
+<figcaption>No packet knows the full route. Each router only decides "which neighbour is closer to the destination?" and passes it on.</figcaption>
+</figure>
+<h4>Packet switching vs circuit switching</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>Circuit switching</th><th>Packet switching</th></tr>
+<tr><td>How it works</td><td>Reserve a full path before talking</td><td>Cut data into packets, send each one separately</td></tr>
+<tr><td>Example</td><td>Old landline phone calls</td><td>The Internet</td></tr>
+<tr><td>Sharing</td><td>Path is yours alone, even during silence</td><td>Everyone shares the same links</td></tr>
+<tr><td>If a link breaks</td><td>Call drops</td><td>Packets go around it</td></tr>
+<tr><td>Downside</td><td>Wastes capacity</td><td>Packets can arrive late, out of order, or not at all</td></tr>
+</table></div>
+<p>Packet switching is "best effort": the network tries, but makes no promises. Making delivery <i>reliable</i> is a job pushed up to TCP (section 19).</p>
+<h4>Who's who</h4>
+<ul>
+<li><b>Tier 1 ISPs</b> own the backbone and swap traffic with each other for free (called <b>peering</b>).</li>
+<li><b>Regional and local ISPs</b> pay bigger ones to carry their traffic (called <b>transit</b>).</li>
+<li><b>IXPs</b> (Internet Exchange Points) are buildings where many networks plug into each other to swap traffic directly.</li>
+<li><b>Undersea cables</b> carry over 95% of traffic between continents. Satellites are a tiny share.</li>
+</ul>
+</section>
+
+<section id="s3">
+<h3>3. Network Types &amp; Topologies</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Network <b>types</b> are named by how big an area they cover — a room, a building, a city, or the world.</p>
+<p>A <b>topology</b> is the shape of the wiring — who is connected to whom.</p></div>
+<div class="table-wrap"><table>
+<tr><th>Type</th><th>Stands for</th><th>Covers</th><th>Example</th></tr>
+<tr><td><b>PAN</b></td><td>Personal Area Network</td><td>A few metres</td><td>Phone to earbuds over Bluetooth</td></tr>
+<tr><td><b>LAN</b></td><td>Local Area Network</td><td>A home, office or building</td><td>Your home Wi-Fi</td></tr>
+<tr><td><b>MAN</b></td><td>Metropolitan Area Network</td><td>A city</td><td>A city-wide cable network</td></tr>
+<tr><td><b>WAN</b></td><td>Wide Area Network</td><td>Countries, the world</td><td>The Internet; a company joining offices</td></tr>
+</table></div>
+<figure class="diagram">
+<svg viewBox="0 0 640 200" role="img" aria-label="Four topologies: bus with all devices on one cable, star with every device connected to a central switch, ring with devices in a loop, and mesh where every device links to every other.">
+  <text class="d-accent-text" x="85" y="20" text-anchor="middle">BUS</text>
+  <path class="d-line-accent" d="M20 85 H150"/>
+  <path class="d-line" d="M45 85 V60 M85 85 V60 M125 85 V60 M65 85 V110 M105 85 V110"/>
+  <circle class="d-box" cx="45" cy="52" r="8"/><circle class="d-box" cx="85" cy="52" r="8"/><circle class="d-box" cx="125" cy="52" r="8"/>
+  <circle class="d-box" cx="65" cy="118" r="8"/><circle class="d-box" cx="105" cy="118" r="8"/>
+  <text class="d-sub" x="85" y="160" text-anchor="middle">one shared cable</text>
+  <text class="d-sub" x="85" y="177" text-anchor="middle">cable breaks → all down</text>
+
+  <text class="d-accent-text" x="245" y="20" text-anchor="middle">STAR</text>
+  <path class="d-line" d="M245 85 L200 45 M245 85 L290 45 M245 85 L200 125 M245 85 L290 125"/>
+  <rect class="d-fill-accent" x="230" y="72" width="30" height="26" rx="4"/>
+  <rect class="d-box-accent" x="230" y="72" width="30" height="26" rx="4"/>
+  <circle class="d-box" cx="200" cy="45" r="8"/><circle class="d-box" cx="290" cy="45" r="8"/>
+  <circle class="d-box" cx="200" cy="125" r="8"/><circle class="d-box" cx="290" cy="125" r="8"/>
+  <text class="d-sub" x="245" y="160" text-anchor="middle">all via a central switch</text>
+  <text class="d-sub" x="245" y="177" text-anchor="middle">the usual home/office shape</text>
+
+  <text class="d-accent-text" x="405" y="20" text-anchor="middle">RING</text>
+  <path class="d-line" d="M405 40 L450 85 L405 130 L360 85 Z"/>
+  <circle class="d-box" cx="405" cy="40" r="8"/><circle class="d-box" cx="450" cy="85" r="8"/>
+  <circle class="d-box" cx="405" cy="130" r="8"/><circle class="d-box" cx="360" cy="85" r="8"/>
+  <text class="d-sub" x="405" y="160" text-anchor="middle">data goes round the loop</text>
+  <text class="d-sub" x="405" y="177" text-anchor="middle">one break can stop it</text>
+
+  <text class="d-accent-text" x="565" y="20" text-anchor="middle">MESH</text>
+  <path class="d-line" d="M525 45 H605 M525 125 H605 M525 45 V125 M605 45 V125 M525 45 L605 125 M605 45 L525 125"/>
+  <circle class="d-box" cx="525" cy="45" r="8"/><circle class="d-box" cx="605" cy="45" r="8"/>
+  <circle class="d-box" cx="525" cy="125" r="8"/><circle class="d-box" cx="605" cy="125" r="8"/>
+  <text class="d-sub" x="565" y="160" text-anchor="middle">everyone linked to everyone</text>
+  <text class="d-sub" x="565" y="177" text-anchor="middle">tough, but lots of cables</text>
+</svg>
+<figcaption>Star is what you'll meet in real life. The Internet as a whole is a partial mesh — many routes between places, so one broken link doesn't matter.</figcaption>
+</figure>
+<h4>Topologies in one line each</h4>
+<ul>
+<li><b>Bus</b> — everyone on one cable. Cheap, but one fault takes down all. Mostly history now.</li>
+<li><b>Star</b> — every device plugs into a central switch. One cable breaking only affects one device. If the switch dies, everything stops.</li>
+<li><b>Ring</b> — each device passes data to the next in a loop.</li>
+<li><b>Mesh</b> — many links between devices. <i>Full mesh</i> means every pair is linked: with <i>n</i> devices that's <code>n(n−1)/2</code> cables. Reliable but costly.</li>
+<li><b>Tree / hybrid</b> — stars joined together. Most office networks look like this.</li>
+</ul>
+</section>
+
+<section id="s4">
+<h3>4. Network Devices</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Each device has one main job. The interview question is almost always "what's the difference between a hub, a switch and a router?" — and the answer is <b>how smart they are about where data goes</b>.</p>
+<p class="analogy">A hub shouts every message to the whole room. A switch walks over and hands it to the right person. A router posts it to another building.</p></div>
+<div class="table-wrap"><table>
+<tr><th>Device</th><th>What it does</th><th>Works with</th><th>Layer</th></tr>
+<tr><td><b>Hub</b></td><td>Copies every incoming signal out of every port. No intelligence. Mostly obsolete.</td><td>Raw signals</td><td>1 — Physical</td></tr>
+<tr><td><b>Switch</b></td><td>Connects devices <i>inside</i> one network. Learns which device is on which port and sends data only there.</td><td>MAC addresses</td><td>2 — Data Link</td></tr>
+<tr><td><b>Router</b></td><td>Connects <i>different</i> networks together and picks the path between them.</td><td>IP addresses</td><td>3 — Network</td></tr>
+<tr><td><b>Modem</b></td><td>"Modulator–demodulator". Turns your digital data into a signal that can travel over the phone line, cable or fibre — and back.</td><td>Signals on the line</td><td>1 — Physical</td></tr>
+<tr><td><b>Access point</b></td><td>Lets Wi-Fi devices join a wired network. A wireless version of a switch port.</td><td>MAC addresses</td><td>2 — Data Link</td></tr>
+<tr><td><b>Gateway</b></td><td>The "exit door" of a network. Also used for anything that translates between two different kinds of network or protocol.</td><td>Varies</td><td>Often 3 and up</td></tr>
+<tr><td><b>Firewall</b></td><td>Decides which traffic is allowed in and out, using rules.</td><td>IPs, ports, sometimes content</td><td>3–7</td></tr>
+</table></div>
+<h4>Your "Wi-Fi router" at home is really five devices in one box</h4>
+<pre><code>Modem         → talks to your ISP over the fibre/cable line
+Router        → joins your home network to the Internet
+Switch        → the LAN ports on the back
+Access point  → the Wi-Fi
+DHCP + NAT + firewall → hands out addresses, shares one public IP, blocks junk</code></pre>
+<h4>Default gateway</h4>
+<p>Your computer's <b>default gateway</b> is the router it sends anything to when the destination isn't on the local network. At home, it's usually <code>192.168.1.1</code> or <code>192.168.0.1</code>. If the gateway is wrong, you can reach your printer but not Google.</p>
+<div class="note"><b>Switch vs router in one sentence:</b> a switch moves data <i>within</i> a network using MAC addresses; a router moves data <i>between</i> networks using IP addresses.</div>
+</section>
+
+<section id="s5">
+<h3>5. Latency, Bandwidth &amp; Throughput</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Latency</b> is how long one piece of data takes to get there — a delay, measured in milliseconds.</p>
+<p><b>Bandwidth</b> is how much data <i>could</i> flow per second — the maximum, measured in Mbps or Gbps.</p>
+<p><b>Throughput</b> is how much data <i>actually</i> flows per second right now. It's always lower than bandwidth.</p>
+<p class="analogy">A motorway: latency is how long the drive takes; bandwidth is how many lanes it has; throughput is how many cars actually got through this hour, traffic jams included.</p></div>
+<h4>Where latency comes from</h4>
+<ul>
+<li><b>Propagation delay</b> — the time for the signal to physically travel. Light in fibre goes about 200,000 km per second, so London to Mumbai (~7,200 km) takes at least ~36 ms one way. You can't fix physics; you can only move the server closer.</li>
+<li><b>Transmission delay</b> — the time to push all the bits onto the wire. Bigger files, slower links → longer.</li>
+<li><b>Queuing delay</b> — waiting in a router's queue behind other packets. This is what spikes when the network is busy.</li>
+<li><b>Processing delay</b> — the time a router takes to read the header and decide where to send it. Tiny.</li>
+</ul>
+<h4>RTT — the number that matters most for web apps</h4>
+<p><b>RTT</b> (round-trip time) is the time to send something and get a reply. Opening an HTTPS connection needs several round trips before any data arrives (TCP handshake, then TLS). With an RTT of 100 ms, that's a few hundred milliseconds of nothing.</p>
+<div class="note"><b>Why more bandwidth often doesn't help:</b> most web pages are many small files. Small files are limited by <i>latency</i> (round trips), not bandwidth. Upgrading from 100 Mbps to 1 Gbps barely changes page load; moving the server closer (a CDN) changes it a lot.</div>
+<h4>Other words you'll hear</h4>
+<ul>
+<li><b>Jitter</b> — how much latency jumps around. Bad for video calls and games.</li>
+<li><b>Packet loss</b> — the percentage of packets that never arrive. Even 1–2% makes TCP slow down sharply.</li>
+<li><b>Mbps vs MBps</b> — megabits vs megabytes. 8 bits = 1 byte, so a 100 Mbps line downloads at about 12.5 MB per second at best.</li>
+</ul>
+</section>
+
+<!-- ================= LAYERS ================= -->
+<div class="part">Part 2 — The Layer Models</div>
+
+<section id="s6">
+<h3>6. Why Layers? The OSI Model</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Sending data across the world is a huge problem. So it's split into <b>layers</b>, each solving one small part and trusting the layer below to handle the rest.</p>
+<p>The <b>OSI model</b> splits networking into 7 layers. It's a <i>teaching model</i> — a way to talk about where something happens. Real networks follow the simpler TCP/IP model (next section).</p>
+<p class="analogy">Sending a gift: you write the card (application), wrap it (presentation), the courier picks it up (transport), sorting centres route it between cities (network), a van drives it down your street (data link), and the road itself is the physical layer. The person writing the card never thinks about roads.</p></div>
+<figure class="diagram">
+<svg viewBox="0 0 640 384" role="img" aria-label="The seven OSI layers on the left, from Application at the top to Physical at the bottom, mapped to the four TCP/IP layers on the right: Application covers OSI 7 to 5, Transport matches 4, Internet matches 3, and Link covers 2 and 1.">
+  <text class="d-sub" x="155" y="24" text-anchor="middle">OSI — 7 layers (the teaching model)</text>
+  <text class="d-accent-text" x="485" y="24" text-anchor="middle">TCP/IP — 4 layers (what really runs)</text>
+
+  <rect class="d-box" x="40" y="40" width="230" height="40" rx="5"/>
+  <text class="d-label" x="54" y="65">7  Application</text><text class="d-sub" x="260" y="65" text-anchor="end">HTTP, DNS</text>
+  <rect class="d-box" x="40" y="84" width="230" height="40" rx="5"/>
+  <text class="d-label" x="54" y="109">6  Presentation</text><text class="d-sub" x="260" y="109" text-anchor="end">TLS, encoding</text>
+  <rect class="d-box" x="40" y="128" width="230" height="40" rx="5"/>
+  <text class="d-label" x="54" y="153">5  Session</text><text class="d-sub" x="260" y="153" text-anchor="end">open / keep / close</text>
+  <rect class="d-box" x="40" y="172" width="230" height="40" rx="5"/>
+  <text class="d-label" x="54" y="197">4  Transport</text><text class="d-sub" x="260" y="197" text-anchor="end">TCP, UDP</text>
+  <rect class="d-box" x="40" y="216" width="230" height="40" rx="5"/>
+  <text class="d-label" x="54" y="241">3  Network</text><text class="d-sub" x="260" y="241" text-anchor="end">IP, ICMP</text>
+  <rect class="d-box" x="40" y="260" width="230" height="40" rx="5"/>
+  <text class="d-label" x="54" y="285">2  Data Link</text><text class="d-sub" x="260" y="285" text-anchor="end">Ethernet, Wi-Fi</text>
+  <rect class="d-box" x="40" y="304" width="230" height="40" rx="5"/>
+  <text class="d-label" x="54" y="329">1  Physical</text><text class="d-sub" x="260" y="329" text-anchor="end">cables, radio</text>
+
+  <rect class="d-fill-accent" x="370" y="40" width="230" height="128" rx="5"/>
+  <rect class="d-box-accent" x="370" y="40" width="230" height="128" rx="5"/>
+  <text class="d-label" x="485" y="100" text-anchor="middle">Application</text>
+  <text class="d-sub" x="485" y="120" text-anchor="middle">HTTP · DNS · TLS · SMTP · SSH</text>
+  <rect class="d-box-accent" x="370" y="172" width="230" height="40" rx="5"/>
+  <text class="d-label" x="485" y="191" text-anchor="middle">Transport</text>
+  <text class="d-sub" x="485" y="206" text-anchor="middle">TCP · UDP · QUIC</text>
+  <rect class="d-box-accent" x="370" y="216" width="230" height="40" rx="5"/>
+  <text class="d-label" x="485" y="235" text-anchor="middle">Internet</text>
+  <text class="d-sub" x="485" y="250" text-anchor="middle">IP · ICMP</text>
+  <rect class="d-box-accent" x="370" y="260" width="230" height="84" rx="5"/>
+  <text class="d-label" x="485" y="296" text-anchor="middle">Link</text>
+  <text class="d-sub" x="485" y="316" text-anchor="middle">Ethernet · Wi-Fi · ARP</text>
+
+  <path class="d-dash" d="M274 170 H366 M274 214 H366 M274 258 H366"/>
+  <text class="d-sub" x="320" y="370" text-anchor="middle">Mnemonic, top down: All People Seem To Need Data Processing</text>
+</svg>
+<figcaption>The top three OSI layers are squashed into one "Application" layer in TCP/IP, and the bottom two into "Link". Transport and Network line up exactly.</figcaption>
+</figure>
+<h4>Each layer's job, in one line</h4>
+<ol>
+<li><b>Physical</b> — send raw 1s and 0s as electrical signals, light or radio waves.</li>
+<li><b>Data Link</b> — get data to the <i>next device</i> on the same local network, using MAC addresses. Spots damaged data.</li>
+<li><b>Network</b> — get data <i>across many networks</i> to the right computer, using IP addresses. Picks the route.</li>
+<li><b>Transport</b> — get data to the right <i>program</i> on that computer, using port numbers. TCP also makes it reliable.</li>
+<li><b>Session</b> — open, keep and close a conversation between two programs.</li>
+<li><b>Presentation</b> — make the data readable: character encoding, compression, encryption.</li>
+<li><b>Application</b> — the protocol your app actually speaks: HTTP, DNS, SMTP.</li>
+</ol>
+<p>Memorise bottom-up with <b>"Please Do Not Throw Sausage Pizza Away"</b> (Physical, Data Link, Network, Transport, Session, Presentation, Application).</p>
+<div class="note"><b>Don't confuse "Application layer" with "your application".</b> Layer 7 is the <i>protocol</i> (HTTP), not your React app. Your browser <i>uses</i> layer 7.</div>
+</section>
+
+<section id="s7">
+<h3>7. OSI vs TCP/IP — the Full Table</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>TCP/IP</b> is the model the Internet actually runs on. It has 4 layers (some books say 5, splitting Link into Data Link and Physical).</p>
+<p>In interviews, people still say "layer 4" or "layer 7" using <i>OSI</i> numbers. So learn OSI for vocabulary, TCP/IP for how things really work.</p></div>
+<div class="table-wrap"><table>
+<tr><th>OSI layer</th><th>TCP/IP layer</th><th>Data unit (PDU)</th><th>Address used</th><th>Protocols</th><th>Devices</th></tr>
+<tr><td>7 Application</td><td rowspan="3">Application</td><td rowspan="3">Data / message</td><td rowspan="3">URL, domain name</td><td>HTTP, DNS, SMTP, FTP, SSH, DHCP</td><td rowspan="3">L7 load balancer, proxy, WAF</td></tr>
+<tr><td>6 Presentation</td><td>TLS*, UTF-8, JPEG, gzip</td></tr>
+<tr><td>5 Session</td><td>Session setup, RPC</td></tr>
+<tr><td>4 Transport</td><td>Transport</td><td>Segment (TCP) / Datagram (UDP)</td><td>Port</td><td>TCP, UDP, QUIC</td><td>L4 load balancer, firewall</td></tr>
+<tr><td>3 Network</td><td>Internet</td><td>Packet</td><td>IP address</td><td>IP, ICMP, OSPF, BGP</td><td>Router, L3 switch</td></tr>
+<tr><td>2 Data Link</td><td rowspan="2">Link</td><td>Frame</td><td>MAC address</td><td>Ethernet, Wi-Fi (802.11), ARP*</td><td>Switch, bridge, access point, network card</td></tr>
+<tr><td>1 Physical</td><td>Bits</td><td>—</td><td>Cables, fibre, radio</td><td>Hub, repeater, modem, cables</td></tr>
+</table></div>
+<p>* Some protocols don't fit neatly. TLS sits between TCP and HTTP, so people place it at 5, 6 or "4.5". ARP links IP (layer 3) to MAC (layer 2), so it's placed at either. If an interviewer pushes, say exactly that — it shows you understand the models are simplifications.</p>
+<h4>PDU names — a common quick-fire question</h4>
+<pre><code>Application  → data / message
+Transport    → segment (TCP)  or  datagram (UDP)
+Network      → packet
+Data Link    → frame
+Physical     → bits</code></pre>
+<div class="note"><b>Why the layers matter in practice:</b> when someone says "it's an L4 load balancer", you instantly know it sees IPs and ports but <i>not</i> URLs or cookies. "L7" means it can read the HTTP request. The layer number tells you what a device can see.</div>
+</section>
+
+<section id="s8">
+<h3>8. Encapsulation</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>As your data goes <i>down</i> the layers, each layer wraps it in its own envelope — a <b>header</b> with the information that layer needs. This is <b>encapsulation</b>.</p>
+<p>At the other end, the data goes <i>up</i> the layers and each one removes its own envelope. That's <b>decapsulation</b>.</p>
+<p class="analogy">A letter in an envelope, inside a courier bag, inside a delivery van. Each handler only opens the wrapping meant for them.</p></div>
+<figure class="diagram">
+<svg viewBox="0 0 640 300" role="img" aria-label="Encapsulation: application data gets a TCP header to become a segment, then an IP header to become a packet, then an Ethernet header and FCS trailer to become a frame, which is finally sent as bits.">
+  <text class="d-label" x="20" y="57">Application</text>
+  <text class="d-sub" x="20" y="72">data</text>
+  <rect class="d-box" x="370" y="40" width="150" height="32" rx="4"/>
+  <text class="d-mono" x="445" y="61" text-anchor="middle">DATA</text>
+
+  <text class="d-label" x="20" y="107">Transport</text>
+  <text class="d-sub" x="20" y="122">segment</text>
+  <rect class="d-fill-accent" x="300" y="90" width="66" height="32" rx="4"/>
+  <rect class="d-box-accent" x="300" y="90" width="66" height="32" rx="4"/>
+  <text class="d-mono" x="333" y="111" text-anchor="middle">TCP hdr</text>
+  <rect class="d-box" x="370" y="90" width="150" height="32" rx="4"/>
+  <text class="d-mono" x="445" y="111" text-anchor="middle">DATA</text>
+
+  <text class="d-label" x="20" y="157">Network</text>
+  <text class="d-sub" x="20" y="172">packet</text>
+  <rect class="d-fill-accent" x="230" y="140" width="66" height="32" rx="4"/>
+  <rect class="d-box-accent" x="230" y="140" width="66" height="32" rx="4"/>
+  <text class="d-mono" x="263" y="161" text-anchor="middle">IP hdr</text>
+  <rect class="d-box" x="300" y="140" width="66" height="32" rx="4"/>
+  <text class="d-mono" x="333" y="161" text-anchor="middle">TCP hdr</text>
+  <rect class="d-box" x="370" y="140" width="150" height="32" rx="4"/>
+  <text class="d-mono" x="445" y="161" text-anchor="middle">DATA</text>
+
+  <text class="d-label" x="20" y="207">Data Link</text>
+  <text class="d-sub" x="20" y="222">frame</text>
+  <rect class="d-fill-accent" x="160" y="190" width="66" height="32" rx="4"/>
+  <rect class="d-box-accent" x="160" y="190" width="66" height="32" rx="4"/>
+  <text class="d-mono" x="193" y="211" text-anchor="middle">Eth hdr</text>
+  <rect class="d-box" x="230" y="190" width="66" height="32" rx="4"/>
+  <text class="d-mono" x="263" y="211" text-anchor="middle">IP hdr</text>
+  <rect class="d-box" x="300" y="190" width="66" height="32" rx="4"/>
+  <text class="d-mono" x="333" y="211" text-anchor="middle">TCP hdr</text>
+  <rect class="d-box" x="370" y="190" width="150" height="32" rx="4"/>
+  <text class="d-mono" x="445" y="211" text-anchor="middle">DATA</text>
+  <rect class="d-fill-accent" x="524" y="190" width="56" height="32" rx="4"/>
+  <rect class="d-box-accent" x="524" y="190" width="56" height="32" rx="4"/>
+  <text class="d-mono" x="552" y="211" text-anchor="middle">FCS</text>
+
+  <text class="d-label" x="20" y="257">Physical</text>
+  <text class="d-sub" x="20" y="272">bits</text>
+  <text class="d-mono" x="160" y="261">01001000 01010100 01010100 01010000 …</text>
+
+  <text class="d-sub" x="320" y="296" text-anchor="middle">Going down, each layer adds its header. At the other end, each layer strips its own.</text>
+</svg>
+<figcaption>The payload never changes. Only the envelopes around it do. FCS is a trailer at the end of the frame used to detect damage.</figcaption>
+</figure>
+<h4>What each header carries</h4>
+<div class="table-wrap"><table>
+<tr><th>Header</th><th>Key fields</th><th>Question it answers</th></tr>
+<tr><td>TCP</td><td>Source port, destination port, sequence number, ack number, flags</td><td>Which program? Which piece is this?</td></tr>
+<tr><td>IP</td><td>Source IP, destination IP, TTL, protocol</td><td>Which computer, anywhere in the world?</td></tr>
+<tr><td>Ethernet</td><td>Source MAC, destination MAC, type</td><td>Which device on <i>this</i> local network?</td></tr>
+</table></div>
+<div class="note"><b>A key insight:</b> as a packet crosses the Internet, the <b>IP addresses stay the same</b> end to end, but the <b>MAC addresses change at every hop</b>. Each router strips the old frame and wraps the packet in a new one for the next link.</div>
+</section>
+
+<!-- ================= LINK & NETWORK ================= -->
+<div class="part">Part 3 — Link &amp; Network Layers</div>
+
+<section id="s9">
+<h3>9. MAC Addresses, Ethernet &amp; ARP</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Every network card has a <b>MAC address</b> — a hardware ID set at the factory, like <code>3c:22:fb:9a:10:4e</code>. It's used to deliver data to the right device on the <i>same local network</i>.</p>
+<p><b>Ethernet</b> is the set of rules for sending data over a local wired network (Wi-Fi follows very similar rules). <b>ARP</b> is how a device finds out which MAC address belongs to an IP address.</p>
+<p class="analogy">Your IP address is like your postal address — it can change when you move. Your MAC address is like your name — it stays with you. The postman uses the address to reach your street, then the name to find you in the house.</p></div>
+<h4>MAC vs IP</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>MAC address</th><th>IP address</th></tr>
+<tr><td>Layer</td><td>2 — Data Link</td><td>3 — Network</td></tr>
+<tr><td>Size</td><td>48 bits, written as 6 hex pairs</td><td>32 bits (IPv4) or 128 bits (IPv6)</td></tr>
+<tr><td>Set by</td><td>Manufacturer (burned into the card)</td><td>The network (usually DHCP)</td></tr>
+<tr><td>Scope</td><td>Only matters on the local network</td><td>Works across the whole Internet</td></tr>
+<tr><td>Changes?</td><td>Rarely (phones now randomise it for privacy)</td><td>Yes, when you change networks</td></tr>
+</table></div>
+<p>The first half of a MAC address (24 bits) identifies the maker — the <b>OUI</b>. <code>ff:ff:ff:ff:ff:ff</code> is the <b>broadcast</b> address: "everyone on this network".</p>
+<h4>An Ethernet frame</h4>
+<pre><code>| Preamble | Dest MAC | Source MAC | Type  | Payload (the IP packet) | FCS     |
+|  8 bytes | 6 bytes  | 6 bytes    | 2 B   | 46 – 1500 bytes         | 4 bytes |</code></pre>
+<ul>
+<li><b>Type</b> says what's inside — for example IPv4 or IPv6.</li>
+<li>The payload can be at most <b>1500 bytes</b>. That limit is the <b>MTU</b> (Maximum Transmission Unit). Bigger IP packets must be split up.</li>
+<li><b>FCS</b> (Frame Check Sequence) holds a <b>CRC</b> — a checksum.</li>
+</ul>
+<h4>Error detection with CRC</h4>
+<p>The sender runs the frame through a maths formula and attaches the result (the CRC). The receiver runs the same formula. If the answers don't match, a bit got flipped on the way, and the frame is <b>thrown away</b>. Ethernet <i>detects</i> errors; it doesn't fix them. Re-sending is TCP's job, higher up.</p>
+<p>Simpler checks you may be asked about: a <b>parity bit</b> (one extra bit making the count of 1s even or odd — catches single-bit errors only) and a <b>checksum</b> (add the data up; IP, TCP and UDP headers each use one).</p>
+<h4>How a switch learns</h4>
+<ol>
+<li>A frame arrives on port 3 from MAC <code>AA</code>. The switch writes down "<code>AA</code> is on port 3" in its <b>MAC table</b>.</li>
+<li>It looks up the destination MAC. If it knows the port, it sends the frame out of that port only.</li>
+<li>If it doesn't know yet, it <b>floods</b> the frame out of every port. When the reply comes back, it learns that MAC too.</li>
+</ol>
+<h4>ARP — finding the MAC for an IP</h4>
+<pre><code>Your laptop wants to send to 192.168.1.1 (the router) but needs its MAC.
+
+1. Broadcast to everyone:  "Who has 192.168.1.1? Tell 192.168.1.10"
+2. The router replies:     "192.168.1.1 is at 3c:22:fb:9a:10:4e"
+3. Laptop saves it in its ARP cache for a few minutes.
+
+$ arp -a        # see your ARP cache</code></pre>
+<p>Your computer only ever ARPs for devices on its <b>own</b> network. To reach Google, it ARPs for the <i>router's</i> MAC and hands the packet to the router.</p>
+<h4>VLANs, briefly</h4>
+<p>A <b>VLAN</b> (Virtual LAN) splits one physical switch into several separate networks. Guests, staff and printers can share the same hardware but can't see each other's traffic. Traffic between VLANs must go through a router or firewall.</p>
+<div class="note"><b>Collision vs broadcast domain</b> (classic question): a <b>hub</b> puts everyone in one collision domain — two devices talking at once garble each other. A <b>switch</b> gives each port its own collision domain, but everyone still hears broadcasts. A <b>router</b> (or a VLAN) breaks up the broadcast domain.</div>
+</section>
+
+<section id="s10">
+<h3>10. IPv4 Addresses &amp; Classes</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>An <b>IPv4 address</b> is a 32-bit number, written as four numbers from 0 to 255 separated by dots: <code>192.168.1.10</code>. Each of the four parts is 8 bits, called an <b>octet</b>.</p>
+<p>Every address has two parts: the <b>network part</b> (which street) and the <b>host part</b> (which house on that street).</p>
+<p class="analogy">A phone number: the area code finds the city, the rest finds the person. All phones in one city share the area code.</p></div>
+<pre><code>192      .168      .1        .10
+11000000 .10101000 .00000001 .00001010     ← the same thing in binary
+
+32 bits → 2^32 ≈ 4.3 billion possible addresses (not enough — hence NAT and IPv6)</code></pre>
+<h4>Classes — the old system (still asked)</h4>
+<div class="table-wrap"><table>
+<tr><th>Class</th><th>First octet</th><th>Default mask</th><th>Network / host split</th><th>Use</th></tr>
+<tr><td>A</td><td>1 – 126</td><td>255.0.0.0 (/8)</td><td>N.H.H.H — few huge networks</td><td>Very large organisations</td></tr>
+<tr><td>B</td><td>128 – 191</td><td>255.255.0.0 (/16)</td><td>N.N.H.H</td><td>Medium organisations</td></tr>
+<tr><td>C</td><td>192 – 223</td><td>255.255.255.0 (/24)</td><td>N.N.N.H — many small networks</td><td>Small networks</td></tr>
+<tr><td>D</td><td>224 – 239</td><td>—</td><td>—</td><td>Multicast (one-to-many)</td></tr>
+<tr><td>E</td><td>240 – 255</td><td>—</td><td>—</td><td>Reserved / experimental</td></tr>
+</table></div>
+<p>127 is missing from class A on purpose: <code>127.0.0.0/8</code> is <b>loopback</b>. <code>127.0.0.1</code> (<code>localhost</code>) always means "this same computer" — that's how your dev server on <code>localhost:3000</code> works without any network at all.</p>
+<p>Classes wasted addresses badly — a company needing 300 addresses had to take a whole class B (65,536). Since 1993 the Internet uses <b>CIDR</b> instead (next section). Learn classes for interviews, but say they're obsolete.</p>
+<h4>Special addresses to recognise</h4>
+<div class="table-wrap"><table>
+<tr><th>Address</th><th>Meaning</th></tr>
+<tr><td><code>127.0.0.1</code></td><td>Loopback — this machine</td></tr>
+<tr><td><code>0.0.0.0</code></td><td>"Any address" — a server listening on it accepts connections on every network card</td></tr>
+<tr><td><code>255.255.255.255</code></td><td>Broadcast to everyone on the local network</td></tr>
+<tr><td><code>169.254.x.x</code></td><td>Link-local — your computer gave itself this because DHCP failed. A clue that something's wrong.</td></tr>
+<tr><td><code>10.x</code>, <code>172.16–31.x</code>, <code>192.168.x</code></td><td>Private ranges (section 12)</td></tr>
+</table></div>
+<div class="note"><b>A real dev bug:</b> a server inside Docker listening on <code>127.0.0.1</code> can't be reached from outside the container, because loopback means "only me". Listen on <code>0.0.0.0</code> instead.</div>
+</section>
+
+<section id="s11">
+<h3>11. CIDR &amp; Subnetting</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>CIDR</b> notation writes an address with a slash and a number: <code>192.168.10.0/24</code>. The number says <b>how many bits from the left are the network part</b>. The rest are for hosts.</p>
+<p><b>Subnetting</b> means cutting one network into smaller ones by borrowing host bits for the network part.</p>
+<p class="analogy">A big plot of land (/24) divided into four equal smaller plots (/26). Same land, more fences.</p></div>
+<h4>The only formula you need</h4>
+<pre><code>host bits         = 32 − prefix
+total addresses   = 2^(host bits)
+usable hosts      = 2^(host bits) − 2     (first = network address, last = broadcast)</code></pre>
+<div class="table-wrap"><table>
+<tr><th>Prefix</th><th>Subnet mask</th><th>Total addresses</th><th>Usable hosts</th></tr>
+<tr><td>/8</td><td>255.0.0.0</td><td>16,777,216</td><td>16,777,214</td></tr>
+<tr><td>/16</td><td>255.255.0.0</td><td>65,536</td><td>65,534</td></tr>
+<tr><td>/24</td><td>255.255.255.0</td><td>256</td><td>254</td></tr>
+<tr><td>/25</td><td>255.255.255.128</td><td>128</td><td>126</td></tr>
+<tr><td>/26</td><td>255.255.255.192</td><td>64</td><td>62</td></tr>
+<tr><td>/27</td><td>255.255.255.224</td><td>32</td><td>30</td></tr>
+<tr><td>/28</td><td>255.255.255.240</td><td>16</td><td>14</td></tr>
+<tr><td>/30</td><td>255.255.255.252</td><td>4</td><td>2 (point-to-point link)</td></tr>
+<tr><td>/32</td><td>255.255.255.255</td><td>1</td><td>A single host</td></tr>
+</table></div>
+<p>A <b>subnet mask</b> is the same idea as the prefix, written as an address: 1s for network bits, 0s for host bits. <code>/26</code> = 26 ones = <code>11111111.11111111.11111111.11000000</code> = <code>255.255.255.192</code>.</p>
+<h4>Worked example — split 192.168.10.0/24 into 4 subnets</h4>
+<figure class="diagram">
+<svg viewBox="0 0 640 250" role="img" aria-label="The network 192.168.10.0/24 with 256 addresses is split into four /26 subnets of 64 addresses each, starting at .0, .64, .128 and .192. The address 192.168.10.150 falls in the third subnet, .128 to .191.">
+  <rect class="d-box" x="40" y="14" width="560" height="38" rx="6"/>
+  <text class="d-label" x="320" y="38" text-anchor="middle">192.168.10.0/24 — 256 addresses</text>
+  <path class="d-line" d="M107 52 V76 M249 52 V76 M391 52 V76 M533 52 V76"/>
+  <text class="d-sub" x="320" y="70" text-anchor="middle">borrow 2 host bits → 2² = 4 subnets of 64</text>
+
+  <rect class="d-box" x="40" y="80" width="134" height="104" rx="6"/>
+  <text class="d-label" x="107" y="102" text-anchor="middle">192.168.10.0/26</text>
+  <text class="d-sub" x="107" y="124" text-anchor="middle">range .0 – .63</text>
+  <text class="d-sub" x="107" y="144" text-anchor="middle">hosts .1 – .62</text>
+  <text class="d-sub" x="107" y="164" text-anchor="middle">broadcast .63</text>
+
+  <rect class="d-box" x="182" y="80" width="134" height="104" rx="6"/>
+  <text class="d-label" x="249" y="102" text-anchor="middle">192.168.10.64/26</text>
+  <text class="d-sub" x="249" y="124" text-anchor="middle">range .64 – .127</text>
+  <text class="d-sub" x="249" y="144" text-anchor="middle">hosts .65 – .126</text>
+  <text class="d-sub" x="249" y="164" text-anchor="middle">broadcast .127</text>
+
+  <rect class="d-fill-accent" x="324" y="80" width="134" height="104" rx="6"/>
+  <rect class="d-box-accent" x="324" y="80" width="134" height="104" rx="6"/>
+  <text class="d-label" x="391" y="102" text-anchor="middle">192.168.10.128/26</text>
+  <text class="d-sub" x="391" y="124" text-anchor="middle">range .128 – .191</text>
+  <text class="d-sub" x="391" y="144" text-anchor="middle">hosts .129 – .190</text>
+  <text class="d-sub" x="391" y="164" text-anchor="middle">broadcast .191</text>
+
+  <rect class="d-box" x="466" y="80" width="134" height="104" rx="6"/>
+  <text class="d-label" x="533" y="102" text-anchor="middle">192.168.10.192/26</text>
+  <text class="d-sub" x="533" y="124" text-anchor="middle">range .192 – .255</text>
+  <text class="d-sub" x="533" y="144" text-anchor="middle">hosts .193 – .254</text>
+  <text class="d-sub" x="533" y="164" text-anchor="middle">broadcast .255</text>
+
+  <text class="d-accent-text" x="391" y="206" text-anchor="middle">↑ 192.168.10.150 lives here</text>
+  <text class="d-sub" x="320" y="232" text-anchor="middle">Block size = 256 − 192 = 64. Subnets start at multiples of 64: 0, 64, 128, 192.</text>
+</svg>
+<figcaption>Each /26 has 64 addresses but only 62 usable hosts — the first is the network's own name and the last is its broadcast address.</figcaption>
+</figure>
+<pre><code>Need 4 subnets  → borrow 2 bits (2² = 4)        → /24 + 2 = /26
+Host bits left  → 32 − 26 = 6                   → 2⁶ = 64 addresses each
+Usable hosts    → 64 − 2 = 62 per subnet
+Mask            → 255.255.255.192               (128 + 64 = 192)
+Block size      → 256 − 192 = 64</code></pre>
+<h4>Question style: "Which subnet is 192.168.10.150/26 in?"</h4>
+<ol>
+<li>Block size for /26 is 64. Multiples: 0, 64, 128, 192.</li>
+<li>150 sits between 128 and 191 → network address is <b>192.168.10.128</b>.</li>
+<li>Broadcast is the last one in the block: <b>192.168.10.191</b>.</li>
+<li>Usable hosts: <b>.129 to .190</b>.</li>
+</ol>
+<h4>Question style: "I need 50 hosts per subnet. What prefix?"</h4>
+<p>Find the smallest power of 2 where <code>2^n − 2 ≥ 50</code>. 2⁵ − 2 = 30 (too small), 2⁶ − 2 = 62 (enough). So 6 host bits → <b>/26</b>.</p>
+<h4>Two computers, same subnet?</h4>
+<p>AND each IP with the mask; if the results match, they're on the same subnet and can talk directly. If not, traffic goes via the router. With /26, <code>192.168.10.70</code> (block .64) and <code>192.168.10.130</code> (block .128) are on <i>different</i> subnets, even though they look close.</p>
+<div class="note"><b>Where you'll meet this as a developer:</b> cloud networks. Creating an AWS VPC asks for a CIDR like <code>10.0.0.0/16</code>, then subnets like <code>10.0.1.0/24</code> (public) and <code>10.0.2.0/24</code> (private). Security group rules like <code>0.0.0.0/0</code> mean "any address at all".</div>
+</section>
+
+<section id="s12">
+<h3>12. Private IPs &amp; NAT</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>There aren't enough IPv4 addresses for every device on Earth. So homes and offices use <b>private addresses</b> inside, which aren't reachable from the Internet, and share <b>one public address</b> to go out.</p>
+<p><b>NAT</b> (Network Address Translation) is the trick your router uses to make that sharing work.</p>
+<p class="analogy">An office with one phone number and a receptionist. Staff have internal extensions. When someone calls out, the outside world only sees the main number — the receptionist remembers who made which call so replies reach the right desk.</p></div>
+<h4>Private ranges (memorise these)</h4>
+<div class="table-wrap"><table>
+<tr><th>Range</th><th>CIDR</th><th>Size</th><th>Typically seen</th></tr>
+<tr><td>10.0.0.0 – 10.255.255.255</td><td>10.0.0.0/8</td><td>~16.7 million</td><td>Companies, cloud VPCs</td></tr>
+<tr><td>172.16.0.0 – 172.31.255.255</td><td>172.16.0.0/12</td><td>~1 million</td><td>Docker networks, companies</td></tr>
+<tr><td>192.168.0.0 – 192.168.255.255</td><td>192.168.0.0/16</td><td>65,536</td><td>Home routers</td></tr>
+</table></div>
+<p>Thousands of homes all use <code>192.168.1.10</code> at the same time. That's fine — routers on the Internet refuse to carry private addresses, so they never clash.</p>
+<figure class="diagram">
+<svg viewBox="0 0 640 280" role="img" aria-label="Three home devices with private 192.168.1 addresses send traffic through a NAT router, which rewrites the source to its single public address 203.0.113.5 with a unique port, and records each mapping in a NAT table so replies return to the right device.">
+  <rect class="d-box" x="20" y="20" width="150" height="44" rx="6"/>
+  <text class="d-label" x="34" y="38">Laptop</text>
+  <text class="d-mono" x="34" y="56">192.168.1.10</text>
+  <rect class="d-box" x="20" y="80" width="150" height="44" rx="6"/>
+  <text class="d-label" x="34" y="98">Phone</text>
+  <text class="d-mono" x="34" y="116">192.168.1.11</text>
+  <rect class="d-box" x="20" y="140" width="150" height="44" rx="6"/>
+  <text class="d-label" x="34" y="158">Smart TV</text>
+  <text class="d-mono" x="34" y="176">192.168.1.12</text>
+
+  <path class="d-line" d="M170 42 L244 92 M170 102 H244 M170 162 L244 112"/>
+
+  <rect class="d-fill-accent" x="250" y="60" width="160" height="84" rx="7"/>
+  <rect class="d-box-accent" x="250" y="60" width="160" height="84" rx="7"/>
+  <text class="d-label" x="330" y="82" text-anchor="middle">Home router (NAT)</text>
+  <text class="d-sub" x="330" y="104" text-anchor="middle">inside: 192.168.1.1</text>
+  <text class="d-accent-text" x="330" y="126" text-anchor="middle">outside: 203.0.113.5</text>
+
+  <path class="d-line-accent" d="M410 102 H474"/><path class="d-arrow-accent" d="M480 102 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="445" y="94" text-anchor="middle">Internet</text>
+
+  <rect class="d-box" x="480" y="80" width="140" height="44" rx="6"/>
+  <text class="d-label" x="494" y="98">Web server</text>
+  <text class="d-mono" x="494" y="116">198.51.100.7</text>
+
+  <rect class="d-box" x="20" y="200" width="600" height="68" rx="7"/>
+  <text class="d-label" x="36" y="220">NAT table — the router remembers who asked</text>
+  <text class="d-mono" x="36" y="240">192.168.1.10:51000  ⇄  203.0.113.5:40001</text>
+  <text class="d-mono" x="36" y="258">192.168.1.11:51000  ⇄  203.0.113.5:40002</text>
+  <text class="d-sub" x="390" y="249">The server only ever sees 203.0.113.5</text>
+</svg>
+<figcaption>Outgoing, NAT rewrites the private source address and port to the public one. Replies come back to that public port, and the table says which device to hand them to.</figcaption>
+</figure>
+<h4>What NAT costs you</h4>
+<ul>
+<li><b>Nobody outside can start a connection to you.</b> The router has no table entry for an unknown incoming request, so it drops it. That's accidental security — and why hosting a game server at home needs <b>port forwarding</b>.</li>
+<li><b>Peer-to-peer gets hard.</b> Video calls (WebRTC) use tricks called STUN and TURN to get two NAT-ed devices talking.</li>
+<li>It breaks the original idea that every device has its own reachable address. IPv6 restores that.</li>
+</ul>
+<div class="note"><b>Check it yourself:</b> run <code>ipconfig</code> / <code>ifconfig</code> and you'll see a private address like <code>192.168.1.10</code>. Search "what is my IP" and you'll see a completely different public one. The gap between the two is NAT.</div>
+</section>
+
+<section id="s13">
+<h3>13. IPv6</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>IPv6</b> is the newer version of IP with <b>128-bit addresses</b> instead of 32. That's about 3.4 × 10³⁸ addresses — enough for every device forever, so NAT isn't needed.</p>
+<p>Addresses are written as 8 groups of 4 hex digits separated by colons.</p></div>
+<pre><code>Full:        2001:0db8:0000:0000:0000:ff00:0042:8329
+Shortened:   2001:db8::ff00:42:8329
+
+Rule 1: drop leading zeros in each group     (0db8 → db8, 0042 → 42)
+Rule 2: replace ONE run of all-zero groups with ::   (only once per address)
+
+::1          → loopback (IPv6's 127.0.0.1)
+fe80::/10    → link-local (only valid on this network)</code></pre>
+<h4>IPv4 vs IPv6</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>IPv4</th><th>IPv6</th></tr>
+<tr><td>Address size</td><td>32 bits, ~4.3 billion</td><td>128 bits, ~3.4 × 10³⁸</td></tr>
+<tr><td>Written as</td><td><code>192.168.1.10</code></td><td><code>2001:db8::1</code></td></tr>
+<tr><td>NAT</td><td>Needed everywhere</td><td>Not needed — every device can have a public address</td></tr>
+<tr><td>Getting an address</td><td>DHCP</td><td>Can configure itself (SLAAC) or use DHCPv6</td></tr>
+<tr><td>Finding MACs</td><td>ARP</td><td>NDP (Neighbour Discovery)</td></tr>
+<tr><td>Broadcast</td><td>Yes</td><td>No — uses multicast instead</td></tr>
+<tr><td>Header</td><td>Variable, has a checksum</td><td>Fixed 40 bytes, no checksum (simpler for routers)</td></tr>
+<tr><td>DNS record</td><td>A</td><td>AAAA</td></tr>
+</table></div>
+<p>The switch-over is slow because IPv4 and IPv6 can't talk to each other directly. Most networks run both side by side — called <b>dual stack</b>.</p>
+<div class="note"><b>In a URL</b>, IPv6 addresses go in square brackets so the colons aren't confused with the port: <code>http://[::1]:3000</code>. If <code>localhost</code> works but your Node app doesn't respond, it may be listening on IPv4 only while <code>localhost</code> resolved to <code>::1</code>.</div>
+</section>
+
+<section id="s14">
+<h3>14. Routing</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>Routing</b> is choosing the path a packet takes between networks. Each router keeps a <b>routing table</b>: a list of "to reach these addresses, send to that neighbour".</p>
+<p>A router never plans the whole journey. It only decides the <b>next hop</b>.</p>
+<p class="analogy">Road signs at each junction. No sign shows the full route to Edinburgh — each just says "Edinburgh, this way".</p></div>
+<h4>A routing table</h4>
+<pre><code>Destination       Next hop        Interface
+192.168.1.0/24    (direct)        eth0          ← my own local network
+10.20.0.0/16      192.168.1.254   eth0          ← office network via another router
+0.0.0.0/0         203.0.113.1     wan0          ← default route: everything else → ISP</code></pre>
+<p>If several entries match, the router picks the <b>most specific</b> one — the longest prefix. This is called <b>longest prefix match</b>. <code>0.0.0.0/0</code> matches everything, so it's used only when nothing better does.</p>
+<h4>Static vs dynamic routing</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>Static</th><th>Dynamic</th></tr>
+<tr><td>Who writes the routes</td><td>A person, by hand</td><td>Routers share and learn routes automatically</td></tr>
+<tr><td>If a link fails</td><td>Stays broken until someone fixes it</td><td>Routers find another path</td></tr>
+<tr><td>Good for</td><td>Small, simple networks; the default route at home</td><td>Large networks, the Internet</td></tr>
+</table></div>
+<h4>The two families of dynamic routing</h4>
+<ul>
+<li><b>Distance vector</b> — each router tells its <i>neighbours</i> "here's how far I am from everything". Simple, but slow to notice failures. Called "routing by rumour". Example: <b>RIP</b>, which counts hops and gives up after 15.</li>
+<li><b>Link state</b> — each router tells <i>everyone</i> about its own direct links. Every router builds a full map and runs Dijkstra's shortest-path algorithm on it. Faster and smarter, but uses more memory. Example: <b>OSPF</b>.</li>
+</ul>
+<h4>RIP, OSPF and BGP at a glance</h4>
+<div class="table-wrap"><table>
+<tr><th>Protocol</th><th>Type</th><th>Used</th><th>Picks the path by</th></tr>
+<tr><td><b>RIP</b></td><td>Distance vector</td><td>Small networks (mostly old)</td><td>Fewest hops</td></tr>
+<tr><td><b>OSPF</b></td><td>Link state</td><td>Inside one organisation</td><td>Lowest cost (based on link speed)</td></tr>
+<tr><td><b>BGP</b></td><td>Path vector</td><td><i>Between</i> organisations — the whole Internet</td><td>Policies, business deals, path length</td></tr>
+</table></div>
+<p>The Internet is made of tens of thousands of <b>Autonomous Systems</b> (ASes) — each is one organisation's network (an ISP, Google, Cloudflare). <b>BGP</b> is how ASes tell each other "I can reach these addresses". It's the glue of the Internet. When a company publishes a wrong BGP route, whole services disappear — that's what took Facebook offline for six hours in 2021.</p>
+<div class="note"><b>Interior vs exterior:</b> RIP and OSPF are <i>interior</i> gateway protocols (inside one network). BGP is the <i>exterior</i> one (between networks). Interviewers like this distinction.</div>
+</section>
+
+<section id="s15">
+<h3>15. ICMP, TTL, Ping &amp; Traceroute</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>ICMP</b> (Internet Control Message Protocol) is the network's messaging system for errors and checks — "that host is unreachable", "your packet expired". It doesn't carry your app's data.</p>
+<p><b>TTL</b> (Time To Live) is a counter in every IP packet. Each router lowers it by 1. When it hits 0, the packet is thrown away. This stops lost packets from looping forever.</p></div>
+<h4>Ping</h4>
+<pre><code>$ ping google.com
+64 bytes from 142.250.183.14: icmp_seq=1 ttl=117 time=12.4 ms
+64 bytes from 142.250.183.14: icmp_seq=2 ttl=117 time=11.9 ms</code></pre>
+<p><code>ping</code> sends an ICMP <b>Echo Request</b>; the target replies with an <b>Echo Reply</b>. It tells you: is the host reachable, and what's the round-trip time? A ping failing doesn't always mean the host is down — many servers and firewalls simply block ICMP.</p>
+<h4>Traceroute — the clever use of TTL</h4>
+<pre><code>Send a packet with TTL=1 → the 1st router drops it, replies "Time Exceeded"  → now you know hop 1
+Send a packet with TTL=2 → the 2nd router drops it, replies                  → hop 2
+…keep going until the destination itself replies.
+
+$ traceroute google.com      (Windows: tracert google.com)
+ 1  192.168.1.1     1.2 ms     ← your home router
+ 2  10.45.0.1       8.7 ms     ← your ISP
+ 3  * * *                      ← this router doesn't answer; not necessarily a problem
+ 4  142.250.183.14  12.1 ms    ← arrived</code></pre>
+<p>Traceroute shows <b>where</b> on the path things slow down or stop. A big jump in time between two hops points to the slow link.</p>
+<h4>Common ICMP messages</h4>
+<ul>
+<li><b>Echo Request / Reply</b> — ping.</li>
+<li><b>Destination Unreachable</b> — no route, or the port is closed.</li>
+<li><b>Time Exceeded</b> — TTL hit zero (what traceroute relies on).</li>
+</ul>
+<div class="note"><b>A neat trick:</b> starting TTL is usually 64 (Linux, macOS) or 128 (Windows). A reply with <code>ttl=117</code> probably started at 128 and crossed 11 routers. In IPv6 the same field is called <b>Hop Limit</b> — a more honest name, since it counts hops, not time.</div>
+</section>
+
+<!-- ================= TRANSPORT ================= -->
+<div class="part">Part 4 — Transport Layer</div>
+
+<section id="s16">
+<h3>16. Ports &amp; Sockets</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>An IP address gets data to the right <b>computer</b>. A <b>port</b> gets it to the right <b>program</b> on that computer. Ports are numbers from 0 to 65535.</p>
+<p>A <b>socket</b> is one end of a conversation: an IP address plus a port, like <code>142.250.183.14:443</code>. Programs read and write to sockets the way they read and write files.</p>
+<p class="analogy">The IP address is a block of flats; the port is the flat number. The building is right, but without the flat number the letter can't be delivered.</p></div>
+<h4>Port ranges</h4>
+<div class="table-wrap"><table>
+<tr><th>Range</th><th>Name</th><th>Used for</th></tr>
+<tr><td>0 – 1023</td><td>Well-known</td><td>Standard services (HTTP, SSH). Need admin rights to listen on.</td></tr>
+<tr><td>1024 – 49151</td><td>Registered</td><td>Apps like databases (3306, 5432) and dev servers (3000, 8080)</td></tr>
+<tr><td>49152 – 65535</td><td>Ephemeral</td><td>Picked at random by your OS for the <i>client</i> side of each connection</td></tr>
+</table></div>
+<h4>Ports worth knowing by heart</h4>
+<div class="table-wrap"><table>
+<tr><th>Port</th><th>Service</th><th>Port</th><th>Service</th></tr>
+<tr><td>20, 21</td><td>FTP (data, control)</td><td>143 / 993</td><td>IMAP / IMAP over TLS</td></tr>
+<tr><td>22</td><td>SSH, SFTP</td><td>443</td><td>HTTPS (and HTTP/3 over UDP)</td></tr>
+<tr><td>23</td><td>Telnet (insecure)</td><td>587</td><td>SMTP for sending mail from an app</td></tr>
+<tr><td>25</td><td>SMTP (server to server)</td><td>3306</td><td>MySQL</td></tr>
+<tr><td>53</td><td>DNS</td><td>5432</td><td>PostgreSQL</td></tr>
+<tr><td>67, 68</td><td>DHCP (server, client)</td><td>6379</td><td>Redis</td></tr>
+<tr><td>80</td><td>HTTP</td><td>27017</td><td>MongoDB</td></tr>
+<tr><td>110 / 995</td><td>POP3 / POP3 over TLS</td><td>3000, 5173, 8080</td><td>Common dev servers</td></tr>
+</table></div>
+<h4>How one server port handles thousands of users</h4>
+<p>Every connection is identified by five things together — the <b>5-tuple</b>:</p>
+<pre><code>(protocol, source IP, source port, destination IP, destination port)
+
+TCP, 49.36.10.5:52344   → 104.18.2.1:443
+TCP, 49.36.10.5:52345   → 104.18.2.1:443     ← same user, second tab: different source port
+TCP, 117.200.8.9:60111  → 104.18.2.1:443     ← different user</code></pre>
+<p>All three hit port 443, but each 5-tuple is unique, so the server keeps them apart. A port is not "used up" by one connection.</p>
+<h4>Sockets in code</h4>
+<pre><code>// Server: create → bind to a port → listen → accept connections
+const net = require("net");
+net.createServer(socket =&gt; {
+  socket.on("data", d =&gt; socket.write("echo: " + d));
+}).listen(4000, "0.0.0.0");
+
+// Client: create → connect to IP:port → send/receive
+const client = net.connect(4000, "127.0.0.1", () =&gt; client.write("hi"));</code></pre>
+<p>Express, <code>fetch</code>, database drivers — they all sit on top of exactly this. <code>app.listen(3000)</code> is "open a socket on port 3000 and wait".</p>
+<div class="note"><b>"EADDRINUSE: address already in use :3000"</b> means another process already has a socket listening on that port — usually your old dev server. Find it with <code>lsof -i :3000</code> (macOS/Linux) or <code>netstat -ano | findstr :3000</code> (Windows).</div>
+</section>
+
+<section id="s17">
+<h3>17. TCP vs UDP</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>TCP</b> is careful: it sets up a connection, numbers every byte, re-sends anything lost, and delivers everything <b>in order</b>. Slower, but nothing goes missing.</p>
+<p><b>UDP</b> just fires packets off. No connection, no re-sending, no ordering. Faster and lighter, but some data may be lost.</p>
+<p class="analogy">TCP is a recorded-delivery parcel — signed for, tracked, re-sent if lost. UDP is shouting across a room — quick, but if they didn't hear, you don't repeat yourself.</p></div>
+<div class="table-wrap"><table>
+<tr><th></th><th>TCP</th><th>UDP</th></tr>
+<tr><td>Connection</td><td>Yes — handshake first</td><td>No — just send</td></tr>
+<tr><td>Reliable</td><td>Yes — lost data is re-sent</td><td>No — lost is lost</td></tr>
+<tr><td>Ordered</td><td>Yes</td><td>No</td></tr>
+<tr><td>Flow &amp; congestion control</td><td>Yes — slows down if the receiver or network is overwhelmed</td><td>No — sends as fast as you tell it</td></tr>
+<tr><td>Header size</td><td>20–60 bytes</td><td>8 bytes</td></tr>
+<tr><td>Data shape</td><td>A continuous stream of bytes</td><td>Separate messages (datagrams)</td></tr>
+<tr><td>Speed</td><td>Slower to start, steady</td><td>Fast, low delay</td></tr>
+<tr><td>Used by</td><td>HTTP/1.1 &amp; 2, SSH, email, databases, file transfer</td><td>DNS, video calls, online games, live streaming, DHCP, QUIC (HTTP/3)</td></tr>
+</table></div>
+<h4>Why would anyone want unreliable delivery?</h4>
+<p>Because for some data, <b>late is as bad as lost</b>. In a video call, a missing frame from half a second ago is useless — re-sending it would only freeze the call while it waits. Better to skip it and show the next one. Games, live audio and video all think this way.</p>
+<p>DNS uses UDP because a lookup is one small question and one small answer. A handshake would triple the cost. If no answer comes back, the client simply asks again.</p>
+<div class="note"><b>TCP is a stream, not messages.</b> If you send "hello" then "world", the other side may receive "helloworld" in one read, or "hel" then "loworld". TCP only promises the bytes arrive in order — not where your messages start and end. Protocols on top (like HTTP) add lengths or delimiters to fix that.</div>
+</section>
+
+<section id="s18">
+<h3>18. The 3-Way Handshake &amp; 4-Way Teardown</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Before TCP sends any data, both sides agree they're ready and pick starting numbers for counting bytes. That's the <b>3-way handshake</b>: SYN, SYN-ACK, ACK.</p>
+<p>Closing takes four steps because each side shuts its own direction separately — the <b>4-way teardown</b>.</p>
+<p class="analogy">A phone call: "Hello, can you hear me?" — "Yes, I can hear you, can you hear me?" — "Yes." Then you talk. At the end: "I'm done." — "OK." … "I'm done too." — "OK, bye."</p></div>
+<figure class="diagram">
+<svg viewBox="0 0 640 410" role="img" aria-label="TCP connection timeline. Opening: client sends SYN with seq 100, server replies SYN-ACK with seq 300 and ack 101, client sends ACK 301, and both are established. Closing: client sends FIN, server ACKs, server sends its own FIN, client ACKs and waits in TIME_WAIT.">
+  <text class="d-label" x="120" y="18" text-anchor="middle">Client</text>
+  <text class="d-label" x="520" y="18" text-anchor="middle">Server</text>
+  <path class="d-line" d="M120 26 V396 M520 26 V396"/>
+
+  <text class="d-accent-text" x="320" y="40" text-anchor="middle">OPENING — 3-way handshake</text>
+  <path class="d-line-accent" d="M120 56 L515 84"/><path class="d-arrow-accent" d="M520 84 l-9.7 -5.2 l-0.6 9 z"/>
+  <text class="d-mono" x="320" y="62" text-anchor="middle">SYN  seq=100</text>
+  <path class="d-line-accent" d="M520 96 L125 124"/><path class="d-arrow-accent" d="M120 124 l9.7 -5.2 l0.6 9 z"/>
+  <text class="d-mono" x="320" y="102" text-anchor="middle">SYN-ACK  seq=300, ack=101</text>
+  <path class="d-line-accent" d="M120 136 L515 164"/><path class="d-arrow-accent" d="M520 164 l-9.7 -5.2 l-0.6 9 z"/>
+  <text class="d-mono" x="320" y="142" text-anchor="middle">ACK  ack=301</text>
+
+  <text class="d-sub" x="110" y="60" text-anchor="end">SYN_SENT</text>
+  <text class="d-sub" x="530" y="50">LISTEN</text>
+  <text class="d-sub" x="530" y="100">SYN_RCVD</text>
+  <text class="d-accent-text" x="110" y="180" text-anchor="end">ESTABLISHED</text>
+  <text class="d-accent-text" x="530" y="180">ESTABLISHED</text>
+  <text class="d-sub" x="320" y="200" text-anchor="middle">⇄  data flows both ways  ⇄</text>
+
+  <text class="d-accent-text" x="320" y="228" text-anchor="middle">CLOSING — 4-way teardown</text>
+  <path class="d-line" d="M120 240 L515 266"/><path class="d-arrow" d="M520 266 l-9.7 -5.2 l-0.6 9 z"/>
+  <text class="d-mono" x="320" y="246" text-anchor="middle">FIN</text>
+  <path class="d-line" d="M520 276 L125 302"/><path class="d-arrow" d="M120 302 l9.7 -5.2 l0.6 9 z"/>
+  <text class="d-mono" x="320" y="282" text-anchor="middle">ACK</text>
+  <path class="d-line" d="M520 316 L125 342"/><path class="d-arrow" d="M120 342 l9.7 -5.2 l0.6 9 z"/>
+  <text class="d-mono" x="320" y="322" text-anchor="middle">FIN</text>
+  <path class="d-line" d="M120 356 L515 382"/><path class="d-arrow" d="M520 382 l-9.7 -5.2 l-0.6 9 z"/>
+  <text class="d-mono" x="320" y="362" text-anchor="middle">ACK</text>
+
+  <text class="d-sub" x="110" y="244" text-anchor="end">FIN_WAIT</text>
+  <text class="d-sub" x="530" y="280">CLOSE_WAIT</text>
+  <text class="d-sub" x="530" y="320">LAST_ACK</text>
+  <text class="d-sub" x="530" y="386">CLOSED</text>
+  <text class="d-accent-text" x="110" y="372" text-anchor="end">TIME_WAIT</text>
+</svg>
+<figcaption>Each side acknowledges the other's number plus one. Between the server's ACK and its FIN it may still send data — that's why closing needs four steps, not three.</figcaption>
+</figure>
+<h4>Opening, step by step</h4>
+<ol>
+<li><b>SYN</b> — client: "I want to connect. My bytes will start counting from 100."</li>
+<li><b>SYN-ACK</b> — server: "Got it, I expect 101 next. My bytes start from 300."</li>
+<li><b>ACK</b> — client: "Got it, I expect 301 next." Connection open.</li>
+</ol>
+<p>Starting numbers are random, not 0 — that makes it hard for an attacker to guess them and inject fake packets.</p>
+<h4>Why three steps, not two?</h4>
+<p>Both sides must prove they can <b>send and receive</b>. After step 2, the client knows both directions work, but the server doesn't yet know the client received its reply. Step 3 confirms it. It also stops an old, delayed SYN from opening a ghost connection.</p>
+<h4>Closing</h4>
+<p>TCP is two one-way streams. FIN means "I've finished <i>sending</i>" — but I can still receive. So each side sends its own FIN and gets its own ACK. The side that closes first waits in <b>TIME_WAIT</b> (typically 30 seconds to 2 minutes) in case its final ACK got lost and the other side re-sends its FIN.</p>
+<p>A connection can also be cut instantly with <b>RST</b> (reset) — what you get when you connect to a port nobody is listening on: "connection refused".</p>
+<div class="note"><b>Why this matters for speed:</b> the handshake costs one full round trip before any data moves. HTTPS adds TLS on top. This is why <b>keep-alive</b> (reusing one connection for many requests) and <b>connection pooling</b> in database drivers matter so much — you pay the handshake once instead of every time.</div>
+</section>
+
+<section id="s19">
+<h3>19. Reliability, Flow Control &amp; Congestion Control</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>TCP has three different jobs that sound alike:</p>
+<p><b>Reliability</b> — make sure every byte arrives, once, in order.</p>
+<p><b>Flow control</b> — don't send faster than the <i>receiver</i> can handle.</p>
+<p><b>Congestion control</b> — don't send faster than the <i>network</i> can handle.</p>
+<p class="analogy">Flow control is not overfilling your friend's cup. Congestion control is not jamming the motorway everyone shares.</p></div>
+<h4>Reliability — sequence numbers and ACKs</h4>
+<ul>
+<li>Every byte has a <b>sequence number</b>. The receiver uses them to put pieces back in order and spot gaps.</li>
+<li>The receiver sends an <b>ACK</b> (acknowledgement) saying "I've got everything up to byte N; send N+1 next".</li>
+<li>If no ACK comes back within a <b>timeout</b>, the sender assumes the data was lost and <b>re-sends</b> it (retransmission).</li>
+<li>If the sender gets <b>three duplicate ACKs</b> for the same byte, it doesn't wait for the timeout — the later packets are getting through, so one must be missing. It re-sends straight away (<b>fast retransmit</b>).</li>
+<li>Duplicates are spotted by sequence number and quietly dropped.</li>
+</ul>
+<h4>Flow control — the sliding window</h4>
+<p>Waiting for an ACK after every packet would be painfully slow. Instead the sender may have a <b>window</b> of data "in flight" — sent but not yet acknowledged. As ACKs arrive, the window <b>slides</b> forward and more can be sent.</p>
+<pre><code>bytes:  [ acked ][ sent, waiting for ACK ][ can send now ][ must wait ]
+                 |&lt;-------------- window ----------------&gt;|
+ACK arrives → the left edge moves right → the whole window slides →</code></pre>
+<p>The receiver tells the sender how big that window can be in every ACK (the <b>receive window</b>, <code>rwnd</code>). If the receiving app is slow to read, its buffer fills, it advertises a smaller window, and the sender slows down. Window 0 means "stop for now".</p>
+<h4>Congestion control — slow start and AIMD</h4>
+<p>The sender keeps a second limit, the <b>congestion window</b> (<code>cwnd</code>), guessing how much the network can take. It actually sends <code>min(rwnd, cwnd)</code>.</p>
+<ol>
+<li><b>Slow start</b> — begin small (traditionally 1 segment, about 10 today) and <b>double</b> <code>cwnd</code> every round trip. Despite the name, this grows very fast.</li>
+<li>Once it reaches a threshold (<code>ssthresh</code>), switch to <b>congestion avoidance</b>: grow by just <b>1 segment per round trip</b>. This is the <b>additive increase</b>.</li>
+<li>When a loss is detected, assume the network is congested and <b>cut back hard</b>:
+  <ul>
+  <li>Three duplicate ACKs (mild) → halve <code>cwnd</code> and continue. This is the <b>multiplicative decrease</b>.</li>
+  <li>A timeout (serious) → drop <code>cwnd</code> right back and start slow start again.</li>
+  </ul></li>
+</ol>
+<p>Together this pattern is called <b>AIMD</b> — Additive Increase, Multiplicative Decrease. The speed graph looks like a sawtooth: climb slowly, drop sharply, climb again. It's what lets millions of connections share the Internet fairly without anyone in charge.</p>
+<div class="note"><b>Practical takeaway:</b> because of slow start, a brand-new connection is slow for its first few round trips. That's one more reason to reuse connections, and why a fresh page load feels slower than the second one. Modern algorithms (CUBIC, Google's BBR) refine this, but the idea is the same.</div>
+</section>
+
+<!-- ================= APPLICATION ================= -->
+<div class="part">Part 5 — Application Layer</div>
+
+<section id="s20">
+<h3>20. DNS — the Internet's Phone Book</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Computers find each other by IP address, but people remember names. <b>DNS</b> (Domain Name System) turns a name like <code>example.com</code> into an IP address.</p>
+<p>No single computer holds every name. DNS is a <b>tree</b> of servers, each responsible for one part of the name, and answers are <b>cached</b> everywhere along the way.</p>
+<p class="analogy">Asking for directions: you ask a helpful local (the resolver). They don't know, so they ask the country office (root), who points them to the city office (.com), who points them to the right building (the domain's own server), who finally gives the exact address.</p></div>
+<figure class="diagram">
+<svg viewBox="0 0 640 340" role="img" aria-label="DNS lookup: the browser asks a recursive resolver. The resolver asks a root server, which points to the .com TLD servers. The TLD server points to the domain's authoritative server, which returns the IP address. The resolver caches it and answers the browser.">
+  <rect class="d-box" x="20" y="138" width="120" height="54" rx="7"/>
+  <text class="d-label" x="80" y="160" text-anchor="middle">Browser + OS</text>
+  <text class="d-sub" x="80" y="179" text-anchor="middle">check caches first</text>
+
+  <rect class="d-fill-accent" x="220" y="138" width="160" height="54" rx="7"/>
+  <rect class="d-box-accent" x="220" y="138" width="160" height="54" rx="7"/>
+  <text class="d-label" x="300" y="160" text-anchor="middle">Recursive resolver</text>
+  <text class="d-sub" x="300" y="179" text-anchor="middle">ISP, 1.1.1.1 or 8.8.8.8</text>
+
+  <path class="d-line-accent" d="M140 156 H214"/><path class="d-arrow-accent" d="M220 156 l-9 -4.5 v9 z"/>
+  <text class="d-accent-text" x="180" y="148" text-anchor="middle">1 ask</text>
+  <path class="d-line" d="M220 176 H146"/><path class="d-arrow" d="M140 176 l9 -4.5 v9 z"/>
+  <text class="d-sub" x="180" y="206" text-anchor="middle">8 answer</text>
+
+  <rect class="d-box" x="470" y="24" width="150" height="54" rx="7"/>
+  <text class="d-label" x="545" y="46" text-anchor="middle">Root server</text>
+  <text class="d-sub" x="545" y="65" text-anchor="middle">"ask the .com servers"</text>
+
+  <rect class="d-box" x="470" y="138" width="150" height="54" rx="7"/>
+  <text class="d-label" x="545" y="160" text-anchor="middle">.com TLD server</text>
+  <text class="d-sub" x="545" y="179" text-anchor="middle">"ask ns1.example.com"</text>
+
+  <rect class="d-box" x="470" y="252" width="150" height="54" rx="7"/>
+  <text class="d-label" x="545" y="274" text-anchor="middle">Authoritative</text>
+  <text class="d-sub" x="545" y="293" text-anchor="middle">"it's 203.0.113.10"</text>
+
+  <path class="d-line-accent" d="M380 146 L470 62"/>
+  <text class="d-accent-text" x="408" y="94" text-anchor="end">2 · 3</text>
+  <path class="d-line-accent" d="M380 165 H470"/>
+  <text class="d-accent-text" x="425" y="158" text-anchor="middle">4 · 5</text>
+  <path class="d-line-accent" d="M380 184 L470 268"/>
+  <text class="d-accent-text" x="408" y="244" text-anchor="end">6 · 7</text>
+
+  <text class="d-label" x="20" y="240">The steps</text>
+  <text class="d-sub" x="20" y="260">1  Browser asks the resolver for example.com</text>
+  <text class="d-sub" x="20" y="278">2–3  Root: "I don't know, try the .com servers"</text>
+  <text class="d-sub" x="20" y="296">4–5  TLD: "try example.com's own name server"</text>
+  <text class="d-sub" x="20" y="314">6–7  Authoritative server gives the real IP</text>
+  <text class="d-sub" x="20" y="332">8  Resolver caches it (for its TTL) and replies</text>
+</svg>
+<figcaption>The resolver does the legwork (a <i>recursive</i> query for you); root and TLD servers only point onward (<i>iterative</i> answers). Thanks to caching, most lookups stop at step 1.</figcaption>
+</figure>
+<h4>The full lookup order</h4>
+<ol>
+<li><b>Browser cache</b> — visited recently? Done.</li>
+<li><b>OS cache</b> and the <b>hosts file</b> (<code>/etc/hosts</code>) — a manual override list.</li>
+<li><b>Recursive resolver</b> — usually your ISP's, or a public one like Cloudflare's <code>1.1.1.1</code> or Google's <code>8.8.8.8</code>. Has a big shared cache.</li>
+<li><b>Root servers</b> — 13 named root server addresses, each copied to hundreds of machines worldwide. They only know where each top-level domain lives.</li>
+<li><b>TLD servers</b> — for <code>.com</code>, <code>.org</code>, <code>.in</code>… They know which name servers handle each domain.</li>
+<li><b>Authoritative name server</b> — the one that actually holds the domain's records (often at Cloudflare, Route 53 or your registrar). Gives the final answer.</li>
+</ol>
+<h4>Record types</h4>
+<div class="table-wrap"><table>
+<tr><th>Record</th><th>Maps</th><th>Example</th></tr>
+<tr><td><b>A</b></td><td>Name → IPv4 address</td><td><code>example.com → 203.0.113.10</code></td></tr>
+<tr><td><b>AAAA</b></td><td>Name → IPv6 address</td><td><code>example.com → 2001:db8::10</code></td></tr>
+<tr><td><b>CNAME</b></td><td>Name → another name (an alias)</td><td><code>www.example.com → example.netlify.app</code></td></tr>
+<tr><td><b>MX</b></td><td>Which servers receive email for this domain</td><td><code>example.com → mail.google.com (priority 10)</code></td></tr>
+<tr><td><b>NS</b></td><td>Which name servers are authoritative</td><td><code>example.com → ns1.cloudflare.com</code></td></tr>
+<tr><td><b>TXT</b></td><td>Free text — domain ownership checks, email anti-spoofing (SPF, DKIM)</td><td><code>"v=spf1 include:_spf.google.com ~all"</code></td></tr>
+<tr><td><b>PTR</b></td><td>IP → name (reverse lookup)</td><td><code>10.113.0.203.in-addr.arpa → example.com</code></td></tr>
+<tr><td><b>SOA</b></td><td>Admin info about the zone</td><td>Primary server, serial number, timers</td></tr>
+</table></div>
+<h4>Caching and TTL</h4>
+<p>Every record has a <b>TTL</b> (time to live) in seconds — how long others may cache it. A TTL of 3600 means "you can reuse this answer for an hour".</p>
+<ul>
+<li><b>Long TTL</b> → fewer lookups, faster, but changes take longer to reach everyone.</li>
+<li><b>Short TTL</b> → changes spread fast, but more lookups.</li>
+</ul>
+<p>"DNS propagation takes up to 48 hours" really means: old answers are still sitting in caches until their TTL runs out. <b>Before moving a site to a new server, lower the TTL a day ahead.</b></p>
+<div class="note"><b>DNS mostly uses UDP port 53</b> — one small question, one small answer. It switches to TCP for large answers and for copying whole zones between servers. Newer options, DNS over HTTPS (DoH) and DNS over TLS (DoT), encrypt lookups so your network can't read or tamper with them.</div>
+<div class="note"><b>A gotcha when you deploy:</b> you can't put a CNAME on the bare root domain (<code>example.com</code>), only on subdomains like <code>www</code>. That's why hosts like Vercel and Netlify ask for an A record on the root, or why DNS providers offer "ALIAS" / "CNAME flattening".</div>
+</section>
+
+<section id="s21">
+<h3>21. DHCP — Getting an Address Automatically</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>When you join a Wi-Fi network, you don't type in an IP address. <b>DHCP</b> (Dynamic Host Configuration Protocol) hands one to you automatically, along with everything else you need to get online.</p>
+<p class="analogy">Checking into a hotel: you arrive, the front desk gives you a room number, tells you where the exit and the restaurant are, and the room is yours until checkout.</p></div>
+<h4>DORA — the four steps</h4>
+<pre><code>1. Discover  client → everyone   "Is there a DHCP server? I need an address."
+                                 (from 0.0.0.0 to 255.255.255.255 — it has no IP yet)
+2. Offer     server → client     "You can have 192.168.1.23."
+3. Request   client → everyone   "I'll take 192.168.1.23, please."
+                                 (broadcast, so any other servers that offered know)
+4. Ack       server → client     "Confirmed. It's yours for 24 hours."</code></pre>
+<h4>What you get</h4>
+<ul>
+<li>Your <b>IP address</b></li>
+<li>The <b>subnet mask</b> (which addresses are local)</li>
+<li>The <b>default gateway</b> (the router to send everything else to)</li>
+<li><b>DNS servers</b> to use</li>
+<li>A <b>lease time</b> — the address is borrowed, not owned. Devices renew at about halfway through.</li>
+</ul>
+<p>DHCP runs over UDP — server port 67, client port 68. At home, your router is the DHCP server.</p>
+<div class="note"><b>Troubleshooting clue:</b> if your machine shows an address starting <code>169.254</code>, no DHCP server answered, so it gave itself a "link-local" address. You're not really on the network. Servers and printers usually get a <b>reserved</b> or <b>static</b> address instead, so they don't move around.</div>
+</section>
+
+<section id="s22">
+<h3>22. HTTP — Requests, Responses &amp; Methods</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>HTTP</b> (HyperText Transfer Protocol) is the language browsers and servers speak. The client sends a <b>request</b>; the server sends back a <b>response</b>. Every web page, image and API call is one of these exchanges.</p>
+<p>In HTTP/1.1 it's just readable text sent over a TCP connection — you could type it by hand.</p></div>
+<h4>Anatomy of a request</h4>
+<pre><code>POST /api/orders?coupon=SAVE10 HTTP/1.1      ← method, path + query, version
+Host: shop.example.com                       ← headers: extra information
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOi...
+Cookie: session=abc123
+                                             ← blank line = headers are over
+{"productId": 42, "qty": 2}                  ← body (optional)</code></pre>
+<h4>Anatomy of a response</h4>
+<pre><code>HTTP/1.1 201 Created                         ← version, status code, reason
+Content-Type: application/json
+Set-Cookie: cart=; Max-Age=0
+Cache-Control: no-store
+
+{"orderId": 9001, "status": "pending"}</code></pre>
+<h4>Methods</h4>
+<div class="table-wrap"><table>
+<tr><th>Method</th><th>Meaning</th><th>Has body?</th><th>Safe</th><th>Idempotent</th></tr>
+<tr><td><b>GET</b></td><td>Read something</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+<tr><td><b>POST</b></td><td>Create something / trigger an action</td><td>Yes</td><td>No</td><td>No</td></tr>
+<tr><td><b>PUT</b></td><td>Replace the whole thing</td><td>Yes</td><td>No</td><td>Yes</td></tr>
+<tr><td><b>PATCH</b></td><td>Change part of it</td><td>Yes</td><td>No</td><td>Not guaranteed</td></tr>
+<tr><td><b>DELETE</b></td><td>Remove it</td><td>Usually no</td><td>No</td><td>Yes</td></tr>
+<tr><td><b>HEAD</b></td><td>Like GET, but headers only</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+<tr><td><b>OPTIONS</b></td><td>"What am I allowed to do here?" (used by CORS)</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+</table></div>
+<ul>
+<li><b>Safe</b> = doesn't change anything on the server. Browsers and crawlers assume GET is safe, so never delete things on a GET link.</li>
+<li><b>Idempotent</b> = doing it twice has the same effect as once. Deleting order 5 twice still leaves order 5 deleted. POSTing twice creates two orders — which is why a "retry" on a payment POST is dangerous and needs an <b>idempotency key</b>.</li>
+</ul>
+<h4>REST over HTTP, briefly</h4>
+<p><b>REST</b> is a style for designing APIs on top of HTTP: URLs name <b>things</b> (nouns), and the HTTP method says <b>what to do</b> with them.</p>
+<pre><code>GET    /users          → list users
+GET    /users/7        → one user
+POST   /users          → create a user
+PATCH  /users/7        → update part of user 7
+DELETE /users/7        → delete user 7
+GET    /users/7/orders → user 7's orders
+
+✗  POST /getUser   ✗  GET /deleteUser?id=7     ← verbs in URLs, wrong methods</code></pre>
+<p>REST also means <b>stateless</b> requests (each carries everything needed, like an auth token) and using proper status codes — next section.</p>
+</section>
+
+<section id="s23">
+<h3>23. Status Codes, Headers, Cookies &amp; Statelessness</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>status code</b> is a three-digit number telling you how the request went. The first digit is the category — learn those five and you can guess any code.</p>
+<p><b>Headers</b> are labelled notes attached to a request or response. <b>Cookies</b> are small pieces of data the server asks the browser to store and send back.</p></div>
+<h4>Status code families</h4>
+<div class="table-wrap"><table>
+<tr><th>Range</th><th>Meaning</th><th>Ones to know</th></tr>
+<tr><td><b>1xx</b></td><td>Info, keep going</td><td>101 Switching Protocols (upgrading to WebSocket)</td></tr>
+<tr><td><b>2xx</b></td><td>Success</td><td>200 OK · 201 Created · 204 No Content</td></tr>
+<tr><td><b>3xx</b></td><td>Go somewhere else</td><td>301 Moved Permanently · 302 Found (temporary) · 304 Not Modified (use your cache) · 307/308 redirect keeping the method</td></tr>
+<tr><td><b>4xx</b></td><td>You (the client) got it wrong</td><td>400 Bad Request · 401 Unauthorized · 403 Forbidden · 404 Not Found · 405 Method Not Allowed · 409 Conflict · 422 Unprocessable · 429 Too Many Requests</td></tr>
+<tr><td><b>5xx</b></td><td>The server got it wrong</td><td>500 Internal Server Error · 502 Bad Gateway · 503 Service Unavailable · 504 Gateway Timeout</td></tr>
+</table></div>
+<ul>
+<li><b>401 vs 403</b> — 401 means "I don't know who you are" (log in). 403 means "I know who you are, and you're not allowed".</li>
+<li><b>502 vs 504</b> — both come from a proxy or load balancer in front of your app. 502: the app sent back garbage or refused the connection (often it crashed). 504: the app took too long to answer.</li>
+<li><b>301 vs 302</b> — browsers and search engines remember a 301 for good. Use 302 while testing.</li>
+</ul>
+<h4>Headers worth knowing</h4>
+<div class="table-wrap"><table>
+<tr><th>Header</th><th>Direction</th><th>Purpose</th></tr>
+<tr><td><code>Host</code></td><td>Request</td><td>Which website — lets one server host many domains. Required in HTTP/1.1.</td></tr>
+<tr><td><code>Content-Type</code></td><td>Both</td><td>Format of the body: <code>application/json</code>, <code>text/html</code></td></tr>
+<tr><td><code>Accept</code></td><td>Request</td><td>Formats the client would like back</td></tr>
+<tr><td><code>Authorization</code></td><td>Request</td><td>Credentials, e.g. <code>Bearer &lt;token&gt;</code></td></tr>
+<tr><td><code>User-Agent</code></td><td>Request</td><td>Which browser or client is asking</td></tr>
+<tr><td><code>Cache-Control</code></td><td>Both</td><td>Caching rules: <code>max-age=3600</code>, <code>no-store</code></td></tr>
+<tr><td><code>ETag</code> / <code>If-None-Match</code></td><td>Both</td><td>A version fingerprint; lets the server reply 304 "unchanged"</td></tr>
+<tr><td><code>Content-Encoding</code></td><td>Response</td><td>Compression used: <code>gzip</code>, <code>br</code></td></tr>
+<tr><td><code>Location</code></td><td>Response</td><td>Where to go for a redirect (3xx) or the new item (201)</td></tr>
+<tr><td><code>Set-Cookie</code> / <code>Cookie</code></td><td>Response / Request</td><td>Store a cookie / send it back</td></tr>
+</table></div>
+<h4>HTTP is stateless</h4>
+<p><b>Stateless</b> means the server doesn't remember anything between requests. Each request is handled as if it's the first one ever. That makes servers simple and easy to scale — any server can handle any request.</p>
+<p>But apps need to know "this is still Ada, logged in". So state is <b>carried by the request itself</b>, using:</p>
+<ul>
+<li><b>Cookies</b> holding a session ID, which the server looks up in its session store, or</li>
+<li><b>Tokens</b> (like a JWT) in the <code>Authorization</code> header, which carry the user's identity inside them.</li>
+</ul>
+<h4>Cookies</h4>
+<pre><code>Set-Cookie: session=abc123; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=86400</code></pre>
+<div class="table-wrap"><table>
+<tr><th>Attribute</th><th>What it does</th></tr>
+<tr><td><code>HttpOnly</code></td><td>JavaScript can't read it — protects the session from XSS attacks</td></tr>
+<tr><td><code>Secure</code></td><td>Only sent over HTTPS</td></tr>
+<tr><td><code>SameSite</code></td><td><code>Strict</code> / <code>Lax</code> / <code>None</code> — whether it's sent on requests from other sites. Helps stop CSRF.</td></tr>
+<tr><td><code>Max-Age</code> / <code>Expires</code></td><td>How long it lives. Without either, it's deleted when the browser closes.</td></tr>
+<tr><td><code>Domain</code> / <code>Path</code></td><td>Which URLs it gets sent to</td></tr>
+</table></div>
+<div class="note"><b>The browser sends cookies automatically</b> on every matching request — you don't attach them yourself. That's convenient, and it's exactly why CSRF attacks work. Tokens in a header must be attached by your code, so other sites can't make the browser send them.</div>
+</section>
+
+<section id="s24">
+<h3>24. HTTP/1.1 vs HTTP/2 vs HTTP/3</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>The <i>meaning</i> of HTTP never changed — same methods, status codes and headers. What changed is <b>how the bytes travel</b>, each version fixing the biggest slowdown of the one before.</p>
+<p class="analogy">HTTP/1.1 is a single-lane checkout: one customer at a time. HTTP/2 lets many customers be served on one lane, interleaved. HTTP/3 gives each customer their own lane, so one slow customer holds nobody else up.</p></div>
+<div class="table-wrap"><table>
+<tr><th></th><th>HTTP/1.1 (1997)</th><th>HTTP/2 (2015)</th><th>HTTP/3 (2022)</th></tr>
+<tr><td>Runs on</td><td>TCP</td><td>TCP</td><td><b>QUIC</b>, which runs on UDP</td></tr>
+<tr><td>Format</td><td>Plain text</td><td>Binary frames</td><td>Binary frames</td></tr>
+<tr><td>Requests per connection</td><td>One at a time (keep-alive reuses the connection)</td><td>Many at once — <b>multiplexing</b></td><td>Many at once, fully independent</td></tr>
+<tr><td>Head-of-line blocking</td><td>Yes, per connection</td><td>Fixed at HTTP level, but one lost TCP packet still stalls all streams</td><td>Gone — a lost packet only stalls its own stream</td></tr>
+<tr><td>Header compression</td><td>None</td><td>HPACK</td><td>QPACK</td></tr>
+<tr><td>Encryption</td><td>Optional</td><td>Effectively required by browsers</td><td>Built in (TLS 1.3 inside QUIC)</td></tr>
+<tr><td>Connection setup</td><td>TCP + TLS: 2–3 round trips</td><td>Same</td><td>1 round trip, or 0 when resuming</td></tr>
+</table></div>
+<h4>The key words explained</h4>
+<ul>
+<li><b>Head-of-line blocking</b> — when the item at the front of a queue is stuck, everything behind it waits. In HTTP/1.1, a slow response blocks the next one on that connection, so browsers open about <b>6 connections per site</b> as a workaround.</li>
+<li><b>Multiplexing</b> — HTTP/2 chops many requests into small numbered frames and mixes them on <b>one</b> connection. No need for 6 connections, or old hacks like sprite sheets and bundling everything into one file.</li>
+<li><b>Why HTTP/2 still blocks</b> — TCP insists on delivering bytes in order. If one packet is lost, TCP holds back <i>everything</i> after it, even frames for other requests.</li>
+<li><b>QUIC</b> — rebuilds reliability on top of UDP but tracks each stream separately. It also survives network changes (<b>connection migration</b>) — walk from Wi-Fi to mobile data and the download continues.</li>
+</ul>
+<div class="note"><b>Do you need to change your code?</b> No. The browser and server agree on a version automatically. HTTP/2 and 3 are usually switched on at your CDN or load balancer, and your Express app keeps speaking plain HTTP/1.1 behind it.</div>
+</section>
+
+<section id="s25">
+<h3>25. HTTPS &amp; TLS</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>HTTPS</b> is just HTTP sent through an encrypted tunnel. The tunnel is made by <b>TLS</b> (Transport Layer Security; its old name was SSL).</p>
+<p>TLS gives you three things: <b>encryption</b> (nobody in between can read it), <b>integrity</b> (nobody can change it unnoticed) and <b>authentication</b> (you're really talking to the real site, not an impostor).</p>
+<p class="analogy">A sealed, tamper-proof envelope, plus an ID card checked by a trusted authority before you hand anything over.</p></div>
+<h4>Symmetric vs asymmetric encryption</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>Symmetric</th><th>Asymmetric (public-key)</th></tr>
+<tr><td>Keys</td><td>One shared secret key locks and unlocks</td><td>A pair: a public key (share with anyone) and a private key (never shared)</td></tr>
+<tr><td>Speed</td><td>Very fast</td><td>Slow — around 1000× slower</td></tr>
+<tr><td>Problem</td><td>How do two strangers agree on the key safely?</td><td>Too slow for bulk data</td></tr>
+<tr><td>Examples</td><td>AES, ChaCha20</td><td>RSA, elliptic curves (ECDHE, ECDSA)</td></tr>
+<tr><td>TLS uses it for</td><td><b>All the actual data</b></td><td><b>The handshake</b> — proving identity and agreeing on the shared key</td></tr>
+</table></div>
+<p>So TLS uses the slow, clever kind once, to safely set up the fast kind. Best of both.</p>
+<figure class="diagram">
+<svg viewBox="0 0 640 330" role="img" aria-label="TLS 1.3 handshake after the TCP connection: client sends ClientHello with supported versions, ciphers and a key share; server replies with ServerHello, its key share, certificate and Finished; both compute the same session key; client checks the certificate and sends Finished; then all HTTP data is encrypted with the shared symmetric key.">
+  <text class="d-label" x="120" y="18" text-anchor="middle">Browser</text>
+  <text class="d-label" x="520" y="18" text-anchor="middle">Server</text>
+  <path class="d-line" d="M120 26 V250 M520 26 V250"/>
+  <text class="d-sub" x="320" y="40" text-anchor="middle">(TCP handshake already done)</text>
+
+  <path class="d-line-accent" d="M120 56 L515 84"/><path class="d-arrow-accent" d="M520 84 l-9.7 -5.2 l-0.6 9 z"/>
+  <text class="d-mono" x="320" y="62" text-anchor="middle">ClientHello · ciphers · key share</text>
+
+  <path class="d-line-accent" d="M520 96 L125 124"/><path class="d-arrow-accent" d="M120 124 l9.7 -5.2 l0.6 9 z"/>
+  <text class="d-mono" x="320" y="102" text-anchor="middle">ServerHello · key share · certificate</text>
+
+  <text class="d-accent-text" x="320" y="146" text-anchor="middle">Both sides now compute the SAME secret session key</text>
+
+  <path class="d-line-accent" d="M120 160 L515 188"/><path class="d-arrow-accent" d="M520 188 l-9.7 -5.2 l-0.6 9 z"/>
+  <text class="d-mono" x="320" y="166" text-anchor="middle">Finished (certificate checked)</text>
+  <text class="d-sub" x="110" y="160" text-anchor="end">verify cert</text>
+
+  <path class="d-dash" d="M126 226 H514"/>
+  <path class="d-arrow" d="M520 226 l-9 -4.5 v9 z"/><path class="d-arrow" d="M120 226 l9 -4.5 v9 z"/>
+  <text class="d-mono" x="320" y="218" text-anchor="middle">GET / … encrypted with AES</text>
+
+  <rect class="d-box" x="40" y="262" width="270" height="58" rx="7"/>
+  <text class="d-label" x="56" y="284">Asymmetric — handshake only</text>
+  <text class="d-sub" x="56" y="306">proves identity, agrees on a key · slow</text>
+  <rect class="d-box-accent" x="330" y="262" width="270" height="58" rx="7"/>
+  <text class="d-label" x="346" y="284">Symmetric — everything after</text>
+  <text class="d-sub" x="346" y="306">one shared key encrypts the data · fast</text>
+</svg>
+<figcaption>TLS 1.3 needs just one round trip. The key is never sent across the wire — each side combines its own secret with the other's "key share" and arrives at the same answer (Diffie–Hellman key exchange).</figcaption>
+</figure>
+<h4>The handshake, in steps</h4>
+<ol>
+<li><b>ClientHello</b> — the browser says which TLS versions and ciphers it supports, and sends its half of the key exchange (a "key share").</li>
+<li><b>ServerHello</b> — the server picks a cipher, sends its own key share, and its <b>certificate</b>, signed to prove it owns the matching private key.</li>
+<li>Both sides combine the two key shares and calculate the same <b>session key</b>. An eavesdropper who saw both shares still can't work it out — that's the maths of Diffie–Hellman.</li>
+<li>The browser <b>checks the certificate</b>: right domain? not expired? signed by someone it trusts? If anything fails, you see the big red warning page.</li>
+<li>Both send <b>Finished</b>. From now on, everything is encrypted with the fast symmetric session key.</li>
+</ol>
+<p>Older TLS 1.2 needed two round trips, and sometimes encrypted the key with the server's RSA public key instead. TLS 1.3 dropped that because if the private key leaked later, old recorded traffic could be decrypted. With fresh keys per session (<b>forward secrecy</b>), it can't.</p>
+<h4>Certificates and the chain of trust</h4>
+<ul>
+<li>A <b>certificate</b> says "this public key belongs to example.com", and is signed by a <b>Certificate Authority</b> (CA) like Let's Encrypt or DigiCert.</li>
+<li>Your browser and OS ship with a list of trusted <b>root CAs</b>. Roots sign <b>intermediate</b> CAs, which sign websites' certificates. The browser follows that chain back to a root it trusts.</li>
+<li>Anyone can make a certificate, but only a trusted CA's signature makes browsers accept it. That's what stops an attacker from pretending to be your bank.</li>
+</ul>
+<div class="note"><b>What HTTPS does <i>not</i> hide:</b> the IP address you're connecting to, and usually the domain name (it's sent in the clear in the ClientHello, as "SNI"). It <i>does</i> hide the path, query string, headers, cookies and body. So <code>/search?q=secret</code> is protected; the fact you visited the site is not.</div>
+</section>
+
+<section id="s26">
+<h3>26. Email, FTP &amp; SSH</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Email uses <b>different protocols for sending and receiving</b>. <b>SMTP</b> sends mail. <b>POP3</b> or <b>IMAP</b> fetch it into your mail app.</p>
+<p><b>FTP</b> moves files. <b>SSH</b> gives you a secure terminal on a remote machine.</p>
+<p class="analogy">SMTP is the postal service delivering the letter to your letterbox. POP3 is emptying the letterbox into your house. IMAP is leaving the letters in the box and reading them from any house you own.</p></div>
+<h4>Email protocols</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>SMTP</th><th>POP3</th><th>IMAP</th></tr>
+<tr><td>Job</td><td>Send (push) mail</td><td>Download mail</td><td>Sync mail</td></tr>
+<tr><td>Where mail lives</td><td>—</td><td>Moved to your device, usually removed from the server</td><td>Stays on the server; all devices see the same thing</td></tr>
+<tr><td>Multiple devices</td><td>—</td><td>Poor</td><td>Great — read on phone, it's read on laptop too</td></tr>
+<tr><td>Ports (secure)</td><td>25 server-to-server, 587 for apps</td><td>110 (995)</td><td>143 (993)</td></tr>
+</table></div>
+<pre><code>You (Gmail app) ──SMTP──▶ Gmail server ──SMTP──▶ Outlook's server ◀──IMAP── Your friend's phone
+                                         (found via the MX record in DNS)</code></pre>
+<p>When your app sends a password-reset email through a service like SendGrid or SES, it's speaking SMTP (port 587) or that service's HTTP API.</p>
+<h4>FTP and friends</h4>
+<ul>
+<li><b>FTP</b> (ports 20/21) — old file transfer. Uses two connections: one for commands, one for data. Sends passwords in <b>plain text</b>. Avoid it.</li>
+<li><b>SFTP</b> — file transfer over SSH (port 22). Encrypted. What you should use.</li>
+<li><b>FTPS</b> — FTP wrapped in TLS. Works, but less common.</li>
+</ul>
+<h4>SSH</h4>
+<p><b>SSH</b> (Secure Shell, port 22) gives you an encrypted command line on another computer — how you log into a cloud server. It replaced <b>Telnet</b>, which sent everything, passwords included, unencrypted.</p>
+<pre><code>ssh-keygen -t ed25519                  # make a key pair
+ssh-copy-id ubuntu@203.0.113.10        # put the PUBLIC key on the server
+ssh ubuntu@203.0.113.10                # log in — no password needed
+ssh -L 5432:localhost:5432 ubuntu@host # tunnel: reach the server's database locally</code></pre>
+<p>SSH keys use asymmetric encryption: the server holds your public key and challenges you to prove you have the private one. That's also how GitHub knows it's you on <code>git push</code>.</p>
+</section>
+
+<section id="s27">
+<h3>27. Real-Time: Polling, Long Polling, SSE &amp; WebSockets</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Normal HTTP is "client asks, server answers". The server can't speak first. For chat, live scores or notifications, you need a way for the server to <b>push</b> updates.</p>
+<p>There are four main ways, from simplest to most capable.</p>
+<p class="analogy">Short polling is a child asking "are we there yet?" every minute. Long polling is asking once, and the driver only answers when you arrive. SSE is the driver giving a running commentary. WebSockets is a proper two-way conversation.</p></div>
+<div class="table-wrap"><table>
+<tr><th>Technique</th><th>How it works</th><th>Direction</th><th>Good for</th></tr>
+<tr><td><b>Short polling</b></td><td>Client asks "anything new?" every few seconds</td><td>Client → server</td><td>Simple dashboards; low traffic</td></tr>
+<tr><td><b>Long polling</b></td><td>Client asks; server <i>holds</i> the request open until there's news (or a timeout), then the client asks again</td><td>Feels like server push</td><td>Fallback when nothing else works</td></tr>
+<tr><td><b>SSE</b> (Server-Sent Events)</td><td>One long-lived HTTP response that the server keeps writing events into</td><td>Server → client only</td><td>Notifications, live feeds, streaming AI responses</td></tr>
+<tr><td><b>WebSockets</b></td><td>An HTTP request is "upgraded" into a permanent two-way connection</td><td>Both ways, any time</td><td>Chat, multiplayer games, collaborative editing</td></tr>
+</table></div>
+<h4>SSE in a few lines</h4>
+<pre><code>// Browser
+const es = new EventSource("/events");
+es.onmessage = e =&gt; console.log(JSON.parse(e.data));   // auto-reconnects if dropped
+
+// Server response
+Content-Type: text/event-stream
+
+data: {"score": "2-1"}
+
+data: {"score": "3-1"}</code></pre>
+<h4>WebSockets — how the upgrade works</h4>
+<pre><code>GET /chat HTTP/1.1
+Host: example.com
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==
+
+HTTP/1.1 101 Switching Protocols          ← from here on, it's no longer HTTP
+Upgrade: websocket
+Connection: Upgrade
+
+// Browser
+const ws = new WebSocket("wss://example.com/chat");   // wss = WebSocket over TLS
+ws.onmessage = e =&gt; render(e.data);
+ws.send(JSON.stringify({ text: "hi" }));</code></pre>
+<h4>Choosing</h4>
+<ul>
+<li>Only the server needs to push? <b>SSE</b> — simpler, plain HTTP, reconnects by itself, works with normal load balancers.</li>
+<li>Both sides talk often and fast? <b>WebSockets</b>.</li>
+<li>Updates are rare and a few seconds' delay is fine? Plain <b>polling</b> is honestly fine.</li>
+</ul>
+<div class="note"><b>The hidden cost of WebSockets:</b> each user holds a connection open on one particular server. Scaling to many servers then needs sticky sessions or a shared message bus (like Redis pub/sub) so a message sent on server A reaches a user connected to server B. Mention this in system design answers.</div>
+</section>
+
+<!-- ================= WEB IN PRACTICE ================= -->
+<div class="part">Part 6 — The Web in Practice</div>
+
+<section id="s28">
+<h3>28. What Happens When You Type a URL and Press Enter</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>This is <b>the</b> classic networking interview question, because the answer touches almost every section on this page.</p>
+<p>The short version: find the server's address (DNS), open a connection (TCP), secure it (TLS), ask for the page (HTTP), then the browser turns the reply into pixels.</p></div>
+<figure class="diagram">
+<svg viewBox="0 0 640 270" role="img" aria-label="Eight steps from URL to page: parse the URL, DNS lookup, TCP handshake, TLS handshake, send the HTTP request, the server does its work, the HTTP response comes back, and the browser renders the page.">
+  <rect class="d-box" x="20" y="20" width="135" height="74" rx="7"/>
+  <text class="d-accent-text" x="32" y="42">1  Parse URL</text>
+  <text class="d-sub" x="32" y="63">https? which host?</text>
+  <text class="d-sub" x="32" y="81">check HSTS &amp; cache</text>
+
+  <rect class="d-box" x="175" y="20" width="135" height="74" rx="7"/>
+  <text class="d-accent-text" x="187" y="42">2  DNS lookup</text>
+  <text class="d-sub" x="187" y="63">name → IP address</text>
+  <text class="d-sub" x="187" y="81">caches → resolver</text>
+
+  <rect class="d-box" x="330" y="20" width="135" height="74" rx="7"/>
+  <text class="d-accent-text" x="342" y="42">3  TCP handshake</text>
+  <text class="d-sub" x="342" y="63">SYN, SYN-ACK, ACK</text>
+  <text class="d-sub" x="342" y="81">1 round trip</text>
+
+  <rect class="d-box" x="485" y="20" width="135" height="74" rx="7"/>
+  <text class="d-accent-text" x="497" y="42">4  TLS handshake</text>
+  <text class="d-sub" x="497" y="63">check certificate</text>
+  <text class="d-sub" x="497" y="81">agree session key</text>
+
+  <path class="d-line" d="M155 57 H169 M310 57 H324 M465 57 H479"/>
+  <path class="d-arrow" d="M175 57 l-6 -4 v8 z"/><path class="d-arrow" d="M330 57 l-6 -4 v8 z"/><path class="d-arrow" d="M485 57 l-6 -4 v8 z"/>
+  <path class="d-line" d="M552 94 V112 H87 V128"/><path class="d-arrow" d="M87 134 l-4.5 -9 h9 z"/>
+
+  <rect class="d-fill-accent" x="20" y="134" width="135" height="74" rx="7"/>
+  <rect class="d-box-accent" x="20" y="134" width="135" height="74" rx="7"/>
+  <text class="d-accent-text" x="32" y="156">5  HTTP request</text>
+  <text class="d-sub" x="32" y="177">GET / · Host header</text>
+  <text class="d-sub" x="32" y="195">cookies attached</text>
+
+  <rect class="d-fill-accent" x="175" y="134" width="135" height="74" rx="7"/>
+  <rect class="d-box-accent" x="175" y="134" width="135" height="74" rx="7"/>
+  <text class="d-accent-text" x="187" y="156">6  Server works</text>
+  <text class="d-sub" x="187" y="177">LB → app → database</text>
+  <text class="d-sub" x="187" y="195">builds the response</text>
+
+  <rect class="d-fill-accent" x="330" y="134" width="135" height="74" rx="7"/>
+  <rect class="d-box-accent" x="330" y="134" width="135" height="74" rx="7"/>
+  <text class="d-accent-text" x="342" y="156">7  HTTP response</text>
+  <text class="d-sub" x="342" y="177">200 OK + HTML</text>
+  <text class="d-sub" x="342" y="195">compressed (gzip/br)</text>
+
+  <rect class="d-fill-accent" x="485" y="134" width="135" height="74" rx="7"/>
+  <rect class="d-box-accent" x="485" y="134" width="135" height="74" rx="7"/>
+  <text class="d-accent-text" x="497" y="156">8  Render</text>
+  <text class="d-sub" x="497" y="177">parse, fetch CSS/JS</text>
+  <text class="d-sub" x="497" y="195">layout, then paint</text>
+
+  <path class="d-line-accent" d="M155 171 H169 M310 171 H324 M465 171 H479"/>
+  <path class="d-arrow-accent" d="M175 171 l-6 -4 v8 z"/><path class="d-arrow-accent" d="M330 171 l-6 -4 v8 z"/><path class="d-arrow-accent" d="M485 171 l-6 -4 v8 z"/>
+
+  <text class="d-sub" x="320" y="238" text-anchor="middle">Steps 2–4 are pure setup: several round trips before a single byte of the page arrives.</text>
+  <text class="d-sub" x="320" y="258" text-anchor="middle">That's why caching, keep-alive, HTTP/3 and CDNs make such a difference.</text>
+</svg>
+<figcaption>The top row is "getting connected"; the bottom row is "getting the page". On a repeat visit, most of the top row is skipped thanks to caches and reused connections.</figcaption>
+</figure>
+<h4>The answer, step by step</h4>
+<ol>
+<li><b>Parse the URL.</b> The browser splits <code>https://shop.example.com/cart</code> into scheme (<code>https</code>), host and path. If you typed words, not a URL, it becomes a search instead. If the site is on the <b>HSTS</b> list, the browser goes straight to HTTPS. It also checks whether a fresh copy is already in its cache.</li>
+<li><b>DNS lookup.</b> Browser cache → OS cache → hosts file → resolver → root → TLD → authoritative server. Result: an IP address (section 20).</li>
+<li><b>TCP connection.</b> The OS picks a random source port and does the 3-way handshake with the server's IP on port 443 (section 18). With HTTP/3, this and the next step are combined into QUIC over UDP.</li>
+<li><b>TLS handshake.</b> Agree a cipher, check the certificate, derive the session key (section 25).</li>
+<li><b>Send the HTTP request.</b> <code>GET /cart</code> with headers — <code>Host</code>, cookies, <code>Accept</code>, <code>User-Agent</code>. Underneath, it's wrapped into TCP segments, IP packets and Ethernet/Wi-Fi frames, and routed hop by hop across the Internet (sections 8, 14).</li>
+<li><b>The server works.</b> Often it first hits a CDN or load balancer, then a reverse proxy like Nginx, then your app (Express, Django…), which may query a database or cache, and builds the response.</li>
+<li><b>The response comes back.</b> Status code, headers (<code>Content-Type</code>, <code>Cache-Control</code>, <code>Set-Cookie</code>), and the HTML body.</li>
+<li><b>The browser renders.</b> Parse HTML into the <b>DOM</b>, find <code>&lt;link&gt;</code>, <code>&lt;script&gt;</code> and <code>&lt;img&gt;</code> tags and fetch them too (more requests, usually on the same connection), parse CSS into the <b>CSSOM</b>, combine them into a render tree, work out the <b>layout</b> (sizes and positions), then <b>paint</b> pixels. JavaScript runs and may fetch more data.</li>
+</ol>
+<div class="note"><b>How to stand out:</b> after giving the steps, mention one or two things that make it faster — DNS caching, keep-alive and connection reuse, HTTP/2 multiplexing, a CDN serving from nearby, compression, and caching headers. And note that the network part is the same for any <code>fetch()</code> your frontend makes.</div>
+</section>
+
+<section id="s29">
+<h3>29. CDNs, Proxies &amp; Load Balancers</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>proxy</b> is a middleman that passes requests on for someone else. Which side it works for decides its name.</p>
+<p>A <b>forward proxy</b> sits in front of <b>clients</b> and hides them. A <b>reverse proxy</b> sits in front of <b>servers</b> and hides them. A <b>load balancer</b> is a reverse proxy that shares requests across many servers. A <b>CDN</b> is a worldwide network of reverse proxies that keep copies of your files close to users.</p>
+<p class="analogy">A forward proxy is a personal assistant who makes calls for you, so the other side never sees your number. A reverse proxy is a company switchboard — callers dial one number and never know which desk picks up.</p></div>
+<h4>Forward vs reverse proxy</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>Forward proxy</th><th>Reverse proxy</th></tr>
+<tr><td>Works for</td><td>The clients</td><td>The servers</td></tr>
+<tr><td>Hides</td><td>Who the client is</td><td>Which server(s) actually answer</td></tr>
+<tr><td>Set up by</td><td>The user or their company</td><td>The website owner</td></tr>
+<tr><td>Used for</td><td>Company web filtering, getting around blocks, caching for an office</td><td>TLS termination, load balancing, caching, compression, rate limiting, security</td></tr>
+<tr><td>Examples</td><td>Corporate proxy, Squid</td><td>Nginx, HAProxy, Cloudflare, AWS ALB</td></tr>
+</table></div>
+<pre><code>Forward:   [You] → [Proxy] → Internet → [Server]      server sees the proxy, not you
+Reverse:   [You] → Internet → [Nginx]  → [App 1 | App 2 | App 3]   you see Nginx, not the apps</code></pre>
+<h4>Load balancers — L4 vs L7</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>Layer 4 (transport)</th><th>Layer 7 (application)</th></tr>
+<tr><td>Can see</td><td>IPs and ports only</td><td>The full HTTP request: URL, headers, cookies</td></tr>
+<tr><td>Routes by</td><td>Connection — "send this TCP connection to server 2"</td><td>Content — "<code>/api/*</code> to the API servers, <code>/images/*</code> to storage"</td></tr>
+<tr><td>Speed</td><td>Faster, very little work per packet</td><td>Slower, must decrypt and read each request</td></tr>
+<tr><td>Can it do TLS, cookies, redirects?</td><td>No</td><td>Yes</td></tr>
+<tr><td>Example</td><td>AWS NLB</td><td>AWS ALB, Nginx, Cloudflare</td></tr>
+</table></div>
+<h4>Ways to pick a server</h4>
+<ul>
+<li><b>Round robin</b> — take turns: 1, 2, 3, 1, 2, 3.</li>
+<li><b>Least connections</b> — send to whoever is least busy.</li>
+<li><b>IP hash</b> — the same client always goes to the same server ("sticky").</li>
+<li><b>Health checks</b> — the balancer pings each server regularly and stops sending traffic to any that fail.</li>
+</ul>
+<h4>CDNs</h4>
+<p>A <b>CDN</b> (Content Delivery Network — Cloudflare, Akamai, CloudFront) has servers called <b>edge servers</b> in hundreds of cities. A user in Chennai gets your images from a server in Chennai, not from your origin server in Virginia. That cuts latency from ~250 ms to ~10 ms.</p>
+<ul>
+<li>Best for static files — images, CSS, JS, videos. Many CDNs can also cache API responses and run code at the edge.</li>
+<li>You control caching with headers: <code>Cache-Control: public, max-age=31536000, immutable</code> for files with a hash in their name (<code>app.3f9a2c.js</code>).</li>
+<li>Bonus: the CDN absorbs traffic spikes and DDoS attacks before they reach your server.</li>
+</ul>
+<div class="note"><b>TLS termination:</b> the load balancer or CDN usually handles HTTPS and talks plain HTTP to your app on a private network. That's why your app sees the balancer's IP, not the user's — read the real one from the <code>X-Forwarded-For</code> header (and in Express, set <code>app.set("trust proxy", 1)</code>).</div>
+</section>
+
+<section id="s30">
+<h3>30. CORS</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Browsers follow the <b>same-origin policy</b>: JavaScript on one site can't read responses from a different site, unless that site says it's allowed.</p>
+<p><b>CORS</b> (Cross-Origin Resource Sharing) is how the <i>server</i> says "it's fine, this other site may read my responses" — using response headers.</p>
+<p class="analogy">A bouncer (the browser) checking the guest list. The list is written by the venue (the server). The bouncer only works at the door of the browser — someone using <code>curl</code> walks straight past.</p></div>
+<h4>What counts as the same origin</h4>
+<p>An <b>origin</b> is <b>scheme + host + port</b>. All three must match.</p>
+<pre><code>https://app.example.com           ← our page
+
+https://app.example.com/api       ✓ same origin (path doesn't matter)
+http://app.example.com            ✗ different scheme
+https://api.example.com           ✗ different host (even a subdomain)
+https://app.example.com:8443      ✗ different port
+http://localhost:5173 → http://localhost:3000   ✗ different port — the classic dev error</code></pre>
+<h4>Simple requests vs preflight</h4>
+<p>For "simple" requests (GET, or a POST with a form-type body), the browser just sends it and checks the answer's headers. For anything else — <code>PUT</code>, <code>DELETE</code>, JSON bodies, custom headers like <code>Authorization</code> — it first sends a <b>preflight</b> <code>OPTIONS</code> request to ask permission.</p>
+<pre><code>OPTIONS /api/orders
+Origin: https://app.example.com
+Access-Control-Request-Method: DELETE
+Access-Control-Request-Headers: Authorization
+
+← 204 No Content
+Access-Control-Allow-Origin: https://app.example.com
+Access-Control-Allow-Methods: GET, POST, DELETE
+Access-Control-Allow-Headers: Authorization, Content-Type
+Access-Control-Max-Age: 600                    ← cache this permission for 10 minutes</code></pre>
+<p>Only if the preflight says yes does the browser send the real request.</p>
+<h4>Cookies across origins</h4>
+<p>To send cookies cross-origin, the frontend must use <code>credentials: "include"</code> and the server must reply <code>Access-Control-Allow-Credentials: true</code> with a <b>specific</b> origin — <code>*</code> is not allowed with credentials.</p>
+<pre><code>// Express
+app.use(cors({ origin: "https://app.example.com", credentials: true }));</code></pre>
+<div class="note"><b>The misunderstanding interviewers probe:</b> CORS does not protect your server. The request often still reaches it — the browser just hides the response from the page. Postman, curl and other servers ignore CORS entirely. Real protection is authentication and authorisation. And never fix a CORS error by reflecting every origin back with credentials on — that opens the door to any site.</div>
+</section>
+
+<section id="s31">
+<h3>31. Network Security</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>Network security is about controlling <b>who can reach what</b>, and making sure data in transit can't be <b>read, changed or faked</b>.</p>
+<p>Most attacks either sit in the middle of a conversation, pretend to be someone else, or simply flood a target until it falls over.</p></div>
+<h4>Firewalls</h4>
+<p>A <b>firewall</b> checks traffic against rules like "allow port 443 from anywhere, allow port 22 only from the office IP, block everything else".</p>
+<ul>
+<li><b>Packet filter</b> — looks at each packet's IPs and ports alone.</li>
+<li><b>Stateful firewall</b> — remembers connections, so replies to things <i>you</i> started are let back in automatically. Most firewalls (and cloud security groups) work this way.</li>
+<li><b>WAF</b> (Web Application Firewall) — layer 7. Reads HTTP requests and blocks things like SQL injection patterns.</li>
+</ul>
+<h4>VPN</h4>
+<p>A <b>VPN</b> (Virtual Private Network) builds an encrypted tunnel from your device to another network. Everything goes through the tunnel, so the café Wi-Fi only sees scrambled data heading to the VPN server. Companies use VPNs to let staff reach internal systems as if they were in the office. A VPN hides your traffic from the local network — it doesn't make you anonymous to the VPN provider.</p>
+<h4>Common attacks</h4>
+<div class="table-wrap"><table>
+<tr><th>Attack</th><th>What happens</th><th>Defence</th></tr>
+<tr><td><b>Man-in-the-middle (MITM)</b></td><td>The attacker secretly sits between you and the server, reading or changing traffic. Easy on open Wi-Fi.</td><td>HTTPS everywhere, certificate checks, HSTS</td></tr>
+<tr><td><b>DDoS</b> (Distributed Denial of Service)</td><td>Thousands of hijacked machines flood a target with traffic until real users can't get in.</td><td>CDN / DDoS protection services, rate limiting, autoscaling</td></tr>
+<tr><td><b>SYN flood</b> (a type of DoS)</td><td>Send loads of SYNs and never finish the handshake, filling the server's table of half-open connections.</td><td>SYN cookies, firewall limits</td></tr>
+<tr><td><b>DNS spoofing</b> / cache poisoning</td><td>Fake DNS answers send you to the attacker's IP instead of the real site.</td><td>DNSSEC (signed DNS answers), DoH/DoT, and HTTPS — the fake site can't show a valid certificate</td></tr>
+<tr><td><b>ARP spoofing</b></td><td>On a local network, the attacker announces "the router's IP is at <i>my</i> MAC", so traffic flows through them — a local MITM.</td><td>Switch protections (Dynamic ARP Inspection), encryption, VPN on untrusted networks</td></tr>
+<tr><td><b>Packet sniffing</b></td><td>Capturing traffic on a network and reading anything unencrypted.</td><td>Encrypt everything in transit (TLS, SSH)</td></tr>
+<tr><td><b>Port scanning</b></td><td>Probing which ports are open to find weak services. Often the first step of an attack.</td><td>Close unused ports; firewall rules</td></tr>
+</table></div>
+<div class="note"><b>Notice the pattern:</b> HTTPS defeats most of these on its own. Even if DNS or ARP is fooled and traffic goes to the attacker, they can't produce a valid certificate for your domain, so the browser refuses to continue. This is why "HTTPS everywhere" and <b>HSTS</b> (telling browsers "never use plain HTTP for this site") matter so much.</div>
+<h4>A developer's checklist</h4>
+<ul>
+<li>HTTPS only, with HSTS. Redirect HTTP to HTTPS.</li>
+<li>Expose as few ports as possible. Databases should <b>never</b> be open to the Internet — keep them on a private network.</li>
+<li>Rate-limit login and other expensive endpoints (respond 429).</li>
+<li>SSH with keys, not passwords.</li>
+<li>Secure, HttpOnly, SameSite cookies.</li>
+</ul>
+</section>
+
+<section id="s32">
+<h3>32. Useful Commands</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>When something "doesn't load", these commands tell you <i>which layer</i> is broken. Work from the bottom up: do I have an address? can I reach the host? does the name resolve? is the port open? what does the server actually say?</p></div>
+<div class="table-wrap"><table>
+<tr><th>Command</th><th>Answers</th></tr>
+<tr><td><code>ipconfig</code> (Windows) · <code>ifconfig</code> / <code>ip addr</code> (Mac/Linux)</td><td>What's my IP, subnet mask and gateway?</td></tr>
+<tr><td><code>ping host</code></td><td>Can I reach it, and how long does a round trip take?</td></tr>
+<tr><td><code>traceroute host</code> · <code>tracert host</code> (Windows)</td><td>Which routers does traffic go through, and where does it slow down or stop?</td></tr>
+<tr><td><code>nslookup example.com</code></td><td>What IP does this name resolve to?</td></tr>
+<tr><td><code>dig example.com</code></td><td>Same, with full detail — record types, TTLs, which server answered</td></tr>
+<tr><td><code>curl -v https://example.com</code></td><td>The full HTTP conversation, including TLS and headers</td></tr>
+<tr><td><code>netstat -an</code> · <code>ss -tulpn</code> (Linux)</td><td>Which ports are open and which connections exist?</td></tr>
+<tr><td><code>lsof -i :3000</code></td><td>Which process is using port 3000?</td></tr>
+<tr><td><code>arp -a</code></td><td>The IP-to-MAC table for my local network</td></tr>
+<tr><td><code>nc -zv host 5432</code></td><td>Is this one port open on that host?</td></tr>
+</table></div>
+<h4>Examples you'll actually use</h4>
+<pre><code># DNS
+dig example.com                 # A record and its TTL
+dig example.com MX +short       # mail servers only
+dig @8.8.8.8 example.com        # ask Google's resolver directly (bypass your own)
+dig +trace example.com          # walk root → TLD → authoritative yourself
+
+# HTTP
+curl -I https://example.com                     # headers only (HEAD)
+curl -v https://example.com                     # everything: DNS, TCP, TLS, headers
+curl -X POST -H "Content-Type: application/json" \
+     -d '{"name":"Ada"}' http://localhost:3000/users
+curl -w "dns:%{time_namelookup} connect:%{time_connect} tls:%{time_appconnect} total:%{time_total}\n" \
+     -o /dev/null -s https://example.com        # where does the time go?
+
+# Ports and processes
+lsof -i :3000                   # who's using my port?
+ss -tulpn                       # all listening TCP/UDP ports (Linux)
+netstat -ano | findstr :3000    # Windows equivalent</code></pre>
+<h4>A debugging order that works</h4>
+<ol>
+<li><code>ping 8.8.8.8</code> works? Then your connection to the Internet is fine.</li>
+<li><code>ping google.com</code> fails but the line above worked? It's <b>DNS</b>.</li>
+<li>Host pings, but the site won't load? Check the <b>port</b> with <code>nc -zv</code> or <code>curl -v</code> — firewall, or the app isn't running.</li>
+<li>Connects but errors? Read the <b>status code</b> and headers in <code>curl -v</code> or the browser's Network tab.</li>
+</ol>
+<div class="note"><b>The browser's Network tab</b> is the same tool with a nicer face. Click a request → <b>Timing</b> shows DNS, connection, TLS, waiting for the server (TTFB) and download — exactly the steps from section 28.</div>
+</section>
+
+<!-- ================= REVISION ================= -->
+<div class="part">Revision</div>
+
+<section id="rev">
+<h3>Interview Q&amp;A — quick answers</h3>
+
+<h4>Foundations and layers</h4>
+<ul>
+<li><b>What is the Internet?</b> A network of networks — many independent networks (ISPs, companies, clouds) that agree to carry each other's traffic using IP.</li>
+<li><b>Packet switching vs circuit switching?</b> Packet switching cuts data into packets that share links and are routed separately (the Internet). Circuit switching reserves a whole path for the call (old phones).</li>
+<li><b>Hub vs switch vs router?</b> Hub repeats everything to every port (L1). Switch sends frames only to the right port using MAC addresses (L2). Router connects different networks using IP addresses (L3).</li>
+<li><b>Name the OSI layers.</b> Physical, Data Link, Network, Transport, Session, Presentation, Application — "Please Do Not Throw Sausage Pizza Away".</li>
+<li><b>OSI vs TCP/IP?</b> OSI is a 7-layer teaching model; TCP/IP is the 4-layer model the Internet actually uses (Application, Transport, Internet, Link).</li>
+<li><b>PDU at each layer?</b> Data → segment/datagram → packet → frame → bits.</li>
+<li><b>What is encapsulation?</b> Each layer wraps the data from above with its own header on the way down; the receiver strips them on the way up.</li>
+<li><b>Latency vs bandwidth vs throughput?</b> Delay per trip / maximum capacity / what you actually get.</li>
+</ul>
+
+<h4>Addressing and routing</h4>
+<ul>
+<li><b>MAC vs IP address?</b> MAC is a 48-bit hardware ID used on the local network (L2). IP is a logical address used across networks (L3) and changes when you move networks.</li>
+<li><b>What does ARP do?</b> Finds the MAC address for an IP on the local network by broadcasting "who has this IP?"</li>
+<li><b>How many usable hosts in a /27?</b> 2⁵ − 2 = 30.</li>
+<li><b>What subnet is 10.1.1.200/26 in?</b> Block size 64 → 10.1.1.192/26, broadcast 10.1.1.255, hosts .193–.254.</li>
+<li><b>Private IP ranges?</b> 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16.</li>
+<li><b>What is NAT, and why does it exist?</b> The router swaps many private addresses for one public address and tracks the mappings. It exists because IPv4 ran out of addresses.</li>
+<li><b>Why IPv6?</b> 128-bit addresses — effectively unlimited, no NAT needed, simpler headers, no broadcast.</li>
+<li><b>Static vs dynamic routing?</b> Routes typed by hand vs routes learned automatically from other routers.</li>
+<li><b>Distance vector vs link state?</b> Share your distances with neighbours (RIP) vs share your links with everyone and compute the shortest path yourself (OSPF).</li>
+<li><b>What is BGP?</b> The protocol that routes between Autonomous Systems — how the networks that make up the Internet tell each other what they can reach.</li>
+<li><b>How does traceroute work?</b> Sends packets with TTL 1, 2, 3… Each router that drops one at TTL 0 replies "Time Exceeded", revealing itself.</li>
+</ul>
+
+<h4>Transport</h4>
+<ul>
+<li><b>TCP vs UDP?</b> TCP: connection, reliable, ordered, flow and congestion control, more overhead. UDP: no connection, no guarantees, fast and light.</li>
+<li><b>When would you use UDP?</b> When late data is useless — video calls, games, live streams — or for tiny exchanges like DNS. Also as the base for QUIC.</li>
+<li><b>Explain the 3-way handshake.</b> SYN (here's my starting number) → SYN-ACK (got it, here's mine) → ACK (got yours). Both sides confirm they can send and receive.</li>
+<li><b>Why 4 steps to close?</b> Each direction closes separately: FIN/ACK from each side. The server may still send data between its ACK and its FIN.</li>
+<li><b>What is TIME_WAIT?</b> The side that closes first waits a while in case its final ACK was lost and the other side resends its FIN.</li>
+<li><b>Flow vs congestion control?</b> Flow control protects the receiver (receive window). Congestion control protects the network (congestion window, slow start, AIMD).</li>
+<li><b>What is a socket?</b> One endpoint of a connection — an IP address plus a port. A connection is identified by the 5-tuple.</li>
+<li><b>How can one server port serve thousands of clients?</b> Each connection has a different source IP/port, so every 5-tuple is unique.</li>
+</ul>
+
+<h4>Application layer and the web</h4>
+<ul>
+<li><b>How does DNS resolution work?</b> Browser/OS cache → recursive resolver → root → TLD → authoritative, with answers cached for their TTL.</li>
+<li><b>A vs CNAME?</b> A maps a name to an IPv4 address; CNAME maps a name to another name.</li>
+<li><b>What is DHCP / DORA?</b> Automatic IP configuration: Discover, Offer, Request, Acknowledge. Gives IP, mask, gateway, DNS, lease.</li>
+<li><b>GET vs POST?</b> GET reads, has no body, is safe and idempotent and can be cached. POST sends a body to create or act, and isn't idempotent.</li>
+<li><b>PUT vs PATCH?</b> PUT replaces the whole resource (idempotent); PATCH changes part of it.</li>
+<li><b>401 vs 403?</b> Not logged in vs logged in but not allowed.</li>
+<li><b>502 vs 504?</b> Proxy got a bad/no response from the app vs proxy waited too long for the app.</li>
+<li><b>Why is HTTP stateless and how do apps keep you logged in?</b> Each request stands alone, which makes scaling easy. State travels in cookies (session ID) or tokens (JWT) with every request.</li>
+<li><b>HTTP/1.1 vs 2 vs 3?</b> 1.1: text, one request at a time per connection. 2: binary, multiplexed on one TCP connection. 3: over QUIC/UDP, no TCP head-of-line blocking, faster setup.</li>
+<li><b>How does HTTPS work?</b> TLS handshake: asymmetric crypto proves the server's identity (certificate) and agrees a shared key; symmetric encryption protects the actual data.</li>
+<li><b>Why not use asymmetric encryption for everything?</b> It's far too slow; symmetric is fast once both sides share a key.</li>
+<li><b>SMTP vs POP3 vs IMAP?</b> Send mail / download and remove from the server / sync and keep on the server.</li>
+<li><b>WebSockets vs SSE vs long polling?</b> Two-way persistent connection / one-way server push over HTTP / repeated held-open requests.</li>
+<li><b>What happens when you type a URL?</b> Parse → DNS → TCP → TLS → HTTP request → server work → response → render (DOM, CSSOM, layout, paint).</li>
+</ul>
+
+<h4>Infrastructure and security</h4>
+<ul>
+<li><b>Forward vs reverse proxy?</b> Forward acts for clients and hides them; reverse acts for servers and hides them.</li>
+<li><b>L4 vs L7 load balancer?</b> L4 routes by IP and port only; L7 reads HTTP and can route by path, header or cookie.</li>
+<li><b>What does a CDN do?</b> Caches content on servers near users to cut latency and offload the origin.</li>
+<li><b>What is CORS?</b> A browser rule letting a server allow specific other origins to read its responses. It doesn't protect the server itself.</li>
+<li><b>What is a preflight request?</b> An <code>OPTIONS</code> request the browser sends first, for non-simple requests, to ask the server's permission.</li>
+<li><b>What is a MITM attack and how do you stop it?</b> An attacker relaying and reading your traffic; HTTPS with certificate checks and HSTS.</li>
+<li><b>What is a DDoS?</b> A flood of traffic from many machines to overwhelm a service; defended with CDNs, rate limits and scrubbing services.</li>
+<li><b>What does a VPN do?</b> Encrypts all your traffic in a tunnel to another network.</li>
+</ul>
+</section>
+
+<section id="road">
+<h3>Learning Path</h3>
+<ol>
+<li><b>The big picture</b> — clients, servers, IP addresses, packets. Run <code>ipconfig</code>/<code>ifconfig</code> and find your private IP, then search "what is my IP" for the public one.</li>
+<li><b>Layers</b> — learn the OSI names and the TCP/IP mapping until you can draw the table from memory.</li>
+<li><b>Watch real traffic</b> — open the browser's Network tab on any site. Look at methods, status codes, headers, cookies and the Timing breakdown.</li>
+<li><b>DNS hands-on</b> — <code>dig</code> a few domains, look at A, CNAME, MX and TTLs. Try <code>dig +trace</code>.</li>
+<li><b>Subnetting drills</b> — do ten "which subnet / how many hosts" questions until the block-size method is automatic.</li>
+<li><b>TCP</b> — draw the handshake and teardown from memory. Run <code>curl -v</code> and match what you see to the steps.</li>
+<li><b>Build with sockets</b> — a tiny TCP echo server in Node, then an HTTP server without Express, so you see HTTP is just text over TCP.</li>
+<li><b>HTTPS</b> — set up a site with a free Let's Encrypt certificate. Inspect the certificate chain in the browser.</li>
+<li><b>Real-time</b> — build a small chat with WebSockets and a notification feed with SSE.</li>
+<li><b>Deployment networking</b> — put an app behind Nginx as a reverse proxy, then a CDN. Fix the CORS error you'll certainly hit.</li>
+<li><b>Practise the classic answer</b> — explain "what happens when you type a URL" out loud in under three minutes.</li>
+<li><b>Then</b> — Wireshark to see packets for real, cloud networking (VPCs, subnets, security groups), and HTTP/3 and QUIC in more depth.</li>
+</ol>
+<div class="note"><b>The habit that matters most:</b> whenever something on the web is slow or broken, ask "which layer is this?" Is it DNS, the connection, TLS, the server, or the browser? Naming the layer is half the fix — and it's exactly the kind of thinking interviewers want to hear.</div>
+</section>
+
+</main>
+</div>
+
+<script src="../assets/notes.js"></script>
+</body>
+</html>
+
+

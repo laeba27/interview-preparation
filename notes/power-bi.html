@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Power BI — Notes</title>
+<link rel="stylesheet" href="../assets/notes.css">
+<script>
+  try { document.documentElement.setAttribute("data-theme",
+    localStorage.getItem("notes-theme") || "light"); } catch (e) {}
+</script>
+</head>
+<body>
+<div class="scrim"></div>
+<button class="icon-btn" id="reopen" title="Show sidebar ([)" aria-label="Show sidebar">☰</button>
+<div class="layout">
+
+<aside>
+  <div class="sidebar-head">
+    <a class="back-link" href="../index.html">← All topics</a>
+    <button class="icon-btn" id="collapseBtn" title="Hide sidebar ([)" aria-label="Hide sidebar">‹</button>
+  </div>
+  <input id="search" type="text" placeholder="Filter topics…" autocomplete="off">
+  <h2>Getting Started</h2>
+  <nav>
+    <a href="#s1">1 · What Power BI Is</a>
+    <a href="#s2">2 · Components &amp; Fabric</a>
+    <a href="#s3">3 · The Workflow</a>
+    <a href="#s4">4 · Data Sources &amp; Modes</a>
+  </nav>
+  <h2>Power Query</h2>
+  <nav>
+    <a href="#s5">5 · Power Query Editor</a>
+    <a href="#s6">6 · Common Transforms</a>
+    <a href="#s7">7 · Merge, Append, Pivot, Group</a>
+    <a href="#s8">8 · M Language Basics</a>
+  </nav>
+  <h2>Data Modelling</h2>
+  <nav>
+    <a href="#s9">9 · Fact vs Dimension</a>
+    <a href="#s10">10 · Star vs Snowflake</a>
+    <a href="#s11">11 · Relationships</a>
+    <a href="#s12">12 · Date Table</a>
+  </nav>
+  <h2>DAX</h2>
+  <nav>
+    <a href="#s13">13 · Column vs Measure vs Table</a>
+    <a href="#s14">14 · Row vs Filter Context</a>
+    <a href="#s15">15 · Aggregations &amp; SUMX</a>
+    <a href="#s16">16 · CALCULATE &amp; FILTER</a>
+    <a href="#s17">17 · ALL, ALLEXCEPT, REMOVEFILTERS</a>
+    <a href="#s18">18 · RELATED &amp; RELATEDTABLE</a>
+    <a href="#s19">19 · IF, SWITCH, DIVIDE, VAR</a>
+    <a href="#s20">20 · Time Intelligence</a>
+    <a href="#s21">21 · RANKX</a>
+  </nav>
+  <h2>Visuals &amp; Reports</h2>
+  <nav>
+    <a href="#s22">22 · Choosing Visuals</a>
+    <a href="#s23">23 · Interactions &amp; Drilling</a>
+    <a href="#s24">24 · Bookmarks, Tooltips, Formatting</a>
+    <a href="#s25">25 · Parameters</a>
+  </nav>
+  <h2>Service &amp; Security</h2>
+  <nav>
+    <a href="#s26">26 · Row-Level Security</a>
+    <a href="#s27">27 · Service &amp; Licences</a>
+    <a href="#s28">28 · Reports vs Dashboards</a>
+    <a href="#s29">29 · Refresh &amp; Gateways</a>
+  </nav>
+  <h2>Practice</h2>
+  <nav>
+    <a href="#s30">30 · Performance Tips</a>
+    <a href="#s31">31 · Power BI vs Tableau vs Excel</a>
+    <a href="#s32">32 · End-to-End Sales Dashboard</a>
+  </nav>
+  <h2>Revision</h2>
+  <nav>
+    <a href="#rev">Quick Revision</a>
+    <a href="#road">Learning Path</a>
+  </nav>
+</aside>
+
+<main>
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="../index.html#analytics">Data Analytics</a></li><li><a href="power-bi.html">Power BI</a></li><li><span aria-current="page">Notes</span></li></ol></nav>
+<header class="top">
+  <h1>Power BI</h1>
+  <div class="top-actions">
+    <button class="ghost" id="menuBtn">☰ Topics</button>
+    <button class="ghost" id="theme">Dark mode</button>
+  </div>
+</header>
+<p class="sub">Power BI explained simply, for data analyst and business analyst interviews. Short sentences, small examples, one idea at a time. Most examples use one small made-up Sales table.</p>
+
+<!-- ================= GETTING STARTED ================= -->
+<div class="part">Part 1 — Getting Started</div>
+
+<section id="s1">
+<h3>1. What Power BI Is</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Power BI</b> is a Microsoft tool for <b>business intelligence</b> (BI). BI means turning raw data into charts and numbers that help people make decisions.</p>
+<p>You connect to data, clean it, link tables together, write a few formulas, and build an interactive <b>report</b>. Then you share it with your team online.</p>
+<p class="analogy">Think of a kitchen. Raw data is the vegetables. Power Query washes and cuts them. The data model is the recipe. The report is the finished plate you serve to guests.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Made by <b>Microsoft</b>. It works very well with Excel, SQL Server, Azure, Teams and SharePoint.</li>
+<li>Reports are <b>interactive</b>. Click a bar in one chart and the other charts filter too.</li>
+<li>Three languages you meet: <b>M</b> (Power Query, for cleaning), <b>DAX</b> (for formulas), and a little <b>SQL</b> (to read from databases).</li>
+<li>A Power BI Desktop file is saved as <code>.pbix</code>. A template (no data, only design) is <code>.pbit</code>. A project folder for Git is <code>.pbip</code>.</li>
+<li>It is popular because it is cheap, easy to start, and has a free desktop app.</li>
+</ul>
+<h4>Our example Sales table</h4>
+<p>Most examples in these notes use this tiny table. Each row is one sale.</p>
+<div class="table-wrap"><table>
+<tr><th>Date</th><th>Product</th><th>Region</th><th>Qty</th><th>Price</th></tr>
+<tr><td>2025-01-05</td><td>Pen</td><td>North</td><td>10</td><td>20</td></tr>
+<tr><td>2025-01-07</td><td>Notebook</td><td>South</td><td>4</td><td>60</td></tr>
+<tr><td>2025-02-11</td><td>Pen</td><td>South</td><td>6</td><td>20</td></tr>
+<tr><td>2025-02-15</td><td>Bag</td><td>North</td><td>1</td><td>900</td></tr>
+<tr><td>2025-03-02</td><td>Notebook</td><td>East</td><td>8</td><td>60</td></tr>
+</table></div>
+<p>Sales amount for one row = <code>Qty × Price</code>. For the first row that is 10 × 20 = 200.</p>
+<div class="note"><b>Remember:</b> Power BI = connect + clean + model + visualise + share. If you can explain those five words with an example, you can answer "What is Power BI?".</div>
+</section>
+
+<section id="s2">
+<h3>2. Components &amp; Microsoft Fabric</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Power BI is not one app. It is a <b>family</b> of tools. You <b>build</b> in one place and <b>share</b> in another.</p>
+<p class="analogy">It is like a bakery. Desktop is the kitchen where you bake. The Service is the shop where customers buy. Mobile is home delivery.</p>
+</div>
+<h4>The parts</h4>
+<div class="table-wrap"><table>
+<tr><th>Part</th><th>What it is</th><th>Who uses it</th></tr>
+<tr><td><b>Power BI Desktop</b></td><td>Free Windows app. You connect, clean, model and design reports here.</td><td>Report builders (analysts)</td></tr>
+<tr><td><b>Power BI Service</b></td><td>The website <code>app.powerbi.com</code>. You publish, share, refresh and build dashboards here.</td><td>Everyone: builders and viewers</td></tr>
+<tr><td><b>Power BI Mobile</b></td><td>Apps for iOS and Android to view reports on a phone.</td><td>Managers on the move</td></tr>
+<tr><td><b>Power BI Report Server</b></td><td>An on-premises server (inside the company, not cloud) to host reports. Needs a special Desktop version.</td><td>Companies that can't use the cloud</td></tr>
+<tr><td><b>Power BI Embedded</b></td><td>Put Power BI reports inside your own website or app.</td><td>Developers</td></tr>
+</table></div>
+<h4>Key points</h4>
+<ul>
+<li><b>Desktop is Windows only.</b> Mac users run it in a virtual machine, or edit some things in the Service.</li>
+<li>You can also build simple reports straight in the browser (Service), but Desktop has all the features.</li>
+<li><b>Microsoft Fabric</b> (since 2023) is Microsoft's all-in-one data platform. Power BI is now one part ("workload") of Fabric.</li>
+<li>Fabric adds data engineering, data warehouses and notebooks. All data sits in one shared lake called <b>OneLake</b>.</li>
+<li><b>Copilot</b> (AI help) can write DAX, summarise pages and suggest visuals, on paid Fabric capacity.</li>
+</ul>
+<div class="note"><b>Remember:</b> build in Desktop, share in the Service, view on Mobile. Report Server is for on-premises only. Fabric is the bigger platform Power BI now lives in.</div>
+</section>
+
+<section id="s3">
+<h3>3. The Power BI Workflow</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Almost every Power BI project follows the same six steps, in the same order.</p>
+<p class="analogy">It is like making tea. Get the leaves (get data), wash the cup (transform), mix in the right order (model), pour it nicely (visualise), carry it out (publish), and serve it (share).</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 200" role="img" aria-label="Power BI workflow in six steps: get data, transform, model, visualise happen in Power BI Desktop; publish and share happen in the Power BI Service.">
+  <rect class="d-box-accent" x="10" y="40" width="90" height="56" rx="8"/>
+  <text class="d-accent-text" x="55" y="63" text-anchor="middle">1. Get data</text>
+  <text class="d-sub" x="55" y="81" text-anchor="middle">connectors</text>
+
+  <rect class="d-box" x="116" y="40" width="90" height="56" rx="8"/>
+  <text class="d-label" x="161" y="63" text-anchor="middle">2. Transform</text>
+  <text class="d-sub" x="161" y="81" text-anchor="middle">Power Query</text>
+
+  <rect class="d-box" x="222" y="40" width="90" height="56" rx="8"/>
+  <text class="d-label" x="267" y="63" text-anchor="middle">3. Model</text>
+  <text class="d-sub" x="267" y="81" text-anchor="middle">tables + DAX</text>
+
+  <rect class="d-box" x="328" y="40" width="90" height="56" rx="8"/>
+  <text class="d-label" x="373" y="63" text-anchor="middle">4. Visualise</text>
+  <text class="d-sub" x="373" y="81" text-anchor="middle">charts, pages</text>
+
+  <rect class="d-fill-accent" x="434" y="40" width="90" height="56" rx="8"/>
+  <rect class="d-box-accent" x="434" y="40" width="90" height="56" rx="8"/>
+  <text class="d-accent-text" x="479" y="63" text-anchor="middle">5. Publish</text>
+  <text class="d-sub" x="479" y="81" text-anchor="middle">to Service</text>
+
+  <rect class="d-fill-accent" x="540" y="40" width="90" height="56" rx="8"/>
+  <rect class="d-box-accent" x="540" y="40" width="90" height="56" rx="8"/>
+  <text class="d-accent-text" x="585" y="63" text-anchor="middle">6. Share</text>
+  <text class="d-sub" x="585" y="81" text-anchor="middle">apps, links</text>
+
+  <path class="d-line" d="M100 68 H108"/><path class="d-arrow" d="M116 68 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M206 68 H214"/><path class="d-arrow" d="M222 68 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M312 68 H320"/><path class="d-arrow" d="M328 68 l-9 -4.5 v9 z"/>
+  <path class="d-line-accent" d="M418 68 H426"/><path class="d-arrow-accent" d="M434 68 l-9 -4.5 v9 z"/>
+  <path class="d-line-accent" d="M524 68 H532"/><path class="d-arrow-accent" d="M540 68 l-9 -4.5 v9 z"/>
+
+  <path class="d-dash" d="M10 108 V116 H418 V108"/>
+  <text class="d-label" x="214" y="136" text-anchor="middle">Power BI Desktop (build)</text>
+  <path class="d-dash" d="M434 108 V116 H630 V108"/>
+  <text class="d-accent-text" x="532" y="136" text-anchor="middle">Power BI Service (share)</text>
+
+  <text class="d-sub" x="320" y="176" text-anchor="middle">After publishing, scheduled refresh keeps the data up to date without opening Desktop.</text>
+</svg>
+<figcaption>The six-step workflow. Steps 1–4 happen in Desktop. Steps 5–6 happen in the Service.</figcaption>
+</figure>
+<h4>How to do it (step by step)</h4>
+<ol>
+<li><b>Get data</b>: Home → Get data → pick a source (Excel, SQL Server, CSV, web…).</li>
+<li><b>Transform</b>: click <b>Transform data</b>. Power Query Editor opens. Clean the data, then <b>Close &amp; Apply</b>.</li>
+<li><b>Model</b>: go to <b>Model view</b>. Link tables with relationships. Write measures in DAX.</li>
+<li><b>Visualise</b>: go to <b>Report view</b>. Drag fields onto the page to build charts.</li>
+<li><b>Publish</b>: Home → <b>Publish</b> → choose a workspace in the Service.</li>
+<li><b>Share</b>: in the Service, share the report, publish an app, and set up scheduled refresh.</li>
+</ol>
+<div class="note"><b>Remember:</b> "Get data → Transform → Model → Visualise → Publish → Share". Interviewers love asking you to walk through this.</div>
+</section>
+
+<section id="s4">
+<h3>4. Data Sources &amp; Connection Modes</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Power BI can read from hundreds of <b>sources</b>: files, databases, cloud services and websites. A <b>connector</b> is the built-in plug for each source.</p>
+<p>The <b>connection mode</b> decides one big thing: does Power BI <b>copy</b> the data in, or <b>ask</b> the source every time?</p>
+<p class="analogy">Import is like downloading a movie: fast to watch, but it is a copy from that day. DirectQuery is like streaming: always the latest, but it depends on the internet speed.</p>
+</div>
+<h4>Common sources</h4>
+<ul>
+<li><b>Files</b>: Excel, CSV, JSON, XML, PDF, a whole folder of files.</li>
+<li><b>Databases</b>: SQL Server, MySQL, PostgreSQL, Oracle, Snowflake, Databricks.</li>
+<li><b>Cloud / online</b>: SharePoint, OneDrive, Azure SQL, Dataverse, Salesforce, Google Analytics, a web page.</li>
+<li><b>Power BI / Fabric</b>: existing semantic models, dataflows, lakehouses and warehouses.</li>
+</ul>
+<h4>The connection modes</h4>
+<div class="table-wrap"><table>
+<tr><th>Mode</th><th>What happens</th><th>Good</th><th>Bad</th></tr>
+<tr><td><b>Import</b></td><td>Data is copied into the <code>.pbix</code> file and compressed.</td><td>Fastest. All DAX and Power Query features work.</td><td>Data is only as fresh as the last refresh. File size limits.</td></tr>
+<tr><td><b>DirectQuery</b></td><td>No copy. Every click sends a query to the source.</td><td>Always fresh. Works with huge data.</td><td>Slower visuals. Some DAX and transforms are limited. Puts load on the source.</td></tr>
+<tr><td><b>Live connection</b></td><td>Connects to an existing Power BI semantic model or Analysis Services model.</td><td>One shared, trusted model for many reports.</td><td>You can't change the model or use Power Query. You can add report-level measures only.</td></tr>
+<tr><td><b>Composite</b></td><td>Mix Import and DirectQuery tables in one model.</td><td>Small tables imported (fast), big table live (fresh).</td><td>More complex to design.</td></tr>
+</table></div>
+<ul>
+<li><b>Direct Lake</b> (Fabric only): reads Delta tables in OneLake directly. Nearly Import speed, without a full copy.</li>
+<li><b>Storage mode</b> for each table is set in Model view → table properties: Import, DirectQuery or <b>Dual</b> (can act as either).</li>
+</ul>
+<div class="note"><b>Remember:</b> Import by default. DirectQuery when data is huge or must be real-time. Live connection when a central team owns the model.</div>
+</section>
+
+<!-- ================= POWER QUERY ================= -->
+<div class="part">Part 2 — Power Query</div>
+
+<section id="s5">
+<h3>5. Power Query Editor &amp; Applied Steps</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Power Query</b> is the cleaning tool inside Power BI (and Excel). You clean data by clicking buttons. Each click is saved as a <b>step</b>.</p>
+<p>Next time data refreshes, Power BI <b>repeats all the steps</b> automatically. You never clean the same data twice.</p>
+<p class="analogy">Applied steps are like a recipe card. Once you write "wash, peel, cut", anyone can repeat it on new vegetables tomorrow.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Open it with Home → <b>Transform data</b>.</li>
+<li>Left side: <b>Queries</b> (each one becomes a table). Middle: a preview of the data. Right side: <b>Applied Steps</b>.</li>
+<li>Click any step to see the data at that moment. Click the ✕ to delete a step.</li>
+<li>The <b>formula bar</b> shows the M code for each step. Turn it on in View → Formula bar.</li>
+<li><b>Column quality / distribution / profile</b> (View tab) show errors, empty values and unique counts. Great for spotting dirty data.</li>
+<li><b>Query folding</b> = Power Query turns your steps into one SQL query and lets the database do the work. Faster. Right-click a step → "View Native Query" to check.</li>
+<li>Click <b>Close &amp; Apply</b> to load the clean data into the model.</li>
+</ul>
+<h4>How to do it</h4>
+<ol>
+<li>Get data → Excel → pick the Sales sheet → <b>Transform Data</b> (not Load).</li>
+<li>Check the first steps Power BI added: <code>Source</code>, <code>Navigation</code>, <code>Promoted Headers</code>, <code>Changed Type</code>.</li>
+<li>Add your own steps (next section).</li>
+<li>Rename steps to clear names, like "Removed blank rows". Right-click → Rename.</li>
+<li>Close &amp; Apply.</li>
+</ol>
+<div class="note"><b>Remember:</b> Power QUERY = clean and shape (M language). DAX = calculate (after loading). Clean as early as possible, ideally in Power Query or at the source.</div>
+</section>
+
+<section id="s6">
+<h3>6. Common Transformations</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>transformation</b> is one change to the data, like removing a column or fixing a date. These are the ones you will use every day.</p>
+<p class="analogy">It is like tidying a messy cupboard: throw out what you don't need, put labels on boxes, split mixed items into separate boxes.</p>
+</div>
+<h4>The everyday list</h4>
+<div class="table-wrap"><table>
+<tr><th>Transform</th><th>What it does</th><th>Where to click</th></tr>
+<tr><td><b>Remove columns</b></td><td>Drop columns you don't need. Smaller model, faster report.</td><td>Home → Remove Columns (or Choose Columns)</td></tr>
+<tr><td><b>Rename column</b></td><td>Give a clear name, e.g. <code>cust_nm</code> → <code>Customer Name</code>.</td><td>Double-click the header</td></tr>
+<tr><td><b>Change type</b></td><td>Set the data type: Whole number, Decimal, Date, Text, True/False.</td><td>Click the icon left of the header</td></tr>
+<tr><td><b>Remove rows</b></td><td>Remove top rows, blank rows, duplicates or errors.</td><td>Home → Remove Rows</td></tr>
+<tr><td><b>Replace values</b></td><td>Change "N/A" to null, or "Nrth" to "North".</td><td>Transform → Replace Values</td></tr>
+<tr><td><b>Split column</b></td><td>"Delhi-North" → "Delhi" and "North". By delimiter or number of characters.</td><td>Home → Split Column</td></tr>
+<tr><td><b>Trim / Clean / Format</b></td><td>Remove extra spaces, hidden characters, change UPPER/lower case.</td><td>Transform → Format</td></tr>
+<tr><td><b>Conditional column</b></td><td>New column using IF-style rules, without code.</td><td>Add Column → Conditional Column</td></tr>
+<tr><td><b>Fill down</b></td><td>Copy the value above into empty cells below.</td><td>Transform → Fill → Down</td></tr>
+<tr><td><b>Column from examples</b></td><td>Type a few results; Power Query guesses the rule.</td><td>Add Column → Column From Examples</td></tr>
+</table></div>
+<h4>Example: conditional column</h4>
+<p>Rule: if Qty ≥ 5 then "Bulk" else "Single". Result on our Sales table:</p>
+<div class="table-wrap"><table>
+<tr><th>Product</th><th>Qty</th><th>Order Type (new)</th></tr>
+<tr><td>Pen</td><td>10</td><td>Bulk</td></tr>
+<tr><td>Notebook</td><td>4</td><td>Single</td></tr>
+<tr><td>Bag</td><td>1</td><td>Single</td></tr>
+</table></div>
+<h4>Example: fill down</h4>
+<p>Excel exports often show a region only on the first row of a group. Fill down fixes it.</p>
+<div class="flow">Before            After fill down
+Region  Product   Region  Product
+North   Pen       North   Pen
+null    Bag       North   Bag
+South   Pen       South   Pen
+null    Notebook  South   Notebook</div>
+<div class="note"><b>Remember:</b> always set the correct data type. A "number" stored as text can't be summed, and a text date can't use time intelligence.</div>
+</section>
+
+<section id="s7">
+<h3>7. Merge, Append, Pivot, Unpivot &amp; Group By</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Append</b> stacks tables <b>on top</b> of each other (more rows). <b>Merge</b> joins tables <b>side by side</b> using a matching column (more columns).</p>
+<p class="analogy">Append is like stapling January's attendance sheet under December's. Merge is like adding a "phone number" column next to each student by looking them up in another list.</p>
+</div>
+<h4>Merge vs Append</h4>
+<div class="table-wrap"><table>
+<tr><th></th><th>Append Queries</th><th>Merge Queries</th></tr>
+<tr><td>Result</td><td>More <b>rows</b></td><td>More <b>columns</b></td></tr>
+<tr><td>Needs</td><td>Same column names in each table</td><td>A matching key column (e.g. ProductID)</td></tr>
+<tr><td>SQL twin</td><td><code>UNION ALL</code></td><td><code>JOIN</code></td></tr>
+<tr><td>Example</td><td>Sales_2024 + Sales_2025 → one Sales table</td><td>Sales + Products → add Category to each sale</td></tr>
+<tr><td>Where</td><td>Home → Append Queries</td><td>Home → Merge Queries, then expand the new column</td></tr>
+</table></div>
+<ul>
+<li>Merge join kinds: <b>Left outer</b> (default: all rows from the first table), Right outer, Full outer, <b>Inner</b> (only matches), <b>Left anti</b> (rows with no match: great for finding missing data), Right anti.</li>
+<li>Tip: in a good model you often <b>don't need to merge</b>. Keep Products as its own table and use a relationship instead.</li>
+</ul>
+<h4>Pivot and Unpivot</h4>
+<p><b>Unpivot</b> turns many columns into rows. <b>Pivot</b> does the opposite. Power BI likes <b>long, thin</b> tables, so unpivot is used far more often.</p>
+<div class="flow">Wide (bad for Power BI)          Long (good) after Unpivot
+Product  Jan  Feb  Mar           Product  Month  Sales
+Pen      200  120  0             Pen      Jan    200
+Bag      0    900  0             Pen      Feb    120
+                                 Pen      Mar    0
+                                 Bag      Jan    0 ...</div>
+<p>How: select the <b>Product</b> column → Transform → Unpivot Columns → <b>Unpivot Other Columns</b>. This still works when new months are added later.</p>
+<h4>Group By</h4>
+<p><b>Group By</b> makes a summary table, like a SQL <code>GROUP BY</code>. Example: total Qty per Region.</p>
+<div class="table-wrap"><table>
+<tr><th>Region</th><th>Total Qty</th></tr>
+<tr><td>North</td><td>11</td></tr>
+<tr><td>South</td><td>10</td></tr>
+<tr><td>East</td><td>8</td></tr>
+</table></div>
+<p>How: Home → Group By → group by Region → new column "Total Qty", operation Sum, column Qty.</p>
+<div class="note"><b>Remember:</b> Append = stack rows (UNION). Merge = join columns (JOIN). Unpivot wide month columns into rows before you model.</div>
+</section>
+
+<section id="s8">
+<h3>8. M Language Basics</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>M</b> is the language behind Power Query. Every button you click writes a line of M. You rarely need to write it from scratch, but you should be able to read it.</p>
+<p class="analogy">M is like the receipt behind your shopping. You chose items by pointing (clicking). The receipt (M code) lists every item in order.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>See all the code in Home → <b>Advanced Editor</b>.</li>
+<li>A query is a <code>let ... in</code> block. Each line inside <code>let</code> is one step. <code>in</code> says which step is the final result.</li>
+<li>Each step uses the step before it, by name.</li>
+<li><b>M is case-sensitive.</b> <code>Table.SelectRows</code> works; <code>table.selectrows</code> fails.</li>
+<li><code>each [Qty] &gt; 0</code> means "for each row, check Qty is greater than 0".</li>
+<li>Step names with spaces are written like <code>#"Changed Type"</code>.</li>
+</ul>
+<pre><code>let
+    // 1. Read the CSV file
+    Source = Csv.Document(File.Contents("C:\Data\sales.csv"), [Delimiter = ",", Encoding = 65001]),
+    // 2. Use the first row as column names
+    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+    // 3. Set data types
+    Typed = Table.TransformColumnTypes(Promoted,
+        {{"Date", type date}, {"Qty", Int64.Type}, {"Price", type number}}),
+    // 4. Keep only rows with Qty above 0
+    Filtered = Table.SelectRows(Typed, each [Qty] &gt; 0),
+    // 5. Add Amount = Qty * Price
+    Added = Table.AddColumn(Filtered, "Amount", each [Qty] * [Price], type number)
+in
+    Added</code></pre>
+<div class="note"><b>Remember:</b> M = Power Query's language, step by step, case-sensitive. DAX = model formulas. Don't mix them up in an interview.</div>
+</section>
+
+<!-- ================= MODELLING ================= -->
+<div class="part">Part 3 — Data Modelling</div>
+
+<section id="s9">
+<h3>9. Fact vs Dimension Tables</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>fact table</b> stores <b>events</b> with numbers: each sale, each click, each payment. A <b>dimension table</b> stores <b>descriptions</b>: who, what, where, when.</p>
+<p class="analogy">A shop receipt roll is the fact table: thousands of sales. The product catalogue and the staff list are dimension tables: they describe the items and people on those receipts.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><b>Fact</b>: many rows, grows every day, mostly numbers and ID columns (keys). Example: <code>Sales</code>.</li>
+<li><b>Dimension</b>: fewer rows, mostly text, one row per thing. Example: <code>Product</code>, <code>Store</code>, <code>Date</code>, <code>Customer</code>.</li>
+<li>You <b>sum and count</b> fact columns. You <b>filter and group</b> by dimension columns.</li>
+<li>They are linked by a <b>key</b>: <code>Sales[ProductID]</code> matches <code>Product[ProductID]</code>.</li>
+<li><b>Granularity</b> (grain) = what one row of the fact means. Example: "one row = one product in one order".</li>
+</ul>
+<h4>Our flat Sales table, split into a model</h4>
+<div class="flow">Sales (fact)                          Product (dimension)
+OrderDate | ProductID | StoreID | Qty | Price      ProductID | Product | Category
+2025-01-05| P1        | S1      | 10  | 20         P1        | Pen     | Stationery
+2025-02-15| P3        | S1      | 1   | 900        P3        | Bag     | Accessories
+
+Store (dimension)                     Date (dimension)
+StoreID | City   | Region             Date | Year | Month | Quarter
+S1      | Delhi  | North              2025-01-05 | 2025 | Jan | Q1</div>
+<p>The rest of these notes use this model: <b>Sales</b>, <b>Product</b>, <b>Store</b> and <b>'Date'</b>.</p>
+<div class="note"><b>Remember:</b> facts = numbers about events (what you add up). Dimensions = descriptions (what you slice by).</div>
+</section>
+
+<section id="s10">
+<h3>10. Star vs Snowflake Schema</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>schema</b> is the shape of your model. In a <b>star schema</b>, one fact table sits in the middle, and each dimension links straight to it. In a <b>snowflake</b>, dimensions are split further into more tables.</p>
+<p class="analogy">A star is like a wheel: the hub (fact) with spokes (dimensions). A snowflake is a wheel where some spokes have extra small branches.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 680 300" role="img" aria-label="Left: star schema with the Sales fact table in the centre and Date, Product, Store and Customer each linked directly to it. Right: snowflake schema where Product links on to Category and Store links on to Region.">
+  <text class="d-accent-text" x="170" y="18" text-anchor="middle">STAR SCHEMA</text>
+  <text class="d-accent-text" x="515" y="18" text-anchor="middle">SNOWFLAKE SCHEMA</text>
+  <path class="d-dash" d="M340 10 V270"/>
+
+  <rect class="d-box" x="120" y="30" width="100" height="40" rx="7"/>
+  <text class="d-label" x="170" y="55" text-anchor="middle">Date</text>
+  <rect class="d-box" x="10" y="120" width="90" height="40" rx="7"/>
+  <text class="d-label" x="55" y="145" text-anchor="middle">Product</text>
+  <rect class="d-fill-accent" x="120" y="115" width="100" height="50" rx="8"/>
+  <rect class="d-box-accent" x="120" y="115" width="100" height="50" rx="8"/>
+  <text class="d-accent-text" x="170" y="137" text-anchor="middle">Sales</text>
+  <text class="d-sub" x="170" y="154" text-anchor="middle">fact</text>
+  <rect class="d-box" x="240" y="120" width="90" height="40" rx="7"/>
+  <text class="d-label" x="285" y="145" text-anchor="middle">Store</text>
+  <rect class="d-box" x="120" y="210" width="100" height="40" rx="7"/>
+  <text class="d-label" x="170" y="235" text-anchor="middle">Customer</text>
+
+  <path class="d-line" d="M170 70 V115"/>
+  <path class="d-line" d="M170 165 V210"/>
+  <path class="d-line" d="M100 140 H120"/>
+  <path class="d-line" d="M220 140 H240"/>
+
+  <rect class="d-box" x="440" y="30" width="100" height="40" rx="7"/>
+  <text class="d-label" x="490" y="55" text-anchor="middle">Date</text>
+  <rect class="d-box" x="350" y="120" width="80" height="40" rx="7"/>
+  <text class="d-label" x="390" y="145" text-anchor="middle">Customer</text>
+  <rect class="d-fill-accent" x="440" y="115" width="100" height="50" rx="8"/>
+  <rect class="d-box-accent" x="440" y="115" width="100" height="50" rx="8"/>
+  <text class="d-accent-text" x="490" y="137" text-anchor="middle">Sales</text>
+  <text class="d-sub" x="490" y="154" text-anchor="middle">fact</text>
+  <rect class="d-box" x="560" y="120" width="90" height="40" rx="7"/>
+  <text class="d-label" x="605" y="145" text-anchor="middle">Product</text>
+  <rect class="d-box" x="560" y="210" width="90" height="40" rx="7"/>
+  <text class="d-label" x="605" y="235" text-anchor="middle">Category</text>
+  <rect class="d-box" x="440" y="210" width="100" height="40" rx="7"/>
+  <text class="d-label" x="490" y="235" text-anchor="middle">Store</text>
+  <rect class="d-box" x="350" y="210" width="80" height="40" rx="7"/>
+  <text class="d-label" x="390" y="235" text-anchor="middle">Region</text>
+
+  <path class="d-line" d="M490 70 V115"/>
+  <path class="d-line" d="M430 140 H440"/>
+  <path class="d-line" d="M540 140 H560"/>
+  <path class="d-line" d="M490 165 V210"/>
+  <path class="d-line-accent" d="M605 160 V210"/>
+  <path class="d-line-accent" d="M440 230 H430"/>
+
+  <text class="d-sub" x="170" y="288" text-anchor="middle">every dimension links straight to the fact</text>
+  <text class="d-sub" x="515" y="288" text-anchor="middle">some dimensions split into extra tables</text>
+</svg>
+<figcaption>Star schema (left) vs snowflake schema (right). The green links on the right are the extra "snowflake" branches.</figcaption>
+</figure>
+<div class="table-wrap"><table>
+<tr><th></th><th>Star</th><th>Snowflake</th></tr>
+<tr><td>Shape</td><td>Fact + one layer of dimensions</td><td>Dimensions split into sub-tables</td></tr>
+<tr><td>Number of tables</td><td>Fewer</td><td>More</td></tr>
+<tr><td>Repeated text</td><td>Some (e.g. "Stationery" repeats in Product)</td><td>Less repetition</td></tr>
+<tr><td>Speed in Power BI</td><td><b>Faster</b>, simpler DAX</td><td>Slower, more relationships to follow</td></tr>
+<tr><td>Recommended?</td><td><b>Yes</b>, Microsoft's advice</td><td>Flatten it into a star in Power Query</td></tr>
+</table></div>
+<h4>How to turn a snowflake into a star</h4>
+<ol>
+<li>In Power Query, merge <code>Category</code> into <code>Product</code> (Merge Queries on CategoryID).</li>
+<li>Expand the Category Name column.</li>
+<li>Right-click the <code>Category</code> query → untick <b>Enable load</b>, so it doesn't load as a separate table.</li>
+</ol>
+<div class="note"><b>Remember:</b> star schema = best practice in Power BI. It is faster, easier to understand, and DAX works the way you expect.</div>
+</section>
+
+<section id="s11">
+<h3>11. Relationships, Cardinality &amp; Filter Direction</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>relationship</b> is a link between two tables using a matching column. It lets a filter on one table reach another table.</p>
+<p><b>Cardinality</b> says how many rows match on each side. <b>Cross-filter direction</b> says which way the filter can travel.</p>
+<p class="analogy">A relationship is like a one-way street sign. Filters are cars. A single-direction street lets cars go only from the dimension to the fact.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 250" role="img" aria-label="Three cardinality types. One-to-one: Employee to Employee Details. One-to-many: Product to Sales, with the filter flowing from Product to Sales. Many-to-many: Budget to Product on Category, where both sides repeat.">
+  <rect class="d-box" x="20" y="20" width="150" height="44" rx="7"/>
+  <text class="d-label" x="95" y="47" text-anchor="middle">Employee</text>
+  <rect class="d-box" x="290" y="20" width="150" height="44" rx="7"/>
+  <text class="d-label" x="365" y="47" text-anchor="middle">Employee Details</text>
+  <path class="d-line" d="M170 42 H290"/>
+  <text class="d-label" x="182" y="36" text-anchor="middle">1</text>
+  <text class="d-label" x="278" y="36" text-anchor="middle">1</text>
+  <text class="d-accent-text" x="460" y="38">One-to-one (1:1)</text>
+  <text class="d-sub" x="460" y="55">one row to one row; rare</text>
+
+  <rect class="d-box" x="20" y="100" width="150" height="44" rx="7"/>
+  <text class="d-label" x="95" y="127" text-anchor="middle">Product</text>
+  <rect class="d-fill-accent" x="290" y="100" width="150" height="44" rx="7"/>
+  <rect class="d-box-accent" x="290" y="100" width="150" height="44" rx="7"/>
+  <text class="d-accent-text" x="365" y="127" text-anchor="middle">Sales</text>
+  <path class="d-line-accent" d="M170 122 H284"/><path class="d-arrow-accent" d="M290 122 l-9 -4.5 v9 z"/>
+  <text class="d-label" x="182" y="116" text-anchor="middle">1</text>
+  <text class="d-label" x="276" y="116" text-anchor="middle">*</text>
+  <text class="d-sub" x="230" y="140" text-anchor="middle">filter flows →</text>
+  <text class="d-accent-text" x="460" y="118">One-to-many (1:*)</text>
+  <text class="d-sub" x="460" y="135">one product, many sales</text>
+
+  <rect class="d-box" x="20" y="180" width="150" height="44" rx="7"/>
+  <text class="d-label" x="95" y="200" text-anchor="middle">Budget</text>
+  <text class="d-sub" x="95" y="216" text-anchor="middle">per Category</text>
+  <rect class="d-box" x="290" y="180" width="150" height="44" rx="7"/>
+  <text class="d-label" x="365" y="200" text-anchor="middle">Product</text>
+  <text class="d-sub" x="365" y="216" text-anchor="middle">Category repeats</text>
+  <path class="d-dash" d="M170 202 H290"/>
+  <text class="d-label" x="182" y="196" text-anchor="middle">*</text>
+  <text class="d-label" x="278" y="196" text-anchor="middle">*</text>
+  <text class="d-accent-text" x="460" y="198">Many-to-many (*:*)</text>
+  <text class="d-sub" x="460" y="215">both sides repeat; take care</text>
+</svg>
+<figcaption>The three cardinality types. One-to-many from a dimension to a fact is the normal, healthy case.</figcaption>
+</figure>
+<h4>Cardinality</h4>
+<ul>
+<li><b>One-to-many (1:*)</b>: one row in Product matches many rows in Sales. The "one" side must have unique keys. This is 90% of relationships.</li>
+<li><b>One-to-one (1:1)</b>: each row matches exactly one row. Usually means the two tables should be merged into one.</li>
+<li><b>Many-to-many (*:*)</b>: neither side is unique. Example: a Budget table by Category joined to Product on Category. Works, but can give confusing totals. A <b>bridge table</b> (a table of unique keys in the middle) is often cleaner.</li>
+</ul>
+<h4>Cross-filter direction</h4>
+<ul>
+<li><b>Single</b> (default, recommended): filters go from the "one" side (dimension) to the "many" side (fact). Picking "Pen" filters Sales.</li>
+<li><b>Both</b> (bi-directional): filters go both ways. Useful for some many-to-many cases, but can slow the model and cause <b>ambiguity</b> (more than one path between tables).</li>
+<li>Prefer turning on "both" only inside one measure with <code>CROSSFILTER(..., Both)</code>, instead of on the whole relationship.</li>
+</ul>
+<h4>Active vs inactive relationships</h4>
+<ul>
+<li>Only <b>one active</b> relationship can exist between two tables. It is a solid line in Model view.</li>
+<li>Extra ones are <b>inactive</b> (dotted line). Example: Sales has <code>OrderDate</code> and <code>ShipDate</code>, both linked to <code>'Date'[Date]</code>.</li>
+<li>Use an inactive one inside a measure with <code>USERELATIONSHIP</code>:</li>
+</ul>
+<pre><code>Sales by Ship Date =
+CALCULATE (
+    [Total Sales],
+    USERELATIONSHIP ( Sales[ShipDate], 'Date'[Date] )   -- use the dotted line for this measure only
+)</code></pre>
+<h4>How to create a relationship</h4>
+<ol>
+<li>Go to Model view.</li>
+<li>Drag <code>Product[ProductID]</code> onto <code>Sales[ProductID]</code>.</li>
+<li>Double-click the line. Check cardinality (Many to one) and cross-filter direction (Single).</li>
+<li>Power BI may auto-detect relationships on load. Always check them.</li>
+</ol>
+<div class="note"><b>Remember:</b> one-to-many, single direction, from dimension to fact. Use USERELATIONSHIP for a second date, and avoid "both" unless you really need it.</div>
+</section>
+
+<section id="s12">
+<h3>12. The Date (Calendar) Table</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>date table</b> is a dimension with <b>one row for every day</b>, with no gaps. It has helper columns like Year, Month and Quarter.</p>
+<p class="analogy">It is like a wall calendar. Even days with no sales still have a box on it. Time formulas need every box to be there to count backwards and forwards.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Time intelligence functions (YTD, last year) need a proper date table to work correctly.</li>
+<li>Rules: one row per date, <b>unique</b> dates, <b>no blanks</b>, <b>no gaps</b>. Best to cover whole years.</li>
+<li><code>CALENDAR(start, end)</code> makes dates between two dates you choose.</li>
+<li><code>CALENDARAUTO()</code> looks at all dates in your model and makes full years that cover them.</li>
+<li>Turn off <b>Auto date/time</b> (File → Options → Data Load). It creates hidden date tables for every date column and makes the file bigger.</li>
+</ul>
+<pre><code>Date =
+ADDCOLUMNS (
+    CALENDAR ( DATE ( 2024, 1, 1 ), DATE ( 2025, 12, 31 ) ),
+    "Year", YEAR ( [Date] ),
+    "Month No", MONTH ( [Date] ),
+    "Month", FORMAT ( [Date], "MMM" ),
+    "Quarter", "Q" &amp; QUARTER ( [Date] ),
+    "Weekday", FORMAT ( [Date], "ddd" )
+)</code></pre>
+<h4>How to do it</h4>
+<ol>
+<li>Modeling → <b>New table</b> → paste the formula above.</li>
+<li>Select the table → Table tools → <b>Mark as date table</b> → choose the <code>Date</code> column.</li>
+<li>Select the <code>Month</code> column → <b>Sort by column</b> → <code>Month No</code>. Otherwise months sort A–Z (Apr, Aug, Dec…).</li>
+<li>Create a relationship: <code>'Date'[Date]</code> (one) → <code>Sales[OrderDate]</code> (many).</li>
+<li>Always use <code>'Date'</code> columns in visuals and slicers, not <code>Sales[OrderDate]</code>.</li>
+</ol>
+<div class="note"><b>Remember:</b> make a date table, mark it as a date table, sort months by month number, and link it to the fact. Say these four steps in interviews.</div>
+</section>
+
+<!-- ================= DAX ================= -->
+<div class="part">Part 4 — DAX</div>
+
+<section id="s13">
+<h3>13. DAX Basics: Calculated Column vs Measure vs Calculated Table</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>DAX</b> (Data Analysis Expressions) is the formula language of Power BI. It looks a bit like Excel formulas, but it works on <b>whole tables and columns</b>, not single cells.</p>
+<p>You can use DAX to make three things: a <b>calculated column</b>, a <b>measure</b>, or a <b>calculated table</b>.</p>
+<p class="analogy">A calculated column is like writing a value on every receipt in a pile. A measure is like a calculator you use when someone asks a question. It works out the answer only when needed.</p>
+</div>
+<div class="table-wrap"><table>
+<tr><th></th><th>Calculated column</th><th>Measure</th><th>Calculated table</th></tr>
+<tr><td>What it makes</td><td>A new column in a table</td><td>One number (a summary)</td><td>A whole new table</td></tr>
+<tr><td>When it is calculated</td><td>At refresh, row by row</td><td><b>At query time</b>, when a visual needs it</td><td>At refresh</td></tr>
+<tr><td>Stored in the file?</td><td>Yes, uses memory</td><td>No, only the formula</td><td>Yes, uses memory</td></tr>
+<tr><td>Reacts to slicers?</td><td>No (values are fixed)</td><td><b>Yes</b></td><td>No</td></tr>
+<tr><td>Context</td><td>Row context</td><td>Filter context</td><td>—</td></tr>
+<tr><td>Example</td><td><code>Amount = Sales[Qty] * Sales[Price]</code></td><td><code>Total Qty = SUM(Sales[Qty])</code></td><td><code>Date = CALENDARAUTO()</code></td></tr>
+<tr><td>Use it for</td><td>Slicing, grouping, filtering by a value per row (e.g. "Bulk"/"Single")</td><td>Totals, %, averages, KPIs</td><td>Date tables, helper tables</td></tr>
+</table></div>
+<h4>Key points</h4>
+<ul>
+<li>Syntax: <code>Name = expression</code>. Columns are written <code>Table[Column]</code>. Measures are written <code>[Measure]</code>.</li>
+<li>Table names with spaces or reserved words need quotes: <code>'Date'[Year]</code>.</li>
+<li><b>Prefer measures.</b> They don't use memory and they respond to every filter.</li>
+<li>Keep measures in one empty table called <code>_Measures</code> so they are easy to find.</li>
+<li>Comments: <code>--</code> or <code>//</code> for one line, <code>/* */</code> for many lines.</li>
+<li>An <b>implicit measure</b> is when you drag a number column and Power BI sums it for you. An <b>explicit measure</b> is one you write. Write explicit ones; they are reusable.</li>
+</ul>
+<div class="note"><b>Remember:</b> if you need to slice or filter by it, use a column. If you need to add it up and see it change with filters, use a measure.</div>
+</section>
+
+<section id="s14">
+<h3>14. Row Context vs Filter Context</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Row context</b> means "I am looking at <b>one row</b> right now". <b>Filter context</b> means "these <b>filters</b> are active right now, so only some rows are visible".</p>
+<p class="analogy">Row context is a teacher marking one exam paper at a time. Filter context is the principal saying "show me only Class 10, Section B" before anyone counts anything.</p>
+</div>
+<h4>Row context</h4>
+<ul>
+<li>Exists in <b>calculated columns</b> and inside <b>iterator</b> functions like <code>SUMX</code>.</li>
+<li>Lets you write <code>Sales[Qty] * Sales[Price]</code>: "this row's Qty times this row's Price".</li>
+<li>Row context does <b>not</b> filter anything by itself.</li>
+</ul>
+<h4>Filter context</h4>
+<ul>
+<li>Comes from everything around a visual cell: <b>slicers</b>, <b>rows/columns of a matrix</b>, chart axes, the <b>Filters pane</b>, cross-filtering from other visuals, and RLS.</li>
+<li>Every <b>measure</b> is calculated inside a filter context. That's why the same measure shows a different number in every cell.</li>
+<li><code>CALCULATE</code> is the function that <b>changes</b> filter context.</li>
+</ul>
+<figure class="diagram">
+<svg viewBox="0 0 640 230" role="img" aria-label="Filter context flow: a slicer for Year 2025 and a matrix row for Region North combine into one filter context. That filter context leaves only matching rows of the Sales table. The Total Sales measure runs on those rows and the cell shows 52,400.">
+  <rect class="d-box" x="20" y="30" width="150" height="44" rx="7"/>
+  <text class="d-label" x="95" y="50" text-anchor="middle">Slicer</text>
+  <text class="d-sub" x="95" y="66" text-anchor="middle">Year = 2025</text>
+  <rect class="d-box" x="20" y="100" width="150" height="44" rx="7"/>
+  <text class="d-label" x="95" y="120" text-anchor="middle">Matrix row</text>
+  <text class="d-sub" x="95" y="136" text-anchor="middle">Region = North</text>
+
+  <path class="d-line" d="M170 52 H195 V78 H219"/><path class="d-arrow" d="M225 78 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M170 122 H195 V96 H219"/><path class="d-arrow" d="M225 96 l-9 -4.5 v9 z"/>
+
+  <rect class="d-fill-accent" x="225" y="55" width="170" height="64" rx="8"/>
+  <rect class="d-box-accent" x="225" y="55" width="170" height="64" rx="8"/>
+  <text class="d-accent-text" x="310" y="80" text-anchor="middle">Filter context</text>
+  <text class="d-sub" x="310" y="99" text-anchor="middle">2025 AND North</text>
+
+  <path class="d-line-accent" d="M395 87 H444"/><path class="d-arrow-accent" d="M450 87 l-9 -4.5 v9 z"/>
+
+  <rect class="d-box" x="450" y="55" width="170" height="64" rx="8"/>
+  <text class="d-label" x="535" y="80" text-anchor="middle">Sales table</text>
+  <text class="d-sub" x="535" y="99" text-anchor="middle">only matching rows stay</text>
+
+  <path class="d-line" d="M535 119 V190 H496"/><path class="d-arrow" d="M490 190 l9 -4.5 v9 z"/>
+
+  <rect class="d-box-accent" x="150" y="170" width="340" height="44" rx="8"/>
+  <text class="d-accent-text" x="320" y="190" text-anchor="middle">[Total Sales] runs on the rows that are left</text>
+  <text class="d-sub" x="320" y="206" text-anchor="middle">the cell for North shows 52,400</text>
+</svg>
+<figcaption>Every cell of a visual has its own filter context. The measure formula is the same; only the visible rows change.</figcaption>
+</figure>
+<h4>Example</h4>
+<p>A matrix with Region on rows, and the measure <code>Total Qty = SUM(Sales[Qty])</code>:</p>
+<div class="table-wrap"><table>
+<tr><th>Region (filter context)</th><th>Total Qty</th></tr>
+<tr><td>North → only North rows visible</td><td>11</td></tr>
+<tr><td>South → only South rows visible</td><td>10</td></tr>
+<tr><td>East → only East rows visible</td><td>8</td></tr>
+<tr><td><b>Total</b> → no Region filter</td><td><b>29</b></td></tr>
+</table></div>
+<p><b>Context transition</b> (one line): when <code>CALCULATE</code> runs inside a row context, it turns the current row into a filter. A measure used in a calculated column does this automatically.</p>
+<div class="note"><b>Remember:</b> row context = "this row" (columns, iterators). Filter context = "these filters" (visuals, slicers). CALCULATE changes the filter context.</div>
+</section>
+
+<section id="s15">
+<h3>15. Aggregations &amp; Iterators (SUM vs SUMX)</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Aggregation</b> functions squash a column into one number: SUM, AVERAGE, COUNT. <b>Iterator</b> functions (ending in X) go <b>row by row</b>, do a calculation on each row, and then squash the results.</p>
+<p class="analogy">SUM is adding up the totals already printed on receipts. SUMX is going through each receipt, multiplying quantity by price yourself, and then adding those up.</p>
+</div>
+<h4>The basic aggregators</h4>
+<div class="table-wrap"><table>
+<tr><th>Function</th><th>What it does</th><th>On our Sales table</th></tr>
+<tr><td><code>SUM(Sales[Qty])</code></td><td>Adds a column</td><td>29</td></tr>
+<tr><td><code>AVERAGE(Sales[Price])</code></td><td>Average of a column</td><td>212</td></tr>
+<tr><td><code>MIN</code> / <code>MAX</code></td><td>Smallest / largest value</td><td>MAX(Price) = 900</td></tr>
+<tr><td><code>COUNT(Sales[Qty])</code></td><td>Counts <b>non-blank</b> values in a column</td><td>5</td></tr>
+<tr><td><code>COUNTROWS(Sales)</code></td><td>Counts <b>rows</b> in a table</td><td>5</td></tr>
+<tr><td><code>DISTINCTCOUNT(Sales[Product])</code></td><td>Counts <b>unique</b> values</td><td>3 (Pen, Notebook, Bag)</td></tr>
+<tr><td><code>COUNTBLANK</code></td><td>Counts empty cells</td><td>0</td></tr>
+</table></div>
+<h4>Iterators: SUMX, AVERAGEX, COUNTX, MAXX…</h4>
+<ul>
+<li>Syntax: <code>SUMX(table, expression)</code>. It creates a <b>row context</b> on the table.</li>
+<li>You can't write <code>SUM(Sales[Qty] * Sales[Price])</code>. SUM takes only one column. Use SUMX.</li>
+<li>Iterators don't need a stored "Amount" column, so the model stays smaller.</li>
+</ul>
+<pre><code>Total Qty = SUM ( Sales[Qty] )
+
+-- Row by row: Qty * Price, then add all results
+Total Sales = SUMX ( Sales, Sales[Qty] * Sales[Price] )
+-- 200 + 240 + 120 + 900 + 480 = 1,940
+
+Orders = COUNTROWS ( Sales )
+
+Avg Sale per Order = AVERAGEX ( Sales, Sales[Qty] * Sales[Price] )   -- 1,940 / 5 = 388
+
+Unique Products = DISTINCTCOUNT ( Sales[ProductID] )</code></pre>
+<div class="note"><b>Remember:</b> SUM adds one column. SUMX calculates an expression on each row first, then adds. Use COUNTROWS to count rows, DISTINCTCOUNT for unique items.</div>
+</section>
+
+<section id="s16">
+<h3>16. CALCULATE &amp; FILTER</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>CALCULATE</b> is the most important DAX function. It means: "work out this measure, <b>but with these filters changed</b>".</p>
+<p><b>FILTER</b> returns a smaller table: only the rows that pass a test.</p>
+<p class="analogy">CALCULATE is like asking a shopkeeper: "What were total sales, but only for the North branch?" The question is the same; you just changed the condition.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Syntax: <code>CALCULATE(expression, filter1, filter2, ...)</code>. Many filters are joined with AND.</li>
+<li>A simple filter like <code>Store[Region] = "North"</code> <b>replaces</b> any existing filter on that column.</li>
+<li>To <b>keep</b> the existing filter and add yours on top, wrap it in <code>KEEPFILTERS(...)</code>.</li>
+<li><code>FILTER(table, condition)</code> goes row by row (an iterator). Use it when the condition is complex, like comparing a measure or two columns.</li>
+<li>Don't use <code>FILTER</code> on a whole big fact table when a simple column filter will do. It is slower.</li>
+</ul>
+<pre><code>-- Sales only for the North region
+North Sales =
+CALCULATE ( [Total Sales], Store[Region] = "North" )
+
+-- Two conditions (AND)
+North Pen Sales =
+CALCULATE ( [Total Sales], Store[Region] = "North", Product[Product] = "Pen" )
+
+-- OR inside one column
+North or South Sales =
+CALCULATE ( [Total Sales], Store[Region] IN { "North", "South" } )
+
+-- FILTER for a row-level condition: only big orders (amount over 1,000)
+Big Order Sales =
+CALCULATE (
+    [Total Sales],
+    FILTER ( Sales, Sales[Qty] * Sales[Price] &gt; 1000 )
+)
+
+-- Count products that sold more than 500 in total (FILTER over a measure)
+Top Products Count =
+COUNTROWS ( FILTER ( VALUES ( Product[Product] ), [Total Sales] &gt; 500 ) )</code></pre>
+<div class="note"><b>Remember:</b> CALCULATE = "same measure, different filters". It is the answer to half of all DAX interview questions.</div>
+</section>
+
+<section id="s17">
+<h3>17. ALL, ALLEXCEPT &amp; REMOVEFILTERS</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>These functions <b>remove filters</b>. You need them for things like "% of total", where you must compare a part with the whole.</p>
+<p class="analogy">Filters are like blinkers on a horse. ALL takes the blinkers off, so the measure can see the whole field, not just its own lane.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><code>ALL(table)</code> or <code>ALL(column)</code>: ignore all filters on that table or column.</li>
+<li><code>ALLEXCEPT(table, column)</code>: ignore all filters on the table <b>except</b> the columns you list.</li>
+<li><code>REMOVEFILTERS(...)</code>: same as ALL when used inside CALCULATE. Newer and clearer name.</li>
+<li><code>ALLSELECTED(...)</code>: ignore filters from inside the visual, but keep slicer/page filters. Good for "% of what is shown".</li>
+<li>ALL can also return a table (e.g. for RANKX). REMOVEFILTERS can only be used as a CALCULATE filter.</li>
+</ul>
+<pre><code>-- Total for all regions, no matter what is selected
+All Region Sales =
+CALCULATE ( [Total Sales], REMOVEFILTERS ( Store[Region] ) )
+
+-- % of total across regions
+Region % of Total =
+DIVIDE ( [Total Sales], CALCULATE ( [Total Sales], ALL ( Store[Region] ) ) )
+
+-- % of the product's own category (keep Category filter, drop the rest of Product)
+% of Category =
+DIVIDE ( [Total Sales], CALCULATE ( [Total Sales], ALLEXCEPT ( Product, Product[Category] ) ) )</code></pre>
+<h4>Result in a matrix</h4>
+<div class="table-wrap"><table>
+<tr><th>Region</th><th>Total Sales</th><th>All Region Sales</th><th>Region % of Total</th></tr>
+<tr><td>North</td><td>1,100</td><td>1,940</td><td>56.7%</td></tr>
+<tr><td>South</td><td>360</td><td>1,940</td><td>18.6%</td></tr>
+<tr><td>East</td><td>480</td><td>1,940</td><td>24.7%</td></tr>
+<tr><td><b>Total</b></td><td><b>1,940</b></td><td><b>1,940</b></td><td><b>100%</b></td></tr>
+</table></div>
+<div class="note"><b>Remember:</b> part ÷ whole. The "whole" is CALCULATE with ALL or REMOVEFILTERS. ALLEXCEPT keeps the columns you name.</div>
+</section>
+
+<section id="s18">
+<h3>18. RELATED &amp; RELATEDTABLE</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>These functions <b>follow a relationship</b> to fetch data from another table, inside a row context.</p>
+<p><b>RELATED</b> goes from the many side to the one side (fetch one value). <b>RELATEDTABLE</b> goes from the one side to the many side (fetch all matching rows).</p>
+<p class="analogy">RELATED is like looking up a student's class teacher: one answer. RELATEDTABLE is like asking a teacher for the list of all her students: many rows.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Both need an existing relationship between the tables.</li>
+<li>Used in <b>calculated columns</b> or inside iterators like SUMX (they need a row context).</li>
+<li>RELATED works like Excel's VLOOKUP, but it uses the relationship, so it is safer.</li>
+</ul>
+<pre><code>-- Calculated column in Sales (many side): fetch the product's category
+Category = RELATED ( Product[Category] )
+
+-- Calculated column in Product (one side): how many sales rows each product has
+Order Count = COUNTROWS ( RELATEDTABLE ( Sales ) )
+
+-- Measure: sales using a price stored in the Product table
+Sales at List Price =
+SUMX ( Sales, Sales[Qty] * RELATED ( Product[ListPrice] ) )</code></pre>
+<div class="note"><b>Remember:</b> RELATED = many → one (one value). RELATEDTABLE = one → many (a table). Both need a relationship.</div>
+</section>
+
+<section id="s19">
+<h3>19. IF, SWITCH, DIVIDE &amp; VAR / RETURN</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>IF</b> and <b>SWITCH</b> make decisions. <b>DIVIDE</b> divides safely. <b>VAR</b> saves a result in a named box so you can reuse it.</p>
+<p class="analogy">VAR is like writing a number on a sticky note while doing maths, so you don't have to work it out again for the next step.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><code>IF(condition, value_if_true, value_if_false)</code>. Same idea as Excel.</li>
+<li><code>SWITCH</code> replaces many nested IFs. <code>SWITCH(TRUE(), ...)</code> checks conditions from top to bottom and takes the first true one.</li>
+<li><code>DIVIDE(a, b, alternate)</code> returns BLANK (or your alternate value) when b is 0. The <code>/</code> operator gives an error (infinity) instead.</li>
+<li><code>VAR</code> stores a value. <code>RETURN</code> gives the final answer. Variables are calculated once, so code is faster and easier to read.</li>
+<li>Logic operators: <code>&amp;&amp;</code> = AND, <code>||</code> = OR. <code>&amp;</code> joins text.</li>
+</ul>
+<pre><code>-- IF
+Sales Status = IF ( [Total Sales] &gt;= 1000, "On target", "Below target" )
+
+-- SWITCH(TRUE()) for bands
+Sales Band =
+SWITCH (
+    TRUE (),
+    [Total Sales] &gt;= 100000, "High",
+    [Total Sales] &gt;= 50000, "Medium",
+    "Low"                                   -- default if nothing matched
+)
+
+-- Safe division
+Avg Price = DIVIDE ( [Total Sales], [Total Qty], 0 )
+
+-- VAR / RETURN: profit margin
+Profit Margin % =
+VAR Revenue = [Total Sales]
+VAR Cost = SUMX ( Sales, Sales[Qty] * RELATED ( Product[UnitCost] ) )
+RETURN
+    DIVIDE ( Revenue - Cost, Revenue )</code></pre>
+<div class="note"><b>Remember:</b> always use DIVIDE instead of "/" in measures, use SWITCH(TRUE()) instead of deep IFs, and use VAR to make long measures clean.</div>
+</section>
+
+<section id="s20">
+<h3>20. Time Intelligence</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Time intelligence</b> functions compare numbers over time: year-to-date, same month last year, growth %. They need a marked <b>date table</b>.</p>
+<p class="analogy">It is like a school report card that shows this term's marks next to last term's, so you can see if you improved.</p>
+</div>
+<h4>Key functions</h4>
+<div class="table-wrap"><table>
+<tr><th>Function</th><th>Meaning</th></tr>
+<tr><td><code>TOTALYTD(expr, 'Date'[Date])</code></td><td>Year-to-date total (from 1 Jan to the current date in context). Also <code>TOTALQTD</code>, <code>TOTALMTD</code>.</td></tr>
+<tr><td><code>DATESYTD('Date'[Date])</code></td><td>The YTD dates as a table, for use inside CALCULATE.</td></tr>
+<tr><td><code>SAMEPERIODLASTYEAR('Date'[Date])</code></td><td>The same dates, one year back.</td></tr>
+<tr><td><code>DATEADD('Date'[Date], -1, MONTH)</code></td><td>Shift dates by any number of DAY, MONTH, QUARTER or YEAR.</td></tr>
+<tr><td><code>PREVIOUSMONTH</code> / <code>PREVIOUSYEAR</code></td><td>The whole previous month / year.</td></tr>
+<tr><td><code>DATESINPERIOD</code></td><td>A rolling window, e.g. last 3 months.</td></tr>
+</table></div>
+<pre><code>Sales YTD = TOTALYTD ( [Total Sales], 'Date'[Date] )
+
+-- Fiscal year ending 31 March (common in India)
+Sales FYTD = TOTALYTD ( [Total Sales], 'Date'[Date], "3-31" )
+
+Sales LY = CALCULATE ( [Total Sales], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
+
+Sales LM = CALCULATE ( [Total Sales], DATEADD ( 'Date'[Date], -1, MONTH ) )
+
+-- Year-over-year growth %
+YoY % =
+VAR CurrentSales = [Total Sales]
+VAR LastYearSales = [Sales LY]
+RETURN
+    DIVIDE ( CurrentSales - LastYearSales, LastYearSales )
+
+-- Rolling 3 months
+Sales Rolling 3M =
+CALCULATE (
+    [Total Sales],
+    DATESINPERIOD ( 'Date'[Date], MAX ( 'Date'[Date] ), -3, MONTH )
+)</code></pre>
+<h4>YoY example</h4>
+<div class="table-wrap"><table>
+<tr><th>Month</th><th>Total Sales (2025)</th><th>Sales LY (2024)</th><th>YoY %</th></tr>
+<tr><td>Jan</td><td>44,000</td><td>40,000</td><td>10.0%</td></tr>
+<tr><td>Feb</td><td>38,000</td><td>40,000</td><td>-5.0%</td></tr>
+<tr><td>Mar</td><td>50,000</td><td>(blank)</td><td>(blank) — no data last year</td></tr>
+</table></div>
+<ul>
+<li>Format YoY % as a percentage (Measure tools → Format → Percentage).</li>
+<li>Newer Power BI versions also have <b>calendar-based time intelligence</b> (preview since late 2025) for custom calendars like 4-4-5 retail weeks. The classic functions above are still what interviews ask.</li>
+</ul>
+<div class="note"><b>Remember:</b> marked date table + CALCULATE + a time function. YoY % = (This year − Last year) ÷ Last year, written with VAR and DIVIDE.</div>
+</section>
+
+<section id="s21">
+<h3>21. RANKX</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>RANKX</b> gives a rank number (1, 2, 3…) to each item, based on a measure. Example: rank products by sales.</p>
+<p class="analogy">It is like a class result list. Everyone's marks are compared with everyone else's, and the top scorer gets rank 1.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Syntax: <code>RANKX(table, expression, [value], [order], [ties])</code>.</li>
+<li>The table is usually <code>ALL(Product[Product])</code>. Without ALL, each row only sees itself and every product gets rank 1. This is the classic mistake.</li>
+<li>Order: <code>DESC</code> (default, highest = 1) or <code>ASC</code>.</li>
+<li>Ties: <code>Skip</code> (default: 1, 2, 2, 4) or <code>Dense</code> (1, 2, 2, 3).</li>
+<li>For a "Top 5" visual you can also use the visual-level <b>Top N filter</b>, no DAX needed.</li>
+<li>Newer window functions like <code>RANK</code>, <code>WINDOW</code> and <code>OFFSET</code> also exist. RANKX is still the one interviews expect.</li>
+</ul>
+<pre><code>Product Rank =
+RANKX ( ALL ( Product[Product] ), [Total Sales], , DESC, Dense )
+
+-- Show sales only for the top 3 products, blank for others
+Top 3 Sales =
+IF ( [Product Rank] &lt;= 3, [Total Sales] )</code></pre>
+<div class="table-wrap"><table>
+<tr><th>Product</th><th>Total Sales</th><th>Product Rank</th></tr>
+<tr><td>Bag</td><td>900</td><td>1</td></tr>
+<tr><td>Notebook</td><td>720</td><td>2</td></tr>
+<tr><td>Pen</td><td>320</td><td>3</td></tr>
+</table></div>
+<div class="note"><b>Remember:</b> RANKX needs ALL around the table. Otherwise everything is rank 1.</div>
+</section>
+
+<!-- ================= VISUALS ================= -->
+<div class="part">Part 5 — Visuals &amp; Reports</div>
+
+<section id="s22">
+<h3>22. Choosing Visuals</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>visual</b> is any chart, table, card or map on a report page. Pick the visual based on the <b>question</b> you want to answer.</p>
+<p class="analogy">Choosing a visual is like choosing a container. Soup goes in a bowl, not on a plate. Trends go in a line chart, not a pie chart.</p>
+</div>
+<div class="table-wrap"><table>
+<tr><th>Question</th><th>Best visual</th></tr>
+<tr><td>What is one big number? (Total Sales)</td><td><b>Card</b> / KPI visual</td></tr>
+<tr><td>How does it change over time?</td><td><b>Line chart</b>, area chart</td></tr>
+<tr><td>Which category is bigger?</td><td><b>Bar / column chart</b> (bars for long names)</td></tr>
+<tr><td>What is the share of a whole? (few parts)</td><td>Donut / pie (max 4–5 slices), or 100% stacked bar</td></tr>
+<tr><td>Where does it happen?</td><td><b>Map</b> (Azure Maps), filled map, shape map</td></tr>
+<tr><td>How do two numbers relate?</td><td><b>Scatter chart</b></td></tr>
+<tr><td>What adds up to the total step by step?</td><td><b>Waterfall</b></td></tr>
+<tr><td>Are we on target?</td><td><b>Gauge</b>, KPI visual</td></tr>
+<tr><td>What drives the number?</td><td>Key influencers, decomposition tree (AI visuals)</td></tr>
+<tr><td>Exact numbers to read</td><td><b>Table</b> or <b>matrix</b></td></tr>
+</table></div>
+<h4>Key points</h4>
+<ul>
+<li><b>Card</b>: shows one number. The newer card visual can show several numbers in one box.</li>
+<li><b>Slicer</b>: an on-page filter (list, dropdown, date range, buttons). Users click it to filter the page.</li>
+<li><b>Table vs matrix</b>: a <b>table</b> is a flat list (like Excel rows). A <b>matrix</b> is a pivot table: rows <b>and</b> columns, subtotals, and it can expand/collapse levels.</li>
+<li><b>Maps</b>: Microsoft is replacing the older Map and Filled map visuals with <b>Azure Maps</b>. Map data needs clear location columns; set the Data category (City, Country) in Column tools.</li>
+<li><b>Custom visuals</b>: extra visuals from <b>AppSource</b> (Get more visuals), or a <code>.pbiviz</code> file. Prefer <b>certified</b> ones (checked by Microsoft).</li>
+<li>Python and R visuals exist too, for special charts.</li>
+<li>Keep pages simple: 5–8 visuals, important KPIs at the top-left, consistent colours. Use a <b>theme</b> (View → Themes).</li>
+</ul>
+<div class="note"><b>Remember:</b> line for time, bar for comparing, card for one number, matrix for pivot-style detail. Avoid pies with many slices.</div>
+</section>
+
+<section id="s23">
+<h3>23. Interactions, Hierarchies, Drill-down &amp; Drill-through</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Interactions</b>: clicking one visual filters the others. A <b>hierarchy</b> is a ladder of levels like Year → Quarter → Month. <b>Drill-down</b> moves down that ladder inside the same visual. <b>Drill-through</b> jumps to a <b>different page</b> with details.</p>
+<p class="analogy">Drill-down is zooming in on a map: country → state → city. Drill-through is clicking a city to open its own detailed guide book.</p>
+</div>
+<h4>Interactions</h4>
+<ul>
+<li>Default: click a bar → other visuals <b>cross-highlight</b> or <b>cross-filter</b>.</li>
+<li>Change it: select a visual → Format → <b>Edit interactions</b>. On each other visual choose <b>Filter</b>, <b>Highlight</b> or <b>None</b>.</li>
+<li>Ctrl + click selects many items.</li>
+<li><b>Sync slicers</b> (View → Sync slicers) makes one slicer work across many pages.</li>
+<li>Filter levels in the Filters pane: <b>visual</b>, <b>page</b>, <b>all pages</b> (report). Plus drill-through filters.</li>
+</ul>
+<h4>Hierarchies and drill-down</h4>
+<ul>
+<li>Create a hierarchy: in the Data pane, right-click <code>Year</code> → Create hierarchy → drag Quarter and Month into it.</li>
+<li>Or just put several fields in a visual's axis: Category, then Product.</li>
+<li>Drill icons on the visual: ↓ (turn on drill mode, then click a bar), ⇊ (next level for all), ⤓ (expand all down one level), ↑ (drill up).</li>
+</ul>
+<h4>Drill-through: how to do it</h4>
+<ol>
+<li>Create a new page called "Product Details".</li>
+<li>Drag <code>Product[Product]</code> into the page's <b>Drill through</b> box (in the Visualizations pane).</li>
+<li>Power BI adds a <b>Back</b> button automatically.</li>
+<li>On any other page, right-click a bar for "Pen" → <b>Drill through</b> → Product Details.</li>
+<li>The details page opens, filtered to Pen.</li>
+</ol>
+<div class="note"><b>Remember:</b> drill-down = deeper level, same visual. Drill-through = another page, filtered to what you clicked.</div>
+</section>
+
+<section id="s24">
+<h3>24. Bookmarks, Tooltip Pages &amp; Conditional Formatting</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>bookmark</b> saves how a page looks right now (filters, visible visuals). A <b>tooltip page</b> is a mini report that pops up when you hover. <b>Conditional formatting</b> changes colours based on values.</p>
+<p class="analogy">A bookmark is like a saved camera angle. Press the button and you are back to the exact same view.</p>
+</div>
+<h4>Bookmarks</h4>
+<ul>
+<li>View → <b>Bookmarks</b> pane → set up the page → <b>Add</b>.</li>
+<li>Use with <b>buttons</b>: Insert → Button → Action → Type: Bookmark.</li>
+<li>Common uses: "Reset filters" button, toggle between chart and table, show/hide a help panel (with the <b>Selection pane</b>).</li>
+<li>Each bookmark can choose to save Data (filters), Display (visible visuals) and Current page.</li>
+<li><b>Personal bookmarks</b> in the Service let viewers save their own views.</li>
+</ul>
+<h4>Tooltip pages: how to do it</h4>
+<ol>
+<li>Add a new page. In Format page → Page information, turn on <b>Allow use as tooltip</b>.</li>
+<li>Set Canvas settings → Type: <b>Tooltip</b> (small size).</li>
+<li>Add small visuals to it, e.g. a monthly sales line.</li>
+<li>On the main visual: Format → General → Tooltips → Type: <b>Report page</b> → choose your page.</li>
+<li>Hover a bar: the mini page appears, filtered to that bar.</li>
+</ol>
+<h4>Conditional formatting</h4>
+<ul>
+<li>On a table/matrix: select the field in the Values well → down arrow → <b>Conditional formatting</b>.</li>
+<li>Types: <b>background colour</b>, <b>font colour</b>, <b>data bars</b>, <b>icons</b> (arrows, traffic lights), <b>web URL</b>.</li>
+<li>Format by: <b>Gradient</b> (colour scale), <b>Rules</b> (e.g. &lt; 0 red, ≥ 0 green), or <b>Field value</b> (a measure that returns a colour name or hex code).</li>
+</ul>
+<pre><code>-- Measure returning a colour, used with "Format by: Field value"
+YoY Colour = IF ( [YoY %] &lt; 0, "#D64545", "#2F6F4E" )</code></pre>
+<div class="note"><b>Remember:</b> bookmarks + buttons make reports feel like apps. Tooltip pages give detail on hover. Conditional formatting makes problems jump out.</div>
+</section>
+
+<section id="s25">
+<h3>25. Parameters: What-if &amp; Field Parameters</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>parameter</b> lets the report user change a value or a field with a slicer. <b>What-if</b> parameters change a <b>number</b>. <b>Field parameters</b> change <b>which column or measure</b> a visual shows.</p>
+<p class="analogy">A what-if parameter is like a volume knob: turn it, and the sound changes. A field parameter is like a TV remote: switch the channel, and the screen shows a different show.</p>
+</div>
+<h4>What-if parameter</h4>
+<ol>
+<li>Modeling → <b>New parameter</b> → <b>Numeric range</b>.</li>
+<li>Name "Discount", min 0, max 0.5, increment 0.05. Tick "Add slicer to this page".</li>
+<li>Power BI creates a table, a slicer and a measure for you.</li>
+<li>Use the value in your own measure.</li>
+</ol>
+<pre><code>-- Created by Power BI
+Discount = GENERATESERIES ( 0, 0.5, 0.05 )
+Discount Value = SELECTEDVALUE ( Discount[Discount], 0 )
+
+-- Your measure
+Sales After Discount = [Total Sales] * ( 1 - [Discount Value] )</code></pre>
+<h4>Field parameter</h4>
+<ol>
+<li>Modeling → New parameter → <b>Fields</b>.</li>
+<li>Pick fields, e.g. <code>Product[Category]</code>, <code>Store[Region]</code>, <code>'Date'[Month]</code>.</li>
+<li>Power BI adds a slicer. Put the parameter on a chart's axis.</li>
+<li>Users pick "Region" in the slicer and the chart switches to show sales by Region.</li>
+</ol>
+<ul>
+<li>Field parameters can also switch <b>measures</b>: Sales / Qty / Profit with one slicer.</li>
+<li>Power Query also has <b>query parameters</b> (Home → Manage Parameters), e.g. a server name used in the Source step. Different from these report parameters.</li>
+</ul>
+<div class="note"><b>Remember:</b> what-if = change a number (scenario). Field parameter = change what the visual shows (dynamic axis or measure).</div>
+</section>
+
+<!-- ================= SERVICE ================= -->
+<div class="part">Part 6 — Service, Security &amp; Sharing</div>
+
+<section id="s26">
+<h3>26. Row-Level Security (RLS)</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Row-Level Security</b> means different people see different <b>rows</b> in the same report. The North manager sees only North data.</p>
+<p class="analogy">It is like a hotel key card. Everyone enters the same building, but each card opens only its own room.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>You create <b>roles</b> with DAX filter rules on tables. The filter flows through relationships to the facts.</li>
+<li><b>Static RLS</b>: the value is fixed in the rule. One role per region: "North", "South"…</li>
+<li><b>Dynamic RLS</b>: one rule for everyone, using <code>USERPRINCIPALNAME()</code>, which returns the logged-in user's email.</li>
+<li>RLS applies to people with the <b>Viewer</b> role. Workspace Admins, Members and Contributors <b>bypass</b> RLS.</li>
+<li><b>Object-Level Security (OLS)</b> hides whole tables or columns (set up with external tools like Tabular Editor).</li>
+</ul>
+<h4>Static RLS</h4>
+<pre><code>-- Role "North" — rule on the Store table
+[Region] = "North"</code></pre>
+<h4>Dynamic RLS</h4>
+<p>Add a small mapping table that says which user sees which region:</p>
+<div class="table-wrap"><table>
+<tr><th>Email</th><th>Region</th></tr>
+<tr><td>asha@company.com</td><td>North</td></tr>
+<tr><td>ravi@company.com</td><td>South</td></tr>
+</table></div>
+<pre><code>-- Role "Regional Manager" — rule on the UserRegion table
+-- Relationship: UserRegion[Region] → Store[Region] (filter must reach Store and Sales)
+[Email] = USERPRINCIPALNAME ()</code></pre>
+<p>Simpler version when the email is already on the Store table: rule on Store is <code>[ManagerEmail] = USERPRINCIPALNAME()</code>.</p>
+<h4>How to do it</h4>
+<ol>
+<li>Desktop: Modeling → <b>Manage roles</b> → New role → pick a table → write the DAX rule.</li>
+<li>Test: Modeling → <b>View as</b> → choose a role (and "Other user" for an email).</li>
+<li>Publish.</li>
+<li>Service: semantic model → ⋯ → <b>Security</b> → add people or groups to each role.</li>
+</ol>
+<div class="note"><b>Remember:</b> RLS = filter rows by role. Static = fixed value. Dynamic = USERPRINCIPALNAME() plus a user mapping table. Roles are created in Desktop, people are added in the Service.</div>
+</section>
+
+<section id="s27">
+<h3>27. Power BI Service &amp; Licences</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>The <b>Power BI Service</b> (<code>app.powerbi.com</code>) is the cloud website where reports live after you publish them. Teams share, refresh and view them there.</p>
+<p class="analogy">Desktop is your laptop where you write a document. The Service is the shared office drive where everyone can open the final version.</p>
+</div>
+<h4>The main items</h4>
+<ul>
+<li><b>Workspace</b>: a shared folder for a team's content. <b>My workspace</b> is your private one.</li>
+<li><b>Workspace roles</b>: <b>Admin</b> (everything), <b>Member</b> (edit + share), <b>Contributor</b> (edit), <b>Viewer</b> (only view).</li>
+<li><b>Semantic model</b> (old name: <b>dataset</b>): the data + relationships + measures you published. Many reports can use one semantic model.</li>
+<li><b>Report</b>: the pages of visuals. <b>Dashboard</b>: one page of pinned tiles (next section).</li>
+<li><b>Dataflow</b>: Power Query in the cloud. Clean once, reuse in many models.</li>
+<li><b>App</b>: a packaged, read-only bundle of reports and dashboards from a workspace. The best way to share with large groups of viewers.</li>
+<li><b>Deployment pipelines</b>: move content from Development → Test → Production.</li>
+<li><b>Endorsement</b>: mark a semantic model as <b>Promoted</b> or <b>Certified</b> so people trust it.</li>
+</ul>
+<h4>Ways to share</h4>
+<ol>
+<li><b>Workspace access</b>: add colleagues to the workspace with a role. Good for the team that builds.</li>
+<li><b>Share a report</b> link with specific people. Good for a few people.</li>
+<li><b>Publish an app</b>: best for many viewers (whole department).</li>
+<li><b>Embed</b> in Teams, SharePoint or a website.</li>
+<li><b>Publish to web</b>: anyone on the internet can see it. <b>Never</b> use it for company data.</li>
+<li>Also: Analyze in Excel, export to PDF/PowerPoint, email <b>subscriptions</b>, data <b>alerts</b> on dashboard tiles.</li>
+</ol>
+<h4>Licences at a glance</h4>
+<div class="table-wrap"><table>
+<tr><th>Licence</th><th>What you get</th><th>Note</th></tr>
+<tr><td><b>Free</b></td><td>Use Desktop. Publish only to My workspace. Can't share.</td><td>Can <b>view</b> content that sits on Fabric capacity F64 or larger.</td></tr>
+<tr><td><b>Pro</b></td><td>Share and collaborate in workspaces. 1 GB model size, 8 refreshes per day.</td><td>Per user, per month. Both the sharer and the viewer need Pro (unless capacity).</td></tr>
+<tr><td><b>Premium Per User (PPU)</b></td><td>Premium features for one user: bigger models, 48 refreshes/day, deployment pipelines, paginated reports.</td><td>Per user. Viewers need PPU too.</td></tr>
+<tr><td><b>Fabric capacity (F SKUs)</b></td><td>The organisation buys computing power. All Fabric workloads.</td><td>From <b>F64</b> upward, free users can view Power BI content. Old Premium P SKUs are being replaced by F SKUs.</td></tr>
+</table></div>
+<p>Prices change, so check Microsoft's pricing page. In 2025, Pro was about $14 and PPU about $24 per user per month.</p>
+<div class="note"><b>Remember:</b> semantic model = the data, report = the pages, app = the way to share with many. Free can't share, Pro can, capacity lets free users view.</div>
+</section>
+
+<section id="s28">
+<h3>28. Reports vs Dashboards</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>report</b> is many pages of interactive visuals from <b>one</b> semantic model. A <b>dashboard</b> is <b>one page</b> of tiles that you <b>pin</b> from one or more reports. Dashboards exist only in the Service.</p>
+<p class="analogy">A report is a full newspaper with many pages. A dashboard is the front page summary, with headlines cut out from different sections.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 240" role="img" aria-label="Report A and Report B each have several pages. Visuals from both are pinned as tiles onto one single-page dashboard in the Power BI Service.">
+  <rect class="d-box" x="20" y="30" width="170" height="70" rx="8"/>
+  <text class="d-label" x="105" y="57" text-anchor="middle">Report A</text>
+  <text class="d-sub" x="105" y="75" text-anchor="middle">3 pages, 1 semantic model</text>
+  <text class="d-sub" x="105" y="91" text-anchor="middle">slicers, drill, filters</text>
+
+  <rect class="d-box" x="20" y="130" width="170" height="70" rx="8"/>
+  <text class="d-label" x="105" y="157" text-anchor="middle">Report B</text>
+  <text class="d-sub" x="105" y="175" text-anchor="middle">2 pages, another model</text>
+  <text class="d-sub" x="105" y="191" text-anchor="middle">slicers, drill, filters</text>
+
+  <rect class="d-fill-accent" x="400" y="20" width="220" height="185" rx="9"/>
+  <rect class="d-box-accent" x="400" y="20" width="220" height="185" rx="9"/>
+  <text class="d-accent-text" x="510" y="42" text-anchor="middle">Dashboard (one page)</text>
+
+  <rect class="d-box" x="415" y="58" width="90" height="56" rx="6"/>
+  <text class="d-label" x="460" y="82" text-anchor="middle">Sales card</text>
+  <text class="d-sub" x="460" y="99" text-anchor="middle">from A</text>
+  <rect class="d-box" x="515" y="58" width="90" height="56" rx="6"/>
+  <text class="d-label" x="560" y="82" text-anchor="middle">Trend line</text>
+  <text class="d-sub" x="560" y="99" text-anchor="middle">from A</text>
+  <rect class="d-box" x="415" y="128" width="90" height="56" rx="6"/>
+  <text class="d-label" x="460" y="152" text-anchor="middle">Stock level</text>
+  <text class="d-sub" x="460" y="169" text-anchor="middle">from B</text>
+  <rect class="d-box" x="515" y="128" width="90" height="56" rx="6"/>
+  <text class="d-label" x="560" y="152" text-anchor="middle">Live tile</text>
+  <text class="d-sub" x="560" y="169" text-anchor="middle">from B</text>
+
+  <path class="d-line-accent" d="M190 65 H300 V86 H409"/><path class="d-arrow-accent" d="M415 86 l-9 -4.5 v9 z"/>
+  <path class="d-line-accent" d="M190 165 H300 V156 H409"/><path class="d-arrow-accent" d="M415 156 l-9 -4.5 v9 z"/>
+  <text class="d-accent-text" x="300" y="122" text-anchor="middle">pin visuals</text>
+
+  <text class="d-sub" x="320" y="228" text-anchor="middle">Report = explore and filter. Dashboard = one-page summary of pinned tiles (Service only).</text>
+</svg>
+<figcaption>Reports hold the detail. Dashboards collect key tiles from many reports. Clicking a tile opens the report it came from.</figcaption>
+</figure>
+<div class="table-wrap"><table>
+<tr><th></th><th>Report</th><th>Dashboard</th></tr>
+<tr><td>Pages</td><td>One or many</td><td><b>Only one</b></td></tr>
+<tr><td>Data source</td><td>One semantic model</td><td>Tiles from <b>many</b> reports and models</td></tr>
+<tr><td>Where made</td><td>Desktop and Service</td><td><b>Service only</b></td></tr>
+<tr><td>Interactivity</td><td>Full: slicers, cross-filter, drill</td><td>Limited: no slicers; click a tile to open its report</td></tr>
+<tr><td>Data alerts</td><td>No</td><td><b>Yes</b> (on card, KPI, gauge tiles)</td></tr>
+<tr><td>Q&amp;A box</td><td>As a visual</td><td>Built in at the top</td></tr>
+<tr><td>Best for</td><td>Analysts digging into details</td><td>Managers checking key numbers at a glance</td></tr>
+</table></div>
+<div class="note"><b>Remember:</b> report = many pages, one model, fully interactive. Dashboard = one page, many sources, pinned tiles, Service only, supports alerts.</div>
+</section>
+
+<section id="s29">
+<h3>29. Refresh &amp; Gateways</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Refresh</b> means re-loading the latest data into an Import model. <b>Scheduled refresh</b> does it automatically at set times. A <b>gateway</b> is a small program that lets the cloud Service reach data inside your office network.</p>
+<p class="analogy">A gateway is like a security guard at the office gate. The cloud can't walk in. The guard carries the data out to it, safely.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 230" role="img" aria-label="An on-premises SQL Server inside the office network sends data through the on-premises data gateway, which connects outbound to the Power BI Service in the Microsoft cloud. A cloud source like Azure SQL connects to the Service directly, with no gateway.">
+  <rect class="d-dash" x="10" y="30" width="300" height="140" rx="10"/>
+  <text class="d-label" x="22" y="50">Your office network</text>
+  <rect class="d-dash" x="340" y="30" width="290" height="140" rx="10"/>
+  <text class="d-label" x="352" y="50">Microsoft cloud</text>
+
+  <rect class="d-box" x="25" y="80" width="120" height="50" rx="8"/>
+  <text class="d-label" x="85" y="101" text-anchor="middle">SQL Server</text>
+  <text class="d-sub" x="85" y="118" text-anchor="middle">on-premises</text>
+
+  <rect class="d-box-accent" x="170" y="80" width="125" height="50" rx="8"/>
+  <text class="d-accent-text" x="232" y="101" text-anchor="middle">Data gateway</text>
+  <text class="d-sub" x="232" y="118" text-anchor="middle">on an office PC</text>
+
+  <rect class="d-fill-accent" x="360" y="80" width="140" height="50" rx="8"/>
+  <rect class="d-box-accent" x="360" y="80" width="140" height="50" rx="8"/>
+  <text class="d-accent-text" x="430" y="101" text-anchor="middle">Power BI Service</text>
+  <text class="d-sub" x="430" y="118" text-anchor="middle">semantic model</text>
+
+  <rect class="d-box" x="520" y="80" width="100" height="50" rx="8"/>
+  <text class="d-label" x="570" y="101" text-anchor="middle">Azure SQL</text>
+  <text class="d-sub" x="570" y="118" text-anchor="middle">cloud source</text>
+
+  <path class="d-line" d="M145 105 H164"/><path class="d-arrow" d="M170 105 l-9 -4.5 v9 z"/>
+  <path class="d-line-accent" d="M295 105 H354"/><path class="d-arrow-accent" d="M360 105 l-9 -4.5 v9 z"/>
+  <text class="d-sub" x="327" y="150" text-anchor="middle">encrypted, outbound</text>
+  <path class="d-line" d="M520 105 H506"/><path class="d-arrow" d="M500 105 l9 -4.5 v9 z"/>
+  <text class="d-sub" x="570" y="150" text-anchor="middle">no gateway needed</text>
+
+  <text class="d-label" x="320" y="198" text-anchor="middle">Scheduled refresh: up to 8 a day on Pro, up to 48 a day on PPU or capacity</text>
+  <text class="d-sub" x="320" y="218" text-anchor="middle">The gateway machine must be switched on and online when refresh runs.</text>
+</svg>
+<figcaption>A gateway is needed only for data the cloud can't reach directly: on-premises databases, files on a local drive or network share.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li><b>Import</b> models need refresh. <b>DirectQuery</b> and live connections don't store data, so they show fresh data on each click (but on-premises DirectQuery still needs a gateway).</li>
+<li><b>On-premises data gateway (standard mode)</b>: shared by many users, managed centrally. Recommended for companies.</li>
+<li><b>Personal mode</b>: only for one user, Import only. Fine for learning.</li>
+<li><b>VNet data gateway</b>: a Microsoft-managed gateway for data inside Azure private networks.</li>
+<li>Cloud sources (SharePoint Online, OneDrive, Azure SQL) don't need a gateway.</li>
+<li><b>Incremental refresh</b>: refresh only new data (e.g. last 7 days) instead of the full history. Uses <code>RangeStart</code> and <code>RangeEnd</code> parameters.</li>
+<li>Refresh history and failure emails help you catch problems (wrong password, gateway offline).</li>
+</ul>
+<h4>How to set up scheduled refresh</h4>
+<ol>
+<li>Install the gateway on an always-on machine in the office and sign in.</li>
+<li>In the Service: Settings → <b>Manage connections and gateways</b> → add a data source connection with credentials.</li>
+<li>Open the semantic model → Settings → <b>Gateway and cloud connections</b> → map the source to the gateway.</li>
+<li>Turn on <b>Scheduled refresh</b>, choose time zone and times (e.g. 7 AM daily).</li>
+</ol>
+<div class="note"><b>Remember:</b> cloud data → no gateway. On-premises data → gateway. Import → schedule refreshes (8/day Pro, 48/day PPU or capacity).</div>
+</section>
+
+<!-- ================= PRACTICE ================= -->
+<div class="part">Part 7 — Practice</div>
+
+<section id="s30">
+<h3>30. Performance Tips</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A slow report makes people stop using it. Most speed problems come from <b>too much data</b>, a <b>messy model</b>, or <b>heavy DAX</b>.</p>
+<p class="analogy">A slow report is like a heavy school bag. Take out books you don't need today (columns), organise the rest (star schema), and it gets light again.</p>
+</div>
+<h4>Find the problem first</h4>
+<ul>
+<li><b>Performance Analyzer</b> (Optimize tab → Performance analyzer; older versions: View tab). Click Start recording, then Refresh visuals.</li>
+<li>It shows time for each visual: <b>DAX query</b>, <b>Visual display</b>, and <b>Other</b> (waiting). Copy the query to <b>DAX Studio</b> for deeper checks.</li>
+<li>Tools like <b>DAX Studio</b> (VertiPaq Analyzer) show which columns use the most memory.</li>
+</ul>
+<h4>Model tips</h4>
+<ul>
+<li><b>Remove unused columns and rows.</b> The best data is data you don't load.</li>
+<li>Use a <b>star schema</b>. Avoid many-to-many and bi-directional filters.</li>
+<li>Columns with <b>few unique values</b> compress well. Split date-time into separate date and time columns; round long decimals.</li>
+<li>Turn off <b>Auto date/time</b>.</li>
+<li>Use correct data types. Whole numbers compress better than text.</li>
+<li>Keep <b>query folding</b> working in Power Query.</li>
+</ul>
+<h4>DAX and report tips</h4>
+<ul>
+<li>Prefer <b>measures over calculated columns</b>.</li>
+<li>Use <b>VAR</b> so a value is calculated once.</li>
+<li>Filter columns, not whole tables: <code>CALCULATE([Sales], Store[Region] = "North")</code> instead of <code>FILTER(Sales, ...)</code>.</li>
+<li>Use <code>DIVIDE</code>, and avoid deep IF chains with SWITCH.</li>
+<li>Fewer visuals per page. Each visual sends its own query.</li>
+<li>Use <b>aggregations</b> or Import for summary tables when the fact is huge in DirectQuery.</li>
+</ul>
+<div class="note"><b>Remember:</b> measure first with Performance Analyzer. Then: fewer columns, star schema, measures over calculated columns, simple filters.</div>
+</section>
+
+<section id="s31">
+<h3>31. Power BI vs Tableau vs Excel</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>All three can make charts. They are built for different jobs. Interviewers ask this to see if you understand <b>when</b> to use each tool.</p>
+<p class="analogy">Excel is a Swiss army knife. Power BI and Tableau are professional kitchen knives: better for the main job, less good for everything else.</p>
+</div>
+<div class="table-wrap"><table>
+<tr><th></th><th>Power BI</th><th>Tableau</th><th>Excel</th></tr>
+<tr><td>Made by</td><td>Microsoft</td><td>Salesforce</td><td>Microsoft</td></tr>
+<tr><td>Best for</td><td>Company dashboards, Microsoft-based teams</td><td>Rich, flexible visual exploration</td><td>Quick analysis, small data, financial models</td></tr>
+<tr><td>Data size</td><td>Millions to billions of rows (compressed model)</td><td>Very large (extracts / live)</td><td>About 1 million rows per sheet (more with Power Pivot)</td></tr>
+<tr><td>Formula language</td><td>DAX + M</td><td>Calculated fields, LOD expressions</td><td>Excel formulas (also Power Query and DAX via Power Pivot)</td></tr>
+<tr><td>Cost</td><td>Low (free Desktop, Pro per user)</td><td>Higher per user</td><td>Part of Microsoft 365</td></tr>
+<tr><td>Learning curve</td><td>Easy start, DAX gets harder</td><td>Easy drag and drop, strong visuals</td><td>Easiest; most people know it</td></tr>
+<tr><td>Sharing</td><td>Power BI Service, apps, Teams</td><td>Tableau Server / Cloud</td><td>Send files, SharePoint</td></tr>
+<tr><td>Desktop OS</td><td>Windows only</td><td>Windows and Mac</td><td>Windows and Mac</td></tr>
+</table></div>
+<div class="note"><b>Remember:</b> a good answer: "Power BI for shared, refreshable company reports in a Microsoft setup; Tableau for very flexible visual exploration; Excel for quick, small, ad-hoc work." Don't say one is simply "best".</div>
+</section>
+
+<section id="s32">
+<h3>32. End-to-End: A Sales Dashboard</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>This is a short walk-through of a complete project. Practise it once yourself, then explain it in interviews as your project.</p>
+<p class="analogy">Like a cooking show: here are the ingredients, here are the steps, here is the finished dish.</p>
+</div>
+<h4>The task</h4>
+<p>"The sales head wants to see total sales, growth vs last year, best products, and sales by region, with a filter for year and region. Data is in Excel files and refreshed daily."</p>
+<h4>Step by step</h4>
+<ol>
+<li><b>Get data</b>: Get data → Folder → the folder of monthly Excel files → Combine &amp; Transform. Also load the Products and Stores sheets.</li>
+<li><b>Transform</b>: remove empty rows, set data types (Date, Whole number, Decimal), trim text, fix "Nrth" → "North", remove unused columns.</li>
+<li><b>Model</b>: create the <code>'Date'</code> table with CALENDARAUTO, mark it as a date table. Relationships: Date, Product and Store (one) → Sales (many), single direction. Star schema.</li>
+<li><b>Measures</b> (in a <code>_Measures</code> table):</li>
+</ol>
+<pre><code>Total Sales = SUMX ( Sales, Sales[Qty] * Sales[Price] )
+Total Qty = SUM ( Sales[Qty] )
+Orders = COUNTROWS ( Sales )
+Avg Order Value = DIVIDE ( [Total Sales], [Orders] )
+Sales LY = CALCULATE ( [Total Sales], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
+YoY % = DIVIDE ( [Total Sales] - [Sales LY], [Sales LY] )
+Sales YTD = TOTALYTD ( [Total Sales], 'Date'[Date] )
+Product Rank = RANKX ( ALL ( Product[Product] ), [Total Sales], , DESC, Dense )</code></pre>
+<ol start="5">
+<li><b>Visualise</b> (one main page):
+  <ul>
+  <li>Top row: 4 <b>cards</b> — Total Sales, Orders, Avg Order Value, YoY %.</li>
+  <li><b>Line chart</b>: Total Sales and Sales LY by Month.</li>
+  <li><b>Bar chart</b>: Top 5 products (Top N filter on Total Sales).</li>
+  <li><b>Map</b> or bar: Sales by Region.</li>
+  <li><b>Matrix</b>: Category → Product with Total Sales and YoY %, conditional formatting red/green.</li>
+  <li><b>Slicers</b>: Year and Region, synced across pages.</li>
+  </ul>
+</li>
+<li><b>Extras</b>: a drill-through page "Product Details", a tooltip page with the monthly trend, a "Reset filters" bookmark button.</li>
+<li><b>Security</b>: dynamic RLS so each regional manager sees only their region.</li>
+<li><b>Publish</b> to a "Sales" workspace. Put the Excel folder on SharePoint (no gateway needed) or set up a gateway for a local folder.</li>
+<li><b>Refresh</b>: scheduled daily at 7 AM.</li>
+<li><b>Share</b>: publish an <b>app</b> for the sales team. Pin the cards to a dashboard and add a data alert if YoY % drops below 0.</li>
+</ol>
+<h4>Insights to talk about</h4>
+<ul>
+<li>"North gave 57% of sales, mainly from one expensive product (Bag)."</li>
+<li>"February sales fell 5% vs last year; Pen sales dropped in South."</li>
+<li>"I would suggest a promotion on Notebooks in East, the fastest-growing region."</li>
+</ul>
+<div class="note"><b>Remember:</b> in interviews, describe a project as: problem → data → cleaning → model → key measures → visuals → sharing → <b>one business insight</b>. The insight is what makes you stand out.</div>
+</section>
+
+<!-- ================= REVISION ================= -->
+<div class="part">Revision</div>
+
+<section id="rev">
+<h3>Quick Revision</h3>
+<p>The most-asked Power BI questions, with short and simple answers. Say these in your own words.</p>
+<h4>Basics</h4>
+<ul>
+<li><b>What is Power BI?</b> A Microsoft BI tool to connect, clean, model, visualise and share data as interactive reports.</li>
+<li><b>Main components?</b> Desktop (build), Service (share), Mobile (view), Report Server (on-premises).</li>
+<li><b>What is the workflow?</b> Get data → Transform → Model → Visualise → Publish → Share.</li>
+<li><b>Import vs DirectQuery?</b> Import copies data (fast, needs refresh). DirectQuery asks the source each time (fresh, slower).</li>
+<li><b>What is a live connection?</b> Connecting to an existing semantic model or Analysis Services. You can't edit the model.</li>
+<li><b>What is a composite model?</b> A model mixing Import and DirectQuery tables.</li>
+<li><b>What is Microsoft Fabric?</b> Microsoft's all-in-one data platform; Power BI is one part of it.</li>
+</ul>
+<h4>Power Query</h4>
+<ul>
+<li><b>Power Query vs DAX?</b> Power Query (M) cleans and shapes data before loading. DAX calculates after loading.</li>
+<li><b>What are applied steps?</b> The saved list of transformations, repeated on every refresh.</li>
+<li><b>Merge vs Append?</b> Merge = join columns (like SQL JOIN). Append = stack rows (like UNION).</li>
+<li><b>What is unpivot?</b> Turning many columns (Jan, Feb, Mar) into rows (Month, Value).</li>
+<li><b>What is query folding?</b> Power Query sending your steps back to the source as one query, so the source does the work.</li>
+</ul>
+<h4>Modelling</h4>
+<ul>
+<li><b>Fact vs dimension?</b> Fact = events with numbers (Sales). Dimension = descriptions (Product, Date).</li>
+<li><b>Star vs snowflake?</b> Star = dimensions link straight to the fact. Snowflake = dimensions split further. Star is best in Power BI.</li>
+<li><b>Types of cardinality?</b> One-to-one, one-to-many (most common), many-to-many.</li>
+<li><b>Single vs both direction?</b> Single = filter flows dimension → fact (default). Both = flows both ways; use carefully.</li>
+<li><b>Active vs inactive relationship?</b> Only one active between two tables. Use an inactive one with USERELATIONSHIP.</li>
+<li><b>Why a date table?</b> Time intelligence needs one row per day, no gaps. Mark it as a date table.</li>
+</ul>
+<h4>DAX</h4>
+<ul>
+<li><b>Calculated column vs measure?</b> Column = stored, per row, fixed. Measure = calculated at query time, reacts to filters.</li>
+<li><b>Row vs filter context?</b> Row = "this row". Filter = "these filters are on".</li>
+<li><b>SUM vs SUMX?</b> SUM adds one column. SUMX calculates per row, then adds.</li>
+<li><b>COUNT vs COUNTROWS vs DISTINCTCOUNT?</b> Non-blank values in a column / rows in a table / unique values.</li>
+<li><b>What does CALCULATE do?</b> Evaluates an expression with changed filters.</li>
+<li><b>ALL vs ALLEXCEPT?</b> ALL removes all filters. ALLEXCEPT removes all except the columns you name.</li>
+<li><b>RELATED vs RELATEDTABLE?</b> Many → one value / one → many rows.</li>
+<li><b>Why DIVIDE?</b> It handles divide-by-zero safely.</li>
+<li><b>Why VAR?</b> Readable code, and the value is calculated only once.</li>
+<li><b>How do you do YoY %?</b> (Sales − SAMEPERIODLASTYEAR Sales) ÷ last year's Sales, with DIVIDE.</li>
+<li><b>Why is every RANKX rank 1?</b> You forgot ALL around the table.</li>
+</ul>
+<h4>Reports, Service &amp; Security</h4>
+<ul>
+<li><b>Drill-down vs drill-through?</b> Drill-down = next level in the same visual. Drill-through = jump to a detail page.</li>
+<li><b>What is a bookmark?</b> A saved view of a page (filters, visible visuals), often used with buttons.</li>
+<li><b>Table vs matrix?</b> Table = flat list. Matrix = pivot with rows, columns and subtotals.</li>
+<li><b>What-if vs field parameter?</b> What-if changes a number. Field parameter changes which field or measure is shown.</li>
+<li><b>Report vs dashboard?</b> Report = many pages, one model, interactive. Dashboard = one page of pinned tiles from many reports, Service only.</li>
+<li><b>What is RLS?</b> Row-Level Security: users see only their rows. Dynamic RLS uses USERPRINCIPALNAME().</li>
+<li><b>When do you need a gateway?</b> When the Service must reach on-premises data.</li>
+<li><b>How many scheduled refreshes?</b> 8 a day on Pro, 48 a day on PPU or capacity.</li>
+<li><b>Free vs Pro?</b> Free can't share. Pro can share and collaborate.</li>
+<li><b>How do you make a report faster?</b> Performance Analyzer, remove columns, star schema, measures over calculated columns.</li>
+</ul>
+<div class="note"><b>Remember:</b> answer simply first, then give one small example (often with the Sales table). That beats a long textbook definition.</div>
+</section>
+
+<section id="road">
+<h3>Learning Path</h3>
+<p>Go step by step. Build something small at each step. Install Power BI Desktop (free) first.</p>
+<ol>
+<li><b>Excel basics</b> — sorting, filtering, pivot tables. Power BI ideas build on these.</li>
+<li><b>Get data + Power Query</b> — load a CSV and an Excel file, clean them, merge and append.</li>
+<li><b>First report</b> — cards, bar, line, slicers, a table. Learn interactions.</li>
+<li><b>Data modelling</b> — fact and dimension tables, star schema, relationships, a date table.</li>
+<li><b>DAX part 1</b> — SUM, SUMX, COUNTROWS, DIVIDE, measures vs columns.</li>
+<li><b>DAX part 2</b> — CALCULATE, ALL, FILTER, time intelligence, RANKX, VAR.</li>
+<li><b>Report polish</b> — drill-through, tooltips, bookmarks, conditional formatting, themes.</li>
+<li><b>Service</b> — publish, workspaces, apps, RLS, scheduled refresh (a free Fabric trial helps).</li>
+<li><b>Project</b> — build the sales dashboard from section 32 on a public dataset (e.g. a superstore sales sample). Put screenshots in your portfolio.</li>
+<li><b>Then</b> — practise SQL alongside, and consider the Microsoft <b>PL-300</b> (Power BI Data Analyst) certification.</li>
+</ol>
+<div class="note"><b>Remember:</b> for every report, ask three questions. Who will use it? What decision will they make? Which one number matters most? Build around those answers.</div>
+</section>
+
+</main>
+</div>
+
+<script src="../assets/notes.js"></script>
+</body>
+</html>

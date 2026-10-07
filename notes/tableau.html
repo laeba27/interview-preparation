@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tableau — Notes</title>
+<link rel="stylesheet" href="../assets/notes.css">
+<script>
+  try { document.documentElement.setAttribute("data-theme",
+    localStorage.getItem("notes-theme") || "light"); } catch (e) {}
+</script>
+</head>
+<body>
+<div class="scrim"></div>
+<button class="icon-btn" id="reopen" title="Show sidebar ([)" aria-label="Show sidebar">☰</button>
+<div class="layout">
+
+<aside>
+  <div class="sidebar-head">
+    <a class="back-link" href="../index.html">← All topics</a>
+    <button class="icon-btn" id="collapseBtn" title="Hide sidebar ([)" aria-label="Hide sidebar">‹</button>
+  </div>
+  <input id="search" type="text" placeholder="Filter topics…" autocomplete="off">
+  <h2>Getting Started</h2>
+  <nav>
+    <a href="#s1">1 · What Tableau Is</a>
+    <a href="#s2">2 · The Product Family</a>
+    <a href="#s3">3 · The Interface</a>
+    <a href="#s4">4 · Sheets, Dashboards, Stories</a>
+  </nav>
+  <h2>Connecting Data</h2>
+  <nav>
+    <a href="#s5">5 · Live vs Extract &amp; File Types</a>
+    <a href="#s6">6 · Joins</a>
+    <a href="#s7">7 · Relationships &amp; Blending</a>
+    <a href="#s8">8 · Unions, Interpreter, Pivot, Split</a>
+  </nav>
+  <h2>Core Ideas</h2>
+  <nav>
+    <a href="#s9">9 · Dimensions vs Measures</a>
+    <a href="#s10">10 · Discrete vs Continuous</a>
+    <a href="#s11">11 · Aggregation</a>
+  </nav>
+  <h2>Building Charts</h2>
+  <nav>
+    <a href="#s12">12 · Bar, Line &amp; Tables</a>
+    <a href="#s13">13 · Maps &amp; Scatter Plots</a>
+    <a href="#s14">14 · Heatmap, Treemap, Histogram, Box Plot</a>
+    <a href="#s15">15 · Dual-Axis &amp; Combo Charts</a>
+    <a href="#s16">16 · Gantt &amp; Bullet Charts</a>
+  </nav>
+  <h2>Organising Data</h2>
+  <nav>
+    <a href="#s17">17 · Filters &amp; Their Order</a>
+    <a href="#s18">18 · Sets, Groups, Bins</a>
+    <a href="#s19">19 · Hierarchies &amp; Sorting</a>
+  </nav>
+  <h2>Calculations</h2>
+  <nav>
+    <a href="#s20">20 · Calculated Fields</a>
+    <a href="#s21">21 · String &amp; Date Functions</a>
+    <a href="#s22">22 · LOD Expressions</a>
+    <a href="#s23">23 · Table Calculations</a>
+    <a href="#s24">24 · Parameters</a>
+  </nav>
+  <h2>Dashboards &amp; Stories</h2>
+  <nav>
+    <a href="#s25">25 · Dashboards &amp; Layout</a>
+    <a href="#s26">26 · Dashboard Actions</a>
+    <a href="#s27">27 · Stories, Formatting, Tooltips</a>
+    <a href="#s28">28 · Trend, Reference, Forecast</a>
+  </nav>
+  <h2>Sharing &amp; Practice</h2>
+  <nav>
+    <a href="#s29">29 · Performance Tips</a>
+    <a href="#s30">30 · Publishing &amp; Sharing</a>
+    <a href="#s31">31 · Tableau vs Power BI</a>
+    <a href="#s32">32 · Build a Sales Dashboard</a>
+  </nav>
+  <h2>Revision</h2>
+  <nav>
+    <a href="#rev">Quick Revision</a>
+    <a href="#road">Learning Path</a>
+  </nav>
+</aside>
+
+<main>
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="../index.html#analytics">Data Analytics</a></li><li><span>Tableau</span></li><li><span aria-current="page">Notes</span></li></ol></nav>
+<header class="top">
+  <h1>Tableau</h1>
+  <div class="top-actions">
+    <button class="ghost" id="menuBtn">☰ Topics</button>
+    <button class="ghost" id="theme">Dark mode</button>
+  </div>
+</header>
+<p class="sub">Tableau explained simply, for data and business analyst interviews. Each topic has a plain-words box, an everyday example, and "how to do it" steps. All examples use one small, made-up sales table, so you can follow along in Tableau Public.</p>
+
+<!-- ================= GETTING STARTED ================= -->
+<div class="part">Part 1 — Getting Started</div>
+
+<section id="s1">
+<h3>1. What Tableau Is</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Tableau</b> is a tool for turning data into charts and dashboards. You drag and drop columns. Tableau draws the chart. You don't need to write code.</p>
+<p class="analogy">Think of Tableau as a smart drawing board. You hand it a spreadsheet, point at what you want to see ("sales by region"), and it draws the picture for you.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><b>Data visualization</b> = showing data as pictures (bars, lines, maps), so people understand it fast.</li>
+<li>A <b>dashboard</b> = one screen with many charts and filters together. Managers use it to track the business.</li>
+<li>Tableau is used for <b>reporting</b> (what happened), <b>analysis</b> (why it happened) and <b>sharing</b> results with a team.</li>
+<li>It connects to Excel, CSV, SQL databases, cloud warehouses (Snowflake, BigQuery) and many more.</li>
+<li>Tableau is owned by <b>Salesforce</b> (since 2019).</li>
+<li>Its query language is called <b>VizQL</b>. When you drag fields, Tableau writes the database query for you.</li>
+</ul>
+<h4>The example data used in these notes</h4>
+<p>We will use a small "Superstore-style" <b>Orders</b> table. Each row is one product line in one order.</p>
+<div class="table-wrap"><table>
+<tr><th>Order ID</th><th>Order Date</th><th>Ship Date</th><th>Region</th><th>Category</th><th>Customer</th><th>Sales</th><th>Profit</th></tr>
+<tr><td>CA-1001</td><td>2025-01-05</td><td>2025-01-08</td><td>East</td><td>Furniture</td><td>Asha Rao</td><td>500</td><td>80</td></tr>
+<tr><td>CA-1002</td><td>2025-01-19</td><td>2025-01-21</td><td>West</td><td>Technology</td><td>Ravi Kumar</td><td>1200</td><td>300</td></tr>
+<tr><td>CA-1003</td><td>2025-02-02</td><td>2025-02-07</td><td>South</td><td>Office Supplies</td><td>Meera Iyer</td><td>90</td><td>-10</td></tr>
+<tr><td>CA-1004</td><td>2025-02-14</td><td>2025-02-16</td><td>East</td><td>Technology</td><td>Asha Rao</td><td>800</td><td>150</td></tr>
+<tr><td>CA-1005</td><td>2025-03-03</td><td>2025-03-09</td><td>Central</td><td>Furniture</td><td>John Das</td><td>300</td><td>-40</td></tr>
+</table></div>
+<div class="note"><b>Remember:</b> in one line, "Tableau is a drag-and-drop tool that connects to data and turns it into interactive charts and dashboards."</div>
+</section>
+
+<section id="s2">
+<h3>2. The Tableau Product Family</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Tableau is not one app. It is a <b>family</b> of products. One app <b>builds</b> charts, one <b>cleans</b> data, and others <b>share</b> charts with people.</p>
+<p class="analogy">Think of a bakery. The kitchen bakes the cakes (Desktop). A prep table washes and cuts the fruit first (Prep). The shop window shows the cakes to customers (Server, Cloud, Public).</p>
+</div>
+<div class="table-wrap"><table>
+<tr><th>Product</th><th>What it does</th><th>Simple example</th></tr>
+<tr><td><b>Tableau Desktop</b></td><td>The main app on your computer. You build charts and dashboards here.</td><td>You make a sales dashboard.</td></tr>
+<tr><td><b>Tableau Prep Builder</b></td><td>Cleans and reshapes data before charting. You build a <b>flow</b> (a series of steps). Files: <code>.tfl</code> / <code>.tflx</code>.</td><td>Remove blank rows, fix city names, join two files.</td></tr>
+<tr><td><b>Tableau Server</b></td><td>Your company installs and runs it on its own machines. People view dashboards in a browser.</td><td>A bank keeps all data inside its own building.</td></tr>
+<tr><td><b>Tableau Cloud</b></td><td>The same idea as Server, but Tableau (Salesforce) hosts it for you. Old name: Tableau Online.</td><td>A startup shares dashboards without managing servers.</td></tr>
+<tr><td><b>Tableau Public</b></td><td>Free. Anyone can see what you publish. Good for learning and portfolios.</td><td>You share a project on your resume.</td></tr>
+<tr><td><b>Tableau Pulse</b></td><td>Part of Tableau Cloud. It tracks key <b>metrics</b> and sends short AI-written insights by email, Slack or the web.</td><td>"Sales are up 8% this week, mainly in the West."</td></tr>
+</table></div>
+<h4>Key points</h4>
+<ul>
+<li><b>Licences</b> (user types): <b>Creator</b> = can build everything (includes Desktop and Prep). <b>Explorer</b> = can edit and explore published content. <b>Viewer</b> = can only look and use filters.</li>
+<li><b>Tableau Agent</b> is the built-in AI helper (formerly Einstein Copilot). It can suggest charts and help write calculations from plain English.</li>
+<li><b>Tableau Next</b> is Salesforce's newer "agentic" analytics product built on the Salesforce platform. Just know the name.</li>
+<li><b>Tableau Desktop Public Edition</b> is the free desktop app. Your work is shared on Tableau Public, so never use private or company data there.</li>
+</ul>
+<div class="note"><b>Remember:</b> Desktop = build, Prep = clean, Server / Cloud = share inside a company, Public = share with the world, Pulse = metrics with AI insights.</div>
+</section>
+
+<section id="s3">
+<h3>3. The Tableau Interface</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>The Tableau screen has a few main areas. On the left is your list of columns. In the middle are <b>shelves</b> where you drop columns. The big empty area shows your chart.</p>
+<p class="analogy">It is like cooking with a recipe board. The data pane is your pantry (ingredients). The shelves are the pots. The view is the plate where the finished dish appears.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 316" role="img" aria-label="Map of the Tableau Desktop worksheet screen: toolbar at the top, data pane on the left, then the Pages, Filters shelves and Marks card, then the Columns and Rows shelves above the view, Show Me on the right, and sheet tabs along the bottom.">
+  <rect class="d-box" x="20" y="14" width="600" height="28" rx="6"/>
+  <text class="d-sub" x="320" y="32" text-anchor="middle">Toolbar: undo, save, swap rows and columns, sort, fit</text>
+
+  <rect class="d-fill-accent" x="20" y="52" width="130" height="218" rx="7"/>
+  <rect class="d-box-accent" x="20" y="52" width="130" height="218" rx="7"/>
+  <text class="d-accent-text" x="85" y="76" text-anchor="middle">Data pane</text>
+  <text class="d-sub" x="85" y="98" text-anchor="middle">your columns</text>
+  <text class="d-label" x="85" y="130" text-anchor="middle">Dimensions</text>
+  <text class="d-sub" x="85" y="148" text-anchor="middle">Region, Category</text>
+  <text class="d-label" x="85" y="184" text-anchor="middle">Measures</text>
+  <text class="d-sub" x="85" y="202" text-anchor="middle">Sales, Profit</text>
+  <text class="d-sub" x="85" y="248" text-anchor="middle">(Analytics tab too)</text>
+
+  <rect class="d-box" x="160" y="52" width="120" height="34" rx="6"/>
+  <text class="d-label" x="220" y="74" text-anchor="middle">Pages</text>
+  <rect class="d-box" x="160" y="94" width="120" height="50" rx="6"/>
+  <text class="d-label" x="220" y="115" text-anchor="middle">Filters</text>
+  <text class="d-sub" x="220" y="133" text-anchor="middle">drop fields to filter</text>
+  <rect class="d-box-accent" x="160" y="152" width="120" height="118" rx="6"/>
+  <text class="d-accent-text" x="220" y="174" text-anchor="middle">Marks card</text>
+  <text class="d-sub" x="220" y="196" text-anchor="middle">mark type</text>
+  <text class="d-sub" x="220" y="214" text-anchor="middle">Color · Size · Label</text>
+  <text class="d-sub" x="220" y="232" text-anchor="middle">Detail · Tooltip</text>
+  <text class="d-sub" x="220" y="250" text-anchor="middle">Shape · Path</text>
+
+  <rect class="d-box" x="290" y="52" width="240" height="26" rx="5"/>
+  <text class="d-label" x="410" y="70" text-anchor="middle">Columns shelf (across)</text>
+  <rect class="d-box" x="290" y="84" width="240" height="26" rx="5"/>
+  <text class="d-label" x="410" y="102" text-anchor="middle">Rows shelf (down)</text>
+  <rect class="d-fill-accent" x="290" y="118" width="240" height="152" rx="7"/>
+  <rect class="d-box-accent" x="290" y="118" width="240" height="152" rx="7"/>
+  <text class="d-accent-text" x="410" y="184" text-anchor="middle">The view (canvas)</text>
+  <text class="d-sub" x="410" y="204" text-anchor="middle">your chart is drawn here</text>
+
+  <rect class="d-box" x="540" y="52" width="80" height="218" rx="7"/>
+  <text class="d-label" x="580" y="76" text-anchor="middle">Show Me</text>
+  <text class="d-sub" x="580" y="98" text-anchor="middle">chart</text>
+  <text class="d-sub" x="580" y="114" text-anchor="middle">ideas</text>
+
+  <rect class="d-box" x="20" y="280" width="96" height="24" rx="5"/>
+  <text class="d-sub" x="68" y="296" text-anchor="middle">Data Source</text>
+  <rect class="d-box-accent" x="122" y="280" width="76" height="24" rx="5"/>
+  <text class="d-accent-text" x="160" y="296" text-anchor="middle">Sheet 1</text>
+  <rect class="d-box" x="204" y="280" width="96" height="24" rx="5"/>
+  <text class="d-sub" x="252" y="296" text-anchor="middle">Dashboard 1</text>
+  <rect class="d-box" x="306" y="280" width="76" height="24" rx="5"/>
+  <text class="d-sub" x="344" y="296" text-anchor="middle">Story 1</text>
+  <text class="d-sub" x="500" y="296" text-anchor="middle">tabs: one per sheet</text>
+</svg>
+<figcaption>The worksheet screen. Drag fields from the data pane onto Columns, Rows, Filters or the Marks card. The view updates at once.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li><b>Data pane</b> (left): every column (Tableau calls it a <b>field</b>) from your data. The <b>Analytics</b> tab next to it has trend lines, averages and forecasts.</li>
+<li><b>Columns shelf</b>: fields here go <b>across</b> the chart (left to right). <b>Rows shelf</b>: fields here go <b>down</b> (top to bottom).</li>
+<li><b>Marks card</b>: controls how each mark looks. A <b>mark</b> is one drawn item: one bar, one dot, one map shape.
+  <ul>
+  <li><b>Color</b>, <b>Size</b>, <b>Label</b> (text on the mark), <b>Detail</b> (split marks without changing the look), <b>Tooltip</b> (pop-up on hover), <b>Shape</b>, <b>Path</b> (line order).</li>
+  <li>The mark type drop-down: Automatic, Bar, Line, Area, Square, Circle, Shape, Text, Map, Pie, Gantt Bar, Polygon, Density.</li>
+  </ul></li>
+<li><b>Filters shelf</b>: drop a field here to keep only some data. <b>Pages shelf</b>: makes a "flip-book" animation, one page per value.</li>
+<li><b>Show Me</b>: suggests chart types for the fields you selected. Grey charts need different fields; it tells you what is missing.</li>
+<li>A field you drop on a shelf becomes a <b>pill</b> (a rounded tag).</li>
+</ul>
+<div class="note"><b>Remember:</b> Columns = across, Rows = down, Marks card = how marks look. If you can explain these three, you can explain any Tableau chart.</div>
+</section>
+
+<section id="s4">
+<h3>4. Workbooks, Worksheets, Dashboards and Stories</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>workbook</b> is your Tableau file. Inside it are <b>worksheets</b> (one chart each), <b>dashboards</b> (many charts on one screen) and <b>stories</b> (a slideshow of charts).</p>
+<p class="analogy">A workbook is like a school notebook. Each page is a worksheet. A dashboard is a poster where you stick several pages together. A story is a presentation you give from those posters.</p>
+</div>
+<div class="table-wrap"><table>
+<tr><th>Item</th><th>What it holds</th><th>Used for</th></tr>
+<tr><td><b>Worksheet</b></td><td>One chart (one "viz")</td><td>Building and testing a single view</td></tr>
+<tr><td><b>Dashboard</b></td><td>Many worksheets, filters, text, images</td><td>Monitoring the business on one screen</td></tr>
+<tr><td><b>Story</b></td><td>A sequence of "story points" (sheets or dashboards)</td><td>Walking someone through findings, step by step</td></tr>
+</table></div>
+<h4>Key points</h4>
+<ul>
+<li><b>Viz</b> (short for visualization) = any chart Tableau draws.</li>
+<li>You make new sheets with the icons at the bottom tab bar: New Worksheet, New Dashboard, New Story.</li>
+<li>One worksheet can be used in many dashboards. Change it once, and every dashboard updates.</li>
+<li>The <b>Data Source</b> tab (bottom-left) is where you connect and prepare data.</li>
+</ul>
+<div class="note"><b>Remember:</b> worksheet = one chart, dashboard = many charts together, story = charts in order to tell a message.</div>
+</section>
+
+<!-- ================= CONNECTING DATA ================= -->
+<div class="part">Part 2 — Connecting Data</div>
+
+<section id="s5">
+<h3>5. Live vs Extract, and File Types</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>When you connect to data, Tableau asks: <b>Live</b> or <b>Extract</b>? Live reads the database every time. Extract takes a <b>snapshot</b> (a saved copy) of the data into a fast Tableau file.</p>
+<p class="analogy">Live is like watching a cricket match on TV: always current, but you need the signal. An extract is like a recording: very fast to play, but only as new as the last time you recorded it.</p>
+</div>
+<h4>How to connect (step by step)</h4>
+<ol>
+<li>Open Tableau. On the start page, under <b>Connect</b>, pick the source: Microsoft Excel, Text file (CSV), or a server like MySQL.</li>
+<li>Choose the file (or type the server name, user and password).</li>
+<li>You land on the <b>Data Source page</b>. Drag the sheet or table into the canvas.</li>
+<li>At the top-right, choose <b>Live</b> or <b>Extract</b>.</li>
+<li>Click the <b>Sheet 1</b> tab to start building charts.</li>
+</ol>
+<div class="table-wrap"><table>
+<tr><th></th><th>Live connection</th><th>Extract (.hyper)</th></tr>
+<tr><td><b>Data freshness</b></td><td>Always up to date</td><td>As fresh as the last refresh</td></tr>
+<tr><td><b>Speed</b></td><td>Depends on the database speed</td><td>Usually fast (Hyper engine is built for this)</td></tr>
+<tr><td><b>Works offline?</b></td><td>No</td><td>Yes</td></tr>
+<tr><td><b>Load on database</b></td><td>Every click sends a query</td><td>Only during refresh</td></tr>
+<tr><td><b>Good for</b></td><td>Real-time numbers, very fast warehouses</td><td>Slow sources, big files, sharing packaged work</td></tr>
+</table></div>
+<h4>File types you must know</h4>
+<div class="table-wrap"><table>
+<tr><th>Extension</th><th>What it is</th></tr>
+<tr><td><code>.twb</code></td><td>Tableau Workbook. Only the design (charts, calculations). <b>No data inside.</b> Small file.</td></tr>
+<tr><td><code>.twbx</code></td><td>Packaged Workbook. The workbook <b>plus</b> its data (extract or local files). Send this to someone who doesn't have your data.</td></tr>
+<tr><td><code>.hyper</code></td><td>Extract file. A compressed snapshot of data. (Old format was <code>.tde</code>.)</td></tr>
+<tr><td><code>.tds</code></td><td>Data Source file. Saves connection details, calculated fields, renames. <b>No data.</b></td></tr>
+<tr><td><code>.tdsx</code></td><td>Packaged data source: the <code>.tds</code> plus the extract.</td></tr>
+<tr><td><code>.tfl</code> / <code>.tflx</code></td><td>Tableau Prep flow / packaged flow.</td></tr>
+</table></div>
+<ul>
+<li><b>Extract refresh</b>: <b>Full</b> = rebuild the whole copy. <b>Incremental</b> = add only new rows (based on a column like Order Date or an ID).</li>
+<li><b>Extract filters</b> can keep the extract small, e.g. only the last 2 years.</li>
+</ul>
+<div class="note"><b>Remember:</b> .twb = design only, .twbx = design + data packed together. Live = fresh but depends on database; extract = fast snapshot.</div>
+</section>
+
+<section id="s6">
+<h3>6. Joins</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>join</b> combines two tables side by side using a common column, like <code>Order ID</code>. The result is <b>one wide table</b>.</p>
+<p class="analogy">Two class lists: one has roll number and name, the other has roll number and marks. Matching on roll number gives one list with name and marks together.</p>
+</div>
+<h4>Example tables</h4>
+<p><b>Orders</b> has CA-1001, CA-1002, CA-1003. <b>Returns</b> has CA-1002 and CA-9999 (a typo order that is not in Orders).</p>
+<div class="table-wrap"><table>
+<tr><th>Join type</th><th>Keeps</th><th>Rows in result</th></tr>
+<tr><td><b>Inner</b></td><td>Only rows that match in <b>both</b> tables</td><td>CA-1002</td></tr>
+<tr><td><b>Left</b></td><td>All rows from the left table + matches from the right</td><td>CA-1001, 1002, 1003 (Returned is null for 1001 and 1003)</td></tr>
+<tr><td><b>Right</b></td><td>All rows from the right table + matches from the left</td><td>CA-1002, CA-9999</td></tr>
+<tr><td><b>Full outer</b></td><td>Everything from both, matched where possible</td><td>CA-1001, 1002, 1003, 9999</td></tr>
+</table></div>
+<h4>How to make a join (step by step)</h4>
+<ol>
+<li>On the Data Source page, drag <b>Orders</b> to the canvas.</li>
+<li><b>Double-click</b> the Orders box. This opens the <b>physical layer</b> (the join area).</li>
+<li>Drag <b>Returns</b> next to Orders. A Venn icon (two circles) appears.</li>
+<li>Click the Venn icon. Pick the join type (Inner, Left, Right, Full Outer).</li>
+<li>Set the join clause: <code>Order ID = Order ID</code>.</li>
+</ol>
+<ul>
+<li><b>Duplication problem</b>: if one order has 3 rows in table B, the join repeats the order 3 times. Then <code>SUM(Sales)</code> becomes too big. Always check totals after a join.</li>
+<li><b>Null</b> = an empty value. Left/right/full joins create nulls where there is no match.</li>
+<li>You can join on more than one column, and use <code>=</code>, <code>&lt;</code>, <code>&gt;</code> and so on. You can also use a calculation in a join clause.</li>
+<li><b>Cross-database join</b> = join tables from two different sources (e.g. Excel + MySQL).</li>
+</ul>
+<div class="note"><b>Remember:</b> a join makes one flat table <b>before</b> analysis. Watch out for duplicated rows inflating your sums.</div>
+</section>
+
+<section id="s7">
+<h3>7. Relationships and Blending</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>relationship</b> links two tables but <b>keeps them separate</b>. Tableau decides how to join them later, for each chart, using only the fields that chart needs. It has been the default since Tableau 2020.2.</p>
+<p class="analogy">A join is like gluing two books into one big book. A relationship is like putting a bookmark that says "see page 5 in the other book". You only open the other book when you need it.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 250" role="img" aria-label="Left side: a join merges Orders and Returns into one table in the physical layer, which can duplicate rows. Right side: a relationship keeps Orders and Returns separate in the logical layer, linked by a flexible line called a noodle.">
+  <path class="d-dash" d="M320 14 V200"/>
+
+  <text class="d-accent-text" x="160" y="26" text-anchor="middle">Join (physical layer)</text>
+  <rect class="d-box" x="30" y="44" width="100" height="40" rx="7"/>
+  <text class="d-label" x="80" y="69" text-anchor="middle">Orders</text>
+  <rect class="d-box" x="190" y="44" width="100" height="40" rx="7"/>
+  <text class="d-label" x="240" y="69" text-anchor="middle">Returns</text>
+  <circle class="d-box-accent" cx="153" cy="64" r="13"/>
+  <circle class="d-box-accent" cx="167" cy="64" r="13"/>
+  <path class="d-line" d="M160 86 V118"/><path class="d-arrow" d="M160 124 l-4.5 -9 h9 z"/>
+  <rect class="d-fill-accent" x="40" y="126" width="240" height="44" rx="7"/>
+  <rect class="d-box-accent" x="40" y="126" width="240" height="44" rx="7"/>
+  <text class="d-accent-text" x="160" y="145" text-anchor="middle">One merged table</text>
+  <text class="d-sub" x="160" y="162" text-anchor="middle">fixed before analysis; rows can repeat</text>
+  <text class="d-sub" x="160" y="194" text-anchor="middle">You pick: inner / left / right / full</text>
+
+  <text class="d-accent-text" x="480" y="26" text-anchor="middle">Relationship (logical layer)</text>
+  <rect class="d-box-accent" x="350" y="60" width="100" height="44" rx="7"/>
+  <text class="d-accent-text" x="400" y="87" text-anchor="middle">Orders</text>
+  <rect class="d-box-accent" x="510" y="60" width="100" height="44" rx="7"/>
+  <text class="d-accent-text" x="560" y="87" text-anchor="middle">Returns</text>
+  <path class="d-line-accent" d="M450 82 C470 56, 490 108, 510 82"/>
+  <text class="d-sub" x="480" y="52" text-anchor="middle">"noodle"</text>
+  <text class="d-mono" x="480" y="126" text-anchor="middle">Order ID = Order ID</text>
+  <text class="d-sub" x="480" y="152" text-anchor="middle">Tables stay separate.</text>
+  <text class="d-sub" x="480" y="170" text-anchor="middle">Tableau picks the join for each chart,</text>
+  <text class="d-sub" x="480" y="188" text-anchor="middle">at each table's own level of detail.</text>
+
+  <text class="d-label" x="320" y="228" text-anchor="middle">Double-click a table in the logical layer to open its physical layer (joins and unions).</text>
+</svg>
+<figcaption>Joins merge tables early. Relationships ("noodles") stay flexible and avoid double counting.</figcaption>
+</figure>
+<h4>Key points about relationships</h4>
+<ul>
+<li>The Data Source page has two layers. <b>Logical layer</b> (top level) = relationships. <b>Physical layer</b> (inside a table) = joins and unions.</li>
+<li>You don't pick a join type. Tableau uses the right one per chart (this is called a <b>context-aware</b> join).</li>
+<li>Each table keeps its own <b>level of detail</b>, so sums are not duplicated.</li>
+<li>Unmatched rows are kept by default, so you don't lose data silently.</li>
+<li>Optional "Performance options" let you set cardinality (one / many) and referential integrity. Leave them alone unless you are sure.</li>
+</ul>
+<h4>Data blending (the older way)</h4>
+<ul>
+<li><b>Blending</b> combines data from <b>two different data sources</b> inside one worksheet.</li>
+<li>The first source you use is the <b>primary</b> (blue tick). The other is <b>secondary</b> (orange tick).</li>
+<li>They are linked on a common field. An orange <b>link icon</b> shows which field links them. You can click it to turn the link on or off.</li>
+<li>It works like a <b>left join</b> from primary to secondary, done <b>after</b> each source is aggregated.</li>
+<li>Limits: secondary fields are always aggregated, and some functions (like COUNTD on secondary) don't work well. Use it when the sources can't be related, e.g. data at different levels like daily sales vs monthly targets.</li>
+</ul>
+<div class="table-wrap"><table>
+<tr><th></th><th>Join</th><th>Relationship</th><th>Blend</th></tr>
+<tr><td><b>Where</b></td><td>Physical layer (inside a table)</td><td>Logical layer (top of Data Source page)</td><td>In a worksheet, between two data sources</td></tr>
+<tr><td><b>When combined</b></td><td>Before analysis, once</td><td>At query time, per chart</td><td>After each source is aggregated</td></tr>
+<tr><td><b>Join type</b></td><td>You choose</td><td>Tableau chooses</td><td>Always left (primary → secondary)</td></tr>
+<tr><td><b>Duplicate rows?</b></td><td>Possible</td><td>No (keeps level of detail)</td><td>No</td></tr>
+<tr><td><b>Best for</b></td><td>Same-level tables, simple lookups</td><td>Default choice for most models</td><td>Different sources at different levels, quick one-off</td></tr>
+</table></div>
+<div class="note"><b>Remember:</b> start with relationships. Use joins when you need a specific join type. Use blending only for two separate data sources that can't be related.</div>
+</section>
+
+<section id="s8">
+<h3>8. Unions, Data Interpreter, Pivot and Split</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>These are quick cleaning tools on the Data Source page. A <b>union</b> stacks tables on top of each other. <b>Data Interpreter</b> tidies messy Excel files. <b>Pivot</b> turns columns into rows. <b>Split</b> breaks one column into many.</p>
+<p class="analogy">A union is like stapling January's attendance sheet under December's. Same columns, more rows.</p>
+</div>
+<h4>Union (stack rows)</h4>
+<ul>
+<li>Use it when files have the <b>same columns</b>: <code>Sales_2024.csv</code> and <code>Sales_2025.csv</code>.</li>
+<li>Join = adds <b>columns</b> (side by side). Union = adds <b>rows</b> (top to bottom).</li>
+<li>Tableau adds a <code>Table Name</code> (or <code>Sheet</code>) column so you know where each row came from.</li>
+<li><b>Wildcard union</b> = union all files matching a pattern, like <code>Sales_*.csv</code>.</li>
+</ul>
+<ol>
+<li>Drag the first table to the canvas and double-click it (physical layer).</li>
+<li>Drag the second table <b>under</b> the first until it says "Drag table to union". Drop it.</li>
+<li>Or right-click the table → <b>Convert to Union</b> to set a wildcard pattern.</li>
+</ol>
+<h4>Data Interpreter</h4>
+<ul>
+<li>Excel files often have titles, blank rows and notes above the real table. Tick <b>Use Data Interpreter</b> on the Data Source page.</li>
+<li>Tableau finds the real header row and removes the extra stuff. Click "Review the results" to check what it did.</li>
+</ul>
+<h4>Pivot (wide to long)</h4>
+<p>Data like this is "wide" and hard to chart:</p>
+<div class="table-wrap"><table>
+<tr><th>Region</th><th>Jan</th><th>Feb</th><th>Mar</th></tr>
+<tr><td>East</td><td>500</td><td>800</td><td>650</td></tr>
+</table></div>
+<ol>
+<li>On the Data Source page, select the <code>Jan</code>, <code>Feb</code>, <code>Mar</code> columns (Ctrl/Cmd-click).</li>
+<li>Right-click → <b>Pivot</b>.</li>
+<li>You get two columns: <code>Pivot Field Names</code> (Jan, Feb, Mar) and <code>Pivot Field Values</code> (500, 800, 650). Rename them to <code>Month</code> and <code>Sales</code>.</li>
+</ol>
+<h4>Split</h4>
+<ul>
+<li>Right-click a column like <code>Customer</code> = "Asha Rao" → <b>Split</b>. Tableau makes "Asha" and "Rao" columns.</li>
+<li><b>Custom Split</b> lets you choose the separator (e.g. <code>-</code> or <code>,</code>) and which parts to keep.</li>
+</ul>
+<div class="note"><b>Remember:</b> join = more columns, union = more rows, pivot = columns into rows. For heavy cleaning, use Tableau Prep.</div>
+</section>
+
+<!-- ================= CORE IDEAS ================= -->
+<div class="part">Part 3 — Core Ideas</div>
+
+<section id="s9">
+<h3>9. Dimensions vs Measures</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>dimension</b> is a field you <b>group by</b> or describe with: Region, Category, Customer name. A <b>measure</b> is a number you <b>calculate with</b>: Sales, Profit, Quantity.</p>
+<p class="analogy">In "total sales <i>by region</i>", Region is the dimension (the labels on the shelves) and Sales is the measure (what you count on each shelf).</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Dimensions are usually text, dates or IDs. They <b>slice</b> the data into groups.</li>
+<li>Measures are numbers that can be <b>aggregated</b> (summed, averaged, counted).</li>
+<li>In the data pane, dimensions are listed at the top, measures below a line.</li>
+<li>Tableau guesses the role when it connects. You can change it: right-click the field → <b>Convert to Dimension</b> / <b>Convert to Measure</b>.</li>
+<li>Example: <code>Postal Code</code> is a number, but you never add postal codes. So make it a dimension.</li>
+<li><b>Measure Names</b> and <b>Measure Values</b> are special fields. They let you show many measures in one chart (e.g. Sales, Profit and Quantity side by side in a text table).</li>
+</ul>
+<div class="note"><b>Remember:</b> dimension = "by what?" (labels, groups). Measure = "how much?" (numbers you aggregate).</div>
+</section>
+
+<section id="s10">
+<h3>10. Discrete vs Continuous (Blue vs Green)</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Discrete</b> means separate, distinct values (like 2023, 2024, 2025). Discrete pills are <b>blue</b> and make <b>headers</b>. <b>Continuous</b> means an unbroken range of values. Continuous pills are <b>green</b> and make an <b>axis</b>.</p>
+<p class="analogy">Discrete is like the floors of a building: floor 1, floor 2, floor 3, with nothing in between. Continuous is like a ramp: every point in between exists.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 282" role="img" aria-label="Left: a blue discrete pill YEAR of Order Date creates separate header boxes 2023, 2024 and 2025, each with its own bar. Right: a green continuous pill of exact Order Date creates one unbroken time axis with a line across it.">
+  <path class="d-dash" d="M320 14 V236"/>
+
+  <rect class="p-sky" x="40" y="22" width="240" height="30" rx="15"/>
+  <text class="t-sky" x="160" y="42" text-anchor="middle">YEAR(Order Date) · discrete</text>
+  <rect class="d-box" x="40" y="68" width="76" height="24" rx="4"/>
+  <text class="d-label" x="78" y="85" text-anchor="middle">2023</text>
+  <rect class="d-box" x="122" y="68" width="76" height="24" rx="4"/>
+  <text class="d-label" x="160" y="85" text-anchor="middle">2024</text>
+  <rect class="d-box" x="204" y="68" width="76" height="24" rx="4"/>
+  <text class="d-label" x="242" y="85" text-anchor="middle">2025</text>
+  <rect class="p-sky" x="58" y="150" width="40" height="60"/>
+  <rect class="p-sky" x="140" y="130" width="40" height="80"/>
+  <rect class="p-sky" x="222" y="106" width="40" height="104"/>
+  <path class="d-line" d="M40 210 H280"/>
+  <text class="d-sub" x="160" y="230" text-anchor="middle">separate labelled boxes = headers</text>
+
+  <rect class="p-sea" x="350" y="22" width="260" height="30" rx="15"/>
+  <text class="t-sea" x="480" y="42" text-anchor="middle">Order Date (exact) · continuous</text>
+  <path class="d-line-accent" d="M362 188 L392 176 L420 182 L450 160 L480 166 L510 140 L540 148 L570 124 L600 118"/>
+  <path class="d-line" d="M360 210 H604"/>
+  <path class="d-line" d="M362 210 V216 M442 210 V216 M522 210 V216 M602 210 V216"/>
+  <text class="d-sub" x="362" y="230" text-anchor="middle">2023</text>
+  <text class="d-sub" x="442" y="230" text-anchor="middle">2024</text>
+  <text class="d-sub" x="522" y="230" text-anchor="middle">2025</text>
+  <text class="d-sub" x="602" y="230" text-anchor="middle">2026</text>
+  <text class="d-sub" x="480" y="100" text-anchor="middle">one unbroken axis = continuous</text>
+
+  <text class="d-label" x="320" y="266" text-anchor="middle">Blue = discrete = headers.   Green = continuous = axis.</text>
+</svg>
+<figcaption>The same date field, used two ways. Blue gives labelled boxes. Green gives a smooth timeline.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li><b>Dimension/measure</b> and <b>discrete/continuous</b> are two different ideas. Don't mix them up.</li>
+<li>Usually: dimensions are discrete (blue) and measures are continuous (green). But not always.</li>
+<li>A measure can be discrete. Example: make <code>SUM(Sales)</code> discrete and it shows as header text instead of an axis.</li>
+<li>A date can be both. Right-click a date pill: the top list (<code>YEAR</code>, <code>QUARTER</code>, <code>MONTH</code>) gives <b>date parts</b> (blue, discrete). The lower list gives <b>date values</b> (green, continuous, e.g. a timeline of each month).</li>
+<li>To switch: right-click the pill → <b>Discrete</b> or <b>Continuous</b>.</li>
+<li>Colour legend: discrete field on Color gives separate colours; continuous field gives a colour <b>gradient</b> (light to dark).</li>
+</ul>
+<div class="note"><b>Remember:</b> interviewers love this one. "Blue pills are discrete and draw headers; green pills are continuous and draw axes. It is separate from dimension vs measure."</div>
+</section>
+
+<section id="s11">
+<h3>11. Aggregation</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Aggregation</b> means rolling many rows into one number. When you drop Sales on a shelf, Tableau shows <code>SUM(Sales)</code>, the total for each group.</p>
+<p class="analogy">Your bank statement has 100 transactions. Aggregation is the summary line at the bottom: "Total spent: ₹12,000".</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Default aggregation for measures is <b>SUM</b>. Change it: right-click the pill → <b>Measure (Sum)</b> → pick another.</li>
+<li>Common ones: <code>SUM</code>, <code>AVG</code>, <code>MIN</code>, <code>MAX</code>, <code>COUNT</code>, <code>COUNTD</code> (count distinct), <code>MEDIAN</code>.</li>
+<li><code>COUNT([Order ID])</code> counts rows. <code>COUNTD([Order ID])</code> counts <b>unique</b> orders. One order with 3 products: COUNT = 3, COUNTD = 1.</li>
+<li><code>ATTR([Field])</code> shows the value if all rows in the group have the same value, otherwise <code>*</code>.</li>
+<li>The <b>level of detail</b> of a chart = the dimensions in it. "Sales by Region" has 4 marks, one per region.</li>
+<li><b>Disaggregate</b>: menu <b>Analysis</b> → untick <b>Aggregate Measures</b>. Now you see one mark per row. Used for some scatter plots.</li>
+</ul>
+<pre><code>Data: East rows have Sales 500 and 800.
+
+SUM(Sales)   for East = 1300
+AVG(Sales)   for East = 650
+COUNT(Sales) for East = 2</code></pre>
+<div class="note"><b>Remember:</b> every measure in a chart is aggregated to the level of the dimensions in the chart. Add a dimension, and you get more, smaller groups.</div>
+</section>
+
+<!-- ================= CHARTS ================= -->
+<div class="part">Part 4 — Building Charts</div>
+
+<section id="s12">
+<h3>12. Bar, Line, Text Table and Highlight Table</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>These four are the basics. <b>Bar</b> charts compare categories. <b>Line</b> charts show change over time. <b>Text tables</b> show exact numbers. <b>Highlight tables</b> are text tables with coloured cells.</p>
+<p class="analogy">A bar chart is like a row of water glasses. You see at a glance which glass is fullest.</p>
+</div>
+<h4>Bar chart: Sales by Category</h4>
+<ol>
+<li>Drag <code>Category</code> to <b>Columns</b>.</li>
+<li>Drag <code>Sales</code> to <b>Rows</b>. Tableau draws bars with <code>SUM(Sales)</code>.</li>
+<li>Click the sort icon in the toolbar to sort high to low.</li>
+<li>Drag <code>Region</code> to <b>Color</b> for a <b>stacked bar</b>. Drag <code>Region</code> to Columns instead for side-by-side bars.</li>
+<li>Drag <code>Sales</code> to <b>Label</b> to show numbers on the bars.</li>
+</ol>
+<h4>Line chart: Sales over time</h4>
+<ol>
+<li>Drag <code>Order Date</code> to <b>Columns</b>. It shows <code>YEAR(Order Date)</code>.</li>
+<li>Right-click the pill → choose the green <b>Month</b> (date value, e.g. "May 2025") for a continuous timeline.</li>
+<li>Drag <code>Sales</code> to <b>Rows</b>. You get a line.</li>
+<li>Drag <code>Category</code> to <b>Color</b> for one line per category.</li>
+</ol>
+<h4>Text table (crosstab)</h4>
+<ol>
+<li>Drag <code>Region</code> to Rows and <code>Category</code> to Columns.</li>
+<li>Drag <code>Sales</code> to <b>Text</b> on the Marks card.</li>
+<li>Menu <b>Analysis</b> → <b>Totals</b> → Show Row / Column Grand Totals.</li>
+</ol>
+<h4>Highlight table</h4>
+<ol>
+<li>Build the text table above.</li>
+<li>Drag <code>Sales</code> (or <code>Profit</code>) to <b>Color</b>. Change mark type to <b>Square</b>.</li>
+<li>Now big numbers have darker cells. Use a diverging colour (red–green) for Profit, so losses stand out.</li>
+</ol>
+<div class="note"><b>Remember:</b> bar = compare categories, line = trend over time, text table = exact values, highlight table = exact values plus colour for quick scanning.</div>
+</section>
+
+<section id="s13">
+<h3>13. Maps and Scatter Plots</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>map</b> shows data by location. A <b>scatter plot</b> shows how two numbers relate: one on each axis, one dot per item.</p>
+<p class="analogy">A scatter plot is like plotting students by "hours studied" and "marks". If the dots go up together, more study means more marks.</p>
+</div>
+<h4>Maps: how to build</h4>
+<ol>
+<li>Make sure the location field has a <b>geographic role</b>. Right-click <code>State</code> → <b>Geographic Role</b> → <b>State/Province</b>. A globe icon appears.</li>
+<li>Double-click <code>State</code>. Tableau adds <code>Latitude (generated)</code> and <code>Longitude (generated)</code> and draws a map.</li>
+<li><b>Symbol map</b>: drag <code>Sales</code> to <b>Size</b>. Bigger circle = more sales.</li>
+<li><b>Filled map</b> (choropleth): change mark type to <b>Map</b> and drag <code>Profit</code> to <b>Color</b>. Each state is shaded.</li>
+</ol>
+<ul>
+<li>If some places are not found, click the "<b>unknown</b>" note at the bottom-right of the map and fix the locations.</li>
+<li>You can also use your own latitude/longitude columns, or spatial files (shapefile, GeoJSON).</li>
+<li><b>Map layers</b> let you stack several layers (e.g. filled states plus city dots) on one map.</li>
+</ul>
+<h4>Scatter plot: Sales vs Profit by Customer</h4>
+<ol>
+<li>Drag <code>Sales</code> to Columns and <code>Profit</code> to Rows. You get just one dot (the grand total).</li>
+<li>Drag <code>Customer</code> to <b>Detail</b>. Now there is one dot per customer.</li>
+<li>Drag <code>Category</code> to Color.</li>
+<li>Optional: Analytics pane → drag <b>Trend Line</b> onto the view.</li>
+</ol>
+<div class="note"><b>Remember:</b> a scatter plot needs a dimension on Detail, otherwise you only get one dot. A map needs a geographic role on the field.</div>
+</section>
+
+<section id="s14">
+<h3>14. Heatmap, Treemap, Histogram and Box Plot</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>These charts show patterns and spread. A <b>heatmap</b> uses colour in a grid. A <b>treemap</b> shows parts of a whole as rectangles. A <b>histogram</b> shows how values are spread. A <b>box plot</b> shows the middle and the extremes of values.</p>
+<p class="analogy">A histogram is like sorting students into height groups (150–160 cm, 160–170 cm …) and counting how many are in each group.</p>
+</div>
+<h4>Heatmap: Sales by Month and Weekday</h4>
+<ol>
+<li>Drag <code>Order Date</code> to Columns, set it to <b>Month</b> (discrete, blue).</li>
+<li>Drag <code>Order Date</code> to Rows, set it to <b>Weekday</b> (More → Weekday).</li>
+<li>Mark type <b>Square</b>. Drag <code>Sales</code> to <b>Color</b>.</li>
+<li>Dark squares show busy days. (Mark type <b>Density</b> makes a "glow" heatmap for dense scatter or map points.)</li>
+</ol>
+<h4>Treemap: Sales by Sub-Category</h4>
+<ol>
+<li>Drag <code>Sub-Category</code> to <b>Label</b> (or Detail).</li>
+<li>Drag <code>Sales</code> to <b>Size</b> and <code>Profit</code> to <b>Color</b>. Mark type <b>Square</b>.</li>
+<li>Big rectangle = big sales. Red = loss. Or select the fields and click Treemap in Show Me.</li>
+</ol>
+<h4>Histogram: how big are our orders?</h4>
+<ol>
+<li>Click <code>Sales</code> in the data pane, open <b>Show Me</b>, pick <b>Histogram</b>.</li>
+<li>Tableau creates a new field <code>Sales (bin)</code> and puts <code>CNT(Sales)</code> on Rows.</li>
+<li>Edit the bin size: right-click <code>Sales (bin)</code> → Edit → e.g. size 100.</li>
+<li>Result: how many order lines fall in 0–100, 100–200, and so on.</li>
+</ol>
+<h4>Box plot (box-and-whisker)</h4>
+<ol>
+<li>Drag <code>Category</code> to Columns, <code>Sales</code> to Rows.</li>
+<li>Drag <code>Order ID</code> to <b>Detail</b>, so there is one dot per order. Mark type <b>Circle</b>.</li>
+<li>Analytics pane → drag <b>Box Plot</b> onto the view (or pick box-and-whisker in Show Me).</li>
+</ol>
+<ul>
+<li>The <b>box</b> covers the middle 50% of values (from the 25th to the 75th percentile). The line inside is the <b>median</b>.</li>
+<li>The <b>whiskers</b> reach out to 1.5 × the box height by default. Dots past them are <b>outliers</b> (unusual values).</li>
+</ul>
+<div class="note"><b>Remember:</b> histogram = how values are spread (uses bins). Box plot = median, middle 50% and outliers. Treemap = part-to-whole with rectangles.</div>
+</section>
+
+<section id="s15">
+<h3>15. Dual-Axis and Combo Charts</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>dual-axis</b> chart puts two measures on top of each other, each with its own axis (one left, one right). A <b>combo chart</b> is a dual-axis chart where each measure uses a different mark type, like bars plus a line.</p>
+<p class="analogy">Like a weather chart: bars for rainfall (mm) and a line for temperature (°C). Two scales, one picture.</p>
+</div>
+<h4>How to build Sales (bars) + Profit (line) by Month</h4>
+<ol>
+<li>Drag <code>Order Date</code> to Columns and set it to continuous Month.</li>
+<li>Drag <code>Sales</code> to Rows. Drag <code>Profit</code> to Rows too. You now have two charts stacked.</li>
+<li>Right-click the <code>SUM(Profit)</code> pill → <b>Dual Axis</b>. The charts merge.</li>
+<li>On the Marks card there is now one tab per measure. Set <code>SUM(Sales)</code> to <b>Bar</b> and <code>SUM(Profit)</code> to <b>Line</b>.</li>
+<li>If both use the same unit, right-click the right axis → <b>Synchronize Axis</b>.</li>
+</ol>
+<ul>
+<li>Synchronize only works when both measures have the same data type (both whole numbers or both decimals).</li>
+<li>Different scales can mislead. Always label both axes clearly.</li>
+<li><b>Blended axis</b> (shared axis) is different: drag a second measure onto the <b>existing axis</b>. Both share one axis, using Measure Names/Values.</li>
+<li>Dual axis is also used for <b>donut charts</b> (pie + a smaller white circle on top) and map layers.</li>
+</ul>
+<div class="note"><b>Remember:</b> dual axis = two measures, two axes, overlaid. Combo = dual axis with different mark types. Sync the axes if units match.</div>
+</section>
+
+<section id="s16">
+<h3>16. Gantt and Bullet Charts</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>Gantt chart</b> shows tasks or events as bars on a timeline: where each starts and how long it lasts. A <b>bullet chart</b> compares an actual number to a target.</p>
+<p class="analogy">A Gantt chart is like a school timetable drawn as bars. A bullet chart is like a thermometer with a red line marking your goal.</p>
+</div>
+<h4>Gantt chart: how long does shipping take?</h4>
+<ol>
+<li>Create a field <code>Days to Ship</code>: <code>DATEDIFF('day', [Order Date], [Ship Date])</code>.</li>
+<li>Drag <code>Order Date</code> to Columns (continuous, exact Day).</li>
+<li>Drag <code>Order ID</code> to Rows.</li>
+<li>Set mark type to <b>Gantt Bar</b>. Drag <code>Days to Ship</code> to <b>Size</b>. Each bar starts at the order date and its length is the shipping time.</li>
+</ol>
+<h4>Bullet chart: Sales vs Target</h4>
+<ol>
+<li>You need two measures: <code>Sales</code> (actual) and <code>Target</code>.</li>
+<li>Select both in the data pane (Ctrl/Cmd-click), plus <code>Region</code>. In Show Me, click <b>Bullet Graph</b>.</li>
+<li>The bar is actual sales. A <b>reference line</b> marks the target. Shaded bands show e.g. 60% and 80% of target.</li>
+<li>If Tableau puts them the wrong way round, right-click the axis → <b>Swap Reference Line Fields</b>.</li>
+</ol>
+<div class="note"><b>Remember:</b> Gantt = start + duration (Gantt Bar mark, duration on Size). Bullet = actual vs target in a small space, often used on KPI dashboards.</div>
+</section>
+
+<!-- ================= ORGANISING ================= -->
+<div class="part">Part 5 — Organising Data</div>
+
+<section id="s17">
+<h3>17. Filters and the Order of Operations</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>filter</b> keeps only the data you want. Tableau runs filters in a <b>fixed order</b>. The order matters because each step only sees what the earlier steps let through.</p>
+<p class="analogy">Like airport checks: first the ticket check, then security, then the gate. Someone stopped at the first check never reaches the gate. Filters work the same way, top to bottom.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 384" role="img" aria-label="Tableau filter order of operations from top to bottom: extract filters, data source filters, context filters, then FIXED LOD and top N run, dimension filters, then INCLUDE and EXCLUDE LOD run, measure filters, then table calculations run, and finally table calculation filters.">
+  <rect class="d-fill-accent" x="180" y="14" width="300" height="40" rx="7"/>
+  <rect class="d-box-accent" x="180" y="14" width="300" height="40" rx="7"/>
+  <text class="d-accent-text" x="330" y="31" text-anchor="middle">1. Extract filters</text>
+  <text class="d-sub" x="330" y="47" text-anchor="middle">limit rows saved in the .hyper file</text>
+
+  <rect class="d-box" x="180" y="72" width="300" height="40" rx="7"/>
+  <text class="d-label" x="330" y="89" text-anchor="middle">2. Data source filters</text>
+  <text class="d-sub" x="330" y="105" text-anchor="middle">limit rows for the whole data source</text>
+
+  <rect class="d-box" x="180" y="130" width="300" height="40" rx="7"/>
+  <text class="d-label" x="330" y="147" text-anchor="middle">3. Context filters</text>
+  <text class="d-sub" x="330" y="163" text-anchor="middle">grey pill; makes a smaller working set</text>
+
+  <rect class="d-box" x="180" y="188" width="300" height="40" rx="7"/>
+  <text class="d-label" x="330" y="205" text-anchor="middle">4. Dimension filters</text>
+  <text class="d-sub" x="330" y="221" text-anchor="middle">blue pill: Region, Category, Top N</text>
+
+  <rect class="d-box" x="180" y="246" width="300" height="40" rx="7"/>
+  <text class="d-label" x="330" y="263" text-anchor="middle">5. Measure filters</text>
+  <text class="d-sub" x="330" y="279" text-anchor="middle">green pill: SUM(Sales) at least 1,000</text>
+
+  <rect class="d-box" x="180" y="304" width="300" height="40" rx="7"/>
+  <text class="d-label" x="330" y="321" text-anchor="middle">6. Table calculation filters</text>
+  <text class="d-sub" x="330" y="337" text-anchor="middle">only hide marks; the numbers stay the same</text>
+
+  <path class="d-line" d="M330 54 V66"/><path class="d-arrow" d="M330 72 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M330 112 V124"/><path class="d-arrow" d="M330 130 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M330 170 V182"/><path class="d-arrow" d="M330 188 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M330 228 V240"/><path class="d-arrow" d="M330 246 l-4.5 -9 h9 z"/>
+  <path class="d-line" d="M330 286 V298"/><path class="d-arrow" d="M330 304 l-4.5 -9 h9 z"/>
+
+  <text class="d-accent-text" x="170" y="183" text-anchor="end">FIXED LOD, Top N, sets</text>
+  <text class="d-accent-text" x="170" y="241" text-anchor="end">INCLUDE / EXCLUDE LOD</text>
+  <text class="d-accent-text" x="170" y="299" text-anchor="end">table calcs computed</text>
+  <text class="d-sub" x="490" y="183">between 3 and 4</text>
+  <text class="d-sub" x="490" y="241">between 4 and 5</text>
+  <text class="d-sub" x="490" y="299">between 5 and 6</text>
+
+  <text class="d-label" x="320" y="372" text-anchor="middle">Top runs first. Each step only sees rows the steps above let through.</text>
+</svg>
+<figcaption>The filter order of operations (simplified). Trend lines and reference lines come after all of these.</figcaption>
+</figure>
+<h4>Types of filters</h4>
+<div class="table-wrap"><table>
+<tr><th>Filter</th><th>How to make it</th><th>Example</th></tr>
+<tr><td><b>Extract filter</b></td><td>When creating the extract: Edit → Add filter</td><td>Keep only 2024–2025 in the extract</td></tr>
+<tr><td><b>Data source filter</b></td><td>Data Source page, top-right → <b>Filters: Add</b></td><td>Remove test orders for every sheet</td></tr>
+<tr><td><b>Context filter</b></td><td>Right-click a filter pill → <b>Add to Context</b> (turns grey)</td><td>Top 10 customers <i>within</i> East</td></tr>
+<tr><td><b>Dimension filter</b></td><td>Drag a dimension to Filters</td><td>Region = East, West</td></tr>
+<tr><td><b>Measure filter</b></td><td>Drag a measure to Filters</td><td>SUM(Profit) &gt; 0</td></tr>
+<tr><td><b>Table calc filter</b></td><td>Filter on a table calculation field</td><td>Show only the last 6 months, while running totals still count all months</td></tr>
+</table></div>
+<h4>Key points</h4>
+<ul>
+<li><b>Show Filter</b>: right-click a filter pill → Show Filter. Users get a control (list, drop-down, slider) on the sheet.</li>
+<li>Dimension filters have tabs: <b>General</b> (pick values), <b>Wildcard</b> (text match), <b>Condition</b> (e.g. Sales &gt; 1000), <b>Top</b> (Top N).</li>
+<li>Date filters: <b>relative dates</b> (last 3 months), <b>range of dates</b>, or discrete parts (year = 2025).</li>
+<li><b>Classic interview trap</b>: You set "Top 10 customers by Sales" and also filter Region = East. You get fewer than 10 rows! Why? Top N runs <b>before</b> the Region filter. Fix: add Region to <b>context</b>.</li>
+<li>Filters can apply to one sheet, several sheets, or all sheets using the same data source (right-click → Apply to Worksheets).</li>
+<li>"<b>Only relevant values</b>" on a filter control shows only values allowed by other filters. It is handy but slower.</li>
+</ul>
+<div class="note"><b>Remember:</b> Extract → Data Source → Context → Dimension → Measure → Table Calc. FIXED LOD runs before dimension filters, so dimension filters don't change it (context filters do).</div>
+</section>
+
+<section id="s18">
+<h3>18. Sets, Groups and Bins</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>group</b> combines several values into one, like "East + South = Eastern Zone". A <b>set</b> splits data into two parts: <b>IN</b> the set or <b>OUT</b> of it. A <b>bin</b> cuts a number into equal ranges.</p>
+<p class="analogy">A group is like putting several kids into one team. A set is like a VIP list: each guest is either on the list or not. Bins are like age brackets: 18–25, 26–35, and so on.</p>
+</div>
+<h4>Groups</h4>
+<ol>
+<li>Right-click <code>Sub-Category</code> → <b>Create</b> → <b>Group</b>.</li>
+<li>Select "Phones" and "Accessories" → click <b>Group</b>. Name it "Mobile".</li>
+<li>Tick "Include Other" to put everything else in one "Other" group.</li>
+</ol>
+<ul>
+<li>A new field appears with a paperclip icon. You can also select marks in a chart and click the paperclip to group them.</li>
+<li>Groups are good for fixing spelling variants: "Bengaluru", "Bangalore" → one value.</li>
+</ul>
+<h4>Sets</h4>
+<ul>
+<li><b>Fixed set</b>: you pick members by hand. It doesn't change when data changes.</li>
+<li><b>Dynamic set</b>: built from a <b>condition</b> (e.g. SUM(Sales) &gt; 5000) or a <b>Top N</b> rule (top 10 customers by sales). It updates when data changes.</li>
+<li>Use a set on Color to see "Top customers vs everyone else", or on Filters to show only IN members.</li>
+<li><b>Combined set</b>: join two sets on the same dimension (all members, shared members, or except shared).</li>
+<li><b>Set controls</b> let users add or remove members from a drop-down. <b>Set actions</b> change set members by clicking a chart (see Dashboard Actions).</li>
+</ul>
+<ol>
+<li>Right-click <code>Customer</code> → <b>Create</b> → <b>Set</b>.</li>
+<li>Go to the <b>Top</b> tab → By field: Top 10 by <code>Sales</code> Sum.</li>
+<li>Drag the new set to <b>Color</b>. You see IN (top 10) vs OUT.</li>
+</ol>
+<h4>Bins</h4>
+<ul>
+<li>Right-click a measure like <code>Sales</code> → <b>Create</b> → <b>Bins</b>. Choose a <b>bin size</b> (e.g. 100).</li>
+<li>The bin field is a <b>dimension</b>. Used for histograms or customer age bands.</li>
+</ul>
+<div class="note"><b>Remember:</b> group = merge values into one, set = IN / OUT split (fixed or dynamic), bin = equal-sized number ranges.</div>
+</section>
+
+<section id="s19">
+<h3>19. Hierarchies and Sorting</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>hierarchy</b> is a drill-down path from big to small, like Country → State → City. <b>Sorting</b> sets the order in which items appear.</p>
+<p class="analogy">A hierarchy is like a postal address read from the top: country, then state, then city, then street. You zoom in one level at a time.</p>
+</div>
+<h4>Hierarchies: how to make one</h4>
+<ol>
+<li>In the data pane, drag <code>State</code> on top of <code>Country</code>. Name the hierarchy "Location".</li>
+<li>Drag <code>City</code> under <code>State</code> in the hierarchy.</li>
+<li>Drag "Country" to a shelf. A small <b>+</b> icon appears on the pill. Click it to drill down to State; click <b>−</b> to roll up.</li>
+</ol>
+<ul>
+<li>Dates have a built-in hierarchy: Year → Quarter → Month → Day.</li>
+<li>Common example: Category → Sub-Category → Product Name.</li>
+</ul>
+<h4>Sorting</h4>
+<ul>
+<li><b>Quick sort</b>: click the sort icon on an axis or the toolbar.</li>
+<li><b>Field sort</b>: right-click a dimension pill → <b>Sort</b>. Options: Data source order, Alphabetic, <b>Field</b> (by another measure, e.g. by SUM(Sales)), <b>Manual</b> (drag into your own order), <b>Nested</b>.</li>
+<li><b>Nested sort</b> sorts inside each group. Example: sub-categories sorted by sales <b>within</b> each category.</li>
+<li>Manual sort is "frozen": it won't change when data changes. Sorting by a field is "computed" and updates with the data.</li>
+</ul>
+<div class="note"><b>Remember:</b> hierarchies give drill-down with + and −. Sort by a measure (computed) so the order stays right when data changes.</div>
+</section>
+
+<!-- ================= CALCULATIONS ================= -->
+<div class="part">Part 6 — Calculations</div>
+
+<section id="s20">
+<h3>20. Calculated Fields</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>calculated field</b> is a new column you create with a formula. It works like an Excel formula, but for the whole column at once.</p>
+<p class="analogy">Your data has price and quantity, but not the bill amount. A calculated field is like writing a new column on the sheet: "Amount = Price × Quantity".</p>
+</div>
+<h4>How to create one</h4>
+<ol>
+<li>Menu <b>Analysis</b> → <b>Create Calculated Field</b> (or right-click in the data pane → Create → Calculated Field).</li>
+<li>Give it a name, like <code>Profit Ratio</code>.</li>
+<li>Type the formula. Field names go in square brackets: <code>[Sales]</code>.</li>
+<li>The bottom of the editor says "The calculation is valid" or shows the error. Click <b>OK</b>.</li>
+</ol>
+<h4>Basic syntax</h4>
+<pre><code>// Comments start with two slashes
+[Sales] - [Profit]                      // row-level math
+
+// Ratio: aggregate FIRST, then divide
+SUM([Profit]) / SUM([Sales])            // correct profit ratio
+
+// IF ... THEN ... ELSEIF ... ELSE ... END
+IF [Profit] &gt; 0 THEN "Profitable"
+ELSEIF [Profit] = 0 THEN "Break-even"
+ELSE "Loss"
+END
+
+// CASE: compare one field to fixed values
+CASE [Region]
+    WHEN "East" THEN "Zone A"
+    WHEN "West" THEN "Zone B"
+    ELSE "Zone C"
+END
+
+// IIF: short IF (test, then, else)
+IIF([Sales] &gt;= 1000, "Big order", "Small order")
+
+// Handling nulls (empty values)
+ZN(SUM([Sales]))                        // null becomes 0
+IFNULL([Discount], 0)                   // if null, use 0
+ISNULL([Ship Date])                     // TRUE if empty
+
+// Logic
+[Region] = "East" AND [Profit] &lt; 0       // TRUE or FALSE</code></pre>
+<h4>Key points</h4>
+<ul>
+<li>Calculations can be <b>row-level</b> (run on every row, like <code>[Sales] - [Profit]</code>) or <b>aggregate</b> (run on groups, like <code>SUM([Sales])</code>).</li>
+<li>You <b>can't mix</b> them in one expression. <code>[Sales] / SUM([Sales])</code> gives the error "Cannot mix aggregate and non-aggregate arguments". Fix: wrap both, or use an LOD.</li>
+<li>Why <code>SUM([Profit]) / SUM([Sales])</code> and not <code>[Profit] / [Sales]</code>? The second makes a ratio per row, and then Tableau sums those ratios. Adding percentages gives nonsense.</li>
+<li>Strings use double or single quotes. Every <code>IF</code> and <code>CASE</code> needs an <code>END</code>.</li>
+<li><code>CASE</code> is often faster and cleaner than many <code>ELSEIF</code>s when checking one field against fixed values.</li>
+<li>Calculated fields show an <b>=</b> sign next to their icon in the data pane.</li>
+</ul>
+<div class="note"><b>Remember:</b> for ratios, aggregate first: <code>SUM([Profit]) / SUM([Sales])</code>. And never mix aggregate and row-level parts in one formula.</div>
+</section>
+
+<section id="s21">
+<h3>21. String and Date Functions</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>String functions</b> work on text: cut it, join it, change its case. <b>Date functions</b> work on dates: take the year, round to the month, count days between two dates.</p>
+<p class="analogy">String functions are like scissors and glue for words. Date functions are like a calendar that can count days for you.</p>
+</div>
+<h4>String functions</h4>
+<pre><code>LEFT([Order ID], 2)                      // "CA"
+RIGHT([Order ID], 4)                     // "1001"
+MID([Order ID], 4, 2)                    // "10"  (start at position 4, take 2)
+LEN([Customer])                          // number of characters
+UPPER([Region])                          // "EAST"
+TRIM([Customer])                         // remove spaces at both ends
+CONTAINS([Product], "Chair")             // TRUE / FALSE
+REPLACE([Region], "Central", "Middle")   // swap text
+SPLIT([Customer], " ", 1)                // "Asha"  (first part before a space)
+[Region] + " - " + [Category]            // join text: "East - Furniture"
+STR([Sales]) + " INR"                    // turn a number into text first</code></pre>
+<h4>Date functions</h4>
+<pre><code>// Example: [Order Date] = 2025-02-14, [Ship Date] = 2025-02-16
+
+DATEPART('year', [Order Date])           // 2025       (a number)
+DATEPART('month', [Order Date])          // 2          (a number)
+DATENAME('month', [Order Date])          // "February" (text)
+DATETRUNC('month', [Order Date])         // 2025-02-01 (date, rounded down)
+DATEDIFF('day', [Order Date], [Ship Date])   // 2      (days between)
+DATEADD('month', 3, [Order Date])        // 2025-05-14
+YEAR([Order Date])                       // 2025 (shortcut for DATEPART year)
+TODAY()                                  // today's date
+NOW()                                    // date and time now
+MAKEDATE(2025, 1, 1)                     // builds a date
+DATEPARSE('dd/MM/yyyy', [Date Text])     // turn text into a date</code></pre>
+<h4>Key points</h4>
+<ul>
+<li><b>DATEPART</b> returns a <b>number</b>. <b>DATENAME</b> returns <b>text</b>. <b>DATETRUNC</b> returns a <b>date</b>.</li>
+<li>Date parts are written in quotes: <code>'year'</code>, <code>'quarter'</code>, <code>'month'</code>, <code>'week'</code>, <code>'day'</code>, <code>'hour'</code>.</li>
+<li><b>DATEDIFF</b> order is (part, start, end). If end is earlier than start, the result is negative.</li>
+<li>Year-to-date example: <code>[Order Date] &lt;= TODAY() AND YEAR([Order Date]) = YEAR(TODAY())</code>.</li>
+<li>A text column like "14/02/2025" is not a date yet. Change its type (click the Abc icon → Date) or use <code>DATEPARSE</code>.</li>
+</ul>
+<div class="note"><b>Remember:</b> DATEPART = number, DATENAME = text, DATETRUNC = date rounded down, DATEDIFF = gap between two dates.</div>
+</section>
+
+<section id="s22">
+<h3>22. LOD Expressions (FIXED, INCLUDE, EXCLUDE)</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Normally, a calculation follows the dimensions in the chart. An <b>LOD expression</b> (Level of Detail) lets you choose a <b>different level</b> for one calculation, without changing the chart.</p>
+<p class="analogy">You are looking at sales by city. Your boss asks, "What percent of its state's sales is each city?" You need the state total while still looking at cities. An LOD gets you that state total.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 304" role="img" aria-label="A ladder of detail levels from coarse to fine: all data, Region, Region plus Category which is the view, Region plus Category plus Customer, and each row. EXCLUDE moves up to a coarser level by dropping a field. INCLUDE moves down to a finer level by adding a field. FIXED picks its own level and ignores the view.">
+  <text class="d-sub" x="320" y="12" text-anchor="middle">coarser (fewer, bigger groups)</text>
+  <rect class="d-box" x="200" y="20" width="240" height="34" rx="6"/>
+  <text class="d-label" x="320" y="42" text-anchor="middle">All data (one number)</text>
+  <rect class="d-box" x="200" y="72" width="240" height="34" rx="6"/>
+  <text class="d-label" x="320" y="94" text-anchor="middle">Region</text>
+  <rect class="d-fill-accent" x="200" y="124" width="240" height="34" rx="6"/>
+  <rect class="d-box-accent" x="200" y="124" width="240" height="34" rx="6"/>
+  <text class="d-accent-text" x="320" y="146" text-anchor="middle">Region + Category = the view</text>
+  <rect class="d-box" x="200" y="176" width="240" height="34" rx="6"/>
+  <text class="d-label" x="320" y="198" text-anchor="middle">Region + Category + Customer</text>
+  <rect class="d-box" x="200" y="228" width="240" height="34" rx="6"/>
+  <text class="d-label" x="320" y="250" text-anchor="middle">Each row of data</text>
+  <text class="d-sub" x="320" y="276" text-anchor="middle">finer (more, smaller groups)</text>
+
+  <path class="d-line-accent" d="M200 141 H160 V89 H194"/><path class="d-arrow-accent" d="M200 89 l-9 -4.5 v9 z"/>
+  <text class="d-accent-text" x="150" y="110" text-anchor="end">EXCLUDE [Category]</text>
+  <text class="d-sub" x="150" y="126" text-anchor="end">drops a field → coarser</text>
+
+  <path class="d-line-accent" d="M440 141 H480 V193 H446"/><path class="d-arrow-accent" d="M440 193 l9 -4.5 v9 z"/>
+  <text class="d-accent-text" x="490" y="162">INCLUDE [Customer]</text>
+  <text class="d-sub" x="490" y="178">adds a field → finer</text>
+
+  <text class="d-label" x="320" y="298" text-anchor="middle">FIXED names its own level and ignores the view.</text>
+</svg>
+<figcaption>INCLUDE and EXCLUDE move up or down from the chart's level. FIXED jumps straight to the level you name.</figcaption>
+</figure>
+<h4>Syntax</h4>
+<pre><code>{ FIXED [dimension] : AGG([measure]) }
+{ INCLUDE [dimension] : AGG([measure]) }
+{ EXCLUDE [dimension] : AGG([measure]) }
+{ SUM([Sales]) }        // no keyword = whole table (same as FIXED with no dimension)</code></pre>
+<h4>Simple examples</h4>
+<pre><code>// FIXED: each customer's first order date (cohort analysis)
+{ FIXED [Customer] : MIN([Order Date]) }
+
+// FIXED: sales per region, whatever the chart shows
+{ FIXED [Region] : SUM([Sales]) }
+
+// Percent of region: each category's share of its region's total
+SUM([Sales]) / MIN({ FIXED [Region] : SUM([Sales]) })
+
+// INCLUDE: average sales per customer, shown by Region
+//   view = Region; first sum per customer, then AVG on the shelf
+AVG({ INCLUDE [Customer] : SUM([Sales]) })
+
+// EXCLUDE: region total next to each category in a Region + Category chart
+{ EXCLUDE [Category] : SUM([Sales]) }</code></pre>
+<p>Why <code>MIN()</code> around the FIXED part? A FIXED result is copied onto every row of that region. <code>SUM()</code> would add those copies together and give a number that is too big. <code>MIN()</code> (or <code>MAX()</code> / <code>AVG()</code>) just picks the one region total.</p>
+<h4>Key points</h4>
+<ul>
+<li><b>FIXED</b> ignores the view's dimensions. It is computed <b>before</b> dimension filters, so normal filters don't change it. Context filters and data source filters do.</li>
+<li><b>INCLUDE</b> and <b>EXCLUDE</b> are relative to the view and are computed <b>after</b> dimension filters.</li>
+<li>FIXED results can be used as dimensions (e.g. "first order year" for cohorts). INCLUDE/EXCLUDE results are measures.</li>
+<li>Common uses: customer first purchase date, percent of total, compare each item to its group's average, count customers by number of orders.</li>
+<li>Count customers by order count: <code>{ FIXED [Customer] : COUNTD([Order ID]) }</code>, then drag it to Columns as a dimension and <code>COUNTD([Customer])</code> to Rows.</li>
+</ul>
+<div class="note"><b>Remember:</b> FIXED = "use exactly this level". INCLUDE = "go finer". EXCLUDE = "go coarser". FIXED runs before dimension filters; add a filter to context if it must affect FIXED.</div>
+</section>
+
+<section id="s23">
+<h3>23. Table Calculations</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>table calculation</b> runs on the numbers <b>already in the chart</b>, not on the raw data. It looks across the marks: running totals, ranks, percent of total, change from last month.</p>
+<p class="analogy">It is like working with a printed report. You add a new column in pen: "running total so far", using only the numbers you can see on the page.</p>
+</div>
+<h4>Quick table calculations (the easy way)</h4>
+<ol>
+<li>Build a chart: <code>MONTH(Order Date)</code> on Columns, <code>SUM(Sales)</code> on Rows.</li>
+<li>Right-click the <code>SUM(Sales)</code> pill → <b>Quick Table Calculation</b>.</li>
+<li>Pick one: Running Total, Difference, Percent Difference, Percent of Total, Rank, Percentile, Moving Average, YTD Total, Compound Growth Rate, Year over Year Growth, YTD Growth.</li>
+<li>A small triangle (Δ) appears on the pill. It means "table calculation".</li>
+</ol>
+<h4>Worked example</h4>
+<div class="table-wrap"><table>
+<tr><th>Month</th><th>SUM(Sales)</th><th>Running total</th><th>Difference</th><th>% of total</th><th>Rank</th></tr>
+<tr><td>Jan</td><td>1700</td><td>1700</td><td>—</td><td>59%</td><td>1</td></tr>
+<tr><td>Feb</td><td>890</td><td>2590</td><td>−810</td><td>31%</td><td>2</td></tr>
+<tr><td>Mar</td><td>300</td><td>2890</td><td>−590</td><td>10%</td><td>3</td></tr>
+</table></div>
+<h4>Writing them yourself</h4>
+<pre><code>RUNNING_SUM(SUM([Sales]))                    // running total
+SUM([Sales]) / TOTAL(SUM([Sales]))           // percent of total
+RANK(SUM([Sales]))                           // 1 = highest (descending by default)
+SUM([Sales]) - LOOKUP(SUM([Sales]), -1)      // difference from previous mark
+(SUM([Sales]) - LOOKUP(SUM([Sales]), -1))
+    / ABS(LOOKUP(SUM([Sales]), -1))          // percent change
+WINDOW_AVG(SUM([Sales]), -2, 0)              // 3-month moving average (2 back + current)
+WINDOW_SUM(SUM([Sales]))                     // total of all marks in the window
+INDEX()                                      // 1, 2, 3 ... position of each mark
+FIRST()  /  LAST()                           // offset from the first / last mark</code></pre>
+<h4>Compute Using (direction) — the simple version</h4>
+<ul>
+<li>A table calc needs to know <b>which way to move</b> through the marks. Right-click the pill → <b>Compute Using</b>.</li>
+<li><b>Table (across)</b> = left to right. <b>Table (down)</b> = top to bottom. <b>Pane</b> = inside each pane only. <b>Cell</b> = each cell alone.</li>
+<li><b>Specific Dimensions</b>: you tick which dimensions to move along.</li>
+<li><b>Addressing</b> = the dimensions it moves <b>along</b> (e.g. Month). <b>Partitioning</b> = the dimensions that make <b>separate groups</b> where it restarts (e.g. Region). Example: running total along Month, restarting for each Region.</li>
+<li>Table calcs run late (after measure filters). So filtering a table calc only <b>hides</b> marks; it does not change results.</li>
+</ul>
+<div class="note"><b>Remember:</b> table calcs work on the aggregated numbers in the view. Always check Compute Using: wrong direction = wrong answer.</div>
+</section>
+
+<section id="s24">
+<h3>24. Parameters</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>parameter</b> is a single value the user can change, like a number, a date or a word from a list. On its own it does nothing. You plug it into calculations, filters or reference lines.</p>
+<p class="analogy">A parameter is like a volume knob. The knob alone makes no sound. But connect it to a speaker (a calculation), and turning it changes what you hear.</p>
+</div>
+<h4>Example 1: Top N with a slider</h4>
+<ol>
+<li>Right-click in the data pane → <b>Create Parameter</b>. Name: <code>Top N</code>. Data type: Integer. Allowable values: <b>Range</b> 1 to 20. Current value: 10.</li>
+<li>Right-click the parameter → <b>Show Parameter</b>. A slider appears.</li>
+<li>Drag <code>Customer</code> to Filters → <b>Top</b> tab → By field: Top <b>Top N</b> by SUM(Sales).</li>
+<li>Now moving the slider changes how many customers are shown.</li>
+</ol>
+<h4>Example 2: "Choose a measure"</h4>
+<ol>
+<li>Create a parameter <code>Choose Measure</code>. Data type: <b>String</b>. Allowable values: <b>List</b> → add "Sales", "Profit", "Quantity".</li>
+<li>Create a calculated field <code>Selected Measure</code>:</li>
+</ol>
+<pre><code>CASE [Choose Measure]
+    WHEN "Sales"    THEN SUM([Sales])
+    WHEN "Profit"   THEN SUM([Profit])
+    WHEN "Quantity" THEN SUM([Quantity])
+END</code></pre>
+<ol start="3">
+<li>Put <code>Selected Measure</code> on Rows and <code>Category</code> on Columns.</li>
+<li>Show the parameter control. Users pick a measure and the chart changes.</li>
+<li>Tip: put the parameter in the title, like "&lt;Choose Measure&gt; by Category", using Insert in the title editor.</li>
+</ol>
+<h4>Key points</h4>
+<ul>
+<li>Allowable values: <b>All</b> (type anything), <b>List</b> (fixed choices), <b>Range</b> (min, max, step).</li>
+<li>Parameters are <b>global</b>: one parameter can be used in any sheet of the workbook, even across data sources.</li>
+<li>Since 2020.1, a list parameter can <b>refresh its values from a field</b> when the workbook opens ("dynamic parameter").</li>
+<li><b>Parameter actions</b> let users set a parameter by clicking on a chart.</li>
+<li>Filter vs parameter: a filter is tied to one field. A parameter is one free value you can use anywhere (in calcs, Top N, reference lines, bins).</li>
+</ul>
+<div class="note"><b>Remember:</b> parameter = a user-controlled input value. It does nothing until a calculation, filter or reference line uses it.</div>
+</section>
+
+<!-- ================= DASHBOARDS ================= -->
+<div class="part">Part 7 — Dashboards &amp; Stories</div>
+
+<section id="s25">
+<h3>25. Dashboards and Layout</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>dashboard</b> puts several sheets, filters and text on one screen. <b>Layout containers</b> are invisible boxes that keep things lined up in rows or columns.</p>
+<p class="analogy">Containers are like shelves in a cupboard. A horizontal shelf holds things side by side. A vertical shelf stack holds things one above the other. Move a shelf, and everything on it moves together.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 306" role="img" aria-label="A dashboard layout: a title at the top, a horizontal container with three KPI cards, a vertical container on the left with a map above a line chart, a vertical container on the right with filters and legends, and one floating legend placed on top of the map.">
+  <rect class="d-box-accent" x="20" y="10" width="600" height="262" rx="8"/>
+  <rect class="d-box" x="30" y="20" width="580" height="30" rx="5"/>
+  <text class="d-label" x="320" y="40" text-anchor="middle">Title (text object)</text>
+
+  <rect class="d-dash" x="30" y="58" width="580" height="66" rx="5"/>
+  <text class="d-sub" x="40" y="72">Horizontal container</text>
+  <rect class="d-box" x="40" y="78" width="180" height="38" rx="5"/>
+  <text class="d-label" x="130" y="102" text-anchor="middle">Sales KPI</text>
+  <rect class="d-box" x="230" y="78" width="180" height="38" rx="5"/>
+  <text class="d-label" x="320" y="102" text-anchor="middle">Profit KPI</text>
+  <rect class="d-box" x="420" y="78" width="180" height="38" rx="5"/>
+  <text class="d-label" x="510" y="102" text-anchor="middle">Orders KPI</text>
+
+  <rect class="d-dash" x="30" y="132" width="390" height="132" rx="5"/>
+  <text class="d-sub" x="40" y="146">Vertical container</text>
+  <rect class="d-box" x="40" y="152" width="370" height="50" rx="5"/>
+  <text class="d-label" x="130" y="182" text-anchor="middle">Map: Sales by State</text>
+  <rect class="d-box" x="40" y="208" width="370" height="48" rx="5"/>
+  <text class="d-label" x="225" y="237" text-anchor="middle">Line: Sales by Month</text>
+
+  <rect class="d-dash" x="430" y="132" width="180" height="132" rx="5"/>
+  <text class="d-sub" x="440" y="146">Vertical container</text>
+  <rect class="d-box" x="440" y="152" width="160" height="30" rx="5"/>
+  <text class="d-sub" x="520" y="171" text-anchor="middle">Region filter</text>
+  <rect class="d-box" x="440" y="188" width="160" height="30" rx="5"/>
+  <text class="d-sub" x="520" y="207" text-anchor="middle">Category filter</text>
+  <rect class="d-box" x="440" y="224" width="160" height="30" rx="5"/>
+  <text class="d-sub" x="520" y="243" text-anchor="middle">Date range filter</text>
+
+  <rect class="d-fill-accent" x="290" y="158" width="112" height="38" rx="5"/>
+  <rect class="d-box-accent" x="290" y="158" width="112" height="38" rx="5"/>
+  <text class="d-accent-text" x="346" y="175" text-anchor="middle">Floating legend</text>
+  <text class="d-sub" x="346" y="189" text-anchor="middle">sits on top</text>
+
+  <text class="d-label" x="320" y="294" text-anchor="middle">Tiled items snap into containers. Floating items sit on top, at a fixed spot.</text>
+</svg>
+<figcaption>A typical layout: title, a row of KPI cards, main charts on the left, filters on the right. Dashed boxes are layout containers.</figcaption>
+</figure>
+<h4>How to build a dashboard</h4>
+<ol>
+<li>Click <b>New Dashboard</b> (bottom tab bar).</li>
+<li>Set <b>Size</b> on the left: <b>Fixed</b> (e.g. 1200 × 800; looks the same everywhere), <b>Automatic</b> (fits any screen, may squash), or <b>Range</b> (min and max).</li>
+<li>Drag a <b>Horizontal</b> container from Objects to the top. Drag KPI sheets into it.</li>
+<li>Drag sheets onto the canvas below. Grey shading shows where they will drop.</li>
+<li>Use a sheet's drop-down → <b>Use as Filter</b> (funnel icon) to make clicks on it filter the others.</li>
+<li>Add a <b>Text</b> object for the title. Use <b>Distribute Contents Evenly</b> on a container to make items equal width.</li>
+</ol>
+<h4>Key points</h4>
+<ul>
+<li><b>Tiled</b> = items snap into a grid and never overlap. This is the default and the safest.</li>
+<li><b>Floating</b> = items sit on top at an exact position and size. Good for legends, logos, small notes. Hold Shift while dragging to float.</li>
+<li><b>Objects</b> you can add: Horizontal, Vertical, Text, Image, Web Page, Blank, Navigation (button to another sheet), Download (PDF, image, crosstab), Extension.</li>
+<li><b>Device layouts</b>: click <b>Device Preview</b> to create Desktop, Tablet and Phone layouts. The phone layout can show fewer charts, stacked vertically.</li>
+<li>Good design: most important number top-left, 3–5 charts max, consistent colours, clear titles that say the message.</li>
+<li>The <b>Item hierarchy</b> in the Layout tab shows how containers are nested. Use it to select hard-to-click containers.</li>
+</ul>
+<div class="note"><b>Remember:</b> plan with containers first, then drop sheets in. Tiled for the main grid, floating only for small extras.</div>
+</section>
+
+<section id="s26">
+<h3>26. Dashboard Actions</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Actions</b> make a dashboard interactive. When a user clicks or hovers on one chart, something happens: other charts filter, highlight, or a web page opens.</p>
+<p class="analogy">Actions are like light switches wired to different lamps. Flip a switch on the map (click East) and the lamps in the other charts change.</p>
+</div>
+<div class="table-wrap"><table>
+<tr><th>Action</th><th>What happens</th><th>Example</th></tr>
+<tr><td><b>Filter</b></td><td>Clicking a mark filters other sheets</td><td>Click "East" on the map; the line chart shows only East</td></tr>
+<tr><td><b>Highlight</b></td><td>Matching marks stay bright, others fade</td><td>Hover "Furniture"; it lights up in every chart</td></tr>
+<tr><td><b>Go to URL</b></td><td>Opens a web page, can pass field values</td><td>Click a product; open its page on the website</td></tr>
+<tr><td><b>Go to Sheet</b></td><td>Jumps to another sheet or dashboard</td><td>Click a KPI; go to a detail dashboard</td></tr>
+<tr><td><b>Change Parameter</b></td><td>Sets a parameter's value from the click</td><td>Click a region; a reference line shows that region's average</td></tr>
+<tr><td><b>Change Set Values</b></td><td>Adds or replaces set members from the click</td><td>Click categories to expand them (drill-down in place)</td></tr>
+</table></div>
+<h4>How to add a filter action</h4>
+<ol>
+<li>On the dashboard, menu <b>Dashboard</b> → <b>Actions</b> → <b>Add Action</b> → <b>Filter</b>.</li>
+<li><b>Source sheet</b>: the map. <b>Target sheets</b>: the line chart and the table.</li>
+<li><b>Run action on</b>: <b>Hover</b>, <b>Select</b> (click), or <b>Menu</b> (a link in the tooltip).</li>
+<li><b>Clearing the selection will</b>: Show all values / Keep filtered values / Exclude all values.</li>
+<li>Click OK and test by clicking the map.</li>
+</ol>
+<div class="note"><b>Remember:</b> six action types: Filter, Highlight, URL, Go to Sheet, Parameter, Set. Each runs on Hover, Select or Menu.</div>
+</section>
+
+<section id="s27">
+<h3>27. Stories, Formatting and Tooltips</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>story</b> is a set of slides called <b>story points</b>. Each one shows a sheet or dashboard with a caption. <b>Formatting</b> makes charts clean and readable. A <b>tooltip</b> is the pop-up box when you hover on a mark.</p>
+<p class="analogy">A story is like a guided museum tour. Instead of letting visitors wander, you walk them from painting to painting and explain each one.</p>
+</div>
+<h4>Stories: how to build</h4>
+<ol>
+<li>Click <b>New Story</b>. Drag a sheet or dashboard into the story area.</li>
+<li>Write a short caption in the box at the top, like "West sales grew 30% in Q2".</li>
+<li>Click <b>New Blank Point</b> or <b>Duplicate</b> for the next point.</li>
+<li>You can filter or highlight differently in each point, then click <b>Update</b> to save it.</li>
+</ol>
+<h4>Formatting tips</h4>
+<ul>
+<li>Menu <b>Format</b> → <b>Workbook</b> sets fonts and lines for everything at once.</li>
+<li>Right-click any part → <b>Format</b> to change only that part (axis, borders, shading).</li>
+<li>Number format: right-click a measure → Default Properties → <b>Number Format</b> (currency, %, decimals, K/M units).</li>
+<li>Remove clutter: hide gridlines, use fewer colours, label directly instead of using legends.</li>
+<li>Edit titles to say the insight, not just the field names.</li>
+</ul>
+<h4>Tooltips and Viz in Tooltip</h4>
+<ul>
+<li>Click <b>Tooltip</b> on the Marks card to edit the text. Insert fields with the <b>Insert</b> menu, like <code>&lt;SUM(Sales)&gt;</code>.</li>
+<li>Drag extra fields to the Tooltip shelf to show them on hover without changing the chart.</li>
+<li><b>Viz in Tooltip</b>: show a small chart inside the tooltip. In the tooltip editor, click <b>Insert</b> → <b>Sheets</b> → choose a sheet.</li>
+</ul>
+<pre><code>&lt;Sheet name="Monthly Trend" maxwidth="300" maxheight="300" filter="&lt;All Fields&gt;"&gt;</code></pre>
+<p>Now hovering over "East" shows the monthly trend for East only. The <code>filter</code> part passes the hovered mark's values to the small chart.</p>
+<div class="note"><b>Remember:</b> a story walks the viewer through findings in order. Viz in Tooltip adds detail on hover without taking space on the dashboard.</div>
+</section>
+
+<section id="s28">
+<h3>28. Trend Lines, Reference Lines and Forecasting</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>The <b>Analytics pane</b> adds helpful lines to a chart: averages, targets, trends and predictions. You just drag an item onto the chart.</p>
+<p class="analogy">It is like drawing on a printed chart with a ruler: a line for the average, a line for the target, and a dotted line showing where things are heading.</p>
+</div>
+<h4>What is in the Analytics pane</h4>
+<ul>
+<li><b>Constant Line</b>: a fixed value, e.g. a target of 1,000.</li>
+<li><b>Average Line</b>, <b>Median with Quartiles</b>, <b>Totals</b>.</li>
+<li><b>Reference Line</b>: line at a value (average, median, min, max, constant or a parameter). Can be per <b>table</b>, <b>pane</b> or <b>cell</b>.</li>
+<li><b>Reference Band</b>: shaded area between two values. <b>Distribution Band</b>: e.g. 60%–80% of average.</li>
+<li><b>Trend Line</b>: best-fit line. Models: <b>linear</b>, <b>logarithmic</b>, <b>exponential</b>, <b>polynomial</b>, <b>power</b>. Hover to see the equation, <b>R-squared</b> (how well the line fits, 0 to 1) and <b>p-value</b> (lower than 0.05 usually means the trend is real, not chance).</li>
+<li><b>Forecast</b>: predicts future values using <b>exponential smoothing</b>. Needs a date on the view and enough history.</li>
+<li><b>Cluster</b>: groups similar marks automatically (k-means).</li>
+<li><b>Box Plot</b>: shows median, quartiles and outliers.</li>
+</ul>
+<h4>How to add a forecast</h4>
+<ol>
+<li>Build a line chart: continuous <code>MONTH(Order Date)</code> on Columns, <code>SUM(Sales)</code> on Rows.</li>
+<li>Analytics pane → drag <b>Forecast</b> onto the view.</li>
+<li>The forecast appears in a lighter colour with a shaded band. The band is the <b>prediction interval</b> (95% by default): the likely range.</li>
+<li>Right-click → <b>Forecast</b> → <b>Forecast Options</b> to set how far ahead (e.g. 6 months) and the model.</li>
+</ol>
+<div class="note"><b>Remember:</b> reference lines show targets and averages, trend lines show the direction (check R-squared and p-value), forecasts predict the future with exponential smoothing.</div>
+</section>
+
+<!-- ================= SHARING ================= -->
+<div class="part">Part 8 — Sharing &amp; Practice</div>
+
+<section id="s29">
+<h3>29. Performance Tips</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A slow dashboard loses users. Most slowness comes from too much data, too many marks, or too many filters. Fix the biggest problem first.</p>
+<p class="analogy">A slow dashboard is like a heavy backpack. Take out what you don't need (unused columns, extra rows) and the walk gets much easier.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><b>Use extracts</b> for slow sources. Use <b>extract filters</b> and <b>Hide All Unused Fields</b> to make them small.</li>
+<li><b>Aggregate the extract</b> to visible dimensions (e.g. monthly, not every row) if you don't need row detail.</li>
+<li><b>Fewer marks</b>: a table with 100,000 cells is slow and nobody reads it. Show summaries; drill into details with actions.</li>
+<li><b>Fewer quick filters</b>, especially with "Only relevant values" or long lists. Use filter actions or parameters instead.</li>
+<li><b>Fewer sheets</b> per dashboard. Each sheet is at least one query.</li>
+<li>Calculations: numbers and Booleans are faster than strings. Prefer <code>CASE</code> or <code>IN</code> over long <code>IF … OR …</code> chains. Move heavy logic to the database or Prep.</li>
+<li>Use <b>relationships</b> rather than big joins when tables are at different levels.</li>
+<li>Use <b>context filters</b> to shrink data early for slow Top N or FIXED calcs (but not too many).</li>
+<li>Use <b>fixed dashboard size</b> so results can be cached and reused.</li>
+</ul>
+<h4>How to find the slow part</h4>
+<ol>
+<li>Menu <b>Help</b> → <b>Settings and Performance</b> → <b>Start Performance Recording</b>.</li>
+<li>Use the dashboard: click filters, change sheets.</li>
+<li>Stop the recording. Tableau opens a workbook showing which events (queries, layout, rendering) took the longest.</li>
+<li>Also try <b>Workbook Optimizer</b> (Server menu → Run Optimizer). It checks your workbook against best-practice rules.</li>
+</ol>
+<div class="note"><b>Remember:</b> extract + hide unused fields + fewer marks + fewer filters. Measure with the Performance Recorder before guessing.</div>
+</section>
+
+<section id="s30">
+<h3>30. Publishing and Sharing</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Publishing</b> means uploading your workbook or data source to Tableau Server, Tableau Cloud or Tableau Public, so others can open it in a browser.</p>
+<p class="analogy">Desktop is your kitchen. Publishing is putting the dish on the restaurant counter. <b>Permissions</b> decide who may taste it and who may change the recipe.</p>
+</div>
+<h4>How to publish (Server or Cloud)</h4>
+<ol>
+<li>Menu <b>Server</b> → <b>Sign In</b> to your Server or Cloud site.</li>
+<li><b>Server</b> → <b>Publish Workbook</b>. Pick a <b>project</b> (a folder) and a name.</li>
+<li>Set <b>permissions</b> (or keep the project's defaults).</li>
+<li>Choose how data is published: <b>embedded</b> in the workbook, or as a separate <b>published data source</b> others can reuse.</li>
+<li>Set authentication for the data (embed password, or prompt users).</li>
+<li>Click <b>Publish</b>. For Tableau Public: <b>File</b> → <b>Save to Tableau Public</b>.</li>
+</ol>
+<h4>Key points</h4>
+<ul>
+<li><b>Site</b> = a separate space on a server for one team or company. <b>Project</b> = a folder that holds workbooks and data sources.</li>
+<li><b>Site roles</b>: <b>Creator</b>, <b>Explorer</b>, <b>Viewer</b> (plus admin roles). They set the <b>maximum</b> a user can do.</li>
+<li><b>Permissions</b> are set on projects, workbooks and data sources: view, filter, download, web edit, and so on. Best practice: give permissions to <b>groups</b>, not single users, at the <b>project</b> level.</li>
+<li><b>Refresh schedules</b>: published extracts refresh on a schedule (e.g. daily at 6 am). Full or incremental.</li>
+<li><b>Tableau Bridge</b>: lets Tableau Cloud refresh from data inside your company network (on-premises databases).</li>
+<li><b>Subscriptions</b> email a snapshot on a schedule. <b>Data-driven alerts</b> email you when a number crosses a threshold.</li>
+<li><b>Row-level security (RLS)</b>: each user sees only their own rows. Simple way: a calculated filter like <code>[Sales Rep Email] = USERNAME()</code>, or <code>ISMEMBEROF("East Team")</code>.</li>
+<li><b>Tableau Pulse</b> (Cloud): define a metric once (e.g. weekly Sales); users follow it and get AI insight digests.</li>
+<li><b>Tableau Public</b> is free but <b>everything is public</b>. Never upload private or company data.</li>
+</ul>
+<div class="note"><b>Remember:</b> publish to a project, give permissions to groups, schedule extract refreshes, and use USERNAME() for row-level security.</div>
+</section>
+
+<section id="s31">
+<h3>31. Tableau vs Power BI</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Tableau and Microsoft Power BI are the two most popular BI (business intelligence) tools. Both build dashboards. They differ in price, style and ecosystem.</p>
+<p class="analogy">They are like two good car brands. Both get you there. One is loved for its design and feel (Tableau); the other is cheaper and fits perfectly with your other Microsoft gadgets (Power BI).</p>
+</div>
+<div class="table-wrap"><table>
+<tr><th></th><th>Tableau</th><th>Power BI</th></tr>
+<tr><td><b>Owner</b></td><td>Salesforce</td><td>Microsoft</td></tr>
+<tr><td><b>Strength</b></td><td>Flexible, beautiful visuals; great for exploring data</td><td>Low cost; deep Excel, Teams, Azure and Fabric integration</td></tr>
+<tr><td><b>Calculation language</b></td><td>Calculated fields, LOD, table calcs</td><td>DAX (measures) and Power Query M (data prep)</td></tr>
+<tr><td><b>Data prep</b></td><td>Tableau Prep Builder</td><td>Power Query (built in)</td></tr>
+<tr><td><b>Data modelling</b></td><td>Relationships, joins, blending</td><td>Star schema model with relationships (strong modelling)</td></tr>
+<tr><td><b>Authoring app</b></td><td>Tableau Desktop (Windows and Mac)</td><td>Power BI Desktop (Windows only)</td></tr>
+<tr><td><b>Sharing</b></td><td>Server, Cloud, Public</td><td>Power BI Service (in Microsoft Fabric), Report Server</td></tr>
+<tr><td><b>Price</b></td><td>Higher per user</td><td>Usually lower; Pro included in some Microsoft 365 plans</td></tr>
+<tr><td><b>AI features</b></td><td>Tableau Agent, Pulse</td><td>Copilot in Power BI</td></tr>
+<tr><td><b>Learning curve</b></td><td>Easy start; LODs and table calcs take practice</td><td>Easy start; DAX takes practice</td></tr>
+</table></div>
+<div class="note"><b>Remember:</b> if asked "which is better?", say: "Both are strong. Tableau is great for flexible, visual exploration. Power BI is cheaper and fits Microsoft companies. The concepts (dimensions, measures, filters, dashboards) carry over."</div>
+</section>
+
+<section id="s32">
+<h3>32. Build a Sales Dashboard (End to End)</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>This puts everything together. The goal: a one-page sales dashboard for a manager. It answers "How are we doing? Where? Which products? What is the trend?"</p>
+<p class="analogy">Like cooking a full meal: collect ingredients (data), prepare them (clean), cook each dish (sheets), then serve them together on one plate (dashboard).</p>
+</div>
+<h4>Step 1 — Connect and prepare</h4>
+<ol>
+<li>Connect to <code>Superstore.xlsx</code>. Drag <b>Orders</b> to the canvas. Relate <b>Returns</b> on <code>Order ID</code> and <b>People</b> on <code>Region</code>.</li>
+<li>Check data types (dates are dates, Postal Code is a string dimension). Set <code>State</code> geographic role.</li>
+<li>Choose <b>Extract</b> for speed.</li>
+</ol>
+<h4>Step 2 — Create calculations</h4>
+<pre><code>// Profit Ratio
+SUM([Profit]) / SUM([Sales])
+
+// Is Returned?
+IF ISNULL([Returned]) THEN "No" ELSE "Yes" END
+
+// Sales Current Year (for KPI)
+IF YEAR([Order Date]) = { MAX(YEAR([Order Date])) } THEN [Sales] END
+
+// Sales Previous Year
+IF YEAR([Order Date]) = { MAX(YEAR([Order Date])) } - 1 THEN [Sales] END
+
+// Year-over-year growth
+(SUM([Sales Current Year]) - SUM([Sales Previous Year]))
+    / SUM([Sales Previous Year])</code></pre>
+<h4>Step 3 — Build the sheets</h4>
+<ol>
+<li><b>KPI cards</b>: one sheet each for Sales, Profit, Profit Ratio, Orders (<code>COUNTD([Order ID])</code>). Put the measure on Text, make it big. Add YoY growth below it.</li>
+<li><b>Map</b>: State, filled map, Color = Profit Ratio (diverging red–blue).</li>
+<li><b>Trend</b>: continuous Month of Order Date vs Sales, with a Forecast or an average reference line.</li>
+<li><b>Category bars</b>: Sub-Category by Sales, sorted, Color = Profit (losses show red).</li>
+<li><b>Top 10 customers</b>: a Top N filter driven by a <code>Top N</code> parameter.</li>
+</ol>
+<h4>Step 4 — Assemble the dashboard</h4>
+<ol>
+<li>New dashboard, Fixed size 1200 × 800.</li>
+<li>Title text at the top. Horizontal container with the 4 KPI cards.</li>
+<li>Map and trend in a vertical container on the left; category bars and top customers on the right.</li>
+<li>Add filters: Region, Category, and a relative date filter. Apply them to all sheets using this data source.</li>
+</ol>
+<h4>Step 5 — Make it interactive and share</h4>
+<ol>
+<li>Map → <b>Use as Filter</b> (filter action): click a state to filter everything.</li>
+<li>Highlight action on Category. Viz in Tooltip on the map showing the monthly trend.</li>
+<li>Add a Phone layout. Run the Performance Recorder.</li>
+<li>Publish to Tableau Cloud (or Public for a portfolio) and schedule a daily extract refresh.</li>
+</ol>
+<div class="note"><b>Remember:</b> in an interview, explain a dashboard as: business question → data and cleaning → key calculations → chart choices → interactivity → performance → sharing.</div>
+</section>
+
+<!-- ================= REVISION ================= -->
+<div class="part">Revision</div>
+
+<section id="rev">
+<h3>Quick Revision</h3>
+<p>The most-asked Tableau questions, with short and simple answers. Say these in your own words.</p>
+<h4>Basics</h4>
+<ul>
+<li><b>What is Tableau?</b> A drag-and-drop tool that connects to data and makes interactive charts and dashboards.</li>
+<li><b>Name the Tableau products.</b> Desktop (build), Prep (clean), Server and Cloud (share inside a company), Public (free, public), Pulse (metrics with AI insights).</li>
+<li><b>Server vs Cloud?</b> Server: your company hosts it. Cloud: Salesforce hosts it.</li>
+<li><b>.twb vs .twbx?</b> .twb = design only. .twbx = design plus data, packed into one file.</li>
+<li><b>What is a .hyper file?</b> An extract: a fast, compressed snapshot of data.</li>
+<li><b>Live vs extract?</b> Live = always fresh, depends on database speed. Extract = fast snapshot, refreshed on a schedule.</li>
+<li><b>Worksheet vs dashboard vs story?</b> One chart; many charts on one screen; a sequence of slides.</li>
+</ul>
+<h4>Data</h4>
+<ul>
+<li><b>Join vs union?</b> Join adds columns (side by side). Union adds rows (stacked).</li>
+<li><b>Join vs relationship?</b> Join merges tables early into one; rows can duplicate. Relationship keeps tables separate and joins per chart at the right level.</li>
+<li><b>What is data blending?</b> Combining two data sources in one sheet, on a linking field. Works like a left join after aggregation; primary vs secondary source.</li>
+<li><b>What does Data Interpreter do?</b> Cleans messy Excel/CSV: finds headers, removes titles and blank rows.</li>
+<li><b>What is pivot?</b> Turning many columns (Jan, Feb, Mar) into rows (Month, Value).</li>
+</ul>
+<h4>Core ideas</h4>
+<ul>
+<li><b>Dimension vs measure?</b> Dimension = groups and labels. Measure = numbers you aggregate.</li>
+<li><b>Discrete vs continuous?</b> Discrete (blue) = headers. Continuous (green) = axis.</li>
+<li><b>COUNT vs COUNTD?</b> COUNT counts rows. COUNTD counts unique values.</li>
+<li><b>What does ATTR do?</b> Shows the value if it is the same for all rows in the group, otherwise *.</li>
+<li><b>What is the Marks card?</b> It controls how marks look: Color, Size, Label, Detail, Tooltip, Shape, Path.</li>
+</ul>
+<h4>Filters &amp; organising</h4>
+<ul>
+<li><b>Filter order of operations?</b> Extract → Data source → Context → Dimension → Measure → Table calc.</li>
+<li><b>What is a context filter?</b> A filter that runs before others, so Top N and FIXED respect it. Its pill is grey.</li>
+<li><b>Group vs set?</b> Group merges values into one. Set splits data into IN and OUT.</li>
+<li><b>Fixed vs dynamic set?</b> Fixed = hand-picked members. Dynamic = based on a condition or Top N, updates with data.</li>
+<li><b>What is a bin?</b> Equal-sized ranges of a number, used for histograms.</li>
+</ul>
+<h4>Calculations</h4>
+<ul>
+<li><b>Why SUM([Profit])/SUM([Sales]) and not [Profit]/[Sales]?</b> The second sums row ratios, which is wrong.</li>
+<li><b>"Cannot mix aggregate and non-aggregate" error?</b> Wrap the row-level part in an aggregate, or use an LOD.</li>
+<li><b>DATEPART vs DATETRUNC?</b> DATEPART returns a number (2). DATETRUNC returns a date rounded down (2025-02-01).</li>
+<li><b>ZN vs IFNULL?</b> ZN turns null into 0. IFNULL turns null into any value you give.</li>
+<li><b>FIXED vs INCLUDE vs EXCLUDE?</b> FIXED = exact level you name. INCLUDE = finer than the view. EXCLUDE = coarser than the view.</li>
+<li><b>LOD vs table calc?</b> LOD runs in the database on raw data. Table calc runs on the numbers already in the view.</li>
+<li><b>What is Compute Using?</b> The direction a table calc moves through the marks (across, down, pane, specific dimensions).</li>
+<li><b>Parameter vs filter?</b> A filter is tied to a field. A parameter is a free user input used in calcs, filters or lines.</li>
+</ul>
+<h4>Dashboards &amp; sharing</h4>
+<ul>
+<li><b>Tiled vs floating?</b> Tiled snaps into a grid without overlap. Floating sits on top at an exact position.</li>
+<li><b>Dashboard action types?</b> Filter, Highlight, Go to URL, Go to Sheet, Change Parameter, Change Set Values.</li>
+<li><b>What is Viz in Tooltip?</b> A small chart shown inside a tooltip on hover.</li>
+<li><b>How do you speed up a slow dashboard?</b> Extract, hide unused fields, fewer marks, fewer filters, fewer sheets; check with the Performance Recorder.</li>
+<li><b>How do you do row-level security?</b> A user filter or calculated filter like <code>[Rep Email] = USERNAME()</code>.</li>
+<li><b>What is Tableau Pulse?</b> A Tableau Cloud feature that tracks metrics and sends AI-written insights.</li>
+</ul>
+<div class="note"><b>Remember:</b> give the simple answer first, then a small example with Superstore data. That beats a long textbook definition.</div>
+</section>
+
+<section id="road">
+<h3>Learning Path</h3>
+<p>Go step by step. Download free Tableau Public and the Superstore sample data, and build something at each step.</p>
+<ol>
+<li><b>The interface</b> — data pane, shelves, Marks card, Show Me. Make 5 basic charts.</li>
+<li><b>Core ideas</b> — dimensions vs measures, discrete vs continuous, aggregation.</li>
+<li><b>Connecting data</b> — Excel and CSV, live vs extract, relationships, joins, unions, pivot.</li>
+<li><b>More charts</b> — maps, scatter, dual axis, histogram, treemap, Gantt, bullet.</li>
+<li><b>Filters</b> — all filter types and the order of operations. Practise the Top N + context trap.</li>
+<li><b>Calculations</b> — IF/CASE, date functions, then table calcs, then LOD expressions.</li>
+<li><b>Parameters</b> — build the "choose a measure" and "Top N" examples.</li>
+<li><b>Dashboards</b> — containers, actions, device layouts, a story.</li>
+<li><b>Portfolio</b> — publish 2–3 dashboards on Tableau Public (sales, HR, or a public dataset) and add the link to your resume.</li>
+<li><b>Then</b> — learn basic SQL too. Most analyst roles ask for SQL plus one BI tool.</li>
+</ol>
+<div class="note"><b>Remember:</b> for every dashboard, be ready to say what business question it answers, and one insight it shows.</div>
+</section>
+
+</main>
+</div>
+
+<script src="../assets/notes.js"></script>
+</body>
+</html>

@@ -1,0 +1,2598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>English for Work &amp; Life</title>
+<link rel="stylesheet" href="../assets/notes.css">
+<script>
+  try { document.documentElement.setAttribute("data-theme",
+    localStorage.getItem("notes-theme") || "light"); } catch (e) {}
+</script>
+<style>
+/* Page-only styles: phrase cards, formal/informal tags, 30-day tracker */
+:root{ --tf:#2f5f9e; --tf-bg:#e7eefa; --ti:#b5485d; --ti-bg:#fbe9ed; --tb:#2f6f4e; --tb-bg:#e3f1e8; }
+html[data-theme="dark"]{ --tf:#8fb4ee; --tf-bg:#22324a; --ti:#f09aac; --ti-bg:#43262d; --tb:#7fc8a0; --tb-bg:#21392b; }
+.ph-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;margin:10px 0 18px;}
+.ph{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;}
+.ph-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+.ph h4{margin:0;font-size:15.5px;line-height:1.35;color:var(--text);text-transform:none;letter-spacing:0;}
+.ph-mean{margin:5px 0 7px;color:var(--muted);font-size:14px;}
+.ph-ex{margin:0 0 7px;font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:15px;}
+.ph-where{margin:0;font-size:12.8px;color:var(--muted);}
+.ph-where b{color:var(--text);font-weight:600;}
+.ph-swap{margin:0 0 8px;font-size:12.8px;color:var(--muted);text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--ti) 60%,transparent);}
+.ph-swap span{text-decoration:none;display:inline-block;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--ti);margin-right:4px;}
+.tg{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap;}
+.tg.f{color:var(--tf);background:var(--tf-bg);}
+.tg.i{color:var(--ti);background:var(--ti-bg);}
+.tg.b{color:var(--tb);background:var(--tb-bg);}
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;font-size:13.5px;color:var(--muted);margin-top:8px;}
+table.say td:nth-child(2){color:var(--tf);font-weight:600;white-space:nowrap;letter-spacing:.02em;}
+table.ex-last td:last-child{font-family:Georgia,"Times New Roman",serif;font-style:italic;}
+table td:first-child{font-weight:600;}
+table.avoid td:first-child{text-decoration:line-through;color:var(--ti);font-weight:500;}
+table.avoid td:last-child{color:var(--tb);font-weight:600;}
+.bar{height:8px;background:var(--code-bg);border-radius:99px;overflow:hidden;margin:6px 0 14px;}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s;}
+.progress{font-size:14px;color:var(--muted);}
+.days{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px;}
+.day{display:flex;gap:10px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);
+  border-radius:10px;padding:10px 12px;cursor:pointer;font-size:14px;}
+.day input{margin-top:4px;accent-color:var(--accent);}
+.day .d{font-weight:700;min-width:50px;color:var(--muted);}
+.day .t b{display:block;}
+.day:has(input:checked){opacity:.55;}
+.day:has(input:checked) .t{text-decoration:line-through;}
+@media print{.ph,.day{break-inside:avoid;}}
+</style>
+</head>
+<body>
+<div class="scrim"></div>
+<button class="icon-btn" id="reopen" title="Show sidebar ([)" aria-label="Show sidebar">☰</button>
+<div class="layout">
+
+<aside>
+  <div class="sidebar-head">
+    <a class="back-link" href="../index.html">← All topics</a>
+    <button class="icon-btn" id="collapseBtn" title="Hide sidebar ([)" aria-label="Hide sidebar">‹</button>
+  </div>
+  <input id="search" type="text" placeholder="Filter topics…" autocomplete="off">
+
+  <h2>Start Here</h2>
+  <nav>
+    <a href="#how">How to Use This Page</a>
+  </nav>
+
+  <h2>Work Situations</h2>
+  <nav>
+    <a href="#s1">1 · Openers That Set the Tone</a>
+    <a href="#s2">2 · Small Talk With Wit</a>
+    <a href="#s3">3 · Praise That People Remember</a>
+    <a href="#s4">4 · Gratitude With Depth</a>
+    <a href="#s5">5 · Diplomatic Requests</a>
+    <a href="#s6">6 · Follow-ups &amp; Status Checks</a>
+    <a href="#s7">7 · Explaining Your Work Like a Leader</a>
+    <a href="#s8">8 · Presenting With Presence</a>
+    <a href="#s9">9 · Meetings: Opinions, Agreement &amp; Dissent</a>
+    <a href="#s10">10 · Pushing Back &amp; Negotiating</a>
+    <a href="#s11">11 · Owning Mistakes &amp; Hard Conversations</a>
+    <a href="#s12">12 · Persuasion &amp; Influence</a>
+    <a href="#s13">13 · Talking About Your Achievements</a>
+    <a href="#s14">14 · Emails With Polish</a>
+    <a href="#s15">15 · Graceful Exits</a>
+  </nav>
+
+  <h2>Everyday &amp; Social</h2>
+  <nav>
+    <a href="#s16">16 · Compliments That Sparkle</a>
+    <a href="#s17">17 · Expressing Amazement &amp; Delight</a>
+    <a href="#s18">18 · Describing Places, Food &amp; Experiences</a>
+    <a href="#s19">19 · Describing How You Feel</a>
+    <a href="#s20">20 · Catching Up With Friends</a>
+    <a href="#s21">21 · Making Plans &amp; Invitations</a>
+    <a href="#s22">22 · Support, Comfort &amp; Encouragement</a>
+    <a href="#s23">23 · Banter &amp; Playful Teasing</a>
+    <a href="#s24">24 · Texting &amp; Messaging Lines</a>
+  </nav>
+
+  <h2>Word Power</h2>
+  <nav>
+    <a href="#s25">25 · Advanced Vocabulary</a>
+    <a href="#s26">26 · Linkers That Make You Articulate</a>
+    <a href="#s27">27 · Diplomatic Softeners</a>
+    <a href="#s28">28 · Power Verbs for Your Wins</a>
+    <a href="#s29">29 · Phrasal Verbs Natives Use</a>
+    <a href="#s30">30 · Corporate Vocabulary</a>
+    <a href="#s31">31 · Idioms for the Workplace</a>
+    <a href="#s32">32 · Gen Z Terms (Informal Only)</a>
+    <a href="#s33">33 · Commonly Confused Words</a>
+    <a href="#s34">34 · Commonly Mispronounced Words</a>
+    <a href="#s35">35 · Phrases to Retire</a>
+    <a href="#s36">36 · Fillers → Confident Bridges</a>
+  </nav>
+
+  <h2>Practice</h2>
+  <nav>
+    <a href="#plan">30-Day Plan</a>
+  </nav>
+</aside>
+
+<main>
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="../index.html#aptitude">Aptitude</a></li><li><span>English for Work &amp; Life</span></li><li><span aria-current="page">Notes</span></li></ol></nav>
+<header class="top">
+  <h1>English for Work &amp; Life</h1>
+  <div class="top-actions">
+    <button class="ghost" id="menuBtn">☰ Topics</button>
+    <button class="ghost" id="theme">Dark mode</button>
+  </div>
+</header>
+<p class="sub">494+ polished phrases, power words and idioms for fluent speakers who want to sound sharper at work — and more expressive with friends and family. Every phrase shows the plain version it replaces.</p>
+
+<section id="how">
+<h3>How to Use This Page</h3>
+<div class="plain"><span class="plain-label">The idea</span>
+<p>You're already fluent. This page is about <b>range and precision</b> — swapping the default phrase for the one that sounds considered, confident and senior.</p>
+<p class="analogy">Each card shows the plain line you probably use today, then the upgrade. Learn the swap, not the definition.</p></div>
+<ol>
+<li><b>Pick 3 swaps a day</b> from one section — or follow the 30-day plan at the end.</li>
+<li><b>Say them aloud in your own context</b>: your project, your manager, your client.</li>
+<li><b>Deploy one in a real conversation today.</b> Retrieval in context is what makes words stick.</li>
+<li><b>Listen for them</b> in podcasts, earnings calls and senior colleagues — noticing reinforces memory.</li>
+<li><b>Revise on Day 1, 3, 7 and 21.</b> Spaced repetition moves words into active vocabulary.</li>
+</ol>
+<div class="legend">Labels on every phrase:
+  <span class="tg f">Formal</span> clients, seniors, emails
+  <span class="tg i">Informal</span> friends, teammates
+  <span class="tg b">Both</span> safe anywhere
+</div>
+<div class="note"><b>Remember:</b> polish isn't about big words. It's about the precise word, delivered without hesitation.</div>
+</section>
+
+<div class="part">Part 1 — Work Situations</div>
+<section id="s1">
+<h3>1. Openers That Set the Tone</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>Fluent speakers often default to &quot;Hi, how are you?&quot;. Polished speakers open with warmth plus a specific detail — it signals you were paying attention.</p></div>
+<h4>Greeting with presence</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Nice to meet you</p>
+  <div class="ph-top"><h4>Great to put a face to the name</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">You&#x27;ve emailed/called before; now meeting in person.</p>
+  <p class="ph-ex">“Great to put a face to the name — your notes on the audit were invaluable.”</p>
+  <p class="ph-where"><b>Use it:</b> Client visits, offsites</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Thanks for coming</p>
+  <div class="ph-top"><h4>I&#x27;ve been looking forward to this</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Shows genuine interest in the meeting.</p>
+  <p class="ph-ex">“Thanks for making time — I&#x27;ve been looking forward to this conversation.”</p>
+  <p class="ph-where"><b>Use it:</b> Interviews, senior meetings</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I&#x27;ve heard about you</p>
+  <div class="ph-top"><h4>Your reputation precedes you</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">People speak highly of you (warm, slightly playful).</p>
+  <p class="ph-ex">“Ah, Meera — your reputation precedes you. The pricing model was yours, wasn&#x27;t it?”</p>
+  <p class="ph-where"><b>Use it:</b> Meeting someone well known</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> How are you?</p>
+  <div class="ph-top"><h4>How&#x27;s the week treating you?</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">A livelier &quot;how are you&quot;.</p>
+  <p class="ph-ex">“Morning, Kabir! How&#x27;s the week treating you so far?”</p>
+  <p class="ph-where"><b>Use it:</b> Start of calls</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> What are you doing these days?</p>
+  <div class="ph-top"><h4>What&#x27;s been occupying most of your time lately?</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Invites a real answer, not &quot;fine&quot;.</p>
+  <p class="ph-ex">“What&#x27;s been occupying most of your time lately — still the migration?”</p>
+  <p class="ph-where"><b>Use it:</b> Networking, 1:1s</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Long time no see</p>
+  <div class="ph-top"><h4>It&#x27;s been too long</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Warm reunion line.</p>
+  <p class="ph-ex">“Ishaan! It&#x27;s been too long — you&#x27;ve moved to strategy, I hear?”</p>
+  <p class="ph-where"><b>Use it:</b> Old colleagues</p>
+</div>
+</div>
+<h4>Answering &quot;How are you?&quot; with substance</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I&#x27;m busy</p>
+  <div class="ph-top"><h4>Busy in the best way</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Lots of work, all of it meaningful.</p>
+  <p class="ph-ex">“Busy in the best way — we&#x27;re two weeks from launch.”</p>
+  <p class="ph-where"><b>Use it:</b> Any check-in</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I&#x27;m fine</p>
+  <div class="ph-top"><h4>Can&#x27;t complain — plenty on the go</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Fine, with a lot happening.</p>
+  <p class="ph-ex">“Can&#x27;t complain — plenty on the go with the new client.”</p>
+  <p class="ph-where"><b>Use it:</b> Casual chats</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I&#x27;m very good</p>
+  <div class="ph-top"><h4>Firing on all cylinders</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Working at full energy and efficiency.</p>
+  <p class="ph-ex">“Firing on all cylinders after that long weekend.”</p>
+  <p class="ph-where"><b>Use it:</b> Upbeat replies</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Very busy</p>
+  <div class="ph-top"><h4>Running at full stretch, but enjoying it</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Very stretched but positive.</p>
+  <p class="ph-ex">“Running at full stretch, but enjoying it — the team is fantastic.”</p>
+  <p class="ph-where"><b>Use it:</b> Honest yet positive</p>
+</div>
+</div>
+<h4>Introducing yourself with impact</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I work on…</p>
+  <div class="ph-top"><h4>I lead / I own…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">States responsibility with authority.</p>
+  <p class="ph-ex">“I own the reporting layer — everything from ingestion to the exec dashboards.”</p>
+  <p class="ph-where"><b>Use it:</b> Introductions, kickoffs</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> My work is…</p>
+  <div class="ph-top"><h4>My remit covers…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">The scope of my responsibility.</p>
+  <p class="ph-ex">“My remit covers analytics for the South region.”</p>
+  <p class="ph-where"><b>Use it:</b> Formal introductions</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I do both X and Y</p>
+  <div class="ph-top"><h4>I sit at the intersection of X and Y</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Your role blends two areas.</p>
+  <p class="ph-ex">“I sit at the intersection of engineering and product.”</p>
+  <p class="ph-where"><b>Use it:</b> Networking, panels</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> You should talk</p>
+  <div class="ph-top"><h4>You two really ought to connect</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">A purposeful introduction.</p>
+  <p class="ph-ex">“You&#x27;re both obsessed with data quality — you two really ought to connect.”</p>
+  <p class="ph-where"><b>Use it:</b> Introducing others</p>
+</div>
+</div>
+</section>
+<section id="s2">
+<h3>2. Small Talk With Wit</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>Good small talk is curious, light and specific. Ask questions that invite stories, and react in ways that keep the ball in play.</p></div>
+<h4>Questions that invite stories</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> What do you do?</p>
+  <div class="ph-top"><h4>What&#x27;s the most interesting thing you&#x27;re working on right now?</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Draws out passion, not status.</p>
+  <p class="ph-ex">“So what&#x27;s the most interesting thing you&#x27;re working on right now?”</p>
+  <p class="ph-where"><b>Use it:</b> Networking, lunches</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Any plans?</p>
+  <div class="ph-top"><h4>Anything exciting on the horizon?</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Upcoming plans or news.</p>
+  <p class="ph-ex">“Anything exciting on the horizon — travel, projects?”</p>
+  <p class="ph-where"><b>Use it:</b> Friday chats</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Why did you join this?</p>
+  <div class="ph-top"><h4>How did you end up in this field?</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Invites their career story.</p>
+  <p class="ph-ex">“How did you end up in data science? Was it planned?”</p>
+  <p class="ph-where"><b>Use it:</b> Getting to know seniors</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Any news?</p>
+  <div class="ph-top"><h4>What&#x27;s the word on…?</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">What are people saying about…?</p>
+  <p class="ph-ex">“What&#x27;s the word on the restructuring?”</p>
+  <p class="ph-where"><b>Use it:</b> Corridor chats</p>
+</div>
+</div>
+<h4>Catching up after absence</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Tell me what happened</p>
+  <div class="ph-top"><h4>Bring me up to speed</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Give me the essential updates.</p>
+  <p class="ph-ex">“I was out all week — could you bring me up to speed?”</p>
+  <p class="ph-where"><b>Use it:</b> After leave</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Tell me updates</p>
+  <div class="ph-top"><h4>What did I miss?</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Light way to ask for updates.</p>
+  <p class="ph-ex">“Back from leave — what did I miss?”</p>
+  <p class="ph-where"><b>Use it:</b> Teammates</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Tell me shortly</p>
+  <div class="ph-top"><h4>Give me the headline</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Just the main point.</p>
+  <p class="ph-ex">“No need for detail — just give me the headline.”</p>
+  <p class="ph-where"><b>Use it:</b> Busy days</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> What&#x27;s the status?</p>
+  <div class="ph-top"><h4>What&#x27;s the state of play?</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Current overall situation.</p>
+  <p class="ph-ex">“What&#x27;s the state of play on the vendor negotiation?”</p>
+  <p class="ph-where"><b>Use it:</b> Managers, cross-team</p>
+</div>
+</div>
+<h4>Reactions that keep it flowing</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Oh nice</p>
+  <div class="ph-top"><h4>That must have been quite the experience</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Acknowledges an eventful story.</p>
+  <p class="ph-ex">“Stuck in Dubai for two days? That must have been quite the experience.”</p>
+  <p class="ph-where"><b>Use it:</b> Listening</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Okay</p>
+  <div class="ph-top"><h4>I hadn&#x27;t thought of it that way</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Respectful, engaged response.</p>
+  <p class="ph-ex">“Interesting — I hadn&#x27;t thought of it that way.”</p>
+  <p class="ph-where"><b>Use it:</b> Discussions</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Wow</p>
+  <div class="ph-top"><h4>Now that&#x27;s a story</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Shows delight in what they shared.</p>
+  <p class="ph-ex">“You presented to the board on day three? Now that&#x27;s a story.”</p>
+  <p class="ph-where"><b>Use it:</b> Casual chats</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Same, I also…</p>
+  <div class="ph-top"><h4>Funny you should mention that…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Smoothly linking to your own point.</p>
+  <p class="ph-ex">“Funny you should mention that — I was just reading about it.”</p>
+  <p class="ph-where"><b>Use it:</b> Topic links</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Also…</p>
+  <div class="ph-top"><h4>On that note…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Transition to a related topic.</p>
+  <p class="ph-ex">“On that note, how&#x27;s the new hire settling in?”</p>
+  <p class="ph-where"><b>Use it:</b> Changing topic</p>
+</div>
+</div>
+</section>
+<section id="s3">
+<h3>3. Praise That People Remember</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>Generic praise (&quot;good job&quot;) is forgotten instantly. Precise praise names the behaviour and the impact: what they did, and why it mattered.</p></div>
+<h4>Recognising work</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Good job</p>
+  <div class="ph-top"><h4>This is exceptionally well thought-through</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Praises the thinking, not just the output.</p>
+  <p class="ph-ex">“This proposal is exceptionally well thought-through — you&#x27;ve pre-empted every objection.”</p>
+  <p class="ph-where"><b>Use it:</b> Reviews, emails</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Very good work</p>
+  <div class="ph-top"><h4>You&#x27;ve raised the bar</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Set a new, higher standard.</p>
+  <p class="ph-ex">“Honestly, this deck has raised the bar for the whole team.”</p>
+  <p class="ph-where"><b>Use it:</b> Team praise</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Nice details</p>
+  <div class="ph-top"><h4>The attention to detail here is remarkable</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Specific, sincere praise.</p>
+  <p class="ph-ex">“The attention to detail here is remarkable — even the footnotes are clean.”</p>
+  <p class="ph-where"><b>Use it:</b> Feedback</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> You did great</p>
+  <div class="ph-top"><h4>You absolutely knocked it out of the park</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Huge success.</p>
+  <p class="ph-ex">“You absolutely knocked it out of the park in that client pitch.”</p>
+  <p class="ph-where"><b>Use it:</b> Celebrating wins</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> You handled it well</p>
+  <div class="ph-top"><h4>That was a masterclass in…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">A perfect example of a skill.</p>
+  <p class="ph-ex">“That was a masterclass in handling a difficult stakeholder.”</p>
+  <p class="ph-where"><b>Use it:</b> After meetings</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> This helped a lot</p>
+  <div class="ph-top"><h4>This made a tangible difference</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Real, measurable impact.</p>
+  <p class="ph-ex">“Your automation made a tangible difference — we saved six hours a week.”</p>
+  <p class="ph-where"><b>Use it:</b> Appraisals</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Thanks Ravi</p>
+  <div class="ph-top"><h4>Credit where it&#x27;s due</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Publicly acknowledging someone.</p>
+  <p class="ph-ex">“Credit where it&#x27;s due — Ravi cracked the bug at 2 am.”</p>
+  <p class="ph-where"><b>Use it:</b> Team channels</p>
+</div>
+</div>
+<h4>Complimenting the person</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> You&#x27;re good at…</p>
+  <div class="ph-top"><h4>You have a gift for…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">A natural talent.</p>
+  <p class="ph-ex">“You have a gift for making complex ideas feel simple.”</p>
+  <p class="ph-where"><b>Use it:</b> Mentoring, feedback</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I like how you…</p>
+  <div class="ph-top"><h4>I&#x27;ve always admired how you…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Sincere, personal compliment.</p>
+  <p class="ph-ex">“I&#x27;ve always admired how composed you stay under pressure.”</p>
+  <p class="ph-where"><b>Use it:</b> 1:1s</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> You explain well</p>
+  <div class="ph-top"><h4>You bring a real clarity to…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">You make things clear.</p>
+  <p class="ph-ex">“You bring a real clarity to these discussions.”</p>
+  <p class="ph-where"><b>Use it:</b> Meetings, feedback</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> You&#x27;re smart</p>
+  <div class="ph-top"><h4>You&#x27;re incredibly astute</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Sharp and perceptive.</p>
+  <p class="ph-ex">“You&#x27;re incredibly astute about what clients actually want.”</p>
+  <p class="ph-where"><b>Use it:</b> Feedback</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> You did well there</p>
+  <div class="ph-top"><h4>You were in your element</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Doing what you&#x27;re best at, visibly.</p>
+  <p class="ph-ex">“You were in your element on stage today.”</p>
+  <p class="ph-where"><b>Use it:</b> After presentations</p>
+</div>
+</div>
+<h4>Receiving praise gracefully</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> No, it was nothing</p>
+  <div class="ph-top"><h4>That&#x27;s very generous of you</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Gracious acceptance.</p>
+  <p class="ph-ex">“That&#x27;s very generous of you — I learned a lot doing it.”</p>
+  <p class="ph-where"><b>Use it:</b> Senior praise</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Team did it</p>
+  <div class="ph-top"><h4>I can&#x27;t take all the credit</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Sharing credit with class.</p>
+  <p class="ph-ex">“Thank you — though I can&#x27;t take all the credit; Anu did the heavy lifting.”</p>
+  <p class="ph-where"><b>Use it:</b> Public praise</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Thanks</p>
+  <div class="ph-top"><h4>That genuinely means a lot</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Warm, sincere thanks.</p>
+  <p class="ph-ex">“Coming from you, that genuinely means a lot.”</p>
+  <p class="ph-where"><b>Use it:</b> Mentors</p>
+</div>
+</div>
+</section>
+<section id="s4">
+<h3>4. Gratitude With Depth</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>Strong thanks names the action and its effect. It turns a small courtesy into a relationship builder.</p></div>
+<h4>Expressing thanks</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Thanks a lot</p>
+  <div class="ph-top"><h4>I can&#x27;t thank you enough for…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Deep gratitude.</p>
+  <p class="ph-ex">“I can&#x27;t thank you enough for stepping in at the last minute.”</p>
+  <p class="ph-where"><b>Use it:</b> Big favours</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Thanks for helping</p>
+  <div class="ph-top"><h4>This was above and beyond</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">More than you needed to do.</p>
+  <p class="ph-ex">“Staying late to review my deck was above and beyond — thank you.”</p>
+  <p class="ph-where"><b>Use it:</b> Recognising effort</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I owe you</p>
+  <div class="ph-top"><h4>I&#x27;m indebted to you</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">I owe you greatly.</p>
+  <p class="ph-ex">“I&#x27;m indebted to you for the referral.”</p>
+  <p class="ph-where"><b>Use it:</b> Mentors, sponsors</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Your help was useful</p>
+  <div class="ph-top"><h4>Your input was instrumental</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Your contribution was key to success.</p>
+  <p class="ph-ex">“Your input was instrumental in getting the budget approved.”</p>
+  <p class="ph-where"><b>Use it:</b> Emails, recognition</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Thanks for the meeting</p>
+  <div class="ph-top"><h4>I really appreciate you making the time</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Thanks a busy person.</p>
+  <p class="ph-ex">“I really appreciate you making the time — I know your week is packed.”</p>
+  <p class="ph-where"><b>Use it:</b> Seniors, interviews</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Thanks, you saved me</p>
+  <div class="ph-top"><h4>You&#x27;ve saved me a world of trouble</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">You prevented big problems.</p>
+  <p class="ph-ex">“Catching that typo before it went to the client saved me a world of trouble.”</p>
+  <p class="ph-where"><b>Use it:</b> Teammates</p>
+</div>
+</div>
+<h4>Responding to thanks</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Welcome</p>
+  <div class="ph-top"><h4>It was my pleasure, truly</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Warm, sincere.</p>
+  <p class="ph-ex">“It was my pleasure, truly — happy to help anytime.”</p>
+  <p class="ph-where"><b>Use it:</b> Clients, seniors</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> No problem</p>
+  <div class="ph-top"><h4>Glad I could be of help</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Polished reply.</p>
+  <p class="ph-ex">“Glad I could be of help. Keep me posted on how it lands.”</p>
+  <p class="ph-where"><b>Use it:</b> Professional</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Anytime</p>
+  <div class="ph-top"><h4>Happy to pay it forward</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Someone helped me before; I&#x27;m helping you.</p>
+  <p class="ph-ex">“Someone did the same for me once — happy to pay it forward.”</p>
+  <p class="ph-where"><b>Use it:</b> Mentoring</p>
+</div>
+</div>
+</section>
+<section id="s5">
+<h3>5. Diplomatic Requests</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>The more senior the person, the softer the frame. Polished requests give context, make the ask specific, and make &quot;yes&quot; easy.</p></div>
+<h4>Asking with finesse</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Can you…?</p>
+  <div class="ph-top"><h4>Would you be open to…?</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Invites, rather than demands.</p>
+  <p class="ph-ex">“Would you be open to a quick review of the model before Friday?”</p>
+  <p class="ph-where"><b>Use it:</b> Seniors, other teams</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Please send</p>
+  <div class="ph-top"><h4>I&#x27;d be grateful if you could…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Formal, warm request.</p>
+  <p class="ph-ex">“I&#x27;d be grateful if you could share the raw data when convenient.”</p>
+  <p class="ph-where"><b>Use it:</b> Emails</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Are you free?</p>
+  <div class="ph-top"><h4>Could I borrow ten minutes of your time?</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Polite request for a short meeting.</p>
+  <p class="ph-ex">“Could I borrow ten minutes of your time this afternoon?”</p>
+  <p class="ph-where"><b>Use it:</b> Busy colleagues</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> What do you think?</p>
+  <div class="ph-top"><h4>I&#x27;d value your perspective on…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Asks for expert opinion.</p>
+  <p class="ph-ex">“I&#x27;d value your perspective on how to frame this for leadership.”</p>
+  <p class="ph-where"><b>Use it:</b> Mentors, seniors</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Can you change…?</p>
+  <div class="ph-top"><h4>Is there any flexibility on…?</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Asks to change terms gently.</p>
+  <p class="ph-ex">“Is there any flexibility on the delivery date?”</p>
+  <p class="ph-where"><b>Use it:</b> Negotiations</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Can you do it fast?</p>
+  <div class="ph-top"><h4>Would it be a stretch to…?</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Acknowledges the ask may be big.</p>
+  <p class="ph-ex">“Would it be a stretch to have this by Thursday?”</p>
+  <p class="ph-where"><b>Use it:</b> Tight deadlines</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Please check</p>
+  <div class="ph-top"><h4>No pressure at all, but…</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Lowers stakes of the ask.</p>
+  <p class="ph-ex">“No pressure at all, but if you have a moment, could you glance at this?”</p>
+  <p class="ph-where"><b>Use it:</b> Peers</p>
+</div>
+</div>
+<h4>Asking for clarity without sounding lost</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I didn&#x27;t understand</p>
+  <div class="ph-top"><h4>Could you unpack that a little?</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Please explain in more depth.</p>
+  <p class="ph-ex">“Could you unpack that a little — what does &#x27;phase two&#x27; include?”</p>
+  <p class="ph-where"><b>Use it:</b> Meetings</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> So you mean…?</p>
+  <div class="ph-top"><h4>Just so I&#x27;m clear…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Confirming understanding.</p>
+  <p class="ph-ex">“Just so I&#x27;m clear — we&#x27;re prioritising retention over acquisition?”</p>
+  <p class="ph-where"><b>Use it:</b> Meetings, calls</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Is that right?</p>
+  <div class="ph-top"><h4>To make sure we&#x27;re aligned…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Confirming shared understanding.</p>
+  <p class="ph-ex">“To make sure we&#x27;re aligned, the scope excludes mobile, right?”</p>
+  <p class="ph-where"><b>Use it:</b> Kickoffs</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Why?</p>
+  <div class="ph-top"><h4>What&#x27;s the thinking behind…?</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Asks for rationale without challenging.</p>
+  <p class="ph-ex">“What&#x27;s the thinking behind moving the launch?”</p>
+  <p class="ph-where"><b>Use it:</b> Decisions</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> How?</p>
+  <div class="ph-top"><h4>Could you walk me through your reasoning?</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Explain step by step.</p>
+  <p class="ph-ex">“Interesting conclusion — could you walk me through your reasoning?”</p>
+  <p class="ph-where"><b>Use it:</b> Reviews</p>
+</div>
+</div>
+</section>
+<section id="s6">
+<h3>6. Follow-ups &amp; Status Checks</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>Chasing people is part of work. The art is to follow up without sounding impatient — focus on the shared goal, not their delay.</p></div>
+<h4>Checking progress</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Status?</p>
+  <div class="ph-top"><h4>How are things shaping up on…?</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">How&#x27;s it progressing?</p>
+  <p class="ph-ex">“How are things shaping up on the vendor shortlist?”</p>
+  <p class="ph-where"><b>Use it:</b> Peers, reports</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> What happened with…?</p>
+  <div class="ph-top"><h4>Where have we landed on…?</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">What was decided?</p>
+  <p class="ph-ex">“Where have we landed on the pricing question?”</p>
+  <p class="ph-where"><b>Use it:</b> After discussions</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Reminder!</p>
+  <div class="ph-top"><h4>Just bumping this up your inbox</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Gentle email follow-up.</p>
+  <p class="ph-ex">“Just bumping this up your inbox in case it slipped through.”</p>
+  <p class="ph-where"><b>Use it:</b> Email follow-ups</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Any update?</p>
+  <div class="ph-top"><h4>Circling back on…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Returning to an open item.</p>
+  <p class="ph-ex">“Circling back on the contract — any movement from legal?”</p>
+  <p class="ph-where"><b>Use it:</b> Follow-ups</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Will it be done?</p>
+  <div class="ph-top"><h4>Are we still on track for…?</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Is the timeline intact?</p>
+  <p class="ph-ex">“Are we still on track for the 15th?”</p>
+  <p class="ph-where"><b>Use it:</b> Project check-ins</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Any problem?</p>
+  <div class="ph-top"><h4>Is there anything standing in the way?</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Any blockers?</p>
+  <p class="ph-ex">“Is there anything standing in the way that I can help clear?”</p>
+  <p class="ph-where"><b>Use it:</b> 1:1s, stand-ups</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Why is it delayed?</p>
+  <div class="ph-top"><h4>What would help move this forward?</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Offers support, unblocks.</p>
+  <p class="ph-ex">“What would help move this forward from your side?”</p>
+  <p class="ph-where"><b>Use it:</b> Stuck tasks</p>
+</div>
+</div>
+<h4>Checking in on people</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Are you ok?</p>
+  <div class="ph-top"><h4>How are you holding up?</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">How are you coping (busy/hard times)?</p>
+  <p class="ph-ex">“Big week — how are you holding up?”</p>
+  <p class="ph-where"><b>Use it:</b> Stressful periods</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Too much work?</p>
+  <div class="ph-top"><h4>Is your plate looking manageable?</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Is your workload okay?</p>
+  <p class="ph-ex">“Is your plate looking manageable, or should we re-prioritise?”</p>
+  <p class="ph-where"><b>Use it:</b> Managers, peers</p>
+</div>
+</div>
+</section>
+<section id="s7">
+<h3>7. Explaining Your Work Like a Leader</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>Senior people want the conclusion first, then the reasoning. Lead with the headline, quantify the impact, and name the next step.</p></div>
+<h4>Status updates</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> So basically…</p>
+  <div class="ph-top"><h4>The short version is…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Lead with the bottom line.</p>
+  <p class="ph-ex">“The short version is: we&#x27;re on track, with one risk on data access.”</p>
+  <p class="ph-where"><b>Use it:</b> Stand-ups, exec updates</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> We did a lot</p>
+  <div class="ph-top"><h4>We&#x27;ve made solid headway on…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Good progress.</p>
+  <p class="ph-ex">“We&#x27;ve made solid headway on the migration — 80% is done.”</p>
+  <p class="ph-where"><b>Use it:</b> Updates</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I finished X, now Y</p>
+  <div class="ph-top"><h4>I&#x27;ve wrapped up… and I&#x27;m now turning to…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Done → next.</p>
+  <p class="ph-ex">“I&#x27;ve wrapped up the API and I&#x27;m now turning to testing.”</p>
+  <p class="ph-where"><b>Use it:</b> Stand-ups</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> It&#x27;s late</p>
+  <div class="ph-top"><h4>We&#x27;re tracking slightly behind, and here&#x27;s why</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Honest delay with ownership.</p>
+  <p class="ph-ex">“We&#x27;re tracking slightly behind, and here&#x27;s why — plus how we&#x27;ll recover.”</p>
+  <p class="ph-where"><b>Use it:</b> Managing expectations</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> One problem is…</p>
+  <div class="ph-top"><h4>The one thing I&#x27;d flag is…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Highlight a risk.</p>
+  <p class="ph-ex">“The one thing I&#x27;d flag is our dependency on the vendor&#x27;s API.”</p>
+  <p class="ph-where"><b>Use it:</b> Risk reporting</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I&#x27;m waiting</p>
+  <div class="ph-top"><h4>I&#x27;m blocked pending…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Waiting on something specific.</p>
+  <p class="ph-ex">“I&#x27;m blocked pending access to the production database.”</p>
+  <p class="ph-where"><b>Use it:</b> Stand-ups</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I think it&#x27;ll be done</p>
+  <div class="ph-top"><h4>I&#x27;m confident we&#x27;ll land this by…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Firm, confident ETA.</p>
+  <p class="ph-ex">“I&#x27;m confident we&#x27;ll land this by Thursday EOD.”</p>
+  <p class="ph-where"><b>Use it:</b> Deadlines</p>
+</div>
+</div>
+<h4>Explaining ideas and decisions</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Basically it is…</p>
+  <div class="ph-top"><h4>At its core, this is about…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">The essence.</p>
+  <p class="ph-ex">“At its core, this is about reducing manual effort.”</p>
+  <p class="ph-where"><b>Use it:</b> Explaining purpose</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> There are two reasons</p>
+  <div class="ph-top"><h4>The rationale here is twofold</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Two reasons.</p>
+  <p class="ph-ex">“The rationale here is twofold: speed and auditability.”</p>
+  <p class="ph-where"><b>Use it:</b> Justifying decisions</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> This helps in…</p>
+  <div class="ph-top"><h4>What this unlocks is…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">What it enables.</p>
+  <p class="ph-ex">“What this unlocks is real-time reporting for the sales team.”</p>
+  <p class="ph-where"><b>Use it:</b> Selling impact</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> So the result is</p>
+  <div class="ph-top"><h4>The net effect is…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Overall result.</p>
+  <p class="ph-ex">“The net effect is a 30% drop in support tickets.”</p>
+  <p class="ph-where"><b>Use it:</b> Impact</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Meaning…</p>
+  <div class="ph-top"><h4>In practical terms…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">What it means day-to-day.</p>
+  <p class="ph-ex">“In practical terms, managers won&#x27;t need to export to Excel anymore.”</p>
+  <p class="ph-where"><b>Use it:</b> Non-tech audiences</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> But the problem is…</p>
+  <div class="ph-top"><h4>The trade-off is…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">What we give up.</p>
+  <p class="ph-ex">“The trade-off is a slightly longer build in exchange for easier maintenance.”</p>
+  <p class="ph-where"><b>Use it:</b> Design discussions</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I did it myself</p>
+  <div class="ph-top"><h4>I took the initiative to…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Showing ownership.</p>
+  <p class="ph-ex">“I took the initiative to automate the weekly report.”</p>
+  <p class="ph-where"><b>Use it:</b> Appraisals, interviews</p>
+</div>
+</div>
+</section>
+<section id="s8">
+<h3>8. Presenting With Presence</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>Polished presenters use signposts (where we are), framing (why it matters) and landings (so what). Learn one line for each moment and your delivery becomes effortless.</p></div>
+<h4>Opening with a hook</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Today I&#x27;ll talk about…</p>
+  <div class="ph-top"><h4>Let me start with a number</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Grabs attention with data.</p>
+  <p class="ph-ex">“Let me start with a number: 42% of our users never reach checkout.”</p>
+  <p class="ph-where"><b>Use it:</b> Strong openings</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> The topic is…</p>
+  <div class="ph-top"><h4>Here&#x27;s the question I want us to answer today</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Frames the purpose.</p>
+  <p class="ph-ex">“Here&#x27;s the question I want us to answer today: why are renewals slipping?”</p>
+  <p class="ph-where"><b>Use it:</b> Problem-solving talks</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I will cover…</p>
+  <div class="ph-top"><h4>I&#x27;ll keep this tight — three points, ten minutes</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Respect for time, sets structure.</p>
+  <p class="ph-ex">“I&#x27;ll keep this tight — three points, ten minutes, then questions.”</p>
+  <p class="ph-where"><b>Use it:</b> Exec audiences</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> You will learn…</p>
+  <div class="ph-top"><h4>By the time we&#x27;re done, you&#x27;ll be able to…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Promises a takeaway.</p>
+  <p class="ph-ex">“By the time we&#x27;re done, you&#x27;ll be able to read this dashboard in under a minute.”</p>
+  <p class="ph-where"><b>Use it:</b> Training, demos</p>
+</div>
+</div>
+<h4>Signposting and transitions</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Next slide</p>
+  <div class="ph-top"><h4>That brings us neatly to…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Smooth transition.</p>
+  <p class="ph-ex">“That brings us neatly to the cost question.”</p>
+  <p class="ph-where"><b>Use it:</b> Between sections</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Now see this</p>
+  <div class="ph-top"><h4>Let&#x27;s zoom in on…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Focus on a detail.</p>
+  <p class="ph-ex">“Let&#x27;s zoom in on the South region.”</p>
+  <p class="ph-where"><b>Use it:</b> Data deep-dives</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Overall…</p>
+  <div class="ph-top"><h4>Let&#x27;s zoom out for a moment</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Back to the big picture.</p>
+  <p class="ph-ex">“Let&#x27;s zoom out for a moment and look at the full year.”</p>
+  <p class="ph-where"><b>Use it:</b> Context</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Now see this point</p>
+  <div class="ph-top"><h4>Here&#x27;s where it gets interesting</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Builds anticipation.</p>
+  <p class="ph-ex">“Here&#x27;s where it gets interesting — weekend orders doubled.”</p>
+  <p class="ph-where"><b>Use it:</b> Key insights</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Wait, later</p>
+  <div class="ph-top"><h4>Hold that thought — we&#x27;ll come back to it</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Defers a point gracefully.</p>
+  <p class="ph-ex">“Great question — hold that thought, it&#x27;s on slide eight.”</p>
+  <p class="ph-where"><b>Use it:</b> Interruptions</p>
+</div>
+</div>
+<h4>Describing data with precision</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Went up a lot</p>
+  <div class="ph-top"><h4>…rose sharply / surged / spiked</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Increased fast.</p>
+  <p class="ph-ex">“Mobile traffic surged after the campaign.”</p>
+  <p class="ph-where"><b>Use it:</b> Trends</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Stayed the same</p>
+  <div class="ph-top"><h4>…plateaued / levelled off</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Stopped growing.</p>
+  <p class="ph-ex">“Sign-ups plateaued in Q3.”</p>
+  <p class="ph-where"><b>Use it:</b> Trends</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Went down slowly</p>
+  <div class="ph-top"><h4>…tapered off / declined gradually</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Slowly decreased.</p>
+  <p class="ph-ex">“Complaints tapered off after the fix.”</p>
+  <p class="ph-where"><b>Use it:</b> Trends</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Did better</p>
+  <div class="ph-top"><h4>…outpaced / outperformed</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Grew faster than / did better than.</p>
+  <p class="ph-ex">“Tier-2 cities outpaced the metros this year.”</p>
+  <p class="ph-where"><b>Use it:</b> Comparisons</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Is the biggest part</p>
+  <div class="ph-top"><h4>…accounts for the lion&#x27;s share</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">The largest part.</p>
+  <p class="ph-ex">“Electronics accounts for the lion&#x27;s share of revenue.”</p>
+  <p class="ph-where"><b>Use it:</b> Proportions</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> This shows…</p>
+  <div class="ph-top"><h4>The key insight here is…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">The &#x27;so what&#x27;.</p>
+  <p class="ph-ex">“The key insight here is that discounts don&#x27;t drive loyalty.”</p>
+  <p class="ph-where"><b>Use it:</b> Landing a point</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> That is very big</p>
+  <div class="ph-top"><h4>To put that in perspective…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Makes a number meaningful.</p>
+  <p class="ph-ex">“To put that in perspective, that&#x27;s our entire marketing budget.”</p>
+  <p class="ph-where"><b>Use it:</b> Big numbers</p>
+</div>
+</div>
+<h4>Closing and handling questions</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> In conclusion</p>
+  <div class="ph-top"><h4>If you remember one thing from today, let it be this</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Memorable close.</p>
+  <p class="ph-ex">“If you remember one thing from today, let it be this: retention is cheaper than acquisition.”</p>
+  <p class="ph-where"><b>Use it:</b> Final slide</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Please approve</p>
+  <div class="ph-top"><h4>The ask from this group is…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Clear call to action.</p>
+  <p class="ph-ex">“The ask from this group is approval for a two-month pilot.”</p>
+  <p class="ph-where"><b>Use it:</b> Decision meetings</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Any questions?</p>
+  <div class="ph-top"><h4>I&#x27;d welcome any questions or challenges</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Confident Q&amp;A invitation.</p>
+  <p class="ph-ex">“I&#x27;d welcome any questions or challenges.”</p>
+  <p class="ph-where"><b>Use it:</b> Q&amp;A</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Good question</p>
+  <div class="ph-top"><h4>That&#x27;s a sharp question</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Acknowledges, buys a second.</p>
+  <p class="ph-ex">“That&#x27;s a sharp question — let me give you the context.”</p>
+  <p class="ph-where"><b>Use it:</b> Q&amp;A</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I don&#x27;t know</p>
+  <div class="ph-top"><h4>I don&#x27;t want to give you a half-answer — let me come back to you</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Professional &#x27;I don&#x27;t know&#x27;.</p>
+  <p class="ph-ex">“I don&#x27;t want to give you a half-answer — let me confirm and come back to you by tomorrow.”</p>
+  <p class="ph-where"><b>Use it:</b> Unknown answers</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Ok?</p>
+  <div class="ph-top"><h4>Does that address your question?</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Closing the loop.</p>
+  <p class="ph-ex">“Does that address your question, or shall I go deeper?”</p>
+  <p class="ph-where"><b>Use it:</b> After answering</p>
+</div>
+</div>
+</section>
+<section id="s9">
+<h3>9. Meetings: Opinions, Agreement &amp; Dissent</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>Influence in meetings comes from framing. Assert clearly when you&#x27;re sure, hedge when you&#x27;re not, and disagree with the idea — never the person.</p></div>
+<h4>Stating your view</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I think…</p>
+  <div class="ph-top"><h4>My read on this is…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">My interpretation.</p>
+  <p class="ph-ex">“My read on this is that the drop is seasonal, not structural.”</p>
+  <p class="ph-where"><b>Use it:</b> Discussions</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I suggest…</p>
+  <div class="ph-top"><h4>I&#x27;d make the case for…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Argue in favour.</p>
+  <p class="ph-ex">“I&#x27;d make the case for launching in one city first.”</p>
+  <p class="ph-where"><b>Use it:</b> Proposals</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Maybe…</p>
+  <div class="ph-top"><h4>I&#x27;m inclined to think…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Soft, considered opinion.</p>
+  <p class="ph-ex">“I&#x27;m inclined to think we need more data before deciding.”</p>
+  <p class="ph-where"><b>Use it:</b> Uncertain views</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I have an idea</p>
+  <div class="ph-top"><h4>If I could offer a different angle…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Adds a perspective politely.</p>
+  <p class="ph-ex">“If I could offer a different angle — what if we bundle it?”</p>
+  <p class="ph-where"><b>Use it:</b> Brainstorms</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Honestly…</p>
+  <div class="ph-top"><h4>I&#x27;ll be candid…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Being honest, directly.</p>
+  <p class="ph-ex">“I&#x27;ll be candid — I don&#x27;t think the timeline is realistic.”</p>
+  <p class="ph-where"><b>Use it:</b> Hard truths</p>
+</div>
+</div>
+<h4>Agreeing with nuance</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I agree</p>
+  <div class="ph-top"><h4>I&#x27;m fully on board</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Total support.</p>
+  <p class="ph-ex">“I&#x27;m fully on board with the phased approach.”</p>
+  <p class="ph-where"><b>Use it:</b> Agreement</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Yes, true</p>
+  <div class="ph-top"><h4>That resonates with me</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">I connect with that idea.</p>
+  <p class="ph-ex">“That resonates with me — we&#x27;ve seen the same pattern.”</p>
+  <p class="ph-where"><b>Use it:</b> Discussions</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Same as her</p>
+  <div class="ph-top"><h4>I&#x27;d echo what Priya said</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Supporting someone else&#x27;s point.</p>
+  <p class="ph-ex">“I&#x27;d echo what Priya said about data quality.”</p>
+  <p class="ph-where"><b>Use it:</b> Meetings</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Yes and also</p>
+  <div class="ph-top"><h4>Agreed — and to build on that…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Agree and add value.</p>
+  <p class="ph-ex">“Agreed — and to build on that, we could A/B test it.”</p>
+  <p class="ph-where"><b>Use it:</b> Collaborative talk</p>
+</div>
+</div>
+<h4>Disagreeing with grace</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> No, I disagree</p>
+  <div class="ph-top"><h4>I see it slightly differently</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Gentle disagreement.</p>
+  <p class="ph-ex">“I see it slightly differently — I think price isn&#x27;t the issue.”</p>
+  <p class="ph-where"><b>Use it:</b> Any disagreement</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I don&#x27;t like it</p>
+  <div class="ph-top"><h4>I&#x27;m not sure I&#x27;m fully sold on…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Unconvinced, politely.</p>
+  <p class="ph-ex">“I&#x27;m not sure I&#x27;m fully sold on the vendor yet.”</p>
+  <p class="ph-where"><b>Use it:</b> Evaluations</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> That&#x27;s wrong</p>
+  <div class="ph-top"><h4>I&#x27;d push back a little on that</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Respectful challenge.</p>
+  <p class="ph-ex">“I&#x27;d push back a little on that — the data says otherwise.”</p>
+  <p class="ph-where"><b>Use it:</b> Peers, managers</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> But what if…</p>
+  <div class="ph-top"><h4>Let me play devil&#x27;s advocate for a second</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Testing an idea by arguing the opposite.</p>
+  <p class="ph-ex">“Let me play devil&#x27;s advocate for a second — what if adoption is slow?”</p>
+  <p class="ph-where"><b>Use it:</b> Decisions</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I don&#x27;t think so</p>
+  <div class="ph-top"><h4>With respect, I&#x27;d question whether…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Formal challenge to senior people.</p>
+  <p class="ph-ex">“With respect, I&#x27;d question whether we have the capacity for this.”</p>
+  <p class="ph-where"><b>Use it:</b> Senior meetings</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Did you check?</p>
+  <div class="ph-top"><h4>Have we stress-tested…?</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Questions robustness.</p>
+  <p class="ph-ex">“Have we stress-tested the plan against a 20% budget cut?”</p>
+  <p class="ph-where"><b>Use it:</b> Planning</p>
+</div>
+</div>
+<h4>Steering the meeting</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Sorry, one second</p>
+  <div class="ph-top"><h4>If I could just come in here…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Polite interruption.</p>
+  <p class="ph-ex">“If I could just come in here — we have a hard stop at 4.”</p>
+  <p class="ph-where"><b>Use it:</b> Interrupting</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Later</p>
+  <div class="ph-top"><h4>Let&#x27;s put a pin in that</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Pause topic for later.</p>
+  <p class="ph-ex">“Good point — let&#x27;s put a pin in that and revisit Friday.”</p>
+  <p class="ph-where"><b>Use it:</b> Staying on agenda</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Talk later</p>
+  <div class="ph-top"><h4>Let&#x27;s take this offline</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Discuss separately.</p>
+  <p class="ph-ex">“This is getting granular — let&#x27;s take this offline.”</p>
+  <p class="ph-where"><b>Use it:</b> Long side topics</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> We&#x27;re repeating</p>
+  <div class="ph-top"><h4>We seem to be going round in circles</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Discussion isn&#x27;t progressing.</p>
+  <p class="ph-ex">“We seem to be going round in circles — can we agree on criteria first?”</p>
+  <p class="ph-where"><b>Use it:</b> Stuck debates</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> So what now?</p>
+  <div class="ph-top"><h4>Let&#x27;s capture the action items</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Summarise who does what.</p>
+  <p class="ph-ex">“Before we drop, let&#x27;s capture the action items and owners.”</p>
+  <p class="ph-where"><b>Use it:</b> Closing meetings</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Let&#x27;s do later</p>
+  <div class="ph-top"><h4>Can I suggest we table this until…?</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Postpone formally.</p>
+  <p class="ph-ex">“Can I suggest we table this until we have the legal view?”</p>
+  <p class="ph-where"><b>Use it:</b> Formal meetings</p>
+</div>
+</div>
+</section>
+<section id="s10">
+<h3>10. Pushing Back &amp; Negotiating</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>A confident &quot;no&quot; is clear about the constraint and generous with alternatives. You protect your priorities without damaging the relationship.</p></div>
+<h4>Declining gracefully</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I&#x27;m busy</p>
+  <div class="ph-top"><h4>I&#x27;d love to help, but I&#x27;m at capacity this week</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">No time right now.</p>
+  <p class="ph-ex">“I&#x27;d love to help, but I&#x27;m at capacity this week. Could we look at Monday?”</p>
+  <p class="ph-where"><b>Use it:</b> Extra work</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I can&#x27;t</p>
+  <div class="ph-top"><h4>I&#x27;m going to have to pass on this one</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Firm but friendly no.</p>
+  <p class="ph-ex">“I&#x27;m going to have to pass on this one — the release needs my full focus.”</p>
+  <p class="ph-where"><b>Use it:</b> Invitations, tasks</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Not my work</p>
+  <div class="ph-top"><h4>That&#x27;s outside my remit, but X would be ideal</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Not my area, redirects.</p>
+  <p class="ph-ex">“That&#x27;s outside my remit, but Neha would be ideal for it.”</p>
+  <p class="ph-where"><b>Use it:</b> Wrong person</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I&#x27;m not sure</p>
+  <div class="ph-top"><h4>I don&#x27;t want to over-promise</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Avoid committing to too much.</p>
+  <p class="ph-ex">“I don&#x27;t want to over-promise — realistically, Friday is the earliest.”</p>
+  <p class="ph-where"><b>Use it:</b> Deadlines</p>
+</div>
+</div>
+<h4>Negotiating priorities and time</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I have too much work</p>
+  <div class="ph-top"><h4>Happy to take that on — what should I deprioritise?</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Makes trade-offs visible.</p>
+  <p class="ph-ex">“Happy to take that on — what should I deprioritise to make room?”</p>
+  <p class="ph-where"><b>Use it:</b> Managers</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I need more time</p>
+  <div class="ph-top"><h4>If we can move the deadline, I can deliver X</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Conditional offer.</p>
+  <p class="ph-ex">“If we can move the deadline to Tuesday, I can include the mobile view.”</p>
+  <p class="ph-where"><b>Use it:</b> Scope talks</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Why so urgent?</p>
+  <div class="ph-top"><h4>What&#x27;s driving the timeline?</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Probe the real constraint.</p>
+  <p class="ph-ex">“What&#x27;s driving the timeline — is it the board meeting?”</p>
+  <p class="ph-where"><b>Use it:</b> Negotiation</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Let&#x27;s adjust</p>
+  <div class="ph-top"><h4>Could we meet halfway on…?</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Compromise.</p>
+  <p class="ph-ex">“Could we meet halfway on the scope — core features first?”</p>
+  <p class="ph-where"><b>Use it:</b> Compromise</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I&#x27;m worried</p>
+  <div class="ph-top"><h4>I have some reservations about…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Formal concern.</p>
+  <p class="ph-ex">“I have some reservations about launching without load testing.”</p>
+  <p class="ph-where"><b>Use it:</b> Raising risks</p>
+</div>
+</div>
+</section>
+<section id="s11">
+<h3>11. Owning Mistakes &amp; Hard Conversations</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>Accountability is a leadership signal. Own it in one line, focus on the fix, and show what you&#x27;ve learned — no over-apologising.</p></div>
+<h4>Taking ownership</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Sorry, my mistake</p>
+  <div class="ph-top"><h4>That&#x27;s on me, and here&#x27;s how I&#x27;m fixing it</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Ownership + solution.</p>
+  <p class="ph-ex">“The wrong version went out — that&#x27;s on me, and here&#x27;s how I&#x27;m fixing it.”</p>
+  <p class="ph-where"><b>Use it:</b> Mistakes</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I forgot</p>
+  <div class="ph-top"><h4>I dropped the ball on…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">I failed to do something.</p>
+  <p class="ph-ex">“I dropped the ball on the follow-up — apologies.”</p>
+  <p class="ph-where"><b>Use it:</b> Missed tasks</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I made a mistake</p>
+  <div class="ph-top"><h4>In hindsight, I should have…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Reflective ownership.</p>
+  <p class="ph-ex">“In hindsight, I should have flagged the risk earlier.”</p>
+  <p class="ph-where"><b>Use it:</b> Retrospectives</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Sorry for that</p>
+  <div class="ph-top"><h4>Please accept my apologies for…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Formal apology.</p>
+  <p class="ph-ex">“Please accept my apologies for the oversight in yesterday&#x27;s report.”</p>
+  <p class="ph-where"><b>Use it:</b> Clients</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Won&#x27;t happen again</p>
+  <div class="ph-top"><h4>I&#x27;ve put safeguards in place so it doesn&#x27;t recur</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Shows prevention.</p>
+  <p class="ph-ex">“I&#x27;ve put safeguards in place so it doesn&#x27;t recur.”</p>
+  <p class="ph-where"><b>Use it:</b> Follow-up</p>
+</div>
+</div>
+<h4>Giving tough feedback</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> You did wrong</p>
+  <div class="ph-top"><h4>Can I share an observation?</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Asks permission before feedback.</p>
+  <p class="ph-ex">“Can I share an observation from the client call?”</p>
+  <p class="ph-where"><b>Use it:</b> Feedback</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> You are always late</p>
+  <div class="ph-top"><h4>I noticed… and the impact was…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Behaviour + impact framing.</p>
+  <p class="ph-ex">“I noticed the report went out late, and the impact was a delayed client decision.”</p>
+  <p class="ph-where"><b>Use it:</b> 1:1s</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Why can&#x27;t you?</p>
+  <div class="ph-top"><h4>What would help you…?</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Supportive problem-solving.</p>
+  <p class="ph-ex">“What would help you hit the Friday deadlines more consistently?”</p>
+  <p class="ph-where"><b>Use it:</b> Coaching</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Actually this is bad</p>
+  <div class="ph-top"><h4>I want to be upfront with you</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Signal honesty.</p>
+  <p class="ph-ex">“I want to be upfront with you — this needs another round.”</p>
+  <p class="ph-where"><b>Use it:</b> Hard messages</p>
+</div>
+</div>
+<h4>Accepting an apology</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> It&#x27;s ok</p>
+  <div class="ph-top"><h4>Water under the bridge</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">It&#x27;s in the past; forgotten.</p>
+  <p class="ph-ex">“Honestly, it&#x27;s water under the bridge.”</p>
+  <p class="ph-where"><b>Use it:</b> Peers</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> No problem</p>
+  <div class="ph-top"><h4>These things happen — thanks for owning it</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Gracious and encouraging.</p>
+  <p class="ph-ex">“These things happen — thanks for owning it so quickly.”</p>
+  <p class="ph-where"><b>Use it:</b> Professional</p>
+</div>
+</div>
+</section>
+<section id="s12">
+<h3>12. Persuasion &amp; Influence</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>Persuasion is not pressure. Frame your idea around their goals, anticipate objections, and make the next step small.</p></div>
+<h4>Framing your idea</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> My idea is…</p>
+  <div class="ph-top"><h4>What if we approached it from a different angle?</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Opens minds to a new idea.</p>
+  <p class="ph-ex">“What if we approached it from a different angle — retention first?”</p>
+  <p class="ph-where"><b>Use it:</b> Proposals</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> It&#x27;s very useful</p>
+  <div class="ph-top"><h4>The upside here is significant</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Strong benefits.</p>
+  <p class="ph-ex">“The upside here is significant — a 15% cost saving.”</p>
+  <p class="ph-where"><b>Use it:</b> Pitches</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> It is good for us</p>
+  <div class="ph-top"><h4>This directly supports our goal of…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Links to their priorities.</p>
+  <p class="ph-ex">“This directly supports our goal of reducing churn.”</p>
+  <p class="ph-where"><b>Use it:</b> Leadership</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> We must do it</p>
+  <div class="ph-top"><h4>The risk of doing nothing is…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Cost of inaction.</p>
+  <p class="ph-ex">“The risk of doing nothing is losing the client at renewal.”</p>
+  <p class="ph-where"><b>Use it:</b> Urgency</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> We can do this</p>
+  <div class="ph-top"><h4>Here&#x27;s what I&#x27;m proposing</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Clear proposal.</p>
+  <p class="ph-ex">“Here&#x27;s what I&#x27;m proposing: a two-week pilot with five users.”</p>
+  <p class="ph-where"><b>Use it:</b> Decisions</p>
+</div>
+</div>
+<h4>Handling objections</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> No, it&#x27;s fine</p>
+  <div class="ph-top"><h4>That&#x27;s a fair concern — here&#x27;s how we&#x27;d mitigate it</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Acknowledge then reassure.</p>
+  <p class="ph-ex">“That&#x27;s a fair concern — here&#x27;s how we&#x27;d mitigate it.”</p>
+  <p class="ph-where"><b>Use it:</b> Objections</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Yes but…</p>
+  <div class="ph-top"><h4>I hear you, and…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Validate, then continue (avoid &#x27;but&#x27;).</p>
+  <p class="ph-ex">“I hear you, and that&#x27;s exactly why we&#x27;d start small.”</p>
+  <p class="ph-where"><b>Use it:</b> Pushback</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> We will do it</p>
+  <div class="ph-top"><h4>Would it help if…?</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Offers a concession.</p>
+  <p class="ph-ex">“Would it help if we shared weekly progress reports?”</p>
+  <p class="ph-where"><b>Use it:</b> Building trust</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Why not agree?</p>
+  <div class="ph-top"><h4>What would you need to see to feel comfortable?</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Finds their criteria.</p>
+  <p class="ph-ex">“What would you need to see to feel comfortable signing off?”</p>
+  <p class="ph-where"><b>Use it:</b> Stakeholders</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Please try</p>
+  <div class="ph-top"><h4>Let&#x27;s start small and let the results speak</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Low-risk next step.</p>
+  <p class="ph-ex">“Let&#x27;s start small and let the results speak for themselves.”</p>
+  <p class="ph-where"><b>Use it:</b> Closing a pitch</p>
+</div>
+</div>
+</section>
+<section id="s13">
+<h3>13. Talking About Your Achievements</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>Interviews and appraisals reward specificity. Use strong verbs, own your part with &quot;I&quot;, and always quantify the outcome.</p></div>
+<h4>Owning your impact</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I did…</p>
+  <div class="ph-top"><h4>I spearheaded…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">I led it from the front.</p>
+  <p class="ph-ex">“I spearheaded the move from Excel reports to Power BI.”</p>
+  <p class="ph-where"><b>Use it:</b> Interviews, CV</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I helped in…</p>
+  <div class="ph-top"><h4>I was instrumental in…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">I played a key role.</p>
+  <p class="ph-ex">“I was instrumental in reducing onboarding time by 40%.”</p>
+  <p class="ph-where"><b>Use it:</b> Appraisals</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> It was good</p>
+  <div class="ph-top"><h4>This resulted in…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Quantified result.</p>
+  <p class="ph-ex">“This resulted in ₹12 lakh annual savings.”</p>
+  <p class="ph-where"><b>Use it:</b> Showing impact</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I saw a problem</p>
+  <div class="ph-top"><h4>I identified an opportunity to…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Shows initiative.</p>
+  <p class="ph-ex">“I identified an opportunity to automate the reconciliation.”</p>
+  <p class="ph-where"><b>Use it:</b> Interviews</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> My best work is…</p>
+  <div class="ph-top"><h4>What I&#x27;m most proud of is…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Confident, not arrogant.</p>
+  <p class="ph-ex">“What I&#x27;m most proud of is mentoring two interns to full-time offers.”</p>
+  <p class="ph-where"><b>Use it:</b> Interviews</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I want to learn…</p>
+  <div class="ph-top"><h4>I&#x27;m looking to stretch myself in…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Growth ambition.</p>
+  <p class="ph-ex">“I&#x27;m looking to stretch myself in stakeholder management.”</p>
+  <p class="ph-where"><b>Use it:</b> Career talks</p>
+</div>
+</div>
+<h4>Answering tough interview questions</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Umm…</p>
+  <div class="ph-top"><h4>That&#x27;s a great question — let me think about the best example</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Buys time gracefully.</p>
+  <p class="ph-ex">“That&#x27;s a great question — let me think about the best example.”</p>
+  <p class="ph-where"><b>Use it:</b> Interviews</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Story without structure</p>
+  <div class="ph-top"><h4>The situation was…, my task was…, so I…, and the result was…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">STAR structure.</p>
+  <p class="ph-ex">“The situation was a failing dashboard; I rebuilt the model, and load time fell by 70%.”</p>
+  <p class="ph-where"><b>Use it:</b> Behavioural questions</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> My weakness is…</p>
+  <div class="ph-top"><h4>Something I&#x27;m actively working on is…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Framing a weakness positively.</p>
+  <p class="ph-ex">“Something I&#x27;m actively working on is delegating earlier.”</p>
+  <p class="ph-where"><b>Use it:</b> Weakness question</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I like this job</p>
+  <div class="ph-top"><h4>What excites me about this role is…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Shows motivation.</p>
+  <p class="ph-ex">“What excites me about this role is the scale of the data.”</p>
+  <p class="ph-where"><b>Use it:</b> Why this job?</p>
+</div>
+</div>
+</section>
+<section id="s14">
+<h3>14. Emails With Polish</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>A polished email has one purpose, a clear ask in the first two lines, and a warm, efficient tone. These lines replace the tired classics.</p></div>
+<h4>Openings</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I hope this email finds you well</p>
+  <div class="ph-top"><h4>I hope your week is off to a good start</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Fresher than &#x27;hope this finds you well&#x27;.</p>
+  <p class="ph-ex">“Hi Anil, I hope your week is off to a good start.”</p>
+  <p class="ph-where"><b>Use it:</b> Monday/Tuesday emails</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Hi, I have a question</p>
+  <div class="ph-top"><h4>Quick one —</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Short, informal opener.</p>
+  <p class="ph-ex">“Quick one — are we still on for 3 pm?”</p>
+  <p class="ph-where"><b>Use it:</b> Chat, peers</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> As we talked…</p>
+  <div class="ph-top"><h4>Further to our conversation…</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Following our discussion.</p>
+  <p class="ph-ex">“Further to our conversation this morning, please see the revised plan.”</p>
+  <p class="ph-where"><b>Use it:</b> After calls</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I am writing this mail to…</p>
+  <div class="ph-top"><h4>Reaching out because…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Purpose up front.</p>
+  <p class="ph-ex">“Reaching out because we&#x27;d love your input on the pilot.”</p>
+  <p class="ph-where"><b>Use it:</b> Cold emails</p>
+</div>
+</div>
+<h4>The body</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Please do the needful</p>
+  <div class="ph-top"><h4>The key ask is…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Makes the request obvious.</p>
+  <p class="ph-ex">“The key ask is sign-off on the budget by Friday.”</p>
+  <p class="ph-where"><b>Use it:</b> Action emails</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Actually what happened is…</p>
+  <div class="ph-top"><h4>For context…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Background info.</p>
+  <p class="ph-ex">“For context, the client raised this twice last month.”</p>
+  <p class="ph-where"><b>Use it:</b> Explaining</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> PFA</p>
+  <div class="ph-top"><h4>I&#x27;ve attached… for your reference</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Sharing files.</p>
+  <p class="ph-ex">“I&#x27;ve attached the deck for your reference.”</p>
+  <p class="ph-where"><b>Use it:</b> Attachments</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Please note</p>
+  <div class="ph-top"><h4>Flagging that…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Highlighting something important.</p>
+  <p class="ph-ex">“Flagging that the server maintenance is tonight.”</p>
+  <p class="ph-where"><b>Use it:</b> Alerts</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Call me</p>
+  <div class="ph-top"><h4>Happy to jump on a call if easier</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Offers a faster channel.</p>
+  <p class="ph-ex">“Happy to jump on a call if easier.”</p>
+  <p class="ph-where"><b>Use it:</b> Complex topics</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Revert back</p>
+  <div class="ph-top"><h4>Let me know your thoughts</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Invites input.</p>
+  <p class="ph-ex">“Here&#x27;s my first cut — let me know your thoughts.”</p>
+  <p class="ph-where"><b>Use it:</b> Sharing drafts</p>
+</div>
+</div>
+<h4>Closings</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Waiting for your reply</p>
+  <div class="ph-top"><h4>Looking forward to your thoughts</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Warm closing awaiting reply.</p>
+  <p class="ph-ex">“Looking forward to your thoughts.”</p>
+  <p class="ph-where"><b>Use it:</b> Proposals</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Kindly do it</p>
+  <div class="ph-top"><h4>Thanks in advance for your help with this</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Courteous close.</p>
+  <p class="ph-ex">“Thanks in advance for your help with this.”</p>
+  <p class="ph-where"><b>Use it:</b> Requests</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Thanks &amp; Regards</p>
+  <div class="ph-top"><h4>Best / Warm regards / Many thanks</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Sign-offs by warmth.</p>
+  <p class="ph-ex">“Warm regards, Laeba”</p>
+  <p class="ph-where"><b>Use it:</b> Formal</p>
+</div>
+</div>
+</section>
+<section id="s15">
+<h3>15. Graceful Exits</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>Ending well leaves a lasting impression. Give a reason, express warmth, and point to the next contact.</p></div>
+<h4>Ending conversations</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Ok bye</p>
+  <div class="ph-top"><h4>I&#x27;ll let you get on — I know you&#x27;ve got a lot on</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Considerate exit.</p>
+  <p class="ph-ex">“I&#x27;ll let you get on — I know you&#x27;ve got a lot on today.”</p>
+  <p class="ph-where"><b>Use it:</b> Desk chats</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Thanks, bye</p>
+  <div class="ph-top"><h4>This was genuinely useful — thank you</h4><span class="tg f">Formal</span></div>
+  <p class="ph-mean">Close a meeting warmly.</p>
+  <p class="ph-ex">“This was genuinely useful — thank you for the candour.”</p>
+  <p class="ph-where"><b>Use it:</b> Mentors, clients</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Later we&#x27;ll talk</p>
+  <div class="ph-top"><h4>Let&#x27;s pick this up again next week</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Continue later.</p>
+  <p class="ph-ex">“Let&#x27;s pick this up again next week once the numbers are in.”</p>
+  <p class="ph-where"><b>Use it:</b> Unfinished topics</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I have to go</p>
+  <div class="ph-top"><h4>I&#x27;ve got a hard stop, unfortunately</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Must leave at a fixed time.</p>
+  <p class="ph-ex">“I&#x27;ve got a hard stop at 5, unfortunately — shall we wrap up?”</p>
+  <p class="ph-where"><b>Use it:</b> Meetings</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Keep in touch</p>
+  <div class="ph-top"><h4>Let&#x27;s not be strangers</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Stay in touch (warm).</p>
+  <p class="ph-ex">“It was great meeting you — let&#x27;s not be strangers.”</p>
+  <p class="ph-where"><b>Use it:</b> Networking</p>
+</div>
+</div>
+</section>
+<div class="part">Part 2 — Everyday &amp; Social (Informal, but Eloquent)</div>
+<section id="s16">
+<h3>16. Compliments That Sparkle</h3>
+<div class="plain"><span class="plain-label">The vibe</span><p>Casual doesn&#x27;t mean bland. Swap &quot;nice&quot; and &quot;looking good&quot; for vivid, specific words — people remember how you made them feel.</p></div>
+<h4>Looks, outfits &amp; style</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> You look nice</p>
+  <div class="ph-top"><h4>You look absolutely radiant</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Glowing, healthy and happy.</p>
+  <p class="ph-ex">“Okay, you look absolutely radiant today — what&#x27;s your secret?”</p>
+  <p class="ph-where"><b>Use it:</b> Friends, family, celebrations</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Nice dress</p>
+  <div class="ph-top"><h4>That outfit is a total showstopper</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">So striking everyone notices.</p>
+  <p class="ph-ex">“That lehenga is a total showstopper — everyone&#x27;s staring!”</p>
+  <p class="ph-where"><b>Use it:</b> Weddings, parties</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> You dress well</p>
+  <div class="ph-top"><h4>You&#x27;ve got such effortless style</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Stylish without trying hard.</p>
+  <p class="ph-ex">“You&#x27;ve got such effortless style — even in a T-shirt.”</p>
+  <p class="ph-where"><b>Use it:</b> Friends</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Looking smart</p>
+  <div class="ph-top"><h4>Looking very dapper!</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Smart and well-dressed (usually for men).</p>
+  <p class="ph-ex">“Looking very dapper in that blazer, Arjun!”</p>
+  <p class="ph-where"><b>Use it:</b> Parties, office events</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> You look different</p>
+  <div class="ph-top"><h4>You clean up well!</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Playful: you look great all dressed up.</p>
+  <p class="ph-ex">“Wow, you clean up well — barely recognised you!”</p>
+  <p class="ph-where"><b>Use it:</b> Close friends</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Good choice</p>
+  <div class="ph-top"><h4>Your taste is impeccable</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Your choices are perfect.</p>
+  <p class="ph-ex">“Your taste is impeccable — where did you find this lamp?”</p>
+  <p class="ph-where"><b>Use it:</b> Homes, shopping</p>
+</div>
+</div>
+<h4>Talent, work &amp; creations</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I like it very much</p>
+  <div class="ph-top"><h4>I&#x27;m genuinely mesmerised by…</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Completely captivated.</p>
+  <p class="ph-ex">“I&#x27;m genuinely mesmerised by your sketches — the detail is unreal.”</p>
+  <p class="ph-where"><b>Use it:</b> Art, music, dance</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> It was very good</p>
+  <div class="ph-top"><h4>I was spellbound</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">So absorbed I couldn&#x27;t look away.</p>
+  <p class="ph-ex">“I was spellbound through your entire performance.”</p>
+  <p class="ph-where"><b>Use it:</b> Performances</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Very nice</p>
+  <div class="ph-top"><h4>You&#x27;ve completely blown me away</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Deeply impressed and surprised.</p>
+  <p class="ph-ex">“That speech? You&#x27;ve completely blown me away.”</p>
+  <p class="ph-where"><b>Use it:</b> Big moments</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Very good</p>
+  <div class="ph-top"><h4>This is next-level</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Far better than ordinary.</p>
+  <p class="ph-ex">“Your photography is next-level now.”</p>
+  <p class="ph-where"><b>Use it:</b> Hobbies, skills</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> You&#x27;re talented</p>
+  <div class="ph-top"><h4>You have such a gift</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">A natural talent.</p>
+  <p class="ph-ex">“You have such a gift for making people laugh.”</p>
+  <p class="ph-where"><b>Use it:</b> Sincere compliments</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> You&#x27;re great</p>
+  <div class="ph-top"><h4>I&#x27;m in awe of how you…</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Deep admiration.</p>
+  <p class="ph-ex">“I&#x27;m in awe of how you juggle work and your MBA.”</p>
+  <p class="ph-where"><b>Use it:</b> Admiring someone</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I didn&#x27;t know</p>
+  <div class="ph-top"><h4>Where has this talent been hiding?</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Playful surprise at a hidden skill.</p>
+  <p class="ph-ex">“You can sing? Where has this talent been hiding?!”</p>
+  <p class="ph-where"><b>Use it:</b> Discovering skills</p>
+</div>
+</div>
+<h4>Food &amp; hosting</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Very tasty</p>
+  <div class="ph-top"><h4>This is absolutely divine</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Heavenly, delicious.</p>
+  <p class="ph-ex">“This biryani is absolutely divine.”</p>
+  <p class="ph-where"><b>Use it:</b> Meals</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> It&#x27;s tasty</p>
+  <div class="ph-top"><h4>I could eat this every single day</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">So good you&#x27;d never tire of it.</p>
+  <p class="ph-ex">“Aunty, I could eat this every single day.”</p>
+  <p class="ph-where"><b>Use it:</b> Home food</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> So yummy</p>
+  <div class="ph-top"><h4>Every bite is pure bliss</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Total enjoyment.</p>
+  <p class="ph-ex">“This cheesecake — every bite is pure bliss.”</p>
+  <p class="ph-where"><b>Use it:</b> Desserts, cafés</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Very good food</p>
+  <div class="ph-top"><h4>You&#x27;ve outdone yourself</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Even better than your usual.</p>
+  <p class="ph-ex">“Mom, you&#x27;ve outdone yourself this Eid.”</p>
+  <p class="ph-where"><b>Use it:</b> Hosts, family</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Nice house</p>
+  <div class="ph-top"><h4>Your home has such a warm vibe</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">It feels cosy and welcoming.</p>
+  <p class="ph-ex">“Your home has such a warm vibe — I never want to leave.”</p>
+  <p class="ph-where"><b>Use it:</b> Visiting friends</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Good party</p>
+  <div class="ph-top"><h4>You&#x27;re the hostess with the mostest</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Playful: an amazing host.</p>
+  <p class="ph-ex">“Snacks, music, fairy lights — you&#x27;re the hostess with the mostest!”</p>
+  <p class="ph-where"><b>Use it:</b> Parties</p>
+</div>
+</div>
+</section>
+<section id="s17">
+<h3>17. Expressing Amazement &amp; Delight</h3>
+<div class="plain"><span class="plain-label">The vibe</span><p>When something wows you, let your words match the moment. These lines add colour and energy to everyday reactions.</p></div>
+<h4>When you&#x27;re impressed</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Wow</p>
+  <div class="ph-top"><h4>I&#x27;m absolutely gobsmacked</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Shocked in an amazed way.</p>
+  <p class="ph-ex">“You ran a full marathon? I&#x27;m absolutely gobsmacked.”</p>
+  <p class="ph-where"><b>Use it:</b> Big surprises</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> That&#x27;s very good</p>
+  <div class="ph-top"><h4>That&#x27;s beyond incredible</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Better than incredible.</p>
+  <p class="ph-ex">“Front-row tickets? That&#x27;s beyond incredible!”</p>
+  <p class="ph-where"><b>Use it:</b> Exciting news</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I don&#x27;t know what to say</p>
+  <div class="ph-top"><h4>I&#x27;m lost for words</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Too amazed to speak.</p>
+  <p class="ph-ex">“You planned all this for me? I&#x27;m lost for words.”</p>
+  <p class="ph-where"><b>Use it:</b> Surprises, gifts</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> It was very beautiful</p>
+  <div class="ph-top"><h4>It took my breath away</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Stunningly beautiful.</p>
+  <p class="ph-ex">“The view from the top took my breath away.”</p>
+  <p class="ph-where"><b>Use it:</b> Travel, scenery</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Very nice</p>
+  <div class="ph-top"><h4>That&#x27;s insanely good</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Extremely good (casual).</p>
+  <p class="ph-ex">“This playlist is insanely good.”</p>
+  <p class="ph-where"><b>Use it:</b> Friends</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Great</p>
+  <div class="ph-top"><h4>Talk about impressive!</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Emphasises how impressive.</p>
+  <p class="ph-ex">“Promoted in eight months? Talk about impressive!”</p>
+  <p class="ph-where"><b>Use it:</b> Celebrating</p>
+</div>
+</div>
+<h4>When you&#x27;re happy</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I&#x27;m very happy</p>
+  <div class="ph-top"><h4>I&#x27;m over the moon</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Extremely happy.</p>
+  <p class="ph-ex">“I&#x27;m over the moon — I got the internship!”</p>
+  <p class="ph-where"><b>Use it:</b> Good news</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Very happy</p>
+  <div class="ph-top"><h4>I&#x27;m on cloud nine</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Blissfully happy.</p>
+  <p class="ph-ex">“Still on cloud nine after the weekend trip.”</p>
+  <p class="ph-where"><b>Use it:</b> Joy</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Happy for you</p>
+  <div class="ph-top"><h4>I&#x27;m thrilled to bits</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Delighted (warm, playful).</p>
+  <p class="ph-ex">“I&#x27;m thrilled to bits for you two!”</p>
+  <p class="ph-where"><b>Use it:</b> Others&#x27; good news</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Thanks, nice</p>
+  <div class="ph-top"><h4>This made my whole week</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Brought huge happiness.</p>
+  <p class="ph-ex">“Your message made my whole week.”</p>
+  <p class="ph-where"><b>Use it:</b> Kind gestures</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I&#x27;m happy</p>
+  <div class="ph-top"><h4>My heart is so full</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Deeply happy and grateful.</p>
+  <p class="ph-ex">“Seeing everyone together — my heart is so full.”</p>
+  <p class="ph-where"><b>Use it:</b> Family moments</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I&#x27;m excited</p>
+  <div class="ph-top"><h4>I&#x27;m buzzing!</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Excited and energetic.</p>
+  <p class="ph-ex">“Trip&#x27;s booked — I&#x27;m buzzing!”</p>
+  <p class="ph-where"><b>Use it:</b> Excitement</p>
+</div>
+</div>
+</section>
+<section id="s18">
+<h3>18. Describing Places, Food &amp; Experiences</h3>
+<div class="plain"><span class="plain-label">The vibe</span><p>Rich description makes stories come alive. Use sensory, specific words instead of &quot;nice&quot;, &quot;good&quot; and &quot;amazing&quot;.</p></div>
+<h4>Places</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Beautiful</p>
+  <div class="ph-top"><h4>Picturesque</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Pretty as a painting.</p>
+  <p class="ph-ex">“We stayed in a picturesque little village near Munnar.”</p>
+  <p class="ph-where"><b>Use it:</b> Travel stories</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Cute</p>
+  <div class="ph-top"><h4>Quaint</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Charming in an old-fashioned way.</p>
+  <p class="ph-ex">“There&#x27;s a quaint café near the station.”</p>
+  <p class="ph-where"><b>Use it:</b> Cafés, towns</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Peaceful</p>
+  <div class="ph-top"><h4>Serene</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Calm and peaceful.</p>
+  <p class="ph-ex">“The lake at dawn was so serene.”</p>
+  <p class="ph-where"><b>Use it:</b> Nature</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Crowded and fun</p>
+  <div class="ph-top"><h4>Buzzing / vibrant</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Lively and full of energy.</p>
+  <p class="ph-ex">“Bandra on a Saturday night is buzzing.”</p>
+  <p class="ph-where"><b>Use it:</b> Cities, events</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Good place</p>
+  <div class="ph-top"><h4>A hidden gem</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">An excellent place few know about.</p>
+  <p class="ph-ex">“This bookshop is a hidden gem.”</p>
+  <p class="ph-where"><b>Use it:</b> Recommendations</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Very beautiful</p>
+  <div class="ph-top"><h4>Breathtaking</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">So beautiful it&#x27;s overwhelming.</p>
+  <p class="ph-ex">“The Ladakh sky at night is breathtaking.”</p>
+  <p class="ph-where"><b>Use it:</b> Scenery</p>
+</div>
+</div>
+<h4>Food</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Tasty</p>
+  <div class="ph-top"><h4>Scrumptious</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Extremely tasty.</p>
+  <p class="ph-ex">“Those scrumptious momos are worth the queue.”</p>
+  <p class="ph-where"><b>Use it:</b> Food chats</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Smells good</p>
+  <div class="ph-top"><h4>Mouth-watering</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Looks or smells delicious.</p>
+  <p class="ph-ex">“The aroma from the kitchen is mouth-watering.”</p>
+  <p class="ph-where"><b>Use it:</b> Cooking, restaurants</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Soft</p>
+  <div class="ph-top"><h4>Melt-in-your-mouth</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Very soft and rich.</p>
+  <p class="ph-ex">“Melt-in-your-mouth kebabs — Lucknow at its best.”</p>
+  <p class="ph-where"><b>Use it:</b> Describing dishes</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Very tasty</p>
+  <div class="ph-top"><h4>Bursting with flavour</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Full of taste.</p>
+  <p class="ph-ex">“This chaat is bursting with flavour.”</p>
+  <p class="ph-where"><b>Use it:</b> Street food</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Not good</p>
+  <div class="ph-top"><h4>A bit underwhelming</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Less good than expected (polite criticism).</p>
+  <p class="ph-ex">“Honestly, the pasta was a bit underwhelming.”</p>
+  <p class="ph-where"><b>Use it:</b> Honest reviews</p>
+</div>
+</div>
+<h4>Films, books &amp; experiences</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Very interesting</p>
+  <div class="ph-top"><h4>Riveting / gripping</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Holds your attention completely.</p>
+  <p class="ph-ex">“The series is gripping — I finished it in two nights.”</p>
+  <p class="ph-where"><b>Use it:</b> Shows, books</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Good book</p>
+  <div class="ph-top"><h4>A total page-turner</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">A book you can&#x27;t put down.</p>
+  <p class="ph-ex">“That thriller is a total page-turner.”</p>
+  <p class="ph-where"><b>Use it:</b> Books</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Very nice song</p>
+  <div class="ph-top"><h4>Hauntingly beautiful</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Beautiful in a sad, lingering way.</p>
+  <p class="ph-ex">“The soundtrack is hauntingly beautiful.”</p>
+  <p class="ph-where"><b>Use it:</b> Music, films</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Nice film</p>
+  <div class="ph-top"><h4>Wholesome</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Pure, kind and feel-good.</p>
+  <p class="ph-ex">“Such a wholesome movie — perfect for family night.”</p>
+  <p class="ph-where"><b>Use it:</b> Feel-good content</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Unbelievable</p>
+  <div class="ph-top"><h4>Surreal</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">So strange or amazing it feels unreal.</p>
+  <p class="ph-ex">“Meeting my favourite author was surreal.”</p>
+  <p class="ph-where"><b>Use it:</b> Unbelievable moments</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Not that good</p>
+  <div class="ph-top"><h4>Overrated</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Praised more than it deserves.</p>
+  <p class="ph-ex">“Unpopular opinion: that café is overrated.”</p>
+  <p class="ph-where"><b>Use it:</b> Opinions</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Reminds me of old days</p>
+  <div class="ph-top"><h4>Nostalgic</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Fondly reminds you of the past.</p>
+  <p class="ph-ex">“This song makes me so nostalgic about college.”</p>
+  <p class="ph-where"><b>Use it:</b> Memories</p>
+</div>
+</div>
+</section>
+<section id="s19">
+<h3>19. Describing How You Feel</h3>
+<div class="plain"><span class="plain-label">The vibe</span><p>Emotional vocabulary is what makes casual English sound expressive. One precise feeling-word says more than &quot;very&quot; ever could.</p></div>
+<h4>Tired, busy, overwhelmed</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I&#x27;m very tired</p>
+  <div class="ph-top"><h4>I&#x27;m running on fumes</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Almost no energy left.</p>
+  <p class="ph-ex">“Two deadlines and no sleep — I&#x27;m running on fumes.”</p>
+  <p class="ph-where"><b>Use it:</b> Busy weeks</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Tired</p>
+  <div class="ph-top"><h4>I&#x27;m completely drained</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Emotionally or physically exhausted.</p>
+  <p class="ph-ex">“That family function left me completely drained.”</p>
+  <p class="ph-where"><b>Use it:</b> After long days</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Stressed</p>
+  <div class="ph-top"><h4>I&#x27;m a bit frazzled</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Stressed and scattered.</p>
+  <p class="ph-ex">“Sorry, I&#x27;m a bit frazzled today.”</p>
+  <p class="ph-where"><b>Use it:</b> Hectic days</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Very busy</p>
+  <div class="ph-top"><h4>I&#x27;m swamped</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Overloaded with things to do.</p>
+  <p class="ph-ex">“Can we do Sunday? I&#x27;m swamped this week.”</p>
+  <p class="ph-where"><b>Use it:</b> Rescheduling plans</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Very busy time</p>
+  <div class="ph-top"><h4>It&#x27;s been a whirlwind</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Everything happened fast.</p>
+  <p class="ph-ex">“The last month has been a whirlwind.”</p>
+  <p class="ph-where"><b>Use it:</b> Catching up</p>
+</div>
+</div>
+<h4>Bored, restless, low</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I&#x27;m free</p>
+  <div class="ph-top"><h4>I&#x27;m at a loose end</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Nothing to do; free.</p>
+  <p class="ph-ex">“I&#x27;m at a loose end on Saturday — want to hang out?”</p>
+  <p class="ph-where"><b>Use it:</b> Making plans</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Very bored</p>
+  <div class="ph-top"><h4>I&#x27;m bored out of my mind</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Extremely bored.</p>
+  <p class="ph-ex">“No Wi-Fi at Nani&#x27;s — I&#x27;m bored out of my mind.”</p>
+  <p class="ph-where"><b>Use it:</b> Venting</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Not well</p>
+  <div class="ph-top"><h4>I&#x27;m feeling a bit off</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Not quite right (mood or health).</p>
+  <p class="ph-ex">“I&#x27;m feeling a bit off today, might skip the gym.”</p>
+  <p class="ph-where"><b>Use it:</b> Mood</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Very sad</p>
+  <div class="ph-top"><h4>I&#x27;m gutted</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Very disappointed.</p>
+  <p class="ph-ex">“Gutted I missed your birthday dinner.”</p>
+  <p class="ph-where"><b>Use it:</b> Disappointment</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Happy and sad</p>
+  <div class="ph-top"><h4>It&#x27;s bittersweet</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Happy and sad at once.</p>
+  <p class="ph-ex">“Leaving college is so bittersweet.”</p>
+  <p class="ph-where"><b>Use it:</b> Endings, farewells</p>
+</div>
+</div>
+<h4>Excited, nervous, content</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Very excited</p>
+  <div class="ph-top"><h4>I can hardly contain my excitement</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Bursting with excitement.</p>
+  <p class="ph-ex">“Two days to Goa — I can hardly contain my excitement!”</p>
+  <p class="ph-where"><b>Use it:</b> Upcoming plans</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I&#x27;m nervous</p>
+  <div class="ph-top"><h4>I&#x27;ve got butterflies</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Nervous excitement.</p>
+  <p class="ph-ex">“First day tomorrow — I&#x27;ve got butterflies.”</p>
+  <p class="ph-where"><b>Use it:</b> Big days</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Very nervous</p>
+  <div class="ph-top"><h4>I&#x27;m a bundle of nerves</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Very anxious.</p>
+  <p class="ph-ex">“I&#x27;m a bundle of nerves before the interview.”</p>
+  <p class="ph-where"><b>Use it:</b> Stressful events</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I&#x27;m feeling good</p>
+  <div class="ph-top"><h4>I&#x27;m in such a good headspace</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Mentally calm and positive.</p>
+  <p class="ph-ex">“Finally in such a good headspace after the break.”</p>
+  <p class="ph-where"><b>Use it:</b> Well-being</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I&#x27;m happy</p>
+  <div class="ph-top"><h4>I&#x27;m content</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Quietly happy and satisfied.</p>
+  <p class="ph-ex">“Chai, rain, a good book — I&#x27;m content.”</p>
+  <p class="ph-where"><b>Use it:</b> Calm moments</p>
+</div>
+</div>
+</section>
+<section id="s20">
+<h3>20. Catching Up With Friends</h3>
+<div class="plain"><span class="plain-label">The vibe</span><p>Catch-ups are about warmth and curiosity. Ask questions that invite stories, not one-word answers.</p></div>
+<h4>Opening the catch-up</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Hi!</p>
+  <div class="ph-top"><h4>Look who it is!</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Happy surprise at seeing someone.</p>
+  <p class="ph-ex">“Look who it is! Finally back from Bangalore?”</p>
+  <p class="ph-where"><b>Use it:</b> Meeting friends</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Nice to see you</p>
+  <div class="ph-top"><h4>You&#x27;re a sight for sore eyes</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">So good to see you.</p>
+  <p class="ph-ex">“You&#x27;re a sight for sore eyes after this week.”</p>
+  <p class="ph-where"><b>Use it:</b> Reunions</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> What&#x27;s new?</p>
+  <div class="ph-top"><h4>Okay, I need the full update</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Tell me everything.</p>
+  <p class="ph-ex">“Okay, I need the full update — new job, new flat, everything.”</p>
+  <p class="ph-where"><b>Use it:</b> Catch-ups</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> What are you doing?</p>
+  <div class="ph-top"><h4>What&#x27;s been keeping you busy?</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Invites a story.</p>
+  <p class="ph-ex">“So what&#x27;s been keeping you busy these days?”</p>
+  <p class="ph-where"><b>Use it:</b> Any catch-up</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> How was it?</p>
+  <div class="ph-top"><h4>Spill — how did it go?</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Tell me what happened (eager).</p>
+  <p class="ph-ex">“Spill — how did the date go?”</p>
+  <p class="ph-where"><b>Use it:</b> Close friends</p>
+</div>
+</div>
+<h4>Reacting to their news</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Really?</p>
+  <div class="ph-top"><h4>No way! Tell me everything</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Excited disbelief.</p>
+  <p class="ph-ex">“You&#x27;re moving to Canada? No way! Tell me everything.”</p>
+  <p class="ph-where"><b>Use it:</b> Big news</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Congrats</p>
+  <div class="ph-top"><h4>Stop it, that&#x27;s amazing!</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Playful excitement.</p>
+  <p class="ph-ex">“You got engaged?! Stop it, that&#x27;s amazing!”</p>
+  <p class="ph-where"><b>Use it:</b> Happy news</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Oh</p>
+  <div class="ph-top"><h4>That must&#x27;ve been quite something</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Acknowledges an eventful story.</p>
+  <p class="ph-ex">“Stuck in a lift for an hour? That must&#x27;ve been quite something.”</p>
+  <p class="ph-where"><b>Use it:</b> Dramatic stories</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Then?</p>
+  <div class="ph-top"><h4>I&#x27;m hanging on every word</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Totally engaged in the story.</p>
+  <p class="ph-ex">“Keep going, I&#x27;m hanging on every word.”</p>
+  <p class="ph-where"><b>Use it:</b> Gossip, stories</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Nice</p>
+  <div class="ph-top"><h4>Honestly, good for you</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Supportive approval.</p>
+  <p class="ph-ex">“You quit and started your own thing? Honestly, good for you.”</p>
+  <p class="ph-where"><b>Use it:</b> Brave decisions</p>
+</div>
+</div>
+</section>
+<section id="s21">
+<h3>21. Making Plans &amp; Invitations</h3>
+<div class="plain"><span class="plain-label">The vibe</span><p>Inviting and declining are everyday rituals. A warm invite gets a &quot;yes&quot;; a gracious decline keeps the friendship strong.</p></div>
+<h4>Inviting</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Coffee?</p>
+  <div class="ph-top"><h4>Fancy grabbing a coffee?</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Would you like to get coffee?</p>
+  <p class="ph-ex">“Fancy grabbing a coffee after work?”</p>
+  <p class="ph-where"><b>Use it:</b> Friends, colleagues</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Will you come?</p>
+  <div class="ph-top"><h4>Are you up for…?</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Are you willing / in the mood for…?</p>
+  <p class="ph-ex">“Are you up for a movie on Friday?”</p>
+  <p class="ph-where"><b>Use it:</b> Plans</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Let&#x27;s go</p>
+  <div class="ph-top"><h4>We should totally…</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Enthusiastic suggestion.</p>
+  <p class="ph-ex">“We should totally do a weekend road trip.”</p>
+  <p class="ph-where"><b>Use it:</b> Brainstorming plans</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Please come</p>
+  <div class="ph-top"><h4>It wouldn&#x27;t be the same without you</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Warm, persuasive invite.</p>
+  <p class="ph-ex">“Come for the party — it wouldn&#x27;t be the same without you.”</p>
+  <p class="ph-where"><b>Use it:</b> Close friends</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Ok let&#x27;s do</p>
+  <div class="ph-top"><h4>Let&#x27;s make it happen</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Let&#x27;s commit to this plan.</p>
+  <p class="ph-ex">“Dinner next Saturday? Let&#x27;s make it happen.”</p>
+  <p class="ph-where"><b>Use it:</b> Confirming plans</p>
+</div>
+</div>
+<h4>Accepting &amp; declining</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Yes, I&#x27;ll come</p>
+  <div class="ph-top"><h4>Count me in!</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Yes, I&#x27;ll join.</p>
+  <p class="ph-ex">“Trek in November? Count me in!”</p>
+  <p class="ph-where"><b>Use it:</b> Accepting</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I will come</p>
+  <div class="ph-top"><h4>Wouldn&#x27;t miss it for the world</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Definitely coming.</p>
+  <p class="ph-ex">“Your birthday? Wouldn&#x27;t miss it for the world.”</p>
+  <p class="ph-where"><b>Use it:</b> Important events</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> I can&#x27;t come</p>
+  <div class="ph-top"><h4>I&#x27;d love to, but I&#x27;ll have to sit this one out</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Warm no.</p>
+  <p class="ph-ex">“I&#x27;d love to, but I&#x27;ll have to sit this one out — family plans.”</p>
+  <p class="ph-where"><b>Use it:</b> Declining</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Some other day</p>
+  <div class="ph-top"><h4>Can I take a rain check?</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Can we do it another time?</p>
+  <p class="ph-ex">“Can I take a rain check on tonight? I&#x27;m wiped out.”</p>
+  <p class="ph-where"><b>Use it:</b> Postponing</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Let&#x27;s see</p>
+  <div class="ph-top"><h4>Let&#x27;s play it by ear</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Decide later, depending on how things go.</p>
+  <p class="ph-ex">“Not sure about Sunday — let&#x27;s play it by ear.”</p>
+  <p class="ph-where"><b>Use it:</b> Uncertain plans</p>
+</div>
+</div>
+</section>
+<section id="s22">
+<h3>22. Support, Comfort &amp; Encouragement</h3>
+<div class="plain"><span class="plain-label">The vibe</span><p>In tough moments, the right words matter more than clever ones. These lines are warm, sincere and never preachy.</p></div>
+<h4>When someone&#x27;s struggling</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Sorry to hear</p>
+  <div class="ph-top"><h4>My heart goes out to you</h4><span class="tg b">Both</span></div>
+  <p class="ph-mean">Deep sympathy.</p>
+  <p class="ph-ex">“I heard about your grandfather — my heart goes out to you.”</p>
+  <p class="ph-where"><b>Use it:</b> Loss, hard news</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Tell me if any help</p>
+  <div class="ph-top"><h4>I&#x27;m here for you, whatever you need</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Unconditional support.</p>
+  <p class="ph-ex">“Call me anytime. I&#x27;m here for you, whatever you need.”</p>
+  <p class="ph-where"><b>Use it:</b> Hard times</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Don&#x27;t worry</p>
+  <div class="ph-top"><h4>That sounds really tough</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Validates without fixing.</p>
+  <p class="ph-ex">“Ugh, that sounds really tough. How are you holding up?”</p>
+  <p class="ph-where"><b>Use it:</b> Listening</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Relax</p>
+  <div class="ph-top"><h4>Be gentle with yourself</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Don&#x27;t be too hard on yourself.</p>
+  <p class="ph-ex">“You&#x27;ve had a rough month — be gentle with yourself.”</p>
+  <p class="ph-where"><b>Use it:</b> Stress, burnout</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> It will be ok</p>
+  <div class="ph-top"><h4>This too shall pass</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Hard times are temporary.</p>
+  <p class="ph-ex">“I know it feels endless, but this too shall pass.”</p>
+  <p class="ph-where"><b>Use it:</b> Encouragement</p>
+</div>
+</div>
+<h4>Cheering someone on</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> All the best</p>
+  <div class="ph-top"><h4>I&#x27;m rooting for you</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">I&#x27;m supporting you to win.</p>
+  <p class="ph-ex">“Big audition tomorrow — I&#x27;m rooting for you!”</p>
+  <p class="ph-where"><b>Use it:</b> Before big days</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Don&#x27;t worry</p>
+  <div class="ph-top"><h4>You&#x27;ve got this</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">You&#x27;re capable; go for it.</p>
+  <p class="ph-ex">“Deep breath — you&#x27;ve got this.”</p>
+  <p class="ph-where"><b>Use it:</b> Encouragement</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Best of luck</p>
+  <div class="ph-top"><h4>Knock &#x27;em dead!</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Go and impress everyone.</p>
+  <p class="ph-ex">“Knock &#x27;em dead at the interview!”</p>
+  <p class="ph-where"><b>Use it:</b> Before performances</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Good luck</p>
+  <div class="ph-top"><h4>Break a leg!</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Good luck (performances).</p>
+  <p class="ph-ex">“Break a leg tonight!”</p>
+  <p class="ph-where"><b>Use it:</b> Shows, presentations</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Hope you win</p>
+  <div class="ph-top"><h4>Whatever happens, I&#x27;m proud of you</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Support independent of outcome.</p>
+  <p class="ph-ex">“Whatever happens, I&#x27;m proud of you for trying.”</p>
+  <p class="ph-where"><b>Use it:</b> Exams, risks</p>
+</div>
+</div>
+<h4>Congratulating</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Congrats</p>
+  <div class="ph-top"><h4>Congratulations are in order!</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Playful formal-sounding congrats.</p>
+  <p class="ph-ex">“I hear congratulations are in order — new job?”</p>
+  <p class="ph-where"><b>Use it:</b> Good news</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Well deserved</p>
+  <div class="ph-top"><h4>You deserve every bit of it</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Fully earned success.</p>
+  <p class="ph-ex">“Promoted! You deserve every bit of it.”</p>
+  <p class="ph-where"><b>Use it:</b> Achievements</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Proud of you</p>
+  <div class="ph-top"><h4>I&#x27;m so incredibly proud of you</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Heartfelt pride.</p>
+  <p class="ph-ex">“First in the family to graduate — I&#x27;m so incredibly proud of you.”</p>
+  <p class="ph-where"><b>Use it:</b> Milestones</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Nice</p>
+  <div class="ph-top"><h4>Look at you go!</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Admiring someone&#x27;s progress.</p>
+  <p class="ph-ex">“New car, new city — look at you go!”</p>
+  <p class="ph-where"><b>Use it:</b> Friends&#x27; wins</p>
+</div>
+</div>
+</section>
+<section id="s23">
+<h3>23. Banter &amp; Playful Teasing</h3>
+<div class="plain"><span class="plain-label">The vibe</span><p>Light banter builds closeness — keep it affectionate, never cutting. Use these with people who know you well.</p></div>
+<h4>Playful lines</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> You&#x27;re late</p>
+  <div class="ph-top"><h4>Look who finally decided to show up!</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Teasing someone for being late.</p>
+  <p class="ph-ex">“Look who finally decided to show up! We ordered without you.”</p>
+  <p class="ph-where"><b>Use it:</b> Friends running late</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Again?</p>
+  <div class="ph-top"><h4>You never fail to amaze me</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Can be sincere or sarcastic.</p>
+  <p class="ph-ex">“You forgot your phone again? You never fail to amaze me.”</p>
+  <p class="ph-where"><b>Use it:</b> Teasing</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> You changed</p>
+  <div class="ph-top"><h4>Who are you and what have you done with my friend?</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Joking about someone acting unusually.</p>
+  <p class="ph-ex">“You woke up at 6 for yoga? Who are you and what have you done with my friend?”</p>
+  <p class="ph-where"><b>Use it:</b> Surprising behaviour</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Oops</p>
+  <div class="ph-top"><h4>Smooth move</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Sarcastic: that was clumsy.</p>
+  <p class="ph-ex">“Spilled chai on the laptop? Smooth move.”</p>
+  <p class="ph-where"><b>Use it:</b> Small mishaps</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Ok fine</p>
+  <div class="ph-top"><h4>I&#x27;ll allow it</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Playfully giving approval.</p>
+  <p class="ph-ex">“Third dessert? It&#x27;s your birthday — I&#x27;ll allow it.”</p>
+  <p class="ph-where"><b>Use it:</b> Fun moments</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> No it&#x27;s not for you</p>
+  <div class="ph-top"><h4>Don&#x27;t flatter yourself</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Playful put-down of someone&#x27;s ego.</p>
+  <p class="ph-ex">“Dressed up for you? Don&#x27;t flatter yourself.”</p>
+  <p class="ph-where"><b>Use it:</b> Close friends only</p>
+</div>
+</div>
+<h4>Responding to teasing</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Yes I did</p>
+  <div class="ph-top"><h4>Guilty as charged</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Yes, I admit it.</p>
+  <p class="ph-ex">“Did I eat the last samosa? Guilty as charged.”</p>
+  <p class="ph-where"><b>Use it:</b> Owning it</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Ok</p>
+  <div class="ph-top"><h4>I&#x27;ll take that as a compliment</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Turning teasing into praise.</p>
+  <p class="ph-ex">“Too organised? I&#x27;ll take that as a compliment.”</p>
+  <p class="ph-where"><b>Use it:</b> Witty comebacks</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> You also</p>
+  <div class="ph-top"><h4>Says you!</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">You&#x27;re no better.</p>
+  <p class="ph-ex">“&quot;You&#x27;re always late.&quot; &quot;Says you!&quot;”</p>
+  <p class="ph-where"><b>Use it:</b> Friendly comebacks</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> You&#x27;re right</p>
+  <div class="ph-top"><h4>Touché</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Fair point — you got me.</p>
+  <p class="ph-ex">“&quot;You said the same last week.&quot; &quot;Touché.&quot;”</p>
+  <p class="ph-where"><b>Use it:</b> Conceding wittily</p>
+</div>
+</div>
+</section>
+<section id="s24">
+<h3>24. Texting &amp; Messaging Lines</h3>
+<div class="plain"><span class="plain-label">The vibe</span><p>Texts read colder than speech. A little warmth and personality in your messages goes a long way.</p></div>
+<h4>Starting and replying</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Sorry for late reply</p>
+  <div class="ph-top"><h4>Sorry, this slipped through the cracks!</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Apology for a late reply.</p>
+  <p class="ph-ex">“Sorry, this slipped through the cracks! Yes to Saturday.”</p>
+  <p class="ph-where"><b>Use it:</b> Late replies</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Hi, how are you</p>
+  <div class="ph-top"><h4>Just thinking of you</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Warm check-in.</p>
+  <p class="ph-ex">“Just thinking of you — hope the new job is treating you well.”</p>
+  <p class="ph-where"><b>Use it:</b> Checking in</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> See this</p>
+  <div class="ph-top"><h4>Thought you&#x27;d appreciate this</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Sharing something they&#x27;d like.</p>
+  <p class="ph-ex">“Thought you&#x27;d appreciate this meme.”</p>
+  <p class="ph-where"><b>Use it:</b> Sharing links</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> You will like this</p>
+  <div class="ph-top"><h4>This is so you!</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Perfectly matches your personality.</p>
+  <p class="ph-ex">“Saw this mug and thought — this is so you!”</p>
+  <p class="ph-where"><b>Use it:</b> Gifts, links</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Haha</p>
+  <div class="ph-top"><h4>Can&#x27;t stop laughing at this</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Finding something very funny.</p>
+  <p class="ph-ex">“Can&#x27;t stop laughing at your voice note.”</p>
+  <p class="ph-where"><b>Use it:</b> Funny chats</p>
+</div>
+</div>
+<h4>Wrapping up</h4><div class="ph-grid">
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Bye</p>
+  <div class="ph-top"><h4>Talk soon, yeah?</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Let&#x27;s talk again soon.</p>
+  <p class="ph-ex">“So good catching up — talk soon, yeah?”</p>
+  <p class="ph-where"><b>Use it:</b> Ending chats</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> All the best</p>
+  <div class="ph-top"><h4>Sending you all the good vibes</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Wishing you well.</p>
+  <p class="ph-ex">“Big day tomorrow — sending you all the good vibes.”</p>
+  <p class="ph-where"><b>Use it:</b> Before events</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Gn</p>
+  <div class="ph-top"><h4>Sleep tight, chat tomorrow</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Good night, talk tomorrow.</p>
+  <p class="ph-ex">“Sleep tight, chat tomorrow!”</p>
+  <p class="ph-where"><b>Use it:</b> Night texts</p>
+</div>
+<div class="ph">
+  <p class="ph-swap"><span>Instead of</span> Bye, take care</p>
+  <div class="ph-top"><h4>Let me know when you&#x27;re home safe</h4><span class="tg i">Informal</span></div>
+  <p class="ph-mean">Caring sign-off.</p>
+  <p class="ph-ex">“Fun night! Let me know when you&#x27;re home safe.”</p>
+  <p class="ph-where"><b>Use it:</b> After meetups</p>
+</div>
+</div>
+</section>
+<div class="part">Part 3 — Word Power</div>
+<section id="s25">
+<h3>25. Advanced Vocabulary</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>Words that make you sound precise rather than ornate. Aim to own 3–5 a week — use each one in a real sentence before moving on. In &quot;Say it&quot;, CAPITALS mark the stressed syllable.</p></div>
+<div class="table-wrap"><table class="ex-last say"><tr><th>Word</th><th>Say it</th><th>Meaning</th><th>Example</th></tr><tr><td>Articulate</td><td>ar-TIK-yuh-lut</td><td>Able to express ideas clearly.</td><td>She gave an articulate case for the new process.</td></tr><tr><td>Astute</td><td>uh-STYOOT</td><td>Sharp at judging situations.</td><td>An astute observation about the client&#x27;s real concern.</td></tr><tr><td>Candid</td><td>KAN-did</td><td>Honest and direct.</td><td>Thanks for the candid feedback.</td></tr><tr><td>Caveat</td><td>KAV-ee-at</td><td>A warning or condition.</td><td>One caveat: the data excludes March.</td></tr><tr><td>Cogent</td><td>KOH-junt</td><td>Clear, logical and convincing.</td><td>He made a cogent argument for delaying.</td></tr><tr><td>Commendable</td><td>kuh-MEN-duh-bul</td><td>Deserving praise.</td><td>The team&#x27;s resilience was commendable.</td></tr><tr><td>Conundrum</td><td>kuh-NUN-drum</td><td>A confusing, difficult problem.</td><td>Hiring fast without lowering the bar is a real conundrum.</td></tr><tr><td>Corroborate</td><td>kuh-ROB-uh-rayt</td><td>Confirm with evidence.</td><td>The survey corroborates what sales told us.</td></tr><tr><td>Delineate</td><td>dih-LIN-ee-ayt</td><td>Describe precisely; mark the boundaries of.</td><td>Let&#x27;s delineate who owns what.</td></tr><tr><td>Diligent</td><td>DIL-ih-junt</td><td>Careful and hardworking.</td><td>Her diligent testing caught three edge cases.</td></tr><tr><td>Discerning</td><td>dih-SUR-ning</td><td>Showing good judgement.</td><td>Our users are discerning — they notice slow pages.</td></tr><tr><td>Elucidate</td><td>ih-LOO-sih-dayt</td><td>Explain clearly.</td><td>Could you elucidate the pricing logic?</td></tr><tr><td>Encapsulate</td><td>in-KAP-syoo-layt</td><td>Summarise the essence of.</td><td>This slide encapsulates the whole strategy.</td></tr><tr><td>Exacerbate</td><td>ig-ZAS-er-bayt</td><td>Make a problem worse.</td><td>Rushing the fix could exacerbate the issue.</td></tr><tr><td>Formidable</td><td>FOR-mih-duh-bul</td><td>Impressively powerful or difficult.</td><td>They&#x27;re a formidable competitor.</td></tr><tr><td>Granular</td><td>GRAN-yuh-lar</td><td>Very detailed.</td><td>We need more granular data — by store, not region.</td></tr><tr><td>Holistic</td><td>hoh-LIS-tik</td><td>Considering the whole, not parts.</td><td>We need a holistic view of the customer journey.</td></tr><tr><td>Impeccable</td><td>im-PEK-uh-bul</td><td>Flawless.</td><td>Her timing was impeccable.</td></tr><tr><td>Indispensable</td><td>in-dih-SPEN-suh-bul</td><td>Absolutely necessary.</td><td>He&#x27;s become indispensable to the team.</td></tr><tr><td>Inflection point</td><td>in-FLEK-shun point</td><td>A moment of significant change.</td><td>AI is an inflection point for our industry.</td></tr><tr><td>Iterative</td><td>IT-er-uh-tiv</td><td>Improving through repeated cycles.</td><td>We&#x27;ll take an iterative approach — ship, learn, refine.</td></tr><tr><td>Judicious</td><td>joo-DISH-us</td><td>Wise and sensible.</td><td>A judicious use of budget.</td></tr><tr><td>Meticulous</td><td>muh-TIK-yuh-lus</td><td>Extremely careful with details.</td><td>The audit was meticulous.</td></tr><tr><td>Mitigate</td><td>MIT-ih-gayt</td><td>Reduce the severity of.</td><td>How do we mitigate the risk of delay?</td></tr><tr><td>Nuanced</td><td>NYOO-ahnst</td><td>With subtle differences.</td><td>It&#x27;s a nuanced issue — there&#x27;s no single answer.</td></tr><tr><td>Onus</td><td>OH-nus</td><td>Responsibility or duty.</td><td>The onus is on us to prove the value.</td></tr><tr><td>Paramount</td><td>PAR-uh-mount</td><td>Most important.</td><td>Data privacy is paramount.</td></tr><tr><td>Pivotal</td><td>PIV-uh-tul</td><td>Of crucial importance.</td><td>That meeting was pivotal for the deal.</td></tr><tr><td>Pragmatic</td><td>prag-MAT-ik</td><td>Practical rather than idealistic.</td><td>Let&#x27;s take a pragmatic approach and launch the core first.</td></tr><tr><td>Prudent</td><td>PROO-dunt</td><td>Careful and sensible about the future.</td><td>It would be prudent to keep a buffer.</td></tr><tr><td>Purview</td><td>PUR-vyoo</td><td>Area of authority.</td><td>Pricing falls outside my purview.</td></tr><tr><td>Reconcile</td><td>REK-un-syle</td><td>Make two things agree.</td><td>We need to reconcile the two reports.</td></tr><tr><td>Resilient</td><td>rih-ZIL-yunt</td><td>Recovers quickly from difficulty.</td><td>A resilient team bounces back after setbacks.</td></tr><tr><td>Robust</td><td>roh-BUST</td><td>Strong and reliable.</td><td>We need a more robust testing process.</td></tr><tr><td>Salient</td><td>SAY-lee-unt</td><td>Most noticeable or important.</td><td>Let me summarise the salient points.</td></tr><tr><td>Scrutinise</td><td>SKROO-tih-nyze</td><td>Examine closely.</td><td>Finance will scrutinise every line.</td></tr><tr><td>Seamless</td><td>SEEM-lis</td><td>Smooth, without interruption.</td><td>A seamless handover to the new team.</td></tr><tr><td>Succinct</td><td>suk-SINKT</td><td>Brief and clear.</td><td>Keep the summary succinct — three bullets.</td></tr><tr><td>Substantiate</td><td>sub-STAN-shee-ayt</td><td>Support with evidence.</td><td>Can we substantiate that claim with data?</td></tr><tr><td>Tangible</td><td>TAN-juh-bul</td><td>Real and measurable.</td><td>We need tangible results by Q2.</td></tr><tr><td>Tenacious</td><td>tuh-NAY-shus</td><td>Determined; doesn&#x27;t give up.</td><td>Her tenacious follow-up got the contract signed.</td></tr><tr><td>Trajectory</td><td>truh-JEK-tuh-ree</td><td>Path of development over time.</td><td>Our growth trajectory looks strong.</td></tr><tr><td>Ubiquitous</td><td>yoo-BIK-wih-tus</td><td>Found everywhere.</td><td>UPI payments are now ubiquitous in India.</td></tr><tr><td>Underscore</td><td>un-der-SKOR</td><td>Emphasise.</td><td>This incident underscores the need for monitoring.</td></tr><tr><td>Unprecedented</td><td>un-PRES-ih-den-tid</td><td>Never happened before.</td><td>Demand this quarter was unprecedented.</td></tr><tr><td>Viable</td><td>VY-uh-bul</td><td>Workable; able to succeed.</td><td>Is this a viable option within budget?</td></tr></table></div>
+</section>
+<section id="s26">
+<h3>26. Linkers That Make You Articulate</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>Articulate speakers connect ideas. These linkers turn a list of sentences into a line of reasoning.</p></div>
+<div class="table-wrap"><table class="ex-last"><tr><th>Linker</th><th>Use it to…</th><th>Example</th></tr><tr><td>That said…</td><td>Adds a contrast after a point.</td><td>The plan is solid. That said, the timeline is tight.</td></tr><tr><td>Having said that…</td><td>Same as &#x27;that said&#x27;, slightly more formal.</td><td>Having said that, we should still test it.</td></tr><tr><td>By the same token…</td><td>For the same reason.</td><td>We trust them with data; by the same token, they should trust our process.</td></tr><tr><td>Conversely…</td><td>In the opposite way.</td><td>Metros grew slowly; conversely, smaller cities boomed.</td></tr><tr><td>In light of…</td><td>Considering.</td><td>In light of the feedback, we&#x27;ve revised the design.</td></tr><tr><td>To that end…</td><td>To achieve that goal.</td><td>We want faster releases. To that end, we&#x27;re automating tests.</td></tr><tr><td>On balance…</td><td>After considering everything.</td><td>On balance, option B is the safer bet.</td></tr><tr><td>Be that as it may…</td><td>Even if that&#x27;s true.</td><td>Be that as it may, we need a decision today.</td></tr><tr><td>If anything…</td><td>Actually, the opposite / even more.</td><td>It didn&#x27;t slow us down; if anything, it sped us up.</td></tr><tr><td>Case in point…</td><td>Here&#x27;s an example that proves it.</td><td>Small fixes matter. Case in point: the button change lifted sales 5%.</td></tr><tr><td>Not to mention…</td><td>Adding an extra point.</td><td>It&#x27;s cheaper, not to mention faster.</td></tr><tr><td>Which is to say…</td><td>In other words.</td><td>We&#x27;re over budget — which is to say, we need to cut scope.</td></tr><tr><td>All things considered…</td><td>Overall.</td><td>All things considered, it was a successful quarter.</td></tr><tr><td>Notwithstanding…</td><td>In spite of (formal).</td><td>Notwithstanding the delays, we hit our target.</td></tr><tr><td>Insofar as…</td><td>To the extent that.</td><td>It&#x27;s useful insofar as it saves time.</td></tr></table></div>
+</section>
+<section id="s27">
+<h3>27. Diplomatic Softeners</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>The difference between blunt and polished is often one softening phrase. Use these when challenging seniors, clients or peers.</p></div>
+<div class="table-wrap"><table class="ex-last"><tr><th>Softener</th><th>Why it works</th><th>Example</th></tr><tr><td>It might be worth…</td><td>Suggests without pushing.</td><td>It might be worth checking with legal first.</td></tr><tr><td>I wonder whether…</td><td>Raises doubt gently.</td><td>I wonder whether we&#x27;re targeting the right segment.</td></tr><tr><td>Arguably…</td><td>Opinion presented as debatable.</td><td>Arguably, this is our strongest product.</td></tr><tr><td>To some extent…</td><td>Partial agreement.</td><td>To some extent, I agree — but cost matters too.</td></tr><tr><td>Correct me if I&#x27;m wrong, but…</td><td>Challenges without arrogance.</td><td>Correct me if I&#x27;m wrong, but wasn&#x27;t this approved last month?</td></tr><tr><td>I may be missing something, but…</td><td>Humble challenge.</td><td>I may be missing something, but the numbers don&#x27;t add up.</td></tr><tr><td>It&#x27;s not quite what we discussed</td><td>Softer than &#x27;this is wrong&#x27;.</td><td>This is close, but it&#x27;s not quite what we discussed.</td></tr><tr><td>There may be a slight issue with…</td><td>Downplays to stay polite.</td><td>There may be a slight issue with the totals.</td></tr><tr><td>Would it make sense to…?</td><td>Collaborative suggestion.</td><td>Would it make sense to split this into two phases?</td></tr><tr><td>I&#x27;d gently suggest…</td><td>Very soft recommendation.</td><td>I&#x27;d gently suggest we revisit the colour palette.</td></tr></table></div>
+</section>
+<section id="s28">
+<h3>28. Power Verbs for Your Wins</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>For CVs, appraisals and interviews. Strong verbs + a number = credibility.</p></div>
+<div class="table-wrap"><table class="ex-last"><tr><th>Instead of</th><th>Try</th><th>Example</th></tr><tr><td>Led</td><td>Spearheaded · Championed · Steered</td><td>Spearheaded the migration to the cloud.</td></tr><tr><td>Made / created</td><td>Architected · Engineered · Pioneered</td><td>Architected a reusable dashboard framework.</td></tr><tr><td>Improved</td><td>Streamlined · Optimised · Revamped</td><td>Streamlined onboarding from 5 days to 2.</td></tr><tr><td>Changed</td><td>Overhauled · Transformed · Revitalised</td><td>Overhauled the reporting process.</td></tr><tr><td>Helped</td><td>Enabled · Facilitated · Empowered</td><td>Enabled the sales team to self-serve data.</td></tr><tr><td>Managed</td><td>Orchestrated · Oversaw · Coordinated</td><td>Orchestrated a 12-person cross-team launch.</td></tr><tr><td>Started</td><td>Initiated · Launched · Instituted</td><td>Instituted weekly code reviews.</td></tr><tr><td>Increased</td><td>Boosted · Accelerated · Amplified</td><td>Accelerated delivery by 30%.</td></tr><tr><td>Reduced</td><td>Cut · Slashed · Curtailed</td><td>Slashed report generation time by 70%.</td></tr><tr><td>Solved</td><td>Resolved · Untangled · Troubleshot</td><td>Untangled a long-standing data quality issue.</td></tr><tr><td>Got</td><td>Secured · Negotiated · Won</td><td>Secured buy-in from three department heads.</td></tr><tr><td>Taught</td><td>Mentored · Coached · Upskilled</td><td>Mentored four junior analysts.</td></tr></table></div>
+</section>
+<section id="s29">
+<h3>29. Phrasal Verbs Natives Use</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>Fluent professionals lean on phrasal verbs constantly. Mastering these makes your English sound natural, not textbook.</p></div>
+<div class="table-wrap"><table class="ex-last"><tr><th>Phrasal verb</th><th>Meaning</th><th>Example</th></tr><tr><td>Iron out</td><td>Resolve small problems.</td><td>Let&#x27;s iron out the details before Monday.</td></tr><tr><td>Flesh out</td><td>Add detail to an idea.</td><td>Could you flesh out the proposal a bit?</td></tr><tr><td>Zero in on</td><td>Focus precisely on.</td><td>Let&#x27;s zero in on the top three churn reasons.</td></tr><tr><td>Weigh in</td><td>Give your opinion.</td><td>Would you like to weigh in on this?</td></tr><tr><td>Rule out</td><td>Eliminate as an option.</td><td>We can rule out a server issue.</td></tr><tr><td>Follow through</td><td>Complete what you promised.</td><td>She always follows through on commitments.</td></tr><tr><td>Hash out</td><td>Discuss until agreed.</td><td>Let&#x27;s hash out the roles on Thursday.</td></tr><tr><td>Roll out</td><td>Launch gradually.</td><td>We&#x27;ll roll out the feature to 10% of users first.</td></tr><tr><td>Scale back</td><td>Reduce in size.</td><td>We had to scale back the scope.</td></tr><tr><td>Sign off on</td><td>Formally approve.</td><td>The CFO signed off on the budget.</td></tr><tr><td>Run by</td><td>Show someone for approval or opinion.</td><td>Let me run it by my manager.</td></tr><tr><td>Rein in</td><td>Control or limit.</td><td>We need to rein in cloud costs.</td></tr><tr><td>Step up</td><td>Take more responsibility.</td><td>He really stepped up during the outage.</td></tr><tr><td>Touch on</td><td>Mention briefly.</td><td>I&#x27;ll touch on the risks at the end.</td></tr><tr><td>Play down</td><td>Make something seem less important.</td><td>Don&#x27;t play down your contribution.</td></tr><tr><td>Drill down</td><td>Look at more detailed levels.</td><td>Let&#x27;s drill down into the South region.</td></tr><tr><td>Sound out</td><td>Informally check someone&#x27;s opinion.</td><td>I&#x27;ll sound out the team before we decide.</td></tr><tr><td>Get across</td><td>Communicate successfully.</td><td>The demo got the idea across perfectly.</td></tr></table></div>
+</section>
+<section id="s30">
+<h3>30. Corporate Vocabulary</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>Know these to decode meetings instantly. Use sparingly — one or two per conversation keeps you sharp, not jargon-heavy.</p></div>
+<div class="table-wrap"><table class="ex-last"><tr><th>Term</th><th>Meaning</th><th>Example</th></tr><tr><td>Bandwidth</td><td>Capacity to take on work.</td><td>I don&#x27;t have the bandwidth this sprint.</td></tr><tr><td>Buy-in</td><td>Agreement and support.</td><td>We need buy-in from finance before launch.</td></tr><tr><td>Stakeholder</td><td>Anyone affected by or involved in the work.</td><td>Let&#x27;s map our stakeholders first.</td></tr><tr><td>Deliverable</td><td>A concrete output you hand over.</td><td>The key deliverable is the dashboard.</td></tr><tr><td>Headwinds / tailwinds</td><td>Forces slowing / helping progress.</td><td>Rising costs are a headwind; strong demand is a tailwind.</td></tr><tr><td>North Star metric</td><td>The single most important measure of success.</td><td>Retention is our North Star metric.</td></tr><tr><td>Low-hanging fruit</td><td>Easy wins.</td><td>Let&#x27;s grab the low-hanging fruit first.</td></tr><tr><td>Move the needle</td><td>Make a noticeable difference.</td><td>Will this actually move the needle on revenue?</td></tr><tr><td>Table stakes</td><td>The minimum expected to compete.</td><td>Mobile support is table stakes now.</td></tr><tr><td>Run the numbers</td><td>Calculate to check.</td><td>Let me run the numbers before we commit.</td></tr><tr><td>Single point of failure</td><td>One thing whose failure breaks everything.</td><td>Ravi is a single point of failure for deployments.</td></tr><tr><td>Scope creep</td><td>Requirements slowly growing beyond plan.</td><td>Let&#x27;s guard against scope creep.</td></tr><tr><td>Sanity check</td><td>Quick check that something makes sense.</td><td>Can you sanity-check these numbers?</td></tr><tr><td>Ballpark</td><td>Rough estimate.</td><td>Give me a ballpark — weeks or months?</td></tr><tr><td>Pain point</td><td>A persistent customer problem.</td><td>Slow refunds are the biggest pain point.</td></tr><tr><td>Value proposition</td><td>Why customers should choose you.</td><td>What&#x27;s our value proposition for small businesses?</td></tr><tr><td>Due diligence</td><td>Careful research before a decision.</td><td>We did our due diligence on the vendor.</td></tr><tr><td>Take it offline</td><td>Discuss outside the meeting.</td><td>Let&#x27;s take that offline.</td></tr><tr><td>Heads-up</td><td>Advance warning.</td><td>Quick heads-up: the client may join late.</td></tr><tr><td>Keep me posted</td><td>Keep me updated.</td><td>Keep me posted on legal&#x27;s response.</td></tr></table></div>
+</section>
+<section id="s31">
+<h3>31. Idioms for the Workplace</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>One well-timed idiom signals fluency. Make sure the context fits — a misused idiom is worse than none.</p></div>
+<div class="table-wrap"><table class="ex-last"><tr><th>Idiom</th><th>Meaning</th><th>Example</th></tr><tr><td>The elephant in the room</td><td>An obvious problem nobody mentions.</td><td>Let&#x27;s address the elephant in the room: we&#x27;re over budget.</td></tr><tr><td>Read the room</td><td>Sense the mood of the people present.</td><td>Read the room — this isn&#x27;t the time for jokes.</td></tr><tr><td>Move the goalposts</td><td>Change the rules unfairly mid-way.</td><td>The client keeps moving the goalposts.</td></tr><tr><td>Par for the course</td><td>Normal and expected (often negative).</td><td>Late-night calls are par for the course in this role.</td></tr><tr><td>A double-edged sword</td><td>Has both benefits and drawbacks.</td><td>Remote work is a double-edged sword.</td></tr><tr><td>The tip of the iceberg</td><td>A small visible part of a bigger problem.</td><td>These complaints are just the tip of the iceberg.</td></tr><tr><td>Bite the bullet</td><td>Do something unpleasant but necessary.</td><td>Let&#x27;s bite the bullet and rewrite the module.</td></tr><tr><td>A tall order</td><td>A very difficult request.</td><td>Launching in a week is a tall order.</td></tr><tr><td>Cut to the chase</td><td>Get to the main point.</td><td>Let me cut to the chase: we need more budget.</td></tr><tr><td>The devil is in the details</td><td>Small details cause the problems.</td><td>The idea is simple, but the devil is in the details.</td></tr><tr><td>Nip it in the bud</td><td>Stop a problem early.</td><td>Let&#x27;s nip this bug in the bud before release.</td></tr><tr><td>Steep learning curve</td><td>Hard to learn at first.</td><td>The new tool has a steep learning curve.</td></tr><tr><td>Jump the gun</td><td>Act too early.</td><td>Let&#x27;s not jump the gun before the data is in.</td></tr><tr><td>A blessing in disguise</td><td>Something bad that turns out good.</td><td>Losing that client was a blessing in disguise.</td></tr><tr><td>On the back burner</td><td>Paused; low priority.</td><td>Let&#x27;s put the redesign on the back burner.</td></tr><tr><td>The bottom line</td><td>The most important fact.</td><td>The bottom line is we need to cut costs.</td></tr><tr><td>Silver lining</td><td>A positive in a bad situation.</td><td>The silver lining is we learned a lot.</td></tr><tr><td>Take it with a pinch of salt</td><td>Don&#x27;t fully believe it.</td><td>Take those projections with a pinch of salt.</td></tr><tr><td>An uphill battle</td><td>A struggle against difficulty.</td><td>Changing the culture is an uphill battle.</td></tr><tr><td>A whole new ball game</td><td>A completely different situation.</td><td>Managing people is a whole new ball game.</td></tr><tr><td>The writing is on the wall</td><td>Signs show something bad will happen.</td><td>With sales falling, the writing was on the wall.</td></tr><tr><td>Too many cooks spoil the broth</td><td>Too many people involved ruins it.</td><td>Five reviewers? Too many cooks.</td></tr><tr><td>Hit the ground running</td><td>Start quickly and effectively.</td><td>She hit the ground running in her first week.</td></tr><tr><td>Second nature</td><td>Something you do automatically.</td><td>After a month, SQL became second nature.</td></tr><tr><td>Go the extra mile</td><td>Do more than expected.</td><td>He always goes the extra mile for clients.</td></tr><tr><td>Ahead of the curve</td><td>More advanced than others.</td><td>Their analytics team is ahead of the curve.</td></tr></table></div>
+</section>
+<section id="s32">
+<h3>32. Gen Z Terms (Informal Only)</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>Useful for decoding younger colleagues and social media. Keep them out of emails, client calls and senior meetings.</p></div>
+<div class="table-wrap"><table class="ex-last"><tr><th>Term</th><th>Meaning</th><th>Example</th></tr><tr><td>No cap</td><td>No lie; for real.</td><td>That was the best demo all year, no cap.</td></tr><tr><td>Lowkey / highkey</td><td>Slightly, secretly / very, openly.</td><td>I&#x27;m lowkey nervous but highkey excited.</td></tr><tr><td>It&#x27;s giving…</td><td>It looks/feels like…</td><td>This deck? It&#x27;s giving boardroom energy.</td></tr><tr><td>Main character energy</td><td>Bold, confident presence.</td><td>Walking into that pitch with main character energy.</td></tr><tr><td>Understood the assignment</td><td>Did exactly what was needed, brilliantly.</td><td>Your summary understood the assignment.</td></tr><tr><td>Ate (and left no crumbs)</td><td>Did it perfectly.</td><td>You ate that presentation.</td></tr><tr><td>Rent free</td><td>Can&#x27;t stop thinking about it.</td><td>That client comment is living in my head rent free.</td></tr><tr><td>Touch grass</td><td>Go outside; take a break from screens.</td><td>Release done — time to touch grass.</td></tr><tr><td>Delulu</td><td>Unrealistically hopeful (playful).</td><td>Thinking we&#x27;ll finish today is a bit delulu.</td></tr><tr><td>Mid</td><td>Average; underwhelming.</td><td>The new canteen menu is mid.</td></tr><tr><td>Slay</td><td>Do something amazingly.</td><td>You slayed that client call.</td></tr><tr><td>Hits different</td><td>Feels uniquely good.</td><td>Friday chai just hits different.</td></tr><tr><td>Vibe check</td><td>Checking mood.</td><td>Quick vibe check — how&#x27;s everyone feeling?</td></tr><tr><td>The ick</td><td>A sudden feeling of being put off.</td><td>Reply-all for no reason gives me the ick.</td></tr><tr><td>Big W / L</td><td>Big win / loss.</td><td>Client renewed — big W!</td></tr></table></div>
+</section>
+<section id="s33">
+<h3>33. Commonly Confused Words</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>Even fluent speakers slip on these. Getting them right quietly signals precision.</p></div>
+<div class="table-wrap"><table class="ex-last"><tr><th>Pair</th><th>The rule</th><th>Example</th></tr><tr><td>Affect / Effect</td><td>Affect = verb (to influence). Effect = noun (the result).</td><td>The delay affected sales; the effect was a 5% dip.</td></tr><tr><td>Fewer / Less</td><td>Fewer for countable things; less for uncountable.</td><td>Fewer bugs, less effort.</td></tr><tr><td>Imply / Infer</td><td>Speaker implies; listener infers.</td><td>He implied a delay; I inferred we&#x27;d miss the date.</td></tr><tr><td>Principal / Principle</td><td>Principal = main / head. Principle = rule or belief.</td><td>The principal reason is a matter of principle.</td></tr><tr><td>Complement / Compliment</td><td>Complement = complete. Compliment = praise.</td><td>The charts complement the text; the client complimented them.</td></tr><tr><td>Ensure / Assure / Insure</td><td>Ensure = make certain. Assure = reassure a person. Insure = financial cover.</td><td>I assure you we&#x27;ll ensure it&#x27;s done.</td></tr><tr><td>i.e. / e.g.</td><td>i.e. = that is (exactly). e.g. = for example.</td><td>Top cities, e.g. Pune; our biggest market, i.e. Mumbai.</td></tr><tr><td>Discreet / Discrete</td><td>Discreet = tactful. Discrete = separate.</td><td>Be discreet; split it into discrete tasks.</td></tr><tr><td>Comprise / Compose</td><td>The whole comprises the parts (no &#x27;of&#x27;).</td><td>The team comprises five analysts.</td></tr><tr><td>Lose / Loose</td><td>Lose = misplace/fail. Loose = not tight.</td><td>Don&#x27;t lose the loose ends.</td></tr><tr><td>Advice / Advise</td><td>Advice = noun. Advise = verb.</td><td>I advise you to take her advice.</td></tr><tr><td>Everyday / Every day</td><td>Everyday = ordinary (adj). Every day = each day.</td><td>Everyday tasks I do every day.</td></tr></table></div>
+</section>
+<section id="s34">
+<h3>34. Commonly Mispronounced Words</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>Pronunciation is part of polish. These come up often at work and are frequently said incorrectly.</p></div>
+<div class="table-wrap"><table class=""><tr><th>Word</th><th>Say it like</th><th>Tip</th></tr><tr><td>Colleague</td><td>KOL-eeg</td><td>Not &#x27;col-lee-g-yoo&#x27;.</td></tr><tr><td>Hierarchy</td><td>HY-er-ar-kee</td><td>Four syllables.</td></tr><tr><td>Epitome</td><td>ih-PIT-uh-mee</td><td>Ends in &#x27;mee&#x27;, not &#x27;tome&#x27;.</td></tr><tr><td>Hyperbole</td><td>hy-PER-buh-lee</td><td>Not &#x27;hyper-bowl&#x27;.</td></tr><tr><td>Genre</td><td>ZHON-ruh</td><td>Soft &#x27;zh&#x27; at the start.</td></tr><tr><td>Niche</td><td>NEESH (or NITCH)</td><td>Both accepted; &#x27;neesh&#x27; is more common in India/UK.</td></tr><tr><td>Suite</td><td>SWEET</td><td>Like &#x27;sweet&#x27;, not &#x27;suit&#x27;.</td></tr><tr><td>Cache</td><td>KASH</td><td>Like &#x27;cash&#x27; — not &#x27;catch-ay&#x27;.</td></tr><tr><td>Debris</td><td>deh-BREE</td><td>Silent &#x27;s&#x27;.</td></tr><tr><td>Determine</td><td>dih-TUR-min</td><td>Not &#x27;deter-mine&#x27;.</td></tr><tr><td>Entrepreneur</td><td>on-truh-pruh-NUR</td><td>Stress on the last syllable.</td></tr><tr><td>Facade</td><td>fuh-SAHD</td><td>The &#x27;c&#x27; sounds like &#x27;s&#x27;.</td></tr><tr><td>Paradigm</td><td>PAIR-uh-dime</td><td>Silent &#x27;g&#x27;.</td></tr><tr><td>Subtle</td><td>SUT-ul</td><td>Silent &#x27;b&#x27;.</td></tr><tr><td>Wednesday</td><td>WENZ-day</td><td>Silent first &#x27;d&#x27;.</td></tr><tr><td>Data</td><td>DAY-tuh or DAH-tuh</td><td>Both are correct — pick one and stay consistent.</td></tr></table></div>
+</section>
+<section id="s35">
+<h3>35. Phrases to Retire</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>Common in Indian offices, but they read as dated or incorrect to global teams. Swap them for the modern version.</p></div>
+<div class="table-wrap"><table class="avoid"><tr><th>Retire</th><th>Say this instead</th></tr><tr><td>Do the needful</td><td>Could you please take care of this?</td></tr><tr><td>Kindly revert</td><td>Please let me know / I look forward to your reply.</td></tr><tr><td>Revert back</td><td>Get back to you / Reply</td></tr><tr><td>Prepone the meeting</td><td>Bring the meeting forward</td></tr><tr><td>I have a doubt</td><td>I have a question</td></tr><tr><td>Discuss about</td><td>Discuss (no &quot;about&quot;)</td></tr><tr><td>PFA</td><td>I&#x27;ve attached… / Please find attached…</td></tr><tr><td>Myself Laeba</td><td>I&#x27;m Laeba</td></tr><tr><td>Out of station</td><td>Out of town / Travelling</td></tr><tr><td>Please do one thing</td><td>Could you please…?</td></tr><tr><td>Today morning / yesterday night</td><td>This morning / last night</td></tr><tr><td>I am having two years of experience</td><td>I have two years of experience</td></tr><tr><td>Passed out in 2024</td><td>Graduated in 2024</td></tr><tr><td>What is your good name?</td><td>May I have your name?</td></tr><tr><td>Same to same</td><td>Identical / Exactly the same</td></tr><tr><td>Cope up with</td><td>Cope with / Keep up with</td></tr></table></div>
+</section>
+<section id="s36">
+<h3>36. Fillers → Confident Bridges</h3>
+<div class="plain"><span class="plain-label">The principle</span><p>Fillers dilute authority. A short silent pause sounds more confident than any filler word.</p></div>
+<div class="table-wrap"><table class=""><tr><th>Filler habit</th><th>Better choice</th></tr><tr><td>Um… uh…</td><td>A deliberate one-second pause. Silence reads as confidence.</td></tr><tr><td>Basically…</td><td>&quot;Essentially…&quot; / &quot;In short…&quot; — or drop it entirely.</td></tr><tr><td>Like…</td><td>Cut it, or use &quot;for instance…&quot;</td></tr><tr><td>You know?</td><td>&quot;Does that resonate?&quot; — once, at the end of a point.</td></tr><tr><td>Actually…</td><td>Use only for genuine contrast; otherwise remove.</td></tr><tr><td>I don&#x27;t know how to say this…</td><td>&quot;Let me put it this way…&quot;</td></tr><tr><td>What to say…</td><td>&quot;Let me gather my thoughts for a second.&quot;</td></tr><tr><td>Sorry, sorry…</td><td>&quot;Let me rephrase that.&quot;</td></tr><tr><td>So yeah…</td><td>End with a landing: &quot;So that&#x27;s the plan.&quot;</td></tr></table></div>
+</section>
+
+<div class="part">Part 4 — Practice</div>
+<section id="plan">
+<h3>Your 30-Day Plan</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>One deliberate practice task a day. Tick it off when done — your progress is saved in this browser.</p></div>
+<div class="progress" id="progressText">0 of 30 days done</div>
+<div class="bar"><i id="progressBar"></i></div>
+<div class="days"><label class="day"><input type="checkbox" data-day="1"><span class="d">Day 1</span><span class="t"><b>Openers</b>Open three conversations with a specific, warm line from chapter 1.</span></label><label class="day"><input type="checkbox" data-day="2"><span class="d">Day 2</span><span class="t"><b>Introductions</b>Rewrite your self-introduction using &quot;I own…&quot; or &quot;My remit covers…&quot;.</span></label><label class="day"><input type="checkbox" data-day="3"><span class="d">Day 3</span><span class="t"><b>Small talk</b>Ask one person a story-inviting question.</span></label><label class="day"><input type="checkbox" data-day="4"><span class="d">Day 4</span><span class="t"><b>Praise</b>Give one precise compliment: behaviour + impact.</span></label><label class="day"><input type="checkbox" data-day="5"><span class="d">Day 5</span><span class="t"><b>Gratitude</b>Thank someone with &quot;Your input was instrumental in…&quot;.</span></label><label class="day"><input type="checkbox" data-day="6"><span class="d">Day 6</span><span class="t"><b>Vocabulary</b>Learn 5 advanced words. Use 2 in chat today.</span></label><label class="day"><input type="checkbox" data-day="7"><span class="d">Day 7</span><span class="t"><b>Revise</b>Re-read chapters 1–5. Record yourself using 5 phrases.</span></label><label class="day"><input type="checkbox" data-day="8"><span class="d">Day 8</span><span class="t"><b>Requests</b>Make one request with &quot;Would you be open to…?&quot;.</span></label><label class="day"><input type="checkbox" data-day="9"><span class="d">Day 9</span><span class="t"><b>Follow-ups</b>Follow up on something with &quot;Circling back on…&quot;.</span></label><label class="day"><input type="checkbox" data-day="10"><span class="d">Day 10</span><span class="t"><b>Updates</b>Give a stand-up that starts with &quot;The short version is…&quot;.</span></label><label class="day"><input type="checkbox" data-day="11"><span class="d">Day 11</span><span class="t"><b>Linkers</b>Use &quot;That said&quot; and &quot;To that end&quot; in a conversation.</span></label><label class="day"><input type="checkbox" data-day="12"><span class="d">Day 12</span><span class="t"><b>Explaining</b>Explain a decision with &quot;The rationale here is twofold…&quot;.</span></label><label class="day"><input type="checkbox" data-day="13"><span class="d">Day 13</span><span class="t"><b>Vocabulary</b>Learn 5 more words. Write a paragraph about your project using them.</span></label><label class="day"><input type="checkbox" data-day="14"><span class="d">Day 14</span><span class="t"><b>Revise</b>Re-read chapters 6–7. Swap one basic phrase in every email today.</span></label><label class="day"><input type="checkbox" data-day="15"><span class="d">Day 15</span><span class="t"><b>Presenting</b>Rewrite the opening of your last presentation with a hook.</span></label><label class="day"><input type="checkbox" data-day="16"><span class="d">Day 16</span><span class="t"><b>Presenting</b>Describe one chart using surged / plateaued / outpaced.</span></label><label class="day"><input type="checkbox" data-day="17"><span class="d">Day 17</span><span class="t"><b>Opinions</b>Share a view in a meeting with &quot;My read on this is…&quot;.</span></label><label class="day"><input type="checkbox" data-day="18"><span class="d">Day 18</span><span class="t"><b>Softeners</b>Disagree once using a softener: &quot;I may be missing something, but…&quot;.</span></label><label class="day"><input type="checkbox" data-day="19"><span class="d">Day 19</span><span class="t"><b>Pushing back</b>Respond to a new task with &quot;What should I deprioritise?&quot;.</span></label><label class="day"><input type="checkbox" data-day="20"><span class="d">Day 20</span><span class="t"><b>Phrasal verbs</b>Use three phrasal verbs (iron out, weigh in, drill down).</span></label><label class="day"><input type="checkbox" data-day="21"><span class="d">Day 21</span><span class="t"><b>Revise</b>Record a 2-minute mock update. Count your fillers. Aim for zero.</span></label><label class="day"><input type="checkbox" data-day="22"><span class="d">Day 22</span><span class="t"><b>Persuasion</b>Pitch one small idea using &quot;Here&#x27;s what I&#x27;m proposing…&quot;.</span></label><label class="day"><input type="checkbox" data-day="23"><span class="d">Day 23</span><span class="t"><b>Achievements</b>Write 3 CV bullets with power verbs and numbers.</span></label><label class="day"><input type="checkbox" data-day="24"><span class="d">Day 24</span><span class="t"><b>Interviews</b>Answer &quot;Tell me about a challenge&quot; in STAR format, out loud.</span></label><label class="day"><input type="checkbox" data-day="25"><span class="d">Day 25</span><span class="t"><b>Idioms</b>Use one idiom naturally — &quot;cut to the chase&quot; or &quot;the bottom line&quot;.</span></label><label class="day"><input type="checkbox" data-day="26"><span class="d">Day 26</span><span class="t"><b>Emails</b>Rewrite an email: purpose in line one, no &quot;PFA&quot; or &quot;revert&quot;.</span></label><label class="day"><input type="checkbox" data-day="27"><span class="d">Day 27</span><span class="t"><b>Pronunciation</b>Practise 8 tricky words from the pronunciation list.</span></label><label class="day"><input type="checkbox" data-day="28"><span class="d">Day 28</span><span class="t"><b>Confused words</b>Check your last 5 emails for affect/effect, fewer/less.</span></label><label class="day"><input type="checkbox" data-day="29"><span class="d">Day 29</span><span class="t"><b>Hard talks</b>Practise giving feedback using &quot;I noticed… and the impact was…&quot;.</span></label><label class="day"><input type="checkbox" data-day="30"><span class="d">Day 30</span><span class="t"><b>Reflect</b>Pick your 20 favourite phrases. Make them your default. Start round two.</span></label></div>
+<div class="note"><b>Remember:</b> small daily practice beats one long weekend session. After Day 30, start again — round two is easier.</div>
+</section>
+
+</main>
+</div>
+
+<script src="../assets/notes.js"></script>
+<script>
+/* 30-day tracker: progress kept in this browser only */
+(function plan() {
+  const boxes = [...document.querySelectorAll(".day input")];
+  let done = {};
+  try { done = JSON.parse(localStorage.getItem("english-plan") || "{}"); } catch (e) {}
+  function update() {
+    const c = boxes.filter(b => b.checked).length;
+    document.getElementById("progressText").textContent = c + " of 30 days done";
+    document.getElementById("progressBar").style.width = (c / 30 * 100) + "%";
+  }
+  boxes.forEach(b => {
+    b.checked = !!done[b.dataset.day];
+    b.addEventListener("change", () => {
+      done[b.dataset.day] = b.checked;
+      try { localStorage.setItem("english-plan", JSON.stringify(done)); } catch (e) {}
+      update();
+    });
+  });
+  update();
+})();
+</script>
+</body>
+</html>

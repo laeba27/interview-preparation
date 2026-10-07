@@ -1,0 +1,2648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DSA in Java — Easy Notes</title>
+<link rel="stylesheet" href="../assets/notes.css">
+<script>
+  try { document.documentElement.setAttribute("data-theme",
+    localStorage.getItem("notes-theme") || "light"); } catch (e) {}
+</script>
+</head>
+<body>
+<div class="scrim"></div>
+<button class="icon-btn" id="reopen" title="Show sidebar ([)" aria-label="Show sidebar">☰</button>
+<div class="layout">
+
+<aside>
+  <div class="sidebar-head">
+    <a class="back-link" href="../index.html">← All topics</a>
+    <button class="icon-btn" id="collapseBtn" title="Hide sidebar ([)" aria-label="Hide sidebar">‹</button>
+  </div>
+  <input id="search" type="text" placeholder="Filter topics…" autocomplete="off">
+  <h2>Foundations</h2>
+  <nav>
+    <a href="#s1">1 · How to Approach a Problem</a>
+    <a href="#s2">2 · Big-O &amp; Complexity</a>
+    <a href="#s3">3 · Recursion &amp; the Call Stack</a>
+    <a href="#s4">4 · Java Toolkit for DSA</a>
+    <a href="#s5">5 · Bit Manipulation</a>
+  </nav>
+  <h2>Linear Structures</h2>
+  <nav>
+    <a href="#s6">6 · Arrays &amp; Strings</a>
+    <a href="#s7">7 · Hashing</a>
+    <a href="#s8">8 · Linked Lists</a>
+    <a href="#s9">9 · Stacks</a>
+    <a href="#s10">10 · Queues &amp; Deques</a>
+    <a href="#s11">11 · Heaps &amp; Priority Queues</a>
+  </nav>
+  <h2>Trees &amp; Graphs</h2>
+  <nav>
+    <a href="#s12">12 · Binary Trees</a>
+    <a href="#s13">13 · Binary Search Trees</a>
+    <a href="#s14">14 · Balanced Trees &amp; TreeMap</a>
+    <a href="#s15">15 · Tries</a>
+    <a href="#s16">16 · Graphs &amp; Traversal</a>
+    <a href="#s17">17 · Union-Find</a>
+    <a href="#s18">18 · Segment &amp; Fenwick Trees</a>
+  </nav>
+  <h2>Algorithms</h2>
+  <nav>
+    <a href="#s19">19 · Sorting</a>
+    <a href="#s20">20 · Binary Search</a>
+    <a href="#s21">21 · Backtracking</a>
+    <a href="#s22">22 · Greedy</a>
+    <a href="#s23">23 · Divide &amp; Conquer</a>
+    <a href="#s24">24 · Dynamic Programming</a>
+    <a href="#s25">25 · DP Patterns</a>
+    <a href="#s26">26 · Shortest Paths</a>
+    <a href="#s27">27 · Topo Sort, MST &amp; More</a>
+    <a href="#s28">28 · String Algorithms</a>
+    <a href="#s29">29 · Math &amp; Number Theory</a>
+  </nav>
+  <h2>Patterns</h2>
+  <nav>
+    <a href="#s30">30 · Two Pointers</a>
+    <a href="#s31">31 · Sliding Window</a>
+    <a href="#s32">32 · Prefix Sum &amp; Difference</a>
+    <a href="#s33">33 · Fast &amp; Slow Pointers</a>
+    <a href="#s34">34 · Monotonic Stack &amp; Queue</a>
+    <a href="#s35">35 · Merge Intervals</a>
+    <a href="#s36">36 · Cyclic Sort</a>
+    <a href="#s37">37 · In-place List Reversal</a>
+    <a href="#s38">38 · Tree BFS &amp; DFS</a>
+    <a href="#s39">39 · Top K &amp; K-way Merge</a>
+    <a href="#s40">40 · Two Heaps</a>
+    <a href="#s41">41 · Subsets &amp; Permutations</a>
+    <a href="#s42">42 · Modified Binary Search</a>
+    <a href="#s43">43 · Topological Sort</a>
+    <a href="#s44">44 · Matrix &amp; Islands</a>
+    <a href="#s45">45 · Design Problems</a>
+  </nav>
+  <h2>Revision</h2>
+  <nav>
+    <a href="#cheat">Which Pattern When?</a>
+    <a href="#complex">Big-O Cheat Sheet</a>
+    <a href="#road">Learning Path</a>
+  </nav>
+</aside>
+
+<main>
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="../index.html#technical">Technical</a></li><li><a href="dsa.html">DSA in Java</a></li><li><span aria-current="page">Easy Notes</span></li></ol></nav>
+<header class="top">
+  <h1>DSA in Java — Easy Notes</h1>
+  <div class="top-actions">
+    <button class="ghost" id="menuBtn">☰ Topics</button>
+    <a class="ghost-link" href="dsa.html">Full Notes</a>
+    <a class="ghost-link" href="../interview-questions/dsa.html">Interview Q&amp;A</a>
+    <a class="ghost-link" href="../cheat-sheets/dsa-leetcode.html">LeetCode Cheat Sheet</a>
+    <button class="ghost" id="theme">Dark mode</button>
+  </div>
+</header>
+<p class="sub">The same DSA topics, explained for a total beginner. Short sentences, small examples, simple Java. Read this first, then move on to the full notes. Each topic number matches the full notes.</p>
+
+<!-- ================= FOUNDATIONS ================= -->
+<div class="part">Part 1 — Foundations</div>
+
+<section id="s1">
+<h3>1. How to Approach a Problem</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>DSA</b> means <b>Data Structures</b> (ways to store data) and <b>Algorithms</b> (step-by-step recipes to solve a problem). In an interview, they want to see <b>how you think</b>, not only the final code.</p>
+<p class="analogy">Think of cooking a new dish. First you read the recipe and check what is in the fridge. Then you cook a simple version. Only after that do you make it faster or tastier.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><b>Understand</b> the question first. Say it again in your own words.</li>
+<li><b>Ask questions</b>: Can the array be empty? Can numbers be negative? Are there duplicates?</li>
+<li><b>Try a tiny example</b> by hand, like <code>[2, 7, 11]</code>. Write the answer you expect.</li>
+<li>Start with the <b>simple (brute force)</b> idea. Brute force means "try every possibility". It is slow, but correct.</li>
+<li>Then <b>improve</b> it. Ask: "What work am I repeating? Can a HashMap or sorting help?"</li>
+<li><b>Test</b> your code with your tiny example and with edge cases (empty input, one item).</li>
+</ul>
+<h4>Step by step: "Two Sum" (find two numbers that add up to a target)</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Step</th><th>What you do</th></tr></thead>
+<tbody>
+<tr><td>1. Understand</td><td>Input <code>[2, 7, 11, 15]</code>, target <code>9</code>. Return the two positions (indexes).</td></tr>
+<tr><td>2. Ask</td><td>"Is there always exactly one answer?" — Yes.</td></tr>
+<tr><td>3. Example</td><td>2 + 7 = 9, so the answer is <code>[0, 1]</code>.</td></tr>
+<tr><td>4. Brute force</td><td>Check every pair. Two loops. O(n²).</td></tr>
+<tr><td>5. Improve</td><td>For each number, remember it in a HashMap. Look up <code>target - number</code>. O(n).</td></tr>
+<tr><td>6. Test</td><td>Try <code>[3, 3]</code>, target 6 → <code>[0, 1]</code>. Works.</td></tr>
+</tbody></table></div>
+<pre><code>// Step 4: the simple (brute force) answer. Check every pair.
+static int[] twoSumBrute(int[] nums, int target) {
+    for (int i = 0; i &lt; nums.length; i++) {          // first number
+        for (int j = i + 1; j &lt; nums.length; j++) {  // second number, after the first
+            if (nums[i] + nums[j] == target) {        // do they add up?
+                return new int[] { i, j };            // yes: return both positions
+            }
+        }
+    }
+    return new int[] { -1, -1 };                      // no pair found
+}</code></pre>
+<p><b>Time &amp; space:</b> O(n²) time — every pair is checked. O(1) extra space. (The faster HashMap version is in topic 7.)</p>
+<div class="note"><b>Remember:</b> understand → example → brute force → improve → test. Talk out loud at every step.<br>Practice: Two Sum (#1), Contains Duplicate (#217).</div>
+</section>
+
+<section id="s2">
+<h3>2. Big-O &amp; Complexity</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Big-O</b> tells you how the work grows when the input grows. We write <code>n</code> for the input size (for example, how many items are in an array). <b>Time complexity</b> = how many steps. <b>Space complexity</b> = how much extra memory.</p>
+<p class="analogy">Finding a friend's name in your phone contacts. Scrolling one by one gets slower when you have more contacts (O(n)). Typing the name in search is almost instant, even with 5,000 contacts (close to O(1) or O(log n)).</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 680 260" role="img" aria-label="Growth curves: O(1) stays flat, O(log n) grows very slowly, O(n) grows in a straight line, O(n log n) grows a bit faster, and O(n squared) shoots up very quickly.">
+  <path class="d-line" d="M60 220 H600"/><path class="d-arrow" d="M606 220 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M60 220 V24"/><path class="d-arrow" d="M60 18 l-4.5 9 h9 z"/>
+  <text class="d-sub" x="600" y="242" text-anchor="end">input size n →</text>
+  <text class="d-sub" x="70" y="30">steps (time)</text>
+
+  <path class="d-line" d="M60 205 H580"/>
+  <text class="d-label" x="588" y="209">O(1)</text>
+  <path class="d-line" d="M60 218 C 110 175, 250 165, 580 158"/>
+  <text class="d-label" x="588" y="162">O(log n)</text>
+  <path class="d-line" d="M60 218 L580 70"/>
+  <text class="d-label" x="588" y="74">O(n)</text>
+  <path class="d-dash" d="M60 218 Q 330 190, 450 34"/>
+  <text class="d-label" x="456" y="34">O(n log n)</text>
+  <path class="d-line-accent" d="M60 218 Q 250 214, 300 34"/>
+  <text class="d-accent-text" x="250" y="34">O(n²)</text>
+
+  <text class="d-sub" x="330" y="254" text-anchor="middle">Lower curve = faster code. O(n²) gets slow very quickly.</text>
+</svg>
+<figcaption>How the number of steps grows. For big inputs, the shape of the curve matters much more than small details.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li><b>O(1)</b> = constant. Same time for any size. Example: <code>arr[5]</code>.</li>
+<li><b>O(log n)</b> = we cut the problem in half each step. Example: binary search.</li>
+<li><b>O(n)</b> = we look at each item once. Example: one loop.</li>
+<li><b>O(n log n)</b> = good sorting. <b>O(n²)</b> = a loop inside a loop.</li>
+<li>Drop constants: O(2n) is just O(n). Keep the biggest part: O(n² + n) is O(n²).</li>
+<li>Rough rule: a computer does about 100 million simple steps per second.</li>
+</ul>
+<h4>How many steps?</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>n</th><th>O(log n)</th><th>O(n)</th><th>O(n log n)</th><th>O(n²)</th></tr></thead>
+<tbody>
+<tr><td>10</td><td>~3</td><td>10</td><td>~33</td><td>100</td></tr>
+<tr><td>1,000</td><td>~10</td><td>1,000</td><td>~10,000</td><td>1,000,000</td></tr>
+<tr><td>1,000,000</td><td>~20</td><td>1,000,000</td><td>~20,000,000</td><td>1,000,000,000,000 (too slow!)</td></tr>
+</tbody></table></div>
+<pre><code>static void examples(int[] arr) {
+    int first = arr[0];                       // O(1): one step, any size
+
+    int sum = 0;
+    for (int x : arr) {                       // O(n): one pass over the array
+        sum += x;
+    }
+
+    int pairs = 0;
+    for (int i = 0; i &lt; arr.length; i++) {     // O(n²): loop inside a loop
+        for (int j = 0; j &lt; arr.length; j++) {
+            pairs++;
+        }
+    }
+    System.out.println(first + " " + sum + " " + pairs);
+}</code></pre>
+<p><b>Time &amp; space:</b> count the loops. One loop over n = O(n). A loop inside a loop = O(n²). Halving each time = O(log n).</p>
+<div class="note"><b>Remember:</b> Big-O is about growth. If n can be 100,000, an O(n²) answer is usually too slow — look for O(n) or O(n log n).<br>Practice: think about the Big-O of every problem you solve from now on.</div>
+</section>
+
+<section id="s3">
+<h3>3. Recursion &amp; the Call Stack</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Recursion</b> is when a function calls itself with a smaller problem. It needs a <b>base case</b>: a small case where it stops and answers directly. The <b>call stack</b> is where Java remembers every function that is still waiting for an answer.</p>
+<p class="analogy">Russian dolls. You open a doll and find a smaller doll inside. You keep opening until you reach the tiny doll that does not open. That tiny doll is the base case.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 250" role="img" aria-label="Call stack for factorial of 3. main calls fact(3), which calls fact(2), which calls fact(1). fact(1) is the base case and returns 1. Then fact(2) returns 2 times 1 equals 2, and fact(3) returns 3 times 2 equals 6 to main.">
+  <text class="d-accent-text" x="170" y="20" text-anchor="middle">Call stack (newest on top)</text>
+  <rect class="d-fill-accent" x="60" y="32" width="220" height="40" rx="6"/>
+  <rect class="d-box-accent" x="60" y="32" width="220" height="40" rx="6"/>
+  <text class="d-mono" x="170" y="57" text-anchor="middle">fact(1)  base case</text>
+  <rect class="d-box" x="60" y="82" width="220" height="40" rx="6"/>
+  <text class="d-mono" x="170" y="107" text-anchor="middle">fact(2)  waits: 2 * fact(1)</text>
+  <rect class="d-box" x="60" y="132" width="220" height="40" rx="6"/>
+  <text class="d-mono" x="170" y="157" text-anchor="middle">fact(3)  waits: 3 * fact(2)</text>
+  <rect class="d-box" x="60" y="182" width="220" height="40" rx="6"/>
+  <text class="d-mono" x="170" y="207" text-anchor="middle">main     calls fact(3)</text>
+
+  <path class="d-line" d="M40 210 V48"/><path class="d-arrow" d="M40 42 l-4.5 9 h9 z"/>
+  <text class="d-sub" x="34" y="130" text-anchor="end">calls</text>
+  <text class="d-sub" x="34" y="144" text-anchor="end">go up</text>
+
+  <path class="d-line-accent" d="M280 52 C 330 52, 330 102, 286 102"/><path class="d-arrow-accent" d="M280 102 l9 -4.5 v9 z"/>
+  <text class="d-accent-text" x="340" y="80">returns 1</text>
+  <path class="d-line-accent" d="M280 102 C 330 102, 330 152, 286 152"/><path class="d-arrow-accent" d="M280 152 l9 -4.5 v9 z"/>
+  <text class="d-accent-text" x="340" y="130">returns 2 × 1 = 2</text>
+  <path class="d-line-accent" d="M280 152 C 330 152, 330 202, 286 202"/><path class="d-arrow-accent" d="M280 202 l9 -4.5 v9 z"/>
+  <text class="d-accent-text" x="340" y="180">returns 3 × 2 = 6</text>
+  <text class="d-sub" x="320" y="244" text-anchor="middle">Answers flow back down, one frame at a time, and each frame is removed.</text>
+</svg>
+<figcaption>Each call waits on the stack until the call above it returns. Too many calls without a base case = <code>StackOverflowError</code>.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li>Every recursive function needs: a <b>base case</b> (stop) and a <b>recursive case</b> (call itself on a smaller input).</li>
+<li>Forget the base case → the function never stops → <code>StackOverflowError</code>.</li>
+<li>Each waiting call uses memory on the stack. So recursion depth n = O(n) space.</li>
+<li>Trust the function: assume <code>fact(n - 1)</code> already works, and just use its answer.</li>
+<li>Recursion is the base of trees, backtracking, and divide &amp; conquer.</li>
+</ul>
+<h4>Dry run: fact(3)</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Call</th><th>Is it the base case?</th><th>What it returns</th></tr></thead>
+<tbody>
+<tr><td>fact(3)</td><td>No</td><td>3 * fact(2) = 3 * 2 = <b>6</b></td></tr>
+<tr><td>fact(2)</td><td>No</td><td>2 * fact(1) = 2 * 1 = <b>2</b></td></tr>
+<tr><td>fact(1)</td><td>Yes (n &lt;= 1)</td><td><b>1</b></td></tr>
+</tbody></table></div>
+<pre><code>static int fact(int n) {
+    if (n &lt;= 1) {              // base case: stop here
+        return 1;
+    }
+    return n * fact(n - 1);    // recursive case: smaller problem
+}</code></pre>
+<p><b>Time &amp; space:</b> O(n) time — n calls. O(n) space — n calls wait on the stack at the same time.</p>
+<div class="note"><b>Remember:</b> base case first, then a smaller call. Draw the call stack when you feel lost.<br>Practice: Fibonacci Number (#509), Reverse String (#344), Power of Two (#231).</div>
+</section>
+
+<section id="s4">
+<h3>4. Java Toolkit for DSA</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Java already gives you ready-made data structures in <code>java.util</code>. You do not need to build them yourself. You just need to know <b>which one to pick</b>.</p>
+<p class="analogy">A toolbox. A hammer for nails, a screwdriver for screws. ArrayList for a growing list, HashMap for fast lookup, ArrayDeque for a stack or a queue.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><code>int[]</code> = fixed size array. <code>ArrayList</code> = array that can grow.</li>
+<li><code>HashMap</code> = key → value pairs. <code>HashSet</code> = unique items. Both find things in O(1) on average.</li>
+<li><code>ArrayDeque</code> = use it as a <b>stack</b> or a <b>queue</b>. (Avoid the old <code>Stack</code> class.)</li>
+<li><code>PriorityQueue</code> = always gives you the smallest item first (a heap).</li>
+<li><code>Arrays.sort(arr)</code> sorts an array. <code>Collections.sort(list)</code> sorts a list.</li>
+<li>Collections hold objects, so write <code>Integer</code>, not <code>int</code>: <code>List&lt;Integer&gt;</code>.</li>
+</ul>
+<div class="table-wrap"><table>
+<thead><tr><th>I need…</th><th>Use</th><th>Main methods</th></tr></thead>
+<tbody>
+<tr><td>A growing list</td><td><code>ArrayList</code></td><td><code>add</code>, <code>get</code>, <code>size</code></td></tr>
+<tr><td>Fast lookup by key</td><td><code>HashMap</code></td><td><code>put</code>, <code>get</code>, <code>getOrDefault</code>, <code>containsKey</code></td></tr>
+<tr><td>Unique items</td><td><code>HashSet</code></td><td><code>add</code>, <code>contains</code>, <code>remove</code></td></tr>
+<tr><td>Stack (last in, first out)</td><td><code>ArrayDeque</code></td><td><code>push</code>, <code>pop</code>, <code>peek</code></td></tr>
+<tr><td>Queue (first in, first out)</td><td><code>ArrayDeque</code></td><td><code>offer</code>, <code>poll</code>, <code>peek</code></td></tr>
+<tr><td>Smallest item fast</td><td><code>PriorityQueue</code></td><td><code>offer</code>, <code>poll</code>, <code>peek</code></td></tr>
+</tbody></table></div>
+<pre><code>static void toolkitDemo() {
+    List&lt;Integer&gt; list = new ArrayList&lt;&gt;();       // growing list
+    list.add(5);                                    // [5]
+
+    Map&lt;String, Integer&gt; age = new HashMap&lt;&gt;();   // key -&gt; value
+    age.put("Ali", 25);
+    int a = age.getOrDefault("Sara", 0);            // 0 if key is missing
+
+    Set&lt;Integer&gt; seen = new HashSet&lt;&gt;();          // unique items
+    seen.add(3);
+    boolean has = seen.contains(3);                 // true
+
+    Deque&lt;Integer&gt; stack = new ArrayDeque&lt;&gt;();    // stack
+    stack.push(1);
+    int top = stack.pop();                          // 1
+
+    Queue&lt;Integer&gt; queue = new ArrayDeque&lt;&gt;();    // queue
+    queue.offer(1);
+    int front = queue.poll();                       // 1
+
+    PriorityQueue&lt;Integer&gt; heap = new PriorityQueue&lt;&gt;();  // min-heap
+    heap.offer(4);
+    heap.offer(2);
+    int smallest = heap.poll();                     // 2
+
+    int[] arr = { 3, 1, 2 };
+    Arrays.sort(arr);                               // [1, 2, 3]
+    System.out.println(a + " " + has + " " + top + " " + front + " " + smallest);
+}</code></pre>
+<p><b>Time &amp; space:</b> HashMap/HashSet get and put: O(1) on average. PriorityQueue offer/poll: O(log n). Sorting: O(n log n).</p>
+<div class="note"><b>Remember:</b> HashMap for "have I seen this?", ArrayDeque for stack and queue, PriorityQueue for "smallest/largest first".<br>Practice: Valid Anagram (#242), Contains Duplicate (#217).</div>
+</section>
+
+<section id="s5">
+<h3>5. Bit Manipulation</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Computers store numbers in <b>binary</b>: only 0s and 1s. Each 0 or 1 is called a <b>bit</b>. Example: 5 = <code>101</code>, 3 = <code>011</code>. Bit tricks work on these 0s and 1s directly. They are very fast.</p>
+<p class="analogy">A row of light switches. Each switch is on (1) or off (0). Bit operations flip, check, or compare the switches.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><b>AND</b> <code>a &amp; b</code>: 1 only if both bits are 1.</li>
+<li><b>OR</b> <code>a | b</code>: 1 if at least one bit is 1.</li>
+<li><b>XOR</b> <code>a ^ b</code>: 1 if the bits are different. Important: <code>x ^ x = 0</code> and <code>x ^ 0 = x</code>.</li>
+<li><b>Shift</b>: <code>x &lt;&lt; 1</code> doubles x. <code>x &gt;&gt; 1</code> halves x.</li>
+<li><code>(n &amp; 1) == 1</code> means n is odd. <code>n &amp; (n - 1)</code> removes the lowest 1 bit.</li>
+</ul>
+<h4>Dry run: 5 &amp; 3, 5 | 3, 5 ^ 3</h4>
+<div class="table-wrap"><table>
+<thead><tr><th></th><th>Bits</th><th>Number</th></tr></thead>
+<tbody>
+<tr><td>5</td><td><code>101</code></td><td>5</td></tr>
+<tr><td>3</td><td><code>011</code></td><td>3</td></tr>
+<tr><td>5 &amp; 3</td><td><code>001</code></td><td>1</td></tr>
+<tr><td>5 | 3</td><td><code>111</code></td><td>7</td></tr>
+<tr><td>5 ^ 3</td><td><code>110</code></td><td>6</td></tr>
+</tbody></table></div>
+<pre><code>// Single Number: every number appears twice except one.
+// Pairs cancel out with XOR (x ^ x = 0), so only the single one is left.
+static int singleNumber(int[] nums) {
+    int result = 0;
+    for (int x : nums) {
+        result = result ^ x;      // XOR everything together
+    }
+    return result;
+}
+
+// Count how many bits are 1
+static int countOnes(int n) {
+    int count = 0;
+    while (n != 0) {
+        n = n &amp; (n - 1);          // remove the lowest 1 bit
+        count++;
+    }
+    return count;
+}</code></pre>
+<p><b>Time &amp; space:</b> singleNumber is O(n) time, O(1) space — one pass, one variable.</p>
+<div class="note"><b>Remember:</b> XOR cancels pairs. <code>n &amp; 1</code> checks odd/even. This topic is less common — learn the basics and move on.<br>Practice: Single Number (#136), Number of 1 Bits (#191), Counting Bits (#338).</div>
+</section>
+
+<!-- ================= LINEAR ================= -->
+<div class="part">Part 2 — Linear Structures</div>
+
+<section id="s6">
+<h3>6. Arrays &amp; Strings</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>An <b>array</b> is a row of boxes, side by side in memory. Each box has a number called an <b>index</b>. The first index is <b>0</b>, not 1. A <b>string</b> is like an array of characters.</p>
+<p class="analogy">A row of lockers in a school. Each locker has a number. If you know the number, you walk straight to it. You don't open all the other lockers.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 170" role="img" aria-label="An array with values 3, 1, 4, 1, 5 at indexes 0 to 4. arr[2] is highlighted and equals 4.">
+  <text class="d-label" x="110" y="72" text-anchor="end">arr =</text>
+  <rect class="d-box" x="130" y="45" width="70" height="44" rx="4"/>
+  <text class="d-mono" x="165" y="72" text-anchor="middle">3</text>
+  <rect class="d-box" x="200" y="45" width="70" height="44" rx="4"/>
+  <text class="d-mono" x="235" y="72" text-anchor="middle">1</text>
+  <rect class="d-fill-accent" x="270" y="45" width="70" height="44" rx="4"/>
+  <rect class="d-box-accent" x="270" y="45" width="70" height="44" rx="4"/>
+  <text class="d-accent-text" x="305" y="72" text-anchor="middle">4</text>
+  <rect class="d-box" x="340" y="45" width="70" height="44" rx="4"/>
+  <text class="d-mono" x="375" y="72" text-anchor="middle">1</text>
+  <rect class="d-box" x="410" y="45" width="70" height="44" rx="4"/>
+  <text class="d-mono" x="445" y="72" text-anchor="middle">5</text>
+  <text class="d-sub" x="110" y="112" text-anchor="end">index</text>
+  <text class="d-sub" x="165" y="112" text-anchor="middle">0</text>
+  <text class="d-sub" x="235" y="112" text-anchor="middle">1</text>
+  <text class="d-accent-text" x="305" y="112" text-anchor="middle">2</text>
+  <text class="d-sub" x="375" y="112" text-anchor="middle">3</text>
+  <text class="d-sub" x="445" y="112" text-anchor="middle">4</text>
+  <path class="d-line-accent" d="M305 24 V39"/><path class="d-arrow-accent" d="M305 45 l-4.5 -9 h9 z"/>
+  <text class="d-accent-text" x="312" y="20">arr[2] is 4 — found in one step, O(1)</text>
+  <text class="d-sub" x="320" y="150" text-anchor="middle">length = 5, so the last index is 5 - 1 = 4</text>
+</svg>
+<figcaption>Indexes start at 0. The last index is always <code>length - 1</code>. Going past it gives <code>ArrayIndexOutOfBoundsException</code>.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li>Reading or changing <code>arr[i]</code> is <b>O(1)</b> — instant.</li>
+<li>Inserting or deleting in the <b>middle</b> is O(n) — all later items must move over.</li>
+<li>An <code>int[]</code> has a fixed size. Use <code>ArrayList</code> if it must grow.</li>
+<li>Java strings can't be changed (they are <b>immutable</b>). To build a string piece by piece, use <code>StringBuilder</code>.</li>
+<li>Useful: <code>s.length()</code>, <code>s.charAt(i)</code>, <code>s.toCharArray()</code>.</li>
+</ul>
+<h4>Dry run: find the largest number in [3, 1, 4]</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>i</th><th>arr[i]</th><th>Bigger than max?</th><th>max after this step</th></tr></thead>
+<tbody>
+<tr><td>start</td><td>—</td><td>—</td><td>3 (first item)</td></tr>
+<tr><td>1</td><td>1</td><td>No</td><td>3</td></tr>
+<tr><td>2</td><td>4</td><td>Yes</td><td><b>4</b></td></tr>
+</tbody></table></div>
+<pre><code>static int findMax(int[] arr) {
+    int max = arr[0];                         // start with the first item
+    for (int i = 1; i &lt; arr.length; i++) {    // look at every other item
+        if (arr[i] &gt; max) {                   // found a bigger one?
+            max = arr[i];                     // remember it
+        }
+    }
+    return max;
+}
+
+static String reverse(String s) {
+    StringBuilder sb = new StringBuilder();   // fast way to build a string
+    for (int i = s.length() - 1; i &gt;= 0; i--) {  // walk from the end
+        sb.append(s.charAt(i));
+    }
+    return sb.toString();                     // "abc" -&gt; "cba"
+}</code></pre>
+<p><b>Time &amp; space:</b> findMax is O(n) — we look at each item once. O(1) extra space.</p>
+<div class="note"><b>Remember:</b> index starts at 0, ends at <code>length - 1</code>. Use StringBuilder to build strings in a loop.<br>Practice: Reverse String (#344), Best Time to Buy and Sell Stock (#121), Valid Palindrome (#125).</div>
+</section>
+
+<section id="s7">
+<h3>7. Hashing</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Hashing</b> turns a key (like a name) into a box number. So you can store and find things almost instantly. In Java you use <code>HashMap</code> (key → value) and <code>HashSet</code> (only keys).</p>
+<p class="analogy">A coat check at a theatre. You give your coat and get ticket 42. Later you show ticket 42, and they go straight to hook 42. Nobody searches through every coat.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Add, find and remove are <b>O(1) on average</b>.</li>
+<li>Use a HashSet for "have I seen this before?"</li>
+<li>Use a HashMap for counting: "how many times does each word appear?"</li>
+<li>Use a HashMap to remember positions: "where did I see this number?"</li>
+<li>Hashing trades <b>memory</b> for <b>speed</b>: O(n) extra space to save time.</li>
+<li>A HashMap has no order. Use <code>TreeMap</code> if you need sorted keys (topic 14).</li>
+</ul>
+<h4>Dry run: Two Sum, nums = [2, 7, 11], target = 9</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>i</th><th>nums[i]</th><th>need = 9 - nums[i]</th><th>need in map?</th><th>map after</th></tr></thead>
+<tbody>
+<tr><td>0</td><td>2</td><td>7</td><td>No</td><td>{2: 0}</td></tr>
+<tr><td>1</td><td>7</td><td>2</td><td><b>Yes, at index 0</b></td><td>return [0, 1]</td></tr>
+</tbody></table></div>
+<pre><code>static int[] twoSum(int[] nums, int target) {
+    Map&lt;Integer, Integer&gt; seen = new HashMap&lt;&gt;();   // number -&gt; its index
+    for (int i = 0; i &lt; nums.length; i++) {
+        int need = target - nums[i];                   // the partner we want
+        if (seen.containsKey(need)) {                  // seen the partner before?
+            return new int[] { seen.get(need), i };    // yes: done
+        }
+        seen.put(nums[i], i);                          // no: remember this number
+    }
+    return new int[] { -1, -1 };                       // no answer
+}
+
+// Count how often each character appears
+static Map&lt;Character, Integer&gt; countChars(String s) {
+    Map&lt;Character, Integer&gt; count = new HashMap&lt;&gt;();
+    for (char c : s.toCharArray()) {
+        count.put(c, count.getOrDefault(c, 0) + 1);   // old count + 1
+    }
+    return count;
+}</code></pre>
+<p><b>Time &amp; space:</b> O(n) time — one pass, each lookup is O(1). O(n) space for the map.</p>
+<div class="note"><b>Remember:</b> when you see "find a pair", "count", or "seen before", think HashMap or HashSet.<br>Practice: Two Sum (#1), Valid Anagram (#242), Group Anagrams (#49).</div>
+</section>
+
+<section id="s8">
+<h3>8. Linked Lists</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>linked list</b> is a chain of <b>nodes</b>. Each node holds a value and a <b>pointer</b> (arrow) to the next node. The first node is the <b>head</b>. The last node points to <code>null</code> (nothing).</p>
+<p class="analogy">A treasure hunt. Each clue tells you where the next clue is. To reach clue 5, you must follow clues 1, 2, 3 and 4 first.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 150" role="img" aria-label="A linked list: head points to node 3, which points to node 1, which points to node 2, which points to null.">
+  <text class="d-accent-text" x="70" y="30" text-anchor="middle">head</text>
+  <path class="d-line-accent" d="M70 36 V56 H84"/><path class="d-arrow-accent" d="M90 56 l-9 -4.5 v9 z"/>
+  <rect class="d-fill-accent" x="90" y="36" width="110" height="40" rx="6"/>
+  <rect class="d-box-accent" x="90" y="36" width="110" height="40" rx="6"/>
+  <path class="d-line" d="M150 36 V76"/>
+  <text class="d-accent-text" x="120" y="61" text-anchor="middle">3</text>
+  <text class="d-sub" x="175" y="61" text-anchor="middle">next</text>
+
+  <rect class="d-box" x="250" y="36" width="110" height="40" rx="6"/>
+  <path class="d-line" d="M310 36 V76"/>
+  <text class="d-mono" x="280" y="61" text-anchor="middle">1</text>
+  <text class="d-sub" x="335" y="61" text-anchor="middle">next</text>
+
+  <rect class="d-box" x="410" y="36" width="110" height="40" rx="6"/>
+  <path class="d-line" d="M470 36 V76"/>
+  <text class="d-mono" x="440" y="61" text-anchor="middle">2</text>
+  <text class="d-sub" x="495" y="61" text-anchor="middle">next</text>
+
+  <path class="d-line" d="M195 56 H244"/><path class="d-arrow" d="M250 56 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M355 56 H404"/><path class="d-arrow" d="M410 56 l-9 -4.5 v9 z"/>
+  <path class="d-line" d="M515 56 H554"/><path class="d-arrow" d="M560 56 l-9 -4.5 v9 z"/>
+  <text class="d-mono" x="566" y="61">null</text>
+  <text class="d-sub" x="320" y="110" text-anchor="middle">value | pointer to the next node</text>
+  <text class="d-sub" x="320" y="130" text-anchor="middle">To reach the 3rd node you must walk from the head: O(n)</text>
+</svg>
+<figcaption>Nodes can live anywhere in memory. Only the arrows keep them in order.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li>No index. To find the 5th item, walk from the head. That is <b>O(n)</b>.</li>
+<li>Adding or removing at the head is <b>O(1)</b> — just change one arrow.</li>
+<li>Always check for <code>null</code> before you use <code>node.next</code>.</li>
+<li>A <b>dummy node</b> (a fake first node) makes many problems easier. You return <code>dummy.next</code>.</li>
+<li><b>Doubly linked list</b>: each node also points back to the previous node.</li>
+</ul>
+<h4>Dry run: count the nodes in 3 → 1 → 2</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Step</th><th>cur points to</th><th>count</th></tr></thead>
+<tbody>
+<tr><td>start</td><td>3</td><td>0</td></tr>
+<tr><td>1</td><td>1</td><td>1</td></tr>
+<tr><td>2</td><td>2</td><td>2</td></tr>
+<tr><td>3</td><td>null → stop</td><td><b>3</b></td></tr>
+</tbody></table></div>
+<pre><code>class ListNode {
+    int val;           // the value stored here
+    ListNode next;     // arrow to the next node (or null)
+    ListNode(int val) { this.val = val; }
+}
+
+static int length(ListNode head) {
+    int count = 0;
+    ListNode cur = head;          // start at the head
+    while (cur != null) {         // until we fall off the end
+        count++;
+        cur = cur.next;           // move to the next node
+    }
+    return count;
+}
+
+static ListNode addToFront(ListNode head, int value) {
+    ListNode node = new ListNode(value);   // make a new node
+    node.next = head;                      // point it at the old head
+    return node;                           // the new node is the new head
+}</code></pre>
+<p><b>Time &amp; space:</b> length is O(n) — we visit each node once. addToFront is O(1). Both use O(1) extra space.</p>
+<div class="note"><b>Remember:</b> walk with <code>cur = cur.next</code>, and always check for null. Draw the arrows on paper.<br>Practice: Middle of the Linked List (#876), Merge Two Sorted Lists (#21), Reverse Linked List (#206).</div>
+</section>
+
+<section id="s9">
+<h3>9. Stacks</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>stack</b> is a pile. You add to the top (<b>push</b>) and remove from the top (<b>pop</b>). The last thing in is the first thing out. This is called <b>LIFO</b> (Last In, First Out).</p>
+<p class="analogy">A stack of plates. You put a clean plate on top. You also take a plate from the top. You never pull one from the bottom.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 220" role="img" aria-label="A stack with 1 at the bottom, 2 in the middle and 3 on top. Push adds a new item on top. Pop removes the top item, 3.">
+  <path class="d-line" d="M220 60 V196 H420 V60"/>
+  <rect class="d-box" x="235" y="152" width="170" height="36" rx="5"/>
+  <text class="d-mono" x="320" y="175" text-anchor="middle">1  (bottom)</text>
+  <rect class="d-box" x="235" y="112" width="170" height="36" rx="5"/>
+  <text class="d-mono" x="320" y="135" text-anchor="middle">2</text>
+  <rect class="d-fill-accent" x="235" y="72" width="170" height="36" rx="5"/>
+  <rect class="d-box-accent" x="235" y="72" width="170" height="36" rx="5"/>
+  <text class="d-accent-text" x="320" y="95" text-anchor="middle">3  (top)</text>
+
+  <path class="d-line" d="M150 30 C 200 30, 260 30, 280 62"/><path class="d-arrow" d="M283 68 l-7 -7 l8 -3 z"/>
+  <text class="d-label" x="90" y="34">push(4)</text>
+  <text class="d-sub" x="90" y="52">adds on top</text>
+  <path class="d-line-accent" d="M360 68 C 380 30, 440 30, 484 30"/><path class="d-arrow-accent" d="M490 30 l-9 -4.5 v9 z"/>
+  <text class="d-accent-text" x="498" y="34">pop() → 3</text>
+  <text class="d-sub" x="498" y="52">removes the top</text>
+  <text class="d-sub" x="320" y="214" text-anchor="middle">Only the top is reachable. Last in, first out.</text>
+</svg>
+<figcaption>push, pop and peek all work on the top only, so they are all O(1).</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li><code>push(x)</code> adds on top. <code>pop()</code> removes the top. <code>peek()</code> looks at the top without removing it.</li>
+<li>All three are <b>O(1)</b>.</li>
+<li>In Java use <code>Deque&lt;Integer&gt; stack = new ArrayDeque&lt;&gt;();</code></li>
+<li>Use a stack for matching brackets, "undo" features, and going back to the most recent thing.</li>
+<li>Recursion uses a stack inside (the call stack, topic 3).</li>
+</ul>
+<h4>Dry run: Valid Parentheses on "([])"</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Char</th><th>Action</th><th>Stack after (top on the right)</th></tr></thead>
+<tbody>
+<tr><td><code>(</code></td><td>opening → push</td><td><code>(</code></td></tr>
+<tr><td><code>[</code></td><td>opening → push</td><td><code>( [</code></td></tr>
+<tr><td><code>]</code></td><td>closing → top is <code>[</code>, match → pop</td><td><code>(</code></td></tr>
+<tr><td><code>)</code></td><td>closing → top is <code>(</code>, match → pop</td><td>empty</td></tr>
+<tr><td>end</td><td>stack is empty → <b>valid</b></td><td></td></tr>
+</tbody></table></div>
+<pre><code>static boolean isValid(String s) {
+    Deque&lt;Character&gt; stack = new ArrayDeque&lt;&gt;();
+    for (char c : s.toCharArray()) {
+        if (c == '(' || c == '[' || c == '{') {
+            stack.push(c);                        // opening: save it
+        } else {
+            if (stack.isEmpty()) return false;    // closing with nothing open
+            char top = stack.pop();               // the latest opening bracket
+            if (c == ')' &amp;&amp; top != '(') return false;
+            if (c == ']' &amp;&amp; top != '[') return false;
+            if (c == '}' &amp;&amp; top != '{') return false;
+        }
+    }
+    return stack.isEmpty();                       // nothing left open = valid
+}</code></pre>
+<p><b>Time &amp; space:</b> O(n) time — each character is pushed and popped at most once. O(n) space for the stack.</p>
+<div class="note"><b>Remember:</b> stack = plates = last in, first out. Think "stack" when the newest item must be handled first.<br>Practice: Valid Parentheses (#20), Min Stack (#155), Baseball Game (#682).</div>
+</section>
+
+<section id="s10">
+<h3>10. Queues &amp; Deques</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>queue</b> is a line. You join at the back (<b>offer</b>) and leave from the front (<b>poll</b>). The first in is the first out: <b>FIFO</b>. A <b>deque</b> ("deck") is a line where you can add or remove at <b>both</b> ends.</p>
+<p class="analogy">The queue at a ticket counter. The person who came first gets served first. New people join at the back.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><code>offer(x)</code> adds at the back. <code>poll()</code> removes from the front. <code>peek()</code> looks at the front.</li>
+<li>All are <b>O(1)</b> with <code>ArrayDeque</code>.</li>
+<li><code>poll()</code> returns <code>null</code> when the queue is empty — check <code>isEmpty()</code> first.</li>
+<li>Queues are the heart of <b>BFS</b> (breadth-first search, topics 16 and 38): visit things level by level.</li>
+<li>A deque has <code>offerFirst</code>, <code>offerLast</code>, <code>pollFirst</code>, <code>pollLast</code>.</li>
+</ul>
+<h4>Dry run: a queue step by step</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Operation</th><th>Returns</th><th>Queue after (front on the left)</th></tr></thead>
+<tbody>
+<tr><td>offer(5)</td><td>—</td><td>[5]</td></tr>
+<tr><td>offer(8)</td><td>—</td><td>[5, 8]</td></tr>
+<tr><td>offer(2)</td><td>—</td><td>[5, 8, 2]</td></tr>
+<tr><td>poll()</td><td>5</td><td>[8, 2]</td></tr>
+<tr><td>peek()</td><td>8</td><td>[8, 2]</td></tr>
+</tbody></table></div>
+<pre><code>// Number of Recent Calls: count calls in the last 3000 ms
+class RecentCounter {
+    Queue&lt;Integer&gt; times = new ArrayDeque&lt;&gt;();   // call times, oldest at the front
+
+    int ping(int t) {
+        times.offer(t);                              // new call joins at the back
+        while (times.peek() &lt; t - 3000) {            // oldest call is too old?
+            times.poll();                            // remove it from the front
+        }
+        return times.size();                         // calls left are all recent
+    }
+}</code></pre>
+<p><b>Time &amp; space:</b> each time is added once and removed once, so O(1) on average per call. O(n) space for the queue.</p>
+<div class="note"><b>Remember:</b> queue = ticket line = first in, first out. Stack for "newest first", queue for "oldest first".<br>Practice: Number of Recent Calls (#933), Implement Queue using Stacks (#232).</div>
+</section>
+
+<section id="s11">
+<h3>11. Heaps &amp; Priority Queues</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>heap</b> always keeps the smallest (or largest) item ready at the top. A <b>min-heap</b> gives the smallest first. A <b>max-heap</b> gives the largest first. In Java it is called <code>PriorityQueue</code>.</p>
+<p class="analogy">A hospital emergency room. Patients are not seen in arrival order. The most serious patient always goes first.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><code>peek()</code> (see the top) is <b>O(1)</b>. <code>offer</code> and <code>poll</code> are <b>O(log n)</b>.</li>
+<li>Java's <code>PriorityQueue</code> is a <b>min-heap</b> by default.</li>
+<li>Max-heap: <code>new PriorityQueue&lt;&gt;(Collections.reverseOrder())</code>.</li>
+<li>Great for "the k largest", "the k smallest", "the next most important".</li>
+<li>Trick: to find the k <b>largest</b>, keep a <b>min</b>-heap of size k. The top is the k-th largest.</li>
+</ul>
+<h4>Dry run: 2nd largest in [3, 2, 1, 5], k = 2</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Number</th><th>Heap after offer</th><th>Size &gt; 2?</th><th>Heap after</th></tr></thead>
+<tbody>
+<tr><td>3</td><td>[3]</td><td>No</td><td>[3]</td></tr>
+<tr><td>2</td><td>[2, 3]</td><td>No</td><td>[2, 3]</td></tr>
+<tr><td>1</td><td>[1, 2, 3]</td><td>Yes → poll 1</td><td>[2, 3]</td></tr>
+<tr><td>5</td><td>[2, 3, 5]</td><td>Yes → poll 2</td><td>[3, 5]</td></tr>
+<tr><td>end</td><td colspan="3">top of the heap = <b>3</b> = 2nd largest</td></tr>
+</tbody></table></div>
+<pre><code>static int findKthLargest(int[] nums, int k) {
+    PriorityQueue&lt;Integer&gt; heap = new PriorityQueue&lt;&gt;();  // min-heap
+    for (int x : nums) {
+        heap.offer(x);                // add the number
+        if (heap.size() &gt; k) {        // too many?
+            heap.poll();              // remove the smallest
+        }
+    }
+    return heap.peek();               // smallest of the k largest
+}</code></pre>
+<p><b>Time &amp; space:</b> O(n log k) time — n numbers, each heap step costs log k. O(k) space.</p>
+<div class="note"><b>Remember:</b> "k largest" → min-heap of size k. "k smallest" → max-heap of size k.<br>Practice: Last Stone Weight (#1046), Kth Largest Element in a Stream (#703), Kth Largest Element in an Array (#215).</div>
+</section>
+
+<!-- ================= TREES AND GRAPHS ================= -->
+<div class="part">Part 3 — Trees &amp; Graphs</div>
+
+<section id="s12">
+<h3>12. Binary Trees</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>tree</b> is made of nodes connected like branches. The top node is the <b>root</b>. In a <b>binary tree</b>, each node has at most two children: <b>left</b> and <b>right</b>. A node with no children is a <b>leaf</b>.</p>
+<p class="analogy">A family tree, upside down. The grandparent is at the top (root). Each person has up to two children below them.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 230" role="img" aria-label="A binary tree with root 1. Node 1 has children 2 and 3. Node 2 has children 4 and 5. BFS order is 1, 2, 3, 4, 5. Preorder DFS is 1, 2, 4, 5, 3. Inorder is 4, 2, 5, 1, 3.">
+  <path class="d-line" d="M170 50 L110 110"/>
+  <path class="d-line" d="M170 50 L230 110"/>
+  <path class="d-line" d="M110 110 L70 170"/>
+  <path class="d-line" d="M110 110 L150 170"/>
+  <circle class="d-fill-accent" cx="170" cy="50" r="20"/>
+  <circle class="d-box-accent" cx="170" cy="50" r="20"/>
+  <text class="d-accent-text" x="170" y="55" text-anchor="middle">1</text>
+  <circle class="d-box" cx="110" cy="110" r="20"/>
+  <text class="d-mono" x="110" y="115" text-anchor="middle">2</text>
+  <circle class="d-box" cx="230" cy="110" r="20"/>
+  <text class="d-mono" x="230" y="115" text-anchor="middle">3</text>
+  <circle class="d-box" cx="70" cy="170" r="20"/>
+  <text class="d-mono" x="70" y="175" text-anchor="middle">4</text>
+  <circle class="d-box" cx="150" cy="170" r="20"/>
+  <text class="d-mono" x="150" y="175" text-anchor="middle">5</text>
+  <text class="d-sub" x="200" y="30">root</text>
+  <text class="d-sub" x="70" y="208" text-anchor="middle">leaf</text>
+  <text class="d-sub" x="150" y="208" text-anchor="middle">leaf</text>
+  <text class="d-sub" x="262" y="114">leaf</text>
+
+  <text class="d-accent-text" x="330" y="60">BFS (level by level):</text>
+  <text class="d-mono" x="330" y="80">1, 2, 3, 4, 5</text>
+  <text class="d-label" x="330" y="112">DFS preorder (root, left, right):</text>
+  <text class="d-mono" x="330" y="132">1, 2, 4, 5, 3</text>
+  <text class="d-label" x="330" y="164">DFS inorder (left, root, right):</text>
+  <text class="d-mono" x="330" y="184">4, 2, 5, 1, 3</text>
+</svg>
+<figcaption>BFS goes across, one level at a time. DFS goes deep down one branch first, then comes back.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li>Each node has a value, a <code>left</code> child and a <code>right</code> child (either can be null).</li>
+<li><b>Height / depth</b> = the number of levels from the root to the deepest leaf.</li>
+<li>Most tree problems use <b>recursion</b>: solve for the left side, solve for the right side, combine.</li>
+<li>The base case is almost always <code>if (root == null)</code>.</li>
+<li><b>DFS</b> (depth-first) uses recursion. <b>BFS</b> (breadth-first) uses a queue. More in topic 38.</li>
+</ul>
+<h4>Dry run: maxDepth on the tree above</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Node</th><th>left depth</th><th>right depth</th><th>returns 1 + max</th></tr></thead>
+<tbody>
+<tr><td>4, 5, 3 (leaves)</td><td>0</td><td>0</td><td>1</td></tr>
+<tr><td>2</td><td>1 (node 4)</td><td>1 (node 5)</td><td>2</td></tr>
+<tr><td>1 (root)</td><td>2 (node 2)</td><td>1 (node 3)</td><td><b>3</b></td></tr>
+</tbody></table></div>
+<pre><code>class TreeNode {
+    int val;
+    TreeNode left, right;          // children (can be null)
+    TreeNode(int val) { this.val = val; }
+}
+
+static int maxDepth(TreeNode root) {
+    if (root == null) return 0;            // empty tree has depth 0
+    int left = maxDepth(root.left);        // depth of the left side
+    int right = maxDepth(root.right);      // depth of the right side
+    return 1 + Math.max(left, right);      // this node + the deeper side
+}
+
+static void preorder(TreeNode root, List&lt;Integer&gt; out) {
+    if (root == null) return;
+    out.add(root.val);                     // 1. visit the node
+    preorder(root.left, out);              // 2. then the left side
+    preorder(root.right, out);             // 3. then the right side
+}</code></pre>
+<p><b>Time &amp; space:</b> O(n) time — each node is visited once. O(h) space for the call stack, where h is the tree height.</p>
+<div class="note"><b>Remember:</b> base case <code>root == null</code>, then trust the recursion on left and right.<br>Practice: Maximum Depth of Binary Tree (#104), Invert Binary Tree (#226), Same Tree (#100).</div>
+</section>
+
+<section id="s13">
+<h3>13. Binary Search Trees</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>BST</b> (Binary Search Tree) is a binary tree with one rule: everything on the <b>left</b> is <b>smaller</b> than the node, and everything on the <b>right</b> is <b>bigger</b>. This rule makes searching fast.</p>
+<p class="analogy">A "guess the number" game. "Is it 8?" — "Smaller." Now you ignore everything above 8. Each answer throws away half the choices.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 230" role="img" aria-label="A binary search tree with root 8. Left child 3 has children 1 and 6. Right child 10 has child 14. Searching for 6 goes 8, then left to 3, then right to 6.">
+  <path class="d-line-accent" d="M320 50 L200 110"/>
+  <path class="d-line" d="M320 50 L440 110"/>
+  <path class="d-line" d="M200 110 L140 170"/>
+  <path class="d-line-accent" d="M200 110 L260 170"/>
+  <path class="d-line" d="M440 110 L500 170"/>
+  <circle class="d-fill-accent" cx="320" cy="50" r="20"/>
+  <circle class="d-box-accent" cx="320" cy="50" r="20"/>
+  <text class="d-accent-text" x="320" y="55" text-anchor="middle">8</text>
+  <circle class="d-fill-accent" cx="200" cy="110" r="20"/>
+  <circle class="d-box-accent" cx="200" cy="110" r="20"/>
+  <text class="d-accent-text" x="200" y="115" text-anchor="middle">3</text>
+  <circle class="d-box" cx="440" cy="110" r="20"/>
+  <text class="d-mono" x="440" y="115" text-anchor="middle">10</text>
+  <circle class="d-box" cx="140" cy="170" r="20"/>
+  <text class="d-mono" x="140" y="175" text-anchor="middle">1</text>
+  <circle class="d-fill-accent" cx="260" cy="170" r="20"/>
+  <circle class="d-box-accent" cx="260" cy="170" r="20"/>
+  <text class="d-accent-text" x="260" y="175" text-anchor="middle">6</text>
+  <circle class="d-box" cx="500" cy="170" r="20"/>
+  <text class="d-mono" x="500" y="175" text-anchor="middle">14</text>
+  <text class="d-sub" x="232" y="72" text-anchor="end">6 &lt; 8: go left</text>
+  <text class="d-sub" x="240" y="135">6 &gt; 3: go right</text>
+  <text class="d-accent-text" x="290" y="175">found 6!</text>
+  <text class="d-sub" x="320" y="218" text-anchor="middle">left side is always smaller, right side is always bigger</text>
+</svg>
+<figcaption>Searching for 6 takes only 3 steps. Each step throws away one half of the tree.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li>Search, insert and delete take <b>O(h)</b> steps, where h is the height.</li>
+<li>If the tree is balanced (bushy), h is about <b>log n</b>, so it is fast.</li>
+<li>If you insert sorted numbers (1, 2, 3, 4…), the tree becomes a long line. Then h = n and it is slow.</li>
+<li><b>Inorder</b> traversal (left, root, right) of a BST gives the values in <b>sorted order</b>.</li>
+<li>Validate a BST by checking each node is inside a (min, max) range, not just against its parent.</li>
+</ul>
+<h4>Dry run: search for 6</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>At node</th><th>Compare</th><th>Go</th></tr></thead>
+<tbody>
+<tr><td>8</td><td>6 &lt; 8</td><td>left</td></tr>
+<tr><td>3</td><td>6 &gt; 3</td><td>right</td></tr>
+<tr><td>6</td><td>6 == 6</td><td><b>found</b></td></tr>
+</tbody></table></div>
+<pre><code>static TreeNode search(TreeNode root, int target) {
+    TreeNode cur = root;
+    while (cur != null) {
+        if (target == cur.val) return cur;     // found it
+        if (target &lt; cur.val) cur = cur.left;  // smaller: go left
+        else cur = cur.right;                  // bigger: go right
+    }
+    return null;                               // not in the tree
+}
+
+static TreeNode insert(TreeNode root, int value) {
+    if (root == null) return new TreeNode(value);   // empty spot: put it here
+    if (value &lt; root.val) root.left = insert(root.left, value);
+    else root.right = insert(root.right, value);
+    return root;
+}</code></pre>
+<p><b>Time &amp; space:</b> O(h) time — one path from root down. O(log n) if balanced, O(n) in the worst case.</p>
+<div class="note"><b>Remember:</b> smaller → left, bigger → right. Inorder of a BST is sorted.<br>Practice: Search in a Binary Search Tree (#700), Insert into a Binary Search Tree (#701), Validate Binary Search Tree (#98).</div>
+</section>
+
+<section id="s14">
+<h3>14. Balanced Trees &amp; TreeMap</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>balanced tree</b> fixes itself after every insert, so it never becomes a long line. Its height stays about <b>log n</b>. Java's <code>TreeMap</code> and <code>TreeSet</code> are balanced trees (red-black trees) that are ready to use. <b>Advanced — come back later</b> for how the balancing works. For now, just learn to <b>use</b> TreeMap.</p>
+<p class="analogy">A dictionary. Words are always kept in order. You can quickly find a word, or "the word just before" or "the word just after" it.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>You almost never write AVL or red-black trees in interviews. You use <code>TreeMap</code> / <code>TreeSet</code>.</li>
+<li>Like HashMap, but the keys are kept <b>sorted</b>. Each operation is <b>O(log n)</b>.</li>
+<li><code>floorKey(x)</code> = biggest key ≤ x. <code>ceilingKey(x)</code> = smallest key ≥ x.</li>
+<li><code>firstKey()</code> = smallest key. <code>lastKey()</code> = biggest key.</li>
+<li>Use it when you need "the closest value" or sorted order while adding items.</li>
+</ul>
+<h4>Dry run: TreeSet with {10, 20, 30}</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Call</th><th>Answer</th><th>Why</th></tr></thead>
+<tbody>
+<tr><td>floor(25)</td><td>20</td><td>biggest value ≤ 25</td></tr>
+<tr><td>ceiling(25)</td><td>30</td><td>smallest value ≥ 25</td></tr>
+<tr><td>floor(5)</td><td>null</td><td>nothing ≤ 5</td></tr>
+<tr><td>first()</td><td>10</td><td>smallest value</td></tr>
+</tbody></table></div>
+<pre><code>static void treeMapDemo() {
+    TreeMap&lt;Integer, String&gt; map = new TreeMap&lt;&gt;();
+    map.put(30, "c");
+    map.put(10, "a");
+    map.put(20, "b");                     // keys are kept sorted: 10, 20, 30
+
+    Integer below = map.floorKey(25);     // 20
+    Integer above = map.ceilingKey(25);   // 30
+    Integer none = map.floorKey(5);       // null: always check for null!
+    int smallest = map.firstKey();        // 10
+
+    System.out.println(below + " " + above + " " + none + " " + smallest);
+}</code></pre>
+<p><b>Time &amp; space:</b> O(log n) for put, get, floor and ceiling. O(n) space.</p>
+<div class="note"><b>Remember:</b> need sorted keys or "nearest value"? Use TreeMap/TreeSet. Results like <code>floorKey</code> can be null.<br>Practice: Time Based Key-Value Store (#981), My Calendar I (#729).</div>
+</section>
+
+<section id="s15">
+<h3>15. Tries</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>trie</b> (say "try") is a tree for words. Each step down the tree is one letter. Words that start the same way share the same path. It is great for <b>prefix</b> searches (a prefix is the start of a word, like "ca" in "cat").</p>
+<p class="analogy">The search box on your phone. You type "ca" and it suggests "cat", "car", "call". All of them share the start "c" → "a".</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Each node has up to 26 children (one per letter a–z) and a flag <code>isEnd</code> ("a word ends here").</li>
+<li>Insert and search take <b>O(L)</b>, where L is the length of the word. The number of words does not matter.</li>
+<li><code>startsWith(prefix)</code> is very fast — that is the main reason to use a trie.</li>
+<li>Used for autocomplete, spell check and word games.</li>
+</ul>
+<h4>Dry run: insert "cat" and "car"</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Word</th><th>Path</th><th>New nodes made</th></tr></thead>
+<tbody>
+<tr><td>cat</td><td>root → c → a → t (isEnd)</td><td>c, a, t</td></tr>
+<tr><td>car</td><td>root → c → a → r (isEnd)</td><td>only r (c and a are shared)</td></tr>
+<tr><td>startsWith("ca")</td><td>root → c → a exists</td><td><b>true</b></td></tr>
+<tr><td>search("ca")</td><td>node a has isEnd = false</td><td><b>false</b></td></tr>
+</tbody></table></div>
+<pre><code>class Trie {
+    Trie[] children = new Trie[26];   // one slot per letter a-z
+    boolean isEnd = false;            // does a word end here?
+
+    void insert(String word) {
+        Trie node = this;
+        for (char c : word.toCharArray()) {
+            int i = c - 'a';                       // 'a' -&gt; 0, 'b' -&gt; 1 ...
+            if (node.children[i] == null) {
+                node.children[i] = new Trie();     // make the path if missing
+            }
+            node = node.children[i];               // step down
+        }
+        node.isEnd = true;                         // mark the end of the word
+    }
+
+    boolean search(String word) {
+        Trie node = walk(word);
+        return node != null &amp;&amp; node.isEnd;         // path exists AND a word ends here
+    }
+
+    boolean startsWith(String prefix) {
+        return walk(prefix) != null;               // path exists
+    }
+
+    Trie walk(String s) {                          // follow letters, null if missing
+        Trie node = this;
+        for (char c : s.toCharArray()) {
+            node = node.children[c - 'a'];
+            if (node == null) return null;
+        }
+        return node;
+    }
+}</code></pre>
+<p><b>Time &amp; space:</b> O(L) per operation — one step per letter. Space grows with the total letters stored.</p>
+<div class="note"><b>Remember:</b> "prefix" or "starts with" in the question → think trie.<br>Practice: Longest Common Prefix (#14), Implement Trie (#208).</div>
+</section>
+
+<section id="s16">
+<h3>16. Graphs &amp; Traversal</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>graph</b> is a set of <b>nodes</b> (also called vertices) joined by <b>edges</b> (lines). Unlike a tree, a graph can have loops (cycles) and no root. We usually store it as an <b>adjacency list</b>: for each node, a list of its neighbours.</p>
+<p class="analogy">A map of cities and roads. Cities are nodes. Roads are edges. "Can I drive from city A to city B?" is a graph question.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 230" role="img" aria-label="A graph with four nodes. Edges: 0 to 1, 0 to 2, 1 to 3, 2 to 3. Its adjacency list is: 0 has 1 and 2, 1 has 0 and 3, 2 has 0 and 3, 3 has 1 and 2.">
+  <path class="d-line" d="M90 60 H230"/>
+  <path class="d-line" d="M90 60 V170"/>
+  <path class="d-line" d="M230 60 V170"/>
+  <path class="d-line" d="M90 170 H230"/>
+  <circle class="d-fill-accent" cx="90" cy="60" r="22"/>
+  <circle class="d-box-accent" cx="90" cy="60" r="22"/>
+  <text class="d-accent-text" x="90" y="65" text-anchor="middle">0</text>
+  <circle class="d-box" cx="230" cy="60" r="22"/>
+  <text class="d-mono" x="230" y="65" text-anchor="middle">1</text>
+  <circle class="d-box" cx="90" cy="170" r="22"/>
+  <text class="d-mono" x="90" y="175" text-anchor="middle">2</text>
+  <circle class="d-box" cx="230" cy="170" r="22"/>
+  <text class="d-mono" x="230" y="175" text-anchor="middle">3</text>
+  <text class="d-sub" x="160" y="215" text-anchor="middle">nodes + edges</text>
+
+  <text class="d-accent-text" x="330" y="40">Adjacency list</text>
+  <rect class="d-box" x="330" y="52" width="250" height="140" rx="6"/>
+  <text class="d-mono" x="350" y="80">0 → [1, 2]</text>
+  <text class="d-mono" x="350" y="110">1 → [0, 3]</text>
+  <text class="d-mono" x="350" y="140">2 → [0, 3]</text>
+  <text class="d-mono" x="350" y="170">3 → [1, 2]</text>
+  <text class="d-sub" x="455" y="215" text-anchor="middle">BFS from 0 visits: 0, 1, 2, 3</text>
+</svg>
+<figcaption>The same graph drawn as a picture and stored as an adjacency list. Each edge appears twice because it goes both ways.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li><b>Undirected</b> edge = a two-way road. <b>Directed</b> edge = a one-way road. <b>Weighted</b> edge = a road with a length.</li>
+<li>Store it as <code>List&lt;List&lt;Integer&gt;&gt;</code>: <code>graph.get(u)</code> = neighbours of u.</li>
+<li>Always keep a <b>visited</b> set or array. Without it, cycles make you loop forever.</li>
+<li><b>BFS</b> (queue) explores in rings, nearest first. It finds the shortest path when all edges have the same cost.</li>
+<li><b>DFS</b> (recursion or stack) goes as deep as possible, then backs up.</li>
+</ul>
+<h4>Dry run: BFS from node 0</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Poll</th><th>New neighbours added</th><th>Queue after</th><th>Visited</th></tr></thead>
+<tbody>
+<tr><td>start</td><td>—</td><td>[0]</td><td>{0}</td></tr>
+<tr><td>0</td><td>1, 2</td><td>[1, 2]</td><td>{0, 1, 2}</td></tr>
+<tr><td>1</td><td>3 (0 already visited)</td><td>[2, 3]</td><td>{0, 1, 2, 3}</td></tr>
+<tr><td>2</td><td>none</td><td>[3]</td><td>same</td></tr>
+<tr><td>3</td><td>none</td><td>[] → done</td><td>same</td></tr>
+</tbody></table></div>
+<pre><code>static List&lt;Integer&gt; bfs(List&lt;List&lt;Integer&gt;&gt; graph, int start) {
+    List&lt;Integer&gt; order = new ArrayList&lt;&gt;();          // visit order
+    boolean[] visited = new boolean[graph.size()];
+    Queue&lt;Integer&gt; queue = new ArrayDeque&lt;&gt;();
+
+    queue.offer(start);
+    visited[start] = true;                              // mark when you add it
+    while (!queue.isEmpty()) {
+        int node = queue.poll();                        // take the oldest
+        order.add(node);
+        for (int next : graph.get(node)) {              // look at neighbours
+            if (!visited[next]) {
+                visited[next] = true;
+                queue.offer(next);                      // visit it later
+            }
+        }
+    }
+    return order;
+}
+
+static void dfs(List&lt;List&lt;Integer&gt;&gt; graph, int node, boolean[] visited) {
+    visited[node] = true;                               // mark this node
+    for (int next : graph.get(node)) {
+        if (!visited[next]) {
+            dfs(graph, next, visited);                  // go deeper
+        }
+    }
+}</code></pre>
+<p><b>Time &amp; space:</b> O(V + E) time — each node (V) and each edge (E) is looked at once. O(V) space for visited and the queue.</p>
+<div class="note"><b>Remember:</b> graph = adjacency list + visited. BFS for "shortest steps", DFS for "can I reach / explore everything".<br>Practice: Find if Path Exists in Graph (#1971), Flood Fill (#733), Number of Islands (#200).</div>
+</section>
+
+<section id="s17">
+<h3>17. Union-Find</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Union-Find</b> (also called Disjoint Set) keeps track of <b>groups</b>. It answers two questions fast: "Are A and B in the same group?" (<b>find</b>) and "Join the groups of A and B" (<b>union</b>). <b>Advanced — come back later</b> if graphs still feel new.</p>
+<p class="analogy">Friend circles at school. Each circle has a leader. To check if two students are in the same circle, ask each one "who is your leader?". If the leaders are the same, they are in the same circle.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Each item has a <code>parent</code>. The item that is its own parent is the group's <b>leader</b> (root).</li>
+<li><code>find(x)</code> follows parents up to the leader.</li>
+<li><code>union(a, b)</code> makes one leader the parent of the other leader.</li>
+<li><b>Path compression</b>: while finding, point everyone straight to the leader. This makes it almost O(1).</li>
+<li>Use it for: counting connected groups, and finding a cycle in an undirected graph.</li>
+</ul>
+<h4>Dry run: 4 items, union(0,1), union(1,2)</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Step</th><th>parent array [0, 1, 2, 3]</th><th>Groups</th></tr></thead>
+<tbody>
+<tr><td>start</td><td>[0, 1, 2, 3]</td><td>{0} {1} {2} {3}</td></tr>
+<tr><td>union(0, 1)</td><td>[1, 1, 2, 3]</td><td>{0, 1} {2} {3}</td></tr>
+<tr><td>union(1, 2)</td><td>[1, 2, 2, 3]</td><td>{0, 1, 2} {3}</td></tr>
+<tr><td>find(0) == find(2)?</td><td>both lead to 2</td><td><b>yes, same group</b></td></tr>
+</tbody></table></div>
+<pre><code>class UnionFind {
+    int[] parent;
+
+    UnionFind(int n) {
+        parent = new int[n];
+        for (int i = 0; i &lt; n; i++) parent[i] = i;   // everyone leads their own group
+    }
+
+    int find(int x) {
+        if (parent[x] != x) {
+            parent[x] = find(parent[x]);   // path compression: jump to the leader
+        }
+        return parent[x];
+    }
+
+    boolean union(int a, int b) {
+        int rootA = find(a), rootB = find(b);
+        if (rootA == rootB) return false;  // already in the same group
+        parent[rootA] = rootB;             // join the two groups
+        return true;
+    }
+}</code></pre>
+<p><b>Time &amp; space:</b> almost O(1) per find/union with path compression. O(n) space for the parent array.</p>
+<div class="note"><b>Remember:</b> "groups", "connected", "same set" → Union-Find. If <code>union</code> returns false, that edge makes a cycle.<br>Practice: Find if Path Exists in Graph (#1971), Number of Provinces (#547), Redundant Connection (#684).</div>
+</section>
+
+<section id="s18">
+<h3>18. Segment &amp; Fenwick Trees</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Advanced — come back later.</b> These trees answer "what is the sum (or min, or max) of items from index L to R?" fast, <b>even when the items keep changing</b>. If the array never changes, a simple prefix sum (topic 32) is enough.</p>
+<p class="analogy">A school with class totals and a school total. If one student's mark changes, you update their class total and the school total. You don't add up every student again.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Array never changes → use <b>prefix sums</b>: O(1) per query.</li>
+<li>Array changes often → use a <b>Fenwick tree</b> (Binary Indexed Tree) or a <b>segment tree</b>.</li>
+<li>Both do update and range-query in <b>O(log n)</b>.</li>
+<li>Fenwick tree: shorter code, good for sums. Segment tree: more code, but works for min, max and more.</li>
+<li>These are rare in beginner interviews. Learn them after you are comfortable with everything else.</li>
+</ul>
+<h4>The idea in one table: why not a plain array?</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Method</th><th>Update one item</th><th>Sum of a range</th></tr></thead>
+<tbody>
+<tr><td>Plain array (loop to add)</td><td>O(1)</td><td>O(n)</td></tr>
+<tr><td>Prefix sum array</td><td>O(n) (rebuild)</td><td>O(1)</td></tr>
+<tr><td>Fenwick / segment tree</td><td>O(log n)</td><td>O(log n)</td></tr>
+</tbody></table></div>
+<pre><code>// Minimal Fenwick tree for sums. Indexes are 1-based inside.
+class Fenwick {
+    int[] tree;
+    Fenwick(int n) { tree = new int[n + 1]; }
+
+    void add(int i, int delta) {            // add delta at position i (1-based)
+        for (; i &lt; tree.length; i += i &amp; (-i)) {
+            tree[i] += delta;
+        }
+    }
+
+    int prefixSum(int i) {                  // sum of positions 1..i
+        int sum = 0;
+        for (; i &gt; 0; i -= i &amp; (-i)) {
+            sum += tree[i];
+        }
+        return sum;
+    }
+
+    int rangeSum(int left, int right) {     // sum of positions left..right
+        return prefixSum(right) - prefixSum(left - 1);
+    }
+}</code></pre>
+<p><b>Time &amp; space:</b> O(log n) per update and per query. O(n) space.</p>
+<div class="note"><b>Remember:</b> no updates → prefix sum. Many updates + range sums → Fenwick or segment tree. Come back to this later.<br>Practice: Range Sum Query - Immutable (#303) first, then Range Sum Query - Mutable (#307).</div>
+</section>
+
+<!-- ================= ALGORITHMS ================= -->
+<div class="part">Part 4 — Algorithms</div>
+
+<section id="s19">
+<h3>19. Sorting</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Sorting</b> means putting items in order, like smallest to largest. Many problems become easy after sorting. In real code you just call <code>Arrays.sort()</code>. But you should know how a simple sort works inside.</p>
+<p class="analogy">Sorting playing cards in your hand. You pick up one card at a time and slide it left until it is in the right place. That is <b>insertion sort</b>.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Simple sorts (bubble, selection, insertion) are <b>O(n²)</b>. Fine for small arrays, slow for big ones.</li>
+<li>Fast sorts (merge sort, quick sort) are <b>O(n log n)</b>.</li>
+<li><code>Arrays.sort(int[])</code> is O(n log n). Use it in interviews unless they ask you to write a sort.</li>
+<li>A <b>stable</b> sort keeps equal items in their original order. Merge sort is stable.</li>
+<li>Sort objects with a <b>comparator</b>: <code>Arrays.sort(people, (a, b) -&gt; a.age - b.age)</code>.</li>
+</ul>
+<h4>Dry run: insertion sort on [3, 1, 2]</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>i</th><th>Card to place</th><th>What happens</th><th>Array after</th></tr></thead>
+<tbody>
+<tr><td>start</td><td>—</td><td>—</td><td>[3, 1, 2]</td></tr>
+<tr><td>1</td><td>1</td><td>3 &gt; 1, move 3 right; put 1 at index 0</td><td>[1, 3, 2]</td></tr>
+<tr><td>2</td><td>2</td><td>3 &gt; 2, move 3 right; 1 &lt; 2, stop; put 2 at index 1</td><td><b>[1, 2, 3]</b></td></tr>
+</tbody></table></div>
+<pre><code>static void insertionSort(int[] arr) {
+    for (int i = 1; i &lt; arr.length; i++) {
+        int card = arr[i];                    // the item we want to place
+        int j = i - 1;
+        while (j &gt;= 0 &amp;&amp; arr[j] &gt; card) {     // bigger items on the left?
+            arr[j + 1] = arr[j];              // move them one step right
+            j--;
+        }
+        arr[j + 1] = card;                    // drop the card in the gap
+    }
+}</code></pre>
+<div class="table-wrap"><table>
+<thead><tr><th>Sort</th><th>Time</th><th>Note</th></tr></thead>
+<tbody>
+<tr><td>Bubble / Selection / Insertion</td><td>O(n²)</td><td>easy to write, slow</td></tr>
+<tr><td>Merge sort</td><td>O(n log n)</td><td>always fast, uses O(n) extra space (topic 23)</td></tr>
+<tr><td>Quick sort</td><td>O(n log n) average</td><td>fast in practice, O(n²) in the worst case</td></tr>
+<tr><td>Counting sort</td><td>O(n + k)</td><td>only for small whole numbers (k = range of values)</td></tr>
+</tbody></table></div>
+<p><b>Time &amp; space:</b> insertion sort is O(n²) time, O(1) extra space. <code>Arrays.sort</code> is O(n log n).</p>
+<div class="note"><b>Remember:</b> in interviews, sort with <code>Arrays.sort</code> and say "that's O(n log n)". Sorting first often unlocks two pointers or greedy.<br>Practice: Merge Sorted Array (#88), Sort Colors (#75), Sort an Array (#912).</div>
+</section>
+
+<section id="s20">
+<h3>20. Binary Search</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Binary search</b> finds an item in a <b>sorted</b> array by looking at the middle. If the middle is too small, throw away the left half. If too big, throw away the right half. Repeat.</p>
+<p class="analogy">Finding a word in a paper dictionary. You open it in the middle. "M"? Your word starts with "D", so you only look in the first half. You never read every page.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 220" role="img" aria-label="Binary search for 9 in the sorted array 1, 3, 5, 7, 9, 11, 13. Step 1: middle is 7, too small, keep the right half. Step 2: middle is 11, too big, keep the left part. Step 3: middle is 9, found.">
+  <text class="d-label" x="20" y="44">step 1</text>
+  <rect class="d-box" x="110" y="24" width="56" height="32" rx="4"/><text class="d-mono" x="138" y="45" text-anchor="middle">1</text>
+  <rect class="d-box" x="166" y="24" width="56" height="32" rx="4"/><text class="d-mono" x="194" y="45" text-anchor="middle">3</text>
+  <rect class="d-box" x="222" y="24" width="56" height="32" rx="4"/><text class="d-mono" x="250" y="45" text-anchor="middle">5</text>
+  <rect class="d-fill-accent" x="278" y="24" width="56" height="32" rx="4"/><rect class="d-box-accent" x="278" y="24" width="56" height="32" rx="4"/><text class="d-accent-text" x="306" y="45" text-anchor="middle">7</text>
+  <rect class="d-box" x="334" y="24" width="56" height="32" rx="4"/><text class="d-mono" x="362" y="45" text-anchor="middle">9</text>
+  <rect class="d-box" x="390" y="24" width="56" height="32" rx="4"/><text class="d-mono" x="418" y="45" text-anchor="middle">11</text>
+  <rect class="d-box" x="446" y="24" width="56" height="32" rx="4"/><text class="d-mono" x="474" y="45" text-anchor="middle">13</text>
+  <text class="d-sub" x="514" y="44">7 &lt; 9 → go right</text>
+
+  <text class="d-label" x="20" y="104">step 2</text>
+  <rect class="d-dash" x="110" y="84" width="224" height="32" rx="4"/><text class="d-sub" x="222" y="104" text-anchor="middle">thrown away</text>
+  <rect class="d-box" x="334" y="84" width="56" height="32" rx="4"/><text class="d-mono" x="362" y="105" text-anchor="middle">9</text>
+  <rect class="d-fill-accent" x="390" y="84" width="56" height="32" rx="4"/><rect class="d-box-accent" x="390" y="84" width="56" height="32" rx="4"/><text class="d-accent-text" x="418" y="105" text-anchor="middle">11</text>
+  <rect class="d-box" x="446" y="84" width="56" height="32" rx="4"/><text class="d-mono" x="474" y="105" text-anchor="middle">13</text>
+  <text class="d-sub" x="514" y="104">11 &gt; 9 → go left</text>
+
+  <text class="d-label" x="20" y="164">step 3</text>
+  <rect class="d-dash" x="110" y="144" width="224" height="32" rx="4"/>
+  <rect class="d-fill-accent" x="334" y="144" width="56" height="32" rx="4"/><rect class="d-box-accent" x="334" y="144" width="56" height="32" rx="4"/><text class="d-accent-text" x="362" y="165" text-anchor="middle">9</text>
+  <rect class="d-dash" x="390" y="144" width="112" height="32" rx="4"/>
+  <text class="d-accent-text" x="514" y="164">found at index 4!</text>
+  <text class="d-sub" x="320" y="210" text-anchor="middle">7 items → only 3 checks. 1,000,000 items → only about 20 checks.</text>
+</svg>
+<figcaption>Each step throws away half of what is left. That is why binary search is O(log n).</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li>The array <b>must be sorted</b>.</li>
+<li>Keep two indexes: <code>lo</code> (left end) and <code>hi</code> (right end). Loop while <code>lo &lt;= hi</code>.</li>
+<li>Middle: <code>mid = lo + (hi - lo) / 2</code>. This avoids number overflow for huge indexes.</li>
+<li>Too small → <code>lo = mid + 1</code>. Too big → <code>hi = mid - 1</code>.</li>
+<li>Off-by-one mistakes are common. Test with 1 item and 2 items.</li>
+</ul>
+<h4>Dry run: find 9 in [1, 3, 5, 7, 9, 11, 13]</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>lo</th><th>hi</th><th>mid</th><th>arr[mid]</th><th>Action</th></tr></thead>
+<tbody>
+<tr><td>0</td><td>6</td><td>3</td><td>7</td><td>7 &lt; 9 → lo = 4</td></tr>
+<tr><td>4</td><td>6</td><td>5</td><td>11</td><td>11 &gt; 9 → hi = 4</td></tr>
+<tr><td>4</td><td>4</td><td>4</td><td>9</td><td><b>found → return 4</b></td></tr>
+</tbody></table></div>
+<pre><code>static int binarySearch(int[] arr, int target) {
+    int lo = 0, hi = arr.length - 1;
+    while (lo &lt;= hi) {                     // still something to check
+        int mid = lo + (hi - lo) / 2;      // the middle index
+        if (arr[mid] == target) {
+            return mid;                    // found it
+        } else if (arr[mid] &lt; target) {
+            lo = mid + 1;                  // too small: search the right half
+        } else {
+            hi = mid - 1;                  // too big: search the left half
+        }
+    }
+    return -1;                             // not found
+}</code></pre>
+<p><b>Time &amp; space:</b> O(log n) time — the search area halves every step. O(1) space.</p>
+<div class="note"><b>Remember:</b> sorted input + "find" → binary search. Use <code>lo &lt;= hi</code> and move to <code>mid + 1</code> / <code>mid - 1</code>.<br>Practice: Binary Search (#704), Search Insert Position (#35), First Bad Version (#278).</div>
+</section>
+
+<section id="s21">
+<h3>21. Backtracking</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Backtracking</b> tries every choice, one step at a time. If a path is done (or wrong), it goes <b>back</b> one step and tries the next choice. The pattern is always: <b>choose → explore → un-choose</b>.</p>
+<p class="analogy">Walking through a maze. At each fork you pick a path. If you hit a dead end, you walk back to the last fork and try another path.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>It is recursion that builds an answer bit by bit in a list (often called <code>path</code>).</li>
+<li><b>Choose</b>: add an item to <code>path</code>. <b>Explore</b>: recurse. <b>Un-choose</b>: remove the item.</li>
+<li>When saving an answer, save a <b>copy</b>: <code>new ArrayList&lt;&gt;(path)</code>. Otherwise it changes later.</li>
+<li>It is slow (often O(2ⁿ) or O(n!)), because it tries everything. That is OK — the questions expect it.</li>
+<li>Used for: subsets, permutations, combinations, Sudoku, N-Queens, word search.</li>
+</ul>
+<h4>Dry run: all subsets of [1, 2]</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Call</th><th>path</th><th>Saved</th><th>Next</th></tr></thead>
+<tbody>
+<tr><td>start = 0</td><td>[]</td><td>[]</td><td>choose 1</td></tr>
+<tr><td>start = 1</td><td>[1]</td><td>[1]</td><td>choose 2</td></tr>
+<tr><td>start = 2</td><td>[1, 2]</td><td>[1, 2]</td><td>nothing left, go back, remove 2, then remove 1</td></tr>
+<tr><td>start = 2</td><td>[2]</td><td>[2]</td><td>nothing left, go back</td></tr>
+<tr><td>end</td><td colspan="3">answers: [], [1], [1, 2], [2]</td></tr>
+</tbody></table></div>
+<pre><code>static List&lt;List&lt;Integer&gt;&gt; subsets(int[] nums) {
+    List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
+    backtrack(nums, 0, new ArrayList&lt;&gt;(), result);
+    return result;
+}
+
+static void backtrack(int[] nums, int start, List&lt;Integer&gt; path,
+                      List&lt;List&lt;Integer&gt;&gt; result) {
+    result.add(new ArrayList&lt;&gt;(path));          // save a COPY of the current path
+    for (int i = start; i &lt; nums.length; i++) {
+        path.add(nums[i]);                       // choose
+        backtrack(nums, i + 1, path, result);    // explore
+        path.remove(path.size() - 1);            // un-choose (go back)
+    }
+}</code></pre>
+<p><b>Time &amp; space:</b> O(2ⁿ × n) time — there are 2ⁿ subsets and copying each costs up to n. O(n) space for the recursion (plus the answers).</p>
+<div class="note"><b>Remember:</b> choose → explore → un-choose. Save copies, not the same list.<br>Practice: Subsets (#78), Letter Case Permutation (#784), Combination Sum (#39).</div>
+</section>
+
+<section id="s22">
+<h3>22. Greedy</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>greedy</b> algorithm makes the <b>best-looking choice right now</b> and never changes its mind. Sometimes this gives the best total answer. Sometimes it does not — so you must check.</p>
+<p class="analogy">Giving change with the fewest coins: take the biggest coin that fits, again and again. With normal coins (25, 10, 5, 1) this works. With strange coins it can fail.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Greedy is usually <b>sort + one loop</b>. Fast and short.</li>
+<li>It works only when a local best choice never hurts the final answer.</li>
+<li>Test it with small examples. If you find a case where greedy fails, use <b>DP</b> (topic 24) instead.</li>
+<li>Common greedy ideas: pick the earliest finish time, the smallest that fits, the biggest jump.</li>
+</ul>
+<h4>Dry run: Assign Cookies, children's greed g = [1, 2, 3], cookie sizes s = [1, 1]</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>child (need)</th><th>cookie (size)</th><th>Fits?</th><th>happy children</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>1</td><td>Yes → move both</td><td>1</td></tr>
+<tr><td>2</td><td>1</td><td>No → try next cookie</td><td>1</td></tr>
+<tr><td>2</td><td>none left</td><td>stop</td><td><b>1</b></td></tr>
+</tbody></table></div>
+<pre><code>static int findContentChildren(int[] greed, int[] cookies) {
+    Arrays.sort(greed);                  // least greedy child first
+    Arrays.sort(cookies);                // smallest cookie first
+    int child = 0, cookie = 0;
+    while (child &lt; greed.length &amp;&amp; cookie &lt; cookies.length) {
+        if (cookies[cookie] &gt;= greed[child]) {
+            child++;                     // this child is happy, next child
+        }
+        cookie++;                        // this cookie is used or too small
+    }
+    return child;                        // number of happy children
+}</code></pre>
+<p><b>Time &amp; space:</b> O(n log n) time because of sorting. O(1) extra space.</p>
+<div class="note"><b>Remember:</b> greedy = best choice now, no going back. Prove it with examples, or switch to DP.<br>Practice: Assign Cookies (#455), Best Time to Buy and Sell Stock II (#122), Jump Game (#55).</div>
+</section>
+
+<section id="s23">
+<h3>23. Divide &amp; Conquer</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Divide and conquer</b> has three steps. <b>Divide</b> the problem into smaller parts. <b>Conquer</b> (solve) each part, usually with recursion. <b>Combine</b> the answers. <b>Merge sort</b> is the classic example.</p>
+<p class="analogy">Sorting a big pile of exam papers with a friend. You each sort half. Then you merge your two sorted piles by always taking the smaller top paper.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Merge sort: split the array in half, sort each half, then <b>merge</b> the two sorted halves.</li>
+<li>Merging two sorted lists is easy: compare the fronts, take the smaller one.</li>
+<li>Splitting in half gives log n levels. Each level does n work. Total: <b>O(n log n)</b>.</li>
+<li>Binary search and quick sort are also divide and conquer.</li>
+</ul>
+<h4>Dry run: merge sort on [3, 1, 2]</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Step</th><th>What happens</th><th>Result</th></tr></thead>
+<tbody>
+<tr><td>Divide</td><td>[3, 1, 2] → [3] and [1, 2]</td><td></td></tr>
+<tr><td>Divide</td><td>[1, 2] → [1] and [2]</td><td></td></tr>
+<tr><td>Merge</td><td>[1] + [2]</td><td>[1, 2]</td></tr>
+<tr><td>Merge</td><td>[3] + [1, 2]: take 1, take 2, take 3</td><td><b>[1, 2, 3]</b></td></tr>
+</tbody></table></div>
+<pre><code>static void mergeSort(int[] arr, int lo, int hi) {   // sorts arr[lo..hi]
+    if (lo &gt;= hi) return;                  // 0 or 1 item: already sorted
+    int mid = lo + (hi - lo) / 2;
+    mergeSort(arr, lo, mid);               // sort the left half
+    mergeSort(arr, mid + 1, hi);           // sort the right half
+    merge(arr, lo, mid, hi);               // combine them
+}
+
+static void merge(int[] arr, int lo, int mid, int hi) {
+    int[] temp = new int[hi - lo + 1];
+    int i = lo, j = mid + 1, k = 0;
+    while (i &lt;= mid &amp;&amp; j &lt;= hi) {          // both halves have items
+        if (arr[i] &lt;= arr[j]) temp[k++] = arr[i++];   // take the smaller
+        else temp[k++] = arr[j++];
+    }
+    while (i &lt;= mid) temp[k++] = arr[i++]; // copy what is left
+    while (j &lt;= hi) temp[k++] = arr[j++];
+    for (k = 0; k &lt; temp.length; k++) {
+        arr[lo + k] = temp[k];             // put the merged items back
+    }
+}
+// Call it like this: mergeSort(arr, 0, arr.length - 1);</code></pre>
+<p><b>Time &amp; space:</b> O(n log n) time — log n levels, n work each. O(n) extra space for the temp arrays.</p>
+<div class="note"><b>Remember:</b> divide, solve the halves, combine. Merge sort is the one to know by heart.<br>Practice: Merge Two Sorted Lists (#21), Sort an Array (#912), Maximum Subarray (#53).</div>
+</section>
+
+<section id="s24">
+<h3>24. Dynamic Programming</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Dynamic Programming (DP)</b> means: solve small problems first, <b>save their answers</b>, and build bigger answers from them. You never solve the same small problem twice.</p>
+<p class="analogy">Someone asks "what is 1+1+1+1+1?" You count: 5. Then they add "+1". You don't count again from the start. You remember 5 and say 6. That memory is DP.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 200" role="img" aria-label="DP table for Climbing Stairs. ways for steps 0 to 5 are 1, 1, 2, 3, 5, 8. ways of 4 equals ways of 3 plus ways of 2, which is 3 plus 2 equals 5.">
+  <text class="d-label" x="100" y="80" text-anchor="end">ways[i]</text>
+  <text class="d-sub" x="100" y="128" text-anchor="end">step i</text>
+  <rect class="d-box" x="120" y="55" width="70" height="40" rx="4"/><text class="d-mono" x="155" y="80" text-anchor="middle">1</text>
+  <rect class="d-box" x="190" y="55" width="70" height="40" rx="4"/><text class="d-mono" x="225" y="80" text-anchor="middle">1</text>
+  <rect class="d-box" x="260" y="55" width="70" height="40" rx="4"/><text class="d-mono" x="295" y="80" text-anchor="middle">2</text>
+  <rect class="d-box" x="330" y="55" width="70" height="40" rx="4"/><text class="d-mono" x="365" y="80" text-anchor="middle">3</text>
+  <rect class="d-fill-accent" x="400" y="55" width="70" height="40" rx="4"/><rect class="d-box-accent" x="400" y="55" width="70" height="40" rx="4"/><text class="d-accent-text" x="435" y="80" text-anchor="middle">5</text>
+  <rect class="d-box" x="470" y="55" width="70" height="40" rx="4"/><text class="d-mono" x="505" y="80" text-anchor="middle">8</text>
+  <text class="d-sub" x="155" y="128" text-anchor="middle">0</text>
+  <text class="d-sub" x="225" y="128" text-anchor="middle">1</text>
+  <text class="d-sub" x="295" y="128" text-anchor="middle">2</text>
+  <text class="d-sub" x="365" y="128" text-anchor="middle">3</text>
+  <text class="d-accent-text" x="435" y="128" text-anchor="middle">4</text>
+  <text class="d-sub" x="505" y="128" text-anchor="middle">5</text>
+  <path class="d-line-accent" d="M365 55 C 375 25, 410 25, 425 49"/><path class="d-arrow-accent" d="M428 55 l-6.5 -7.5 l8 -2 z"/>
+  <path class="d-line-accent" d="M295 55 C 310 8, 420 8, 433 49"/><path class="d-arrow-accent" d="M435 55 l-5.5 -8 l8.5 -1 z"/>
+  <text class="d-accent-text" x="330" y="152" text-anchor="middle">ways[4] = ways[3] + ways[2] = 3 + 2 = 5</text>
+  <text class="d-sub" x="330" y="170" text-anchor="middle">Fill the table left to right. Each box uses two boxes we already filled.</text>
+  <text class="d-sub" x="330" y="190" text-anchor="middle">Base cases: ways[0] = 1, ways[1] = 1</text>
+</svg>
+<figcaption>Climbing Stairs: you can take 1 or 2 steps. To reach step i, you came from step i-1 or step i-2. So add their answers.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li>DP works when the big problem is made of <b>smaller, repeating</b> problems.</li>
+<li><b>State</b>: what does <code>dp[i]</code> mean? Write it in words first. Example: "ways to reach step i".</li>
+<li><b>Recurrence</b> (the rule): how <code>dp[i]</code> uses smaller answers. Example: <code>dp[i] = dp[i-1] + dp[i-2]</code>.</li>
+<li><b>Base case</b>: the smallest answers you know without work.</li>
+<li><b>Top-down</b> = recursion + a memo (saved answers). <b>Bottom-up</b> = fill a table with a loop.</li>
+</ul>
+<h4>Dry run: Climbing Stairs, n = 4</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>i</th><th>dp[i-1]</th><th>dp[i-2]</th><th>dp[i]</th></tr></thead>
+<tbody>
+<tr><td>0, 1</td><td colspan="2">base cases</td><td>1, 1</td></tr>
+<tr><td>2</td><td>1</td><td>1</td><td>2</td></tr>
+<tr><td>3</td><td>2</td><td>1</td><td>3</td></tr>
+<tr><td>4</td><td>3</td><td>2</td><td><b>5</b></td></tr>
+</tbody></table></div>
+<pre><code>static int climbStairs(int n) {
+    int[] dp = new int[n + 1];           // dp[i] = ways to reach step i
+    dp[0] = 1;                           // base: one way to stand at the start
+    dp[1] = 1;                           // base: one way to reach step 1
+    for (int i = 2; i &lt;= n; i++) {
+        dp[i] = dp[i - 1] + dp[i - 2];   // came from 1 step below or 2 steps below
+    }
+    return dp[n];
+}
+
+// Same idea, top-down with a memo (saved answers)
+static int fib(int n, int[] memo) {      // call with memo = new int[n + 1]
+    if (n &lt;= 1) return n;                // base cases
+    if (memo[n] != 0) return memo[n];    // already solved? reuse it
+    memo[n] = fib(n - 1, memo) + fib(n - 2, memo);
+    return memo[n];
+}</code></pre>
+<p><b>Time &amp; space:</b> O(n) time — each step is computed once. O(n) space for the table.</p>
+<div class="note"><b>Remember:</b> state in words → rule → base case → fill the table. DP is "recursion + memory".<br>Practice: Climbing Stairs (#70), Fibonacci Number (#509), Min Cost Climbing Stairs (#746).</div>
+</section>
+
+<section id="s25">
+<h3>25. DP Patterns</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Most DP problems follow a few <b>shapes</b>. Learn the shapes and new problems look familiar. The steps are always the same: define the state, write the rule, set the base cases.</p>
+<p class="analogy">Recipes in a cookbook. Once you know how to make one soup, you can make most soups. Only the ingredients change.</p>
+</div>
+<h4>Key points</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Pattern</th><th>State means</th><th>Example problem</th></tr></thead>
+<tbody>
+<tr><td>1D line</td><td><code>dp[i]</code> = best answer using the first i items</td><td>House Robber (#198)</td></tr>
+<tr><td>Grid</td><td><code>dp[r][c]</code> = answer to reach cell (r, c)</td><td>Unique Paths (#62)</td></tr>
+<tr><td>Knapsack (pick or skip)</td><td><code>dp[x]</code> = best answer for amount x</td><td>Coin Change (#322)</td></tr>
+<tr><td>Two strings</td><td><code>dp[i][j]</code> = answer for first i chars of A and first j chars of B</td><td>Longest Common Subsequence (#1143)</td></tr>
+</tbody></table></div>
+<ul>
+<li>Grid: you can only come from the <b>top</b> or the <b>left</b>, so add (or take min of) those two cells.</li>
+<li>Pick or skip: for each item, the answer is the better of "take it" and "leave it".</li>
+<li>Draw the table on paper for a tiny input before you code.</li>
+</ul>
+<h4>Dry run: Unique Paths in a 3 × 3 grid (move only right or down)</h4>
+<div class="table-wrap"><table>
+<thead><tr><th></th><th>col 0</th><th>col 1</th><th>col 2</th></tr></thead>
+<tbody>
+<tr><td>row 0</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><td>row 1</td><td>1</td><td>1 + 1 = 2</td><td>1 + 2 = 3</td></tr>
+<tr><td>row 2</td><td>1</td><td>2 + 1 = 3</td><td>3 + 3 = <b>6</b></td></tr>
+</tbody></table></div>
+<pre><code>static int uniquePaths(int rows, int cols) {
+    int[][] dp = new int[rows][cols];        // dp[r][c] = ways to reach (r, c)
+    for (int r = 0; r &lt; rows; r++) {
+        for (int c = 0; c &lt; cols; c++) {
+            if (r == 0 || c == 0) {
+                dp[r][c] = 1;                // first row/column: only one way
+            } else {
+                dp[r][c] = dp[r - 1][c] + dp[r][c - 1];   // from top + from left
+            }
+        }
+    }
+    return dp[rows - 1][cols - 1];
+}
+
+static int rob(int[] houses) {               // House Robber: no two neighbours
+    int skip = 0, take = 0;                  // best so far without / with last house
+    for (int money : houses) {
+        int newTake = skip + money;          // rob this one: last one must be skipped
+        skip = Math.max(skip, take);         // skip this one: keep the best so far
+        take = newTake;
+    }
+    return Math.max(skip, take);
+}</code></pre>
+<p><b>Time &amp; space:</b> uniquePaths is O(rows × cols) time and space. rob is O(n) time, O(1) space.</p>
+<div class="note"><b>Remember:</b> name the pattern first (line, grid, pick-or-skip, two strings), then fill the table.<br>Practice: House Robber (#198), Unique Paths (#62), Coin Change (#322), Longest Common Subsequence (#1143).</div>
+</section>
+
+<section id="s26">
+<h3>26. Shortest Paths</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>shortest path</b> is the cheapest way from one node to another. If every edge costs the same, plain <b>BFS</b> works. If edges have different costs (weights), use <b>Dijkstra's algorithm</b>. It always grows from the closest node not yet finished.</p>
+<p class="analogy">Google Maps. It does not count the number of roads. It adds up the minutes on each road and picks the fastest total route.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>All edges equal → <b>BFS</b>, O(V + E).</li>
+<li>Different weights, none negative → <b>Dijkstra</b> with a PriorityQueue, O(E log V).</li>
+<li>Negative weights → Bellman-Ford (advanced — come back later).</li>
+<li>Keep a <code>dist</code> array. Start with "infinity" everywhere, and 0 for the start.</li>
+<li>When you find a shorter way to a node, update <code>dist</code> and put it in the heap.</li>
+</ul>
+<h4>Dry run: edges 0→1 (cost 4), 0→2 (cost 1), 2→1 (cost 2). Start at 0.</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Poll from heap</th><th>Update</th><th>dist [0, 1, 2]</th></tr></thead>
+<tbody>
+<tr><td>start</td><td>dist[0] = 0</td><td>[0, ∞, ∞]</td></tr>
+<tr><td>node 0 (dist 0)</td><td>1: 0+4 = 4, 2: 0+1 = 1</td><td>[0, 4, 1]</td></tr>
+<tr><td>node 2 (dist 1)</td><td>1: 1+2 = 3 &lt; 4, update</td><td>[0, 3, 1]</td></tr>
+<tr><td>node 1 (dist 3)</td><td>no edges out</td><td><b>[0, 3, 1]</b></td></tr>
+<tr><td>node 1 (old dist 4)</td><td>4 &gt; 3, out of date, skip</td><td>same</td></tr>
+</tbody></table></div>
+<pre><code>// graph.get(u) holds edges as {neighbour, cost}
+static int[] dijkstra(List&lt;List&lt;int[]&gt;&gt; graph, int start) {
+    int n = graph.size();
+    int[] dist = new int[n];
+    Arrays.fill(dist, Integer.MAX_VALUE);             // "infinity" at first
+    dist[start] = 0;
+
+    // heap of {node, distance}, smallest distance first
+    PriorityQueue&lt;int[]&gt; heap = new PriorityQueue&lt;&gt;(Comparator.comparingInt(a -&gt; a[1]));
+    heap.offer(new int[] { start, 0 });
+
+    while (!heap.isEmpty()) {
+        int[] cur = heap.poll();
+        int node = cur[0], d = cur[1];
+        if (d &gt; dist[node]) continue;                 // old, out-of-date entry: skip
+        for (int[] edge : graph.get(node)) {
+            int next = edge[0], cost = edge[1];
+            if (d + cost &lt; dist[next]) {              // found a shorter way?
+                dist[next] = d + cost;
+                heap.offer(new int[] { next, dist[next] });
+            }
+        }
+    }
+    return dist;
+}</code></pre>
+<p><b>Time &amp; space:</b> O(E log V) time — each edge may push into the heap. O(V + E) space.</p>
+<div class="note"><b>Remember:</b> same cost → BFS. Different costs → Dijkstra (always expand the closest node first).<br>Practice: Shortest Path in Binary Matrix (#1091), Network Delay Time (#743).</div>
+</section>
+
+<section id="s27">
+<h3>27. Topo Sort, MST &amp; More</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Two more famous graph tools. <b>Topological sort</b> puts tasks in an order where every task comes after the tasks it depends on (full details in topic 43). A <b>Minimum Spanning Tree (MST)</b> connects all nodes with the <b>cheapest total</b> set of edges. <b>Advanced — come back later</b> for MST.</p>
+<p class="analogy">MST: a town wants to connect every house with water pipes, using the least pipe in total. It does not need every road — just enough to reach every house.</p>
+</div>
+<h4>Key points</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Tool</th><th>What it does</th><th>When</th></tr></thead>
+<tbody>
+<tr><td>Topological sort</td><td>orders tasks by dependencies</td><td>"course prerequisites", "build order"</td></tr>
+<tr><td>Kruskal (MST)</td><td>sort edges by cost, add each if it joins two groups</td><td>"connect everything for the least cost"</td></tr>
+<tr><td>Prim (MST)</td><td>grow from one node, always add the cheapest edge out</td><td>same as Kruskal</td></tr>
+<tr><td>Cycle check</td><td>Union-Find (undirected) or DFS colours (directed)</td><td>"is there a loop?"</td></tr>
+</tbody></table></div>
+<ul>
+<li>Kruskal = sorting + Union-Find (topic 17). If <code>union</code> says "already joined", skip that edge — it would make a loop.</li>
+<li>An MST of n nodes always has exactly <b>n - 1</b> edges.</li>
+</ul>
+<h4>Dry run: Kruskal on 3 nodes. Edges: (0-1, cost 1), (1-2, cost 2), (0-2, cost 3)</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Edge (sorted)</th><th>Different groups?</th><th>Action</th><th>total</th></tr></thead>
+<tbody>
+<tr><td>0-1, cost 1</td><td>Yes</td><td>take it</td><td>1</td></tr>
+<tr><td>1-2, cost 2</td><td>Yes</td><td>take it</td><td>3</td></tr>
+<tr><td>0-2, cost 3</td><td>No (already joined)</td><td>skip</td><td><b>3</b></td></tr>
+</tbody></table></div>
+<pre><code>// edges are {from, to, cost}. Uses the UnionFind class from topic 17.
+static int kruskal(int n, int[][] edges) {
+    Arrays.sort(edges, Comparator.comparingInt(e -&gt; e[2]));   // cheapest first
+    UnionFind uf = new UnionFind(n);
+    int total = 0;
+    for (int[] e : edges) {
+        if (uf.union(e[0], e[1])) {      // joins two different groups?
+            total += e[2];               // yes: use this edge
+        }                                // no: it would make a loop, skip
+    }
+    return total;
+}</code></pre>
+<p><b>Time &amp; space:</b> O(E log E) time — sorting the edges is the slow part. O(V) space for Union-Find.</p>
+<div class="note"><b>Remember:</b> dependencies → topological sort. Cheapest way to connect everything → MST (Kruskal).<br>Practice: Course Schedule (#207), Min Cost to Connect All Points (#1584).</div>
+</section>
+
+<section id="s28">
+<h3>28. String Algorithms</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Advanced — come back later.</b> Special string algorithms like <b>KMP</b> and <b>rolling hash</b> find a small word (the <b>pattern</b>) inside a long text faster than the simple way. First learn the simple way well. Most interviews only need the simple way, a HashMap, or two pointers.</p>
+<p class="analogy">Looking for a word in a book. The simple way: start at each letter and compare. KMP is smarter: when a match fails, it remembers how much already matched, so it doesn't start again from zero.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Simple search: try every start position, compare letter by letter. O(n × m) (n = text length, m = pattern length).</li>
+<li><b>KMP</b>: uses a helper table so it never goes backwards in the text. O(n + m).</li>
+<li><b>Rolling hash (Rabin-Karp)</b>: turns each window of text into a number, compares numbers. O(n + m) on average.</li>
+<li>In Java, <code>text.indexOf(pattern)</code> does the simple search for you.</li>
+<li>Many "string" problems are really hashing (anagrams), two pointers (palindromes) or sliding window.</li>
+</ul>
+<h4>Dry run: find "ll" in "hello"</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Start i</th><th>Compare</th><th>Match?</th></tr></thead>
+<tbody>
+<tr><td>0</td><td>"he" vs "ll"</td><td>No (h ≠ l)</td></tr>
+<tr><td>1</td><td>"el" vs "ll"</td><td>No (e ≠ l)</td></tr>
+<tr><td>2</td><td>"ll" vs "ll"</td><td><b>Yes → return 2</b></td></tr>
+</tbody></table></div>
+<pre><code>static int strStr(String text, String pattern) {
+    int n = text.length(), m = pattern.length();
+    for (int i = 0; i + m &lt;= n; i++) {        // every possible start position
+        int j = 0;
+        while (j &lt; m &amp;&amp; text.charAt(i + j) == pattern.charAt(j)) {
+            j++;                              // letters match, keep going
+        }
+        if (j == m) return i;                 // all m letters matched
+    }
+    return -1;                                // not found
+}</code></pre>
+<p><b>Time &amp; space:</b> O(n × m) time in the worst case. O(1) space. (KMP gets this down to O(n + m).)</p>
+<div class="note"><b>Remember:</b> master the simple search first. KMP and rolling hash are for later.<br>Practice: Find the Index of the First Occurrence in a String (#28), Repeated Substring Pattern (#459).</div>
+</section>
+
+<section id="s29">
+<h3>29. Math &amp; Number Theory</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Some problems need a little math: <b>GCD</b> (greatest common divisor — the biggest number that divides both), <b>prime numbers</b> (numbers divisible only by 1 and themselves), and <b>modulo</b> (<code>%</code>, the remainder after dividing). <b>Gentle topic</b> — learn the few tools below and move on.</p>
+<p class="analogy">Modulo is like a clock. 14 o'clock is 2 o'clock, because 14 % 12 = 2. After 12, the numbers wrap around.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><code>a % b</code> = remainder. <code>n % 10</code> = last digit. <code>n / 10</code> = remove the last digit.</li>
+<li><b>GCD</b> with Euclid's trick: <code>gcd(a, b) = gcd(b, a % b)</code>, stop when b is 0.</li>
+<li>To check if n is prime, test divisors only up to <b>√n</b>.</li>
+<li><b>Sieve of Eratosthenes</b>: find all primes up to n by crossing out multiples.</li>
+<li>Big answers: problems often say "return answer % 1,000,000,007". Use <code>long</code> to avoid overflow.</li>
+</ul>
+<h4>Dry run: gcd(12, 8)</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>a</th><th>b</th><th>a % b</th></tr></thead>
+<tbody>
+<tr><td>12</td><td>8</td><td>4</td></tr>
+<tr><td>8</td><td>4</td><td>0</td></tr>
+<tr><td>4</td><td>0</td><td>b is 0 → answer <b>4</b></td></tr>
+</tbody></table></div>
+<pre><code>static int gcd(int a, int b) {
+    while (b != 0) {
+        int r = a % b;       // remainder
+        a = b;               // shift: (a, b) becomes (b, r)
+        b = r;
+    }
+    return a;
+}
+
+static boolean isPrime(int n) {
+    if (n &lt; 2) return false;               // 0 and 1 are not prime
+    for (int d = 2; d * d &lt;= n; d++) {     // only up to the square root
+        if (n % d == 0) return false;      // found a divisor
+    }
+    return true;
+}
+
+static int sumOfDigits(int n) {
+    int sum = 0;
+    while (n &gt; 0) {
+        sum += n % 10;                     // take the last digit
+        n = n / 10;                        // remove the last digit
+    }
+    return sum;
+}</code></pre>
+<p><b>Time &amp; space:</b> gcd is O(log n). isPrime is O(√n). sumOfDigits is O(number of digits). All O(1) space.</p>
+<div class="note"><b>Remember:</b> <code>% 10</code> gets the last digit, <code>/ 10</code> drops it. Check primes up to √n.<br>Practice: Fizz Buzz (#412), Palindrome Number (#9), Count Primes (#204).</div>
+</section>
+
+<!-- ================= PATTERNS ================= -->
+<div class="part">Part 5 — Patterns</div>
+
+<section id="s30">
+<h3>30. Two Pointers</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Two pointers</b> means using two indexes that move through the array. Often one starts at the <b>left end</b> and one at the <b>right end</b>, and they walk towards each other. This turns many O(n²) problems into O(n).</p>
+<p class="analogy">Two people searching a long shelf for a pair of books, one from each end. They walk towards each other, and each step they decide who should move.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 200" role="img" aria-label="Two pointers on the sorted array 1, 2, 4, 6, 8, 9 with target 12. Left pointer moves right when the sum is too small, right pointer moves left when the sum is too big. They meet at 4 and 8, which add up to 12.">
+  <rect class="d-box" x="40" y="50" width="56" height="40" rx="4"/><text class="d-mono" x="68" y="75" text-anchor="middle">1</text>
+  <rect class="d-box" x="96" y="50" width="56" height="40" rx="4"/><text class="d-mono" x="124" y="75" text-anchor="middle">2</text>
+  <rect class="d-fill-accent" x="152" y="50" width="56" height="40" rx="4"/><rect class="d-box-accent" x="152" y="50" width="56" height="40" rx="4"/><text class="d-accent-text" x="180" y="75" text-anchor="middle">4</text>
+  <rect class="d-box" x="208" y="50" width="56" height="40" rx="4"/><text class="d-mono" x="236" y="75" text-anchor="middle">6</text>
+  <rect class="d-fill-accent" x="264" y="50" width="56" height="40" rx="4"/><rect class="d-box-accent" x="264" y="50" width="56" height="40" rx="4"/><text class="d-accent-text" x="292" y="75" text-anchor="middle">8</text>
+  <rect class="d-box" x="320" y="50" width="56" height="40" rx="4"/><text class="d-mono" x="348" y="75" text-anchor="middle">9</text>
+  <text class="d-sub" x="208" y="30" text-anchor="middle">sorted array, target = 12</text>
+
+  <text class="d-accent-text" x="180" y="128" text-anchor="middle">L</text>
+  <path class="d-line-accent" d="M180 116 V100"/><path class="d-arrow-accent" d="M180 94 l-4.5 9 h9 z"/>
+  <text class="d-accent-text" x="292" y="128" text-anchor="middle">R</text>
+  <path class="d-line-accent" d="M292 116 V100"/><path class="d-arrow-accent" d="M292 94 l-4.5 9 h9 z"/>
+  <path class="d-dash" d="M68 96 V112"/>
+  <text class="d-sub" x="68" y="128" text-anchor="middle">L start</text>
+  <path class="d-dash" d="M348 96 V112"/>
+  <text class="d-sub" x="348" y="128" text-anchor="middle">R start</text>
+  <text class="d-sub" x="208" y="166" text-anchor="middle">L moved right twice, R moved left once</text>
+
+  <text class="d-label" x="420" y="56">1 + 9 = 10 → too small, L++</text>
+  <text class="d-label" x="420" y="80">2 + 9 = 11 → too small, L++</text>
+  <text class="d-label" x="420" y="104">4 + 9 = 13 → too big, R--</text>
+  <text class="d-accent-text" x="420" y="128">4 + 8 = 12 → found!</text>
+</svg>
+<figcaption>Because the array is sorted, moving L makes the sum bigger and moving R makes it smaller. Each step throws away one number for good.</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li><b>Opposite ends</b> (L and R move towards each other): pair sums in a sorted array, palindromes, reversing.</li>
+<li><b>Same direction</b> (slow and fast both move right): remove duplicates, move zeroes.</li>
+<li>Often the array must be <b>sorted</b> first.</li>
+<li>Loop while <code>left &lt; right</code>.</li>
+<li>Each pointer only moves forward, so the total work is O(n).</li>
+</ul>
+<h4>Dry run: is "racecar" a palindrome?</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>left</th><th>right</th><th>chars</th><th>Same?</th></tr></thead>
+<tbody>
+<tr><td>0</td><td>6</td><td>r, r</td><td>Yes</td></tr>
+<tr><td>1</td><td>5</td><td>a, a</td><td>Yes</td></tr>
+<tr><td>2</td><td>4</td><td>c, c</td><td>Yes</td></tr>
+<tr><td>3</td><td>3</td><td>left is not &lt; right → stop</td><td><b>palindrome</b></td></tr>
+</tbody></table></div>
+<pre><code>static boolean isPalindrome(String s) {
+    int left = 0, right = s.length() - 1;
+    while (left &lt; right) {
+        if (s.charAt(left) != s.charAt(right)) return false;   // mismatch
+        left++;                                   // move inwards
+        right--;
+    }
+    return true;
+}
+
+// Pair with a given sum in a SORTED array (0-based positions)
+static int[] pairSum(int[] arr, int target) {
+    int left = 0, right = arr.length - 1;
+    while (left &lt; right) {
+        int sum = arr[left] + arr[right];
+        if (sum == target) return new int[] { left, right };
+        if (sum &lt; target) left++;                 // need bigger: move left up
+        else right--;                             // need smaller: move right down
+    }
+    return new int[] { -1, -1 };
+}</code></pre>
+<p><b>Time &amp; space:</b> O(n) time — the pointers together cross the array once. O(1) space.</p>
+<div class="note"><b>Remember:</b> sorted array + "pair" or "palindrome" → two pointers from both ends.<br>Practice: Valid Palindrome (#125), Move Zeroes (#283), Two Sum II - Input Array Is Sorted (#167, it wants 1-based positions).</div>
+</section>
+
+<section id="s31">
+<h3>31. Sliding Window</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>window</b> is a block of neighbouring items in an array or string (a <b>subarray</b> or <b>substring</b>). <b>Sliding window</b> moves this block step by step. Instead of adding everything again, you <b>add the new item</b> on the right and <b>remove the old item</b> on the left.</p>
+<p class="analogy">Looking out of a train window. The view slides along. A new tree appears on one side, and an old one disappears on the other. You don't look at the whole route again.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 640 190" role="img" aria-label="Sliding window of size 3 over the array 2, 1, 5, 1, 3, 2. The window covering 5, 1, 3 has the biggest sum, 9. Sliding right adds the new item and removes the old one.">
+  <rect class="d-box" x="80" y="60" width="70" height="40" rx="4"/><text class="d-mono" x="115" y="85" text-anchor="middle">2</text>
+  <rect class="d-box" x="150" y="60" width="70" height="40" rx="4"/><text class="d-mono" x="185" y="85" text-anchor="middle">1</text>
+  <rect class="d-fill-accent" x="220" y="60" width="210" height="40" rx="4"/>
+  <rect class="d-box" x="220" y="60" width="70" height="40" rx="4"/><text class="d-mono" x="255" y="85" text-anchor="middle">5</text>
+  <rect class="d-box" x="290" y="60" width="70" height="40" rx="4"/><text class="d-mono" x="325" y="85" text-anchor="middle">1</text>
+  <rect class="d-box" x="360" y="60" width="70" height="40" rx="4"/><text class="d-mono" x="395" y="85" text-anchor="middle">3</text>
+  <rect class="d-box" x="430" y="60" width="70" height="40" rx="4"/><text class="d-mono" x="465" y="85" text-anchor="middle">2</text>
+  <rect class="d-box-accent" x="216" y="54" width="218" height="52" rx="6"/>
+  <text class="d-accent-text" x="325" y="40" text-anchor="middle">window (size 3): 5 + 1 + 3 = 9</text>
+  <rect class="d-dash" x="146" y="112" width="218" height="14" rx="4"/>
+  <text class="d-sub" x="255" y="142" text-anchor="middle">previous window: 1 + 5 + 1 = 7</text>
+  <text class="d-sub" x="320" y="170" text-anchor="middle">new sum = old sum + new right item - old left item = 7 + 3 - 1 = 9</text>
+</svg>
+<figcaption>Each slide costs only two small steps (add one, remove one), so the whole pass is O(n) instead of O(n × k).</figcaption>
+</figure>
+<h4>Key points</h4>
+<ul>
+<li><b>Fixed window</b>: size k is given. Add the right item, remove the left item, update the answer.</li>
+<li><b>Variable window</b>: grow the right side; when the window breaks a rule, shrink from the left.</li>
+<li>Clues in the question: "subarray", "substring", "contiguous" (next to each other), "longest", "of size k".</li>
+<li>Often uses a HashMap or HashSet to track what is inside the window.</li>
+<li>Both ends only move right, so it is O(n).</li>
+</ul>
+<h4>Dry run: biggest sum of 3 in a row, [2, 1, 5, 1, 3, 2]</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Window</th><th>sum</th><th>best</th></tr></thead>
+<tbody>
+<tr><td>[2, 1, 5]</td><td>8</td><td>8</td></tr>
+<tr><td>[1, 5, 1]</td><td>8 + 1 - 2 = 7</td><td>8</td></tr>
+<tr><td>[5, 1, 3]</td><td>7 + 3 - 1 = 9</td><td>9</td></tr>
+<tr><td>[1, 3, 2]</td><td>9 + 2 - 5 = 6</td><td><b>9</b></td></tr>
+</tbody></table></div>
+<pre><code>// Fixed window: biggest sum of k items in a row
+static int maxSumOfK(int[] arr, int k) {
+    int sum = 0;
+    for (int i = 0; i &lt; k; i++) sum += arr[i];    // first window
+    int best = sum;
+    for (int right = k; right &lt; arr.length; right++) {
+        sum += arr[right];                         // add the new item
+        sum -= arr[right - k];                     // remove the old item
+        best = Math.max(best, sum);
+    }
+    return best;
+}
+
+// Variable window: longest substring with no repeated letter
+static int lengthOfLongestSubstring(String s) {
+    Set&lt;Character&gt; inWindow = new HashSet&lt;&gt;();
+    int left = 0, best = 0;
+    for (int right = 0; right &lt; s.length(); right++) {
+        char c = s.charAt(right);
+        while (inWindow.contains(c)) {             // repeat! shrink from the left
+            inWindow.remove(s.charAt(left));
+            left++;
+        }
+        inWindow.add(c);                           // grow on the right
+        best = Math.max(best, right - left + 1);   // window size
+    }
+    return best;
+}</code></pre>
+<p><b>Time &amp; space:</b> O(n) time — each item enters and leaves the window once. O(1) for the fixed version, O(k) for the set.</p>
+<div class="note"><b>Remember:</b> "longest / shortest / best subarray or substring" → sliding window. Add on the right, remove on the left.<br>Practice: Maximum Average Subarray I (#643), Longest Substring Without Repeating Characters (#3), Minimum Size Subarray Sum (#209).</div>
+</section>
+
+<section id="s32">
+<h3>32. Prefix Sum &amp; Difference</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>prefix sum</b> array stores running totals: <code>prefix[i]</code> = sum of the first i items. Then the sum of any range is just <b>one subtraction</b>. A <b>difference array</b> does the opposite trick: it makes "add 5 to every item from L to R" fast.</p>
+<p class="analogy">Your bank statement shows the balance after each day. To know how much you spent from Tuesday to Friday, you don't add each purchase. You subtract: Monday's balance minus Friday's balance.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Build once in O(n): <code>prefix[i + 1] = prefix[i] + arr[i]</code>, with <code>prefix[0] = 0</code>.</li>
+<li>Sum from index L to R = <code>prefix[R + 1] - prefix[L]</code>. That is O(1).</li>
+<li>The extra 0 at the start removes special cases for L = 0.</li>
+<li>Prefix sum + HashMap solves "count subarrays with sum k".</li>
+<li>Difference array: to add v to range [L, R], do <code>diff[L] += v</code> and <code>diff[R + 1] -= v</code>, then take running totals at the end.</li>
+</ul>
+<h4>Dry run: arr = [1, 2, 3, 4]</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>i</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th></tr></thead>
+<tbody>
+<tr><td>arr[i]</td><td>1</td><td>2</td><td>3</td><td>4</td><td>—</td></tr>
+<tr><td>prefix[i]</td><td>0</td><td>1</td><td>3</td><td>6</td><td>10</td></tr>
+</tbody></table></div>
+<p>Sum of index 1 to 2 (2 + 3) = <code>prefix[3] - prefix[1]</code> = 6 - 1 = <b>5</b>. Correct!</p>
+<pre><code>class RangeSum {
+    int[] prefix;
+
+    RangeSum(int[] arr) {
+        prefix = new int[arr.length + 1];          // one extra slot for the 0
+        for (int i = 0; i &lt; arr.length; i++) {
+            prefix[i + 1] = prefix[i] + arr[i];    // running total
+        }
+    }
+
+    int sumRange(int left, int right) {            // sum of arr[left..right]
+        return prefix[right + 1] - prefix[left];
+    }
+}</code></pre>
+<p><b>Time &amp; space:</b> O(n) to build, then O(1) for every range question. O(n) space.</p>
+<div class="note"><b>Remember:</b> many "sum of a range" questions → build a prefix sum once, answer each in O(1).<br>Practice: Running Sum of 1d Array (#1480), Range Sum Query - Immutable (#303), Subarray Sum Equals K (#560).</div>
+</section>
+
+<section id="s33">
+<h3>33. Fast &amp; Slow Pointers</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Two pointers move through a linked list at <b>different speeds</b>. The <b>slow</b> one moves 1 step. The <b>fast</b> one moves 2 steps. If there is a loop (cycle), fast will catch up with slow. If there is no loop, fast reaches the end. When fast reaches the end, slow is in the <b>middle</b>.</p>
+<p class="analogy">Two runners on a track. If the track is a circle, the fast runner will lap the slow one and they meet. If it is a straight road, the fast runner just finishes first.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Find the <b>middle</b> of a list in one pass.</li>
+<li>Detect a <b>cycle</b> (loop) with O(1) extra memory — no HashSet needed.</li>
+<li>Always check <code>fast != null &amp;&amp; fast.next != null</code> before moving fast 2 steps.</li>
+<li>Also works on numbers, like Happy Number (the "list" is the next value each time).</li>
+</ul>
+<h4>Dry run: middle of 1 → 2 → 3 → 4 → 5</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Step</th><th>slow</th><th>fast</th></tr></thead>
+<tbody>
+<tr><td>start</td><td>1</td><td>1</td></tr>
+<tr><td>1</td><td>2</td><td>3</td></tr>
+<tr><td>2</td><td>3</td><td>5</td></tr>
+<tr><td>stop</td><td><b>3 = middle</b></td><td>5 has no next → stop</td></tr>
+</tbody></table></div>
+<pre><code>static ListNode middleNode(ListNode head) {
+    ListNode slow = head, fast = head;
+    while (fast != null &amp;&amp; fast.next != null) {
+        slow = slow.next;              // 1 step
+        fast = fast.next.next;         // 2 steps
+    }
+    return slow;                       // slow is in the middle
+}
+
+static boolean hasCycle(ListNode head) {
+    ListNode slow = head, fast = head;
+    while (fast != null &amp;&amp; fast.next != null) {
+        slow = slow.next;
+        fast = fast.next.next;
+        if (slow == fast) return true; // they met: there is a loop
+    }
+    return false;                      // fast reached the end: no loop
+}</code></pre>
+<p><b>Time &amp; space:</b> O(n) time, O(1) space — just two pointers.</p>
+<div class="note"><b>Remember:</b> slow 1 step, fast 2 steps. They meet → cycle. Fast ends → slow is the middle.<br>Practice: Middle of the Linked List (#876), Linked List Cycle (#141), Happy Number (#202).</div>
+</section>
+
+<section id="s34">
+<h3>34. Monotonic Stack &amp; Queue</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>monotonic stack</b> is a stack that is always kept in order (for example, always getting smaller from bottom to top). Before pushing a new item, you pop every item that breaks the order. It answers "<b>what is the next bigger (or smaller) item?</b>" for every position in O(n).</p>
+<p class="analogy">People standing in a line, looking right. A tall person arriving blocks the view of all shorter people before them. Those shorter people have found their "next taller person" — so they leave the line.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Clue: "next greater", "next smaller", "how many days until warmer".</li>
+<li>Store <b>indexes</b> in the stack, not values. Then you can find both the value and the distance.</li>
+<li>When the new item is bigger than the top, the top has found its "next greater". Pop it and record the answer.</li>
+<li>Each item is pushed once and popped once, so it is O(n).</li>
+<li>A <b>monotonic queue</b> (deque) does the same for a sliding window maximum. (Advanced — come back later.)</li>
+</ul>
+<h4>Dry run: next greater for [2, 1, 3]</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>i</th><th>value</th><th>Action</th><th>stack (indexes)</th><th>answer</th></tr></thead>
+<tbody>
+<tr><td>0</td><td>2</td><td>push 0</td><td>[0]</td><td>[-1, -1, -1]</td></tr>
+<tr><td>1</td><td>1</td><td>1 is not bigger than 2 → push 1</td><td>[0, 1]</td><td>[-1, -1, -1]</td></tr>
+<tr><td>2</td><td>3</td><td>3 &gt; 1 → ans[1] = 3, pop. 3 &gt; 2 → ans[0] = 3, pop. Push 2.</td><td>[2]</td><td><b>[3, 3, -1]</b></td></tr>
+</tbody></table></div>
+<pre><code>static int[] nextGreater(int[] nums) {
+    int[] answer = new int[nums.length];
+    Arrays.fill(answer, -1);                       // -1 means "none found"
+    Deque&lt;Integer&gt; stack = new ArrayDeque&lt;&gt;();     // holds indexes
+    for (int i = 0; i &lt; nums.length; i++) {
+        while (!stack.isEmpty() &amp;&amp; nums[stack.peek()] &lt; nums[i]) {
+            int j = stack.pop();                   // nums[i] is j's next greater
+            answer[j] = nums[i];
+        }
+        stack.push(i);                             // wait for my next greater
+    }
+    return answer;
+}</code></pre>
+<p><b>Time &amp; space:</b> O(n) time — each index is pushed and popped at most once. O(n) space.</p>
+<div class="note"><b>Remember:</b> "next greater / next smaller" → monotonic stack of indexes.<br>Practice: Next Greater Element I (#496), Daily Temperatures (#739), Sliding Window Maximum (#239, hard).</div>
+</section>
+
+<section id="s35">
+<h3>35. Merge Intervals</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>An <b>interval</b> is a range with a start and an end, like <code>[1, 3]</code>. Two intervals <b>overlap</b> if one starts before the other ends. To merge them, first <b>sort by start</b>, then walk through and join the ones that overlap.</p>
+<p class="analogy">Your calendar has meetings 1–3 pm and 2–6 pm. They overlap, so you are busy from 1 to 6 pm. That is merging.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Step 1: <b>sort by start time</b>. This is almost always the first step.</li>
+<li>Overlap check (after sorting): <code>next.start &lt;= current.end</code>.</li>
+<li>Merge: <code>current.end = Math.max(current.end, next.end)</code>.</li>
+<li>No overlap → save the current interval and start a new one.</li>
+<li>Used for meeting rooms, calendars, booking systems.</li>
+</ul>
+<h4>Dry run: [[1, 3], [2, 6], [8, 10]] (already sorted)</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Next interval</th><th>Overlaps last merged?</th><th>Merged list</th></tr></thead>
+<tbody>
+<tr><td>[1, 3]</td><td>first one</td><td>[[1, 3]]</td></tr>
+<tr><td>[2, 6]</td><td>2 ≤ 3 → yes, end = max(3, 6) = 6</td><td>[[1, 6]]</td></tr>
+<tr><td>[8, 10]</td><td>8 ≤ 6? no → add new</td><td><b>[[1, 6], [8, 10]]</b></td></tr>
+</tbody></table></div>
+<pre><code>static int[][] merge(int[][] intervals) {
+    Arrays.sort(intervals, Comparator.comparingInt(a -&gt; a[0]));   // sort by start
+    List&lt;int[]&gt; merged = new ArrayList&lt;&gt;();
+    for (int[] cur : intervals) {
+        if (merged.isEmpty() || cur[0] &gt; merged.get(merged.size() - 1)[1]) {
+            merged.add(cur);                              // no overlap: new interval
+        } else {
+            int[] last = merged.get(merged.size() - 1);   // overlap: stretch the end
+            last[1] = Math.max(last[1], cur[1]);
+        }
+    }
+    return merged.toArray(new int[0][]);
+}</code></pre>
+<p><b>Time &amp; space:</b> O(n log n) time for sorting, then one pass. O(n) space for the answer.</p>
+<div class="note"><b>Remember:</b> intervals → sort by start first, then compare each one with the last merged interval.<br>Practice: Merge Intervals (#56), Insert Interval (#57), Non-overlapping Intervals (#435).</div>
+</section>
+
+<section id="s36">
+<h3>36. Cyclic Sort</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>When an array holds numbers from <b>1 to n</b> (or 0 to n), each number has a "home": number <code>x</code> belongs at index <code>x - 1</code>. <b>Cyclic sort</b> keeps swapping each number into its home. Then a missing or duplicate number is easy to spot.</p>
+<p class="analogy">Students with seat numbers walking into a classroom. Each student goes straight to their own numbered seat. An empty seat at the end shows who is absent.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Clue: "numbers in the range 1 to n", "find the missing / duplicate number".</li>
+<li>If <code>nums[i]</code> is not at its home, swap it there. Do <b>not</b> move i yet — check the new number too.</li>
+<li>If the number is already home (or its home already has the same number), move on: <code>i++</code>.</li>
+<li>After sorting, any index i where <code>nums[i] != i + 1</code> shows a problem number.</li>
+<li>O(n) time and O(1) extra space — better than sorting or a HashSet.</li>
+</ul>
+<h4>Dry run: [3, 1, 2]</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>i</th><th>nums[i]</th><th>Its home index</th><th>Action</th><th>Array after</th></tr></thead>
+<tbody>
+<tr><td>0</td><td>3</td><td>2</td><td>swap with index 2</td><td>[2, 1, 3]</td></tr>
+<tr><td>0</td><td>2</td><td>1</td><td>swap with index 1</td><td>[1, 2, 3]</td></tr>
+<tr><td>0</td><td>1</td><td>0</td><td>already home → i++</td><td>[1, 2, 3]</td></tr>
+<tr><td>1, 2</td><td colspan="4">already home → done: <b>[1, 2, 3]</b></td></tr>
+</tbody></table></div>
+<pre><code>static void cyclicSort(int[] nums) {          // numbers are 1..n
+    int i = 0;
+    while (i &lt; nums.length) {
+        int home = nums[i] - 1;               // where this number belongs
+        if (nums[i] != nums[home]) {          // not home yet (and no duplicate there)
+            int temp = nums[i];               // swap it home
+            nums[i] = nums[home];
+            nums[home] = temp;
+        } else {
+            i++;                              // fine: move to the next index
+        }
+    }
+}
+
+// Missing Number: numbers 0..n with one missing (simple math version)
+static int missingNumber(int[] nums) {
+    int n = nums.length;
+    int expected = n * (n + 1) / 2;           // sum of 0..n
+    int actual = 0;
+    for (int x : nums) actual += x;
+    return expected - actual;                 // the difference is the missing one
+}</code></pre>
+<p><b>Time &amp; space:</b> O(n) time — every swap puts one number home for good. O(1) space.</p>
+<div class="note"><b>Remember:</b> "numbers from 1 to n" → put each number at index <code>number - 1</code>.<br>Practice: Missing Number (#268), Find All Numbers Disappeared in an Array (#448), Find the Duplicate Number (#287).</div>
+</section>
+
+<section id="s37">
+<h3>37. In-place List Reversal</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>To <b>reverse a linked list</b>, you turn every arrow around so it points backwards. "<b>In place</b>" means you don't make a new list — you only change the existing arrows. You need three pointers: <code>prev</code>, <code>cur</code> and <code>next</code>.</p>
+<p class="analogy">A line of people, each with a hand on the shoulder of the person in front. To reverse the line, each person in turn takes their hand off and puts it on the person behind them.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>Save <code>next = cur.next</code> <b>before</b> you change the arrow, or you lose the rest of the list.</li>
+<li>Turn the arrow: <code>cur.next = prev</code>.</li>
+<li>Move both forward: <code>prev = cur</code>, <code>cur = next</code>.</li>
+<li>At the end, <code>prev</code> is the new head.</li>
+<li>Draw it on paper. Three boxes and arrows make it clear.</li>
+</ul>
+<h4>Dry run: reverse 1 → 2 → 3</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Step</th><th>prev</th><th>cur</th><th>Arrows so far</th></tr></thead>
+<tbody>
+<tr><td>start</td><td>null</td><td>1</td><td>1 → 2 → 3</td></tr>
+<tr><td>1</td><td>1</td><td>2</td><td>null ← 1 &nbsp; 2 → 3</td></tr>
+<tr><td>2</td><td>2</td><td>3</td><td>null ← 1 ← 2 &nbsp; 3</td></tr>
+<tr><td>3</td><td>3</td><td>null</td><td>null ← 1 ← 2 ← 3 &nbsp; (new head = <b>3</b>)</td></tr>
+</tbody></table></div>
+<pre><code>static ListNode reverseList(ListNode head) {
+    ListNode prev = null;              // the reversed part (empty at first)
+    ListNode cur = head;               // the node we are working on
+    while (cur != null) {
+        ListNode next = cur.next;      // 1. remember the rest of the list
+        cur.next = prev;               // 2. turn the arrow backwards
+        prev = cur;                    // 3. move prev forward
+        cur = next;                    // 4. move cur forward
+    }
+    return prev;                       // prev is the new head
+}</code></pre>
+<p><b>Time &amp; space:</b> O(n) time — each node once. O(1) space — only three pointers.</p>
+<div class="note"><b>Remember:</b> save next, turn the arrow, move prev, move cur. Return prev.<br>Practice: Reverse Linked List (#206), Palindrome Linked List (#234), Reverse Linked List II (#92).</div>
+</section>
+
+<section id="s38">
+<h3>38. Tree BFS &amp; DFS</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>There are two ways to visit every node of a tree. <b>BFS</b> (breadth-first) visits <b>level by level</b>, using a queue. <b>DFS</b> (depth-first) goes <b>deep down one branch</b> first, using recursion. Look again at the tree picture in topic 12.</p>
+<p class="analogy">BFS is like reading a company chart floor by floor: the CEO, then all managers, then all staff. DFS is like following one chain of command all the way down before trying the next.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><b>BFS</b>: put the root in a queue. Each round, take out all nodes of the current level and add their children.</li>
+<li>Use BFS for: level order, "minimum depth", "rightmost node of each level".</li>
+<li><b>DFS</b>: preorder (node, left, right), inorder (left, node, right), postorder (left, right, node).</li>
+<li>Use DFS for: height, path sums, checking a property of every subtree.</li>
+<li>Trick for BFS levels: save <code>size = queue.size()</code> at the start of each level, then loop exactly that many times.</li>
+</ul>
+<h4>Dry run: level order of the tree 1 (children 2, 3), 2 (children 4, 5)</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Round</th><th>Queue at start</th><th>size</th><th>Level saved</th><th>Queue after</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>[1]</td><td>1</td><td>[1]</td><td>[2, 3]</td></tr>
+<tr><td>2</td><td>[2, 3]</td><td>2</td><td>[2, 3]</td><td>[4, 5]</td></tr>
+<tr><td>3</td><td>[4, 5]</td><td>2</td><td>[4, 5]</td><td>[] → done</td></tr>
+</tbody></table></div>
+<pre><code>static List&lt;List&lt;Integer&gt;&gt; levelOrder(TreeNode root) {
+    List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
+    if (root == null) return result;
+    Queue&lt;TreeNode&gt; queue = new ArrayDeque&lt;&gt;();
+    queue.offer(root);
+    while (!queue.isEmpty()) {
+        int size = queue.size();                 // nodes in this level
+        List&lt;Integer&gt; level = new ArrayList&lt;&gt;();
+        for (int i = 0; i &lt; size; i++) {
+            TreeNode node = queue.poll();
+            level.add(node.val);
+            if (node.left != null) queue.offer(node.left);    // next level
+            if (node.right != null) queue.offer(node.right);
+        }
+        result.add(level);
+    }
+    return result;
+}
+
+// DFS: is there a root-to-leaf path that adds up to target?
+static boolean hasPathSum(TreeNode root, int target) {
+    if (root == null) return false;
+    if (root.left == null &amp;&amp; root.right == null) {   // leaf
+        return root.val == target;
+    }
+    int rest = target - root.val;                     // what is still needed
+    return hasPathSum(root.left, rest) || hasPathSum(root.right, rest);
+}</code></pre>
+<p><b>Time &amp; space:</b> O(n) time for both — each node once. BFS uses O(width) space, DFS uses O(height) space.</p>
+<div class="note"><b>Remember:</b> "level" in the question → BFS with a queue. "path" or "depth" → DFS with recursion.<br>Practice: Binary Tree Level Order Traversal (#102), Average of Levels in Binary Tree (#637), Path Sum (#112).</div>
+</section>
+
+<section id="s39">
+<h3>39. Top K &amp; K-way Merge</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Top K</b> means "find the k biggest / smallest / most frequent items". Use a <b>heap of size k</b>. <b>K-way merge</b> means "merge k sorted lists into one sorted list". Put the first item of each list in a min-heap, and keep taking the smallest.</p>
+<p class="analogy">Top K: a talent show keeps only the best 3 acts on stage. When a better act arrives, the weakest one on stage leaves. K-way merge: k queues at a bank, and the next served is always the person with the earliest ticket among all queue fronts.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>k largest → min-heap of size k (the smallest of the best k sits on top, easy to kick out).</li>
+<li>k most frequent → count with a HashMap first, then use the heap on the counts.</li>
+<li>K-way merge → heap holds one item from each list. Poll the smallest, then push the next item from that same list.</li>
+<li>Time is O(n log k), which beats sorting everything (O(n log n)) when k is small.</li>
+</ul>
+<h4>Dry run: top 2 frequent in [1, 1, 1, 2, 2, 3]</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Step</th><th>Result</th></tr></thead>
+<tbody>
+<tr><td>Count</td><td>{1: 3, 2: 2, 3: 1}</td></tr>
+<tr><td>Add 1 (count 3)</td><td>heap: [1]</td></tr>
+<tr><td>Add 2 (count 2)</td><td>heap: [2, 1] (lowest count on top)</td></tr>
+<tr><td>Add 3 (count 1)</td><td>size 3 &gt; 2 → poll lowest count (3) → heap: [2, 1]</td></tr>
+<tr><td>Answer</td><td><b>[1, 2]</b> (any order)</td></tr>
+</tbody></table></div>
+<pre><code>static int[] topKFrequent(int[] nums, int k) {
+    Map&lt;Integer, Integer&gt; count = new HashMap&lt;&gt;();
+    for (int x : nums) count.put(x, count.getOrDefault(x, 0) + 1);   // 1. count
+
+    // 2. min-heap ordered by count: the least frequent is on top
+    PriorityQueue&lt;Integer&gt; heap =
+        new PriorityQueue&lt;&gt;(Comparator.comparingInt(n -&gt; count.get(n)));
+    for (int num : count.keySet()) {
+        heap.offer(num);
+        if (heap.size() &gt; k) heap.poll();        // drop the least frequent
+    }
+
+    int[] result = new int[k];                   // 3. the heap holds the answer
+    for (int i = 0; i &lt; k; i++) result[i] = heap.poll();
+    return result;
+}</code></pre>
+<p><b>Time &amp; space:</b> O(n log k) time — counting is O(n), each heap step is O(log k). O(n) space for the counts.</p>
+<div class="note"><b>Remember:</b> "top k", "k closest", "k most frequent" → heap of size k. "Merge k sorted" → min-heap of list fronts.<br>Practice: Kth Largest Element in a Stream (#703), Top K Frequent Elements (#347), K Closest Points to Origin (#973), Merge k Sorted Lists (#23, hard).</div>
+</section>
+
+<section id="s40">
+<h3>40. Two Heaps</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Use <b>two heaps</b> to split numbers into a <b>smaller half</b> and a <b>bigger half</b>. A max-heap holds the smaller half (its top is the biggest of the small ones). A min-heap holds the bigger half (its top is the smallest of the big ones). The <b>median</b> (middle value) is always at the tops.</p>
+<p class="analogy">A class lines up by height and splits into two groups at the middle. You only need to look at the tallest of the short group and the shortest of the tall group to find the middle height.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><code>low</code> = max-heap (smaller half). <code>high</code> = min-heap (bigger half).</li>
+<li>Keep sizes balanced: <code>low</code> has the same number of items as <code>high</code>, or one more.</li>
+<li>Odd count → median = top of <code>low</code>. Even count → average of both tops.</li>
+<li>Clue: "median of a stream" (numbers keep arriving), "sliding window median".</li>
+</ul>
+<h4>Dry run: add 5, then 2, then 8</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Add</th><th>low (max-heap)</th><th>high (min-heap)</th><th>Median</th></tr></thead>
+<tbody>
+<tr><td>5</td><td>[5]</td><td>[]</td><td>5</td></tr>
+<tr><td>2</td><td>[2]</td><td>[5]</td><td>(2 + 5) / 2 = 3.5</td></tr>
+<tr><td>8</td><td>[5, 2]</td><td>[8]</td><td><b>5</b></td></tr>
+</tbody></table></div>
+<pre><code>class MedianFinder {
+    PriorityQueue&lt;Integer&gt; low = new PriorityQueue&lt;&gt;(Collections.reverseOrder()); // max-heap
+    PriorityQueue&lt;Integer&gt; high = new PriorityQueue&lt;&gt;();                         // min-heap
+
+    void addNum(int num) {
+        low.offer(num);                       // 1. add to the small half
+        high.offer(low.poll());               // 2. move the biggest small one up
+        if (high.size() &gt; low.size()) {       // 3. keep low the same size or bigger
+            low.offer(high.poll());
+        }
+    }
+
+    double findMedian() {
+        if (low.size() &gt; high.size()) return low.peek();     // odd count
+        return (low.peek() + high.peek()) / 2.0;              // even count
+    }
+}</code></pre>
+<p><b>Time &amp; space:</b> O(log n) per add, O(1) for the median. O(n) space.</p>
+<div class="note"><b>Remember:</b> median of changing data → max-heap for the small half, min-heap for the big half.<br>Practice: Find Median from Data Stream (#295, hard but it is the classic one).</div>
+</section>
+
+<section id="s41">
+<h3>41. Subsets &amp; Permutations</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>These are backtracking problems (topic 21). A <b>subset</b> is any group of the items (order does not matter). A <b>permutation</b> is an ordering of all the items (order matters). A <b>combination</b> is a group of exactly k items.</p>
+<p class="analogy">Pizza toppings. Subsets: every possible set of toppings you could choose. Permutations: every order you could put 3 toppings on the pizza, one after another.</p>
+</div>
+<h4>Key points</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Type</th><th>For [1, 2, 3]</th><th>How many</th><th>Trick</th></tr></thead>
+<tbody>
+<tr><td>Subsets</td><td>[], [1], [2], [3], [1,2], [1,3], [2,3], [1,2,3]</td><td>2ⁿ = 8</td><td>loop from <code>start</code> (topic 21)</td></tr>
+<tr><td>Permutations</td><td>[1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], [3,2,1]</td><td>n! = 6</td><td><code>used[]</code> array, loop from 0</td></tr>
+<tr><td>Combinations (k = 2)</td><td>[1,2], [1,3], [2,3]</td><td>C(n, k) = 3</td><td>subsets, but save only when size = k</td></tr>
+</tbody></table></div>
+<ul>
+<li>Permutations: every position can use any item that is <b>not used yet</b>.</li>
+<li>Save the answer when <code>path.size() == nums.length</code>.</li>
+<li>With duplicates in the input: sort first, then skip equal neighbours.</li>
+</ul>
+<h4>Dry run: permutations of [1, 2] (first steps)</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>path</th><th>used</th><th>Action</th></tr></thead>
+<tbody>
+<tr><td>[]</td><td>[F, F]</td><td>choose 1</td></tr>
+<tr><td>[1]</td><td>[T, F]</td><td>choose 2</td></tr>
+<tr><td>[1, 2]</td><td>[T, T]</td><td>full → save. Go back, un-choose 2, un-choose 1</td></tr>
+<tr><td>[2]</td><td>[F, T]</td><td>choose 1 → [2, 1] full → save</td></tr>
+<tr><td colspan="3">answers: [1, 2], [2, 1]</td></tr>
+</tbody></table></div>
+<pre><code>static List&lt;List&lt;Integer&gt;&gt; permute(int[] nums) {
+    List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
+    build(nums, new boolean[nums.length], new ArrayList&lt;&gt;(), result);
+    return result;
+}
+
+static void build(int[] nums, boolean[] used, List&lt;Integer&gt; path,
+                  List&lt;List&lt;Integer&gt;&gt; result) {
+    if (path.size() == nums.length) {            // all items placed
+        result.add(new ArrayList&lt;&gt;(path));       // save a copy
+        return;
+    }
+    for (int i = 0; i &lt; nums.length; i++) {
+        if (used[i]) continue;                   // already in the path
+        used[i] = true;                          // choose
+        path.add(nums[i]);
+        build(nums, used, path, result);         // explore
+        path.remove(path.size() - 1);            // un-choose
+        used[i] = false;
+    }
+}</code></pre>
+<p><b>Time &amp; space:</b> O(n! × n) time — n! orderings, each copied. O(n) space for the recursion.</p>
+<div class="note"><b>Remember:</b> subsets → loop from <code>start</code>. Permutations → loop from 0 with <code>used[]</code>.<br>Practice: Subsets (#78), Permutations (#46), Combinations (#77).</div>
+</section>
+
+<section id="s42">
+<h3>42. Modified Binary Search</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>Binary search (topic 20) can do more than "find x". You can change it to find the <b>first</b> or <b>last</b> position of x, search in a <b>rotated</b> sorted array, or even search for the <b>answer itself</b> ("what is the smallest speed that works?").</p>
+<p class="analogy">Looking for the first page of chapter 5 in a book. When you land on a chapter 5 page, you don't stop — you keep looking to the left to see if chapter 5 starts earlier.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><b>First position</b>: when you find x, save it, then keep searching <b>left</b> (<code>hi = mid - 1</code>).</li>
+<li><b>Last position</b>: same, but keep searching <b>right</b>.</li>
+<li><b>Rotated array</b> (like [4, 5, 6, 1, 2, 3]): one half is always sorted. Check if x is in that half.</li>
+<li><b>Search on the answer</b>: if "does value v work?" is no, no, no, yes, yes, yes, binary search for the first yes.</li>
+<li>The question's clue is often "sorted" plus "O(log n)".</li>
+</ul>
+<h4>Dry run: first position of 2 in [1, 2, 2, 2, 3]</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>lo</th><th>hi</th><th>mid</th><th>arr[mid]</th><th>Action</th><th>answer</th></tr></thead>
+<tbody>
+<tr><td>0</td><td>4</td><td>2</td><td>2</td><td>found, keep looking left: hi = 1</td><td>2</td></tr>
+<tr><td>0</td><td>1</td><td>0</td><td>1</td><td>too small: lo = 1</td><td>2</td></tr>
+<tr><td>1</td><td>1</td><td>1</td><td>2</td><td>found, keep looking left: hi = 0</td><td>1</td></tr>
+<tr><td>1</td><td>0</td><td colspan="3">lo &gt; hi → stop</td><td><b>1</b></td></tr>
+</tbody></table></div>
+<pre><code>static int firstPosition(int[] arr, int target) {
+    int lo = 0, hi = arr.length - 1;
+    int answer = -1;                      // -1 if never found
+    while (lo &lt;= hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (arr[mid] == target) {
+            answer = mid;                 // found one, save it
+            hi = mid - 1;                 // but maybe there is an earlier one
+        } else if (arr[mid] &lt; target) {
+            lo = mid + 1;
+        } else {
+            hi = mid - 1;
+        }
+    }
+    return answer;
+}</code></pre>
+<p><b>Time &amp; space:</b> O(log n) time, O(1) space — still halving every step.</p>
+<div class="note"><b>Remember:</b> found it? Save the answer and keep searching in the direction you need.<br>Practice: Search Insert Position (#35), Find First and Last Position of Element in Sorted Array (#34), Search in Rotated Sorted Array (#33).</div>
+</section>
+
+<section id="s43">
+<h3>43. Topological Sort</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p><b>Topological sort</b> puts tasks in an order where every task comes <b>after</b> the tasks it depends on. It works on a <b>directed graph with no cycles</b>. The <b>in-degree</b> of a node is how many arrows point into it — how many tasks must happen before it.</p>
+<p class="analogy">Getting dressed. Socks before shoes. Shirt before jacket. You can start with anything that has nothing before it, and the order follows from there.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li><b>Kahn's algorithm</b>: start with all nodes that have in-degree 0 (nothing before them). Put them in a queue.</li>
+<li>Take one out, add it to the order, and lower the in-degree of its neighbours by 1.</li>
+<li>When a neighbour reaches in-degree 0, it is ready — add it to the queue.</li>
+<li>If the final order has fewer than n nodes, there is a <b>cycle</b> (impossible to finish).</li>
+<li>Clue: "prerequisites", "dependencies", "build order", "can all courses be finished?"</li>
+</ul>
+<h4>Dry run: 4 courses. 0 before 1, 0 before 2, 1 before 3, 2 before 3</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Take out</th><th>in-degree [0, 1, 2, 3] after</th><th>Queue after</th><th>Order</th></tr></thead>
+<tbody>
+<tr><td>start</td><td>[0, 1, 1, 2]</td><td>[0]</td><td>[]</td></tr>
+<tr><td>0</td><td>[0, 0, 0, 2]</td><td>[1, 2]</td><td>[0]</td></tr>
+<tr><td>1</td><td>[0, 0, 0, 1]</td><td>[2]</td><td>[0, 1]</td></tr>
+<tr><td>2</td><td>[0, 0, 0, 0]</td><td>[3]</td><td>[0, 1, 2]</td></tr>
+<tr><td>3</td><td>—</td><td>[]</td><td><b>[0, 1, 2, 3]</b></td></tr>
+</tbody></table></div>
+<pre><code>// prereqs[i] = {course, before}: "before" must be taken before "course"
+static List&lt;Integer&gt; courseOrder(int n, int[][] prereqs) {
+    List&lt;List&lt;Integer&gt;&gt; graph = new ArrayList&lt;&gt;();
+    for (int i = 0; i &lt; n; i++) graph.add(new ArrayList&lt;&gt;());
+    int[] inDegree = new int[n];
+    for (int[] p : prereqs) {
+        graph.get(p[1]).add(p[0]);        // arrow: before -&gt; course
+        inDegree[p[0]]++;                 // course has one more thing before it
+    }
+
+    Queue&lt;Integer&gt; queue = new ArrayDeque&lt;&gt;();
+    for (int i = 0; i &lt; n; i++) {
+        if (inDegree[i] == 0) queue.offer(i);   // ready to start
+    }
+
+    List&lt;Integer&gt; order = new ArrayList&lt;&gt;();
+    while (!queue.isEmpty()) {
+        int course = queue.poll();
+        order.add(course);
+        for (int next : graph.get(course)) {
+            inDegree[next]--;             // one less thing to wait for
+            if (inDegree[next] == 0) queue.offer(next);
+        }
+    }
+    return order.size() == n ? order : new ArrayList&lt;&gt;();   // empty = cycle
+}</code></pre>
+<p><b>Time &amp; space:</b> O(V + E) time — each course and each arrow once. O(V + E) space for the graph.</p>
+<div class="note"><b>Remember:</b> start from in-degree 0, remove it, lower the neighbours. Fewer than n in the order → cycle.<br>Practice: Course Schedule (#207), Course Schedule II (#210).</div>
+</section>
+
+<section id="s44">
+<h3>44. Matrix &amp; Islands</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>A <b>matrix</b> (grid) is a 2D array: rows and columns. Many grid problems are graph problems in disguise. Each cell is a node, and its <b>4 neighbours</b> (up, down, left, right) are its edges. An <b>island</b> is a group of connected land cells.</p>
+<p class="analogy">A paint bucket tool in a drawing app. You click one pixel, and the colour spreads to every touching pixel of the same colour. That spreading is DFS on a grid.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>A cell is <code>grid[r][c]</code>: r = row, c = column.</li>
+<li>Always check the borders first: <code>r &gt;= 0 &amp;&amp; r &lt; rows &amp;&amp; c &gt;= 0 &amp;&amp; c &lt; cols</code>.</li>
+<li>Mark visited cells, often by changing <code>'1'</code> to <code>'0'</code> (sinking the land).</li>
+<li>Number of islands = how many times you start a new DFS on unvisited land.</li>
+<li>Use BFS instead when the question asks for the <b>shortest</b> number of steps.</li>
+</ul>
+<h4>Dry run: count islands</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Grid</th><th>What happens</th></tr></thead>
+<tbody>
+<tr><td><code>1 1 0</code><br><code>0 1 0</code><br><code>0 0 1</code></td><td>(0,0) is land → island 1. DFS sinks (0,0), (0,1), (1,1).<br>(2,2) is land → island 2. DFS sinks it.<br>Answer: <b>2</b>.</td></tr>
+</tbody></table></div>
+<pre><code>static int numIslands(char[][] grid) {
+    int count = 0;
+    for (int r = 0; r &lt; grid.length; r++) {
+        for (int c = 0; c &lt; grid[0].length; c++) {
+            if (grid[r][c] == '1') {       // new land we have not visited
+                count++;                   // found a new island
+                sink(grid, r, c);          // mark the whole island as visited
+            }
+        }
+    }
+    return count;
+}
+
+static void sink(char[][] grid, int r, int c) {
+    if (r &lt; 0 || r &gt;= grid.length || c &lt; 0 || c &gt;= grid[0].length) return;  // outside
+    if (grid[r][c] != '1') return;         // water or already visited
+    grid[r][c] = '0';                      // mark as visited
+    sink(grid, r + 1, c);                  // down
+    sink(grid, r - 1, c);                  // up
+    sink(grid, r, c + 1);                  // right
+    sink(grid, r, c - 1);                  // left
+}</code></pre>
+<p><b>Time &amp; space:</b> O(rows × cols) time — each cell is visited once. O(rows × cols) space for the recursion in the worst case.</p>
+<div class="note"><b>Remember:</b> grid = graph. Check borders, mark visited, explore 4 directions.<br>Practice: Flood Fill (#733), Number of Islands (#200), Max Area of Island (#695).</div>
+</section>
+
+<section id="s45">
+<h3>45. Design Problems</h3>
+<div class="plain">
+<span class="plain-label">In plain words</span>
+<p>In a <b>design problem</b>, you build a small class with a few methods, and each method must be fast. The trick is to <b>combine data structures</b>. Example: an <b>LRU cache</b> (Least Recently Used) keeps the most recently used items and throws out the oldest one when it is full.</p>
+<p class="analogy">A small desk that fits only 2 books. When you need a third book, you put away the book you haven't touched for the longest time.</p>
+</div>
+<h4>Key points</h4>
+<ul>
+<li>First, list each method and the speed it needs (often O(1)).</li>
+<li>Then pick structures: HashMap for fast lookup, a linked list or deque for order, a heap for min/max.</li>
+<li><b>Min Stack</b>: a normal stack plus a second stack that tracks the minimum so far.</li>
+<li><b>LRU Cache</b>: HashMap + doubly linked list. In Java, <code>LinkedHashMap</code> already combines them.</li>
+<li>Interviewers may ask you to build the linked list yourself — see the full notes for that version.</li>
+</ul>
+<h4>Dry run: LRU cache with capacity 2</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Call</th><th>Returns</th><th>Cache (oldest → newest)</th></tr></thead>
+<tbody>
+<tr><td>put(1, 1)</td><td>—</td><td>[1]</td></tr>
+<tr><td>put(2, 2)</td><td>—</td><td>[1, 2]</td></tr>
+<tr><td>get(1)</td><td>1</td><td>[2, 1] (1 is now newest)</td></tr>
+<tr><td>put(3, 3)</td><td>—</td><td>full → remove oldest (2) → [1, 3]</td></tr>
+<tr><td>get(2)</td><td>-1</td><td>[1, 3] (2 was removed)</td></tr>
+</tbody></table></div>
+<pre><code>// LRU Cache using LinkedHashMap (keeps items in "last used" order)
+class LRUCache extends LinkedHashMap&lt;Integer, Integer&gt; {
+    int capacity;
+
+    LRUCache(int capacity) {
+        super(16, 0.75f, true);          // true = order by last access, not insert
+        this.capacity = capacity;
+    }
+
+    int get(int key) {
+        return getOrDefault(key, -1);    // reading also marks it "recently used"
+    }
+
+    void put(int key, int value) {
+        super.put(key, value);
+    }
+
+    @Override
+    protected boolean removeEldestEntry(Map.Entry&lt;Integer, Integer&gt; eldest) {
+        return size() &gt; capacity;        // too big? Java removes the oldest
+    }
+}
+
+// Min Stack: getMin() in O(1)
+class MinStack {
+    Deque&lt;Integer&gt; stack = new ArrayDeque&lt;&gt;();
+    Deque&lt;Integer&gt; mins = new ArrayDeque&lt;&gt;();     // min so far, at each level
+
+    void push(int x) {
+        stack.push(x);
+        mins.push(mins.isEmpty() ? x : Math.min(x, mins.peek()));
+    }
+    void pop()    { stack.pop(); mins.pop(); }
+    int top()     { return stack.peek(); }
+    int getMin()  { return mins.peek(); }
+}</code></pre>
+<p><b>Time &amp; space:</b> every method is O(1). O(n) space for the stored items.</p>
+<div class="note"><b>Remember:</b> design = pick the right mix of structures so every method is fast. HashMap + ordered list is the most common mix.<br>Practice: Min Stack (#155), Design HashMap (#706), LRU Cache (#146).</div>
+</section>
+
+<!-- ================= REVISION ================= -->
+<div class="part">Revision</div>
+
+<section id="cheat">
+<h3>Which Pattern When?</h3>
+<p>Read the question slowly and look for these clues. The clue usually tells you which tool to try first.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Clue in the question</th><th>Try this pattern</th><th>Example problem</th></tr></thead>
+<tbody>
+<tr><td>"Find a pair", "seen before", "count how many times"</td><td>HashMap / HashSet (7)</td><td>Two Sum (#1)</td></tr>
+<tr><td>Sorted array + "pair" / "palindrome"</td><td>Two pointers (30)</td><td>Valid Palindrome (#125)</td></tr>
+<tr><td>"Subarray" / "substring", "longest", "of size k"</td><td>Sliding window (31)</td><td>Longest Substring Without Repeating Characters (#3)</td></tr>
+<tr><td>"Sum of a range" asked many times</td><td>Prefix sum (32)</td><td>Range Sum Query - Immutable (#303)</td></tr>
+<tr><td>Sorted array + "find" + O(log n)</td><td>Binary search (20, 42)</td><td>Binary Search (#704)</td></tr>
+<tr><td>Linked list "middle" or "cycle"</td><td>Fast &amp; slow pointers (33)</td><td>Linked List Cycle (#141)</td></tr>
+<tr><td>"Reverse" a linked list</td><td>In-place reversal (37)</td><td>Reverse Linked List (#206)</td></tr>
+<tr><td>Brackets, "undo", most recent first</td><td>Stack (9)</td><td>Valid Parentheses (#20)</td></tr>
+<tr><td>"Next greater" / "next smaller"</td><td>Monotonic stack (34)</td><td>Daily Temperatures (#739)</td></tr>
+<tr><td>"Top k", "k largest", "k most frequent"</td><td>Heap of size k (11, 39)</td><td>Kth Largest Element in an Array (#215)</td></tr>
+<tr><td>"Median" of numbers that keep arriving</td><td>Two heaps (40)</td><td>Find Median from Data Stream (#295)</td></tr>
+<tr><td>Intervals, meetings, overlapping ranges</td><td>Sort + merge intervals (35)</td><td>Merge Intervals (#56)</td></tr>
+<tr><td>"Numbers from 1 to n", missing / duplicate</td><td>Cyclic sort (36)</td><td>Missing Number (#268)</td></tr>
+<tr><td>Tree "level by level"</td><td>BFS with a queue (38)</td><td>Binary Tree Level Order Traversal (#102)</td></tr>
+<tr><td>Tree "depth", "path", "every subtree"</td><td>DFS recursion (12, 38)</td><td>Maximum Depth of Binary Tree (#104)</td></tr>
+<tr><td>Grid, "islands", "regions", flood fill</td><td>DFS / BFS on a matrix (44)</td><td>Number of Islands (#200)</td></tr>
+<tr><td>"Shortest path", all steps cost the same</td><td>BFS (16)</td><td>Shortest Path in Binary Matrix (#1091)</td></tr>
+<tr><td>"Shortest path" with different costs</td><td>Dijkstra (26)</td><td>Network Delay Time (#743)</td></tr>
+<tr><td>"Prerequisites", "dependencies", "order of tasks"</td><td>Topological sort (43)</td><td>Course Schedule (#207)</td></tr>
+<tr><td>"Connected groups", "same set"</td><td>Union-Find (17)</td><td>Number of Provinces (#547)</td></tr>
+<tr><td>"All combinations / subsets / permutations"</td><td>Backtracking (21, 41)</td><td>Subsets (#78)</td></tr>
+<tr><td>"How many ways", "min / max cost", choices repeat</td><td>Dynamic programming (24, 25)</td><td>Climbing Stairs (#70)</td></tr>
+<tr><td>"Prefix", "starts with", autocomplete</td><td>Trie (15)</td><td>Implement Trie (#208)</td></tr>
+<tr><td>Best choice now seems always safe</td><td>Greedy (22)</td><td>Assign Cookies (#455)</td></tr>
+</tbody></table></div>
+<div class="note"><b>Remember:</b> if nothing fits, write the brute force first. Then ask: "What am I repeating?" The answer often points to a HashMap, sorting, or DP.</div>
+</section>
+
+<section id="complex">
+<h3>Big-O Cheat Sheet</h3>
+<p>Average times for the most common operations. "n" is the number of items.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Structure</th><th>Get / find</th><th>Add</th><th>Remove</th><th>Note</th></tr></thead>
+<tbody>
+<tr><td>Array <code>int[]</code></td><td>O(1) by index, O(n) by value</td><td>O(n) in the middle</td><td>O(n) in the middle</td><td>fixed size</td></tr>
+<tr><td><code>ArrayList</code></td><td>O(1) by index</td><td>O(1) at the end</td><td>O(n) in the middle</td><td>grows by itself</td></tr>
+<tr><td>Linked list</td><td>O(n)</td><td>O(1) at the head</td><td>O(1) at the head</td><td>no index</td></tr>
+<tr><td>Stack / Queue (<code>ArrayDeque</code>)</td><td>O(1) top / front</td><td>O(1)</td><td>O(1)</td><td>only the ends</td></tr>
+<tr><td><code>HashMap</code> / <code>HashSet</code></td><td>O(1)</td><td>O(1)</td><td>O(1)</td><td>no order</td></tr>
+<tr><td><code>TreeMap</code> / <code>TreeSet</code></td><td>O(log n)</td><td>O(log n)</td><td>O(log n)</td><td>sorted keys</td></tr>
+<tr><td>Heap (<code>PriorityQueue</code>)</td><td>O(1) peek min</td><td>O(log n)</td><td>O(log n) poll</td><td>min first</td></tr>
+<tr><td>BST (balanced)</td><td>O(log n)</td><td>O(log n)</td><td>O(log n)</td><td>O(n) if it becomes a line</td></tr>
+<tr><td>Trie</td><td>O(L)</td><td>O(L)</td><td>O(L)</td><td>L = word length</td></tr>
+</tbody></table></div>
+<div class="table-wrap"><table>
+<thead><tr><th>Algorithm</th><th>Time</th><th>Extra space</th></tr></thead>
+<tbody>
+<tr><td>Linear search / one loop</td><td>O(n)</td><td>O(1)</td></tr>
+<tr><td>Binary search</td><td>O(log n)</td><td>O(1)</td></tr>
+<tr><td>Simple sorts (bubble, insertion)</td><td>O(n²)</td><td>O(1)</td></tr>
+<tr><td>Merge sort / <code>Arrays.sort</code></td><td>O(n log n)</td><td>O(n) / O(log n)</td></tr>
+<tr><td>Two pointers / sliding window</td><td>O(n)</td><td>O(1) or O(k)</td></tr>
+<tr><td>BFS / DFS on a graph</td><td>O(V + E)</td><td>O(V)</td></tr>
+<tr><td>Dijkstra</td><td>O(E log V)</td><td>O(V + E)</td></tr>
+<tr><td>Subsets / permutations</td><td>O(2ⁿ) / O(n!)</td><td>O(n)</td></tr>
+<tr><td>1D DP / 2D DP</td><td>O(n) / O(n × m)</td><td>O(n) / O(n × m)</td></tr>
+</tbody></table></div>
+<h4>What input size allows what speed?</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>n up to about…</th><th>You can afford</th></tr></thead>
+<tbody>
+<tr><td>10–20</td><td>O(2ⁿ) or O(n!) — backtracking is fine</td></tr>
+<tr><td>1,000–5,000</td><td>O(n²)</td></tr>
+<tr><td>100,000–1,000,000</td><td>O(n log n) or O(n)</td></tr>
+<tr><td>bigger</td><td>O(log n) or O(1)</td></tr>
+</tbody></table></div>
+<div class="note"><b>Remember:</b> look at the size limit of n in the problem. It quietly tells you how fast your answer must be.</div>
+</section>
+
+<section id="road">
+<h3>Learning Path</h3>
+<p>Go in this order. Do the easy problems at each step before moving on. It is fine to look at a solution when stuck for 30 minutes — then try again the next day without looking.</p>
+<ol>
+<li><b>Big-O and Java basics</b> (topics 2, 4) — loops, arrays, ArrayList, HashMap.<br>Problems: Fizz Buzz (#412), Running Sum of 1d Array (#1480), Richest Customer Wealth (#1672).</li>
+<li><b>Arrays &amp; strings</b> (6) — loops, indexes, StringBuilder.<br>Problems: Reverse String (#344), Best Time to Buy and Sell Stock (#121), Merge Sorted Array (#88).</li>
+<li><b>Hashing</b> (7) — HashMap and HashSet.<br>Problems: Two Sum (#1), Contains Duplicate (#217), Valid Anagram (#242).</li>
+<li><b>Two pointers</b> (30) — from both ends.<br>Problems: Valid Palindrome (#125), Move Zeroes (#283), Two Sum II (#167).</li>
+<li><b>Sliding window &amp; prefix sum</b> (31, 32).<br>Problems: Maximum Average Subarray I (#643), Longest Substring Without Repeating Characters (#3), Range Sum Query - Immutable (#303).</li>
+<li><b>Stacks &amp; queues</b> (9, 10).<br>Problems: Valid Parentheses (#20), Min Stack (#155), Implement Queue using Stacks (#232).</li>
+<li><b>Linked lists</b> (8, 33, 37).<br>Problems: Reverse Linked List (#206), Middle of the Linked List (#876), Linked List Cycle (#141).</li>
+<li><b>Recursion</b> (3) — base case and call stack.<br>Problems: Fibonacci Number (#509), Power of Two (#231), Merge Two Sorted Lists (#21).</li>
+<li><b>Binary search</b> (20, 42).<br>Problems: Binary Search (#704), Search Insert Position (#35), First Bad Version (#278).</li>
+<li><b>Binary trees</b> (12, 13, 38) — DFS recursion and BFS levels.<br>Problems: Maximum Depth of Binary Tree (#104), Invert Binary Tree (#226), Binary Tree Level Order Traversal (#102).</li>
+<li><b>Heaps</b> (11, 39).<br>Problems: Last Stone Weight (#1046), Kth Largest Element in a Stream (#703), Top K Frequent Elements (#347).</li>
+<li><b>Backtracking</b> (21, 41).<br>Problems: Subsets (#78), Permutations (#46), Combination Sum (#39).</li>
+<li><b>Graphs &amp; grids</b> (16, 44, 43).<br>Problems: Flood Fill (#733), Number of Islands (#200), Course Schedule (#207).</li>
+<li><b>Dynamic programming</b> (24, 25).<br>Problems: Climbing Stairs (#70), House Robber (#198), Coin Change (#322).</li>
+<li><b>Then</b> — intervals, greedy, tries, Union-Find, Dijkstra. Advanced topics (segment trees, KMP, MST) last. Now read the <a href="dsa.html">full notes</a> and practise with the <a href="../cheat-sheets/dsa-leetcode.html">LeetCode cheat sheet</a> and the <a href="../interview-questions/dsa.html">interview Q&amp;A</a>.</li>
+</ol>
+<div class="note"><b>Remember:</b> a little every day beats a lot once a week. 2 problems a day for 3 months is enough to feel confident.</div>
+</section>
+
+</main>
+</div>
+
+<script src="../assets/notes.js"></script>
+</body>
+</html>
