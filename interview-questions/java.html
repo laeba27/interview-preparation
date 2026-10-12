@@ -92,6 +92,7 @@
     <a href="#s42">42 · SOLID</a>
     <a href="#s43">43 · Reflection &amp; Annotations</a>
     <a href="#s44">44 · Build &amp; Testing</a>
+    <a href="#s45">45 · The Java Lifecycle</a>
   </nav>
 
   <h2>Practice</h2>
@@ -6910,6 +6911,215 @@ svc.transfer("A", "B", 500);
 </details>
 </section>
 
+<section id="s45">
+<h3>45. The Java Lifecycle</h3>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>Walk me through what happens from writing a <code>.java</code> file to the program exiting.</summary>
+<div class="answer">
+<p>So I think of it as a pipeline. First the compiler, then the JVM loads and prepares classes, then my code runs, and at the end the JVM shuts down.</p>
+<pre><code>1. Write      : Hello.java (source code)
+2. Compile    : javac Hello.java  -&gt;  Hello.class (bytecode, not machine code)
+3. JVM starts : java Hello  -&gt;  sets up heap, stacks, metaspace
+4. Load       : class loader finds Hello.class (parent delegation)
+5. Link       : verify bytecode, prepare statics (defaults), resolve references
+6. Initialize : static fields + static blocks run, once
+7. Run        : main() runs on the "main" thread
+8. JIT        : hot methods get compiled to native code while running
+9. GC         : unreachable objects are freed in the background
+10. Shutdown  : all non-daemon threads end (or System.exit) -&gt; shutdown hooks -&gt; exit</code></pre>
+<p>Walking through it: <code>javac</code> turns my code into bytecode, which is the same on every OS. That's the "write once, run anywhere" part. When I type <code>java Hello</code>, the JVM starts and loads only the classes it needs, when it needs them. Steps 4 to 6 happen again for every new class my code touches later.</p>
+<p>The JVM starts by interpreting bytecode, which starts fast but runs slowly. Methods that run a lot get compiled to machine code by the JIT, which is why Java programs "warm up" and get faster after a while.</p>
+<p>So in practice: compile once, then load, link, initialize, run, and the JIT and GC help in the background until the last non-daemon thread finishes.</p>
+<p class="tip"><b>Interviewers look for:</b> the stages in the right order, knowing that bytecode is not machine code, that class loading is lazy, and what makes the JVM exit.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>What are loading, linking and initialization? When exactly does a static block run?</summary>
+<div class="answer">
+<p>So these are the three steps the JVM takes to get a class ready. Loading finds the class, linking checks and prepares it, and initialization runs its static code.</p>
+<div class="table-wrap"><table>
+<tr><th>Step</th><th>What happens</th></tr>
+<tr><td>Loading</td><td>A class loader reads the <code>.class</code> bytes and creates a <code>Class</code> object. It asks its parent first (bootstrap, then platform, then application).</td></tr>
+<tr><td>Linking: verify</td><td>Checks the bytecode is safe and legal</td></tr>
+<tr><td>Linking: prepare</td><td>Makes room for static fields and sets them to defaults: 0, <code>false</code>, <code>null</code></td></tr>
+<tr><td>Linking: resolve</td><td>Turns symbolic names into real references, usually lazily</td></tr>
+<tr><td>Initialization</td><td>Runs static field assignments and <code>static { }</code> blocks, top to bottom</td></tr>
+</table></div>
+<p>A static block runs <b>once</b>, on the class's <b>first active use</b>. That means creating an object, calling a static method, using a static field that isn't a compile-time constant, or initializing a subclass. It does <i>not</i> run just because the class exists in the jar.</p>
+<pre><code>class Config {
+    static final int MAX = 10;                       // compile-time constant
+    static { System.out.println("Config initialized"); }
+}
+
+System.out.println(Config.MAX);                      // 10   (no init: the value is copied in)
+System.out.println(Config.class.getName());          // Config  (still no init)
+new Config();                                        // Config initialized</code></pre>
+<p>I ran this, and the static block only printed at <code>new Config()</code>. The JVM also guarantees initialization happens under a lock, so even if two threads use the class at the same time, the static block runs only once. That's why the "holder class" singleton pattern is thread-safe.</p>
+<p class="tip"><b>Interviewers look for:</b> the three phases with verify/prepare/resolve, "once, lazily, on first active use", and the compile-time constant exception.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>In what order do static blocks, instance blocks and constructors run, with a parent and child class?</summary>
+<div class="answer">
+<p>So the rule I remember is: <b>statics first, parent before child, once per class</b>. Then for every object, the parent's instance blocks and constructor run, then the child's.</p>
+<pre><code>class Parent {
+    static { System.out.println("1. Parent static block"); }
+    { System.out.println("3. Parent instance block"); }
+    Parent() { System.out.println("4. Parent constructor"); }
+}
+class Child extends Parent {
+    static { System.out.println("2. Child static block"); }
+    { System.out.println("5. Child instance block"); }
+    Child() { System.out.println("6. Child constructor"); }
+}
+
+new Child();
+new Child();</code></pre>
+<pre><code>1. Parent static block
+2. Child static block
+3. Parent instance block
+4. Parent constructor
+5. Child instance block
+6. Child constructor
+3. Parent instance block      &lt;- second object: no static blocks this time
+4. Parent constructor
+5. Child instance block
+6. Child constructor</code></pre>
+<p>Walking through it: before a child class can be initialized, its parent must be initialized, so the parent's static block runs first. Statics run only once per class, so the second <code>new Child()</code> skips them.</p>
+<p>For each object, the child constructor's first line is always <code>super()</code>, even if I don't write it. So the parent part of the object is built first. At each level, instance blocks and field initializers run in the order they're written, then the constructor body.</p>
+<p>So in practice: I never put logic in a parent constructor that calls an overridable method, because the child's fields aren't set yet at that point.</p>
+<p class="tip"><b>Interviewers look for:</b> the exact six-line order, and that static blocks don't run again for the second object.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>What is the lifecycle of an object, and when does it become eligible for garbage collection?</summary>
+<div class="answer">
+<p>So an object is created, used, becomes unreachable, and then the GC frees it at some point. The key moment is "unreachable".</p>
+<div class="table-wrap"><table>
+<tr><th>Stage</th><th>What happens</th></tr>
+<tr><td>Allocation</td><td><code>new</code> gets memory on the heap, usually in Eden. Fields get defaults.</td></tr>
+<tr><td>Construction</td><td>Constructor chain runs, super-first</td></tr>
+<tr><td>In use</td><td>Reachable from a GC root: a local variable, a static field, an active thread</td></tr>
+<tr><td>Unreachable</td><td>No path from any root. Now it's eligible for GC.</td></tr>
+<tr><td>Collected</td><td>The GC frees the memory later. I don't control when.</td></tr>
+</table></div>
+<pre><code>void demo() {
+    Order o = new Order();   // allocated, reachable through o
+    o = null;                // unreachable -&gt; eligible for GC
+}</code></pre>
+<p>An object becomes eligible when I set the last reference to <code>null</code>, when the variable goes out of scope, when I remove it from the collection holding it, or when it's only part of an "island" of objects that point to each other but nothing outside points to them. Java's GC traces from roots, so cycles are not a problem.</p>
+<p>Most objects die young, so they're collected cheaply in the young generation. Objects that survive several collections move to the old generation, which is collected less often.</p>
+<p>And one thing to be careful about: <code>System.gc()</code> is only a hint. Eligible doesn't mean collected right now.</p>
+<p class="tip"><b>Interviewers look for:</b> "reachable from GC roots", not "reference count is zero", and knowing eligible is not the same as collected.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span><code>finalize()</code> vs try-with-resources vs <code>Cleaner</code>: how should you clean up resources?</summary>
+<div class="answer">
+<p>So I use try-with-resources almost always, <code>Cleaner</code> only as a safety net for low-level code, and <code>finalize()</code> never.</p>
+<p><code>finalize()</code> is a method the GC <i>might</i> call before freeing an object. The problem is "might": it can run late or never, it slows down GC, and it can even bring an object back to life. It's deprecated since Java 9 and deprecated for removal since Java 18.</p>
+<pre><code>class FileLike implements AutoCloseable {
+    FileLike() { System.out.println("open"); }
+    @Override public void close() { System.out.println("close"); }
+}
+
+try (FileLike f = new FileLike()) {
+    System.out.println("use");
+}                                   // open, use, close  -- close() runs even on an exception</code></pre>
+<p>try-with-resources works with anything that implements <code>AutoCloseable</code>: streams, JDBC connections, locks I wrap. Cleanup happens at a known time, which is what you want for files and connections.</p>
+<p><code>java.lang.ref.Cleaner</code> is for the rare case where a class holds something outside the heap, like native memory. I register a cleanup action, and if someone forgets to call <code>close()</code>, the Cleaner runs it after the object becomes unreachable. The action must not refer back to the object, or the object can never become unreachable.</p>
+<p class="tip"><b>Interviewers look for:</b> why <code>finalize()</code> is bad (no timing guarantee), try-with-resources as the default, and <code>Cleaner</code> as only a backup.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>What are the states in a thread's lifecycle?</summary>
+<div class="answer">
+<p>So <code>Thread.getState()</code> returns one of six values: NEW, RUNNABLE, BLOCKED, WAITING, TIMED_WAITING and TERMINATED.</p>
+<div class="table-wrap"><table>
+<tr><th>State</th><th>When</th></tr>
+<tr><td>NEW</td><td>Created with <code>new Thread()</code>, <code>start()</code> not called yet</td></tr>
+<tr><td>RUNNABLE</td><td>Running, or ready and waiting for a CPU</td></tr>
+<tr><td>BLOCKED</td><td>Trying to enter a <code>synchronized</code> block another thread holds</td></tr>
+<tr><td>WAITING</td><td><code>wait()</code>, <code>join()</code>, <code>park()</code> with no timeout</td></tr>
+<tr><td>TIMED_WAITING</td><td><code>sleep(ms)</code>, <code>wait(ms)</code>, <code>join(ms)</code></td></tr>
+<tr><td>TERMINATED</td><td><code>run()</code> finished or threw</td></tr>
+</table></div>
+<pre><code>Thread t = new Thread(() -&gt; System.out.println("worker done"));
+System.out.println(t.getState());   // NEW
+t.start(); t.join();
+System.out.println(t.getState());   // TERMINATED</code></pre>
+<p>There's no separate "RUNNING" state in Java. RUNNABLE covers both running and ready. The one people mix up is BLOCKED vs WAITING: BLOCKED means "I want a lock that's busy", and it leaves by itself when the lock frees. WAITING means "I chose to wait until someone signals me".</p>
+<p>Also, a thread can be started only once. Calling <code>start()</code> again throws <code>IllegalThreadStateException</code>, even after it's TERMINATED.</p>
+<p class="tip"><b>Interviewers look for:</b> all six states, BLOCKED vs WAITING, and no RUNNING state.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>Explain the Spring bean lifecycle.</summary>
+<div class="answer">
+<p>So a Spring bean goes through: create, inject, initialize, use, and destroy. Spring gives me hooks at each step.</p>
+<pre><code>1. Instantiate           : constructor runs (constructor injection happens here)
+2. Populate properties   : @Autowired fields / setters are injected
+3. Aware callbacks       : setBeanName, setBeanFactory, setApplicationContext
+4. BeanPostProcessor     : postProcessBeforeInitialization
+5. Init                  : @PostConstruct -&gt; afterPropertiesSet() -&gt; custom init-method
+6. BeanPostProcessor     : postProcessAfterInitialization  (AOP proxies are created here)
+7. Ready                 : bean is in use
+8. Destroy (context close): @PreDestroy -&gt; DisposableBean.destroy() -&gt; custom destroy-method</code></pre>
+<pre><code>@Component
+class CacheLoader {
+    private final ProductRepo repo;
+    CacheLoader(ProductRepo repo) { this.repo = repo; }
+
+    @PostConstruct void warmUp() { /* safe to use injected beans here */ }
+    @PreDestroy   void flush()  { /* runs on shutdown */ }
+}</code></pre>
+<p>The practical point: if I need injected fields to do some setup, I do it in <code>@PostConstruct</code>, not in the constructor, because field injection hasn't happened yet when the constructor runs. And because proxies are created after init, a <code>@Transactional</code> method called from <code>@PostConstruct</code> on the same object won't be transactional.</p>
+<p>Scope matters too. A <code>singleton</code> (the default) is created at startup and destroyed on context close. A <code>prototype</code> bean is created new every time it's requested, and Spring does not call its destroy callbacks. It hands the object over and stops tracking it, so cleanup is my job.</p>
+<p class="tip"><b>Interviewers look for:</b> the order of init callbacks, where BeanPostProcessor fits, and that prototype beans don't get destroy callbacks.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>What is the servlet lifecycle? Is a servlet thread-safe?</summary>
+<div class="answer">
+<p>So the container, like Tomcat, controls it: it creates one instance, calls <code>init()</code> once, calls <code>service()</code> for every request, and calls <code>destroy()</code> once at the end.</p>
+<pre><code>container loads class, creates ONE instance  (first request, or startup with load-on-startup)
+        |
+     init()          -- once: read config, open shared resources
+        |
+     service()       -- every request, on a container thread
+        |-- doGet() / doPost() / doPut() ...
+        |
+     destroy()       -- once: undeploy or server shutdown</code></pre>
+<p>Walking through it: there's only one servlet object, but many requests come in at the same time. Each request runs on its own thread from the container's pool, and they all call <code>service()</code> on that same object.</p>
+<p>So a servlet is <b>not</b> thread-safe by default. If I store request data in an instance field, two users can overwrite each other's data. I keep request data in local variables, and anything shared goes in thread-safe objects.</p>
+<p>In Spring MVC it's the same story: <code>DispatcherServlet</code> is one servlet, and my <code>@Controller</code> beans are singletons, so the same rule applies to them.</p>
+<p class="tip"><b>Interviewers look for:</b> init and destroy once, service per request, and "one instance, many threads, so no mutable instance fields".</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>When does the JVM shut down? What are shutdown hooks and daemon threads?</summary>
+<div class="answer">
+<p>So the JVM exits when all <b>non-daemon</b> threads have finished, or when someone calls <code>System.exit()</code>, or on a signal like Ctrl+C. Before it exits, it runs the shutdown hooks.</p>
+<p>A <b>daemon thread</b> is a background helper. The JVM doesn't wait for it; when only daemon threads are left, the JVM just exits and they stop mid-work. The GC threads are a good example. A <b>shutdown hook</b> is a thread I register that the JVM starts during shutdown, for last cleanup like flushing logs.</p>
+<pre><code>Runtime.getRuntime().addShutdownHook(new Thread(() -&gt; System.out.println("shutdown hook runs")));
+
+Thread daemon = new Thread(() -&gt; {
+    while (true) { try { Thread.sleep(1000); } catch (InterruptedException e) { return; } }
+});
+daemon.setDaemon(true);          // must be set before start()
+daemon.start();
+
+System.out.println("main ends");
+// Output:
+// main ends
+// shutdown hook runs           &lt;- the endless daemon didn't keep the JVM alive</code></pre>
+<p>Some things to be careful about. Hooks don't run on <code>kill -9</code> or a JVM crash, so I never rely on them for anything critical. Hooks run in parallel in no fixed order, so they should be fast and independent. And if I forget to mark a background loop as daemon, the program never exits; a common cause is an <code>ExecutorService</code> that was never shut down.</p>
+<p>Spring Boot uses a shutdown hook to close the application context, and that's what triggers the <code>@PreDestroy</code> methods and graceful shutdown.</p>
+<p class="tip"><b>Interviewers look for:</b> "last non-daemon thread ends", that hooks are skipped on <code>kill -9</code>, and the executor-never-shut-down hang.</p>
+</div>
+</details>
+</section>
+
 <div class="part">Practice</div>
 
 <section id="out">
@@ -7750,5 +7960,6 @@ public class DeadlockDemo {
 </div>
 
 <script src="../assets/notes.js"></script>
+<script src="../assets/annotate.js"></script>
 </body>
 </html>

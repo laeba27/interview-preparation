@@ -92,6 +92,7 @@
     <a href="#s42">42 · SOLID</a>
     <a href="#s43">43 · Reflection &amp; Annotations</a>
     <a href="#s44">44 · Build &amp; Testing</a>
+    <a href="#s45">45 · The Java Lifecycle</a>
   </nav>
 
   <h2>Revision</h2>
@@ -6815,6 +6816,243 @@ class OrderServiceTest {
 <div class="note"><b>Interview angle:</b> "Mock vs stub vs spy?" — a stub returns canned answers (<code>when/thenReturn</code>), a mock is additionally verified for interactions (<code>verify</code>), a spy wraps a real object. "Maven <code>install</code> vs <code>deploy</code>?" — local <code>~/.m2</code> vs remote repository. "How do you handle a dependency conflict?" — <code>mvn dependency:tree</code>, then pin the version with <code>dependencyManagement</code> or exclude it. "What is <code>SNAPSHOT</code>?" — a mutable in-development version that may be re-downloaded; releases are immutable.</div>
 </section>
 
+<section id="s45">
+<h3>45. The Java Lifecycle</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p>A <b>lifecycle</b> is the list of stages something goes through, from being created to being thrown away.</p>
+<p>In Java, many things have one: the whole program, each class, each object, each thread, and the beans and servlets that frameworks manage for you. Most of the JVM sections on this page — how Java runs (section 2), memory (35), garbage collection (36) and class loading (37) — are really <i>stages</i> of one story. This section puts them in order.</p>
+<p class="analogy">Think of a factory. The design drawing is your <code>.java</code> file. An engineer turns it into a machine-readable plan (<code>javac</code> makes bytecode). The factory opens (the JVM starts), fetches each plan only when it is first needed (class loading), checks it is safe (verification), and sets up the tools (initialization). Then the workers start building (<code>main()</code> runs). Jobs done often get a faster special machine (the JIT). Cleaners clear away scrap nobody uses (GC). At closing time, the last workers finish and the lights go off (shutdown).</p></div>
+
+<h4>(a) The lifecycle of a Java program</h4>
+<p>Here is everything that happens from writing the code to the program exiting:</p>
+<figure class="diagram">
+<svg viewBox="0 0 640 470" role="img" aria-label="Java program lifecycle: write the .java file, javac compiles it to bytecode in a .class file, the JVM starts, class loaders load the class, linking verifies, prepares and resolves it, initialization runs static code, main runs on the main thread while the JIT compiler and garbage collector work alongside it, and finally the JVM shuts down when all non-daemon threads end or System.exit is called, running shutdown hooks.">
+  <rect class="d-box" x="24"  y="40" width="170" height="50" rx="7"/>
+  <text class="d-label" x="109" y="60" text-anchor="middle">① Write code</text>
+  <text class="d-sub"   x="109" y="77" text-anchor="middle">Hello.java (source)</text>
+
+  <rect class="d-box" x="235" y="40" width="170" height="50" rx="7"/>
+  <text class="d-label" x="320" y="60" text-anchor="middle">② Compile: javac</text>
+  <text class="d-sub"   x="320" y="77" text-anchor="middle">Hello.class (bytecode)</text>
+
+  <rect class="d-box" x="446" y="40" width="170" height="50" rx="7"/>
+  <text class="d-label" x="531" y="60" text-anchor="middle">③ JVM starts</text>
+  <text class="d-sub"   x="531" y="77" text-anchor="middle">you type: java Hello</text>
+
+  <rect class="d-box" x="446" y="150" width="170" height="50" rx="7"/>
+  <text class="d-label" x="531" y="170" text-anchor="middle">④ Loading</text>
+  <text class="d-sub"   x="531" y="187" text-anchor="middle">class loader finds .class</text>
+
+  <rect class="d-box" x="235" y="150" width="170" height="50" rx="7"/>
+  <text class="d-label" x="320" y="170" text-anchor="middle">⑤ Linking</text>
+  <text class="d-sub"   x="320" y="187" text-anchor="middle">verify · prepare · resolve</text>
+
+  <rect class="d-box" x="24"  y="150" width="170" height="50" rx="7"/>
+  <text class="d-label" x="109" y="170" text-anchor="middle">⑥ Initialization</text>
+  <text class="d-sub"   x="109" y="187" text-anchor="middle">runs static code, once</text>
+
+  <rect class="d-fill-accent" x="24" y="260" width="170" height="50" rx="7"/>
+  <rect class="d-box-accent"  x="24" y="260" width="170" height="50" rx="7"/>
+  <text class="d-accent-text" x="109" y="280" text-anchor="middle">⑦ main() runs</text>
+  <text class="d-sub"   x="109" y="297" text-anchor="middle">on the "main" thread</text>
+
+  <rect class="d-box" x="235" y="260" width="170" height="50" rx="7"/>
+  <text class="d-label" x="320" y="280" text-anchor="middle">⑧ JIT compiler</text>
+  <text class="d-sub"   x="320" y="297" text-anchor="middle">hot code → machine code</text>
+
+  <rect class="d-box" x="446" y="260" width="170" height="50" rx="7"/>
+  <text class="d-label" x="531" y="280" text-anchor="middle">⑨ Garbage collector</text>
+  <text class="d-sub"   x="531" y="297" text-anchor="middle">frees unreachable objects</text>
+
+  <rect class="d-box" x="24"  y="370" width="170" height="50" rx="7"/>
+  <text class="d-label" x="109" y="390" text-anchor="middle">⑩ Shutdown</text>
+  <text class="d-sub"   x="109" y="407" text-anchor="middle">hooks run, JVM exits</text>
+
+  <path class="d-line" d="M194 65 H227"/><path class="d-arrow" d="M235 65 l-8 -4 v8 z"/>
+  <path class="d-line" d="M405 65 H438"/><path class="d-arrow" d="M446 65 l-8 -4 v8 z"/>
+  <path class="d-line" d="M531 90 V142"/><path class="d-arrow" d="M531 150 l-4 -8 h8 z"/>
+  <path class="d-line" d="M446 175 H413"/><path class="d-arrow" d="M405 175 l8 -4 v8 z"/>
+  <path class="d-line" d="M235 175 H202"/><path class="d-arrow" d="M194 175 l8 -4 v8 z"/>
+  <path class="d-line-accent" d="M109 200 V252"/><path class="d-arrow-accent" d="M109 260 l-4 -8 h8 z"/>
+
+  <path class="d-dash" d="M194 285 H227"/><path class="d-arrow" d="M235 285 l-8 -4 v8 z"/>
+  <path class="d-dash" d="M160 310 V334 H531 V318"/><path class="d-arrow" d="M531 310 l-4 8 h8 z"/>
+  <text class="d-sub" x="360" y="350" text-anchor="middle">both work in the background while main() runs</text>
+
+  <path class="d-line" d="M80 310 V362"/><path class="d-arrow" d="M80 370 l-4 -8 h8 z"/>
+  <text class="d-sub" x="210" y="390">when every non-daemon thread has ended,</text>
+  <text class="d-sub" x="210" y="407">or someone calls System.exit()</text>
+
+  <text class="d-sub" x="320" y="448" text-anchor="middle">①–② happen once on your machine. ④–⑥ repeat lazily for each class on its first use.</text>
+</svg>
+<figcaption>The Java program pipeline. The solid line is the main path; the dashed lines are helpers that run alongside your code.</figcaption>
+</figure>
+<p>Each step in simple words:</p>
+<ol>
+<li><b>Write</b> — you write source code in a <code>.java</code> file.</li>
+<li><b>Compile</b> — <code>javac</code> checks your code and turns it into <b>bytecode</b>: instructions for the JVM, not for any one CPU. Bytecode is saved in <code>.class</code> files. This is why Java is "write once, run anywhere" (section <a href="#s2">2</a>).</li>
+<li><b>JVM starts</b> — <code>java Hello</code> starts the <b>JVM</b> (Java Virtual Machine), the program that runs bytecode. It sets up memory: the heap, the stacks and metaspace (section <a href="#s35">35</a>).</li>
+<li><b>Loading</b> — a <b>class loader</b> finds the <code>.class</code> bytes and creates a <code>Class</code> object. There are three built-in loaders: <b>bootstrap</b> (core JDK classes like <code>String</code>), <b>platform</b> (other JDK modules) and <b>application</b> (your classpath). Each loader first asks its <b>parent</b> — this is <b>parent delegation</b>, and it stops anyone faking <code>java.lang.String</code> (section <a href="#s37">37</a>).</li>
+<li><b>Linking</b> — three small steps. <b>Verify</b>: check the bytecode is safe and legal. <b>Prepare</b>: make room for static fields and give them <b>default values</b> (0, <code>false</code>, <code>null</code>). <b>Resolve</b>: turn names like <code>"java/util/List"</code> into real references (often lazily, on first use).</li>
+<li><b>Initialization</b> — static field assignments and <code>static { }</code> blocks run, <b>top to bottom in the order written</b>, <b>exactly once</b>. This happens <b>lazily</b>: on the class's first <b>active use</b> — creating an object, calling a static method, reading or writing a static field (that is not a compile-time constant), or initializing a subclass.</li>
+<li><b>main() runs</b> — the JVM calls <code>public static void main(String[] args)</code> on a thread named <code>main</code>. Every new class your code touches goes through steps 4–6 at that moment.</li>
+<li><b>JIT compiles hot code</b> — at first the JVM <b>interprets</b> bytecode (slow but starts fast). Methods that run many times are "hot", so the <b>JIT (Just-In-Time) compiler</b> turns them into fast native machine code while the program runs.</li>
+<li><b>Garbage collection</b> — all along the way, the <b>GC</b> frees objects that nothing can reach any more (section <a href="#s36">36</a>).</li>
+<li><b>Shutdown</b> — the JVM stops when <b>all non-daemon threads have finished</b> (a <b>daemon thread</b> is a background helper the JVM does not wait for), or when <code>System.exit()</code> is called, or on Ctrl+C / a kill signal. First the <b>shutdown hooks</b> run (threads you registered with <code>Runtime.getRuntime().addShutdownHook(...)</code>), then the JVM exits. <code>kill -9</code> or a crash skips the hooks.</li>
+</ol>
+<pre><code>public class Life {
+    public static void main(String[] args) throws Exception {
+        Runtime.getRuntime().addShutdownHook(new Thread(() -&gt; System.out.println("shutdown hook runs")));
+
+        Thread daemon = new Thread(() -&gt; {
+            while (true) { try { Thread.sleep(1000); } catch (InterruptedException e) { return; } }
+        });
+        daemon.setDaemon(true);   // background helper: the JVM will NOT wait for it
+        daemon.start();
+
+        Thread t = new Thread(() -&gt; System.out.println("worker done"));
+        t.start(); t.join();
+        System.out.println("main ends");
+    }
+}
+// Output:
+// worker done
+// main ends
+// shutdown hook runs      &lt;- the endless daemon thread did not keep the JVM alive</code></pre>
+
+<h4>(b) The lifecycle of a class</h4>
+<p>A class has five stages: <b>loading → linking → initialization → use → unloading</b>.</p>
+<ul>
+<li>The first three are steps 4–6 above. They happen once per class (per class loader).</li>
+<li><b>Use</b> — the program creates objects and calls methods.</li>
+<li><b>Unloading</b> — a class is removed only when its <b>class loader</b> can no longer be reached (plus all its classes and their objects). Classes loaded by the built-in loaders are never unloaded. In practice this happens with custom loaders, for example when an app server redeploys a web app.</li>
+</ul>
+<p>The most-asked question here is <b>"in what order do static blocks, instance blocks and constructors run?"</b> An <b>instance initializer block</b> is a plain <code>{ }</code> block inside a class; it runs each time an object is created, just before the constructor body.</p>
+<pre><code>class Parent {
+    static { System.out.println("1. Parent static block"); }
+    { System.out.println("3. Parent instance block"); }
+    Parent() { System.out.println("4. Parent constructor"); }
+}
+
+class Child extends Parent {
+    static int count = 0;                       // set during preparation (0), then here
+    static { System.out.println("2. Child static block"); }
+    { System.out.println("5. Child instance block"); }
+    Child() {
+        super();                                // always runs first, even if you don't write it
+        count++;
+        System.out.println("6. Child constructor");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("main starts");
+        new Child();                            // first active use: load + init Parent, then Child
+        System.out.println("--- second object ---");
+        new Child();                            // static blocks do NOT run again
+        System.out.println("count = " + Child.count);
+    }
+}</code></pre>
+<p>Output (compiled and run on Java 21):</p>
+<pre><code>main starts
+1. Parent static block
+2. Child static block
+3. Parent instance block
+4. Parent constructor
+5. Child instance block
+6. Child constructor
+--- second object ---
+3. Parent instance block
+4. Parent constructor
+5. Child instance block
+6. Child constructor
+count = 2</code></pre>
+<p>The rule: <b>statics first, parent before child, once per class</b>. Then for <b>each</b> object: parent instance blocks + parent constructor, then child instance blocks + child constructor. Notice "main starts" prints before any static block — that is lazy initialization in action.</p>
+<p>Two things do <b>not</b> trigger initialization: reading a <code>static final</code> compile-time constant (like <code>static final int MAX = 10;</code> — the compiler copies the value in), and using <code>Child.class</code>.</p>
+
+<h4>(c) The lifecycle of an object</h4>
+<div class="table-wrap"><table>
+<tr><th>Stage</th><th>What happens</th></tr>
+<tr><td>1. Allocation</td><td><code>new</code> asks for memory on the <b>heap</b>, usually in the young area called <b>Eden</b>. All fields get default values (0, <code>false</code>, <code>null</code>).</td></tr>
+<tr><td>2. Construction</td><td>The constructor chain runs <b>super-first</b>: <code>Object</code>, then each parent, then your class. At each level: field initializers and instance blocks (in order written), then the constructor body.</td></tr>
+<tr><td>3. In use (reachable)</td><td>Some <b>reference</b> (a variable, a field, a list) can reach the object from a <b>GC root</b> — a local variable in a running method, a static field, an active thread.</td></tr>
+<tr><td>4. Unreachable</td><td>No path from any GC root leads to it any more: the variable went out of scope, was set to <code>null</code>, or was removed from a collection. It is now <b>eligible for GC</b>. You cannot get it back.</td></tr>
+<tr><td>5. Collected</td><td>At some later time the GC frees its memory. Short-lived objects die in the <b>young generation</b> (cheap, frequent minor GC); objects that survive several GCs are promoted to the <b>old generation</b>, which is collected less often (section <a href="#s36">36</a>).</td></tr>
+</table></div>
+<pre><code>void demo() {
+    Order o = new Order();     // 1-2: allocated in Eden, constructor runs
+    o.addItem("pen");          // 3: in use, reachable from local variable o
+    o = null;                  // 4: unreachable -&gt; eligible for GC
+}                              // 5: freed whenever the GC next runs (you don't control when)</code></pre>
+<p><b>Cleaning up resources.</b> Memory is freed for you, but <b>resources</b> like files, sockets and database connections must be closed. The old way was <code>finalize()</code>, which the GC <i>might</i> call before freeing an object. It is unreliable (may run late or never), slow, and dangerous, so it is <b>deprecated</b> (since Java 9) and <b>deprecated for removal since Java 18</b>. Do this instead:</p>
+<ul>
+<li><b>try-with-resources</b> — any class that implements <code>AutoCloseable</code> is closed automatically at the end of the <code>try</code> block, even if an exception is thrown. This is the normal answer.</li>
+<li><b><code>java.lang.ref.Cleaner</code></b> — a safety net for rare low-level cases: it runs a cleanup action after the object becomes unreachable, if <code>close()</code> was forgotten.</li>
+</ul>
+<pre><code>class FileLike implements AutoCloseable {
+    FileLike() { System.out.println("open"); }
+    void use() { System.out.println("use"); }
+    @Override public void close() { System.out.println("close"); }
+}
+
+try (FileLike f = new FileLike()) {
+    f.use();
+}                    // close() is called here automatically
+// Output: open, use, close</code></pre>
+
+<h4>(d) The lifecycle of a thread</h4>
+<p>A thread is always in one of the six <code>Thread.State</code> values. The full diagram is in section <a href="#s28">28</a>; here is the short version:</p>
+<div class="table-wrap"><table>
+<tr><th>State</th><th>Meaning</th><th>How it gets here / leaves</th></tr>
+<tr><td><code>NEW</code></td><td>Created, not started yet</td><td><code>new Thread(...)</code>. Leaves when you call <code>start()</code> (only once).</td></tr>
+<tr><td><code>RUNNABLE</code></td><td>Running, or ready and waiting for a CPU</td><td>After <code>start()</code>; returns here from the three waiting states.</td></tr>
+<tr><td><code>BLOCKED</code></td><td>Wants a <code>synchronized</code> lock another thread holds</td><td>Goes back to RUNNABLE when it gets the lock.</td></tr>
+<tr><td><code>WAITING</code></td><td>Waiting with no time limit</td><td><code>wait()</code>, <code>join()</code>, <code>LockSupport.park()</code>. Leaves on <code>notify()</code>/<code>notifyAll()</code>, the joined thread ending, or <code>unpark</code>.</td></tr>
+<tr><td><code>TIMED_WAITING</code></td><td>Waiting with a time limit</td><td><code>sleep(ms)</code>, <code>wait(ms)</code>, <code>join(ms)</code>. Leaves when time is up or it is notified.</td></tr>
+<tr><td><code>TERMINATED</code></td><td>Finished</td><td><code>run()</code> returned or threw an exception. Cannot be restarted.</td></tr>
+</table></div>
+
+<h4>(e) Framework lifecycles interviewers ask about</h4>
+<p><b>Spring bean lifecycle.</b> A <b>bean</b> is an object that Spring creates and manages for you. Its stages:</p>
+<ol>
+<li><b>Instantiate</b> — Spring calls the constructor (constructor injection happens here).</li>
+<li><b>Inject dependencies</b> — <code>@Autowired</code> fields and setters are filled in.</li>
+<li><b>Aware callbacks</b> — if the bean implements them: <code>BeanNameAware</code>, <code>BeanFactoryAware</code>, <code>ApplicationContextAware</code> (Spring hands the bean its name / the container).</li>
+<li><b><code>BeanPostProcessor</code> before-init</b> — <code>postProcessBeforeInitialization</code> on every registered post-processor.</li>
+<li><b>Init callbacks</b>, in this order: <code>@PostConstruct</code> method → <code>InitializingBean.afterPropertiesSet()</code> → custom <code>init-method</code> (<code>@Bean(initMethod = "...")</code>).</li>
+<li><b><code>BeanPostProcessor</code> after-init</b> — <code>postProcessAfterInitialization</code>; this is where AOP proxies (e.g. for <code>@Transactional</code>) are made.</li>
+<li><b>Ready</b> — the bean is used by the application.</li>
+<li><b>Destroy</b> on context close: <code>@PreDestroy</code> → <code>DisposableBean.destroy()</code> → custom <code>destroy-method</code>.</li>
+</ol>
+<pre><code>@Component
+class CacheLoader {
+    private final ProductRepo repo;
+    CacheLoader(ProductRepo repo) { this.repo = repo; }      // 1-2: created + injected
+
+    @PostConstruct
+    void warmUp() { /* dependencies are ready here, not in the constructor */ }
+
+    @PreDestroy
+    void flush() { /* runs when the application context closes */ }
+}</code></pre>
+<div class="table-wrap"><table>
+<tr><th>Scope</th><th>How many objects</th><th>Destroy callbacks</th></tr>
+<tr><td><code>singleton</code> (default)</td><td>One per container, created at startup</td><td>Called by Spring on context close</td></tr>
+<tr><td><code>prototype</code></td><td>A new one every time it is requested</td><td><b>Not called</b> — Spring hands it over and forgets it; you clean it up</td></tr>
+</table></div>
+<p><b>Servlet lifecycle.</b> A <b>servlet</b> is a Java class that answers HTTP requests inside a container like Tomcat. The container controls it:</p>
+<ol>
+<li><b>Load and create</b> — the container loads the class and creates <b>one</b> instance (on the first request, or at startup with <code>load-on-startup</code>).</li>
+<li><b><code>init()</code></b> — called <b>once</b>, for one-time setup.</li>
+<li><b><code>service()</code></b> — called for <b>every request</b>; it hands off to <code>doGet()</code>, <code>doPost()</code> and so on. Many requests run <b>at the same time on different threads</b> using the same instance, so don't keep request data in instance fields.</li>
+<li><b><code>destroy()</code></b> — called <b>once</b> when the app is undeployed or the server stops.</li>
+</ol>
+<p><b>Maven build lifecycle</b> is a different kind of lifecycle — build phases like <code>validate → compile → test → package → verify → install → deploy</code> (section <a href="#s44">44</a>).</p>
+
+<div class="note"><b>Interview tip:</b> if asked "what happens when you run a Java program?", answer in order — <b>write .java → javac compiles to bytecode → JVM starts → load → link (verify, prepare, resolve) → initialize statics → main() runs → JIT compiles hot code → GC frees unreachable objects → all non-daemon threads end or System.exit() → shutdown hooks → exit</b>. Then offer to zoom into any one stage: class loading, object creation order, GC or threads.</div>
+</section>
+
 <div class="part">Revision</div>
 
 <section id="cheat">
@@ -7152,5 +7390,6 @@ B</code></pre>
 </div>
 
 <script src="../assets/notes.js"></script>
+<script src="../assets/annotate.js"></script>
 </body>
 </html>

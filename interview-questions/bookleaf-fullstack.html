@@ -1,0 +1,2048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BookLeaf Full-Stack — Interview Questions</title>
+<link rel="stylesheet" href="../assets/notes.css">
+<script>
+  try { document.documentElement.setAttribute("data-theme",
+    localStorage.getItem("notes-theme") || "light"); } catch (e) {}
+</script>
+</head>
+<body>
+<div class="scrim"></div>
+<div class="layout">
+
+<button class="icon-btn" id="reopen" title="Show sidebar ([)" aria-label="Show sidebar">☰</button>
+<aside>
+  <div class="sidebar-head">
+    <a class="back-link" href="../index.html">← All topics</a>
+    <button class="icon-btn" id="collapseBtn" title="Hide sidebar ([)" aria-label="Hide sidebar">‹</button>
+  </div>
+  <input id="search" type="text" placeholder="Filter topics…" autocomplete="off">
+  <h2>Start Here</h2>
+  <nav>
+    <a href="#s0">The Job at a Glance</a>
+  </nav>
+  <h2>About You</h2>
+  <nav>
+    <a href="#s1">1 · Introduction &amp; Motivation (13)</a>
+    <a href="#s2">2 · Ownership &amp; Behavioural (12)</a>
+  </nav>
+  <h2>Core Full-Stack</h2>
+  <nav>
+    <a href="#s3">3 · Frontend — React &amp; Next.js (12)</a>
+    <a href="#s4">4 · Backend &amp; APIs (14)</a>
+    <a href="#s5">5 · Databases &amp; Performance (12)</a>
+    <a href="#s6">6 · Auth &amp; Security (9)</a>
+  </nav>
+  <h2>AI &amp; Automation</h2>
+  <nav>
+    <a href="#s7">7 · AI &amp; LLM Integration (15)</a>
+    <a href="#s8">8 · Automation — n8n, Make, Zapier (12)</a>
+    <a href="#s9">9 · Bubble &amp; the Migration to Code (10)</a>
+  </nav>
+  <h2>Integrations, DevOps &amp; Design</h2>
+  <nav>
+    <a href="#s10">10 · Payments, Shopify &amp; Print-on-Demand (10)</a>
+    <a href="#s11">11 · DevOps &amp; Deployment (9)</a>
+    <a href="#s12">12 · System Design for BookLeaf (10)</a>
+  </nav>
+  <h2>Closing</h2>
+  <nav>
+    <a href="#s13">13 · Questions to Ask Them &amp; Closing (9)</a>
+  </nav>
+</aside>
+
+<main>
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="../index.html#companies">Company Prep</a></li><li><span>BookLeaf Publishing</span></li><li><span aria-current="page">Interview Questions</span></li></ol></nav>
+<header class="top">
+  <h1>BookLeaf — Full-Stack Developer Interview</h1>
+  <div class="top-actions">
+    <button class="ghost" id="menuBtn">☰ Topics</button>
+    <a class="ghost-link" href="../notes/english-communication.html">English for Work</a>
+    <button class="ghost" id="theme">Dark mode</button>
+  </div>
+</header>
+<p class="sub">147 likely questions for the BookLeaf Publishing Full-Stack Developer role, answered the way you'd say them in the room — first person, simple words, linked to your real projects. Tap a question to reveal the answer.</p>
+<div class="qa-tools">
+  <button class="ghost" id="toggleAll">Expand all</button>
+  <span class="count" id="qaCount"></span>
+</div>
+
+<section id="s0">
+<h3>The Job at a Glance</h3>
+<div class="plain"><span class="plain-label">In plain words</span>
+<p><b>BookLeaf Publishing</b> is a leading Indian self-publishing house: <b>1,200+ books a month</b>, <b>22,000+ titles</b>, India and US, its own warehouse and printing press in Delhi, and featured on <b>Shark Tank India Season 4</b>.</p>
+<p>They want one developer to <b>own the whole tech stack</b>: the author dashboard, internal ops tools, AI features, automations and integrations — working directly with the founders.</p></div>
+<div class="table-wrap"><table>
+<tr><th>What they want</th><th>Your matching proof</th></tr>
+<tr><td>React / Next.js + Node.js</td><td>10+ production apps at RDX; Next.js SaaS at Smile Returns; 95+ Node/Postgres endpoints at Xellerate AI</td></tr>
+<tr><td>Databases &amp; performance</td><td>35% faster APIs (indexes, N+1 fixes); 30% faster queries; 94% faster page loads</td></tr>
+<tr><td>APIs, auth, security</td><td>REST design, JWT/OAuth2, RBAC across 10+ roles with row-level security, signed URLs for private files</td></tr>
+<tr><td>Deployments / DevOps</td><td>CI/CD to AWS, Docker, Nginx, GitHub Actions</td></tr>
+<tr><td>Own projects end to end</td><td>Took broad client requirements through build, QA and release</td></tr>
+<tr><td>AI / LLM, n8n, Bubble, Razorpay</td><td><b>Gap to close:</b> build one small demo of each before the interview (see the Personalise tips)</td></tr>
+</table></div>
+<div class="note"><b>Before the interview:</b> build a tiny project that calls the OpenAI API, wire it into an n8n workflow, and take a test Razorpay payment. Thirty minutes each turns "I haven't used it" into "I tried it last week — here's what I learned".</div>
+</section>
+
+<div class="part">Part 1 — About You</div>
+
+<section id="s1">
+<h3>1. Introduction &amp; Motivation</h3>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>Tell me about yourself.</summary>
+<div class="answer">
+<p>Sure. I'm Laeba, a full-stack engineer based in Gurugram. I finished my B.Tech in Computer Science at SGT University with an 8.53 CGPA.</p>
+<p>Right now I'm a Software Engineer at RDX Digital Solutions. There I've shipped more than ten production apps for clients like TCS, Adani and SBI, from rough requirements all the way to release. I cut page load time by 94% on one of them, and I set up a CI/CD pipeline that deploys to AWS.</p>
+<p>Before that I did two backend-heavy internships. At Xellerate AI I built 95+ REST endpoints on Node and PostgreSQL and made the API 35% faster. At Smile Returns I worked on a multi-tenant healthcare SaaS in Next.js.</p>
+<p>So I've done frontend, backend, database and deployment. What excites me about BookLeaf is owning all of that for one product, with real authors using it every day.</p>
+<p class="tip"><b>Interviewers look for:</b> a 60–90 second story with numbers, that ends by pointing at <i>this</i> role. Practise it out loud until it sounds natural, not memorised.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>What do you know about BookLeaf Publishing?</summary>
+<div class="answer">
+<p>BookLeaf is one of India's biggest self-publishing houses. You publish more than 1,200 books a month and have over 22,000 titles. You work in India and the US, and you have your own warehouse and in-house printing here in Delhi, which is rare. Most self-publishers outsource printing.</p>
+<p>You were also on Shark Tank India Season 4, so I imagine that brought a big wave of new authors and traffic.</p>
+<p>From the job post, I understand the team is small and moves fast, a lot of operations run on Bubble today, and there's a plan to move to code over time. There's also a strong push for automation and AI, which makes sense when you're handling that many manuscripts a month.</p>
+<p class="tip"><b>Personalise:</b> before the interview, browse the BookLeaf site and author packages, read a few author reviews, and watch the Shark Tank clip. Mention one specific detail you noticed, like a package name or a feature of the author dashboard.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>Why do you want to work at BookLeaf?</summary>
+<div class="answer">
+<p>Three reasons. First, the scale is real. 1,200 books a month means every small improvement, like saving an ops person five minutes per book, adds up to hundreds of hours.</p>
+<p>Second, the problems are interesting. You have payments, royalties, printing, shipping and distribution all in one business. That's a lot of systems to connect, and I enjoy integration work.</p>
+<p>Third, the ownership. At RDX I build apps for clients and then hand them over. Here I'd own a product for the long run, see how authors actually use it, and keep making it better.</p>
+<p>And honestly, helping first-time authors get their book into the world is a nice thing to work on.</p>
+<p class="tip"><b>Interviewers look for:</b> reasons tied to <i>this</i> company, not "it's a good opportunity". Link your reasons to their scale and their problems.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>Why this role specifically?</summary>
+<div class="answer">
+<p>Because it matches how I like to work. The role covers the author dashboard, internal tools, APIs, integrations, the database and deployments. I've done each of those pieces in my jobs so far, but always split across different projects. Here I'd get to own them together.</p>
+<p>I also like that it's close to the business. You'd be working with the founders and ops team directly, so you can see whether what you built actually helped.</p>
+<p>The parts that are new for me, like Bubble, n8n and LLM features, are honestly part of the appeal. I learn fastest when I'm given ownership and a real problem.</p>
+<p class="tip"><b>Interviewers look for:</b> that you've read the JD properly and that you're honest about what's new to you, while showing it excites you rather than scares you.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>You joined RDX only in March 2026. Why are you leaving so soon?</summary>
+<div class="answer">
+<p>That's fair to ask. I've had a really good experience at RDX. In a few months I shipped more than ten apps and learned a lot about delivering for big clients.</p>
+<p>But the work is project-based. We build to a client's spec, release it, and move on to the next one. I've realised I want to own one product for the long term, make decisions about its architecture, and see the impact over months and years.</p>
+<p>BookLeaf offers exactly that. I'm not running away from something, I'm moving towards a kind of role I can't get where I am. And I plan to stay and grow here, not move again in six months.</p>
+<p class="tip"><b>Interviewers look for:</b> no complaints about your current employer, a clear "towards" reason, and a signal that you'll stay. Keep it short and calm.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>Why a startup when you're working on enterprise projects for TCS, Adani and SBI?</summary>
+<div class="answer">
+<p>Enterprise work taught me discipline: proper QA, release processes, security reviews, and clear communication with clients. I'll bring all of that with me.</p>
+<p>But in enterprise projects, decisions go through many layers, and the engineer usually doesn't talk to the people who use the product. At a startup like BookLeaf, I can ship a fix in the morning and hear from the ops team by the afternoon whether it helped.</p>
+<p>I also like being responsible for more than one thing. In a small team I won't just be "the frontend person". I'll touch payments, automation, deployments, whatever the business needs that week. That's how I want to grow right now.</p>
+<p class="tip"><b>Interviewers look for:</b> that you understand startup trade-offs (speed, less structure, more responsibility) and aren't just chasing a buzzword.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>Where do you see yourself in two to three years?</summary>
+<div class="answer">
+<p>I'd like to be the person who knows BookLeaf's tech end to end. Someone the founders can trust with a problem and know it will be solved properly.</p>
+<p>Concretely, I'd love to have led a big piece of the Bubble-to-code migration, so the core author and order flows run on a codebase that's tested, fast and easy to change.</p>
+<p>I'd also like to grow into a lead role, helping junior developers, reviewing code and making architecture decisions. And I want to get really good at the AI and automation side, because I think that's where a lot of the leverage is for a publishing business.</p>
+<p class="tip"><b>Interviewers look for:</b> ambition that fits inside the company. Avoid "starting my own company" or "doing a master's abroad", even if true.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>What are your strengths?</summary>
+<div class="answer">
+<p>I'd say three things.</p>
+<ul>
+<li><b>I ship.</b> At RDX I've taken more than ten apps from vague requirements to production in a few months.</li>
+<li><b>I care about performance and measure it.</b> I made one app load 94% faster and cut API response time by 35% at Xellerate. Both times I measured first, then fixed.</li>
+<li><b>I'm comfortable across the stack.</b> React and Next.js, Node, PostgreSQL, Docker, AWS. So I can follow a bug from the button all the way down to the query.</li>
+</ul>
+<p>For a small team like BookLeaf's, I think the last one matters most. You need someone who doesn't get stuck at a layer boundary.</p>
+<p class="tip"><b>Interviewers look for:</b> strengths backed by evidence, not adjectives. Every strength should have a number or a story behind it.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>What is your biggest weakness?</summary>
+<div class="answer">
+<p>Earlier in my internships, I used to try to make things perfect before showing them to anyone. I'd spend an extra day polishing an endpoint or a component when a quick review would have told me I was solving the wrong thing.</p>
+<p>What I do now is share early. I push a rough version, ask for feedback, and then improve it. At RDX, with tight client deadlines, that habit really helped. I still have to remind myself sometimes, but I've got much better at it.</p>
+<p>I think it fits BookLeaf's "bias for shipping" well, because I've learned that shipping and getting feedback beats polishing in private.</p>
+<p class="tip"><b>Personalise:</b> pick a weakness that's real for you. Always show what you're doing about it, and avoid fake ones like "I work too hard".</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>What are your salary expectations?</summary>
+<div class="answer">
+<p>I'd first like to understand the full role and the team better, because this role has a lot of scope. But I don't want to dodge the question.</p>
+<p>Based on my experience and the market for full-stack roles in Delhi NCR, I'm looking at something in the range of <i>[your range]</i>. I'm flexible if the overall package and growth are right, and I'd be happy to hear what range you have budgeted.</p>
+<p class="tip"><b>Personalise:</b> research the market (Glassdoor, AmbitionBox, LinkedIn) and fix your range before the call. Give a range where the lower end is a number you'd genuinely accept. Know your current CTC, as they may ask.</p>
+<p class="tip"><b>Interviewers look for:</b> a calm, prepared answer. Being vague or giving a number with no thought behind it both look bad.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>What's your notice period? When can you join?</summary>
+<div class="answer">
+<p>My notice period at RDX is <i>[X days]</i>. I'll try to finish my current tasks and hand over cleanly so I can join as early as possible, and I'll check if an early release is possible.</p>
+<p>In the meantime, I'd be happy to start reading up on things I'll need here, like Bubble and the Razorpay docs, so I can be useful from the first week.</p>
+<p class="tip"><b>Personalise:</b> check your exact notice period and whether a buyout or early release is possible before the interview. Startups care a lot about joining speed.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>You live in Gurugram. Is commuting to Jhandewalan a problem?</summary>
+<div class="answer">
+<p>No, it's fine. Jhandewalan is well connected by the Delhi Metro, so I can do the commute reliably every day. I've already looked at the route.</p>
+<p>I actually prefer working from the office in a small team. You learn faster when you can just turn around and ask the ops team how something works, or sit with a founder and sketch out a feature.</p>
+<p class="tip"><b>Personalise:</b> check your actual route and time on Google Maps before you answer, and if you'd consider moving closer, say so. Don't promise relocation you won't do.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>Why should we hire you?</summary>
+<div class="answer">
+<p>Because I can cover a lot of the stack from day one, and I've shown I can deliver fast.</p>
+<ul>
+<li>I've built the kinds of things BookLeaf needs: dashboards in Next.js, REST APIs on Node and PostgreSQL, role-based access, secure file uploads, and CI/CD to AWS.</li>
+<li>I've made real systems faster and can show the numbers.</li>
+<li>I've worked directly with clients, so I'm used to turning vague requests into something that works.</li>
+</ul>
+<p>I'll be honest that Bubble, n8n and Razorpay are new to me. But I've picked up new tools quickly in every role so far, and the core skills underneath them, APIs, webhooks and data modelling, are things I already do well.</p>
+<p class="tip"><b>Interviewers look for:</b> a confident summary that maps your experience to their needs, plus honesty about gaps. Confidence plus honesty is a strong combination.</p>
+</div>
+</details>
+</section>
+
+<section id="s2">
+<h3>2. Ownership &amp; Behavioural</h3>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>Tell me about a project you owned end to end.</summary>
+<div class="answer">
+<p>At Xellerate AI, I owned the document exchange and folder storage part of their startup–investor matching platform.</p>
+<p><b>Situation:</b> startups needed to share documents with investors, organised in folders, with control over who sees what. <b>Task:</b> design and build it on the backend. <b>Action:</b> I designed the schema using a parent-ID table for folders and a recursive query to load a whole folder tree in one go. I built the endpoints, added role-based access so each of the 10+ roles only saw what they should, and wrote the tests. <b>Result:</b> it shipped and became part of the core flow for founders and investors.</p>
+<p>At BookLeaf, it's similar to how an author's manuscript, cover and proofs would need to be stored and shared with the right people.</p>
+<p class="tip"><b>Personalise:</b> if one of your RDX apps was more fully "yours" from requirements to release, use that instead, with the client type and what changed after launch.</p>
+<p class="tip"><b>Interviewers look for:</b> STAR structure, clear "I" not "we", and a real result.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>Tell me about a time you worked to a very tight deadline.</summary>
+<div class="answer">
+<p>At RDX, we often have fixed release dates from enterprise clients. On one project the requirements changed late, close to the release date.</p>
+<p>What I did was sit down and split the work into "must have for launch" and "can come in the next release". I checked that list with my lead and the client, so nobody was surprised. Then I focused only on the must-haves, and leaned on our CI/CD pipeline so testing and deployment didn't eat my time.</p>
+<p>We shipped on time, and the extra features went out a week later. The key lesson for me was: cut scope, not quality, and tell people early.</p>
+<p class="tip"><b>Personalise:</b> swap in the real project, the actual number of days, and what exactly you cut. Specific details make this believable.</p>
+<p class="tip"><b>Interviewers look for:</b> prioritisation and communication under pressure, not just "I worked late".</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>Tell me about a bug you caused in production. How did you handle it?</summary>
+<div class="answer">
+<p>I believe in owning these. <i>[Describe the bug, e.g. a change I made broke a filter or a page for some users.]</i></p>
+<p>As soon as I knew, I told my lead straight away rather than trying to fix it quietly. First I rolled back or shipped a quick fix to stop the damage. Then I found the root cause, and I added a test that would have caught it, so it can't come back.</p>
+<p>After that I changed how I work. For example, I now test edge cases like empty data or a different user role before I merge.</p>
+<p>At a place shipping as fast as BookLeaf, bugs will happen. What matters is fixing fast, being open about it, and making sure the same one doesn't happen twice.</p>
+<p class="tip"><b>Personalise:</b> you need a real story here. Pick a small but genuine one from RDX or an internship. Never say "I've never caused a bug".</p>
+<p class="tip"><b>Interviewers look for:</b> honesty, speed of response, root cause, and a prevention step.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>Tell me about a time you disagreed with a senior or a decision-maker.</summary>
+<div class="answer">
+<p>At Xellerate, the plan was to speed up a slow part of the API by adding caching. When I profiled it, the real problem was N+1 queries: the code was running one query per item in a list.</p>
+<p>I didn't just say "you're wrong". I showed the numbers: the query count per request and where the time was going. I suggested we fix the queries and indexes first, and only add caching if it was still slow.</p>
+<p>They agreed to try it. Collapsing the queries into joins and adding composite indexes was part of how we got a 35% faster average response time, without the extra complexity of a cache.</p>
+<p>With founders, I'd do the same: bring data, offer options, and if they still decide differently, I commit fully to their decision.</p>
+<p class="tip"><b>Personalise:</b> adjust the details to match what actually happened, including who you disagreed with.</p>
+<p class="tip"><b>Interviewers look for:</b> disagreeing with data and respect, and "disagree and commit" when the decision goes the other way.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How do you handle vague requirements?</summary>
+<div class="answer">
+<p>That's most of my work at RDX, honestly. Clients often start with a sentence like "we need a dashboard for our team".</p>
+<p>What I do is:</p>
+<ul>
+<li>Ask who will use it and what problem they're trying to solve today.</li>
+<li>Write down my understanding in a few bullet points and send it back, so we agree on it.</li>
+<li>Build the smallest useful version quickly and show it. People find it much easier to react to something real than to describe what they want.</li>
+</ul>
+<p>At BookLeaf, if the ops team says "author onboarding is slow", I'd sit with them, watch the steps, and find where the time actually goes before writing any code.</p>
+<p class="tip"><b>Interviewers look for:</b> asking questions, confirming in writing, and fast iteration instead of waiting for a perfect spec.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>Tell me about a time you wore multiple hats.</summary>
+<div class="answer">
+<p>At RDX, on most projects I'm not only writing code. I'm talking to the client to clarify requirements, building frontend and backend, doing QA, and handling the release through our CI/CD pipeline to AWS.</p>
+<p>On a single app I might be in a requirement call in the morning, fixing a slow page after lunch, and setting up a deployment in the evening.</p>
+<p>I actually enjoy that. It means I understand why something is being built, not just what. I expect BookLeaf to be like that too: one day it's the author dashboard, the next it's a Razorpay issue or an automation that broke.</p>
+<p class="tip"><b>Personalise:</b> name one specific RDX project and list the actual hats you wore on it.</p>
+<p class="tip"><b>Interviewers look for:</b> genuine comfort with switching context, which is essential in a small startup team.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>Tell me about learning a new tool quickly. How would you pick up Bubble or n8n?</summary>
+<div class="answer">
+<p>At Smile Returns, I hadn't built a multi-tenant SaaS before, and I needed to get productive in their Next.js and PostgreSQL setup within a sprint. I read the existing code, asked a lot of questions early, and shipped a small change in the first week so I'd learn the full flow.</p>
+<p>For Bubble and n8n, I haven't used them in production yet. My plan would be:</p>
+<ul>
+<li>Do the official tutorials over a weekend.</li>
+<li>Look at BookLeaf's existing Bubble app and workflows to see how data and triggers are set up.</li>
+<li>Pick one small real task, like automating a notification, and ship it.</li>
+</ul>
+<p>Underneath, they're built on things I already know well: data models, APIs, webhooks and triggers. So I'm confident I'd be useful quickly.</p>
+<p class="tip"><b>Interviewers look for:</b> a concrete learning method and honesty about the gap. Bonus if you've tried the free tier of n8n or Bubble before the interview.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you explain a technical trade-off to a non-technical founder?</summary>
+<div class="answer">
+<p>I'd skip the jargon and talk about time, money, and risk.</p>
+<p>Say the founder asks, "Can we move everything off Bubble next month?" I wouldn't talk about frameworks. I'd say something like:</p>
+<p>"We can, but it's like moving warehouses while orders are still shipping. If we move everything at once, something will break and authors will notice. If we move one flow at a time, starting with something like author royalties, it's slower but safe, and we can stop at any point. Option one is faster but risky. Option two takes longer but nothing breaks. Which matters more to you right now?"</p>
+<p>I give two or three clear options, my recommendation, and let them decide.</p>
+<p class="tip"><b>Personalise:</b> if you've explained something like this to a client at RDX, use that real example.</p>
+<p class="tip"><b>Interviewers look for:</b> analogies, business language, clear options and a recommendation.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>Everything is urgent. How do you prioritise?</summary>
+<div class="answer">
+<p>I ask two questions about each task: how much damage is it causing right now, and how many people does it affect.</p>
+<ul>
+<li>Payments failing, or authors unable to log in or upload: that comes first, because it costs money and trust.</li>
+<li>Something blocking the ops team's daily work, like an order sync that's stuck: next.</li>
+<li>New features and nice-to-haves: after that.</li>
+</ul>
+<p>If two things really are equally important, I don't guess. I go to the founder and say, "I can do A today and B tomorrow, or the other way. Which one?" And I keep everyone updated, so nobody is left wondering.</p>
+<p class="tip"><b>Interviewers look for:</b> a clear framework based on impact, and the habit of making priorities visible instead of silently juggling.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>Have you mentored or helped a junior developer?</summary>
+<div class="answer">
+<p>I haven't formally led or mentored a team yet. But I do help teammates and fellow interns regularly, for example walking someone through how our API is structured, pairing to debug something, or explaining why a query is slow.</p>
+<p>What I've learned is that it works best when you don't just give the answer. I show how I found it, so next time they can do it themselves.</p>
+<p>If I'm helping juniors at BookLeaf, I'd do small things that make a big difference: clear code reviews with reasons, a short setup guide so a new person can run the project on day one, and pairing on their first few tasks.</p>
+<p class="tip"><b>Personalise:</b> add a real moment where you helped a classmate, intern or teammate, and what they could do afterwards.</p>
+<p class="tip"><b>Interviewers look for:</b> honesty about experience level plus the right instincts: teaching how, not just what.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>Tell me about a time you improved a process.</summary>
+<div class="answer">
+<p>At RDX, building, testing and releasing apps had a lot of manual steps. That's slow and easy to get wrong, especially when you're shipping many apps.</p>
+<p>I helped set up a CI/CD pipeline. Now, when code is merged, it builds automatically, runs the tests, and deploys to AWS. If a test fails, it stops and nothing broken goes out.</p>
+<p>The result was faster releases and fewer "it worked on my machine" problems. People could focus on building instead of deploying.</p>
+<p>At BookLeaf I'd look for the same kind of thing in operations: any task someone does by hand for every book, like sending status emails or copying order details, is a candidate for automation.</p>
+<p class="tip"><b>Personalise:</b> add real numbers if you have them, like release time before and after, or how many apps use the pipeline.</p>
+<p class="tip"><b>Interviewers look for:</b> spotting repeated manual work, fixing it, and the outcome.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>How do you handle feedback or criticism of your work?</summary>
+<div class="answer">
+<p>I try to treat it as free help. In code reviews, I don't argue first. I ask myself, "Is this point right?" Usually it is, and I just fix it.</p>
+<p>If I disagree, I explain my reasoning once, calmly, and then we pick the better option. It's not about who wins.</p>
+<p>One example: early in an internship, I got feedback that my pull requests were too big and hard to review. I started splitting them into smaller, focused changes. Reviews got faster and I got better feedback.</p>
+<p class="tip"><b>Personalise:</b> use real feedback you received and the change you made. The "what I changed" part matters most.</p>
+<p class="tip"><b>Interviewers look for:</b> no defensiveness, and evidence that you actually changed something.</p>
+</div>
+</details>
+</section>
+
+<div class="part">Part 2 — Core Full-Stack</div>
+
+<section id="s3">
+<h3>3. Frontend — React &amp; Next.js</h3>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you build the author dashboard?</summary>
+<div class="answer">
+<p>I'd start by asking what authors actually come to do. Probably: check where their book is (editing, cover, printing, live), upload files, see sales and royalties, and get help.</p>
+<p>Then I'd build it with Next.js App Router:</p>
+<ul>
+<li>A layout with a sidebar: My Books, Orders, Royalties, Profile.</li>
+<li>A book page with a clear status timeline, so authors don't need to email support to ask "where is my book?".</li>
+<li>Server components to load data close to the database, and client components only where there's interaction, like uploads.</li>
+<li>TanStack Query for data that changes, like order status.</li>
+<li>Tailwind for a clean, mobile-friendly UI, since many authors will use their phone.</li>
+</ul>
+<p>I'd ship the status view first, because that probably cuts the most support tickets.</p>
+<p class="tip"><b>Interviewers look for:</b> starting from user needs, then structure, then tech. Mentioning reduced support load shows business sense.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How do you manage state in a React app?</summary>
+<div class="answer">
+<p>I split state into types, because each type has a different best tool:</p>
+<ul>
+<li><b>Server data</b>, like an author's books or orders: TanStack Query. It handles caching, loading and refetching, so I don't copy server data into my own state.</li>
+<li><b>UI state</b>, like whether a modal is open: plain <code>useState</code> in the component.</li>
+<li><b>Form state</b>: React Hook Form.</li>
+<li><b>URL state</b>, like filters and the current page: in the query string, so the view can be shared and survives a refresh.</li>
+<li><b>Global app state</b>, like the logged-in user or theme: React Context, or Zustand if it grows.</li>
+</ul>
+<p>Most apps don't need Redux once server data is handled by TanStack Query.</p>
+<p class="tip"><b>Interviewers look for:</b> knowing that server state and client state are different problems.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>What's the difference between server and client components in Next.js?</summary>
+<div class="answer">
+<p>Server components run only on the server. They can read the database or call an API directly, and their code isn't sent to the browser. That means smaller bundles and faster pages.</p>
+<p>Client components, marked with <code>"use client"</code>, run in the browser too. You need them for anything interactive: <code>useState</code>, click handlers, browser APIs like file uploads.</p>
+<p>My default is server components, and I push the client parts down to the smallest piece. For example, a book details page would be a server component, and only the "Upload new cover" button with its progress bar would be a client component.</p>
+<p>One thing to be careful about: never pass secrets or sensitive data as props into a client component, because it ends up in the browser.</p>
+<p class="tip"><b>Interviewers look for:</b> "server by default, client at the leaves", and awareness of what gets sent to the browser.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>For public book pages versus the author dashboard, would you use SSR, SSG or ISR?</summary>
+<div class="answer">
+<p>They have very different needs, so different choices.</p>
+<p><b>Public book pages</b>, with 22,000+ titles: these need to be fast and good for SEO, but they don't change every second. I'd use ISR, which is static generation with revalidation. Pages are built once and cached, then refreshed every so often, or straight away using on-demand revalidation when a book's details change. I wouldn't pre-build all 22,000 at deploy time. I'd build popular ones and let the rest generate on first visit.</p>
+<p><b>Author dashboard</b>: it's private, needs login, and shows personal, changing data like orders and royalties. SEO doesn't matter here. I'd render it dynamically per request, or render the shell on the server and fetch the live parts on the client. It must never be cached publicly.</p>
+<p class="tip"><b>Interviewers look for:</b> matching the rendering strategy to SEO, freshness and privacy, and knowing not to build 22,000 pages at deploy time.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>Tell me about how you improved load performance by 94%.</summary>
+<div class="answer">
+<p>At RDX, one of our client apps was loading slowly. First I measured with Lighthouse and the browser Network tab, to see what was actually heavy.</p>
+<p>Three things made the difference:</p>
+<ul>
+<li><b>Images:</b> they were large PNGs and JPEGs. I converted them to WebP, which is much smaller for the same quality.</li>
+<li><b>Lazy loading:</b> images and sections below the fold only loaded when the user scrolled to them.</li>
+<li><b>Code-splitting:</b> instead of one big JavaScript bundle, each page and heavy component loaded only when it was needed.</li>
+</ul>
+<p>Together that cut load time by 94%. For BookLeaf, book covers are exactly the same problem: a catalogue page with lots of covers would benefit from WebP, proper sizes, and lazy loading.</p>
+<p class="tip"><b>Personalise:</b> know your before and after numbers (for example, seconds or MB) and which metric the 94% refers to. Interviewers often ask.</p>
+<p class="tip"><b>Interviewers look for:</b> measure first, then fix, then measure again.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you build a manuscript submission form with validation?</summary>
+<div class="answer">
+<p>I'd use React Hook Form with a Zod schema. The form would have things like title, author name, genre, language, page size, the manuscript file and the cover file.</p>
+<p>Validation on the frontend would check:</p>
+<ul>
+<li>Required fields are filled and lengths are sensible.</li>
+<li>The file type is allowed, like PDF or DOCX, and the size is under the limit.</li>
+<li>Clear error messages next to each field, not one big error at the top.</li>
+</ul>
+<p>But frontend checks are only for a good experience. The server must validate everything again, using the same Zod schema if possible, because anyone can bypass the browser.</p>
+<p>For a long form, I'd also save a draft, so an author doesn't lose everything if they close the tab.</p>
+<p class="tip"><b>Interviewers look for:</b> a schema-based approach, good error UX, and saying "validate again on the server".</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>How would you handle large manuscript uploads with a progress bar?</summary>
+<div class="answer">
+<p>I wouldn't send big files through our own server. At Smile Returns, I built uploads where the browser uploads directly to storage using a signed URL, and I'd do the same here.</p>
+<ol>
+<li>The frontend asks our API for an upload URL. The API checks the author is logged in and owns that book.</li>
+<li>The API returns a short-lived signed URL for S3.</li>
+<li>The browser uploads the file directly to S3. I'd use <code>XMLHttpRequest</code> or Axios with <code>onUploadProgress</code> to show a progress bar, because plain <code>fetch</code> doesn't give upload progress easily.</li>
+<li>When it's done, the frontend tells the API, and the API saves the file record.</li>
+</ol>
+<p>For very large files, S3 multipart upload lets us retry just the failed part, which helps on slow connections.</p>
+<p class="tip"><b>Interviewers look for:</b> direct-to-storage uploads, real progress, and handling failures and retries.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How do you use TanStack Query for data fetching and caching?</summary>
+<div class="answer">
+<p>TanStack Query manages server data for me: loading states, errors, caching and refetching.</p>
+<p>For example, an author's order list would use <code>useQuery</code> with a key like <code>['orders', authorId]</code>. If they leave the page and come back, it shows the cached data instantly and refreshes in the background.</p>
+<p>When they do something, like update their book details, I use <code>useMutation</code>. After it succeeds, I invalidate the related query so the list refreshes. For small, safe updates I can do an optimistic update, so the UI changes instantly and rolls back if the server says no.</p>
+<p>I also set a sensible <code>staleTime</code>. Royalty reports don't need to refetch every second, but order status can refresh more often.</p>
+<p class="tip"><b>Interviewers look for:</b> query keys, invalidation after mutations, and choosing staleness based on the data.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>How do you make a web app accessible?</summary>
+<div class="answer">
+<p>I start with the basics, because they cover most problems:</p>
+<ul>
+<li>Use proper HTML elements, like <code>&lt;button&gt;</code> for buttons and <code>&lt;label&gt;</code> for inputs, not clickable divs.</li>
+<li>Every image has useful alt text, for example a book cover's alt is the book title.</li>
+<li>Everything works with the keyboard, and focus is visible.</li>
+<li>Enough colour contrast, and never use colour alone to show status, like "red means failed".</li>
+<li>Form errors are linked to their fields so screen readers announce them.</li>
+</ul>
+<p>I check with Lighthouse and by tabbing through the page myself. React Testing Library also nudges you towards accessible code, because you find elements by role and label.</p>
+<p class="tip"><b>Interviewers look for:</b> practical habits over a list of ARIA attributes. Semantic HTML first.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>How do you approach responsive design?</summary>
+<div class="answer">
+<p>I design mobile-first. With Tailwind, I write the mobile styles by default and add breakpoints like <code>md:</code> and <code>lg:</code> for bigger screens.</p>
+<p>For an author dashboard, that means things like: the sidebar becomes a menu on mobile, tables of orders turn into stacked cards, and buttons are big enough to tap.</p>
+<p>I use flexbox and grid instead of fixed widths, and I test on real phone sizes in Chrome DevTools, and on an actual phone before release.</p>
+<p>A lot of Indian authors will check their book status on their phone, so I'd treat mobile as a first-class experience, not an afterthought.</p>
+<p class="tip"><b>Interviewers look for:</b> mobile-first thinking and concrete patterns, like tables becoming cards.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>What are error boundaries and how do you handle errors on the frontend?</summary>
+<div class="answer">
+<p>An error boundary catches errors while rendering a part of the page, so one broken widget doesn't crash the whole app. In Next.js App Router, I can add an <code>error.tsx</code> file to a route, and it shows a fallback with a "Try again" button.</p>
+<p>So if the royalties chart fails, the author still sees their books and orders. Only that section shows an error.</p>
+<p>Error boundaries don't catch everything, like errors in event handlers or failed API calls. For those, I handle the error state in TanStack Query and show a friendly message.</p>
+<p>And I'd log errors to something like Sentry, so we find out about problems before authors email us.</p>
+<p class="tip"><b>Interviewers look for:</b> knowing what error boundaries do and don't catch, and the habit of logging errors.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How do you handle authentication on the frontend?</summary>
+<div class="answer">
+<p>The main rule is: the frontend is never the real security. It only improves the experience. The server checks every request.</p>
+<p>What I do on the frontend:</p>
+<ul>
+<li>Store the session in an <code>httpOnly</code>, secure cookie, not <code>localStorage</code>, so JavaScript can't read it if there's an XSS bug.</li>
+<li>Use Next.js middleware to redirect logged-out users away from dashboard pages before they load.</li>
+<li>Hide buttons the user's role can't use, like "Approve cover" for authors. But the API still checks the role.</li>
+<li>Handle an expired session cleanly, by redirecting to login and returning them to where they were.</li>
+</ul>
+<p class="tip"><b>Interviewers look for:</b> "the server enforces, the client just reflects", plus httpOnly cookies over localStorage.</p>
+</div>
+</details>
+</section>
+
+<section id="s4">
+<h3>4. Backend &amp; APIs</h3>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>How would you design a REST API for authors, books and orders?</summary>
+<div class="answer">
+<p>I'd use nouns for resources and HTTP methods for actions:</p>
+<pre><code>GET    /authors/:id
+GET    /authors/:id/books
+POST   /books
+GET    /books/:id
+PATCH  /books/:id
+POST   /books/:id/files       (manuscript, cover)
+GET    /orders?status=printing&amp;page=2
+POST   /orders
+POST   /orders/:id/cancel</code></pre>
+<p>A few rules I follow: plural nouns, filters in the query string, <code>PATCH</code> for partial updates, and a consistent error format everywhere. Something like "cancel an order" isn't a simple update, so a small action endpoint is clearer than trying to force it into <code>PATCH</code>.</p>
+<p>At Xellerate I built 95+ endpoints, and consistency was what kept them easy to use.</p>
+<p class="tip"><b>Interviewers look for:</b> resource naming, correct methods, and a sensible answer for actions that aren't plain CRUD.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>Which HTTP status codes do you use most and when?</summary>
+<div class="answer">
+<ul>
+<li><b>200</b> OK, <b>201</b> Created (new order), <b>204</b> No Content (successful delete).</li>
+<li><b>400</b> bad input, like a missing title. <b>422</b> if the input is well-formed but breaks a rule.</li>
+<li><b>401</b> not logged in. <b>403</b> logged in but not allowed, like an author trying to see another author's royalties.</li>
+<li><b>404</b> not found. <b>409</b> conflict, like a duplicate ISBN.</li>
+<li><b>429</b> too many requests.</li>
+<li><b>500</b> our bug. <b>502/503</b> an upstream service, like a print API, is down.</li>
+</ul>
+<p>The common mistake is returning 200 with <code>{"error": ...}</code> inside. That breaks monitoring and client error handling.</p>
+<p class="tip"><b>Interviewers look for:</b> the 401 vs 403 difference, and not hiding errors inside a 200.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How do you paginate large lists, like 22,000 titles?</summary>
+<div class="answer">
+<p>There are two main ways.</p>
+<p><b>Offset pagination</b>: <code>?page=3&amp;limit=20</code>. It's simple and lets you jump to page 50, so it's fine for admin tables. But on big tables it gets slower the deeper you go, and if new rows are added you can see duplicates.</p>
+<p><b>Cursor pagination</b>: <code>?after=&lt;last id&gt;&amp;limit=20</code>. The query uses <code>WHERE id &gt; last_id</code>, which uses an index and stays fast. It's best for infinite scroll or feeds, like a public catalogue.</p>
+<p>For the ops dashboard I'd probably use offset, and for public browsing or big exports, cursor. Either way I'd set a max limit, so nobody can request 22,000 rows at once.</p>
+<p class="tip"><b>Interviewers look for:</b> knowing both, the trade-offs, and capping the page size.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How do you version an API?</summary>
+<div class="answer">
+<p>The simplest and most common way is in the URL: <code>/api/v1/orders</code>. It's easy to see and easy to route.</p>
+<p>But I try not to need new versions often. Adding a new field or a new endpoint doesn't break anyone, so that's fine in v1. I only need v2 for breaking changes, like renaming a field or changing what a status means.</p>
+<p>When I do create v2, I keep v1 working for a while, tell the people using it, and remove it later.</p>
+<p>This matters more when external parties use the API, for example partners or a mobile app. For an internal dashboard where we control both sides, we can usually just change both together.</p>
+<p class="tip"><b>Interviewers look for:</b> knowing what counts as a breaking change, and a plan for retiring old versions.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>How would you handle a payment webhook, for example from Razorpay?</summary>
+<div class="answer">
+<p>I haven't integrated Razorpay in production yet, but I've read how its webhooks work, and the pattern is the same for most providers.</p>
+<ol>
+<li><b>Verify the signature.</b> Razorpay sends an <code>X-Razorpay-Signature</code> header, an HMAC-SHA256 of the raw body using our webhook secret. I compute it myself and compare. If it doesn't match, I reject it.</li>
+<li><b>Make it idempotent.</b> Webhooks can arrive more than once. I store the event ID, and if I've already processed it, I just return 200.</li>
+<li><b>Respond fast.</b> I save the event and return 200 quickly, then do the heavy work, like confirming the order and sending emails, in a background job.</li>
+<li><b>Don't trust the order of events.</b> I check the current status before updating.</li>
+</ol>
+<p>And I'd never mark an order paid just because the frontend said so. The webhook or a server-side check is the source of truth.</p>
+<p class="tip"><b>Interviewers look for:</b> signature check, idempotency, quick acknowledgement, and honesty about not having used Razorpay yet.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you send webhooks to other systems?</summary>
+<div class="answer">
+<p>Say BookLeaf wants to notify a print partner or an n8n workflow whenever a book is approved for printing.</p>
+<ul>
+<li>When the event happens, I save it to an events table in the same database transaction. That way, I never lose an event even if the send fails.</li>
+<li>A background worker sends it as a POST with a JSON body and an event ID.</li>
+<li>I sign the body with HMAC, so the receiver can check it really came from us.</li>
+<li>If the receiver fails or times out, I retry with increasing delays, like 1 minute, 5 minutes, 30 minutes, and after a few tries mark it as failed for someone to check.</li>
+</ul>
+<p>Because of retries, receivers might get the same event twice, so the event ID lets them ignore duplicates.</p>
+<p class="tip"><b>Interviewers look for:</b> reliable delivery (store first, then send), signing, retries with backoff, and event IDs.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>What is idempotency and why does it matter?</summary>
+<div class="answer">
+<p>An operation is idempotent if doing it twice has the same effect as doing it once.</p>
+<p>It matters a lot with payments and orders. Imagine an author clicks "Pay" and their internet drops. The browser retries. Without idempotency, we might create two orders or charge them twice.</p>
+<p>The fix is an idempotency key. The client sends a unique key with the request. The server stores it with the result. If the same key comes again, the server returns the saved result instead of doing the work again. A unique constraint in the database makes this safe even if two requests arrive at the same moment.</p>
+<p><code>GET</code>, <code>PUT</code> and <code>DELETE</code> should already be idempotent. <code>POST</code> is the one that needs this extra care.</p>
+<p class="tip"><b>Interviewers look for:</b> a real example like double payment, and using a database constraint, not just an "if exists" check.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>Generating a print-ready PDF takes minutes. How would you handle that?</summary>
+<div class="answer">
+<p>I wouldn't do it inside the API request. It would time out, and the author would sit there waiting.</p>
+<p>Instead I'd use a background job queue, like BullMQ on Redis:</p>
+<ol>
+<li>The API creates a job, like "generate print PDF for book 123", saves the status as <code>queued</code>, and returns straight away.</li>
+<li>A separate worker process picks up the job, generates the PDF, uploads it to S3, and sets the status to <code>ready</code>.</li>
+<li>The dashboard shows the status, by polling or a notification.</li>
+</ol>
+<p>Jobs get retries with backoff, and if one keeps failing, it moves to a failed list and alerts someone. I'd also limit how many run at once, because PDF generation is heavy. With 1,200 books a month, you don't want ten big jobs starving the server.</p>
+<p class="tip"><b>Interviewers look for:</b> moving slow work off the request, status tracking, retries, and concurrency limits.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you store manuscripts and cover files?</summary>
+<div class="answer">
+<p>Files go in object storage like S3, not in the database and not on the app server's disk. The database only stores the file's key, type, size, owner and version.</p>
+<p>At Smile Returns, I built access-controlled storage with time-limited signed URLs, and I'd use the same idea here:</p>
+<ul>
+<li>The bucket is private. No public links.</li>
+<li>When an author or editor needs a file, the API checks they're allowed and gives a signed URL that expires in a few minutes.</li>
+<li>Uploads go directly from the browser to S3, so our server doesn't carry big files.</li>
+</ul>
+<p>I'd also keep versions, because manuscripts get revised many times, and you want to know exactly which file went to print.</p>
+<p class="tip"><b>Interviewers look for:</b> private storage, signed URLs, metadata in the DB, and versioning.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you implement rate limiting?</summary>
+<div class="answer">
+<p>Rate limiting stops abuse, like someone trying thousands of passwords, or a buggy script hammering the API.</p>
+<p>I'd use Redis to count requests per user or IP in a time window. For example, login allows 5 attempts per minute per IP and email, while normal API calls allow a much higher limit. When the limit is hit, I return <code>429</code> with a <code>Retry-After</code> header.</p>
+<p>Redis matters because if we run more than one server, they all share the same counter.</p>
+<p>The strictest limits go on sensitive or expensive endpoints: login, OTP, password reset, and anything that calls OpenAI, because each call costs money.</p>
+<p>Nginx can also do basic rate limiting in front of the app.</p>
+<p class="tip"><b>Interviewers look for:</b> a shared store like Redis, different limits for different endpoints, and the 429 response.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How do you handle validation and errors in a Node API?</summary>
+<div class="answer">
+<p><b>Validation:</b> every request body, query and param goes through a Zod schema at the start of the route. Unknown fields are dropped, so nobody can sneak in something like <code>role: "admin"</code>.</p>
+<p><b>Errors:</b> I have one central error-handling middleware in Express. Routes throw typed errors, like <code>NotFoundError</code> or <code>ForbiddenError</code>, and the middleware turns them into the right status code and a consistent JSON shape:</p>
+<pre><code>{ "error": { "code": "BOOK_NOT_FOUND", "message": "Book not found" } }</code></pre>
+<p>For unexpected errors, the user sees a generic message, while the full stack trace goes to our logs with a request ID. We never leak stack traces or SQL errors to the client.</p>
+<p class="tip"><b>Interviewers look for:</b> validation at the edge, one central error handler, consistent error format, and no leaking internals.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>Node.js or Python? Which would you choose for BookLeaf's backend?</summary>
+<div class="answer">
+<p>For the main web backend, I'd lean towards Node.js with TypeScript. The frontend is React and Next.js, so the whole team uses one language, and we can share types and validation schemas. Node is also great for I/O-heavy work like APIs, webhooks and calling third-party services, which is most of what BookLeaf does.</p>
+<p>Python is stronger for data work, scripts, and some AI and document-processing libraries. If we needed heavy manuscript analysis or PDF processing that has better Python tools, I'd happily build that as a separate small service or worker.</p>
+<p>So my answer: Node for the core, Python where it clearly wins. My own production experience is mostly Node, but I'm comfortable picking up Python.</p>
+<p class="tip"><b>Interviewers look for:</b> a reasoned choice tied to the team and workload, not "Node is better".</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>How do you document APIs?</summary>
+<div class="answer">
+<p>I like OpenAPI (Swagger) specs, because they give a readable page where people can try the endpoints, and they can generate client types.</p>
+<p>If I'm using Zod for validation, I can generate the OpenAPI spec from the same schemas, so the docs don't go out of date.</p>
+<p>I also use Postman a lot. With 95+ endpoints at Xellerate, having saved example requests made testing much easier, and a shared collection is a quick way to help the frontend team.</p>
+<p>On top of that, a short README covering how to run the project, the environment variables, and how auth works. In a small team where people come and go, that saves a lot of time.</p>
+<p class="tip"><b>Interviewers look for:</b> docs that stay in sync with code, and thinking about the next developer.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>How do you integrate third-party APIs reliably, like print or distribution APIs?</summary>
+<div class="answer">
+<p>I assume the other service will sometimes be slow, down, or return something odd. So:</p>
+<ul>
+<li><b>Timeouts</b> on every call. Without one, a hanging print API can tie up our server.</li>
+<li><b>Retries with backoff</b>, but only for safe cases, like timeouts and 5xx errors, and with an idempotency key if it's a create.</li>
+<li><b>Background jobs</b> for anything not needed instantly, like sending an order to the printer.</li>
+<li><b>One wrapper module</b> per provider, so if the API changes, I fix one file.</li>
+<li><b>Logging</b> each request and response, so when a book doesn't reach a distributor, we can see why.</li>
+<li><b>Alerts</b> when failures pile up.</li>
+</ul>
+<p>And I store our own status in our database, instead of asking the third party every time.</p>
+<p class="tip"><b>Interviewers look for:</b> timeouts, safe retries, isolation behind a wrapper, and visibility when things fail.</p>
+</div>
+</details>
+</section>
+
+<section id="s5">
+<h3>5. Databases &amp; Performance</h3>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>SQL or NoSQL for BookLeaf's core data?</summary>
+<div class="answer">
+<p>SQL, specifically PostgreSQL, for the core.</p>
+<p>BookLeaf's data is very connected: authors have books, books have orders, orders have payments, and royalties depend on all of them. That's exactly what relational databases are good at. You get joins, foreign keys so you can't have an order for a book that doesn't exist, and transactions, which you really want when money is involved.</p>
+<p>NoSQL still has a place. Redis for caching, sessions, rate limits and job queues. And Postgres has JSONB columns, so for flexible data, like extra metadata from different distribution platforms, I can store it as JSON without a separate database.</p>
+<p>I've used PostgreSQL, MySQL and MongoDB, and for this kind of business I'd pick Postgres.</p>
+<p class="tip"><b>Interviewers look for:</b> a choice driven by the data's shape and the need for transactions, not by trend.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>Sketch a schema for authors, books, orders and royalties.</summary>
+<div class="answer">
+<pre><code>authors      (id, name, email, phone, country, created_at)
+books        (id, author_id → authors, title, isbn UNIQUE,
+              status, package_id, created_at)
+book_files   (id, book_id → books, kind [manuscript|cover|print_pdf],
+              storage_key, version, uploaded_by, created_at)
+orders       (id, book_id → books, channel [website|amazon|...],
+              quantity, unit_price, currency, status, created_at)
+payments     (id, order_id → orders, provider, provider_payment_id UNIQUE,
+              amount, status, created_at)
+royalties    (id, author_id → authors, book_id → books, order_id → orders,
+              amount, currency, period, status [pending|paid])</code></pre>
+<p>Some choices I'd point out: money stored as integers in paise or cents, never floats. Currency stored on each row, because BookLeaf sells in India and the US. Royalties as their own rows, linked to the order, so every rupee paid to an author can be traced back to a sale. And unique constraints on ISBN and provider payment ID to stop duplicates.</p>
+<p class="tip"><b>Interviewers look for:</b> sensible relationships, money as integers, multi-currency, and an audit trail for royalties.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>Tell me about how you used indexing to improve performance.</summary>
+<div class="answer">
+<p>At Xellerate AI, I cut the average API response time by 35%. I didn't guess. I profiled the slowest, most-used endpoints first.</p>
+<p>Part of it was indexing. Many queries filtered on two columns together, like "matches for this startup with this status". So I added composite indexes on those column pairs, in the right order. The most selective, most-filtered column goes first.</p>
+<p>The other part was fixing N+1 queries, which I can explain too.</p>
+<p>At Smile Returns, I did something similar for appointment booking lookups, and that was part of a 30% query speed-up.</p>
+<p>I'm also careful not to over-index. Each index slows down writes and takes space, so I only add ones that real queries need.</p>
+<p class="tip"><b>Personalise:</b> remember one specific query and index you added, so you can describe it if asked to go deeper.</p>
+<p class="tip"><b>Interviewers look for:</b> measure first, composite index column order, and awareness of the write cost.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>What is the N+1 query problem and how do you fix it?</summary>
+<div class="answer">
+<p>It's when you run one query to get a list, then one more query for each item in the list.</p>
+<p>For example, load 50 orders, then for each order run a separate query to get its book title. That's 51 queries instead of one or two. It's easy to miss with an ORM, because the code looks innocent.</p>
+<p>The fixes:</p>
+<ul>
+<li>Use a join, so it's one query.</li>
+<li>Or load the related rows in one batch with <code>WHERE id IN (...)</code>. In Prisma, using <code>include</code> does this.</li>
+</ul>
+<p>At Xellerate I collapsed several N+1 patterns into joined selects, and it was a big part of the 35% improvement. To spot them, I log the number of queries per request in development.</p>
+<p class="tip"><b>Interviewers look for:</b> a clear example, the fix, and how you detect it.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>How do you keep a payment and an order consistent?</summary>
+<div class="answer">
+<p>I use a database transaction, so related changes either all happen or none do.</p>
+<p>When a payment is confirmed, in one transaction I:</p>
+<ol>
+<li>Insert the payment row, where a unique provider payment ID stops duplicates.</li>
+<li>Update the order status to <code>paid</code>, but only if it's currently <code>pending</code>.</li>
+<li>Create the royalty entry for the author.</li>
+</ol>
+<p>If any step fails, everything rolls back. We never have a paid order with no payment record.</p>
+<p>One important point: I never call an external API, like the payment gateway or an email service, inside the transaction. That holds locks while waiting on the network. I commit first, then trigger emails or print jobs in the background.</p>
+<p class="tip"><b>Interviewers look for:</b> transactions, conditional updates to avoid double processing, and keeping network calls outside the transaction.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How do you run database migrations safely?</summary>
+<div class="answer">
+<p>I use a migration tool, like Prisma Migrate, so every schema change is a file in Git, reviewed, and run the same way in every environment.</p>
+<p>For a live system, I avoid changes that break running code. For example, to rename a column:</p>
+<ol>
+<li>Add the new column.</li>
+<li>Deploy code that writes to both.</li>
+<li>Copy the old data across.</li>
+<li>Switch reads to the new column.</li>
+<li>Drop the old column later.</li>
+</ol>
+<p>I also watch out for migrations that lock big tables, like adding an index on a huge table. In Postgres I'd use <code>CREATE INDEX CONCURRENTLY</code>. And I always take a backup before a risky migration.</p>
+<p class="tip"><b>Interviewers look for:</b> migrations in version control, the expand-then-contract pattern, and awareness of table locks.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>What is normalization, and when would you denormalize?</summary>
+<div class="answer">
+<p>Normalization means storing each fact in one place. For example, an author's email lives only in the authors table, not copied into every book and order. That way, when it changes, you update one row and nothing goes out of sync.</p>
+<p>At Smile Returns I normalised the prescription and appointment schemas, removing duplicated data, and together with indexing that improved query speed by 30%.</p>
+<p>But sometimes you denormalize on purpose. Good examples for BookLeaf:</p>
+<ul>
+<li>Copy the price onto the order when it's placed. If the book's price changes later, old orders should still show what was actually paid.</li>
+<li>Keep a running total of sales per book for a fast dashboard, instead of counting every time.</li>
+</ul>
+<p class="tip"><b>Interviewers look for:</b> understanding both sides, with good reasons to denormalize, like historical accuracy and read speed.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you use Redis for caching?</summary>
+<div class="answer">
+<p>I'd cache data that's read often and changes rarely. For BookLeaf, things like public book details, the catalogue's category lists, or an author's monthly royalty summary.</p>
+<p>The usual pattern is cache-aside: check Redis first. If it's there, return it. If not, read from Postgres, save it to Redis with an expiry, and return it.</p>
+<p>The hard part is keeping it fresh. When a book's details change, I delete its cache key, so the next read gets the new data. And every key has a TTL as a safety net.</p>
+<p>I wouldn't cache things that must be exactly right in real time, like payment status. And I'd only add caching after fixing slow queries, not as a way to hide them.</p>
+<p class="tip"><b>Interviewers look for:</b> cache-aside, invalidation on write, TTLs, and knowing what not to cache.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>A page is slow. How do you find the slow query?</summary>
+<div class="answer">
+<ol>
+<li>Find which request is slow, using logs or APM timings per endpoint.</li>
+<li>Find which queries it runs and how long each takes. In Postgres, <code>pg_stat_statements</code> shows the slowest and most-called queries.</li>
+<li>Run <code>EXPLAIN ANALYZE</code> on the slow query. It shows the real plan and timing.</li>
+</ol>
+<p>Things I look for in the plan:</p>
+<ul>
+<li>A <b>Seq Scan</b> on a big table where I expected an index.</li>
+<li>Estimated rows very different from actual rows, which means stale statistics, so I run <code>ANALYZE</code>.</li>
+<li>Sorting on a column with no index.</li>
+</ul>
+<p>Then I fix it, with an index, a rewritten query, or fewer columns, and run <code>EXPLAIN ANALYZE</code> again to confirm. That's the same measure-fix-measure approach I used at Xellerate.</p>
+<p class="tip"><b>Interviewers look for:</b> a methodical process and being able to read basic plan output.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you handle database backups?</summary>
+<div class="answer">
+<p>A backup you've never restored is just a hope. So:</p>
+<ul>
+<li>Automatic daily backups, plus point-in-time recovery if we're on managed Postgres like AWS RDS. That lets us restore to just before a mistake, like someone deleting the wrong rows.</li>
+<li>Backups stored in a different place from the main database.</li>
+<li>Test restores regularly, for example once a month, into a separate database, to make sure they actually work.</li>
+<li>Manuscripts and covers in S3 with versioning turned on, so a deleted or overwritten file can be recovered.</li>
+</ul>
+<p>For a business with 22,000 titles and authors' royalty history, losing data would be a disaster, so this is worth getting right early.</p>
+<p class="tip"><b>Interviewers look for:</b> automated backups, point-in-time recovery, and actually testing restores.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>How do you make sure one author can never see another author's data?</summary>
+<div class="answer">
+<p>I use two layers.</p>
+<p><b>In the application:</b> every query for author data is filtered by the logged-in author's ID, which comes from the session, never from the request body. So it's <code>WHERE author_id = :currentAuthor</code>, always. I put that in a shared helper, so nobody forgets it.</p>
+<p><b>In the database:</b> PostgreSQL row-level security. At Xellerate, I set up RLS policies so the database itself only returns rows the current user is allowed to see. Even if a developer forgets the filter in some new endpoint, the database blocks it.</p>
+<p>I'd also write tests that log in as author A and try to read author B's book, expecting a 403 or 404. At Smile Returns, the multi-tenant healthcare platform had the same need to keep each tenant's data separate.</p>
+<p class="tip"><b>Interviewers look for:</b> defence in depth, IDs from the session, and tests for cross-user access.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you build search across 22,000+ titles?</summary>
+<div class="answer">
+<p>22,000 rows is not huge, so I'd start with Postgres itself before adding a new tool.</p>
+<ul>
+<li><b>Full-text search</b> with a <code>tsvector</code> column on title, author name and description, and a GIN index. That handles word matching and ranking.</li>
+<li><b>Typo tolerance</b> with the <code>pg_trgm</code> extension, so "harry poter" still finds results.</li>
+<li><b>Filters</b> like genre and language as normal indexed columns.</li>
+</ul>
+<p>I'd debounce the search box on the frontend, so we don't send a request on every keystroke, and paginate the results.</p>
+<p>If we later need advanced features, like instant search-as-you-type or very fuzzy matching across millions of rows, I'd consider Meilisearch or Elasticsearch. But I wouldn't add that complexity on day one.</p>
+<p class="tip"><b>Interviewers look for:</b> right-sizing the solution, and knowing when to grow into a dedicated search engine.</p>
+</div>
+</details>
+</section>
+
+<section id="s6">
+<h3>6. Auth &amp; Security</h3>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>JWT or sessions? Which would you use?</summary>
+<div class="answer">
+<p><b>Sessions:</b> the server stores the session, for example in Redis, and the browser holds a random session ID in a cookie. It's easy to log someone out instantly, because you just delete the session.</p>
+<p><b>JWT:</b> the token itself contains the user info, signed by the server. No lookup is needed, which is handy across many services. But it's hard to revoke before it expires.</p>
+<p>For BookLeaf's author dashboard and internal tools, I'd use sessions in an <code>httpOnly</code>, secure cookie. It's simpler and safer, and instant logout matters, for example when an ops staff member leaves.</p>
+<p>If we needed tokens, say for a mobile app or service-to-service calls, I'd use short-lived JWTs with refresh tokens. I've used both JWT and session-based auth before.</p>
+<p class="tip"><b>Interviewers look for:</b> the revocation trade-off and a choice that fits the product.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you add "Sign in with Google" for authors?</summary>
+<div class="answer">
+<p>I'd use OAuth 2.0 with OpenID Connect, using the authorisation code flow with PKCE. In Next.js, a library like Auth.js handles most of this safely.</p>
+<p>The flow:</p>
+<ol>
+<li>The author clicks "Sign in with Google" and is sent to Google.</li>
+<li>Google sends them back with a one-time code.</li>
+<li>Our server swaps the code for tokens and verifies the ID token.</li>
+<li>We find or create the author by their Google account ID, then create our own session.</li>
+</ol>
+<p>One thing to handle carefully: an author who first signed up with email and password and later uses Google with the same email. I'd only link the accounts if Google says the email is verified.</p>
+<p>We don't need Google's tokens after login, so I wouldn't store them.</p>
+<p class="tip"><b>Interviewers look for:</b> knowing the code flow, PKCE, verifying the ID token, and safe account linking.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>How would you design roles for admins, ops staff and authors?</summary>
+<div class="answer">
+<p>I'd use role-based access control, with permissions rather than checking role names everywhere.</p>
+<ul>
+<li><b>Author:</b> manage their own books and files, see their own orders and royalties.</li>
+<li><b>Ops:</b> see all books, update production status, manage orders. No access to payouts.</li>
+<li><b>Finance:</b> royalties and payouts.</li>
+<li><b>Admin:</b> everything, including managing staff.</li>
+</ul>
+<p>In code, a route checks a permission, like <code>can('royalties:approve')</code>, and roles map to permissions. Adding a new role later is just configuration.</p>
+<p>At Xellerate, I built RBAC with access control lists across 10+ roles, and backed it with row-level security in PostgreSQL, so data rules were enforced in the database too, not just the API.</p>
+<p>I'd also log sensitive actions, like who approved a royalty payout.</p>
+<p class="tip"><b>Interviewers look for:</b> permissions over role checks, least privilege, enforcement in more than one layer, and audit logs.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>Where would you store API keys and secrets, like an OpenAI key?</summary>
+<div class="answer">
+<p>Never in the code, never in Git, and never in the frontend.</p>
+<ul>
+<li>Locally, in a <code>.env</code> file that's in <code>.gitignore</code>.</li>
+<li>In production, in environment variables or a secrets manager like AWS Secrets Manager, and in GitHub Actions secrets for CI/CD.</li>
+<li>The OpenAI key is only used on the server. The browser calls our API, and our API calls OpenAI. If the key were in the frontend, anyone could steal it and run up a huge bill.</li>
+</ul>
+<p>I'd also set a spending limit on the OpenAI account, use separate keys for development and production, and rotate a key immediately if it ever leaks. I'd add a secret scanner to CI to catch accidental commits.</p>
+<p>In Next.js specifically, anything prefixed <code>NEXT_PUBLIC_</code> goes to the browser, so secrets must never use that prefix.</p>
+<p class="tip"><b>Interviewers look for:</b> server-only keys, a secrets manager, rotation, and cost limits on paid APIs.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>Explain SQL injection, XSS and CSRF, and how you prevent them.</summary>
+<div class="answer">
+<p><b>SQL injection:</b> user input gets treated as part of a SQL query, so someone can type <code>' OR 1=1 --</code> and read data they shouldn't. Fix: always use parameterised queries or an ORM like Prisma. Never build SQL by joining strings.</p>
+<p><b>XSS:</b> someone stores a script, for example in a book description, and it runs in other users' browsers. Fix: React escapes output by default, so avoid <code>dangerouslySetInnerHTML</code>. If we must show rich text, sanitise it with something like DOMPurify. A Content Security Policy adds another layer.</p>
+<p><b>CSRF:</b> another website tricks a logged-in user's browser into sending a request to our site. Fix: <code>SameSite</code> cookies, plus CSRF tokens for forms that change data.</p>
+<p>And I keep dependencies updated, since many real attacks come through old packages.</p>
+<p class="tip"><b>Interviewers look for:</b> a simple explanation of each attack and a concrete fix, not just the definitions.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you protect authors' unpublished manuscripts?</summary>
+<div class="answer">
+<p>An unpublished manuscript is an author's most valuable work, so a leak would really hurt trust.</p>
+<ul>
+<li>Private S3 bucket. No public URLs, ever.</li>
+<li>Access only through short-lived signed URLs, given only after checking the person is the author or staff working on that book. I built exactly this at Smile Returns.</li>
+<li>Encryption at rest, which S3 supports, and HTTPS everywhere.</li>
+<li>File IDs that can't be guessed, like UUIDs, not <code>manuscript_1.pdf</code>.</li>
+<li>An access log of who downloaded what and when.</li>
+<li>Staff access limited to the roles that actually need it.</li>
+</ul>
+<p>If we send manuscript text to an AI service, I'd check that provider's data-use terms first, and be open with authors about it.</p>
+<p class="tip"><b>Interviewers look for:</b> layered protection and awareness that AI integrations also touch author data.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>How should passwords be stored?</summary>
+<div class="answer">
+<p>Never in plain text, and never with a fast hash like MD5 or SHA-256 alone.</p>
+<p>I use a slow password-hashing algorithm, like bcrypt or Argon2. They automatically add a random salt, so two users with the same password get different hashes. And they're deliberately slow, so if the database ever leaks, cracking the passwords takes a very long time.</p>
+<p>Alongside that:</p>
+<ul>
+<li>Rate-limit login attempts.</li>
+<li>Reset tokens that are random, single-use, and expire quickly.</li>
+<li>The same error message for "wrong email" and "wrong password", so attackers can't find which emails are registered.</li>
+</ul>
+<p>Or, use Google login so we don't store a password at all.</p>
+<p class="tip"><b>Interviewers look for:</b> bcrypt or Argon2, salting, and why a slow hash matters.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>How do you verify a webhook really came from Razorpay or Stripe?</summary>
+<div class="answer">
+<p>They sign each webhook using a shared secret, and I check that signature.</p>
+<p>For Razorpay, the <code>X-Razorpay-Signature</code> header is an HMAC-SHA256 of the request body using our webhook secret:</p>
+<pre><code>const expected = crypto
+  .createHmac('sha256', process.env.RAZORPAY_WEBHOOK_SECRET)
+  .update(rawBody)
+  .digest('hex');
+const ok = crypto.timingSafeEqual(
+  Buffer.from(expected), Buffer.from(signatureHeader));</code></pre>
+<p>Important details:</p>
+<ul>
+<li>Use the <b>raw</b> body. If Express parses the JSON first and I re-stringify it, the signature won't match.</li>
+<li>Use a timing-safe comparison, and check the lengths match first, because <code>timingSafeEqual</code> throws on different lengths.</li>
+<li>Stripe also signs a timestamp, so I reject old events to stop replays. Their SDK does this check for me.</li>
+</ul>
+<p>I haven't done this with Razorpay in production yet, but I've read the docs, and it's the same HMAC pattern I'd use for signing our own outgoing webhooks.</p>
+<p class="tip"><b>Interviewers look for:</b> HMAC with a secret, the raw-body gotcha, timing-safe comparison, and replay protection.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you handle authors' personal data and privacy?</summary>
+<div class="answer">
+<p>We hold names, emails, phone numbers, addresses, and bank or tax details for royalties. That's sensitive. India's Digital Personal Data Protection Act, 2023, and similar rules for US customers, mean we must handle it carefully.</p>
+<ul>
+<li><b>Collect only what's needed.</b> Don't ask for things we don't use.</li>
+<li><b>Limit access.</b> Bank details visible only to finance, not all ops staff.</li>
+<li><b>Encrypt</b> the most sensitive fields, like bank account numbers, and mask them in the UI.</li>
+<li><b>Keep it out of logs.</b> No full phone numbers or bank details in error logs.</li>
+<li><b>Be careful with third parties.</b> Don't send personal data to automation tools or AI services unless it's really needed.</li>
+<li><b>Support deletion</b> when an author asks, while keeping the financial records we're legally required to keep.</li>
+</ul>
+<p class="tip"><b>Interviewers look for:</b> data minimisation, access control, awareness of the DPDP Act, and thinking about third-party tools.</p>
+</div>
+</details>
+</section>
+
+<div class="part">Part 3 — AI &amp; Automation</div>
+
+<section id="s7">
+<h3>7. AI &amp; LLM Integration</h3>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>How would you add an OpenAI feature to our author dashboard?</summary>
+<div class="answer">
+<p>The main rule is that the browser never talks to OpenAI directly. The dashboard calls our own backend endpoint, and the backend calls OpenAI with the API key stored on the server.</p>
+<ul>
+<li>The author clicks something like "Suggest a blurb" in the dashboard.</li>
+<li>Our API checks they are logged in and own that book, then builds the prompt from the book's data.</li>
+<li>The backend calls the model, validates the response, and saves it as a <b>draft</b>.</li>
+<li>The author edits and approves it. Nothing goes live without a human.</li>
+</ul>
+<p>I'd also log each call with the book ID, model, tokens used and cost, so we can see what it's costing us per book. While we're still on Bubble, the same backend endpoint can be called from Bubble's API Connector, so the work isn't wasted when we migrate.</p>
+<p class="tip"><b>Interviewers look for:</b> key stays on the server, auth before the AI call, output saved as a draft, and cost logging from day one.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>Where do you think AI can actually help BookLeaf?</summary>
+<div class="answer">
+<p>I'd look for tasks that are repetitive, text-heavy and happen 1,200 times a month. A few that stand out:</p>
+<ul>
+<li><b>Metadata:</b> drafting the back-cover blurb, keywords, and suggesting BISAC or genre categories from the synopsis.</li>
+<li><b>Manuscript checks:</b> flagging missing chapters, inconsistent headings, or a missing dedication page before it reaches the formatting team.</li>
+<li><b>Cover briefs:</b> turning the author's rough notes into a clear brief for the designer.</li>
+<li><b>Support:</b> drafting replies to common questions like "Where is my ISBN?" or "When will I get royalties?" for the team to approve.</li>
+<li><b>Ticket triage:</b> tagging incoming emails by type and urgency.</li>
+</ul>
+<p>I'd start with the one that saves the ops team the most hours, measure it, and only then expand.</p>
+<p class="tip"><b>Interviewers look for:</b> ideas tied to the real business, not "add a chatbot", and a plan to start small and measure.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>What are the basics of writing a good prompt?</summary>
+<div class="answer">
+<p>I treat a prompt like a brief to a new colleague who knows nothing about us.</p>
+<ul>
+<li><b>Role and context:</b> "You write back-cover blurbs for a self-publishing house in India."</li>
+<li><b>Clear task and limits:</b> "Write a blurb under 150 words. Don't invent plot points not in the synopsis."</li>
+<li><b>Examples:</b> two or three good blurbs we've approved before. This helps a lot with tone.</li>
+<li><b>Output format:</b> exactly what fields I want back.</li>
+<li><b>Separate data from instructions:</b> put the author's text inside clear tags so it isn't treated as instructions.</li>
+</ul>
+<p>I keep prompts in version control, not hard-coded in random places, and I test changes on a fixed set of sample books before shipping. Temperature I keep low for extraction and categorisation, a bit higher for creative blurbs.</p>
+<p class="tip"><b>Interviewers look for:</b> context, examples, output format, and treating prompts as code that gets versioned and tested.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How do you get reliable JSON out of an LLM?</summary>
+<div class="answer">
+<p>I don't rely on "please reply in JSON" in the prompt anymore. Both OpenAI and Anthropic now support <b>structured outputs</b>, where I pass a JSON schema and the model's response is constrained to match it. Tool or function calling with a schema works in a similar way.</p>
+<p>For example, for book metadata I'd define a schema with <code>title</code>, <code>blurb</code>, <code>keywords</code> as an array, and <code>genre</code> as an enum of our allowed genres.</p>
+<p>But I still validate on my side with Zod, because the shape can be right while the content is wrong, like an empty blurb or a genre that doesn't fit. If validation fails, I retry once with the error message added, and if it fails again I mark the task for a human. I never let unvalidated AI output go straight into the database.</p>
+<p class="tip"><b>Interviewers look for:</b> knowing about structured outputs / JSON schema, plus your own validation and a fallback path.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>What are hallucinations, and how would you guard against them?</summary>
+<div class="answer">
+<p>A hallucination is when the model says something confidently that isn't true. For us, that could be a blurb that invents a plot twist, or a support reply that promises a royalty date we never committed to.</p>
+<p>How I'd reduce it:</p>
+<ul>
+<li>Give the model the actual facts, like the synopsis or our policy text, and tell it to use only that.</li>
+<li>Allow it to say "I don't know" instead of guessing.</li>
+<li>Keep anything with money, dates or legal terms out of AI-generated text, or pull those values from the database, not from the model.</li>
+<li>Validate outputs with simple checks, like length, banned phrases, or whether a promised date exists.</li>
+<li>Most importantly, keep a human approving anything an author will see.</li>
+</ul>
+<p class="tip"><b>Interviewers look for:</b> grounding in real data, letting the model refuse, and human review for anything customer-facing.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>How do you keep AI API keys safe?</summary>
+<div class="answer">
+<p>Same as any secret. The key only lives on the server, in environment variables or a secrets manager, never in frontend code, never in Git, and never in a Bubble client-side workflow where it could show up in the browser.</p>
+<ul>
+<li>In Bubble, I'd mark the key as private in the API Connector so it stays server-side.</li>
+<li>Separate keys for development and production, so a leaked dev key can't burn the production budget.</li>
+<li>Set usage limits and budget alerts in the OpenAI or Anthropic console.</li>
+<li>Our own endpoint is behind auth and rate limited, so nobody can use our backend as a free proxy to the model.</li>
+<li>If a key leaks, rotate it immediately.</li>
+</ul>
+<p class="tip"><b>Interviewers look for:</b> server-side only, separate keys per environment, spend limits, and rate limiting your own AI endpoint.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>The AI provider is slow, rate-limiting you, or down. What do you do?</summary>
+<div class="answer">
+<p>I design for this from the start, because it will happen.</p>
+<ul>
+<li><b>Retries:</b> on a 429 or 5xx error, retry with exponential backoff and a bit of jitter, and respect the <code>Retry-After</code> header. Don't retry on a 400, that's our bug.</li>
+<li><b>Timeouts:</b> set a clear timeout so a request doesn't hang forever.</li>
+<li><b>Background jobs:</b> for bulk work, like generating metadata for 200 books, put it in a queue and process at a controlled rate instead of firing everything at once.</li>
+<li><b>Fallbacks:</b> switch to a second model or provider, or just show "AI suggestions are unavailable right now, you can write it manually".</li>
+</ul>
+<p>The key point is that AI is a helper. If it's down, authors should still be able to submit books and the team can still work.</p>
+<p class="tip"><b>Interviewers look for:</b> backoff, timeouts, queues for bulk work, and graceful degradation so core flows never depend on the AI.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you control AI costs?</summary>
+<div class="answer">
+<p>Cost is basically tokens in plus tokens out, times the model's price. So I'd work on each part:</p>
+<ul>
+<li><b>Right model for the job:</b> a small, cheap model for tagging and categorisation, a bigger one only for things like blurbs where quality matters.</li>
+<li><b>Send less text:</b> don't send a 300-page manuscript when the synopsis and table of contents are enough.</li>
+<li><b>Limit output:</b> set max output tokens.</li>
+<li><b>Caching:</b> store results so the same request isn't paid for twice, and use the providers' prompt caching for long, repeated system prompts.</li>
+<li><b>Batch API:</b> for non-urgent bulk jobs, both OpenAI and Anthropic offer batch processing at a discount.</li>
+</ul>
+<p>And I'd track cost per feature and per book in a simple dashboard, so the founders can see if it's worth it.</p>
+<p class="tip"><b>Interviewers look for:</b> model choice, trimming input, caching, batch for bulk work, and measuring cost per feature.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>What is streaming, and when would you use it?</summary>
+<div class="answer">
+<p>Streaming means the model sends the answer piece by piece as it's generated, instead of waiting for the full response. Technically, the API sends server-sent events, and I forward them from my backend to the browser.</p>
+<p>I'd use it when a person is waiting and watching, like an author clicking "Suggest a blurb" or a support agent drafting a reply. The total time is the same, but seeing text appear after half a second feels much faster than a blank spinner for eight seconds.</p>
+<p>I would <b>not</b> stream for background jobs or when I need structured JSON that I validate before saving. There I just wait for the full response. One thing to remember: with streaming, I still need to handle errors mid-stream and log the final token usage.</p>
+<p class="tip"><b>Interviewers look for:</b> it improves perceived speed for interactive UI, and knowing when not to use it.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>Explain RAG in simple terms. How would you build a support bot over our FAQs?</summary>
+<div class="answer">
+<p>RAG means Retrieval-Augmented Generation. In simple words: before asking the model a question, we first search our own documents for the relevant parts and give those to the model. So it answers from our policies, not from its memory.</p>
+<p>For BookLeaf's support bot:</p>
+<ul>
+<li>Collect FAQs, package details, royalty policy, shipping timelines for India and US.</li>
+<li>Split them into small chunks and create embeddings. I'd store them in PostgreSQL with pgvector, since we'd already have Postgres.</li>
+<li>When an author asks "How long does printing take?", find the top few matching chunks.</li>
+<li>Send those chunks plus the question to the model, with an instruction to answer only from them and say "I'll connect you to the team" otherwise.</li>
+</ul>
+<p>For order-specific questions, the bot should fetch the author's real order status from our database, not guess.</p>
+<p class="tip"><b>Interviewers look for:</b> a plain explanation, a sensible store like pgvector, and a clear handoff to humans.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>How would you measure whether the AI output is actually good?</summary>
+<div class="answer">
+<p>"It looks fine to me" isn't enough, so I'd set up a simple evaluation process.</p>
+<ul>
+<li><b>A test set:</b> 30 to 50 real books with blurbs or categories the team already approved.</li>
+<li><b>Automatic checks:</b> valid JSON, word count, genre from our allowed list, no banned words.</li>
+<li><b>Human scoring:</b> the ops team rates a sample, maybe 1 to 5 for accuracy and tone.</li>
+<li><b>Real-world signal:</b> how often the team or author accepts the draft as-is versus heavily edits it. That's the best metric.</li>
+</ul>
+<p>Every time I change the prompt or the model, I rerun the test set and compare before shipping. Some teams use another LLM as a judge, which is useful for scale, but I'd still check it against human ratings first.</p>
+<p class="tip"><b>Interviewers look for:</b> a fixed test set, re-running on every change, and a business metric like acceptance rate.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>What does human-in-the-loop mean, and where would you use it?</summary>
+<div class="answer">
+<p>It means the AI suggests, and a person decides. The AI does the first 80% of the work, and a human checks and approves before anything is final.</p>
+<p>At BookLeaf, I'd use it for anything an author or reader sees, or anything with money or legal impact: blurbs, support replies, metadata going to Amazon or distribution partners, and anything touching royalties. Low-risk internal work, like tagging a support ticket, can be automatic, with someone spot-checking.</p>
+<p>In the UI, this looks like a "Draft" status with Approve, Edit and Reject buttons, and I'd record who approved it. That gives us an audit trail, and the edits themselves become great data for improving the prompt later.</p>
+<p class="tip"><b>Interviewers look for:</b> risk-based thinking about where humans are required, and a concrete UI and audit trail.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>Authors trust us with unpublished manuscripts. How do you handle privacy when sending text to an AI?</summary>
+<div class="answer">
+<p>This is a real concern, because a manuscript is the author's intellectual property before it's even published.</p>
+<ul>
+<li><b>Send the minimum:</b> for most tasks, the synopsis or a few pages is enough, not the whole book.</li>
+<li><b>Check provider terms:</b> OpenAI and Anthropic say API data isn't used for training by default, but there's still some retention for abuse monitoring. I'd check the current terms and whether zero-data-retention options apply.</li>
+<li><b>Strip personal data:</b> author phone numbers, addresses and bank details never go to the model.</li>
+<li><b>Be transparent:</b> mention AI processing in our terms, and ideally let authors opt out.</li>
+<li><b>Logging:</b> don't store full prompts with manuscript text in our logs forever.</li>
+</ul>
+<p class="tip"><b>Interviewers look for:</b> data minimisation, knowing provider retention policies, and author consent. This shows you think about trust, not just features.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>OpenAI or Anthropic — how would you choose?</summary>
+<div class="answer">
+<p>Honestly, both are very capable now, so I wouldn't pick based on hype. I'd decide based on our task.</p>
+<ul>
+<li>Run the same 30 to 50 test cases on a model from each and compare quality, speed and cost.</li>
+<li>Check features we need: structured outputs, tool calling, long context for manuscripts, batch pricing.</li>
+<li>Check data and privacy terms, and rate limits for our volume.</li>
+</ul>
+<p>Often Claude models do well on long documents and careful writing, and OpenAI has a very broad ecosystem. But that can change every few months, which is exactly why I'd put a thin wrapper in our code, like an <code>aiClient.generate()</code> function, so switching providers or using one as a fallback is a small change, not a rewrite.</p>
+<p class="tip"><b>Interviewers look for:</b> testing on your own data instead of opinions, and not locking the codebase to one provider.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>What is tool calling (function calling)?</summary>
+<div class="answer">
+<p>Tool calling lets the model ask our code to do something. I describe some functions to the model, with a name, a description and a JSON schema for the inputs. The model doesn't run anything itself. It replies saying "call <code>getOrderStatus</code> with order ID 4821". My backend runs that function, sends the result back, and the model uses it to write the final answer.</p>
+<p>For BookLeaf, a support assistant could have tools like <code>getOrderStatus</code>, <code>getRoyaltySummary</code> or <code>getBookStage</code>. So when an author asks "Where's my book?", the answer comes from real data.</p>
+<p>The safety part is important: my code still checks permissions, so the model can only fetch data for the logged-in author. And I'd start with read-only tools. Anything like issuing a refund needs a human.</p>
+<p class="tip"><b>Interviewers look for:</b> the model requests, your code executes; permission checks stay in your code.</p>
+<p class="tip"><b>Personalise:</b> You haven't shipped production LLM work yet, so build a small demo before the interview, for example a Node endpoint that turns a book synopsis into validated JSON metadata with structured outputs, or a tiny tool-calling bot. Then say "I built a small version of this last week" and describe it.</p>
+</div>
+</details>
+</section>
+
+<section id="s8">
+<h3>8. Automation — n8n, Make, Zapier</h3>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>What is n8n, and why do teams use it?</summary>
+<div class="answer">
+<p>n8n is a workflow automation tool. You build workflows visually by connecting nodes: a trigger starts it, like a webhook or a schedule, and then each node does a step, like reading a Google Sheet, calling an API, sending an email or calling OpenAI. It also has a Code node for custom JavaScript or Python when needed.</p>
+<p>Teams use it because they can connect tools quickly without building and deploying a full service. Compared to Zapier and Make, n8n can be <b>self-hosted</b>, which gives more control over data and cost, and it's more developer-friendly.</p>
+<p>For a team like BookLeaf, with lots of repeated ops steps across many tools, it's a fast way to automate glue work, while the core business logic lives in proper code.</p>
+<p class="tip"><b>Interviewers look for:</b> triggers and nodes, self-hosting as the key difference, and knowing it's for glue work.</p>
+<p class="tip"><b>Personalise:</b> n8n isn't on your CV yet, so before the interview, run n8n locally with Docker and build one small workflow (webhook → OpenAI → Google Sheet → email). Then you can say "I set this up myself" honestly.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>Walk me through a workflow you'd build for a new book submission.</summary>
+<div class="answer">
+<p>Something like this:</p>
+<ul>
+<li><b>Trigger:</b> a Webhook node receives the submission from the dashboard with the book ID.</li>
+<li><b>Fetch:</b> get the full details from our API: author, package, manuscript link.</li>
+<li><b>Validate:</b> check the manuscript file exists, the format is DOCX or PDF, and required fields like title and author name are filled. If not, email the author what's missing.</li>
+<li><b>Branch by package:</b> an IF or Switch node, since different packages need different tasks.</li>
+<li><b>Create tasks:</b> create tasks for editing, cover design and ISBN in our task tool or database.</li>
+<li><b>Notify:</b> email or WhatsApp the author "We've received your manuscript", and post in the team's Slack channel.</li>
+</ul>
+<p>I'd make sure the book ID is used to avoid creating tasks twice, and attach an error workflow so failures alert someone.</p>
+<p class="tip"><b>Interviewers look for:</b> a clear trigger, validation, branching, and thinking about duplicates and failures, not just the happy path.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>What kinds of triggers are there? When would you use each?</summary>
+<div class="answer">
+<ul>
+<li><b>Webhook trigger:</b> something happens and another system calls our URL instantly. Good for a new submission, a Razorpay payment, or a new Shopify order. It's real-time.</li>
+<li><b>Schedule trigger:</b> runs at fixed times, like a cron job. Good for a daily summary of books stuck in one stage, or a monthly royalty report.</li>
+<li><b>App triggers:</b> built-in nodes that watch a service, like a new row in Google Sheets or a new email. Some of these poll every few minutes.</li>
+<li><b>Manual trigger:</b> for testing or one-off runs.</li>
+</ul>
+<p>I prefer webhooks when the other system supports them, because polling wastes runs and adds delay. One n8n detail: the Webhook node has a test URL and a production URL, and the production one only works after the workflow is activated.</p>
+<p class="tip"><b>Interviewers look for:</b> knowing push (webhook) vs pull (schedule/polling) and picking the right one.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How do you handle errors and retries in n8n?</summary>
+<div class="answer">
+<p>A few layers:</p>
+<ul>
+<li><b>Retry on Fail:</b> on nodes that call external APIs, I turn on Retry on Fail with a few tries and a wait between them. That handles temporary blips.</li>
+<li><b>On Error setting:</b> for steps that aren't critical, like a Slack message, I let the workflow continue instead of stopping everything.</li>
+<li><b>Error workflow:</b> I'd create one shared workflow starting with the Error Trigger node and set it as the error workflow in each workflow's settings. When anything fails, it sends the team the workflow name, the failed node, the error and a link to the execution.</li>
+</ul>
+<p>And for important flows, like payment-related ones, I'd also have a daily check that compares what should have happened with what did, so silent failures get caught.</p>
+<p class="tip"><b>Interviewers look for:</b> node-level retries, the Error Trigger workflow, and alerts that a human actually sees.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>What if the same event arrives twice? How do you prevent duplicates?</summary>
+<div class="answer">
+<p>This happens a lot. Razorpay, Shopify and Stripe all say webhooks can be delivered more than once, and retries in our own workflow can repeat a step too. So workflows need to be <b>idempotent</b>, meaning running them twice gives the same result as running once.</p>
+<p>How I'd do it:</p>
+<ul>
+<li>Every event has a unique ID, like the payment ID or the webhook event ID.</li>
+<li>Before doing work, check if that ID is already in a "processed events" table. If yes, stop.</li>
+<li>In the database, put a unique constraint on that ID, so even if two runs race, only one insert succeeds.</li>
+<li>Use "upsert" instead of "create" where possible.</li>
+</ul>
+<p>Without this, an author could get two confirmation emails, or worse, a book could get two print orders.</p>
+<p class="tip"><b>Interviewers look for:</b> the word idempotency, a unique event ID, and a database constraint as the real safety net.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>When would you use automation tools versus writing custom code?</summary>
+<div class="answer">
+<p>My rough rule:</p>
+<ul>
+<li><b>Automation tool</b> when it's glue between existing tools, the logic is simple, it may change often, and ops people may want to see or tweak it. Like "new form entry → Sheet → Slack".</li>
+<li><b>Custom code</b> when it's core business logic, involves money, needs proper tests, has high volume, or has complex rules. Royalty calculation and payment handling, for example, belong in code with tests and version control.</li>
+</ul>
+<p>A good middle ground is having n8n call our own API endpoints. n8n handles the trigger and the "who to notify" part, and the real logic stays in tested code. And if a workflow grows to 40 nodes with code blocks everywhere, that's a sign it should become a service.</p>
+<p class="tip"><b>Interviewers look for:</b> a clear rule of thumb, not "always code" or "always no-code". Startups value people who use the fastest right tool.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>Self-hosted n8n or n8n Cloud?</summary>
+<div class="answer">
+<p><b>n8n Cloud</b> is quick to start, with no servers to maintain, updates and backups are handled, but you pay per plan based on executions.</p>
+<p><b>Self-hosted</b> on our own VPS with Docker is cheaper at high volume and keeps author data on our servers, but now we own updates, backups, uptime and security. For a self-hosted setup I'd use Postgres instead of the default SQLite, put it behind Nginx with HTTPS, back up the database, and keep the encryption key that protects stored credentials safe. If volume grows, n8n has a queue mode with Redis and separate workers.</p>
+<p>For BookLeaf, with high volume and an existing in-house setup, self-hosting probably makes sense, as long as someone clearly owns it. I'd check what's already in place first.</p>
+<p class="tip"><b>Interviewers look for:</b> trade-off between convenience and control/cost, and knowing what self-hosting actually requires.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>How do you handle credentials and secrets in automation tools?</summary>
+<div class="answer">
+<p>Always use the tool's built-in credentials feature, never paste API keys directly into nodes or HTTP headers in plain text. In n8n, credentials are stored encrypted and nodes just reference them, so they don't appear in exported workflow JSON.</p>
+<ul>
+<li>Give each integration its own key with the least access it needs.</li>
+<li>Separate credentials for test and production.</li>
+<li>Limit who can see and edit credentials in the tool.</li>
+<li>For incoming webhooks, protect them: verify signatures from Razorpay or Shopify, or use a secret header, so random people can't trigger our workflows.</li>
+<li>Rotate keys when someone leaves the team.</li>
+</ul>
+<p class="tip"><b>Interviewers look for:</b> built-in credential storage, least privilege, and securing incoming webhooks too.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How do you monitor automations and find failed runs?</summary>
+<div class="answer">
+<p>n8n keeps an executions log showing every run, its status, and the data at each node, so I can open a failed run and see exactly where it broke. I'd make sure failed executions are always saved.</p>
+<p>But I don't want someone to have to check the log manually. So:</p>
+<ul>
+<li>The error workflow sends an alert to a Slack channel or email immediately.</li>
+<li>A daily summary: how many runs succeeded and failed per workflow.</li>
+<li>A "heartbeat" check for scheduled workflows, so if the daily report didn't run at all, we notice.</li>
+<li>Business checks, like "any paid order without a print task after two hours?"</li>
+</ul>
+<p>Make and Zapier have similar run histories and email alerts.</p>
+<p class="tip"><b>Interviewers look for:</b> using the executions log, proactive alerts, and catching workflows that silently didn't run.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you connect n8n to OpenAI?</summary>
+<div class="answer">
+<p>n8n has built-in OpenAI nodes and AI nodes, so I'd add the OpenAI credential once and use those. If I need a feature the node doesn't expose, I can use the HTTP Request node to call the API directly.</p>
+<p>Example: when a book is submitted, send the synopsis to OpenAI and ask for a draft blurb and keywords as JSON. Then a Code node or the structured output setting validates the JSON, and the result is saved as a draft in our database and the editor is notified.</p>
+<p>Things I'd be careful about: turning on retries for rate limits, limiting how much text is sent, and adding an IF node to handle bad or empty responses. For anything complex, like RAG over our policies, I might do it in our backend and just call that from n8n.</p>
+<p class="tip"><b>Interviewers look for:</b> built-in nodes vs HTTP Request, validating output, and handling rate limits.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How do you test and document workflows?</summary>
+<div class="answer">
+<p><b>Testing:</b> I run each node step by step in the editor using test data. n8n lets you pin sample data on a node, so I can test later steps without triggering the real webhook again. I'd test bad cases too: missing fields, a duplicate event, an API failure. And I'd keep a separate test workflow or environment pointing to sandbox credentials, like Razorpay test mode, so we never email real authors while testing.</p>
+<p><b>Documentation:</b></p>
+<ul>
+<li>Clear workflow and node names, like "Submission → Create Design Task".</li>
+<li>Sticky notes inside the workflow explaining the why.</li>
+<li>A simple shared doc listing every workflow: what triggers it, what it does, who owns it.</li>
+<li>Export workflow JSON to Git as a backup and history.</li>
+</ul>
+<p class="tip"><b>Interviewers look for:</b> pinned test data, sandbox credentials, and a workflow inventory so automations don't become a mystery.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>How are Make and Zapier different from n8n?</summary>
+<div class="answer">
+<p>All three connect apps with triggers and actions, but they fit different people.</p>
+<ul>
+<li><b>Zapier:</b> the easiest, huge number of app integrations, great for non-technical people. A "Zap" is mostly a linear flow. It gets expensive at high volume because you pay per task.</li>
+<li><b>Make:</b> a visual canvas of "scenarios" with modules, good for branching and data mapping, and usually cheaper than Zapier for complex flows. Billing is based on operations or credits.</li>
+<li><b>n8n:</b> the most developer-friendly, can be self-hosted, has code nodes and good AI nodes, and pricing is per workflow execution rather than per step.</li>
+</ul>
+<p>At BookLeaf, I'd use whatever the team already uses well, and if we're doing high-volume work with author data, I'd lean towards self-hosted n8n.</p>
+<p class="tip"><b>Interviewers look for:</b> a fair comparison on ease, cost model and control.</p>
+</div>
+</details>
+</section>
+
+<section id="s9">
+<h3>9. Bubble &amp; the Migration to Code</h3>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>What is Bubble?</summary>
+<div class="answer">
+<p>Bubble is a no-code platform for building full web apps. You design pages in a visual editor, and it gives you a built-in database and hosting.</p>
+<ul>
+<li><b>Data types</b> are like tables, and each record is called a "thing". So a "Book" data type with fields like title, author and status.</li>
+<li><b>Workflows</b> are the logic: "When the Submit button is clicked → create a new Book → send an email".</li>
+<li><b>Privacy rules</b> control who can see which data.</li>
+<li><b>API Connector</b> calls outside APIs, and <b>backend workflows</b> run on the server, can be scheduled, and can be exposed as API endpoints.</li>
+<li><b>Plugins</b> add extra features.</li>
+</ul>
+<p>It's great for moving fast, which is probably why BookLeaf built ops on it.</p>
+<p class="tip"><b>Interviewers look for:</b> you understand Bubble's concepts in developer terms, not that you look down on no-code.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>You haven't worked in Bubble. How would you get productive quickly?</summary>
+<div class="answer">
+<p>That's true, I haven't used Bubble in production. But the concepts map closely to what I do every day: data types are tables, workflows are event handlers, privacy rules are like the row-level security I built at Xellerate, and the API Connector is just calling REST APIs.</p>
+<p>My plan for the first week or two:</p>
+<ul>
+<li>Do Bubble's official manual and short tutorials, and build a tiny app myself.</li>
+<li>Go through our app's data tab and draw the data model as a diagram.</li>
+<li>List the main workflows and the API calls, and check the logs to see what's heavy.</li>
+<li>Start with small, low-risk fixes with someone reviewing.</li>
+</ul>
+<p>That diagram and list would also become the starting point for the migration plan.</p>
+<p class="tip"><b>Interviewers look for:</b> honesty plus a concrete ramp-up plan and clear transferable skills.</p>
+<p class="tip"><b>Personalise:</b> spend a weekend building a small Bubble app (e.g. a book submission form with a Book data type, a privacy rule and an API Connector call). Then you can say "I built a small app to learn it".</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>What are Bubble privacy rules, and why do they matter?</summary>
+<div class="answer">
+<p>Privacy rules are set on each data type and decide which users can see which records and fields, and whether they can find them in searches. They're enforced on Bubble's server.</p>
+<p>They matter a lot, because a common Bubble mistake is only hiding things in the UI. If the privacy rule is missing, the data can still be pulled through the browser or the API. For BookLeaf, one author should never see another author's royalty statement, bank details or manuscript.</p>
+<p>So I'd set a rule like "this Book is visible when Current User is the Book's author, or Current User's role is Admin". It's the same idea as the row-level security I set up at Xellerate across 10+ roles. One of the first things I'd do is audit the existing privacy rules.</p>
+<p class="tip"><b>Interviewers look for:</b> knowing hiding in the UI is not security, and linking it to your RBAC experience.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How do the API Connector and backend workflows help connect Bubble with other systems?</summary>
+<div class="answer">
+<p>They're the two directions of integration.</p>
+<ul>
+<li><b>API Connector (Bubble → outside):</b> lets Bubble call external APIs, like OpenAI, a print partner, or our new Node service. Keys can be marked private so they stay on the server.</li>
+<li><b>Backend workflows (outside → Bubble):</b> can be exposed as API endpoints, so Razorpay, n8n or our new services can call into Bubble. They can also run on a schedule or loop over lists in the background.</li>
+<li><b>Data API:</b> lets outside code read and write Bubble data directly.</li>
+</ul>
+<p>These are exactly what make a gradual migration possible. New code can read from and write to Bubble during the transition, so we don't have to switch everything in one day.</p>
+<p class="tip"><b>Interviewers look for:</b> both directions, and the link to migration.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>What are Bubble's limits? Why migrate at all?</summary>
+<div class="answer">
+<p>Bubble is great for getting started, but at 1,200 books a month, some limits start to hurt:</p>
+<ul>
+<li><b>Cost:</b> Bubble charges based on workload units, so heavy searches and workflows can get expensive as volume grows.</li>
+<li><b>Performance:</b> large lists and complex searches can get slow, and we have limited control over queries and indexes.</li>
+<li><b>Vendor lock-in:</b> the app can't be exported as code. We depend on their pricing and their uptime.</li>
+<li><b>Engineering practice:</b> version control, code review, automated tests and complex logic are harder than in code.</li>
+<li><b>Hiring:</b> it's easier to hire and grow developers on a standard stack like Next.js and Postgres.</li>
+</ul>
+<p>But I'd be careful: migration is a big cost too, so it should be driven by real pain points, not just "code is better".</p>
+<p class="tip"><b>Interviewers look for:</b> specific limits (workload units, lock-in, testing) and a balanced view.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>How would you plan the migration from Bubble to code?</summary>
+<div class="answer">
+<p>I'd never do a big-bang rewrite. I'd use the <b>strangler pattern</b>: move one piece at a time while Bubble keeps running.</p>
+<ul>
+<li><b>Map it:</b> document data types, workflows and integrations, and find which parts cost the most workload units or cause the most pain.</li>
+<li><b>Build the foundation:</b> a Node API with Postgres, auth and CI/CD.</li>
+<li><b>APIs first:</b> move logic behind APIs. Bubble calls our API through the API Connector, so Bubble becomes more of a frontend over time.</li>
+<li><b>One module at a time:</b> pick something self-contained, like royalty reports or order tracking. Build it, run it in parallel, compare results, then switch.</li>
+<li><b>Frontend last:</b> rebuild the author dashboard in Next.js once the backend is stable.</li>
+</ul>
+<p>Each step is small, shippable, and can be rolled back.</p>
+<p class="tip"><b>Interviewers look for:</b> strangler pattern, Bubble staying live, and a clear order of what moves first and why.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>How would you migrate the data safely?</summary>
+<div class="answer">
+<ul>
+<li><b>Design the new schema properly:</b> Bubble data is loosely structured, so I'd clean it into proper Postgres tables with foreign keys, and keep the Bubble unique ID as a column so every record can be traced back.</li>
+<li><b>Export:</b> use Bubble's Data API with pagination, or CSV exports, into a staging area.</li>
+<li><b>Transform and clean:</b> fix duplicates, bad emails, missing values, and log every record that didn't fit.</li>
+<li><b>Verify:</b> compare counts, and check totals like total royalties owed per author. Spot-check real records with the ops team.</li>
+<li><b>Sync during transition:</b> for the module being moved, keep both sides in sync through webhooks or backend workflows until we fully switch.</li>
+<li><b>Rehearse:</b> run the full migration on a copy first, more than once.</li>
+</ul>
+<p>And of course, backups before every step.</p>
+<p class="tip"><b>Interviewers look for:</b> keeping old IDs, validating with business totals, rehearsals and backups.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>What are the biggest risks of this migration, and how do you avoid downtime?</summary>
+<div class="answer">
+<p>The biggest risks are losing or corrupting data, breaking a flow the ops team depends on daily, and the migration dragging on forever while new features stop.</p>
+<p>How I'd reduce them:</p>
+<ul>
+<li>Move small modules, with a feature flag to switch back to the Bubble version instantly.</li>
+<li>Run old and new in parallel for a while and compare outputs, especially for money.</li>
+<li>Do the final switch for each module at a low-traffic time, with a clear rollback plan.</li>
+<li>Involve the ops team early. They know the edge cases that aren't written anywhere.</li>
+<li>Keep shipping some business features during the migration, so the founders see value throughout.</li>
+<li>Write tests for the new code before switching, especially royalty and payment logic.</li>
+</ul>
+<p class="tip"><b>Interviewers look for:</b> feature flags, parallel runs, rollback plans, and involving the actual users.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you keep improving the Bubble dashboard while planning to replace it?</summary>
+<div class="answer">
+<p>The business can't stop for a migration, so Bubble needs to stay healthy.</p>
+<ul>
+<li>Fix bugs and handle urgent requests in Bubble, since that's what the team uses every day.</li>
+<li>Optimise expensive searches and workflows to cut workload units. That saves money right now.</li>
+<li>For any new feature, ask "will this be thrown away soon?" If it's complex, build the logic as an API in code and call it from Bubble. Then it carries over to the new system.</li>
+<li>Don't add more complexity to parts that are about to move.</li>
+</ul>
+<p>So every change either helps today or moves us closer to the new system, ideally both.</p>
+<p class="tip"><b>Interviewers look for:</b> respect for the current tool, plus building new logic in a way that survives the migration.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you explain the migration plan to the founders?</summary>
+<div class="answer">
+<p>I'd keep it about business outcomes, not technology. Something like:</p>
+<p>"Right now, Bubble costs us X per month, and that grows with every book. Some pages are slow for the ops team, and we can't easily test changes, so bugs reach authors. The plan is to move one part at a time, starting with royalty reports, which is our most expensive and most error-prone area. Bubble keeps running the whole time, so nothing breaks for authors. Each step takes a few weeks, and we can stop or reverse any step."</p>
+<p>Then I'd show a simple timeline, the cost of each phase, and what we gain: lower monthly cost, faster pages, and fewer mistakes. I'd also be honest that some months will have fewer new features.</p>
+<p class="tip"><b>Interviewers look for:</b> plain language, costs and benefits in rupees and time, and honest trade-offs. This role works directly with founders.</p>
+</div>
+</details>
+</section>
+
+<div class="part">Part 4 — Integrations, DevOps &amp; Design</div>
+
+<section id="s10">
+<h3>10. Payments, Shopify &amp; Print-on-Demand</h3>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>Walk me through a Razorpay payment flow, end to end.</summary>
+<div class="answer">
+<p>Say an author buys a publishing package for ₹14,999.</p>
+<ul>
+<li><b>Create order on the server:</b> my backend looks up the price from the database, never from the frontend, and calls Razorpay's Orders API with the amount in paise (1499900), currency INR and our internal receipt ID. I save the order as "created".</li>
+<li><b>Checkout:</b> the frontend opens Razorpay Checkout with the <code>order_id</code> and our public key ID.</li>
+<li><b>Callback:</b> on success, Checkout returns <code>razorpay_payment_id</code>, <code>razorpay_order_id</code> and <code>razorpay_signature</code>. The frontend sends these to my backend.</li>
+<li><b>Verify:</b> the backend checks the signature. Only then is it marked paid.</li>
+<li><b>Webhook:</b> Razorpay also sends a webhook like <code>payment.captured</code> or <code>order.paid</code>, which is the final confirmation.</li>
+</ul>
+<p>Then we start the publishing workflow and send the author a receipt.</p>
+<p class="tip"><b>Interviewers look for:</b> server-side order creation, amount in paise, signature verification, and the webhook as the source of truth.</p>
+<p class="tip"><b>Personalise:</b> Razorpay isn't on your CV yet, so build a small Node demo in Razorpay test mode before the interview (create order → checkout → verify signature → webhook). Then say "I built this in test mode to understand it".</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How do you verify a Razorpay payment signature?</summary>
+<div class="answer">
+<p>Razorpay signs the result with our key secret, so we can prove the payment details weren't faked. On the server, I build the string <code>order_id + "|" + payment_id</code>, using the order ID from <b>my database</b>, create an HMAC SHA256 of it with the key secret, and compare it to the signature I got.</p>
+<pre><code>const expected = crypto
+  .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+  .update(`${order.razorpayOrderId}|${paymentId}`)
+  .digest("hex");
+const ok = crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(signature));</code></pre>
+<p>For webhooks it's similar but different: Razorpay sends an <code>X-Razorpay-Signature</code> header, which is an HMAC SHA256 of the <b>raw request body</b> using the webhook secret. So I must verify against the raw body, before JSON parsing changes it.</p>
+<p class="tip"><b>Interviewers look for:</b> the exact order_id|payment_id format, server-side secret, raw body for webhooks, and a safe comparison.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>Why not just trust the frontend success callback?</summary>
+<div class="answer">
+<p>Two reasons.</p>
+<p><b>Security:</b> the frontend is controlled by the user. Anyone can call our "payment success" endpoint with fake data. That's why we verify the signature on the server.</p>
+<p><b>Reliability:</b> even for honest users, the callback can just never arrive. The payment succeeds, but the author closes the tab, their internet drops, or the bank redirect fails. If we only rely on the callback, we have money taken but no order in our system, and an angry author calling support.</p>
+<p>Webhooks fix this, because Razorpay calls our server directly and retries if we don't respond. So I treat the frontend callback as a nice fast update for the UI, and the verified webhook as the source of truth. Both paths call the same idempotent "mark order paid" function.</p>
+<p class="tip"><b>Interviewers look for:</b> both reasons, security and reliability, and one idempotent handler for both paths.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>How do you handle failed and duplicate payments?</summary>
+<div class="answer">
+<p><b>Failed payments:</b> the order stays "created" or "failed" and I listen for <code>payment.failed</code>. The author sees a clear "Payment didn't go through, try again" message, and retrying reuses the same order. If money was debited but the payment isn't captured, Razorpay auto-refunds it, but I'd still show a helpful message so the author doesn't panic.</p>
+<p><b>Duplicates:</b></p>
+<ul>
+<li>Webhooks can arrive more than once, so I store the event ID or payment ID with a unique constraint and skip ones already processed.</li>
+<li>The "mark as paid" update only runs if the order isn't already paid, inside a transaction.</li>
+<li>If an author really pays twice for the same order, a daily check flags it and we refund the second payment.</li>
+<li>Disable the Pay button after the first click.</li>
+</ul>
+<p class="tip"><b>Interviewers look for:</b> idempotency with unique constraints, state checks, and a process for real double payments.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you handle refunds?</summary>
+<div class="answer">
+<p>Refunds go through Razorpay's Refunds API using the payment ID, either full or partial, for example if an author cancels before editing starts and we keep a small fee.</p>
+<ul>
+<li>Only admins can trigger refunds, and I log who did it and why.</li>
+<li>Check the refund amount isn't more than what's left to refund.</li>
+<li>Store a refund record with status "pending", and update it when the <code>refund.processed</code> or <code>refund.failed</code> webhook arrives.</li>
+<li>Update the order and stop any work in progress, like the print job.</li>
+<li>Email the author with the expected timeline, since bank refunds can take several working days.</li>
+</ul>
+<p>The refund policy itself, how much and when, is a business decision. I'd make sure the code follows it consistently.</p>
+<p class="tip"><b>Interviewers look for:</b> permissions, audit trail, webhook-driven status, and side effects on the order.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you handle US authors with Stripe and multiple currencies?</summary>
+<div class="answer">
+<p>I'd use Stripe for US payments, probably Stripe Checkout, because it's quick, hosted and handles cards and 3D Secure for us. Under the hood it uses PaymentIntents.</p>
+<ul>
+<li>The backend creates a Checkout Session with the price in cents and USD, and our order ID in metadata.</li>
+<li>Confirm through webhooks like <code>checkout.session.completed</code>, verified with the endpoint's signing secret against the raw body.</li>
+<li>Use idempotency keys when creating payments.</li>
+</ul>
+<p>For currencies, I'd always store <b>integers in the smallest unit plus a currency code</b>, never floats. Prices per region are set in our database, not converted live. For royalty reports, I'd record the exchange rate used at the time of each transaction. And I'd put Razorpay and Stripe behind one common payment interface, so the rest of the code doesn't care which gateway was used.</p>
+<p class="tip"><b>Interviewers look for:</b> webhooks with signing secret, integer amounts with currency, and a gateway abstraction.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you integrate Shopify for book sales?</summary>
+<div class="answer">
+<p>If BookLeaf sells authors' books through a Shopify store, I'd connect it like this:</p>
+<ul>
+<li><b>Products:</b> when a book is published, create or update the Shopify product through the Admin API (GraphQL is now the main one): title, cover, price, ISBN as SKU.</li>
+<li><b>Orders:</b> subscribe to webhooks like <code>orders/create</code> and <code>orders/paid</code>. Verify the <code>X-Shopify-Hmac-Sha256</code> header against the raw body.</li>
+<li><b>Respond fast:</b> Shopify expects a quick 200 response, so I save the event and process it in a background job.</li>
+<li><b>Dedupe</b> using the webhook ID, since Shopify can resend.</li>
+<li><b>Royalties:</b> link each order line to our book ID, so author royalties are calculated from real sales.</li>
+<li><b>Fulfilment:</b> when we ship, update fulfilment with the tracking number so the customer gets notified.</li>
+</ul>
+<p class="tip"><b>Interviewers look for:</b> Admin API, verified webhooks, quick acknowledgement with async processing, and mapping sales to royalties.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>Design the print-on-demand order flow.</summary>
+<div class="answer">
+<p>I'd model each order as a clear state machine, so everyone can see where every book is:</p>
+<p><code>PAID → PRINT_QUEUED → PRINTING → PRINTED → PACKED → SHIPPED → DELIVERED</code> (plus <code>ON_HOLD</code> and <code>CANCELLED</code>)</p>
+<ul>
+<li><b>Paid:</b> payment confirmed by webhook. Check the print-ready PDF and cover are approved.</li>
+<li><b>Print queue:</b> group jobs by book size and paper type, since BookLeaf prints in-house in Delhi. For US orders, send to a US print partner's API instead.</li>
+<li><b>Warehouse:</b> scan a barcode when printed and packed, which updates the status.</li>
+<li><b>Shipping:</b> create the shipment with the courier API, save the AWB or tracking number.</li>
+<li><b>Tracking:</b> courier webhooks or polling update status, and the author and buyer get notified.</li>
+</ul>
+<p>Every status change is logged with time and who did it, so we can see where orders get stuck.</p>
+<p class="tip"><b>Interviewers look for:</b> a state machine, India vs US routing, and visibility into delays.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>How would you integrate a print or distribution partner's API?</summary>
+<div class="answer">
+<p>I'd treat any third-party API as unreliable and wrap it carefully.</p>
+<ul>
+<li><b>Read the docs and sandbox first:</b> file specs for PDFs and covers, auth, rate limits, webhooks.</li>
+<li><b>Adapter layer:</b> one module, like <code>printPartner.createJob()</code>, so if we change partners, only that file changes.</li>
+<li><b>Queue the calls:</b> send jobs from a background worker with retries and backoff, never in the user's request.</li>
+<li><b>Store their IDs:</b> save the partner's job ID with our order, and use our order ID as a reference so retries don't create duplicate print jobs.</li>
+<li><b>Status updates:</b> use their webhooks if available, otherwise poll on a schedule.</li>
+<li><b>Logging:</b> log requests and responses, without secrets, for debugging disputes.</li>
+</ul>
+<p>This is the same pattern I used for integrations at my previous jobs: background jobs, retries and clean adapters.</p>
+<p class="tip"><b>Interviewers look for:</b> adapter pattern, queues, idempotent job creation, and logging.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>How would you reconcile payments with orders?</summary>
+<div class="answer">
+<p>Reconciliation means checking that money received and orders in our system match exactly. Even with webhooks, things slip through.</p>
+<p>I'd run a daily job:</p>
+<ul>
+<li>Pull yesterday's payments from Razorpay and Stripe through their APIs.</li>
+<li>Match each one to an order by order ID.</li>
+<li>Flag three cases: <b>paid but no order</b> (webhook missed, so fix it), <b>order marked paid but no payment</b> (a bug, investigate), and <b>amount mismatch</b>.</li>
+<li>Also match settlements, the money actually reaching the bank, with gateway fees, for the finance team.</li>
+</ul>
+<p>The output is a simple report or Slack message for ops, with zero mismatches on a good day. This matters a lot for royalties too, since author payouts depend on correct sales numbers.</p>
+<p class="tip"><b>Interviewers look for:</b> a scheduled job, the three mismatch types, and tying it to finance and royalties.</p>
+</div>
+</details>
+</section>
+
+<section id="s11">
+<h3>11. DevOps &amp; Deployment</h3>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>Tell me about the CI/CD pipeline you've set up.</summary>
+<div class="answer">
+<p>At RDX Digital Solutions, I set up a CI/CD pipeline with GitHub Actions that deploys our client apps to AWS.</p>
+<ul>
+<li>On every pull request: install, lint, type-check, and run tests with Jest or Vitest. If anything fails, the PR can't be merged.</li>
+<li>On merge to main: build the app, build a Docker image, and deploy to the server.</li>
+<li>Secrets are stored in GitHub Actions secrets, not in the repo.</li>
+<li>After deploying, a simple health check confirms the app is up.</li>
+</ul>
+<p>The biggest benefit was confidence. Before, deploys were manual and someone was always nervous. After, deploying became a boring, repeatable thing we could do several times a day. For a "bias for shipping" team like BookLeaf, that's exactly what you want.</p>
+<p class="tip"><b>Interviewers look for:</b> a real pipeline you built, what runs on PR vs merge, and the impact on shipping speed.</p>
+<p class="tip"><b>Personalise:</b> add real details from RDX: which AWS service, how long a deploy takes, and any bug the pipeline caught.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>What is Docker, and why use it?</summary>
+<div class="answer">
+<p>Docker packages an app with everything it needs, the Node version, libraries and config, into an image. A running image is a container. It runs the same way on my laptop, in CI and on the server.</p>
+<p>Why it helps:</p>
+<ul>
+<li>No more "works on my machine". A new junior can run the whole stack with <code>docker compose up</code>.</li>
+<li>Easy to run several services on one VPS: the API, a worker, Redis, maybe n8n.</li>
+<li>Rollbacks are simple: just run the previous image tag.</li>
+</ul>
+<p>I'd use a multi-stage Dockerfile to keep images small, not run as root, and never bake secrets into the image. Those come from environment variables at runtime.</p>
+<p class="tip"><b>Interviewers look for:</b> consistency across environments, onboarding, and basic best practices.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you deploy a Node app to a VPS?</summary>
+<div class="answer">
+<ul>
+<li><b>Server setup:</b> a small Ubuntu VPS, SSH keys only, firewall allowing just ports 22, 80 and 443, and automatic security updates.</li>
+<li><b>Run the app:</b> either Docker Compose, or PM2 to keep Node running and restart it if it crashes or the server reboots.</li>
+<li><b>Nginx in front:</b> as a reverse proxy to the app's port, handling gzip, upload size limits for manuscripts, and serving static files.</li>
+<li><b>SSL:</b> free certificates from Let's Encrypt with Certbot, set to auto-renew.</li>
+<li><b>Deploy:</b> GitHub Actions SSHes in, pulls the new image, and restarts.</li>
+</ul>
+<p>The database I'd keep on a managed service if the budget allows, because backups and updates are handled. If not, on its own server with daily backups.</p>
+<p class="tip"><b>Interviewers look for:</b> security basics, a process manager, Nginx reverse proxy and SSL. This is a bonus skill in the JD.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>How do you manage environment variables and secrets?</summary>
+<div class="answer">
+<p>Config that changes between environments, like database URLs, Razorpay keys and OpenAI keys, goes in environment variables, never in code.</p>
+<ul>
+<li>A <code>.env</code> file locally, which is in <code>.gitignore</code>, plus a <code>.env.example</code> with dummy values so everyone knows what's needed.</li>
+<li>In CI, GitHub Actions secrets. On the server, env files with strict permissions, or AWS Secrets Manager or Parameter Store.</li>
+<li>Validate env variables at startup with Zod. If a key is missing, the app fails immediately with a clear error instead of breaking later.</li>
+<li>Separate keys for dev, staging and production, especially test vs live for Razorpay.</li>
+<li>Rotate secrets if leaked or when someone leaves.</li>
+</ul>
+<p>In Next.js, I'm careful that only <code>NEXT_PUBLIC_</code> variables go to the browser.</p>
+<p class="tip"><b>Interviewers look for:</b> no secrets in Git, validation at startup, separate keys per environment.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>How do you deploy without downtime?</summary>
+<div class="answer">
+<p>The idea is to start the new version before stopping the old one.</p>
+<ul>
+<li><b>PM2:</b> cluster mode with <code>pm2 reload</code> restarts instances one by one.</li>
+<li><b>Docker:</b> start the new container, wait for its health check to pass, switch Nginx to it, then stop the old one. That's basically blue-green.</li>
+<li><b>Graceful shutdown:</b> on SIGTERM, stop taking new requests and finish the current ones, so an author's upload doesn't get cut off.</li>
+</ul>
+<p>The tricky part is the database. Migrations must be backward-compatible, so old and new code both work during the switch. For example, to rename a column: add the new column, write to both, backfill, switch reads, and only drop the old column in a later deploy.</p>
+<p class="tip"><b>Interviewers look for:</b> health checks, graceful shutdown, and especially backward-compatible migrations.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you set up monitoring, logging and alerts?</summary>
+<div class="answer">
+<p>For a small team, I'd keep it simple but cover the basics:</p>
+<ul>
+<li><b>Structured logs:</b> JSON logs with a library like Pino, including a request ID, user ID and order ID, so I can follow one problem across services.</li>
+<li><b>Error tracking:</b> Sentry or similar, so we see errors with stack traces before authors report them.</li>
+<li><b>Uptime checks:</b> a service like UptimeRobot or Better Stack pinging the health endpoint.</li>
+<li><b>Business alerts:</b> these matter most. "No new submissions in 6 hours", "payment webhooks failing", "print queue stuck".</li>
+<li><b>Server metrics:</b> CPU, memory and disk, with an alert before the disk fills up with manuscript uploads.</li>
+</ul>
+<p>Alerts go to one Slack channel, and I'd keep them few so people don't start ignoring them.</p>
+<p class="tip"><b>Interviewers look for:</b> errors, uptime and business-level alerts, without alert fatigue.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How do you handle database backups and restore?</summary>
+<div class="answer">
+<p>A backup only counts if you've tested restoring it.</p>
+<ul>
+<li><b>Automated daily backups</b> with <code>pg_dump</code>, or a managed database's automatic backups with point-in-time recovery.</li>
+<li><b>Store them elsewhere:</b> in S3, in a different region or account from the server, with encryption, and a retention like 30 days.</li>
+<li><b>Files too:</b> manuscripts and covers in S3 with versioning turned on, so an accidental delete or overwrite can be undone.</li>
+<li><b>Test restores:</b> once a month, restore into a test database and check the data. Write down how long it took.</li>
+<li><b>Before risky changes:</b> take a manual backup before big migrations.</li>
+</ul>
+<p>For BookLeaf, losing royalty data or an author's final manuscript would be really serious, so this isn't optional.</p>
+<p class="tip"><b>Interviewers look for:</b> offsite storage, file versioning, and actually testing restores.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>A deploy broke production. What do you do?</summary>
+<div class="answer">
+<p>First, fix it for users, then find the cause.</p>
+<ul>
+<li><b>Roll back right away:</b> redeploy the previous Docker image tag or Git commit. Since every deploy is tagged, this takes a couple of minutes. Or turn off the feature flag if the change was behind one.</li>
+<li><b>Communicate:</b> tell the team and founders in one line what's broken and that we're rolling back.</li>
+<li><b>Check the damage:</b> did bad data get written? Did any payments or emails go out wrongly?</li>
+<li><b>Find the cause</b> calmly, with logs and Sentry.</li>
+<li><b>Prevent it:</b> add a test for that case, and write a short no-blame note on what happened.</li>
+</ul>
+<p>One catch: if a database migration ran, rolling back the code isn't enough. That's why I keep migrations backward-compatible.</p>
+<p class="tip"><b>Interviewers look for:</b> rollback first, clear communication, and learning without blame.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you keep infrastructure costs low for a startup?</summary>
+<div class="answer">
+<ul>
+<li><b>Start simple:</b> one or two well-sized VPS machines with Docker Compose, not Kubernetes. Scale when the numbers say so.</li>
+<li><b>Right-size:</b> check actual CPU and memory use, and downsize idle servers.</li>
+<li><b>Storage:</b> move old manuscripts and print files to cheaper S3 storage classes with lifecycle rules.</li>
+<li><b>CDN and images:</b> serve covers through a CDN as compressed WebP. At RDX, image optimisation and lazy loading gave us a 94% load improvement, and that also cuts bandwidth cost.</li>
+<li><b>Watch SaaS bills:</b> Bubble workload units, Zapier tasks and AI tokens can grow quietly. Track them monthly.</li>
+<li><b>Budget alerts</b> on AWS and AI providers.</li>
+</ul>
+<p>I'd also share a simple monthly cost summary with the founders, so cost is visible, not a surprise.</p>
+<p class="tip"><b>Interviewers look for:</b> pragmatic choices, avoiding over-engineering, and watching SaaS and AI spend too.</p>
+</div>
+</details>
+</section>
+
+<section id="s12">
+<h3>12. System Design for BookLeaf</h3>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>Design the author dashboard.</summary>
+<div class="answer">
+<p>First I'd ask what authors actually come for: "Where is my book?", "What do I need to do?", and "How much have I earned?".</p>
+<ul>
+<li><b>Home:</b> each book with a progress tracker (Manuscript → Editing → Cover → ISBN → Printing → Live) and a clear "Action needed" box, like "Approve your cover".</li>
+<li><b>Book page:</b> upload manuscript, review proofs and covers, comment threads with the team.</li>
+<li><b>Orders and royalties:</b> sales by channel, royalty statements, payout history.</li>
+<li><b>Profile:</b> bank and tax details, with strict access.</li>
+</ul>
+<p><b>Tech:</b> Next.js with TanStack Query, a Node API, PostgreSQL, S3 for files, and role-based access so authors only see their own books while staff see everything. Data is scoped by author ID in every query. And it must work well on mobile, since many authors in India will open it on their phone.</p>
+<p class="tip"><b>Interviewers look for:</b> starting from user needs, clear screens, access control and mobile-first thinking.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>Design the book submission to publishing pipeline for 1,200 books a month.</summary>
+<div class="answer">
+<p>1,200 a month is about 40 books a day, so the challenge isn't raw scale, it's <b>tracking and coordinating many steps and people</b>.</p>
+<ul>
+<li><b>Book state machine:</b> SUBMITTED → EDITING → AUTHOR_REVIEW → TYPESETTING → COVER → ISBN → PRINT_READY → PUBLISHED. Only allowed transitions, each logged.</li>
+<li><b>Tasks:</b> each stage creates tasks assigned to the right team member, with due dates.</li>
+<li><b>Events and jobs:</b> each stage change emits an event. Background workers (a queue like BullMQ on Redis) handle emails, AI checks, file processing and partner API calls.</li>
+<li><b>Ops board:</b> a view per stage showing counts, ageing and overdue books, so bottlenecks are visible.</li>
+<li><b>SLAs:</b> alert if a book sits in a stage too long.</li>
+</ul>
+<p>This gives founders a clear view: how many books are in each stage, and where they're getting stuck.</p>
+<p class="tip"><b>Interviewers look for:</b> realising it's a workflow problem, a state machine, background jobs, and visibility for ops.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you store large manuscripts and cover files?</summary>
+<div class="answer">
+<p>Files go in object storage like S3, never in the database. The database just stores metadata: file key, size, type, version and who uploaded it.</p>
+<ul>
+<li><b>Direct uploads:</b> the backend gives a pre-signed upload URL, and the browser uploads straight to S3. Big files don't pass through our server. Multipart upload for very large files.</li>
+<li><b>Private by default:</b> downloads use short-lived signed URLs. I built exactly this at Smile Returns for private healthcare files.</li>
+<li><b>Versions:</b> every new manuscript or cover is a new version, never overwritten, so we can go back to "v3 that the author approved".</li>
+<li><b>Validation:</b> check file type and size, and scan for viruses in a background job.</li>
+<li><b>Organise:</b> paths like <code>books/{bookId}/manuscript/v3.docx</code>.</li>
+</ul>
+<p class="tip"><b>Interviewers look for:</b> object storage, pre-signed URLs, private access, and versioning.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you design notifications to authors over email and WhatsApp?</summary>
+<div class="answer">
+<ul>
+<li><b>One notification service:</b> the rest of the code just says "send <code>COVER_READY</code> to author 123". The service picks channels and templates.</li>
+<li><b>Queue it:</b> sending happens in background jobs with retries, so a slow email provider never slows down the app.</li>
+<li><b>Channels:</b> email through a provider like SES or Postmark. WhatsApp through the WhatsApp Business API with pre-approved message templates, which is very effective in India.</li>
+<li><b>Preferences:</b> authors can choose channels, and important ones like payment receipts always go by email.</li>
+<li><b>Log everything:</b> what was sent, when, and delivery status, so support can answer "I never got the email".</li>
+<li><b>No spam:</b> idempotency keys so the same event never triggers two messages, and grouping small updates.</li>
+</ul>
+<p class="tip"><b>Interviewers look for:</b> a central service, async sending, WhatsApp templates, logs and deduplication.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>How would you design royalty calculation and reporting?</summary>
+<div class="answer">
+<p>Royalties are money and author trust, so accuracy and traceability matter more than speed.</p>
+<ul>
+<li><b>Sales ledger:</b> every sale is one row, with channel (our store, Amazon, Flipkart, Shopify), book, quantity, price, currency, date, and source reference. Rows are never edited, only corrected with adjustment rows.</li>
+<li><b>Royalty rules:</b> stored per book or per package, with effective dates, since rates can differ by channel.</li>
+<li><b>Monthly job:</b> calculates royalties per book per author and saves a <b>statement</b> showing exactly which sales it includes.</li>
+<li><b>Money:</b> integers in paise or cents, exchange rate saved per sale.</li>
+<li><b>Review step:</b> finance approves before payouts go out.</li>
+<li><b>Author view:</b> statement and sales breakdown in the dashboard, downloadable as PDF.</li>
+</ul>
+<p>And lots of unit tests for edge cases: returns, refunds, rate changes mid-month.</p>
+<p class="tip"><b>Interviewers look for:</b> an append-only ledger, versioned rules, reproducible statements, and tests.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you design order tracking across India and the US?</summary>
+<div class="answer">
+<ul>
+<li><b>One shipment model:</b> order ID, region, carrier, tracking number, status, and a history of events. The same model works for both countries.</li>
+<li><b>Carrier adapters:</b> one adapter per courier, Indian aggregators or couriers here and US carriers or a print partner there, all converting their statuses into our common ones: <code>SHIPPED</code>, <code>IN_TRANSIT</code>, <code>OUT_FOR_DELIVERY</code>, <code>DELIVERED</code>, <code>RETURNED</code>.</li>
+<li><b>Updates:</b> courier webhooks where available, otherwise a scheduled job polls active shipments.</li>
+<li><b>Customer view:</b> a tracking page and notifications at key steps.</li>
+<li><b>Ops alerts:</b> flag shipments with no update for several days.</li>
+</ul>
+<p>Store all times in UTC and show them in the user's time zone, IST or US time.</p>
+<p class="tip"><b>Interviewers look for:</b> a common status model with adapters, webhooks plus polling, and time zones.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>A third-party API is down. How do you keep the system reliable?</summary>
+<div class="answer">
+<p>I assume every external API will fail sometimes, whether that's payments, couriers, the print partner or OpenAI.</p>
+<ul>
+<li><b>Don't call them in the user's request</b> when you don't need to. Save the work as a job, and the user sees "Processing".</li>
+<li><b>Retries with backoff</b>, and after too many failures, move the job to a dead-letter queue and alert someone.</li>
+<li><b>Timeouts</b> on every call.</li>
+<li><b>Circuit breaker:</b> if an API keeps failing, stop calling it for a few minutes instead of piling up requests.</li>
+<li><b>Fallbacks:</b> a second courier, or manual handling by ops.</li>
+<li><b>Catch up later:</b> reconciliation jobs fix anything missed while it was down.</li>
+</ul>
+<p>So for example, if the courier API is down, books still get packed, and labels are created automatically once it's back.</p>
+<p class="tip"><b>Interviewers look for:</b> async jobs, retries, timeouts, circuit breakers and reconciliation.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>How would the system scale as BookLeaf grows?</summary>
+<div class="answer">
+<p>Honestly, 1,200 books a month is not a heavy load for a well-built Node and Postgres app. I'd scale based on real measurements, not guesses.</p>
+<ul>
+<li><b>Database first:</b> proper indexes and no N+1 queries. At Xellerate, composite indexes and fixing N+1 queries made our APIs 35% faster without any new servers.</li>
+<li><b>Stateless API:</b> so we can add more instances behind Nginx or a load balancer.</li>
+<li><b>Background workers</b> scale separately from the API.</li>
+<li><b>Caching</b> with Redis for things read often, like book catalogue pages.</li>
+<li><b>CDN</b> for covers and static files.</li>
+<li>Later, read replicas for reports and analytics.</li>
+</ul>
+<p>The bigger growth risk is usually operational, more people and steps, not traffic. So clean workflows and visibility matter as much as servers.</p>
+<p class="tip"><b>Interviewers look for:</b> right-sized thinking, measuring first, and a real example of optimisation.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl a">Advanced</span>As tech lead, how would you choose tools and frameworks?</summary>
+<div class="answer">
+<p>For a small team, I'd choose <b>boring, popular tools</b> that the team can hire for and get help with: Next.js, Node with TypeScript, PostgreSQL, Prisma, Redis, Docker. That stack also covers what the JD asks for.</p>
+<p>When deciding on any new tool, I'd ask:</p>
+<ul>
+<li>Does it solve a real problem we have now?</li>
+<li>Can the juniors learn and maintain it?</li>
+<li>Is it well maintained with a good community?</li>
+<li>What's the cost, and how hard is it to leave later?</li>
+</ul>
+<p>I'd write each big decision as a short note: the options, what we chose and why. Then six months later, nobody wonders "why did we pick this?". And I'd prefer one language, TypeScript, across frontend and backend so everyone can work on everything.</p>
+<p class="tip"><b>Interviewers look for:</b> pragmatism over hype, team skills, and documented decisions.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl i">Intermediate</span>How would you set code-quality and documentation standards for junior developers?</summary>
+<div class="answer">
+<p>I'd make good habits easy and automatic, not depend on lectures.</p>
+<ul>
+<li><b>Automate:</b> ESLint, Prettier and TypeScript strict mode, run in CI, so style is never a review argument.</li>
+<li><b>Pull requests:</b> small PRs, a short template (what, why, how tested, screenshots), and every PR reviewed.</li>
+<li><b>Tests:</b> required for money logic like payments and royalties. Not 100% coverage everywhere.</li>
+<li><b>Docs:</b> a good README to run the project in one command, short notes for each integration, and decision notes.</li>
+<li><b>Mentoring:</b> pair programming, explaining the "why" in reviews, and giving juniors real ownership of small features.</li>
+</ul>
+<p>I'd also be kind in reviews. Juniors learn faster when they feel safe asking questions.</p>
+<p class="tip"><b>Interviewers look for:</b> automation, review culture, focused testing, and genuine mentoring.</p>
+<p class="tip"><b>Personalise:</b> if you've helped a teammate or intern at RDX, Xellerate or university, mention a specific example here.</p>
+</div>
+</details>
+</section>
+
+<div class="part">Part 5 — Closing</div>
+
+<section id="s13">
+<h3>13. Questions to Ask Them &amp; Closing</h3>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>How should I answer "Do you have any questions for us?"</summary>
+<div class="answer">
+<p>Always say yes, and have three or four ready. Saying "No, I think you covered everything" sounds like low interest.</p>
+<ul>
+<li>Pick questions that show you've thought about <b>their</b> business: the Bubble migration, automation, the team, what success looks like.</li>
+<li>Ask about things that came up in the conversation. "You mentioned the print queue earlier. How is that tracked today?" shows you were listening.</li>
+<li>Avoid asking about salary, leave or work hours in the first round, unless they bring it up.</li>
+<li>Don't ask anything that's answered on their website.</li>
+</ul>
+<p>The questions below are good options. Choose the ones that fit who you're talking to: founders care about vision and priorities, engineers about the stack and process.</p>
+<p class="tip"><b>Interviewers look for:</b> curiosity, preparation, and that you're thinking like someone who already works there.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>Ask: "What would success look like for this role in the first 90 days?"</summary>
+<div class="answer">
+<p><b>Why this is a good question:</b> it shows I care about delivering results, not just getting the job. It also tells me their real priorities. Is it fixing the Bubble dashboard, shipping AI features, or starting the migration? I can then use the answer in my closing, like "That's exactly the kind of thing I did at RDX".</p>
+<p class="tip"><b>Interviewers look for:</b> outcome focus. Founders love this question because it's how they think.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>Ask: "Where does the Bubble-to-code migration stand, and what's driving the timing?"</summary>
+<div class="answer">
+<p><b>Why this is a good question:</b> it shows I read the job description carefully and I'm already thinking about the biggest technical project. Their answer tells me if the pressure is cost, performance or something else, and whether there's a plan or I'd be shaping it from scratch. It's also a natural chance to briefly mention my strangler-pattern approach.</p>
+<p class="tip"><b>Interviewers look for:</b> you understand the real challenge of the role and aren't scared of it.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>Ask: "Which manual process takes the ops team the most time right now?"</summary>
+<div class="answer">
+<p><b>Why this is a good question:</b> BookLeaf is automation-heavy and handles 1,200 books a month, so there are surely painful manual steps. This question shows I think in terms of saving the team's time and finding quick wins. Whatever they answer, I can say how I'd approach it, with n8n, a small script or an AI step, which makes the interview feel like we're already working together.</p>
+<p class="tip"><b>Interviewers look for:</b> a bias for practical impact, which matches their "bias for shipping" culture.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>Ask: "How is the tech team set up today, and who would I be working with and mentoring?"</summary>
+<div class="answer">
+<p><b>Why this is a good question:</b> the role mentions leading and mentoring juniors, so I want to know team size, skills and whether there are freelancers or agencies involved. It shows I take the leadership part seriously, and it helps me understand how much hands-on coding vs reviewing and planning the role involves.</p>
+<p class="tip"><b>Interviewers look for:</b> you're thinking about the team, not just your own tasks.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>Ask: "How do you decide what gets built next, and how do the founders and tech team work together on that?"</summary>
+<div class="answer">
+<p><b>Why this is a good question:</b> I'd be working directly with the founders, so I want to understand how priorities are set and how quickly decisions are made. It also lets them see I'm comfortable with discussing trade-offs and pushing back politely when needed. And their answer tells me a lot about the culture.</p>
+<p class="tip"><b>Interviewers look for:</b> maturity about working with founders and handling changing priorities.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>Ask: "Since Shark Tank, what's changed most for the business, and what's the biggest challenge in the next year?"</summary>
+<div class="answer">
+<p><b>Why this is a good question:</b> it shows I've researched the company, and founders usually enjoy talking about this. It helps me understand growth plans, like expanding the US business or new services, which tells me where technology will matter most. I can then link my skills to that direction.</p>
+<p class="tip"><b>Interviewers look for:</b> genuine interest in the company and its future, not just the job.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>How should I close the interview?</summary>
+<div class="answer">
+<p>In the last minute, I'd briefly sum up why I fit, thank them, and ask about next steps. Something like:</p>
+<p>"Thank you, I really enjoyed this. From what you've shared, the role needs someone who can keep things running today and also build the next system, and that's what excites me. I've built production apps with Node, Next.js and Postgres, set up CI/CD, and worked on RBAC and integrations, and I'm already learning n8n and Bubble for this. What are the next steps in the process?"</p>
+<ul>
+<li>Keep it under a minute, confident but not pushy.</li>
+<li>Mention one thing from the conversation, so it isn't generic.</li>
+</ul>
+<p class="tip"><b>Interviewers look for:</b> clear enthusiasm, a short summary of fit, and professionalism.</p>
+<p class="tip"><b>Personalise:</b> swap in the one or two points they seemed most interested in during your interview.</p>
+</div>
+</details>
+<details class="qa">
+<summary><span class="lvl b">Basic</span>How should I follow up after the interview?</summary>
+<div class="answer">
+<p>Send a short thank-you email within 24 hours to the person you spoke with, or to HR if you don't have their email.</p>
+<pre><code>Subject: Thank you – Full-Stack Developer interview
+
+Hi [Name],
+
+Thank you for taking the time to speak with me today. I enjoyed
+learning about BookLeaf's plans, especially [the Bubble migration /
+automating the submission flow].
+
+After our conversation, I'm even more excited about the role. I'd
+love to help [specific thing they mentioned].
+
+Please let me know if you need anything else from me.
+
+Best regards,
+Laeba Firdous
+[Phone] | [LinkedIn] | [Portfolio/GitHub]</code></pre>
+<p>If I haven't heard back in about a week, or after the date they gave, I'd send one polite follow-up asking about the timeline.</p>
+<p class="tip"><b>Interviewers look for:</b> a short, specific, professional note. It also keeps you in their mind when they decide.</p>
+<p class="tip"><b>Personalise:</b> if you built a small demo (n8n workflow, Razorpay test-mode flow, or AI metadata generator) for the interview, add a link to it in this email.</p>
+</div>
+</details>
+</section>
+
+
+</main>
+</div>
+
+<script src="../assets/notes.js"></script>
+<script src="../assets/annotate.js"></script>
+</body>
+</html>
